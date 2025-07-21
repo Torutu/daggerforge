@@ -116,7 +116,6 @@ export class AdversaryView extends ItemView {
         card.appendChild(title);
         const desc = document.createElement('p');
         desc.classList.add('desc-small-padding');
-
         desc.textContent = adversary.desc || 'No description available.';
         card.appendChild(desc);
 card.addEventListener('click', () => {
