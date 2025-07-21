@@ -26,12 +26,9 @@ once you activate the plugin, you can find it here on the left ribbon.
 
 A huge thank you to everyone who supports this project! Your encouragement and feedback keep this plugin growing and improving.
 
----
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/U7U01IE229)
 
-Feel free to contribute, open issues, or suggest features!
 
----
 ## Daggerheart License & Attribution
 
 This product includes materials from the
