@@ -6,8 +6,8 @@
   "description": "Easy access to DaggerHeart's Adversaries + creating your own.",
   "author": "Waleed Alnaimi",
   "authorUrl": "https://github.com/Torutu",
-  "fundingUrl": "paypal.me/Torutu",
+  "fundingUrl": "https://ko-fi.com/waleedalnaimi",
   "isDesktopOnly": false,
   "license": "MIT",
-  "main": "dist/main.js"
+  "main": "main.js"
 }

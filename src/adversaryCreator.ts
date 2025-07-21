@@ -14,30 +14,35 @@ export class TextInputModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.empty();
-		contentEl.createEl('h2', { text: 'Adversary Stat Block' });
+		contentEl.createEl('h2', { text: 'Adversary Stat Block', cls: 'modal-title' });
 
 		const createField = (
 			label: string,
 			key: string,
-			type: 'input' | 'textarea' = 'input'
+			type: 'input' | 'textarea' = 'input',
+			customClass?: string
 		) => {
-			contentEl.createEl('label', { text: label });
-			const field = contentEl.createEl(type, {
-				cls: 'input-field',
+			const wrapper = contentEl.createDiv({ cls: 'field-row' });
+			wrapper.createEl('label', {
+				text: label,
+				cls: 'inline-label',
+			});
+			const field = wrapper.createEl(type, {
+				cls: ['input-field', customClass].filter(Boolean) as string[],
 			});
 			this.inputs[key] = field as any;
 		};
 
-	const createShortTripleFields = (
-		label1: string, key1: string,
-		label2: string, key2: string,
-		label3: string, key3: string,
-		parent: HTMLElement,
-		dropdownFieldKey?: string,
-		dropdownOptions?: string[]
-		) => {
-		const row = parent.createDiv();
-		row.addClass('flex-row');
+		const createShortTripleFields = (
+			label1: string, key1: string,
+			label2: string, key2: string,
+			label3: string, key3: string,
+			parent: HTMLElement,
+			dropdownFieldKey?: string,
+			dropdownOptions?: string[]
+			) => {
+			const row = parent.createDiv();
+			row.addClass('flex-row');
 
 		const create = (label: string, key: string) => {
 			const wrapper = row.createDiv({ cls: 'inline-field' });
@@ -67,10 +72,15 @@ export class TextInputModal extends Modal {
 	};
 
 		// Create all base fields
-		createField('Name ', 'name');
+		// createField('Name ', 'name', 'textarea', 'adversary-name-textarea');
+		contentEl.createEl('label', { text: 'Name ' });
+		const nameField = contentEl.createEl('input', {
+			cls:'adversary-name-textarea'
+		});
+		this.inputs['name'] = nameField;
 		// === Tier dropdown ===
 		contentEl.createEl('label', { text: ' Tier ' });
-		const tierSelect = contentEl.createEl('select', { cls: ['input-field', 'tier-select' ] });
+		const tierSelect = contentEl.createEl('select', { cls: 'input-field-first-row-tier' });
 		['1', '2', '3', '4'].forEach(level => {
 			tierSelect.createEl('option', { text: level, value: level });
 		});
@@ -78,16 +88,15 @@ export class TextInputModal extends Modal {
 
 		// === Type dropdown ===
 		contentEl.createEl('label', { text: ' Type ' });
-		const typeSelect = contentEl.createEl('select', { cls: ['input-field', 'type-select'] });
+		const typeSelect = contentEl.createEl('select', { cls: 'input-field-first-row' });
 		['Bruiser', 'Horde', 'Leader', 'Minion', 'Ranged', 'Skulk', 'Social', 'Solo', 'Standard', 'Support'].forEach(type => {
 			typeSelect.createEl('option', { text: type, value: type });
 		});
 		this.inputs['type'] = typeSelect;
 		contentEl.createEl('br');
-		createField('Description', 'desc', 'textarea');
-		createField('Motives ', 'motives');
+		createField('Description', 'desc', 'textarea', 'description-textarea');
+		createField('Motives ', 'motives', 'input', 'motives-input');
 		// Create a row container for just these three fields
-		const thresholdRow = contentEl.createDiv({ cls: 'threshold-row' });
 
 		createShortTripleFields(
 			'Difficulty', 'difficulty',
@@ -105,9 +114,9 @@ export class TextInputModal extends Modal {
 		'weaponRange',
 		['Melee', 'Very Close', 'Close', 'Far', 'Very Far']
 		);
-		createField('Experience (optional) ', 'xp');
+		createField('Experience (optional) ', 'xp', 'input', 'experience-input');
 
-		this.featureContainer = contentEl.createDiv();
+		this.featureContainer = contentEl.createDiv('feature-container'); // Container for features
 
 		this.addFeature(); // Add first feature by default
 		this.addFeatureBtn = contentEl.createEl('button', {
@@ -117,12 +126,13 @@ export class TextInputModal extends Modal {
 
 		this.addFeatureBtn.onclick = () => this.addFeature();
 
-		contentEl.createEl('br');
+		// contentEl.createEl('br');
 		// === Insert Button ===
 		this.insertBtn = contentEl.createEl('button', {
-			text: 'Insert Card',
-			cls: 'insert-card-btn'
+		text: 'Insert Card',
+		cls: 'insert-card-btn'
 		});
+
 		this.insertBtn.onclick = () => {
 			const values = Object.fromEntries(
 				Object.entries(this.inputs).map(([key, el]) => [key, (el as HTMLInputElement | HTMLTextAreaElement).value.trim()])
@@ -146,31 +156,30 @@ export class TextInputModal extends Modal {
 		// Flex container for name and type side by side
 		const row = wrapper.createDiv({ cls: 'feature-row' });
 
-
 		const nameEl = row.createEl('input', {
-		cls: 'input-field feature-name',
+		cls: 'input-feature-name',
 		placeholder: 'Feature Name'
 		});
 
 
-		const typeEl = row.createEl('select', { cls: 'input-field feature-type' });
+		const typeEl = row.createEl('select', { cls: 'field-feature-type' });
 		['Action', 'Reaction', 'Passive'].forEach(type => {
 		typeEl.createEl('option', { text: type, value: type });
 		});
 
 
-		const costEl = row.createEl('select', { cls: 'input-field feature-cost' });
+		const costEl = row.createEl('select', { cls: 'input-feature-cost' });
 		['', 'Mark a Stress', 'Spend a Fear'].forEach(opt => {
 		costEl.createEl('option', { text: opt === '' ? 'none' : opt, value: opt });
 		});
 
 
 		const descEl = wrapper.createEl('textarea', {
-		cls: 'input-field feature-desc-input',
+		cls: 'feature-desc-input',
 		placeholder: 'Feature Description'
 		});
 
-		const removeBtn = wrapper.createEl('button', { text: 'Remove', cls: 'remove-btn' });
+		const removeBtn = wrapper.createEl('button', { text: 'Remove', cls: 'remove-feature-btn' });
 
 		removeBtn.onclick = () => {
 			const index = this.features.findIndex(f => f.nameEl === nameEl);
@@ -190,7 +199,7 @@ export class TextInputModal extends Modal {
 			weaponName, weaponRange, weaponDamage, xp
 		} = values;
 
-		const stressBlock = stress ? `Stress: <span class="stat">${stress}</span><br>` : '';
+		const stressBlock = stress ? `Stress: <span class="stat">${stress}</span>` : '';
 
 		const featuresHTML = features.map(f => `
 			<div class="feature">
@@ -215,7 +224,7 @@ export class TextInputModal extends Modal {
 			Thresholds: <span class="stat">${thresholdMajor}/${thresholdSevere} |</span>
 			HP: <span class="stat">${hp} |</span>
 			${stressBlock}
-			ATK: <span class="stat">${atk} |</span>
+			<br>ATK: <span class="stat">${atk} |</span>
 			${weaponName}: <span class="stat">${weaponRange} | ${weaponDamage}</span><br>
 			<div class="experience-line">Experience: <span class="stat">${xp}</span></div>
 			</div>

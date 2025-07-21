@@ -120,26 +120,23 @@
 
 .input-field {
   width: 100%;
+  max-width: 120px;
   margin-bottom: 10px;
 }
 
-input.input-field,
+input.input-help{
+  width: 100%;
+  max-width: 360px;
+}
+
 select.input-field {
   width: 120px;
 }
 
 
-.flex-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
-}
 
-.inline-field {
-  display: flex;
-  flex-direction: column;
-}
+
+
 
 .tier-select {
   width: 20%;
@@ -151,60 +148,26 @@ select.input-field {
   margin-bottom: 10px;
 }
 
-.threshold-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
+
 
 .features-heading {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.add-feature-btn {
-  margin-top: 10px;
-}
 
-.insert-card-btn {
-  margin-top: 20px;
-}
 
-.feature-block {
-  margin-bottom: 1px;
-}
 
-.feature-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 6px;
-}
 
-.feature-name {
-  flex: 1;
-  max-width: 200px;
-}
 
-.feature-type {
-  max-width: 100px;
-}
 
-.feature-cost {
-  margin-bottom: 6px;
-  display: block;
-}
 
-.textinputmodal .feature-desc-input {
-  width: 90%;
-  margin-bottom: 6px;
-  display: block;
-  font-weight: 500;
-  font-size: small;
-}
 
-.remove-btn {
-  margin-bottom: 10px;
-}
+
+
+
+
+
 
 .tier-filter-btn {
   margin-left: 5px;
@@ -243,3 +206,123 @@ select.input-field {
   margin-top: 10px;
 }
 
+
+/* modal styles */
+
+.inline-label {
+  align-self: auto;
+}
+
+.modal-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+/* warpper for field rows */
+.field-row {
+    display: flex;
+    align-items: stretch;
+    align-content: flex-start;
+    flex-direction: column;
+}
+
+/* adversary-name-textarea is used for the textarea input for the adversary name */
+.adversary-name-textarea {
+  width: 220px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+/* for Tier*/
+.input-field-first-row-tier {
+  width: 100%;
+  max-width: 50px;
+  margin-bottom: 10px;
+}
+/* for Type */
+.input-field-first-row {
+  width: 100%;
+  max-width: 100px;
+  margin-bottom: 10px;
+}
+
+.description-textarea {
+  min-width: 100%;
+  height: 60px;
+  margin-bottom: 10px;
+  overflow: auto;
+}
+
+.motives-input {
+  width: 100%;
+  max-width: 340px;
+}
+
+.flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    justify-content: flex-start;
+}
+
+.inline-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-input {
+  width: 100%;
+  max-width: 240px;
+}
+
+.feature-block {
+  margin-bottom: 1px;
+}
+
+.feature-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.input-feature-name {
+  flex: 1;
+  max-width: 200px;
+}
+
+.field-feature-type {
+  max-width: 100px;
+}
+
+.input-feature-cost {
+  margin-bottom: 6px;
+  display: block;
+}
+
+.feature-desc-input {
+  width: 100%;
+  margin-bottom: 6px;
+  display: block;
+  font-weight: 500;
+  font-size: small;
+  resize: vertical;       /* allow vertical resize only */
+  overflow: auto;         /* show scrollbar if needed */
+}
+
+.remove-feature-btn {
+  margin-bottom: 10px;
+}
+
+.add-feature-btn {
+  margin-top: 10px;
+}
+
+.insert-card-btn {
+  display: block;      /* makes the button a block element */
+  margin-left: auto;   /* pushes it to the right */
+  margin-top: 10px;    /* if you want some spacing on top */
+  width: fit-content;  /* keeps the button width as per content */
+}
