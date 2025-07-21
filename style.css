@@ -308,8 +308,8 @@ select.input-field {
   display: block;
   font-weight: 500;
   font-size: small;
-  resize: vertical;       /* allow vertical resize only */
-  overflow: auto;         /* show scrollbar if needed */
+  resize: vertical;
+  overflow: auto;
 }
 
 .remove-feature-btn {
@@ -321,8 +321,8 @@ select.input-field {
 }
 
 .insert-card-btn {
-  display: block;      /* makes the button a block element */
-  margin-left: auto;   /* pushes it to the right */
-  margin-top: 10px;    /* if you want some spacing on top */
-  width: fit-content;  /* keeps the button width as per content */
+  display: block;
+  margin-left: auto;
+  margin-top: 10px;
+  width: fit-content;
 }
