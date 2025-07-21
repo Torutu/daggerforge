@@ -7,7 +7,5 @@
   "author": "Waleed Alnaimi",
   "authorUrl": "https://github.com/Torutu",
   "fundingUrl": "https://ko-fi.com/waleedalnaimi",
-  "isDesktopOnly": false,
-  "license": "MIT",
-  "main": "main.js"
+  "isDesktopOnly": false
 }
