@@ -32,6 +32,7 @@ A huge thank you to everyone who supports this project! Your encouragement and f
 Feel free to contribute, open issues, or suggest features!
 
 ---
+## Daggerheart License & Attribution
 
 This product includes materials from the
 Daggerheart System Reference Document 1.0, ©
