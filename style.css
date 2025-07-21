@@ -1,0 +1,245 @@
+:root {
+  --corner: 10px;
+  --font: "Myriad Pro";
+  --color-primary: #000;
+  --color-bg-outer: #cab996;
+  --color-bg-inner: #f5f1e8;
+  --color-border: #c2af88;
+}
+
+.pseudo-cut-corners {
+  position: relative;
+  clip-path: none;
+  --corner: 4px;
+}
+
+.pseudo-cut-corners::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(
+    var(--corner) 0%,
+    calc(100% - var(--corner)) 0%,
+    100% var(--corner),
+    100% calc(100% - var(--corner)),
+    calc(100% - var(--corner)) 100%,
+    var(--corner) 100%,
+    0% calc(100% - var(--corner)),
+    0% var(--corner)
+  );
+}
+
+.pseudo-cut-corners.outer {
+  filter: drop-shadow(0.2em 0.2em 0.4em rgba(0, 0, 0, 0.5));
+  padding: 1.4px;
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.pseudo-cut-corners.outer::before {
+  background-color: var(--color-bg-outer);
+}
+
+.pseudo-cut-corners.inner {
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.pseudo-cut-corners.inner::before {
+  background-color: var(--color-bg-inner);
+}
+
+.card-inner {
+  font-family: var(--font-text);
+  color: var(--color-primary);
+  font-weight: 1000;
+}
+
+.card-inner * {
+  font-family: inherit;
+  color: inherit;
+}
+
+.card-inner h2{
+  font-size: 1.3em;
+  font-weight: 700;
+  margin: 0;
+}
+.card-inner .subtitle,
+.card-inner .section,
+.card-inner .feature-title {
+  font-weight: bold;
+}
+
+.card-inner .desc {
+  font-weight: 500;
+  font-style: italic;
+  font-size: 0.8em;
+}
+
+.card-inner .motives {
+  font-weight: 700;
+}
+
+.card-inner .motives-desc,
+.card-inner .feature-desc {
+  font-weight: 500;
+  font-size: small;
+}
+
+.card-inner .stats {
+  margin: 2px 0;
+  padding-left: 10px;
+  font-weight: 600;
+  background-color: #fff;
+  font-size: 0.9em;
+  border-top: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.card-inner .stat {
+  font-weight: 400;
+}
+
+.stats .experience-line {
+  border-top: 1px dashed var(--color-border);
+  margin-top: 1px;
+  padding-top: 1px;
+  background-color: #fff;
+}
+
+.card-inner .feature {
+  margin-bottom: 2px;
+}
+
+.input-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+input.input-field,
+select.input-field {
+  width: 120px;
+}
+
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.inline-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.tier-select {
+  width: 20%;
+  margin-bottom: 10px;
+}
+
+.type-select {
+  width: 20%;
+  margin-bottom: 10px;
+}
+
+.threshold-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.features-heading {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.add-feature-btn {
+  margin-top: 10px;
+}
+
+.insert-card-btn {
+  margin-top: 20px;
+}
+
+.feature-block {
+  margin-bottom: 1px;
+}
+
+.feature-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.feature-name {
+  flex: 1;
+  max-width: 200px;
+}
+
+.feature-type {
+  max-width: 100px;
+}
+
+.feature-cost {
+  margin-bottom: 6px;
+  display: block;
+}
+
+.textinputmodal .feature-desc-input {
+  width: 90%;
+  margin-bottom: 6px;
+  display: block;
+  font-weight: 500;
+  font-size: small;
+}
+
+.remove-btn {
+  margin-bottom: 10px;
+}
+
+.tier-filter-btn {
+  margin-left: 5px;
+  margin-top: 3px;
+}
+
+.adversary-card {
+  border: 1px solid #888;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
+
+.tier-text {
+  font-size: 0.8em;
+  padding: 1px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  font-weight: bold;
+}
+
+.title-small-padding {
+  padding: 1px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.desc-small-padding {
+  padding: 1px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  font-size: 0.9em;
+}
+
+.adversary-results {
+  margin-top: 10px;
+}
+
