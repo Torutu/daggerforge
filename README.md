@@ -10,8 +10,8 @@ An Obsidian plugin designed for **DaggerHeart**, a TTRPG, that helps Game Master
 ## Roadmap
 
 - **Initial Release**: Publish the Plugin [ ] <-
-- **Environments**: Add Enviornments Stat Blocks [ ]
-- **HP and Stress Trackers**: Track HP and Stress directly on the statcard [ ]
+- **Environments**: Add enviornments stat blocks [ ]
+- **HP and Stress Trackers**: Track HP and Stress directly on the stat blocks [ ]
 - *More features are planned, but first I want to focus on finishing the initial release before moving forward. Stay tuned!*
 
 ## Supporters
