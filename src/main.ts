@@ -1,11 +1,11 @@
 import { App, Editor, MarkdownView, Notice, Plugin } from 'obsidian';
-
-
 import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversarySearch";
+import { EnvironmentView, ENVIRONMENT_VIEW_TYPE } from "./environmentSearch";
 import { TextInputModal } from "./adversaryCreator";
 import { loadAdversaryTier } from "./adversaryList";
 import { openAdversaryCreatorSidebar } from "./sidebar";
 import { loadStyleSheet } from "./style";
+import { openEnvironmentSidebar } from "./sidebar";
 
 export default class DaggerForgePlugin extends Plugin {
 	async onload() {
@@ -25,6 +25,11 @@ export default class DaggerForgePlugin extends Plugin {
 			});
 		});
 
+		this.registerView(ENVIRONMENT_VIEW_TYPE, (leaf) => new EnvironmentView(leaf));
+		this.addRibbonIcon("mountain", "Environment Browser", () => {
+			openEnvironmentSidebar(this);
+		});
+
 		this.addCommand({
 			id: "Create-Adversary-Card",
 			name: "Create Adversary Card",
@@ -35,6 +40,6 @@ export default class DaggerForgePlugin extends Plugin {
 
 	onunload() {
 		this.app.workspace.detachLeavesOfType(ADVERSARY_VIEW_TYPE);
+		this.app.workspace.detachLeavesOfType(ENVIRONMENT_VIEW_TYPE);
 	}
-
 }

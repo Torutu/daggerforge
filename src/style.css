@@ -331,9 +331,10 @@ select.input-field {
 }
 
 .env-card-inner > div:first-of-type {
-  font-weight: 900;
-  font-size: 1.4rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   margin-bottom: auto;
+  font-style: italic;
 }
 
 .env-desc{
@@ -344,16 +345,13 @@ select.input-field {
     margin: 0.1em 0;
     font-size: 0.9rem;
     line-height: 1.25;
+    font-style: normal;
 }
 
 .env-card-diff-pot {
-    border-top: solid 1px #221e20;
-    border-bottom: solid 1px #221e20;
-    padding-right: 20px;
-    padding-left: 10px;
-    background-color: #ffffff;
-    padding-top: 1px;
-    padding-bottom: 3px;
+  border-top: solid 1px #221e20;
+  border-bottom: solid 1px #221e20;
+  background-color:#ffffff ;
 }
 
 .bold-title {
@@ -369,17 +367,6 @@ select.input-field {
   margin-top: 1.5em;
   padding-top: 1em;
 } */
-
-.env-name{
-  font-weight: 700;
-  font-size: 1.3rem;
-  margin-bottom: 0.5em;
-}
-.env-feat-tier-type {
-  font-weight: 700;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-}
 
 .features-section h3 {
   font-weight: 700;
@@ -426,8 +413,7 @@ select.input-field {
 }
 
 .feature p {
-    margin-top: 5px;
-    font-weight: 500;
+    margin: 0.2em 0;
     font-size: 0.9rem;
     font-style: italic;
 }
