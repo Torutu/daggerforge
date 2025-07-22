@@ -12,7 +12,7 @@ once you activate the plugin, you can find it here on the left ribbon.
 
 <img width="367" height="478" alt="image" src="https://github.com/user-attachments/assets/fe6bd024-8563-4ef0-8607-b995c421a5e7" />
 
-`ctrl + p` to open command palette, then search for `daggerforge` to find all the commands for this plugin
+make sure the note is on edit mode, then `ctrl + p` to open command palette, after that search for `daggerforge` to find all the commands for this plugin
 
 ## Roadmap
 
