@@ -37,9 +37,4 @@ export default class DaggerForgePlugin extends Plugin {
 		});
 		// this.registerDomEvent(document, "click", (evt) => console.log("click", evt));
 	}
-
-	onunload() {
-		this.app.workspace.detachLeavesOfType(ADVERSARY_VIEW_TYPE);
-		this.app.workspace.detachLeavesOfType(ENVIRONMENT_VIEW_TYPE);
-	}
 }

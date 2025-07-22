@@ -11,27 +11,35 @@ export class TextInputModal extends Modal {
 		super(app);
 	}
 
-	onOpen() {
-		const { contentEl } = this;
-		contentEl.empty();
-		contentEl.createEl('h2', { text: 'Adversary Stat Block', cls: 'modal-title' });
+    onOpen() {
+        const { contentEl } = this;
+        contentEl.empty();
+        contentEl.createEl('h2', { text: 'Adversary Stat Block', cls: 'modal-title' });
 
-		const createField = (
-			label: string,
-			key: string,
-			type: 'input' | 'textarea' = 'input',
-			customClass?: string
-		) => {
-			const wrapper = contentEl.createDiv({ cls: 'field-row' });
-			wrapper.createEl('label', {
-				text: label,
-				cls: 'inline-label',
-			});
-			const field = wrapper.createEl(type, {
-				cls: ['input-field', customClass].filter(Boolean) as string[],
-			});
-			this.inputs[key] = field as any;
-		};
+        const createField = (
+            label: string,
+            key: string,
+            type: 'input' | 'textarea' = 'input',
+            customClass?: string
+        ) => {
+            const wrapper = contentEl.createDiv({ cls: 'field-row' });
+            wrapper.createEl('label', {
+                text: label,
+                cls: 'inline-label',
+            });
+
+            if (type === 'input') {
+                const field = wrapper.createEl('input', {
+                    cls: ['input-field', customClass].filter(Boolean) as string[],
+                });
+                this.inputs[key] = field;
+            } else {
+                const field = wrapper.createEl('textarea', {
+                    cls: ['input-field', customClass].filter(Boolean) as string[],
+                });
+                this.inputs[key] = field;
+            }
+        };
 
 		const createShortTripleFields = (
 			label1: string, key1: string,
