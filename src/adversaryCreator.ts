@@ -27,10 +27,18 @@ export class TextInputModal extends Modal {
 				text: label,
 				cls: 'inline-label',
 			});
-			const field = wrapper.createEl(type, {
-				cls: ['input-field', customClass].filter(Boolean) as string[],
-			});
-			this.inputs[key] = field as any;
+
+			if (type === 'input') {
+				const field = wrapper.createEl('input', {
+					cls: ['input-field', customClass].filter(Boolean) as string[],
+				});
+				this.inputs[key] = field;
+			} else {
+				const field = wrapper.createEl('textarea', {
+					cls: ['input-field', customClass].filter(Boolean) as string[],
+				});
+				this.inputs[key] = field;
+			}
 		};
 
 		const createShortTripleFields = (

@@ -1,6 +1,4 @@
 import { App, Editor, MarkdownView, Notice, Plugin } from 'obsidian';
-
-
 import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversarySearch";
 import { TextInputModal } from "./adversaryCreator";
 import { loadAdversaryTier } from "./adversaryList";
@@ -30,11 +28,5 @@ export default class DaggerForgePlugin extends Plugin {
 			name: "Create Adversary Card",
 			editorCallback: (editor, view) => new TextInputModal(this.app, editor).open(),
 		});
-		// this.registerDomEvent(document, "click", (evt) => console.log("click", evt));
 	}
-
-	onunload() {
-		this.app.workspace.detachLeavesOfType(ADVERSARY_VIEW_TYPE);
-	}
-
 }
