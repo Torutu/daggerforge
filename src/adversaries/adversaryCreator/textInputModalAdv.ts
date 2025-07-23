@@ -1,5 +1,5 @@
 import { App, Editor, Modal } from "obsidian";
-import type DaggerForgePlugin from "../main";
+import type DaggerForgePlugin from "../../main";
 import { createField, createShortTripleFields, createSelectField } from "./formHelpers";
 import { addFeature, getFeatureValues } from "./featureManager";
 import { buildCardHTML } from "./cardBuilder";

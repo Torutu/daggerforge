@@ -4,9 +4,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@creator/*": ["src/adversaryCreator/*"],
-      "@editor/*": ["src/adversaryEditor/*"],
-      "@archive/*": ["archive/*"]  // Optional path mapping for archived files
     },
     "inlineSourceMap": true,
     "inlineSources": true,

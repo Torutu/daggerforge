@@ -1,8 +1,5 @@
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice } from "obsidian";
-import envTier1 from '../../env/env-tier-1.json';
-import envTier2 from '../../env/env-tier-2.json';
-import envTier3 from '../../env/env-tier-3.json';
-import envTier4 from '../../env/env-tier-4.json';
+import { ENVIRONMENTS } from "../data/environments";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 
@@ -104,7 +101,7 @@ async onOpen() {
 	this.createTierButtons(container, input, resultsDiv);
 
 	try {
-		this.environments = [...envTier1, ...envTier2, ...envTier3, ...envTier4];
+		this.environments = [...ENVIRONMENTS.tier1, ...ENVIRONMENTS.tier2, ...ENVIRONMENTS.tier3, ...ENVIRONMENTS.tier4];
 	} catch (e) {
 		new Notice("Failed to load environment data.");
 		resultsDiv.setText("Error loading environment data.");

@@ -1,7 +1,7 @@
 import { Notice } from "obsidian";
 import type { Plugin as ObsidianPlugin } from "obsidian";
-import { ADVERSARY_VIEW_TYPE } from "./adversarySearch";
-import { ENVIRONMENT_VIEW_TYPE } from "./environmentSearch";
+import { ADVERSARY_VIEW_TYPE } from "./adversaries/adversarySearch";
+import { ENVIRONMENT_VIEW_TYPE } from "./environments/environmentSearch";
 
 export async function adversariesSidebar(plugin: ObsidianPlugin) {
 	new Notice("Opening Adversary Creator in sidebar...");

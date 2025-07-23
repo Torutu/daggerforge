@@ -1,15 +1,13 @@
 import { Editor, Notice } from "obsidian";
-import adversariesTier1 from '../../adversaries/Adversaries-Tier-1.json';
-import adversariesTier2 from '../../adversaries/Adversaries-Tier-2.json';
-import adversariesTier3 from '../../adversaries/Adversaries-Tier-3.json';
-import adversariesTier4 from '../../adversaries/Adversaries-Tier-4.json';
-import type DaggerForgePlugin from "./main"
+import { ADVERSARIES } from '../data/adversaries';
+// Remove individual JSON imports
+import type DaggerForgePlugin from "../main"
 
 const tierDataMap: Record<string, any[]> = {
-  "1": adversariesTier1,
-  "2": adversariesTier2,
-  "3": adversariesTier3,
-  "4": adversariesTier4,
+  "1": ADVERSARIES.tier1,
+  "2": ADVERSARIES.tier2,
+  "3": ADVERSARIES.tier3,
+  "4": ADVERSARIES.tier4,
 };
 
 export async function loadAdversaryTier(tier: string, editor: Editor) {

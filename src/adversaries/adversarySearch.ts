@@ -1,8 +1,6 @@
 import { ItemView, WorkspaceLeaf, Notice, MarkdownView } from "obsidian";
-import adversariesTier1 from '../../adversaries/Adversaries-Tier-1.json';
-import adversariesTier2 from '../../adversaries/Adversaries-Tier-2.json';
-import adversariesTier3 from '../../adversaries/Adversaries-Tier-3.json';
-import adversariesTier4 from '../../adversaries/Adversaries-Tier-4.json';
+import { ADVERSARIES } from '../data/adversaries';
+// Remove individual JSON imports
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -69,10 +67,10 @@ export class AdversaryView extends ItemView {
         });
         try {
             const allAdversaries = [
-            ...adversariesTier1,
-            ...adversariesTier2,
-            ...adversariesTier3,
-            ...adversariesTier4,
+            ...ADVERSARIES.tier1,
+            ...ADVERSARIES.tier2,
+            ...ADVERSARIES.tier3,
+            ...ADVERSARIES.tier4,
             ];
         this.adversaries = allAdversaries;
         } catch (e) {

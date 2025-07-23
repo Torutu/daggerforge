@@ -1,5 +1,5 @@
 import { App, Editor, Modal } from "obsidian";
-import type DaggerForgePlugin from "../main";
+import type DaggerForgePlugin from "../../main";
 import { FormInputs } from "./types";
 
 export const createField = (

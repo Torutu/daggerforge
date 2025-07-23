@@ -1,8 +1,8 @@
 import { App, Editor, MarkdownView, Notice, Plugin } from 'obsidian';
-import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversarySearch";
-import { EnvironmentView, ENVIRONMENT_VIEW_TYPE } from "./environmentSearch";
-import { TextInputModal } from "./adversaryCreator/textInputModal";
-import { loadAdversaryTier } from "./adversaryList";
+import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversaries/adversarySearch";
+import { EnvironmentView, ENVIRONMENT_VIEW_TYPE } from "./environments/environmentSearch";
+import { TextInputModal } from "./adversaries/adversaryCreator/textInputModalAdv";
+import { loadAdversaryTier } from "./adversaries/adversaryList";
 import { adversariesSidebar } from "./sidebar";
 import { loadStyleSheet } from "./style";
 import { openEnvironmentSidebar } from "./sidebar";

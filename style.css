@@ -91,6 +91,7 @@
 .stress-tickboxes .stress-tickbox:checked:hover,
 .stress-tickboxes .stress-tickbox:checked:focus{ 
     background-color: rgb(41, 41, 41);
+    border-color: rgb(41, 41, 41);
 }
 
 .hp-tickboxes .hp-tickbox:checked:after,
@@ -112,6 +113,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .card-inner h2{
@@ -371,7 +373,7 @@ select.input-field {
     border: 1px solid #8d8d91;
     border-radius: 8px;
     background: #edecec;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-text);
     color: #221e20;
     box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
 }
@@ -432,8 +434,7 @@ select.input-field {
 }
 .env-feat-tier-type {
   font-weight: 700;
-  font-size: 1.1rem;
-  text-transform: uppercase;
+  font-size: 1rem;
 }
 
 .features-section h3 {
