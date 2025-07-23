@@ -41,18 +41,18 @@ export default class DaggerForgePlugin extends Plugin {
 			},
 		});
 		// In your onload() method:
-		this.registerDomEvent(document, 'click', (evt) => {
-			const clickedElement = evt.target as HTMLElement;
-			const editor = this.app.workspace.activeEditor?.editor;
+		// this.registerDomEvent(document, 'click', (evt) => {
+		// 	const clickedElement = evt.target as HTMLElement;
+		// 	const editor = this.app.workspace.activeEditor?.editor;
 			
-			if (clickedElement.closest('.card-outer') && editor) {
-				new TextInputModal(
-					this, 
-					editor, 
-					clickedElement.closest('.card-outer') as HTMLElement
-				).open();
-			}
-		});
+		// 	if (clickedElement.closest('.card-outer') && editor) {
+		// 		new TextInputModal(
+		// 			this, 
+		// 			editor, 
+		// 			clickedElement.closest('.card-outer') as HTMLElement
+		// 		).open();
+		// 	}
+		// });
 		// this.registerDomEvent(document, "click", (evt) => console.log("click", evt));
 	}
 }
