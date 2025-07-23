@@ -1,19 +1,20 @@
 import { App, Editor, MarkdownView, Notice, Plugin } from 'obsidian';
 import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversarySearch";
 import { EnvironmentView, ENVIRONMENT_VIEW_TYPE } from "./environmentSearch";
-import { TextInputModal } from "./adversaryCreator";
+import { TextInputModal } from "./adversaryCreator/textInputModal";
 import { loadAdversaryTier } from "./adversaryList";
-import { openAdversaryCreatorSidebar } from "./sidebar";
+import { adversariesSidebar } from "./sidebar";
 import { loadStyleSheet } from "./style";
 import { openEnvironmentSidebar } from "./sidebar";
 
 export default class DaggerForgePlugin extends Plugin {
+	savedInputState: Record<string, any> = {};
 	async onload() {
 		await loadStyleSheet(this);
 
 		this.registerView(ADVERSARY_VIEW_TYPE, (leaf) => new AdversaryView(leaf));
 		this.addRibbonIcon("venetian-mask", "DaggerHeart Adversary Creator", () => {
-			openAdversaryCreatorSidebar(this);
+			adversariesSidebar(this);
 		});
 		this.addStatusBarItem().setText("Status Bar Text");
 
@@ -30,10 +31,27 @@ export default class DaggerForgePlugin extends Plugin {
 			openEnvironmentSidebar(this);
 		});
 
+		// src/main.ts
 		this.addCommand({
 			id: "Create-Adversary-Card",
 			name: "Create Adversary Card",
-			editorCallback: (editor, view) => new TextInputModal(this.app, editor).open(),
+			editorCallback: (editor) => {
+				// For creation, we don't have a cardElement to edit
+				new TextInputModal(this, editor).open(); 
+			},
+		});
+		// In your onload() method:
+		this.registerDomEvent(document, 'click', (evt) => {
+			const clickedElement = evt.target as HTMLElement;
+			const editor = this.app.workspace.activeEditor?.editor;
+			
+			if (clickedElement.closest('.card-outer') && editor) {
+				new TextInputModal(
+					this, 
+					editor, 
+					clickedElement.closest('.card-outer') as HTMLElement
+				).open();
+			}
 		});
 		// this.registerDomEvent(document, "click", (evt) => console.log("click", evt));
 	}

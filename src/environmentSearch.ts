@@ -7,111 +7,113 @@ import envTier4 from '../../env/env-tier-4.json';
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 
 export class EnvironmentView extends ItemView {
-	private environments: any[] = [];
+  private environments: any[] = [];
+  private lastActiveMarkdown: MarkdownView | null = null;
 
-	constructor(leaf: WorkspaceLeaf) {
-		super(leaf);
-	}
+  constructor(leaf: WorkspaceLeaf) {
+    super(leaf);
+  }
 
-	getViewType(): string {
-		return ENVIRONMENT_VIEW_TYPE;
-	}
+  getViewType(): string {
+    return ENVIRONMENT_VIEW_TYPE;
+  }
 
-	getDisplayText(): string {
-		return "Environment Cards";
-	}
+  getDisplayText(): string {
+    return "Environment Cards";
+  }
 
-	getIcon(): string {
-		return "mountain";
-	}
+  getIcon(): string {
+    return "mountain";
+  }
 
-	private lastActiveMarkdown: MarkdownView | null = null;
+  private createTierButtons(container: HTMLElement, input: HTMLInputElement, resultsDiv: HTMLElement) {
+    const buttonContainer = document.createElement('span');
+    buttonContainer.className = 'tier-buttons';
+    const tiers = ['ALL', '1', '2', '3', '4'];
 
-	async onOpen() {
-		const container = this.containerEl.children[1];
-		container.empty();
+    tiers.forEach(tierLabel => {
+      const button = document.createElement('button');
+      button.textContent = tierLabel === 'ALL' ? 'ALL' : `Tier ${tierLabel}`;
+      button.classList.add('tier-filter-btn');
+      button.addEventListener('click', () => {
+        input.value = '';
+        let filtered = [];
+        if (tierLabel === 'ALL') {
+          filtered = this.environments;
+        } else {
+          filtered = this.environments.filter(e => e.tier.toString() === tierLabel);
+        }
+        this.renderResults(filtered, resultsDiv);
+      });
+      buttonContainer.appendChild(button);
+    });
 
-		this.registerEvent(this.app.workspace.on('active-leaf-change', (leaf) => {
-			const view = leaf?.view;
-			if (view instanceof MarkdownView) {
-				this.lastActiveMarkdown = view;
-			}
-		}));
+    container.insertBefore(buttonContainer, resultsDiv);
+  }
 
-		container.createEl("h2", { text: "Environment Cards" });
+  private renderResults(filtered: any[], resultsDiv: HTMLElement) {
+    resultsDiv.empty();
+    if (filtered.length === 0) {
+      resultsDiv.setText("No environments found.");
+      return;
+    }
+    filtered.forEach(env => {
+      const card = this.createEnvironmentCard(env);
+      resultsDiv.appendChild(card);
+    });
+  }
 
-		const input = container.createEl("input", {
-			attr: {
-				type: "text",
-				placeholder: "Search environments...",
-			},
-			cls: "env-search-box"
-		});
+  private setupSearchInput(input: HTMLInputElement, resultsDiv: HTMLElement) {
+    input.addEventListener('input', () => {
+      const query = input.value.toLowerCase();
+      const filtered = this.environments.filter(env =>
+        env.name.toLowerCase().includes(query) ||
+        env.type.toLowerCase().includes(query)
+      );
+      this.renderResults(filtered, resultsDiv);
+    });
+  }
 
-		const buttonContainer = document.createElement('span');
-		buttonContainer.className = 'tier-buttons';
-		const tiers = ['ALL', '1', '2', '3', '4'];
-		tiers.forEach(tierLabel => {
-			const button = document.createElement('button');
-			button.textContent = tierLabel === 'ALL' ? 'ALL' : `Tier ${tierLabel}`;
-			button.classList.add('tier-filter-btn');
-			button.addEventListener('click', () => {
-				input.value = '';
-				let filtered = [];
-				if (tierLabel === 'ALL') {
-					filtered = this.environments;
-				} else {
-					filtered = this.environments.filter(e => e.tier.toString() === tierLabel);
-				}
-				renderResults(filtered);
-			});
-			buttonContainer.appendChild(button);
-		});
-		container.appendChild(buttonContainer);
+async onOpen() {
+	const container = this.containerEl.children[1] as HTMLElement;
+	container.empty();
 
-		const resultsDiv = container.createEl("div", {
-			cls: "env-results",
-			text: "Results will appear here."
-		});
-
-		try {
-			const allEnv = [
-				...envTier1,
-				...envTier2,
-				...envTier3,
-				...envTier4,
-			];
-			this.environments = allEnv;
-		} catch (e) {
-			new Notice("Failed to load environment data.");
-			resultsDiv.setText("Error loading environment data.");
-			return;
+	this.registerEvent(this.app.workspace.on('active-leaf-change', (leaf) => {
+		const view = leaf?.view;
+		if (view instanceof MarkdownView) {
+			this.lastActiveMarkdown = view;
 		}
+	}));
 
-		const renderResults = (filtered: any[]) => {
-			resultsDiv.empty();
-			if (filtered.length === 0) {
-				resultsDiv.setText("No environments found.");
-				return;
-			}
-			filtered.forEach(env => {
-				const card = this.createEnvironmentCard(env);
-				resultsDiv.appendChild(card);
-			});
-		};
+	container.createEl("h2", {
+		text: "Environment Cards",
+		cls: "env-title" });
 
-		// Initial render
-		renderResults(this.environments);
+	const input = container.createEl("input", {
+		attr: {
+			type: "text",
+			placeholder: "Search environments...",
+		},
+		cls: "env-search-box"
+	});
 
-		input.addEventListener('input', () => {
-			const query = input.value.toLowerCase();
-			const filtered = this.environments.filter(env =>
-				env.name.toLowerCase().includes(query) ||
-				env.type.toLowerCase().includes(query)
-			);
-			renderResults(filtered);
-		});
+	const resultsDiv = container.createEl("div", {
+		cls: "env-results",
+		text: "Results will appear here."
+	});
+	this.createTierButtons(container, input, resultsDiv);
+
+	try {
+		this.environments = [...envTier1, ...envTier2, ...envTier3, ...envTier4];
+	} catch (e) {
+		new Notice("Failed to load environment data.");
+		resultsDiv.setText("Error loading environment data.");
+		return;
 	}
+	this.renderResults(this.environments, resultsDiv);
+	this.setupSearchInput(input, resultsDiv);
+}
+
 
     createEnvironmentCard(env: any): HTMLElement {
         const card = document.createElement("div");
@@ -145,16 +147,25 @@ export class EnvironmentView extends ItemView {
 		}
 		// Format features as HTML blocks
 		const featuresHTML = (env.features || []).map((f: any) => {
-			const costHTML = f.cost ? `<span><strong>Cost:</strong> ${f.cost}</span>` : '';
-			const questionsHTML = f.questions && f.questions.length
-			? `<p>${f.questions.map((q: string) => `${q}`).join('')}</p>`
+			const costHTML = f.cost ? `<span>${f.cost}</span>` : '';
+
+		const bulletsHTML = Array.isArray(f.bullets) && f.bullets.length
+			? f.bullets.map((b: string) => `<div class="env-bullet">${b}</div>`).join('')
 			: '';
+
+			const questionsHTML = f.questions && f.questions.length
+				? `<div class="env-questions">${f.questions.map((q: string) => `${q}`).join('')}</div>`
+				: '';
+
 			return `
-			<div class="feature">
-				<div class="env-feat-name-type">${f.name} - ${f.type}<span class="env-feat-text"> ${f.text}</span></div>
-				${costHTML}
-				${questionsHTML}
-			</div>
+				<div class="feature">
+					<div class="env-feat-name-type">${f.name} - ${f.type}: ${costHTML}
+						<span class="env-feat-text"> ${f.text}</span>
+					</div>
+					
+					${bulletsHTML}
+					${questionsHTML}
+				</div>
 			`;
 		}).join('');
 		// Compose the full HTML block
@@ -175,7 +186,7 @@ export class EnvironmentView extends ItemView {
 				</div>
 			</div>
 </div>
-		`;
+`;
 		editor.replaceSelection(envHTML);
 		new Notice(`Inserted environment ${env.name} into the note.`);
 		});

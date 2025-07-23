@@ -66,6 +66,54 @@
   color: inherit;
 }
 
+.hp-tickboxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.stress-tickboxes .stress-tickbox,
+.hp-tickboxes .hp-tickbox {
+    width: 23px;
+    height: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 4px;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+.hp-tickboxes .hp-tickbox:checked,
+.hp-tickboxes .hp-tickbox:checked:hover,
+.hp-tickboxes .hp-tickbox:checked:focus,
+.stress-tickboxes .stress-tickbox:checked,
+.stress-tickboxes .stress-tickbox:checked:hover,
+.stress-tickboxes .stress-tickbox:checked:focus{ 
+    background-color: rgb(41, 41, 41);
+}
+
+.hp-tickboxes .hp-tickbox:checked:after,
+.stress-tickboxes .stress-tickbox:after { /* hides the check mark */
+    background-color: transparent !important;
+}
+
+
+
+.hp-stress{
+  font-weight: 700;
+  font-size: 0.9em;
+  margin-right: 5px;
+}
+
+
+.stress-tickboxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .card-inner h2{
   font-size: 1.3em;
   font-weight: 700;
@@ -151,6 +199,12 @@ select.input-field {
 .tier-filter-btn {
   margin-left: 5px;
   margin-top: 3px;
+}
+
+.adv-title,
+.env-title{
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 
 /* sidebar result container */
@@ -333,7 +387,8 @@ select.input-field {
 .env-card-inner > div:first-of-type {
   font-weight: 900;
   font-size: 1.4rem;
-  margin-bottom: auto;
+  margin-bottom: -7px;
+  letter-spacing: -0.9px;
 }
 
 .env-desc{
@@ -414,6 +469,20 @@ select.input-field {
   font-size: 0.9rem;
   font-style: normal;
   color: #221e20;
+}
+
+.env-bullet {
+  margin-left: 0.6em;
+  list-style-type: disc;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.env-questions {
+  font-weight: 500;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 0.5em;
 }
 
 .feature span p {

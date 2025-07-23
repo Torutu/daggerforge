@@ -3,7 +3,7 @@ import type { Plugin as ObsidianPlugin } from "obsidian";
 import { ADVERSARY_VIEW_TYPE } from "./adversarySearch";
 import { ENVIRONMENT_VIEW_TYPE } from "./environmentSearch";
 
-export async function openAdversaryCreatorSidebar(plugin: ObsidianPlugin) {
+export async function adversariesSidebar(plugin: ObsidianPlugin) {
 	new Notice("Opening Adversary Creator in sidebar...");
 	const leaf = plugin.app.workspace.getRightLeaf(true);
 	if (leaf) {

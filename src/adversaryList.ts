@@ -55,6 +55,15 @@ function buildCardHTML(
 		thresholds, hp, stress, atk,
 		weaponName, weaponRange, weaponDamage, xp
 	} = values;
+	
+	const hptick = Number(hp) || 0;  // fallback to 0 if undefined
+    const hpTickboxes = Array.from({ length: hptick }, (_, i) => `
+    <input type="checkbox" id="hp-tick-${i}" class="hp-tickbox" />
+    `).join('');
+    const stresstick = Number(stress) ?? 0; // nullish coalescing fallback to 0
+    const stressTickboxes = Array.from({ length: stresstick }, (_, i) => `
+    <input type="checkbox" id="stress-tick-${i}" class="stress-tickbox" />
+    `).join('');
 
 	const stressBlock = stress ? `Stress: <span class="stat">${stress}</span><br>` : "";
 
@@ -70,6 +79,12 @@ const cardHTML = `
 
 <div class="card-outer pseudo-cut-corners outer">
   <div class="card-inner pseudo-cut-corners inner">
+    <div class="hp-tickboxes">
+    <span class="hp-stress">HP</span>${hpTickboxes}
+    </div>
+    <div class="stress-tickboxes">
+        <span class="hp-stress">Stress</span>${stressTickboxes}
+    </div>
     <h2>${name}</h2>
     <div class="subtitle">Tier ${tier} ${type}</div>
     <div class="desc">${desc}</div>

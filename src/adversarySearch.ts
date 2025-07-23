@@ -4,7 +4,6 @@ import adversariesTier2 from '../../adversaries/Adversaries-Tier-2.json';
 import adversariesTier3 from '../../adversaries/Adversaries-Tier-3.json';
 import adversariesTier4 from '../../adversaries/Adversaries-Tier-4.json';
 
-
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
 export class AdversaryView extends ItemView {
@@ -34,7 +33,9 @@ export class AdversaryView extends ItemView {
                 }
             })
         );
-		container.createEl("h2", { text: "Adversary Creator" });
+		container.createEl("h2", { 
+            text: "Adversary Creator",
+            cls: "adv-title" });
 		const input = container.createEl("input", { // Create search input
 			attr: {
 				type: "text",
@@ -122,9 +123,13 @@ card.addEventListener('click', () => {
     const view = this.app.workspace.getActiveViewOfType(MarkdownView) || this.lastActiveMarkdown; // Use the last active markdown view if available
 
     if (!view) {
-        new Notice("No markdown file is open.");
+        new Notice("No note is open. Click on a note to activate it.");
         return;
     }
+    if (view.getMode() !== 'source') {
+		new Notice("You must be in edit mode to insert the adversary card.");
+		return;
+	}
     const editor = view.editor;
     if (!editor) {
         new Notice("Cannot find editor in markdown view.");
@@ -139,6 +144,16 @@ card.addEventListener('click', () => {
     };
 
     const features = adversary.features as Feature[] || []; // Fallback to empty array if features are not defined
+    const hp = adversary.hp || 0;  // fallback to 0 if undefined
+
+    const hpTickboxes = Array.from({ length: hp }, (_, i) => `
+    <input type="checkbox" id="hp-tick-${i}" class="hp-tickbox" />
+    `).join('');
+    const stress = adversary.stress ?? 0; // nullish coalescing fallback to 0
+    const stressTickboxes = Array.from({ length: stress }, (_, i) => `
+    <input type="checkbox" id="stress-tick-${i}" class="stress-tickbox" />
+    `).join('');
+
     const featuresHTML = features.map((f: Feature) => `
             <div class="feature">
             <span class="feature-title">
@@ -150,6 +165,12 @@ card.addEventListener('click', () => {
 const adversaryText = `
 <div class="card-outer pseudo-cut-corners outer">
     <div class="card-inner pseudo-cut-corners inner">
+        <div class="hp-tickboxes">
+        <span class="hp-stress">HP</span>${hpTickboxes}
+        </div>
+        <div class="stress-tickboxes">
+            <span class="hp-stress">Stress</span>${stressTickboxes}
+        </div>
         <h2>${adversary.name}</h2>
                 <div class="subtitle">Tier ${adversary.tier} ${adversary.type}</div>
                 <div class="desc">${adversary.desc}</div>
