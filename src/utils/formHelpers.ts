@@ -1,6 +1,4 @@
-import { App, Editor, Modal } from "obsidian";
-import type DaggerForgePlugin from "../../main";
-import { FormInputs } from "./types";
+import { FormInputs } from "../adversaries/adversaryCreator/types";
 
 export const createField = (
     parent: HTMLElement,
@@ -65,33 +63,50 @@ export const createShortTripleFields = (
     createField(label3, key3);
 };
 
-export const createSelectField = (
+export const createInlineField = (
     parent: HTMLElement,
     inputs: FormInputs,
-    label: string,
-    key: string,
-    options: string[],
-    savedValues?: Record<string, string>,
-    customClass?: string
-) => {
-    const wrapper = parent.createDiv({ cls: 'field-row' });
-    wrapper.createEl('label', { text: label });
-    
-    const select = wrapper.createEl('select', { 
-        cls: ['input-field', customClass].filter(Boolean) as string[] 
-    });
-    
-    options.forEach(opt => {
-        select.createEl('option', { text: opt, value: opt });
-    });
-    
-    inputs[key] = select;
-    
-    if (savedValues?.[key] !== undefined) {
-        select.value = savedValues[key];
-    } else {
-        select.selectedIndex = 0;
+    config: {
+        label: string,
+        key: string,
+        type?: 'input' | 'select',
+        options?: string[],
+        savedValues?: Record<string, string>,
+        customClass?: string
     }
+) => {
+    const wrapper = parent.createDiv({ cls: 'adv-first-inline-field' });
+    wrapper.createEl('label', { text: config.label, cls: 'inline-label' });
     
-    return select;
+    if (config.type === 'select' && config.options) {
+        const select = wrapper.createEl('select', {
+            cls: ['inline-input', config.customClass].filter(Boolean) as string[]
+        });
+        
+        config.options.forEach(opt => {
+            select.createEl('option', { text: opt, value: opt });
+        });
+        
+        inputs[config.key] = select;
+        
+        if (config.savedValues?.[config.key] !== undefined) {
+            select.value = config.savedValues[config.key];
+        } else {
+            select.selectedIndex = 0;
+        }
+        
+        return select;
+    } else {
+        const input = wrapper.createEl('input', {
+            cls: ['inline-input', config.customClass].filter(Boolean) as string[]
+        });
+        inputs[config.key] = input;
+        
+        if (config.savedValues?.[config.key] !== undefined) {
+            input.value = config.savedValues[config.key];
+        }
+        
+        return input;
+    }
 };
+

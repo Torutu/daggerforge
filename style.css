@@ -256,6 +256,35 @@ select.input-field {
   margin-top: 10px;
 }
 
+/* styles.css */
+.form-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.adv-first-inline-field{
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.adv-first-inline-field label {
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+.inline-input {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* Specific field adjustments */
+.adversary-name-input {
+    min-width: 120px;
+}
+
 /* warpper for field rows */
 .field-row {
     display: flex;
@@ -362,7 +391,6 @@ select.input-field {
   margin-top: 10px;
   width: fit-content;
 }
-
 
 /* Env Styles */
 
@@ -500,4 +528,139 @@ select.input-field {
     font-weight: 500;
     font-size: 0.9rem;
     font-style: italic;
+}
+
+/*ENV CREATOR*/
+
+.environment-creator-form {
+    padding: 1rem;
+    font-family: var(--font-family);
+}
+
+.environment-creator-form h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text-normal);
+}
+
+.env-form-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    height: 35px;
+}
+
+.env-form-row label {
+    min-width: 100px;
+    font-weight: bold;
+}
+
+.env-form-row input, .env-form-row select {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+}
+
+textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+}
+
+.env-features-section {
+    margin-top: 2rem;
+    border-top: 1px solid var(--background-modifier-border);
+    padding-top: 1rem;
+}
+
+.env-feature-entry {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background-color: var(--background-secondary);
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.env-add-feature-btn {
+    background-color: var(--interactive-accent);
+    color: white;
+}
+
+.env-remove-feature-btn {
+    background-color: var(--background-modifier-error);
+    color: white;
+}
+
+.env-insert-card-btn {
+    background-color: var(--interactive-accent);
+    color: white;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+}
+
+/*env creation settings*/
+
+/* Name Setting */
+.env-name-setting,
+.env-tier-setting,
+.env-type-setting {
+    border-bottom: unset;
+    width: 150px;
+    padding: unset;
+    border-top: unset;
+}
+.setting-item-control{
+  flex: auto;
+}
+
+/* Impulse Setting */
+.env-impulse-setting {
+    width: 10px;
+}
+
+/* Difficulty Setting */
+.env-diff-setting {
+    width: 10px;
+}
+
+/* Adversaries Setting */
+.env-adv-setting {
+    width: 10px;
+}
+
+.env-desc-setting{
+  width: 260px;
+  border:unset;
+}
+
+/* Common styles for all environment settings */
+.env-impulse-setting,
+.env-diff-setting,
+.env-adv-setting {
+    /* name-type-tier */
+    border-bottom: unset;
+    width: 150px;
+    height: 100px;
+    padding: unset;
+    border-top: unset;
+}
+
+.basic-info-section{
+  width: 100%;
 }

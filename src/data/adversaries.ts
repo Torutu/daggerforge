@@ -10,4 +10,4 @@ export const ADVERSARIES = {
     tier4: adversariesTier4
 };
 
-export type AdversaryData = typeof adversariesTier1[0]; // Gets type from JSON structure
+export type AdversaryData = typeof adversariesTier1[0];

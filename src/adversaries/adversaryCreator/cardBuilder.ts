@@ -26,11 +26,10 @@ export const buildCardHTML = (values: Record<string, string>, features: Feature[
             </span>
             <span class="feature-desc">${f.desc}</span>
         </div>`).join('');
-
+// <button class="edit-button">Edit</button>
     return `
 <div class="card-outer pseudo-cut-corners outer">
     <div class="card-inner pseudo-cut-corners inner">
-        1<button class="edit-button">Edit</button>
         <div class="hp-tickboxes">
             <span class="hp-stress">HP</span>${hpTickboxes}
         </div>

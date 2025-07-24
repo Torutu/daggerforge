@@ -10,4 +10,4 @@ export const ENVIRONMENTS = {
     tier4: envTier4
 }
 
-export type EnvironmentData = typeof envTier1[0];
+export type EnvironmentDatas = typeof envTier1[0];

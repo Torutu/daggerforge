@@ -1,6 +1,6 @@
 import { App, Editor, Modal } from "obsidian";
 import type DaggerForgePlugin from "../../main";
-import { createField, createShortTripleFields, createSelectField } from "./formHelpers";
+import { createField, createShortTripleFields, createInlineField } from "../../utils/formHelpers";
 import { addFeature, getFeatureValues } from "./featureManager";
 import { buildCardHTML } from "./cardBuilder";
 import { FormInputs, FeatureElements } from "./types";
@@ -43,33 +43,36 @@ export class TextInputModal extends Modal {
         const title = this.cardElement ? 'Edit Adversary' : 'Create Adversary';
         contentEl.createEl('h2', { text: title, cls: 'modal-title' });
 
+        const firstRow = contentEl.createDiv({ cls: 'form-row' });
+
         // Name field
-        contentEl.createEl('label', { text: 'Name ' });
-        const nameField = contentEl.createEl('input', { cls: 'adversary-name-textarea' });
-        this.inputs['name'] = nameField;
-        setValueIfSaved('name', nameField);
+        createInlineField(firstRow, this.inputs, {
+            label: 'Name',
+            key: 'name',
+            type: 'input',
+            savedValues: saved,
+            customClass: 'adversary-name-input'
+        });
 
         // Tier dropdown
-        createSelectField(
-            contentEl,
-            this.inputs,
-            ' Tier ',
-            'tier',
-            ['1', '2', '3', '4'],
-            saved,
-            'input-field-first-row-tier'
-        );
+        createInlineField(firstRow, this.inputs, {
+            label: 'Tier',
+            key: 'tier',
+            type: 'select',
+            options: ['1', '2', '3', '4'],
+            savedValues: saved,
+            customClass: 'tier-select'
+        });
 
         // Type dropdown
-        createSelectField(
-            contentEl,
-            this.inputs,
-            ' Type ',
-            'type',
-            ['Bruiser', 'Horde', 'Leader', 'Minion', 'Ranged', 'Skulk', 'Social', 'Solo', 'Standard', 'Support'],
-            saved,
-            'input-field-first-row'
-        );
+        createInlineField(firstRow, this.inputs, {
+            label: 'Type',
+            key: 'type',
+            type: 'select',
+            options: ['Bruiser', 'Horde', 'Leader', 'Minion', 'Ranged', 'Skulk', 'Social', 'Solo', 'Standard', 'Support'],
+            savedValues: saved,
+            customClass: 'type-select'
+        });
 
         contentEl.createEl('br');
         createField(contentEl, this.inputs, 'Description', 'desc', 'textarea', 'description-textarea', saved);

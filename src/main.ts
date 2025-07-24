@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Notice, Plugin } from 'obsidian';
+import { Editor, MarkdownView, Notice, Plugin } from 'obsidian';
 import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversaries/adversarySearch";
 import { EnvironmentView, ENVIRONMENT_VIEW_TYPE } from "./environments/environmentSearch";
 import { TextInputModal } from "./adversaries/adversaryCreator/textInputModalAdv";
@@ -6,40 +6,107 @@ import { loadAdversaryTier } from "./adversaries/adversaryList";
 import { adversariesSidebar } from "./sidebar";
 import { loadStyleSheet } from "./style";
 import { openEnvironmentSidebar } from "./sidebar";
+import { environmentToHTML } from './environments/environmentsToHTML';
+import { EnvironmentModal } from './environments/environmentCreator/enviornmentModal';
 
 export default class DaggerForgePlugin extends Plugin {
-	savedInputState: Record<string, any> = {};
-	async onload() {
-		await loadStyleSheet(this);
+    savedInputState: Record<string, any> = {};
+    
+    async onload() {
+        // ======================
+        // INITIAL SETUP
+        // ======================
+        await loadStyleSheet(this);
+        this.addStatusBarItem().setText("Status Bar Text");
 
-		this.registerView(ADVERSARY_VIEW_TYPE, (leaf) => new AdversaryView(leaf));
-		this.addRibbonIcon("venetian-mask", "DaggerHeart Adversary Creator", () => {
-			adversariesSidebar(this);
-		});
-		this.addStatusBarItem().setText("Status Bar Text");
+        // ======================
+        // ADVERSARY FUNCTIONALITY
+        // ======================
+        this.registerView(ADVERSARY_VIEW_TYPE, (leaf) => new AdversaryView(leaf));
+        
+        // Adversary Ribbon Icons
+        this.addRibbonIcon("venetian-mask", "Adversary Browser", () => {
+            adversariesSidebar(this);
+        });
+        this.addRibbonIcon("swords", "Adversary Creator", () => {
+            this.openAdversaryCreator();
+        });
 
-		[1, 2, 3, 4].forEach((tier) => {
-			this.addCommand({
-				id: `load-tier-${tier}`,
-				name: `Load Tier ${tier} Adversaries`,
-				editorCallback: (editor) => loadAdversaryTier(String(tier), editor),
-			});
-		});
+        // Adversary Commands
+        [1, 2, 3, 4].forEach((tier) => {
+            this.addCommand({
+                id: `load-tier-${tier}`,
+                name: `Load Tier ${tier} Adversaries`,
+                editorCallback: (editor) => loadAdversaryTier(String(tier), editor),
+            });
+        });
+        this.addCommand({
+            id: "Adversary-Creator",
+            name: "Adversary-Creator",
+            editorCallback: (editor) => new TextInputModal(this, editor).open(),
+        });
 
-		this.registerView(ENVIRONMENT_VIEW_TYPE, (leaf) => new EnvironmentView(leaf));
-		this.addRibbonIcon("mountain", "Environment Browser", () => {
-			openEnvironmentSidebar(this);
-		});
+        // ======================
+        // ENVIRONMENT FUNCTIONALITY
+        // ======================
+        this.registerView(ENVIRONMENT_VIEW_TYPE, (leaf) => new EnvironmentView(leaf));
+        
+        // Environment Ribbon Icons
+        this.addRibbonIcon("mountain", "Environment Browser", () => {
+            openEnvironmentSidebar(this);
+        });
+        this.addRibbonIcon("landmark", "Environment Creator", () => {
+            this.openEnvironmentCreator();
+        });
 
-		// src/main.ts
-		this.addCommand({
-			id: "Create-Adversary-Card",
-			name: "Create Adversary Card",
-			editorCallback: (editor) => {
-				// For creation, we don't have a cardElement to edit
-				new TextInputModal(this, editor).open(); 
-			},
-		});
+        // Environment Commands
+        this.addCommand({
+            id: "Environment-Creator",
+            name: "Environment Creator",
+            editorCallback: (editor: Editor) => {
+                new EnvironmentModal(this, editor, (result) => {
+                    this.insertEnvironment(editor, result);
+                }).open();
+            },
+        });
+    }
+
+    // ======================
+    // HELPER METHODS
+    // ======================
+    private openAdversaryCreator() {
+        const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+        if (activeView) {
+            new TextInputModal(this, activeView.editor).open();
+        } else {
+            new Notice("Please open a note first to create an adversary.");
+        }
+    }
+
+    private openEnvironmentCreator() {
+        const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+        if (activeView) {
+            new EnvironmentModal(this, activeView.editor, (result) => {
+                this.insertEnvironment(activeView.editor, result);
+            }).open();
+        } else {
+            new Notice("Please open a note first to create an environment.");
+        }
+    }
+
+    private insertEnvironment(editor: Editor, result: any) {
+        const html = environmentToHTML(result);
+        if (editor) {
+            editor.replaceSelection(html);
+        } else {
+            new Notice("No active editor found. Create a new note first.");
+        }
+    }
+
+    onunload() {
+        // Clean up if needed
+    }
+}
 		// In your onload() method:
 		// this.registerDomEvent(document, 'click', (evt) => {
 		// 	const clickedElement = evt.target as HTMLElement;
@@ -54,5 +121,3 @@ export default class DaggerForgePlugin extends Plugin {
 		// 	}
 		// });
 		// this.registerDomEvent(document, "click", (evt) => console.log("click", evt));
-	}
-}
