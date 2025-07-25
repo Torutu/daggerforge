@@ -29,8 +29,22 @@ export default class DaggerForgePlugin extends Plugin {
             adversariesSidebar(this);
         });
         this.addRibbonIcon("swords", "Adversary Creator", () => {
+            const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+
+            if (!activeView) {
+                new Notice("Please open a note first.");
+                return;
+            }
+
+            const mode = activeView.getMode();
+            if (mode !== "source") {
+                new Notice("Please switch to Edit mode to use the Adversary Creator.");
+                return;
+            }
+
             this.openAdversaryCreator();
         });
+
 
         // Adversary Commands
         [1, 2, 3, 4].forEach((tier) => {
@@ -56,8 +70,22 @@ export default class DaggerForgePlugin extends Plugin {
             openEnvironmentSidebar(this);
         });
         this.addRibbonIcon("landmark", "Environment Creator", () => {
+            const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+
+            if (!activeView) {
+                new Notice("Please open a note first.");
+                return;
+            }
+
+            const mode = activeView.getMode();
+            if (mode !== "source") {
+                new Notice("Please switch to Edit mode to use the Environment Creator.");
+                return;
+            }
+
             this.openEnvironmentCreator();
         });
+
 
         // Environment Commands
         this.addCommand({
