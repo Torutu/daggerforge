@@ -185,12 +185,10 @@ select.input-field {
 
 .tier-select {
   width: 20%;
-  margin-bottom: 10px;
 }
 
 .type-select {
   width: 20%;
-  margin-bottom: 10px;
 }
 
 .features-heading {
@@ -261,7 +259,6 @@ select.input-field {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-bottom: 15px;
 }
 
 .adv-first-inline-field{
@@ -276,8 +273,7 @@ select.input-field {
 }
 
 .inline-input {
-    flex-grow: 1;
-    min-width: 0;
+  width: fit-content;
 }
 
 /* Specific field adjustments */
@@ -329,7 +325,6 @@ select.input-field {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 10px;
     justify-content: flex-start;
 }
 
@@ -356,10 +351,12 @@ select.input-field {
 .input-feature-name {
   flex: 1;
   max-width: 200px;
+  margin-bottom: 3px;
 }
 
 .field-feature-type {
   max-width: 100px;
+  margin-bottom: 6px;
 }
 
 .input-feature-cost {
@@ -390,6 +387,7 @@ select.input-field {
   margin-left: auto;
   margin-top: 10px;
   width: fit-content;
+  float: right;
 }
 
 /* Env Styles */
@@ -544,14 +542,11 @@ select.input-field {
 
 .env-form-row {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    height: 35px;
+    gap: 0.3rem;
+    margin-bottom: 6px;
 }
 
 .env-form-row label {
-    min-width: 100px;
     font-weight: bold;
 }
 
@@ -562,6 +557,18 @@ select.input-field {
     border-radius: 4px;
     background-color: var(--background-primary);
     color: var(--text-normal);
+}
+
+.env-form-second-row{
+  margin-bottom: 6px;
+}
+
+.env-form-third-row{
+  margin-bottom: 6px;
+}
+
+.env-form-forth-row{
+  width: 100%;
 }
 
 textarea {
@@ -589,29 +596,21 @@ textarea {
     background-color: var(--background-secondary);
 }
 
-button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
 .env-add-feature-btn {
     background-color: var(--interactive-accent);
     color: white;
+    margin-top: 6px;
 }
 
 .env-remove-feature-btn {
     background-color: var(--background-modifier-error);
     color: white;
+    margin-bottom: 6px;
 }
 
 .env-insert-card-btn {
-    background-color: var(--interactive-accent);
-    color: white;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
+    margin-top: 6px;
+    float: right;
 }
 
 /*env creation settings*/
@@ -624,9 +623,6 @@ button {
     width: 150px;
     padding: unset;
     border-top: unset;
-}
-.setting-item-control{
-  flex: auto;
 }
 
 /* Impulse Setting */
@@ -663,4 +659,21 @@ button {
 
 .basic-info-section{
   width: 100%;
+}
+
+.feature-header{
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.add-question-btn{
+  margin-bottom: 6px;
+}
+
+.feature-container{
+  border-bottom: 1px solid grey
 }

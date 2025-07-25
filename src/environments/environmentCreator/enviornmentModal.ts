@@ -60,7 +60,7 @@ export class EnvironmentModal extends Modal {
 
 		const secondRow = contentEl.createDiv({ cls: 'env-form-second-row' });
 		createInlineField(secondRow, this.inputs, {
-            label: 'desc',
+            label: 'Description',
             key: 'desc',
             type: 'input',
             savedValues: saved,
@@ -80,8 +80,8 @@ export class EnvironmentModal extends Modal {
 		createInlineField(forthRow, this.inputs, {
             label: 'Potentioal Adversaries',
             key: 'potentioal-adversaries',
-            type: 'select',
-            options: ['monster1','monster2'],
+            type: 'input',
+            // options: ['123','123456'],
             savedValues: saved,
             customClass: 'env-type-select'
         });
@@ -106,13 +106,13 @@ export class EnvironmentModal extends Modal {
 
 		const addBtn = contentEl.createEl("button", {
 			text: "Add Feature",
-			cls: "add-feature-btn"
+			cls: "env-add-feature-btn"
 		});
 		addBtn.onclick = () => this.addFeature();
 
 		const insertBtn = contentEl.createEl("button", {
 			text: "Insert Environment",
-			cls: "insert-card-btn"
+			cls: "env-insert-card-btn"
 		});
 
 		insertBtn.onclick = () => {
@@ -139,129 +139,117 @@ export class EnvironmentModal extends Modal {
 			this.editor.replaceSelection(
 				`<div class="environment-block">\n${htmlContent}\n</div>\n`
 			);
+			
+			// Reset form inputs (similar to your first example)
+			for (const el of Object.values(this.inputs)) {
+				if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+					el.value = "";
+				} else if (el instanceof HTMLSelectElement) {
+					el.selectedIndex = 0;
+				}
+			}
+			
+			// Reset features if you have feature inputs to clear
+			if (this.features) {
+				this.features.forEach(({ nameEl, typeEl, costEl, textEl }) => {
+					nameEl.value = "";
+					typeEl.selectedIndex = 0;
+                    if (costEl) {
+                        costEl.selectedIndex = 0;
+                    }
+					textEl.value = "";
+				});
+				this.features = [];
+				// If you have a feature container to clear:
+				if (this.featureContainer) {
+					this.featureContainer.empty();
+				}
+			}
+			
+			// Clear any saved state if needed
+			if (this.plugin?.savedInputState) {
+				this.plugin.savedInputState = {};
+			}
+			
 			this.close();
 		};
 	}
 
 	addFeature(savedFeature?: SavedFeatureState) {
-    const wrapper = this.featureContainer.createDiv({ cls: 'feature-block' });
-    
-    // Feature header row (name - type : cost)
-    const headerRow = wrapper.createDiv({ cls: 'feature-header' });
-    
-    // Name input
-    const nameEl = headerRow.createEl('input', { 
-        cls: 'input-feature-name', 
-        placeholder: 'Feature Name'
-    });
-    nameEl.value = savedFeature?.name || '';
-    
-    // Type dropdown
-    const typeEl = headerRow.createEl('select', { cls: 'field-feature-type' });
-    ["Action", "Reaction", "Passive", "Trait"].forEach(opt =>
-        typeEl.createEl("option", { text: opt, value: opt })
-    );
-    typeEl.value = savedFeature?.type || "Passive";
-    
-    // Cost dropdown
-    const costEl = headerRow.createEl('select', { cls: 'input-feature-cost' });
-    ['', 'Mark Stress', 'Spend Resource'].forEach(opt =>
-        costEl.createEl("option", { text: opt || 'none', value: opt })
-    );
-    costEl.value = savedFeature?.cost || '';
-    
-    // Add colon between type and cost for display
-    headerRow.createSpan({ text: ": ", cls: 'feature-header-separator' });
-    
-    // Main feature description
-    const descEl = wrapper.createEl('textarea', {
-        cls: 'feature-desc',
-        placeholder: 'Feature description text...'
-    });
-    descEl.value = savedFeature?.text || '';
-    
-    // // Bullet points section
-    // const bulletsContainer = wrapper.createDiv({ cls: 'bullets-container' });
-    // const bulletsHeader = bulletsContainer.createDiv({ 
-    //     cls: 'bullets-header',
-    //     text: 'Bullet Points:' 
-    // });
-    
-    // const bulletEls: HTMLTextAreaElement[] = [];
-    // const addBulletBtn = bulletsContainer.createEl('button', {
-    //     text: '+ Add Bullet Point',
-    //     cls: 'add-bullet-btn'
-    // });
-    
-    // addBulletBtn.onclick = () => {
-    //     const bulletEl = bulletsContainer.createEl('textarea', {
-    //         cls: 'feature-bullet',
-    //         placeholder: '• Enter bullet point text...'
-    //     });
-    //     bulletEls.push(bulletEl);
-    // };
-    
-    // // Initialize with saved bullets
-    // savedFeature?.bullets?.forEach(bullet => {
-    //     const bulletEl = bulletsContainer.createEl('textarea', {
-    //         cls: 'feature-bullet',
-    //         value: `• ${bullet.replace(/^•\s*/, '')}`
-    //     });
-    //     bulletEls.push(bulletEl);
-    // });
-    
-    // Questions section
-    const questionsContainer = wrapper.createDiv({ cls: 'questions-container' });
-    const questionsHeader = questionsContainer.createDiv({
-        cls: 'questions-header',
-        text: 'Questions for Players:'
-    });
-    
-    const questionEls: HTMLTextAreaElement[] = [];
-    const addQuestionBtn = questionsContainer.createEl('button', {
-        text: '+ Add Question',
-        cls: 'add-question-btn'
-    });
-    
-    addQuestionBtn.onclick = () => {
-        const questionEl = questionsContainer.createEl('textarea', {
-            cls: 'feature-question',
-            placeholder: 'Q: Enter question for players...'
-        });
-        questionEls.push(questionEl);
-    };
-    
-    // Initialize with saved questions
-    savedFeature?.questions?.forEach(question => {
-        const questionEl = questionsContainer.createEl('textarea', {
-            cls: 'feature-question',
-            value: question.startsWith('Q:') ? question : `Q: ${question}`
-        });
-        questionEls.push(questionEl);
-    });
-    
-    // Remove button
-    const removeBtn = wrapper.createEl('button', { 
-        text: 'Remove Feature', 
-        cls: 'remove-feature-btn' 
-    });
-    removeBtn.onclick = () => {
-        const index = this.features.findIndex(f => f.nameEl === nameEl);
-        if (index !== -1) {
-            this.features.splice(index, 1);
-            wrapper.remove();
-        }
-    };
-    
-    this.features.push({ 
-        nameEl, 
-        typeEl, 
-        costEl, 
-        textEl: descEl,
-        bulletEls: [], 
-        questionEls 
-    });
-}
+		const wrapper = this.featureContainer.createDiv({ cls: 'feature-block' });
+		
+		// Feature header row (name - type : cost)
+		const headerRow = wrapper.createDiv({ cls: 'feature-header' });
+		
+		// Name input
+		const nameEl = headerRow.createEl('input', { 
+			cls: 'input-feature-name', 
+			placeholder: 'Feature Name'
+		});
+		nameEl.value = savedFeature?.name || '';
+		
+		// Type dropdown
+		const typeEl = headerRow.createEl('select', { cls: 'field-feature-type' });
+		["Action", "Reaction", "Passive", "Trait"].forEach(opt =>
+			typeEl.createEl("option", { text: opt, value: opt })
+		);
+		typeEl.value = savedFeature?.type || "Passive";
+		
+		// Cost dropdown
+		const costEl = headerRow.createEl('select', { cls: 'input-feature-cost' });
+		['', 'Mark Stress', 'Spend Resource'].forEach(opt =>
+			costEl.createEl("option", { text: opt || 'none', value: opt })
+		);
+		costEl.value = savedFeature?.cost || '';
+		
+		// Main feature description
+		const descEl = wrapper.createEl('textarea', {
+			cls: 'feature-desc',
+			placeholder: 'Feature description text...'
+		});
+		descEl.value = savedFeature?.text || '';
+		
+		// Single question section
+		const questionContainer = wrapper.createDiv({ cls: 'question-container' });
+		questionContainer.createDiv({
+			cls: 'question-header',
+			text: 'GM Prompt Question:'
+		});
+		
+		const questionEl = questionContainer.createEl('textarea', {
+			cls: 'feature-question',
+			placeholder: 'Q: Enter question for players...'
+		});
+		
+		// Set value if saved question exists (take first question only if multiple existed)
+		if (savedFeature?.questions && savedFeature.questions.length > 0) {
+			questionEl.value = savedFeature.questions[0] 
+				? savedFeature.questions[0] 
+				: `${savedFeature.questions[0]}`;
+		}
+		
+		// Remove button
+		const removeBtn = wrapper.createEl('button', { 
+			text: 'Remove Feature', 
+			cls: 'env-remove-feature-btn' 
+		});
+		removeBtn.onclick = () => {
+			const index = this.features.findIndex(f => f.nameEl === nameEl);
+			if (index !== -1) {
+				this.features.splice(index, 1);
+				wrapper.remove();
+			}
+		};
+		
+		this.features.push({ 
+			nameEl, 
+			typeEl, 
+			costEl, 
+			textEl: descEl,
+			bulletEls: [], 
+			questionEls: [questionEl] // Single question as array with one element
+		});
+	}
 
 	getFeatureValues(): EnvironmentDatas["features"] {
 		return this.features.map(f => ({

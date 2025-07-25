@@ -74,7 +74,7 @@ export class TextInputModal extends Modal {
             customClass: 'type-select'
         });
 
-        contentEl.createEl('br');
+        // contentEl.createEl('br');
         createField(contentEl, this.inputs, 'Description', 'desc', 'textarea', 'description-textarea', saved);
         createField(contentEl, this.inputs, 'Motives ', 'motives', 'input', 'motives-input', saved);
 
