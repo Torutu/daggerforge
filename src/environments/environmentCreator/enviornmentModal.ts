@@ -70,20 +70,27 @@ export class EnvironmentModal extends Modal {
 		const thirdRow = contentEl.createDiv({ cls: 'env-form-third-row'});
 		createInlineField(thirdRow, this.inputs, {
 			label: 'Impulses',
-			key: 'impulses',
+			key: 'impulse',
 			type: 'input',
 			savedValues: saved,
 			customClass: 'env-impulse-input'
 		})
 
-        const forthRow = contentEl.createDiv({ cls: 'env-form-forth-row' });
+		const forthRow = contentEl.createDiv({ cls: 'env-form-forth-row' });
+		createInlineField(forthRow, this.inputs, {
+            label: 'Difficulity',
+            key: 'difficulty',
+            type: 'input',
+            savedValues: saved,
+            customClass: 'env-difficulity-input'
+        });
+		
 		createInlineField(forthRow, this.inputs, {
             label: 'Potentioal Adversaries',
-            key: 'potentioal-adversaries',
+            key: 'potentialAdversaries',
             type: 'input',
-            // options: ['123','123456'],
             savedValues: saved,
-            customClass: 'env-type-select'
+            customClass: 'env-potentioal-input'
         });
 
 		// === Features ===
@@ -120,7 +127,7 @@ export class EnvironmentModal extends Modal {
 				Object.entries(this.inputs).map(([k, el]) => [k, el.value.trim()])
 			);
 			const features = this.getFeatureValues();
-
+			console.log("difficulty:", values.impulse)
 			const env: EnvironmentDatas = {
 				name: values.name,
 				tier: Number(values.tier),

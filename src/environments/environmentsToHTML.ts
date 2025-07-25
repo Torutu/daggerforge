@@ -22,7 +22,6 @@ export function environmentToHTML(env: EnvironmentData): string {
             </div>
         `;
     }).join('');
-
     return `
 <div class="env-card-outer">
     <div class="env-card-inner">
