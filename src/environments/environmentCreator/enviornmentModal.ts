@@ -204,7 +204,7 @@ export class EnvironmentModal extends Modal {
 		
 		// Cost dropdown
 		const costEl = headerRow.createEl('select', { cls: 'input-feature-cost' });
-		['', 'Mark Stress', 'Spend Resource'].forEach(opt =>
+		['', 'Spend a Fear'].forEach(opt =>
 			costEl.createEl("option", { text: opt || 'none', value: opt })
 		);
 		costEl.value = savedFeature?.cost || '';
