@@ -197,7 +197,7 @@ export class EnvironmentModal extends Modal {
 		
 		// Type dropdown
 		const typeEl = headerRow.createEl('select', { cls: 'field-feature-type' });
-		["Action", "Reaction", "Passive", "Trait"].forEach(opt =>
+		["Action", "Passive"].forEach(opt =>
 			typeEl.createEl("option", { text: opt, value: opt })
 		);
 		typeEl.value = savedFeature?.type || "Passive";
