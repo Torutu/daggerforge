@@ -273,7 +273,7 @@ select.input-field {
 }
 
 .inline-input {
-  width: fit-content;
+  width: 100%;
 }
 
 /* Specific field adjustments */
