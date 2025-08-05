@@ -207,6 +207,10 @@ select.input-field {
   margin-bottom: 10px;
 }
 
+.inline-input.count-input{
+  width: 20%;
+}
+
 /* sidebar result container */
 .env-card,
 .adversary-card {
@@ -236,6 +240,35 @@ select.input-field {
   margin-bottom: 1px;
   font-size: 0.9em;
 }
+
+.adversary-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 16px;
+  width: 100%;
+}
+
+.adversary-counter-container {
+  flex-shrink: 0;
+}
+
+.adversary-search-box {
+  flex-grow: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.adversary-counter-btn {
+  margin: 0 0px;
+}
+
+.adversary-counter-display {
+  padding: 0 8px;
+  font-weight: bold;
+}
+
 .env-results, /* the space between results and the search bar in the sidebar*/
 .adversary-results {
   margin-top: 10px;

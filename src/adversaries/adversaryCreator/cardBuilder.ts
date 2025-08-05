@@ -9,20 +9,22 @@ export const buildCardHTML = (values: Record<string, string>, features: Feature[
 
     const hptick = Number(hp) || 0;
     const stresstick = Number(stress) || 0;
-    const countNum = Math.max(1, parseInt(count || "1"));
+    let countNum = Number(count);
+    countNum = Number.isInteger(countNum) && countNum >= 1 ? countNum : 1;
 
-    const hpStressRepeat = Array.from({ length: countNum }, () => {
-        const hpTickboxes = Array.from({ length: hptick }, (_, i) => `
+    const hpStressRepeat = Array.from({ length: countNum }, (_, index) => {
+        const hpTickboxes = Array.from({ length: hptick }, () => `
             <input type="checkbox" class="hp-tickbox" />
         `).join('');
 
-        const stressTickboxes = Array.from({ length: stresstick }, (_, i) => `
+        const stressTickboxes = Array.from({ length: stresstick }, () => `
             <input type="checkbox" class="stress-tickbox" />
         `).join('');
 
         return `
             <div class="hp-tickboxes">
                 <span class="hp-stress">HP</span>${hpTickboxes}
+                <span class="adversary-count">${index + 1}</span>
             </div>
             <div class="stress-tickboxes">
                 <span class="hp-stress">Stress</span>${stressTickboxes}
@@ -30,9 +32,7 @@ export const buildCardHTML = (values: Record<string, string>, features: Feature[
         `;
     }).join('');
 
-    
     const stressBlock = stress ? `Stress: <span class="stat">${stress}</span>` : '';
-
     const featuresHTML = features.map(f => `
         <div class="feature">
             <span class="feature-title">

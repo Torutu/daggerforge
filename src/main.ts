@@ -46,6 +46,15 @@ export default class DaggerForgePlugin extends Plugin {
             name: "Environment Creator",
             callback: () => this.openCreator('environment'),
         });
+
+        this.registerEvent(
+            this.app.workspace.on("active-leaf-change", () => {
+                const activeFile = this.app.workspace.getActiveFile();
+                if (activeFile && activeFile.name === "-custom@Adversaries.md") {
+                    console.log("FOUND IT");
+                }
+            })
+        );
     }
 
     private async openCreator(type: 'adversary' | 'environment') {

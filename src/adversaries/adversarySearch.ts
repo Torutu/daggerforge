@@ -35,29 +35,47 @@ export class AdversaryView extends ItemView {
 		container.createEl("h2", { 
             text: "Adversary Creator",
             cls: "adv-title" });
-		const input = container.createEl("input", { // Create search input
-			attr: {
-				type: "text",
-				placeholder: "Search adversaries...",
-			},
-			cls: "adversary-search-box"
-		});
-        // Create dropdown container
-        const dropdownContainer = container.createDiv({ cls: 'tier-dropdown-container' });
+        // Create wrapper div to hold everything in one row
+        const controlsRow = container.createDiv({ cls: 'adversary-controls-row' });
 
-        // Create the dropdown select element
-        const dropdown = dropdownContainer.createEl('select', {
+        /** === COUNTER === */
+        const counterContainer = controlsRow.createDiv({ cls: 'adversary-counter-container' });
+        const minusBtn = counterContainer.createEl('button', {
+            text: '-',
+            cls: 'adversary-counter-btn'
+        });
+
+        const counterDisplay = counterContainer.createEl('span', {
+            text: '1',
+            cls: 'adversary-counter-display'
+        });
+
+        const plusBtn = counterContainer.createEl('button', {
+            text: '+',
+            cls: 'adversary-counter-btn'
+        });
+
+        /** === SEARCH INPUT === */
+        const input = controlsRow.createEl("input", {
+            attr: {
+                type: "text",
+                placeholder: "Search adversaries...",
+            },
+            cls: "adversary-search-box"
+        });
+
+        /** === DROPDOWN === */
+        const dropdownContainer = controlsRow.createDiv({ cls: 'tier-dropdown-container' });
+        const dropdown = controlsRow.createEl('select', {
             cls: 'tier-dropdown'
         });
 
-        // Create default "All Tiers" option
         const defaultOption = document.createElement('option');
         defaultOption.value = 'ALL';
         defaultOption.textContent = 'All Tiers';
         defaultOption.selected = true;
         dropdown.appendChild(defaultOption);
 
-        // Add tier options
         ['1', '2', '3', '4'].forEach(tier => {
             const option = document.createElement('option');
             option.value = tier;
@@ -65,42 +83,19 @@ export class AdversaryView extends ItemView {
             dropdown.appendChild(option);
         });
 
-        // Add event listener for dropdown changes
         dropdown.addEventListener('change', (e) => {
             const selectedTier = (e.target as HTMLSelectElement).value;
-            input.value = ''; // Clear search box on tier filter
-            
+            input.value = '';
+
             let filtered = [];
             if (selectedTier === 'ALL') {
                 filtered = this.adversaries;
             } else {
                 filtered = this.adversaries.filter(a => a.tier.toString() === selectedTier);
             }
-            
+
             renderResults(filtered);
         });
-
-        const counterContainer = container.createDiv({ cls: 'adversary-counter-container' });
-        // Create minus button
-        const minusBtn = counterContainer.createEl('button', {
-            text: '-',
-            cls: 'adversary-counter-btn'
-        });
-        minusBtn.style.marginRight = '8px';
-
-        // Create counter display
-        const counterDisplay = counterContainer.createEl('span', {
-            text: '1',  // Default to 1
-            cls: 'adversary-counter-display'
-        });
-        counterDisplay.style.margin = '0 8px';
-
-        // Create plus button
-        const plusBtn = counterContainer.createEl('button', {
-            text: '+',
-            cls: 'adversary-counter-btn'
-        });
-        plusBtn.style.marginLeft = '8px';
 
         // Then update your button handlers:
         minusBtn.onclick = () => {
