@@ -130,6 +130,18 @@ export class TextInputModal extends Modal {
         });
         this.addFeatureBtn.onclick = () => addFeature(this.featureContainer, this.features, setValueIfSaved);
 
+        createInlineField(firstRow, this.inputs, {
+            label: 'Count',
+            key: 'count',
+            type: 'input',
+            savedValues: saved,
+            customClass: 'count-input'
+        });
+
+        if (!saved['count']) {
+            this.inputs['count'].value = "1";
+        }
+
         // Modified button handling
         this.insertBtn = contentEl.createEl('button', {
             text: this.cardElement ? 'Update Card' : 'Insert Card',
@@ -143,7 +155,7 @@ export class TextInputModal extends Modal {
 
             const features = getFeatureValues(this.features);
             const newHTML = buildCardHTML(values, features);
-            
+
             if (this.cardElement) {
                 // Edit mode - replace existing card
                 this.cardElement.outerHTML = newHTML;

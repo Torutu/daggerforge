@@ -684,3 +684,7 @@ textarea {
   width: 20%;
   margin-bottom: 6px;
 }
+
+.adversary-count{
+  float:right;
+}

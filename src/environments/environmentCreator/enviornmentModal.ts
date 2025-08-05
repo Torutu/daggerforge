@@ -5,7 +5,7 @@ import {
 	createShortTripleFields,
     createInlineField
 } from '../../utils/formHelpers';
-import { FormInputs, FeatureElements, SavedFeatureState, EnvironmentDatas} from '../environmentTypes';
+import { FormInputs, FeatureElements, SavedFeatureState, EnvironmentData} from '../environmentTypes';
 // import { ADVERSARIES } from '@/data/adversaries';
 import { environmentToHTML } from '../environmentsToHTML';
 
@@ -15,9 +15,9 @@ export class EnvironmentModal extends Modal {
 	inputs: FormInputs = {};
 	features: FeatureElements[] = [];
 	featureContainer: HTMLElement;
-    onSubmit: (result: EnvironmentDatas) => void;
+    onSubmit: (result: EnvironmentData) => void;
 
-	constructor(plugin: DaggerForgePlugin, editor: Editor, onSubmit: (result: EnvironmentDatas) => void) {
+	constructor(plugin: DaggerForgePlugin, editor: Editor, onSubmit: (result: EnvironmentData) => void) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.editor = editor;
@@ -86,11 +86,11 @@ export class EnvironmentModal extends Modal {
         });
 		
 		createInlineField(forthRow, this.inputs, {
-            label: 'Potentioal Adversaries',
+            label: 'Potential Adversaries',
             key: 'potentialAdversaries',
             type: 'input',
             savedValues: saved,
-            customClass: 'env-potentioal-input'
+            customClass: 'env-Potential-input'
         });
 
 		// === Features ===
@@ -128,7 +128,7 @@ export class EnvironmentModal extends Modal {
 			);
 			const features = this.getFeatureValues();
 			console.log("difficulty:", values.impulse)
-			const env: EnvironmentDatas = {
+			const env: EnvironmentData = {
 				name: values.name,
 				tier: Number(values.tier),
 				type: values.type,
@@ -197,7 +197,7 @@ export class EnvironmentModal extends Modal {
 		
 		// Type dropdown
 		const typeEl = headerRow.createEl('select', { cls: 'field-feature-type' });
-		["Action", "Passive"].forEach(opt =>
+		["Action", "Reaction", "Passive"].forEach(opt =>
 			typeEl.createEl("option", { text: opt, value: opt })
 		);
 		typeEl.value = savedFeature?.type || "Passive";
@@ -258,7 +258,7 @@ export class EnvironmentModal extends Modal {
 		});
 	}
 
-	getFeatureValues(): EnvironmentDatas["features"] {
+	getFeatureValues(): EnvironmentData["features"] {
 		return this.features.map(f => ({
 			name: f.nameEl.value.trim(),
 			type: f.typeEl.value.trim(),

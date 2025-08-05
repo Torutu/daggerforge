@@ -5,7 +5,7 @@ export type FeatureElements = {
 	typeEl: HTMLSelectElement;
 	costEl?: HTMLSelectElement;
 	textEl: HTMLTextAreaElement;
-	bulletEls: HTMLTextAreaElement[]; // optional
+	bulletEls: HTMLTextAreaElement[];
 	questionEls: HTMLTextAreaElement[];
 };
 
@@ -18,18 +18,7 @@ export type SavedFeatureState = {
 	questions: string[];
 };
 
-export type EnvironmentDatas = {
-	name: string;
-	tier: number;
-	type: string;
-	desc: string;
-	impulse: string;
-	difficulty: string;
-	potentialAdversaries: string;
-	features: SavedFeatureState[];
-};
-
-export interface EnvironmentData {
+export type EnvironmentData = {
     name: string;
     tier: number;
     type: string;
@@ -40,7 +29,7 @@ export interface EnvironmentData {
     features: EnvironmentFeature[];
 }
 
-interface EnvironmentFeature {
+type EnvironmentFeature = {
     name: string;
     type: string;
     text: string;

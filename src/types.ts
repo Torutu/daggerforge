@@ -1,4 +1,4 @@
-export interface CardData {
+export type CardData = {
     name: string;
     tier: string;
     type: string;

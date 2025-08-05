@@ -22,3 +22,6 @@ data.json
 
 # deployment files
 deploy.ps1
+
+# dist
+dist

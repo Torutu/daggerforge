@@ -4,18 +4,32 @@ export const buildCardHTML = (values: Record<string, string>, features: Feature[
     const {
         name, tier, type, desc, motives, difficulty,
         thresholdMajor, thresholdSevere, hp, stress, atk,
-        weaponName, weaponRange, weaponDamage, xp
+        weaponName, weaponRange, weaponDamage, xp, count
     } = values;
 
     const hptick = Number(hp) || 0;
-    const hpTickboxes = Array.from({ length: hptick }, (_, i) => `
-        <input type="checkbox" id="hp-tick-${i}" class="hp-tickbox" />
-    `).join('');
-    
-    const stresstick = Number(stress) ?? 0;
-    const stressTickboxes = Array.from({ length: stresstick }, (_, i) => `
-        <input type="checkbox" id="stress-tick-${i}" class="stress-tickbox" />
-    `).join('');
+    const stresstick = Number(stress) || 0;
+    const countNum = Math.max(1, parseInt(count || "1"));
+
+    const hpStressRepeat = Array.from({ length: countNum }, () => {
+        const hpTickboxes = Array.from({ length: hptick }, (_, i) => `
+            <input type="checkbox" class="hp-tickbox" />
+        `).join('');
+
+        const stressTickboxes = Array.from({ length: stresstick }, (_, i) => `
+            <input type="checkbox" class="stress-tickbox" />
+        `).join('');
+
+        return `
+            <div class="hp-tickboxes">
+                <span class="hp-stress">HP</span>${hpTickboxes}
+            </div>
+            <div class="stress-tickboxes">
+                <span class="hp-stress">Stress</span>${stressTickboxes}
+            </div>
+        `;
+    }).join('');
+
     
     const stressBlock = stress ? `Stress: <span class="stat">${stress}</span>` : '';
 
@@ -30,12 +44,7 @@ export const buildCardHTML = (values: Record<string, string>, features: Feature[
     return `
 <div class="card-outer pseudo-cut-corners outer">
     <div class="card-inner pseudo-cut-corners inner">
-        <div class="hp-tickboxes">
-            <span class="hp-stress">HP</span>${hpTickboxes}
-        </div>
-        <div class="stress-tickboxes">
-            <span class="hp-stress">Stress</span>${stressTickboxes}
-        </div>
+        ${hpStressRepeat}
         <h2>${name}</h2>
         <div class="subtitle">Tier ${tier} ${type} </div>
         <div class="desc">${desc}</div>

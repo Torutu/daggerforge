@@ -1,5 +1,6 @@
 import { ItemView, WorkspaceLeaf, Notice, MarkdownView } from "obsidian";
 import { ADVERSARIES } from '../data/adversaries';
+import { getAdversaryCount, incrementAdversaryCount, decrementAdversaryCount, resetAdversaryCount } from "@/utils/adversaryCounter";
 // Remove individual JSON imports
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
@@ -41,26 +42,77 @@ export class AdversaryView extends ItemView {
 			},
 			cls: "adversary-search-box"
 		});
-        const buttonContainer = document.createElement('span');
-        buttonContainer.className = 'tier-buttons';
-        const tiers = ['ALL', '1', '2', '3', '4'];
-        tiers.forEach(tierLabel => {
-            const button = document.createElement('button');
-            button.textContent = tierLabel === 'ALL' ? 'ALL' : `Tier ${tierLabel}`;
-            button.classList.add('tier-filter-btn');
-            button.addEventListener('click', () => {
-                input.value = ''; // Clear search box on tier filter
-                let filtered = [];
-                if (tierLabel === 'ALL') {
-                    filtered = this.adversaries;
-                } else {
-                    filtered = this.adversaries.filter(a => a.tier.toString() === tierLabel);
-                }
-                renderResults(filtered);
-            });
-            buttonContainer.appendChild(button);
+        // Create dropdown container
+        const dropdownContainer = container.createDiv({ cls: 'tier-dropdown-container' });
+
+        // Create the dropdown select element
+        const dropdown = dropdownContainer.createEl('select', {
+            cls: 'tier-dropdown'
         });
-        container.appendChild(buttonContainer); // Append before search input or result list
+
+        // Create default "All Tiers" option
+        const defaultOption = document.createElement('option');
+        defaultOption.value = 'ALL';
+        defaultOption.textContent = 'All Tiers';
+        defaultOption.selected = true;
+        dropdown.appendChild(defaultOption);
+
+        // Add tier options
+        ['1', '2', '3', '4'].forEach(tier => {
+            const option = document.createElement('option');
+            option.value = tier;
+            option.textContent = `Tier ${tier}`;
+            dropdown.appendChild(option);
+        });
+
+        // Add event listener for dropdown changes
+        dropdown.addEventListener('change', (e) => {
+            const selectedTier = (e.target as HTMLSelectElement).value;
+            input.value = ''; // Clear search box on tier filter
+            
+            let filtered = [];
+            if (selectedTier === 'ALL') {
+                filtered = this.adversaries;
+            } else {
+                filtered = this.adversaries.filter(a => a.tier.toString() === selectedTier);
+            }
+            
+            renderResults(filtered);
+        });
+
+        const counterContainer = container.createDiv({ cls: 'adversary-counter-container' });
+        // Create minus button
+        const minusBtn = counterContainer.createEl('button', {
+            text: '-',
+            cls: 'adversary-counter-btn'
+        });
+        minusBtn.style.marginRight = '8px';
+
+        // Create counter display
+        const counterDisplay = counterContainer.createEl('span', {
+            text: '1',  // Default to 1
+            cls: 'adversary-counter-display'
+        });
+        counterDisplay.style.margin = '0 8px';
+
+        // Create plus button
+        const plusBtn = counterContainer.createEl('button', {
+            text: '+',
+            cls: 'adversary-counter-btn'
+        });
+        plusBtn.style.marginLeft = '8px';
+
+        // Then update your button handlers:
+        minusBtn.onclick = () => {
+            decrementAdversaryCount(); // Uses default amount of 1
+            counterDisplay.textContent = getAdversaryCount().toString();
+        };
+
+        plusBtn.onclick = () => {
+            incrementAdversaryCount(); // Uses default amount of 1
+            counterDisplay.textContent = getAdversaryCount().toString();
+        };
+        container.appendChild(dropdownContainer); // Append before search input or result list
         const resultsDiv = container.createEl("div", {
         cls: "adversary-results",
         text: "Results will appear here."
@@ -141,35 +193,48 @@ card.addEventListener('click', () => {
         desc: string;
     };
 
-    const features = adversary.features as Feature[] || []; // Fallback to empty array if features are not defined
-    const hp = adversary.hp || 0;  // fallback to 0 if undefined
+        // Then in your adversary creation code:
+        const currentCount = getAdversaryCount(); // Get the current count
 
-    const hpTickboxes = Array.from({ length: hp }, (_, i) => `
-    <input type="checkbox" id="hp-tick-${i}" class="hp-tickbox" />
-    `).join('');
-    const stress = adversary.stress ?? 0; // nullish coalescing fallback to 0
-    const stressTickboxes = Array.from({ length: stress }, (_, i) => `
-    <input type="checkbox" id="stress-tick-${i}" class="stress-tickbox" />
-    `).join('');
 
-    const featuresHTML = features.map((f: Feature) => `
+        const features = adversary.features as Feature[] || [];
+        const hp = adversary.hp || 0;
+        const stress = adversary.stress ?? 0;
+
+        // Create tickboxes templates
+        const hpTickboxes = Array.from({ length: hp }, (_, i) => 
+            `<input type="checkbox" id="hp-tick-${i}" class="hp-tickbox" />`
+        ).join('');
+
+        const stressTickboxes = Array.from({ length: stress }, (_, i) => 
+            `<input type="checkbox" id="stress-tick-${i}" class="stress-tickbox" />`
+        ).join('');
+
+        // Create multiple instances of tickboxes with proper numbering
+        const multipleTickboxes = Array.from({ length: currentCount }, (_, index) => `
+            <div class="hp-tickboxes">
+                <span class="hp-stress">HP</span>${hpTickboxes}
+                <span class="adversary-count">${index + 1}</span>
+            </div>
+            <div class="stress-tickboxes">
+                <span class="hp-stress">Stress</span>${stressTickboxes}
+            </div>
+        `).join('');
+
+        const featuresHTML = features.map((f: Feature) => `
             <div class="feature">
-            <span class="feature-title">
-                ${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ':'}
-            </span>
-            <span class="feature-desc">${f.desc}</span>
-            </div>`).join('');
+                <span class="feature-title">
+                    ${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ':'}
+                </span>
+                <span class="feature-desc">${f.desc}</span>
+            </div>`
+        ).join('');
 
-const adversaryText = `
-<div class="card-outer pseudo-cut-corners outer">
-    <div class="card-inner pseudo-cut-corners inner">
-        <div class="hp-tickboxes">
-        <span class="hp-stress">HP</span>${hpTickboxes}
-        </div>
-        <div class="stress-tickboxes">
-            <span class="hp-stress">Stress</span>${stressTickboxes}
-        </div>
-        <h2>${adversary.name}</h2>
+        const adversaryText = `
+ <div class="card-outer pseudo-cut-corners outer">
+            <div class="card-inner pseudo-cut-corners inner">
+                ${multipleTickboxes}
+                <h2>${adversary.name}</h2>
                 <div class="subtitle">Tier ${adversary.tier} ${adversary.type}</div>
                 <div class="desc">${adversary.desc}</div>
                 <div class="motives">Motives & Tactics:
@@ -186,10 +251,10 @@ const adversaryText = `
                 </div>
                 <div class="section">FEATURES</div>
                 ${featuresHTML}
-    </div>
-</div>
+            </div>
+        </div>
 `;
-        editor.replaceSelection(adversaryText);
+                editor.replaceSelection(adversaryText);
         new Notice(`Inserted ${adversary.name} into the note.`);
     });
 
