@@ -48,7 +48,7 @@ export class AdversaryView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Adversary Creator";
+		return "Adversary Browser";
 	}
 
 	getIcon(): string {
@@ -73,7 +73,7 @@ export class AdversaryView extends ItemView {
 		container.empty();
 		// Create title
 		container.createEl("h2", {
-			text: "Adversary Creator",
+			text: "Adversary Browser",
 			cls: "adv-title",
 		});
 		// Create controls row

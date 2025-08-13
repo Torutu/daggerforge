@@ -84,7 +84,7 @@ export class EnvironmentView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Environment Cards";
+		return "Environment Browser";
 	}
 
 	getIcon(): string {
@@ -233,7 +233,7 @@ export class EnvironmentView extends ItemView {
 		);
 
 		container.createEl("h2", {
-			text: "Environment Cards",
+			text: "Environment Browser",
 			cls: "env-title",
 		});
 
