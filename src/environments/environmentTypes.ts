@@ -1,4 +1,7 @@
-export type FormInputs = Record<string, HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
+export type FormInputs = Record<
+	string,
+	HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+>;
 
 export type FeatureElements = {
 	nameEl: HTMLInputElement;
@@ -19,21 +22,22 @@ export type SavedFeatureState = {
 };
 
 export type EnvironmentData = {
-    name: string;
-    tier: number;
-    type: string;
-    desc: string;
-    impulse: string;
-    difficulty: string;
-    potentialAdversaries: string;
-    features: EnvironmentFeature[];
-}
+	name: string;
+	tier: number;
+	type: string;
+	desc: string;
+	impulse: string;
+	difficulty: string;
+	potentialAdversaries: string;
+	source: string;
+	features: EnvironmentFeature[];
+};
 
 type EnvironmentFeature = {
-    name: string;
-    type: string;
-    text: string;
-    cost?: string;
-    bullets: string[];
-    questions: string[];
-}
+	name: string;
+	type: string;
+	text: string;
+	cost?: string;
+	bullets: string[];
+	questions: string[];
+};

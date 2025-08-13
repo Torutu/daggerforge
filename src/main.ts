@@ -1,162 +1,208 @@
-import { Editor, MarkdownView, Notice, Plugin } from 'obsidian';
-import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversaries/adversarySearch";
-import { EnvironmentView, ENVIRONMENT_VIEW_TYPE } from "./environments/environmentSearch";
+import { Editor, MarkdownView, Menu, Notice, Plugin } from "obsidian";
+import {
+	AdversaryView,
+	ADVERSARY_VIEW_TYPE,
+} from "./adversaries/adversarySearch";
+import {
+	EnvironmentView,
+	ENVIRONMENT_VIEW_TYPE,
+} from "./environments/environmentSearch";
 import { TextInputModal } from "./adversaries/adversaryCreator/textInputModalAdv";
-import { loadAdversaryTier } from "./adversaries/adversaryList";
 import { adversariesSidebar } from "./sidebar";
 import { loadStyleSheet } from "./style";
 import { openEnvironmentSidebar } from "./sidebar";
-import { environmentToHTML } from './environments/environmentsToHTML';
-import { EnvironmentModal } from './environments/environmentCreator/enviornmentModal';
+import { environmentToHTML } from "./environments/environmentsToHTML";
+import { EnvironmentModal } from "./environments/environmentCreator/enviornmentModal";
 
 export default class DaggerForgePlugin extends Plugin {
-    savedInputState: Record<string, any> = {};
-    
-    async onload() {
-        await loadStyleSheet(this);
-        this.addStatusBarItem().setText("DaggerForge Active");
+	savedInputStateAdv: Record<string, any> = {};
+	savedInputStateEnv: Record<string, any> = {};
 
-        // Register views
-        this.registerView(ADVERSARY_VIEW_TYPE, (leaf) => new AdversaryView(leaf));
-        this.registerView(ENVIRONMENT_VIEW_TYPE, (leaf) => new EnvironmentView(leaf));
+	async onload() {
+		await loadStyleSheet(this);
+		this.addStatusBarItem().setText("DaggerForge Active");
 
-        // Ribbon icons
-        this.addRibbonIcon("venetian-mask", "Adversary Browser", () => adversariesSidebar(this));
-        this.addRibbonIcon("swords", "Adversary Creator", () => this.openCreator('adversary'));
-        this.addRibbonIcon("mountain", "Environment Browser", () => openEnvironmentSidebar(this));
-        this.addRibbonIcon("landmark", "Environment Creator", () => this.openCreator('environment'));
+		// Register views
+		this.registerView(
+			ADVERSARY_VIEW_TYPE,
+			(leaf) => new AdversaryView(leaf),
+		);
+		this.registerView(
+			ENVIRONMENT_VIEW_TYPE,
+			(leaf) => new EnvironmentView(leaf),
+		);
 
-        // Commands
-        [1, 2, 3, 4].forEach((tier) => {
-            this.addCommand({
-                id: `load-tier-${tier}`,
-                name: `Load Tier ${tier} Adversaries`,
-                callback: () => this.loadContentToCanvas(`tier-${tier}-adversaries`),
-            });
-        });
+		// Combined ribbon icon
+		this.addRibbonIcon(
+			"scroll-text",
+			"DaggerForge Menu",
+			(evt: MouseEvent) => {
+				const menu = new Menu();
 
-        this.addCommand({
-            id: "adversary-creator",
-            name: "Adversary Creator",
-            callback: () => this.openCreator('adversary'),
-        });
+				menu.addItem((item) =>
+					item
+						.setTitle("Adversary Browser")
+						.setIcon("venetian-mask")
+						.onClick(() => adversariesSidebar(this)),
+				);
+				menu.addItem((item) =>
+					item
+						.setTitle("Environment Browser")
+						.setIcon("mountain")
+						.onClick(() => openEnvironmentSidebar(this)),
+				);
 
-        this.addCommand({
-            id: "environment-creator",
-            name: "Environment Creator",
-            callback: () => this.openCreator('environment'),
-        });
+				menu.addSeparator();
 
-        this.registerEvent(
-            this.app.workspace.on("active-leaf-change", () => {
-                const activeFile = this.app.workspace.getActiveFile();
-                if (activeFile && activeFile.name === "-custom@Adversaries.md") {
-                    console.log("FOUND IT");
-                }
-            })
-        );
-    }
+				menu.addItem((item) =>
+					item
+						.setTitle("Adversary Creator")
+						.setIcon("swords")
+						.onClick(() => this.openCreator("adversary")),
+				);
+				menu.addItem((item) =>
+					item
+						.setTitle("Environment Creator")
+						.setIcon("landmark")
+						.onClick(() => this.openCreator("environment")),
+				);
 
-    private async openCreator(type: 'adversary' | 'environment') {
-        const activeCanvas = this.getActiveCanvas();
-        if (activeCanvas) {
-            // Handle canvas card creation
-            if (type === 'adversary') {
-                new TextInputModal(this, activeCanvas?.editor).open();
-            } else {
-                new EnvironmentModal(this, activeCanvas?.editor, (result) => {
-                    const content = environmentToHTML(result);
-                    this.insertIntoCanvasCard(activeCanvas, content);
-                }).open();
-            }
-        } else {
-            // Fall back to regular markdown view
-            const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-            if (!activeView) {
-                new Notice("Please open a note or select a canvas card first.");
-                return;
-            }
+				menu.showAtMouseEvent(evt);
+			},
+		);
 
-            if (activeView.getMode() !== "source") {
-                new Notice("Please switch to Edit mode when using in a note.");
-                return;
-            }
+		// Commands
+		[1, 2, 3, 4].forEach((tier) => {
+			this.addCommand({
+				id: `load-tier-${tier}`,
+				name: `Load Tier ${tier} Adversaries`,
+				callback: () =>
+					this.loadContentToMarkdown(`tier-${tier}-adversaries`),
+			});
+		});
 
-            if (type === 'adversary') {
-                new TextInputModal(this, activeView.editor).open();
-            } else {
-                new EnvironmentModal(this, activeView.editor, (result) => {
-                    this.insertEnvironment(activeView.editor, result);
-                }).open();
-            }
-        }
-    }
+		this.addCommand({
+			id: "adversary-creator",
+			name: "Adversary Creator",
+			callback: () => this.openCreator("adversary"),
+		});
 
-    private getActiveCanvas(): any | null {
-        const canvasLeaves = this.app.workspace.getLeavesOfType('canvas');
-        if (canvasLeaves.length === 0) return null;
-        return canvasLeaves[0].view;
-    }
+		this.addCommand({
+			id: "environment-creator",
+			name: "Environment Creator",
+			callback: () => this.openCreator("environment"),
+		});
+	}
 
-    private async insertIntoCanvasCard(canvas: any, content: string) {
-        try {
-            const selection = canvas.selection;
-            if (!selection?.size) {
-                new Notice("Please select a canvas card first.");
-                return;
-            }
+	private async openCreator(type: "adversary" | "environment") {
+		const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+		if (!activeView) {
+			new Notice("Please open a note first.");
+			return;
+		}
 
-            for (const node of selection.values()) {
-                if (node?.type === 'text') {
-                    const currentText = node?.getText() || '';
-                    await node?.setText(currentText + (currentText ? '\n\n' : '') + content);
-                    new Notice("Added to canvas card!");
-                }
-            }
-        } catch (error) {
-            console.error("Canvas insertion error:", error);
-            new Notice("Failed to add to canvas card.");
-        }
-    }
+		if (activeView.getMode() !== "source") {
+			new Notice("Please switch to Edit mode when using in a note.");
+			return;
+		}
 
-    private async loadContentToCanvas(contentType: string) {
-        const canvas = this.getActiveCanvas();
-        if (!canvas) {
-            new Notice("Please open a canvas first.");
-            return;
-        }
+		if (type === "adversary") {
+			new TextInputModal(this, activeView.editor).open();
+		} else {
+			new EnvironmentModal(this, activeView.editor, (result) => {
+				this.insertEnvironment(activeView.editor, result);
+			}).open();
+		}
+	}
 
-        let content = "";
-        if (contentType.startsWith('tier-')) {
-            const tier = contentType.split('-')[1];
-            content = await this.getAdversaryTierContent(tier);
-        }
+	private async loadContentToMarkdown(contentType: string) {
+		const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+		if (!activeView) {
+			new Notice("Please open a note first.");
+			return;
+		}
 
-        if (content) {
-            this.insertIntoCanvasCard(canvas, content);
-        }
-    }
+		let content = "";
+		if (contentType.startsWith("tier-")) {
+			const tier = contentType.split("-")[1];
+			content = await this.getAdversaryTierContent(tier);
+		}
 
-    private adversaryToMarkdown(data: any): string {
-        return `## ${data.name}\n\n**Type:** ${data.type}\n**Difficulty:** ${data.difficulty}\n\n${data.description}\n\n---\n`;
-    }
+		if (content) {
+			activeView.editor.replaceSelection(content);
+		}
+	}
 
-    private async getAdversaryTierContent(tier: string): Promise<string> {
-        // Implement your logic to get markdown content for the tier
-        return `# Tier ${tier} Adversaries\n\n...`;
-    }
+	private async getAdversaryTierContent(tier: string): Promise<string> {
+		// Implement your logic to get markdown content for the tier
+		return `# Tier ${tier} Adversaries\n\n...`;
+	}
 
-    private insertEnvironment(editor: Editor, result: any) {
-        const html = environmentToHTML(result);
-        if (editor) {
-            editor.replaceSelection(html);
-        }
-    }
+	private insertEnvironment(editor: Editor, result: any) {
+		const html = environmentToHTML(result);
+		if (editor) {
+			editor.replaceSelection(html);
+		}
+	}
 
-    onunload() {
-        // Cleanup
-    }
+	onunload() {
+		// Cleanup
+	}
 }
+
+// private getActiveCanvas(): any | null {
+//     const canvasLeaves = this.app.workspace.getLeavesOfType('canvas');
+//     if (canvasLeaves.length === 0) return null;
+//     return canvasLeaves[0].view;
+// }
+
+// private async insertIntoCanvasCard(canvas: any, content: string) {
+//     try {
+//         const selection = canvas.selection;
+//         if (!selection?.size) {
+//             new Notice("Please select a canvas card first.");
+//             return;
+//         }
+
+//         for (const node of selection.values()) {
+//             if (node?.type === 'text') {
+//                 const currentText = node?.getText() || '';
+//                 await node?.setText(currentText + (currentText ? '\n\n' : '') + content);
+//                 new Notice("Added to canvas card!");
+//             }
+//         }
+//     } catch (error) {
+//         console.error("Canvas insertion error:", error);
+//         new Notice("Failed to add to canvas card.");
+//     }
+// }
+
+// private async loadContentToCanvas(contentType: string) {
+//     const canvas = this.getActiveCanvas();
+//     if (!canvas) {
+//         new Notice("Please open a canvas first.");
+//         return;
+//     }
+
+//     let content = "";
+//     if (contentType.startsWith('tier-')) {
+//         const tier = contentType.split('-')[1];
+//         content = await this.getAdversaryTierContent(tier);
+//     }
+
+//     if (content) {
+//         this.insertIntoCanvasCard(canvas, content);
+//     }
+// }
+
+// private adversaryToMarkdown(data: any): string {
+//     return `## ${data.name}\n\n**Type:** ${data.type}\n**Difficulty:** ${data.difficulty}\n\n${data.description}\n\n---\n`;
+// }
+
+// private async getAdversaryTierContent(tier: string): Promise<string> {
+//     // Implement your logic to get markdown content for the tier
+//     return `# Tier ${tier} Adversaries\n\n...`;
+// }
 
 // import { Editor, MarkdownView, Notice, Plugin } from 'obsidian';
 // import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversaries/adversarySearch";
@@ -171,7 +217,7 @@ export default class DaggerForgePlugin extends Plugin {
 
 // export default class DaggerForgePlugin extends Plugin {
 //     savedInputState: Record<string, any> = {};
-    
+
 //     async onload() {
 //         // ======================
 //         // INITIAL SETUP
@@ -183,7 +229,7 @@ export default class DaggerForgePlugin extends Plugin {
 //         // ADVERSARY FUNCTIONALITY
 //         // ======================
 //         this.registerView(ADVERSARY_VIEW_TYPE, (leaf) => new AdversaryView(leaf));
-        
+
 //         // Adversary Ribbon Icons
 //         this.addRibbonIcon("venetian-mask", "Adversary Browser", () => {
 //             adversariesSidebar(this);
@@ -205,7 +251,6 @@ export default class DaggerForgePlugin extends Plugin {
 //             this.openAdversaryCreator();
 //         });
 
-
 //         // Adversary Commands
 //         [1, 2, 3, 4].forEach((tier) => {
 //             this.addCommand({
@@ -224,7 +269,7 @@ export default class DaggerForgePlugin extends Plugin {
 //         // ENVIRONMENT FUNCTIONALITY
 //         // ======================
 //         this.registerView(ENVIRONMENT_VIEW_TYPE, (leaf) => new EnvironmentView(leaf));
-        
+
 //         // Environment Ribbon Icons
 //         this.addRibbonIcon("mountain", "Environment Browser", () => {
 //             openEnvironmentSidebar(this);
@@ -245,7 +290,6 @@ export default class DaggerForgePlugin extends Plugin {
 
 //             this.openEnvironmentCreator();
 //         });
-
 
 //         // Environment Commands
 //         this.addCommand({
@@ -296,23 +340,17 @@ export default class DaggerForgePlugin extends Plugin {
 //     }
 // }
 
+// In your onload() method:
+// this.registerDomEvent(document, 'click', (evt) => {
+// 	const clickedElement = evt.target as HTMLElement;
+// 	const editor = this.app.workspace.activeEditor?.editor;
 
-
-
-
-
-
-		// In your onload() method:
-		// this.registerDomEvent(document, 'click', (evt) => {
-		// 	const clickedElement = evt.target as HTMLElement;
-		// 	const editor = this.app.workspace.activeEditor?.editor;
-			
-		// 	if (clickedElement.closest('.card-outer') && editor) {
-		// 		new TextInputModal(
-		// 			this, 
-		// 			editor, 
-		// 			clickedElement.closest('.card-outer') as HTMLElement
-		// 		).open();
-		// 	}
-		// });
-		// this.registerDomEvent(document, "click", (evt) => console.log("click", evt));
+// 	if (clickedElement.closest('.card-outer') && editor) {
+// 		new TextInputModal(
+// 			this,
+// 			editor,
+// 			clickedElement.closest('.card-outer') as HTMLElement
+// 		).open();
+// 	}
+// });
+// this.registerDomEvent(document, "click", (evt) => console.log("click", evt));

@@ -1,30 +1,30 @@
 {
-  "compilerOptions": {
-    "types": ["obsidian"],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-    },
-    "inlineSourceMap": true,
-    "inlineSources": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "module": "ESNext",
-    "target": "ES2019",
-    "allowJs": true,
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "isolatedModules": true,
-    "strictNullChecks": true,
-    "lib": ["DOM", "ES5", "ES6", "ES7", "ES2019"],
-    "outDir": "dist",  // Recommended to separate compiled files
-    "rootDir": "src"   // Ensures only src is compiled
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": [
-    "archive/**",      // Explicitly exclude archived files
-    "**/*.test.ts",    // Exclude test files
-    "node_modules"
-  ]
+	"compilerOptions": {
+		"types": ["obsidian"],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		},
+		"inlineSourceMap": true,
+		"inlineSources": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"module": "ESNext",
+		"target": "ES2019",
+		"allowJs": true,
+		"noImplicitAny": true,
+		"moduleResolution": "node",
+		"importHelpers": true,
+		"isolatedModules": true,
+		"strictNullChecks": true,
+		"lib": ["DOM", "ES5", "ES6", "ES7", "ES2019"],
+		"outDir": "dist", // Recommended to separate compiled files
+		"rootDir": "src" // Ensures only src is compiled
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": [
+		"archive/**", // Explicitly exclude archived files
+		"**/*.test.ts", // Exclude test files
+		"node_modules"
+	]
 }

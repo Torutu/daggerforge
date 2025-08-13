@@ -19,7 +19,6 @@
 // 		this.cardElement = cardElement;
 // 		}
 
-
 //     onOpen() {
 // 		const saved = this.plugin.savedInputState || {};
 //         const { contentEl } = this;
@@ -183,7 +182,7 @@
 // 				type: typeEl.value.trim(),
 // 				cost: costEl.value.trim(),
 // 				desc: descEl.value.trim()
-// 			})).filter(f => f.name);	
+// 			})).filter(f => f.name);
 // 			this.editor.replaceSelection(this.buildCardHTML(values, features) + '\n');
 // 			for (const el of Object.values(this.inputs)) {
 // 				if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
@@ -272,7 +271,6 @@
 // 			</span>
 // 			<span class="feature-desc">${f.desc}</span>
 // 			</div>`).join('');
-
 
 // 		return `
 // <div class="card-outer pseudo-cut-corners outer">

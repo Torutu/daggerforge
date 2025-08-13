@@ -1,24 +1,23 @@
 import { Editor, Notice } from "obsidian";
-import { ADVERSARIES } from '../data/adversaries';
-// Remove individual JSON imports
-import type DaggerForgePlugin from "../main"
+import { ADVERSARIES } from "../data/adversaries";
 
 const tierDataMap: Record<string, any[]> = {
-  "1": ADVERSARIES.tier1,
-  "2": ADVERSARIES.tier2,
-  "3": ADVERSARIES.tier3,
-  "4": ADVERSARIES.tier4,
+	"1": ADVERSARIES.tier1,
+	"2": ADVERSARIES.tier2,
+	"3": ADVERSARIES.tier3,
+	"4": ADVERSARIES.tier4,
 };
 
 export async function loadAdversaryTier(tier: string, editor: Editor) {
-		const data = tierDataMap[tier];
+	const data = tierDataMap[tier];
 
-		if (!data || !Array.isArray(data) || data.length === 0) {
-			new Notice(`No adversaries found in Tier ${tier} JSON.`);
-			return;
-		}
+	if (!data || !Array.isArray(data) || data.length === 0) {
+		new Notice(`No adversaries found in Tier ${tier} JSON.`);
+		return;
+	}
 
-		const allCardsHTML = data.map((a) =>
+	const allCardsHTML = data
+		.map((a) =>
 			buildCardHTML(
 				{
 					name: a.name ?? "",
@@ -35,10 +34,11 @@ export async function loadAdversaryTier(tier: string, editor: Editor) {
 					weaponRange: a.weaponRange ?? "",
 					weaponDamage: a.weaponDamage ?? "",
 					xp: a.xp ?? "",
-			},
-			a.features ?? []
+				},
+				a.features ?? [],
+			),
 		)
-	).join('\n\n');
+		.join("\n\n");
 
 	editor.replaceSelection(allCardsHTML);
 	new Notice(`Loaded ${data.length} adversaries from Tier ${tier}.`);
@@ -46,36 +46,59 @@ export async function loadAdversaryTier(tier: string, editor: Editor) {
 
 function buildCardHTML(
 	values: Record<string, string>,
-	features: { name: string; type: string; cost: string; desc: string }[]
+	features: { name: string; type: string; cost: string; desc: string }[],
 ): string {
 	const {
-		name, tier, type, desc, motives, difficulty,
-		thresholds, hp, stress, atk,
-		weaponName, weaponRange, weaponDamage, xp
+		name,
+		tier,
+		type,
+		desc,
+		motives,
+		difficulty,
+		thresholds,
+		hp,
+		stress,
+		atk,
+		weaponName,
+		weaponRange,
+		weaponDamage,
+		xp,
 	} = values;
-	
-	const hptick = Number(hp) || 0;  // fallback to 0 if undefined
-    const hpTickboxes = Array.from({ length: hptick }, (_, i) => `
+
+	const hptick = Number(hp) || 0; // fallback to 0 if undefined
+	const hpTickboxes = Array.from(
+		{ length: hptick },
+		(_, i) => `
     <input type="checkbox" id="hp-tick-${i}" class="hp-tickbox" />
-    `).join('');
-    const stresstick = Number(stress) ?? 0; // nullish coalescing fallback to 0
-    const stressTickboxes = Array.from({ length: stresstick }, (_, i) => `
+    `,
+	).join("");
+	const stresstick = Number(stress) ?? 0; // nullish coalescing fallback to 0
+	const stressTickboxes = Array.from(
+		{ length: stresstick },
+		(_, i) => `
     <input type="checkbox" id="stress-tick-${i}" class="stress-tickbox" />
-    `).join('');
+    `,
+	).join("");
 
-	const stressBlock = stress ? `Stress: <span class="stat">${stress}</span><br>` : "";
+	const stressBlock = stress
+		? `Stress: <span class="stat">${stress}</span><br>`
+		: "";
 
-	const featuresHTML = features.map(f => `
+	const featuresHTML = features
+		.map(
+			(f) => `
 			<div class="feature">
 			<span class="feature-title">
-				${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ':'}
+				${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ":"}
 			</span>
 			<span class="feature-desc">${f.desc}</span>
-			</div>`).join('');
+			</div>`,
+		)
+		.join("");
 
-const cardHTML = `
+	const cardHTML = `
 
-<div class="card-outer pseudo-cut-corners outer">
+<section class="card-outer pseudo-cut-corners outer">
   <div class="card-inner pseudo-cut-corners inner">
     <div class="hp-tickboxes">
     <span class="hp-stress">HP</span>${hpTickboxes}
@@ -101,7 +124,7 @@ const cardHTML = `
     <div class="section">FEATURES</div>
     ${featuresHTML}
   </div>
-</div>
+</section>
 `;
-		return cardHTML.trim().replace(/\s+$/, '');
+	return cardHTML.trim().replace(/\s+$/, "");
 }
