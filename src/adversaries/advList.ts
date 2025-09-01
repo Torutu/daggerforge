@@ -10,7 +10,6 @@ const tierDataMap: Record<string, any[]> = {
 
 export async function loadAdversaryTier(tier: string, editor: Editor) {
 	const data = tierDataMap[tier];
-
 	if (!data || !Array.isArray(data) || data.length === 0) {
 		new Notice(`No adversaries found in Tier ${tier} JSON.`);
 		return;

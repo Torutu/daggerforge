@@ -1,6 +1,6 @@
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice, TFile } from "obsidian";
 import { ENVIRONMENTS } from "../data/environments";
-import { EnvironmentData } from "./environmentTypes";
+import { EnvironmentData } from "./envTypes";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 

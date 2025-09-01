@@ -1,4 +1,4 @@
-import { EnvironmentData } from "./environmentTypes";
+import { EnvironmentData } from "./envTypes";
 
 export function environmentToHTML(env: EnvironmentData): string {
 	const featuresHTML = (env.features || [])

@@ -82,7 +82,7 @@ export class TextInputModal extends Modal {
 	cardElement?: HTMLElement;
 	features: FeatureElements[] = [];
 	plugin: DaggerForgePlugin;
-	savedInputStateAdv: Record<string, string> = {};
+	savedInputStateAdv: Record<string, any> = {};
 	editor: Editor;
 	onSubmit?: (newHTML: string) => void; // Add this new property
 	isEditMode: boolean = false; // Add this flag
@@ -91,16 +91,34 @@ export class TextInputModal extends Modal {
 		plugin: DaggerForgePlugin,
 		editor: Editor,
 		cardElement?: HTMLElement,
+		cardData?: Record<string, any> // Add this parameter
 	) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.editor = editor;
 		this.cardElement = cardElement;
 		this.isEditMode = !!cardElement;
-	}
+		if (cardElement && cardData) {
+					console.log("Editing existing card with provided data", cardElement);
+					// Use the cardData that was already extracted
+					this.savedInputStateAdv = {
+						...cardData,
+						// Convert features array to saved format
+					features: cardData.features?.map((f: any) => ({
+							featureName: f.name || f.featureName,
+							featureType: f.type || f.featureType,
+							featureCost: f.cost || f.featureCost,
+							featureDesc: f.desc || f.featureDesc,
+						})) || [],
+					};
+				console.log("Saved input state:", this.savedInputStateAdv);
+			}
+		}
 
 	onOpen() {
+		console.log("savedInputStateAdv on open:", this.savedInputStateAdv);
 		const saved = this.plugin.savedInputStateAdv || {};
+		console.log("Opening modal with saved state:", saved);
 		const { contentEl } = this;
 
 		const setValueIfSaved = (
@@ -282,13 +300,15 @@ export class TextInputModal extends Modal {
 			const features = getFeatureValues(this.features);
 			// WAIT for the file to be saved
 			await buildCustomAdversary(this.plugin.app, values, features);
+			const wrapper = document.createElement("div");
 			const newHTML = buildCardHTML(values, features);
+			wrapper.innerHTML = newHTML.trim();
+			const newCardEl = wrapper.firstChild as HTMLElement;
 			if (this.cardElement) {
-				this.cardElement.outerHTML = newHTML;
+				this.cardElement.replaceWith(newCardEl);
 			} else {
 				this.editor.replaceSelection(newHTML + "\n");
 			}
-			// Reset form (same as before)
 			for (const el of Object.values(this.inputs)) {
 				if (
 					el instanceof HTMLInputElement ||

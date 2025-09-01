@@ -6,9 +6,9 @@ import {
 	FeatureElements,
 	SavedFeatureState,
 	EnvironmentData,
-} from "../environmentTypes";
-import { environmentToHTML } from "../environmentsToHTML";
-import { buildCustomEnvironment, EnvironmentView } from "../environmentSearch";
+} from "../envTypes";
+import { environmentToHTML } from "../envToHTML";
+import { buildCustomEnvironment, EnvironmentView } from "../envSearch";
 
 export class EnvironmentModal extends Modal {
 	plugin: DaggerForgePlugin;
