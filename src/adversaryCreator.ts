@@ -1,4 +1,4 @@
-import { App, Editor, Modal, Notice } from "obsidian";
+import { App, Editor, Modal } from "obsidian";
 
 export class TextInputModal extends Modal {
 	inputs: Record<string, HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> = {};
@@ -14,7 +14,7 @@ export class TextInputModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.empty();
-		contentEl.createEl('h2', { text: 'Adversary Stat Block', cls: 'modal-title' });
+		contentEl.createEl('h2', { text: 'Adversary stat block', cls: 'df-modal-title' });
 
 		const createField = (
 			label: string,
@@ -22,7 +22,7 @@ export class TextInputModal extends Modal {
 			type: 'input' | 'textarea' = 'input',
 			customClass?: string
 		) => {
-			const wrapper = contentEl.createDiv({ cls: 'field-row' });
+			const wrapper = contentEl.createDiv({ cls: 'df-field-row' });
 			wrapper.createEl('label', {
 				text: label,
 				cls: 'inline-label',
@@ -30,12 +30,12 @@ export class TextInputModal extends Modal {
 
 			if (type === 'input') {
 				const field = wrapper.createEl('input', {
-					cls: ['input-field', customClass].filter(Boolean) as string[],
+					cls: ['df-input-field', customClass].filter(Boolean) as string[],
 				});
 				this.inputs[key] = field;
 			} else {
 				const field = wrapper.createEl('textarea', {
-					cls: ['input-field', customClass].filter(Boolean) as string[],
+					cls: ['df-input-field', customClass].filter(Boolean) as string[],
 				});
 				this.inputs[key] = field;
 			}
@@ -50,15 +50,15 @@ export class TextInputModal extends Modal {
 			dropdownOptions?: string[]
 			) => {
 			const row = parent.createDiv();
-			row.addClass('flex-row');
+			row.addClass('df-flex-row');
 
 		const create = (label: string, key: string) => {
-			const wrapper = row.createDiv({ cls: 'inline-field' });
+			const wrapper = row.createDiv({ cls: 'df-inline-field' });
 			wrapper.createEl('label', { text: label });
 
 			if (dropdownFieldKey === key) {
 			// Create select dropdown instead of input
-			const select = wrapper.createEl('select', { cls: 'input-field' }) as HTMLSelectElement;
+			const select = wrapper.createEl('select', { cls: 'df-input-field' }) as HTMLSelectElement;
 			if (dropdownOptions) {
 				dropdownOptions.forEach(opt => {
 				select.createEl('option', { text: opt, value: opt });
@@ -68,7 +68,7 @@ export class TextInputModal extends Modal {
 			} else {
 			// Create regular input
 			const input = wrapper.createEl('input', {
-				cls: 'input-field',
+				cls: 'df-input-field',
 				attr: { type: 'text' }
 			}) as HTMLInputElement;
 			this.inputs[key] = input;
@@ -83,12 +83,12 @@ export class TextInputModal extends Modal {
 		// createField('Name ', 'name', 'textarea', 'adversary-name-textarea');
 		contentEl.createEl('label', { text: 'Name ' });
 		const nameField = contentEl.createEl('input', {
-			cls:'adversary-name-textarea'
+			cls:'df-adversary-name-textarea'
 		});
 		this.inputs['name'] = nameField;
 		// === Tier dropdown ===
 		contentEl.createEl('label', { text: ' Tier ' });
-		const tierSelect = contentEl.createEl('select', { cls: 'input-field-first-row-tier' });
+		const tierSelect = contentEl.createEl('select', { cls: 'df-input-field-first-row-tier' });
 		['1', '2', '3', '4'].forEach(level => {
 			tierSelect.createEl('option', { text: level, value: level });
 		});
@@ -96,13 +96,13 @@ export class TextInputModal extends Modal {
 
 		// === Type dropdown ===
 		contentEl.createEl('label', { text: ' Type ' });
-		const typeSelect = contentEl.createEl('select', { cls: 'input-field-first-row' });
+		const typeSelect = contentEl.createEl('select', { cls: 'df-input-field-first-row' });
 		['Bruiser', 'Horde', 'Leader', 'Minion', 'Ranged', 'Skulk', 'Social', 'Solo', 'Standard', 'Support'].forEach(type => {
 			typeSelect.createEl('option', { text: type, value: type });
 		});
 		this.inputs['type'] = typeSelect;
 		contentEl.createEl('br');
-		createField('Description', 'desc', 'textarea', 'description-textarea');
+		createField('Description', 'desc', 'textarea', 'df-description-textarea');
 		createField('Motives ', 'motives', 'input', 'motives-input');
 		// Create a row container for just these three fields
 
@@ -113,14 +113,14 @@ export class TextInputModal extends Modal {
 		createShortTripleFields(
 			'HP', 'hp',
 			'Stress (optional)', 'stress',
-			'ATK Mod', 'atk', contentEl);
+			'ATK mod', 'atk', contentEl);
 		createShortTripleFields(
-		'Weapon Name', 'weaponName',
-		'Weapon Range', 'weaponRange',
-		'Weapon Damage', 'weaponDamage',
+		'Weapon name', 'weaponName',
+		'Weapon range', 'weaponRange',
+		'Weapon damage', 'weaponDamage',
 		contentEl,
 		'weaponRange',
-		['Melee', 'Very Close', 'Close', 'Far', 'Very Far']
+		['Melee', 'Very close', 'Close', 'Far', 'Very far']
 		);
 		createField('Experience (optional) ', 'xp', 'input', 'experience-input');
 
@@ -128,8 +128,8 @@ export class TextInputModal extends Modal {
 
 		this.addFeature(); // Add first feature by default
 		this.addFeatureBtn = contentEl.createEl('button', {
-			text: 'Add Feature',
-			cls: 'add-feature-btn'
+			text: 'Add feature',
+			cls: 'df-add-feature-btn'
 		});
 
 		this.addFeatureBtn.onclick = () => this.addFeature();
@@ -137,8 +137,8 @@ export class TextInputModal extends Modal {
 		// contentEl.createEl('br');
 		// === Insert Button ===
 		this.insertBtn = contentEl.createEl('button', {
-		text: 'Insert Card',
-		cls: 'insert-card-btn'
+		text: 'Insert card',
+		cls: 'df-insert-card-btn'
 		});
 
 		this.insertBtn.onclick = () => {
@@ -159,35 +159,35 @@ export class TextInputModal extends Modal {
 	}
 
 	addFeature() {
-		const wrapper = this.featureContainer.createDiv({ cls: 'feature-block' });
+		const wrapper = this.featureContainer.createDiv({ cls: 'df-feature-block' });
 
 		// Flex container for name and type side by side
-		const row = wrapper.createDiv({ cls: 'feature-row' });
+		const row = wrapper.createDiv({ cls: 'df-feature-row' });
 
 		const nameEl = row.createEl('input', {
-		cls: 'input-feature-name',
-		placeholder: 'Feature Name'
+		cls: 'df-input-feature-name',
+		placeholder: 'Feature name'
 		});
 
 
-		const typeEl = row.createEl('select', { cls: 'field-feature-type' });
+		const typeEl = row.createEl('select', { cls: 'df-field-feature-type' });
 		['Action', 'Reaction', 'Passive'].forEach(type => {
 		typeEl.createEl('option', { text: type, value: type });
 		});
 
 
-		const costEl = row.createEl('select', { cls: 'input-feature-cost' });
-		['', 'Mark a Stress', 'Spend a Fear'].forEach(opt => {
+		const costEl = row.createEl('select', { cls: 'df-input-feature-cost' });
+		['', 'Mark a stress', 'Spend a fear'].forEach(opt => {
 		costEl.createEl('option', { text: opt === '' ? 'none' : opt, value: opt });
 		});
 
 
 		const descEl = wrapper.createEl('textarea', {
-		cls: 'feature-desc-input',
-		placeholder: 'Feature Description'
+		cls: 'df-feature-desc-input',
+		placeholder: 'Feature description'
 		});
 
-		const removeBtn = wrapper.createEl('button', { text: 'Remove', cls: 'remove-feature-btn' });
+		const removeBtn = wrapper.createEl('button', { text: 'Remove', cls: 'df-remove-feature-btn' });
 
 		removeBtn.onclick = () => {
 			const index = this.features.findIndex(f => f.nameEl === nameEl);
@@ -207,36 +207,36 @@ export class TextInputModal extends Modal {
 			weaponName, weaponRange, weaponDamage, xp
 		} = values;
 
-		const stressBlock = stress ? `Stress: <span class="stat">${stress}</span>` : '';
+		const stressBlock = stress ? `Stress: <span class="df-stat">${stress}</span>` : '';
 
 		const featuresHTML = features.map(f => `
-			<div class="feature">
-			<span class="feature-title">
+			<div class="df-feature">
+			<span class="df-feature-title">
 				${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ':'}
 			</span>
-			<span class="feature-desc">${f.desc}</span>
+			<span class="df-feature-desc">${f.desc}</span>
 			</div>`).join('');
 
 
 		return `
-<div class="card-outer pseudo-cut-corners outer">
-	<div class="card-inner pseudo-cut-corners inner">
+<div class="df-card-outer df-pseudo-cut-corners outer">
+	<div class="df-card-inner df-pseudo-cut-corners inner">
 		<h2>${name}</h2>
-			<div class="subtitle">Tier ${tier} ${type} </div>
-			<div class="desc">${desc}</div>
-			<div class="motives">Motives & Tactics:
-			<span class="motives-desc">${motives}</span>
+			<div class="df-subtitle">Tier ${tier} ${type} </div>
+			<div class="df-desc">${desc}</div>
+			<div class="df-motives">Motives & Tactics:
+			<span class="df-motives-desc">${motives}</span>
 			</div>
-			<div class="stats">
-			Difficulty: <span class="stat">${difficulty} |</span>
-			Thresholds: <span class="stat">${thresholdMajor}/${thresholdSevere} |</span>
-			HP: <span class="stat">${hp} |</span>
+			<div class="df-stats">
+			Difficulty: <span class="df-stat">${difficulty} |</span>
+			Thresholds: <span class="df-stat">${thresholdMajor}/${thresholdSevere} |</span>
+			HP: <span class="df-stat">${hp} |</span>
 			${stressBlock}
-			<br>ATK: <span class="stat">${atk} |</span>
-			${weaponName}: <span class="stat">${weaponRange} | ${weaponDamage}</span><br>
-			<div class="experience-line">Experience: <span class="stat">${xp}</span></div>
+			<br>ATK: <span class="df-stat">${atk} |</span>
+			${weaponName}: <span class="df-stat">${weaponRange} | ${weaponDamage}</span><br>
+			<div class="experience-line">Experience: <span class="df-stat">${xp}</span></div>
 			</div>
-			<div class="section">FEATURES</div>
+			<div class="df-section">FEATURES</div>
 			${featuresHTML}
 	</div>
 </div>

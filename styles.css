@@ -1,19 +1,19 @@
 :root {
-  --corner: 10px;
-  --font: "Myriad Pro";
-  --color-primary: #000;
-  --color-bg-outer: #cab996;
-  --color-bg-inner: #f5f1e8;
-  --color-border: #c2af88;
+  --df-corner: 10px;
+  --df-font: "Myriad Pro";
+  --df-color-primary: #000;
+  --df-color-bg-outer: #cab996;
+  --df-color-bg-inner: #f5f1e8;
+  --df-color-border: #c2af88;
 }
 
-.pseudo-cut-corners {
+.df-pseudo-cut-corners {
   position: relative;
   clip-path: none;
-  --corner: 4px;
+  --df-corner: 4px;
 }
 
-.pseudo-cut-corners::before {
+.df-pseudo-cut-corners::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -22,18 +22,18 @@
   width: 100%;
   height: 100%;
   clip-path: polygon(
-    var(--corner) 0%,
-    calc(100% - var(--corner)) 0%,
-    100% var(--corner),
-    100% calc(100% - var(--corner)),
-    calc(100% - var(--corner)) 100%,
-    var(--corner) 100%,
-    0% calc(100% - var(--corner)),
-    0% var(--corner)
+    var(--df-corner) 0%,
+    calc(100% - var(--df-corner)) 0%,
+    100% var(--df-corner),
+    100% calc(100% - var(--df-corner)),
+    calc(100% - var(--df-corner)) 100%,
+    var(--df-corner) 100%,
+    0% calc(100% - var(--df-corner)),
+    0% var(--df-corner)
   );
 }
 
-.pseudo-cut-corners.outer {
+.df-pseudo-cut-corners.outer {
   filter: drop-shadow(0.2em 0.2em 0.4em rgba(0, 0, 0, 0.5));
   padding: 1.4px;
   max-width: 400px;
@@ -42,146 +42,126 @@
   margin: 0 auto;
 }
 
-.pseudo-cut-corners.outer::before {
-  background-color: var(--color-bg-outer);
+.df-pseudo-cut-corners.outer::before {
+  background-color: var(--df-color-bg-outer);
 }
 
-.pseudo-cut-corners.inner {
+.df-pseudo-cut-corners.inner {
   padding: 5px;
   box-sizing: border-box;
 }
 
-.pseudo-cut-corners.inner::before {
-  background-color: var(--color-bg-inner);
+.df-pseudo-cut-corners.inner::before {
+  background-color: var(--df-color-bg-inner);
 }
 
-.card-inner {
-  font-family: var(--font-text);
-  color: var(--color-primary);
+.df-card-inner {
+  font-family: var(--df-font-text);
+  color: var(--df-color-primary);
   font-weight: 1000;
 }
 
-.card-inner * {
+.df-card-inner * {
   font-family: inherit;
   color: inherit;
 }
 
-.card-inner h2{
+.df-card-inner h2{
   font-size: 1.3em;
   font-weight: 700;
   margin: 0;
 }
-.card-inner .subtitle,
-.card-inner .section,
-.card-inner .feature-title {
+.df-card-inner .df-subtitle,
+.df-card-inner .df-section,
+.df-card-inner .df-feature-title {
   font-weight: bold;
 }
 
-.card-inner .desc {
+.df-card-inner .df-desc {
   font-weight: 500;
   font-style: italic;
   font-size: 0.8em;
 }
 
-.card-inner .motives {
+.df-card-inner .df-motives {
   font-weight: 700;
 }
 
-.card-inner .motives-desc,
-.card-inner .feature-desc {
+.df-card-inner .df-motives-desc,
+.df-card-inner .df-feature-desc {
   font-weight: 500;
   font-size: small;
 }
 
-.card-inner .stats {
+.df-card-inner .df-stats {
   margin: 2px 0;
   padding-left: 10px;
   font-weight: 600;
   background-color: #fff;
   font-size: 0.9em;
-  border-top: 2px solid var(--color-border);
-  border-bottom: 2px solid var(--color-border);
+  border-top: 2px solid var(--df-color-border);
+  border-bottom: 2px solid var(--df-color-border);
 }
 
-.card-inner .stat {
+.df-card-inner .df-stat {
   font-weight: 400;
 }
 
-.stats .experience-line {
-  border-top: 1px dashed var(--color-border);
+.df-stats .df-experience-line {
+  border-top: 1px dashed var(--df-color-border);
   margin-top: 1px;
   padding-top: 1px;
   background-color: #fff;
 }
 
-.card-inner .feature {
+.df-card-inner .df-feature {
   margin-bottom: 2px;
 }
 
-.input-field {
-  width: 100%;
-  max-width: 120px;
+.df-input-field{
+  max-width: 100%;
+  min-width: 100%;
   margin-bottom: 10px;
 }
 
-input.input-help{
+input.df-input-help{
   width: 100%;
   max-width: 360px;
 }
 
-select.input-field {
+/* select.df-input-field {
   width: 120px;
-}
+} */
 
 
-
-
-
-
-.tier-select {
+.df-tier-select {
   width: 20%;
   margin-bottom: 10px;
 }
 
-.type-select {
+.df-type-select {
   width: 20%;
   margin-bottom: 10px;
 }
 
-
-
-.features-heading {
+.df-features-heading {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.tier-filter-btn {
+.df-tier-filter-btn {
   margin-left: 5px;
   margin-top: 3px;
 }
 
-.adversary-card {
+.df-adversary-card {
   border: 1px solid #888;
   padding: 8px;
   margin-bottom: 6px;
   border-radius: 4px;
 }
 
-.tier-text {
+.df-tier-text {
   font-size: 0.8em;
   padding: 1px;
   margin-top: 1px;
@@ -189,31 +169,30 @@ select.input-field {
   font-weight: bold;
 }
 
-.title-small-padding {
+.df-title-small-padding {
   padding: 1px;
   margin-top: 1px;
   margin-bottom: 1px;
 }
 
-.desc-small-padding {
+.df-desc-small-padding {
   padding: 1px;
   margin-top: 1px;
   margin-bottom: 1px;
   font-size: 0.9em;
 }
 
-.adversary-results {
+.df-adversary-results {
   margin-top: 10px;
 }
 
-
 /* modal styles */
 
-.inline-label {
+.df-inline-label {
   align-self: auto;
 }
 
-.modal-title {
+.df-modal-title {
   font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 10px;
@@ -221,7 +200,7 @@ select.input-field {
 }
 
 /* warpper for field rows */
-.field-row {
+.df-field-row {
     display: flex;
     align-items: stretch;
     align-content: flex-start;
@@ -229,38 +208,38 @@ select.input-field {
 }
 
 /* adversary-name-textarea is used for the textarea input for the adversary name */
-.adversary-name-textarea {
+.df-adversary-name-textarea {
   width: 220px;
   height: 30px;
   margin-bottom: 10px;
 }
 
 /* for Tier*/
-.input-field-first-row-tier {
+.df-input-field-first-row-tier {
   width: 100%;
   max-width: 50px;
   margin-bottom: 10px;
 }
 /* for Type */
-.input-field-first-row {
+.df-input-field-first-row {
   width: 100%;
   max-width: 100px;
   margin-bottom: 10px;
 }
 
-.description-textarea {
+.df-description-textarea {
   min-width: 100%;
   height: 60px;
   margin-bottom: 10px;
   overflow: auto;
 }
 
-.motives-input {
+.df-motives-input {
   width: 100%;
   max-width: 340px;
 }
 
-.flex-row {
+.df-flex-row {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -268,41 +247,41 @@ select.input-field {
     justify-content: flex-start;
 }
 
-.inline-field {
+.df-inline-field {
   display: flex;
   flex-direction: column;
 }
 
-.experience-input {
+.df-experience-input {
   width: 100%;
   max-width: 240px;
 }
 
-.feature-block {
+.df-feature-block {
   margin-bottom: 1px;
 }
 
-.feature-row {
+.df-feature-row {
   display: flex;
   gap: 10px;
   margin-bottom: 6px;
 }
 
-.input-feature-name {
+.df-input-feature-name {
   flex: 1;
   max-width: 200px;
 }
 
-.field-feature-type {
+.df-field-feature-type {
   max-width: 100px;
 }
 
-.input-feature-cost {
+.df-input-feature-cost {
   margin-bottom: 6px;
   display: block;
 }
 
-.feature-desc-input {
+.df-feature-desc-input {
   width: 100%;
   margin-bottom: 6px;
   display: block;
@@ -312,17 +291,22 @@ select.input-field {
   overflow: auto;
 }
 
-.remove-feature-btn {
+.df-remove-feature-btn {
   margin-bottom: 10px;
 }
 
-.add-feature-btn {
+.df-add-feature-btn {
   margin-top: 10px;
 }
 
-.insert-card-btn {
+.df-insert-card-btn {
   display: block;
   margin-left: auto;
   margin-top: 10px;
   width: fit-content;
+}
+
+.df-adversary-browser-title{
+  margin-top: 2px;
+  margin-bottom: 4px;
 }

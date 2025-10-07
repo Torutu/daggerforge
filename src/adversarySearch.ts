@@ -1,8 +1,8 @@
 import { ItemView, WorkspaceLeaf, Notice, MarkdownView } from "obsidian";
-import adversariesTier1 from '../../adversaries/Adversaries-Tier-1.json';
-import adversariesTier2 from '../../adversaries/Adversaries-Tier-2.json';
-import adversariesTier3 from '../../adversaries/Adversaries-Tier-3.json';
-import adversariesTier4 from '../../adversaries/Adversaries-Tier-4.json';
+import adversariesTier1 from 'adversaries/Adversaries-Tier-1.json';
+import adversariesTier2 from 'adversaries/Adversaries-Tier-2.json';
+import adversariesTier3 from 'adversaries/Adversaries-Tier-3.json';
+import adversariesTier4 from 'adversaries/Adversaries-Tier-4.json';
 
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
@@ -16,7 +16,7 @@ export class AdversaryView extends ItemView {
 		return ADVERSARY_VIEW_TYPE;
 	}
 	getDisplayText(): string {
-		return "Adversary Creator";
+		return "Adversary creator";
 	}
     getIcon(): string {
 	return "venetian-mask";
@@ -34,21 +34,24 @@ export class AdversaryView extends ItemView {
                 }
             })
         );
-		container.createEl("h2", { text: "Adversary Creator" });
-		const input = container.createEl("input", { // Create search input
+		container.createEl("h2", { 
+            text: "Adversary browser",
+            cls: "df-adversary-browser-title",
+        });
+		const input = container.createEl("input", {
 			attr: {
 				type: "text",
 				placeholder: "Search adversaries...",
 			},
-			cls: "adversary-search-box"
+			cls: "df-adversary-search-box"
 		});
         const buttonContainer = document.createElement('span');
-        buttonContainer.className = 'tier-buttons';
+        buttonContainer.className = 'df-tier-buttons';
         const tiers = ['ALL', '1', '2', '3', '4'];
         tiers.forEach(tierLabel => {
             const button = document.createElement('button');
             button.textContent = tierLabel === 'ALL' ? 'ALL' : `Tier ${tierLabel}`;
-            button.classList.add('tier-filter-btn');
+            button.classList.add('df-tier-filter-btn');
             button.addEventListener('click', () => {
                 input.value = ''; // Clear search box on tier filter
                 let filtered = [];
@@ -63,7 +66,7 @@ export class AdversaryView extends ItemView {
         });
         container.appendChild(buttonContainer); // Append before search input or result list
         const resultsDiv = container.createEl("div", {
-        cls: "adversary-results",
+        cls: "df-adversary-results",
         text: "Results will appear here."
         });
         try {
@@ -105,17 +108,17 @@ export class AdversaryView extends ItemView {
 	}
     createAdversaryCard(adversary: any): HTMLElement { // Create a card for each adversary
         const card = document.createElement('div');
-        card.classList.add('adversary-card');
+        card.classList.add('df-adversary-card');
         const tier = document.createElement('p');
-        tier.classList.add('tier-text');
+        tier.classList.add('df-tier-text');
         tier.textContent = `Tier ${adversary.tier} ${adversary.type}`;
         card.appendChild(tier);
         const title = document.createElement('h3');
-        title.classList.add('title-small-padding');
-        title.textContent = adversary.name || 'Unnamed Adversary';
+        title.classList.add('df-title-small-padding');
+        title.textContent = adversary.name || 'Unnamed adversary';
         card.appendChild(title);
         const desc = document.createElement('p');
-        desc.classList.add('desc-small-padding');
+        desc.classList.add('df-desc-small-padding');
 
         desc.textContent = adversary.desc || 'No description available.';
         card.appendChild(desc);
@@ -141,32 +144,32 @@ card.addEventListener('click', () => {
 
     const features = adversary.features as Feature[] || []; // Fallback to empty array if features are not defined
     const featuresHTML = features.map((f: Feature) => `
-            <div class="feature">
-            <span class="feature-title">
+            <div class="df-feature">
+            <span class="df-feature-title">
                 ${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ':'}
             </span>
-            <span class="feature-desc">${f.desc}</span>
+            <span class="df-feature-desc">${f.desc}</span>
             </div>`).join('');
 
 const adversaryText = `
-<div class="card-outer pseudo-cut-corners outer">
-    <div class="card-inner pseudo-cut-corners inner">
+<div class="df-card-outer df-pseudo-cut-corners outer">
+    <div class="df-card-inner df-pseudo-cut-corners inner">
         <h2>${adversary.name}</h2>
-                <div class="subtitle">Tier ${adversary.tier} ${adversary.type}</div>
-                <div class="desc">${adversary.desc}</div>
-                <div class="motives">Motives & Tactics:
-                    <span class="motives-desc">${adversary.motives}</span>
+                <div class="df-subtitle">Tier ${adversary.tier} ${adversary.type}</div>
+                <div class="df-desc">${adversary.desc}</div>
+                <div class="df-motives">Motives & Tactics:
+                    <span class="df-motives-desc">${adversary.motives}</span>
                 </div>
-                <div class="stats">
-                    Difficulty: <span class="stat">${adversary.difficulty} |</span>
-                    Thresholds: <span class="stat">${adversary.thresholds} |</span>
-                    HP: <span class="stat">${adversary.hp} |</span>
-                    Stress: <span class="stat">${adversary.stress || ''}</span>
-                    <div>ATK: <span class="stat">${adversary.atk} |</span>
-                    ${adversary.weaponName}: <span class="stat">${adversary.weaponRange} | ${adversary.weaponDamage}</span></div>
-                    <div class="experience-line">Experience: <span class="stat">${adversary.xp}</span></div>
+                <div class="df-stats">
+                    Difficulty: <span class="df-stat">${adversary.difficulty} |</span>
+                    Thresholds: <span class="df-stat">${adversary.thresholds} |</span>
+                    HP: <span class="df-stat">${adversary.hp} |</span>
+                    Stress: <span class="df-stat">${adversary.stress || ''}</span>
+                    <div>ATK: <span class="df-stat">${adversary.atk} |</span>
+                    ${adversary.weaponName}: <span class="df-stat">${adversary.weaponRange} | ${adversary.weaponDamage}</span></div>
+                    <div class="df-experience-line">Experience: <span class="df-stat">${adversary.xp}</span></div>
                 </div>
-                <div class="section">FEATURES</div>
+                <div class="df-section">FEATURES</div>
                 ${featuresHTML}
     </div>
 </div>

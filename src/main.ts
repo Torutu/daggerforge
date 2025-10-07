@@ -1,32 +1,36 @@
-import { App, Editor, MarkdownView, Notice, Plugin } from 'obsidian';
+import { Plugin } from 'obsidian';
 import { AdversaryView, ADVERSARY_VIEW_TYPE } from "./adversarySearch";
 import { TextInputModal } from "./adversaryCreator";
 import { loadAdversaryTier } from "./adversaryList";
 import { openAdversaryCreatorSidebar } from "./sidebar";
-import { loadStyleSheet } from "./style";
 
 export default class DaggerForgePlugin extends Plugin {
 	async onload() {
-		await loadStyleSheet(this);
 
 		this.registerView(ADVERSARY_VIEW_TYPE, (leaf) => new AdversaryView(leaf));
-		this.addRibbonIcon("venetian-mask", "DaggerHeart Adversary Creator", () => {
+		
+		this.addRibbonIcon("venetian-mask", "DaggerHeart adversary creator", () => {
 			openAdversaryCreatorSidebar(this);
 		});
-		this.addStatusBarItem().setText("Status Bar Text");
+		this.addCommand({
+			id: "open-adversary-sidebar",
+			name: "Open adversary creator sidebar",
+			callback: () => openAdversaryCreatorSidebar(this),
+		});
 
 		[1, 2, 3, 4].forEach((tier) => {
 			this.addCommand({
 				id: `load-tier-${tier}`,
-				name: `Load Tier ${tier} Adversaries`,
+				name: `Load tier ${tier} adversaries`,
 				editorCallback: (editor) => loadAdversaryTier(String(tier), editor),
 			});
 		});
 
 		this.addCommand({
 			id: "Create-Adversary-Card",
-			name: "Create Adversary Card",
+			name: "Create adversary card",
 			editorCallback: (editor, view) => new TextInputModal(this.app, editor).open(),
 		});
+
 	}
 }

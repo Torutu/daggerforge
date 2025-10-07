@@ -1,9 +1,8 @@
 import { Editor, Notice } from "obsidian";
-import adversariesTier1 from '../../adversaries/Adversaries-Tier-1.json';
-import adversariesTier2 from '../../adversaries/Adversaries-Tier-2.json';
-import adversariesTier3 from '../../adversaries/Adversaries-Tier-3.json';
-import adversariesTier4 from '../../adversaries/Adversaries-Tier-4.json';
-import type DaggerForgePlugin from "./main"
+import adversariesTier1 from 'adversaries/Adversaries-Tier-1.json';
+import adversariesTier2 from 'adversaries/Adversaries-Tier-2.json';
+import adversariesTier3 from 'adversaries/Adversaries-Tier-3.json';
+import adversariesTier4 from 'adversaries/Adversaries-Tier-4.json';
 
 const tierDataMap: Record<string, any[]> = {
   "1": adversariesTier1,
@@ -56,36 +55,36 @@ function buildCardHTML(
 		weaponName, weaponRange, weaponDamage, xp
 	} = values;
 
-	const stressBlock = stress ? `Stress: <span class="stat">${stress}</span><br>` : "";
+	const stressBlock = stress ? `Stress: <span class="df-stat">${stress}</span><br>` : "";
 
 	const featuresHTML = features.map(f => `
-			<div class="feature">
-			<span class="feature-title">
+			<div class="df-feature">
+			<span class="df-feature-title">
 				${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ':'}
 			</span>
-			<span class="feature-desc">${f.desc}</span>
+			<span class="df-feature-desc">${f.desc}</span>
 			</div>`).join('');
 
 const cardHTML = `
 
-<div class="card-outer pseudo-cut-corners outer">
-  <div class="card-inner pseudo-cut-corners inner">
+<div class="df-card-outer df-pseudo-cut-corners outer">
+  <div class="df-card-inner df-pseudo-cut-corners inner">
     <h2>${name}</h2>
-    <div class="subtitle">Tier ${tier} ${type}</div>
-    <div class="desc">${desc}</div>
-    <div class="motives">Motives & Tactics:
-      <span class="motives-desc">${motives}</span>
+    <div class="df-subtitle">Tier ${tier} ${type}</div>
+    <div class="df-desc">${desc}</div>
+    <div class="df-motives">Motives & Tactics:
+      <span class="df-motives-desc">${motives}</span>
     </div>
-    <div class="stats">
-      Difficulty: <span class="stat">${difficulty} |</span>
-      Thresholds: <span class="stat">${thresholds} |</span>
-      HP: <span class="stat">${hp} |</span>
+    <div class="df-stats">
+      Difficulty: <span class="df-stat">${difficulty} |</span>
+      Thresholds: <span class="df-stat">${thresholds} |</span>
+      HP: <span class="df-stat">${hp} |</span>
       ${stressBlock}
-      ATK: <span class="stat">${atk} |</span>
-      ${weaponName}: <span class="stat">${weaponRange} | ${weaponDamage}</span><br>
-      <div class="experience-line">Experience: <span class="stat">${xp}</span></div>
+      ATK: <span class="df-stat">${atk} |</span>
+      ${weaponName}: <span class="df-stat">${weaponRange} | ${weaponDamage}</span><br>
+      <div class="df-experience-line">Experience: <span class="df-stat">${xp}</span></div>
     </div>
-    <div class="section">FEATURES</div>
+    <div class="df-section">FEATURES</div>
     ${featuresHTML}
   </div>
 </div>

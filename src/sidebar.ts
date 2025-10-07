@@ -10,6 +10,6 @@ export async function openAdversaryCreatorSidebar(plugin: ObsidianPlugin) {
 			type: ADVERSARY_VIEW_TYPE,
 			active: true,
 		});
+		await plugin.app.workspace.revealLeaf(leaf);
 	}
-	plugin.app.workspace.rightSplit.expand();
 }
