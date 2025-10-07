@@ -1,6 +1,6 @@
-# DaggerHeart Obsidian Plugin
+# DaggerHeart
 
-An Obsidian plugin designed for **DaggerHeart**, a TTRPG, that helps Game Masters easily add adversaries to their notes and create custom monsters all within Obsidian.
+A plugin designed for **DaggerHeart**, a TTRPG, that helps Game Masters easily add adversaries to their notes and create custom monsters all within Obsidian.
 
 ## Features
 
