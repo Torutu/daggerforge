@@ -157,7 +157,7 @@ const adversaryText = `
         <h2>${adversary.name}</h2>
                 <div class="df-subtitle">Tier ${adversary.tier} ${adversary.type}</div>
                 <div class="df-desc">${adversary.desc}</div>
-                <div class="df-motives">Motives & Tactics:
+                <div class="df-motives">Motices & tactics:
                     <span class="df-motives-desc">${adversary.motives}</span>
                 </div>
                 <div class="df-stats">
@@ -169,7 +169,7 @@ const adversaryText = `
                     ${adversary.weaponName}: <span class="df-stat">${adversary.weaponRange} | ${adversary.weaponDamage}</span></div>
                     <div class="df-experience-line">Experience: <span class="df-stat">${adversary.xp}</span></div>
                 </div>
-                <div class="df-section">FEATURES</div>
+                <div class="df-section">Features</div>
                 ${featuresHTML}
     </div>
 </div>

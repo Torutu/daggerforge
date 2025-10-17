@@ -224,7 +224,7 @@ export class TextInputModal extends Modal {
 		<h2>${name}</h2>
 			<div class="df-subtitle">Tier ${tier} ${type} </div>
 			<div class="df-desc">${desc}</div>
-			<div class="df-motives">Motives & Tactics:
+			<div class="df-motives">Motices & tactics:
 			<span class="df-motives-desc">${motives}</span>
 			</div>
 			<div class="df-stats">
@@ -236,7 +236,7 @@ export class TextInputModal extends Modal {
 			${weaponName}: <span class="df-stat">${weaponRange} | ${weaponDamage}</span><br>
 			<div class="experience-line">Experience: <span class="df-stat">${xp}</span></div>
 			</div>
-			<div class="df-section">FEATURES</div>
+			<div class="df-section">Features</div>
 			${featuresHTML}
 	</div>
 </div>
