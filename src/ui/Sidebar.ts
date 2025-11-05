@@ -1,7 +1,7 @@
 import { Notice } from "obsidian";
 import type { Plugin as ObsidianPlugin } from "obsidian";
-import { ADVERSARY_VIEW_TYPE } from "./adversaries/advSearch";
-import { ENVIRONMENT_VIEW_TYPE } from "./environments/envSearch";
+import { ADVERSARY_VIEW_TYPE } from "../features/adversaries/components/AdvSearch";
+import { ENVIRONMENT_VIEW_TYPE } from "../features/environments/components/EnvSearch";
 
 export async function adversariesSidebar(plugin: ObsidianPlugin) {
 	new Notice("Opening Adversary Browser in sidebar...");

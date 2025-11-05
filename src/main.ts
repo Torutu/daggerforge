@@ -2,20 +2,21 @@ import { Editor, MarkdownView, Menu, Notice, Plugin, TFile} from "obsidian";
 import {
 	AdversaryView,
 	ADVERSARY_VIEW_TYPE,
-} from "./adversaries/advSearch";
+} from "./features/adversaries/components/AdvSearch";
 import {
 	EnvironmentView,
 	ENVIRONMENT_VIEW_TYPE,
-} from "./environments/envSearch";
-import { TextInputModal } from "./adversaries/adversaryCreator/textInputModalAdv";
-import { adversariesSidebar } from "./sidebar";
-import { loadStyleSheet } from "./style";
-import { openEnvironmentSidebar } from "./sidebar";
-import { environmentToHTML } from "./environments/envToHTML";
-import { EnvironmentModal } from "./environments/environmentCreator/envModal";
+} from "./features/environments/components/EnvSearch";
+import { TextInputModal } from "./features/adversaries/creator/TextInputModal";
+import {
+		adversariesSidebar,
+		openEnvironmentSidebar,
+ } from "./ui/Sidebar";
+import { environmentToHTML } from "./features/environments/components/EnvToHTML";
+import { EnvironmentModal } from "./features/environments/creator/EnvModal";
 import { CardData } from "./types";
-import { extractCardData } from "./adversaries/adversaryEditor/cardDataHelpers";
-import { AdversaryEditorModal } from "./adversaries/adversaryEditor/advEditorModal";
+import { extractCardData } from "./features/adversaries/editor/CardDataHelpers";
+import { AdversaryEditorModal } from "./features/adversaries/editor/AdvEditorModal";
 
 export default class DaggerForgePlugin extends Plugin {
 	updateCardData(cardElement: HTMLElement, currentData: CardData) {
@@ -27,7 +28,6 @@ export default class DaggerForgePlugin extends Plugin {
 
 
 	async onload() {
-		await loadStyleSheet(this);
 		this.addStatusBarItem().setText("DaggerForge Active");
 
 		if (!this.isEditListenerAdded) {

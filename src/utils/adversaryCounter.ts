@@ -1,17 +1,26 @@
-// utils/adversaryCounter.ts
+// Adversary counter state management
+let adversaryCount = 1;
 
-let adversaryCount: number = 1;
+export function getAdversaryCount(): number {
+	return adversaryCount;
+}
 
-export const incrementAdversaryCount = (amount: number = 1): void => {
-	adversaryCount += amount;
-};
+export function incrementAdversaryCount(): void {
+	adversaryCount++;
+}
 
-export const decrementAdversaryCount = (amount: number = 1): void => {
-	if (adversaryCount !== 1) adversaryCount -= amount;
-};
+export function decrementAdversaryCount(): void {
+	if (adversaryCount > 1) {
+		adversaryCount--;
+	}
+}
 
-export const getAdversaryCount = (): number => adversaryCount;
+export function setAdversaryCount(count: number): void {
+	if (count > 0) {
+		adversaryCount = count;
+	}
+}
 
-export const resetAdversaryCount = (): void => {
-	adversaryCount = 0;
-};
+export function resetAdversaryCount(): void {
+	adversaryCount = 1;
+}

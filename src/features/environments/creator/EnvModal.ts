@@ -1,14 +1,14 @@
 import { Modal, Editor } from "obsidian";
-import type DaggerForgePlugin from "../../main";
-import { createInlineField } from "../../utils/formHelpers";
+import type DaggerForgePlugin from "../../../main";
+import { createInlineField } from "../../../utils/formHelpers";
+import { FormInputs } from "../../../types/shared";
 import {
-	FormInputs,
 	FeatureElements,
 	SavedFeatureState,
 	EnvironmentData,
-} from "../envTypes";
-import { environmentToHTML } from "../envToHTML";
-import { buildCustomEnvironment, EnvironmentView } from "../envSearch";
+} from "../../../types/environment";
+import { environmentToHTML } from "../components/EnvToHTML";
+import { buildCustomEnvironment, EnvironmentView } from "../components/EnvSearch";
 
 export class EnvironmentModal extends Modal {
 	plugin: DaggerForgePlugin;
@@ -33,14 +33,14 @@ export class EnvironmentModal extends Modal {
 		const { contentEl } = this;
 		const saved = this.plugin.savedInputStateEnv || {};
 		contentEl.empty();
-		const firstRow = contentEl.createDiv({ cls: "env-form-row" });
+		const firstRow = contentEl.createDiv({ cls: "df-env-form-row" });
 		// === Main input fields ===
 		createInlineField(firstRow, this.inputs, {
 			label: "Name",
 			key: "name",
 			type: "input",
 			savedValues: saved,
-			customClass: "env-name-input",
+			customClass: "df-env-name-setting",
 		});
 
 		// Tier dropdown
@@ -50,7 +50,7 @@ export class EnvironmentModal extends Modal {
 			type: "select",
 			options: ["1", "2", "3", "4"],
 			savedValues: saved,
-			customClass: "env-tier-select",
+			customClass: "df-env-tier-setting",
 		});
 
 		// Type dropdown
@@ -60,34 +60,34 @@ export class EnvironmentModal extends Modal {
 			type: "select",
 			options: ["Event", "Exploration", "Social", "Traversal"],
 			savedValues: saved,
-			customClass: "env-type-select",
+			customClass: "df-env-type-setting",
 		});
 
-		const secondRow = contentEl.createDiv({ cls: "env-form-second-row" });
+		const secondRow = contentEl.createDiv({ cls: "df-env-form-second-row" });
 		createInlineField(secondRow, this.inputs, {
 			label: "Description",
 			key: "desc",
 			type: "input",
 			savedValues: saved,
-			customClass: "env-desc-input",
+			customClass: "df-env-desc-setting",
 		});
 
-		const thirdRow = contentEl.createDiv({ cls: "env-form-third-row" });
+		const thirdRow = contentEl.createDiv({ cls: "df-env-form-third-row" });
 		createInlineField(thirdRow, this.inputs, {
 			label: "Impulses",
 			key: "impulse",
 			type: "input",
 			savedValues: saved,
-			customClass: "env-impulse-input",
+			customClass: "df-env-impulse-setting",
 		});
 
-		const forthRow = contentEl.createDiv({ cls: "env-form-forth-row" });
+		const forthRow = contentEl.createDiv({ cls: "df-env-form-forth-row" });
 		createInlineField(forthRow, this.inputs, {
 			label: "Difficulity",
 			key: "difficulty",
 			type: "input",
 			savedValues: saved,
-			customClass: "env-difficulity-input",
+			customClass: "df-env-diff-setting",
 		});
 
 		createInlineField(forthRow, this.inputs, {
@@ -95,11 +95,11 @@ export class EnvironmentModal extends Modal {
 			key: "potentialAdversaries",
 			type: "input",
 			savedValues: saved,
-			customClass: "env-Potential-input",
+			customClass: "df-env-adv-setting",
 		});
 
 		// === Features ===
-		this.featureContainer = contentEl.createDiv("feature-container");
+		this.featureContainer = contentEl.createDiv("df-feature-container");
 		this.features = [];
 
 		const setValueIfSaved = (
@@ -121,13 +121,13 @@ export class EnvironmentModal extends Modal {
 
 		const addBtn = contentEl.createEl("button", {
 			text: "Add Feature",
-			cls: "env-add-feature-btn",
+			cls: "df-env-add-feature-btn",
 		});
 		addBtn.onclick = () => this.addFeature();
 
 		const insertBtn = contentEl.createEl("button", {
 			text: "Insert Environment",
-			cls: "env-insert-card-btn",
+			cls: "df-env-insert-card-btn",
 		});
 
 		//------------INSERT BUTTON
@@ -203,63 +203,63 @@ export class EnvironmentModal extends Modal {
 
 	addFeature(savedFeature?: SavedFeatureState) {
 		const wrapper = this.featureContainer.createDiv({
-			cls: "feature-block",
+			cls: "df-feature-block",
 		});
 
 		// Feature header row (name - type : cost)
-		const headerRow = wrapper.createDiv({ cls: "feature-header" });
+		const headerRow = wrapper.createDiv({ cls: "df-feature-header" });
 
 		// Name input
 		const nameEl = headerRow.createEl("input", {
-			cls: "input-feature-name",
+			cls: "df-input-feature-name",
 			placeholder: "Feature Name",
 		});
 		nameEl.value = savedFeature?.name || "";
 
 		// Type dropdown
 		const typeEl = headerRow.createEl("select", {
-			cls: "field-feature-type",
+			cls: "df-field-feature-type",
 		});
 		["Action", "Reaction", "Passive"].forEach((opt) =>
 			typeEl.createEl("option", {
 				text: opt,
 				value: opt,
-				cls: "tier-option",
+				cls: "df-tier-option",
 			}),
 		);
 		typeEl.value = savedFeature?.type || "Passive";
 
 		// Cost dropdown
 		const costEl = headerRow.createEl("select", {
-			cls: "input-feature-cost",
+			cls: "df-input-feature-cost",
 		});
 		["", "Spend a Fear"].forEach((opt) =>
 			costEl.createEl("option", {
 				text: opt || "none",
 				value: opt,
-				cls: "tier-option",
+				cls: "df-tier-option",
 			}),
 		);
 		costEl.value = savedFeature?.cost || "";
 
 		// Main feature description
 		const descEl = wrapper.createEl("textarea", {
-			cls: "feature-desc",
+			cls: "df-feature-desc",
 			placeholder: "Feature description text...",
 		});
 		descEl.value = savedFeature?.text || "";
 
 		// Single question section
 		const questionContainer = wrapper.createDiv({
-			cls: "question-container",
+			cls: "df-question-container",
 		});
 		questionContainer.createDiv({
-			cls: "question-header",
+			cls: "df-question-header",
 			text: "GM Prompt Question:",
 		});
 
 		const questionEl = questionContainer.createEl("textarea", {
-			cls: "feature-question",
+			cls: "df-feature-question",
 			placeholder: "Q: Enter question for players...",
 		});
 
@@ -273,7 +273,7 @@ export class EnvironmentModal extends Modal {
 		// Remove button
 		const removeBtn = wrapper.createEl("button", {
 			text: "Remove Feature",
-			cls: "env-remove-feature-btn",
+			cls: "df-env-remove-feature-btn",
 		});
 		removeBtn.onclick = () => {
 			const index = this.features.findIndex((f) => f.nameEl === nameEl);

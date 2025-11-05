@@ -1,4 +1,4 @@
-import { FormInputs } from "../adversaries/adversaryCreator/types";
+import { FormInputs } from "../types/shared";
 
 export const createField = (
 	parent: HTMLElement,

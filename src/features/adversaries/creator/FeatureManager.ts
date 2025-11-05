@@ -1,4 +1,4 @@
-import { FeatureElements, SavedFeatureState } from "./types";
+import { FeatureElements, SavedFeatureState } from "../../../types/adversary";
 
 export const addFeature = (
 	featureContainer: HTMLElement,
@@ -9,44 +9,44 @@ export const addFeature = (
 	) => void,
 	savedFeature?: SavedFeatureState,
 ) => {
-	const wrapper = featureContainer.createDiv({ cls: "feature-block" });
-	const row = wrapper.createDiv({ cls: "feature-row" });
+	const wrapper = featureContainer.createDiv({ cls: "df-feature-block" });
+	const row = wrapper.createDiv({ cls: "df-feature-row" });
 
 	const nameEl = row.createEl("input", {
-		cls: "input-feature-name",
+		cls: "df-input-feature-name",
 		placeholder: "Feature Name",
 	});
 	setValueIfSaved("featureName", nameEl);
 
-	const typeEl = row.createEl("select", { cls: "field-feature-type" });
+	const typeEl = row.createEl("select", { cls: "df-field-feature-type" });
 	["Action", "Reaction", "Passive"].forEach((type) => {
 		typeEl.createEl("option", {
 			text: type,
 			value: type,
-			cls: "tier-option",
+			cls: "df-tier-option",
 		});
 	});
 	setValueIfSaved("featureType", typeEl);
 
-	const costEl = row.createEl("select", { cls: "input-feature-cost" });
+	const costEl = row.createEl("select", { cls: "df-input-feature-cost" });
 	["", "Mark a Stress", "Spend a Fear"].forEach((opt) => {
 		costEl.createEl("option", {
 			text: opt === "" ? "none" : opt,
 			value: opt,
-			cls: "tier-option",
+			cls: "df-tier-option",
 		});
 	});
 	setValueIfSaved("featureCost", costEl);
 
 	const descEl = wrapper.createEl("textarea", {
-		cls: "feature-desc-input",
+		cls: "df-feature-desc-input",
 		placeholder: "Feature Description",
 	});
 	setValueIfSaved("featureDesc", descEl);
 
 	const removeBtn = wrapper.createEl("button", {
 		text: "Remove",
-		cls: "remove-feature-btn",
+		cls: "df-remove-feature-btn",
 	});
 
 	removeBtn.onclick = () => {

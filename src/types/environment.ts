@@ -1,7 +1,4 @@
-export type FormInputs = Record<
-	string,
-	HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
->;
+import type { FormInputs } from './shared';
 
 export type FeatureElements = {
 	nameEl: HTMLInputElement;

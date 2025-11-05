@@ -1,13 +1,14 @@
 import { Editor, Modal } from "obsidian";
-import type DaggerForgePlugin from "../../main";
+import type DaggerForgePlugin from "../../../main";
 import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-} from "../../utils/formHelpers";
-import { addFeature, getFeatureValues } from "../adversaryCreator/featureManager";
-import { buildCardHTML } from "../adversaryCreator/cardBuilder";
-import { FormInputs, FeatureElements } from "../adversaryCreator/types";
+} from "../../../utils/formHelpers";
+import { addFeature, getFeatureValues } from "../creator/FeatureManager";
+import { buildCardHTML } from "../creator/CardBuilder";
+import { FormInputs } from "../../../types/shared";
+import { FeatureElements } from "../../../types/adversary";
 
 export class AdversaryEditorModal extends Modal {
 	inputs: FormInputs = {};
@@ -39,9 +40,9 @@ export class AdversaryEditorModal extends Modal {
 		const { contentEl } = this;
 
 		contentEl.empty();
-		contentEl.createEl("h2", { text: "Edit Adversary", cls: "modal-title" });
+		contentEl.createEl("h2", { text: "Edit Adversary", cls: "df-modal-title" });
 
-		const firstRow = contentEl.createDiv({ cls: "form-row" });
+		const firstRow = contentEl.createDiv({ cls: "df-form-row" });
 
 		// Name field - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
@@ -49,7 +50,7 @@ export class AdversaryEditorModal extends Modal {
 			key: "name",
 			type: "input",
 			savedValues: this.cardData,
-			customClass: "adversary-name-input",
+			customClass: "df-adversary-name-input",
 		});
 
 		// Tier dropdown - prefill with existing data
@@ -59,7 +60,7 @@ export class AdversaryEditorModal extends Modal {
 			type: "select",
 			options: ["1", "2", "3", "4"],
 			savedValues: this.cardData,
-			customClass: "tier-select",
+			customClass: "df-tier-select",
 		});
 
 		// Type dropdown - prefill with existing data
@@ -80,7 +81,7 @@ export class AdversaryEditorModal extends Modal {
 				"Support",
 			],
 			savedValues: this.cardData,
-			customClass: "type-select",
+			customClass: "df-type-select",
 		});
 
 		// Description - prefill with existing data
@@ -90,7 +91,7 @@ export class AdversaryEditorModal extends Modal {
 			"Description",
 			"desc",
 			"textarea",
-			"description-textarea",
+			"df-description-textarea",
 			this.cardData,
 		);
 
@@ -101,7 +102,7 @@ export class AdversaryEditorModal extends Modal {
 			"Motives ",
 			"motives",
 			"input",
-			"motives-input",
+			"df-motives-input",
 			this.cardData,
 		);
 
@@ -154,12 +155,12 @@ export class AdversaryEditorModal extends Modal {
 			"Experience (optional) ",
 			"xp",
 			"input",
-			"experience-input",
+			"df-experience-input",
 			this.cardData,
 		);
 
 		// Features section - prefill with existing data
-		this.featureContainer = contentEl.createDiv("feature-container");
+		this.featureContainer = contentEl.createDiv("df-feature-container");
 		this.features = [];
 		this.featureContainer.empty();
 
@@ -176,7 +177,7 @@ export class AdversaryEditorModal extends Modal {
 
 		this.addFeatureBtn = contentEl.createEl("button", {
 			text: "Add Feature",
-			cls: "add-feature-btn",
+			cls: "df-add-feature-btn",
 		});
 		this.addFeatureBtn.onclick = () =>
 			addFeature(this.featureContainer, this.features, () => {});
@@ -187,7 +188,7 @@ export class AdversaryEditorModal extends Modal {
 			key: "count",
 			type: "input",
 			savedValues: this.cardData,
-			customClass: "count-input",
+			customClass: "df-count-input",
 		});
 
 		if (!this.cardData["count"]) {
@@ -197,7 +198,7 @@ export class AdversaryEditorModal extends Modal {
 		// Update button
 		this.insertBtn = contentEl.createEl("button", {
 			text: "Update Card",
-			cls: "insert-card-btn",
+			cls: "df-insert-card-btn",
 		});
 
         this.insertBtn.onclick = () => {

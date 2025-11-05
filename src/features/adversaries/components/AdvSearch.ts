@@ -1,10 +1,10 @@
 import { ItemView, WorkspaceLeaf, Notice, MarkdownView, TFile } from "obsidian";
-import { ADVERSARIES } from "../data/adversaries";
+import { ADVERSARIES } from "../../../data/adversaries";
 import {
 	getAdversaryCount,
 	incrementAdversaryCount,
 	decrementAdversaryCount,
-} from "@/utils/adversaryCounter";
+} from "../../../utils/adversaryCounter";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -74,11 +74,11 @@ export class AdversaryView extends ItemView {
 		// Create title
 		container.createEl("h2", {
 			text: "Adversary Browser",
-			cls: "adv-title",
+			cls: "df-adv-title",
 		});
 		// Create controls row
 		const controlsRow = container.createDiv({
-			cls: "adversary-controls-row",
+			cls: "df-adversary-controls-row",
 		});
 		// Add counter controls
 		this.createCounterControls(controlsRow);
@@ -203,22 +203,22 @@ export class AdversaryView extends ItemView {
 
 	private createCounterControls(container: HTMLElement): HTMLElement {
 		const counterContainer = container.createDiv({
-			cls: "adversary-counter-container",
+			cls: "df-adversary-counter-container",
 		});
 
 		const minusBtn = counterContainer.createEl("button", {
 			text: "-",
-			cls: "adversary-counter-btn",
+			cls: "df-adversary-counter-btn",
 		});
 
 		const counterDisplay = counterContainer.createEl("span", {
 			text: getAdversaryCount().toString(),
-			cls: "adversary-counter-display",
+			cls: "df-adversary-counter-display",
 		});
 
 		const plusBtn = counterContainer.createEl("button", {
 			text: "+",
-			cls: "adversary-counter-btn",
+			cls: "df-adversary-counter-btn",
 		});
 
 		minusBtn.onclick = () => {
@@ -240,7 +240,7 @@ export class AdversaryView extends ItemView {
 				type: "text",
 				placeholder: "Search adversaries...",
 			},
-			cls: "adversary-search-box",
+			cls: "df-adversary-search-box",
 		});
 
 		input.addEventListener("input", () => {
@@ -259,21 +259,21 @@ export class AdversaryView extends ItemView {
 
 	private createTierDropdown(container: HTMLElement): HTMLSelectElement {
 		const dropdown = container.createEl("select", {
-			cls: "tier-dropdown",
+			cls: "df-tier-dropdown",
 		});
 
 		const defaultOption = document.createElement("option");
 		defaultOption.value = "ALL";
 		defaultOption.textContent = "All Tiers";
 		defaultOption.selected = true;
-		defaultOption.classList.add("tier-option"); // custom class
+		defaultOption.classList.add("df-tier-option");
 		dropdown.appendChild(defaultOption);
 
 		["1", "2", "3", "4"].forEach((tier) => {
 			const option = document.createElement("option");
 			option.value = tier;
 			option.textContent = `Tier ${tier}`;
-			option.classList.add("tier-option"); // custom class
+			option.classList.add("df-tier-option");
 			dropdown.appendChild(option);
 		});
 
@@ -295,12 +295,12 @@ export class AdversaryView extends ItemView {
 	private renderResults(adversaries: Adversary[]) {
 		const container = this.containerEl.children[1];
 		let resultsDiv = container.querySelector(
-			".adversary-results",
+			".df-adversary-results",
 		) as HTMLElement;
 
 		if (!resultsDiv) {
 			resultsDiv = container.createEl("div", {
-				cls: "adversary-results",
+				cls: "df-adversary-results",
 			});
 		} else {
 			resultsDiv.empty();
@@ -319,22 +319,21 @@ export class AdversaryView extends ItemView {
 
 	private createAdversaryCard(adversary: Adversary): HTMLElement {
 		const card = document.createElement("div");
-		card.classList.add("adversary-card");
+		card.classList.add("df-adversary-card");
 
 		// Add source-specific class to card
-		const source = adversary.source || "core"; // Default to 'core' if not specified
-		card.classList.add(`source-${source.toLowerCase()}`);
+		const source = adversary.source || "core";
+		card.classList.add(`df-source-${source.toLowerCase()}`);
 
 		// Tier and type
 		const tier = document.createElement("p");
-		tier.classList.add("tier-text");
+		tier.classList.add("df-tier-text");
 		tier.textContent = `Tier ${adversary.tier} ${adversary.type}`;
 
 		// Add source badge
 		const sourceBadge = document.createElement("span");
 		sourceBadge.classList.add(
-			`source-badge-${source.toLowerCase()}`,
-			`source-${source.toLowerCase()}`,
+			`df-source-badge-${source.toLowerCase()}`,
 		);
 
 		// Customize badge text based on source
@@ -342,7 +341,6 @@ export class AdversaryView extends ItemView {
 			core: "Core",
 			custom: "Custom",
 			umbra: "Umbra",
-			// Add more sources as needed
 		};
 		sourceBadge.textContent = badgeTexts[source] || source;
 		tier.appendChild(sourceBadge);
@@ -351,13 +349,13 @@ export class AdversaryView extends ItemView {
 
 		// Name
 		const title = document.createElement("h3");
-		title.classList.add("title-small-padding");
+		title.classList.add("df-title-small-padding");
 		title.textContent = adversary.name || "Unnamed Adversary";
 		card.appendChild(title);
 
 		// Description
 		const desc = document.createElement("p");
-		desc.classList.add("desc-small-padding");
+		desc.classList.add("df-desc-small-padding");
 		desc.textContent = adversary.desc || "No description available.";
 		card.appendChild(desc);
 
@@ -406,25 +404,25 @@ export class AdversaryView extends ItemView {
 		);
 
 		return `
-<section class="card-outer pseudo-cut-corners outer">
-    <div class="card-inner pseudo-cut-corners inner">
+<section class="df-card-outer df-pseudo-cut-corners outer">
+    <div class="df-card-inner df-pseudo-cut-corners inner">
         ${multipleTickboxes}
         <h2>${adversary.name}</h2>
-        <div class="subtitle">Tier ${adversary.tier} ${adversary.type}</div>
-        <div class="desc">${adversary.desc}</div>
-        <div class="motives">Motives & Tactics:
-            <span class="motives-desc">${adversary.motives}</span>
+        <div class="df-subtitle">Tier ${adversary.tier} ${adversary.type}</div>
+        <div class="df-desc">${adversary.desc}</div>
+        <div class="df-motives">Motives & Tactics:
+            <span class="df-motives-desc">${adversary.motives}</span>
         </div>
-        <div class="stats">
-            Difficulty: <span class="stat">${adversary.difficulty} |</span>
-            Thresholds: <span class="stat">${adversary.thresholds} |</span>
-            HP: <span class="stat">${adversary.hp} |</span>
-            Stress: <span class="stat">${adversary.stress || ""}</span>
-            <div>ATK: <span class="stat">${adversary.atk} |</span>
-            ${adversary.weaponName}: <span class="stat">${adversary.weaponRange} | ${adversary.weaponDamage}</span></div>
-            <div class="experience-line">Experience: <span class="stat">${adversary.xp}</span></div>
+        <div class="df-stats">
+            Difficulty: <span class="df-stat">${adversary.difficulty} |</span>
+            Thresholds: <span class="df-stat">${adversary.thresholds} |</span>
+            HP: <span class="df-stat">${adversary.hp} |</span>
+            Stress: <span class="df-stat">${adversary.stress || ""}</span>
+            <div>ATK: <span class="df-stat">${adversary.atk} |</span>
+            ${adversary.weaponName}: <span class="df-stat">${adversary.weaponRange} | ${adversary.weaponDamage}</span></div>
+            <div class="df-experience-line">Experience: <span class="df-stat">${adversary.xp}</span></div>
         </div>
-        <div class="section">FEATURES</div>
+        <div class="df-section">FEATURES</div>
         ${featuresHTML}
     </div>
 </section>
@@ -435,11 +433,11 @@ export class AdversaryView extends ItemView {
 		return features
 			.map(
 				(feature) => `
-            <div class="feature">
-                <span class="feature-title">
+            <div class="df-feature">
+                <span class="df-feature-title">
                     ${feature.name} - ${feature.type}${feature.cost ? `: ${feature.cost}` : ":"}
                 </span>
-                <span class="feature-desc">${feature.desc}</span>
+                <span class="df-feature-desc">${feature.desc}</span>
             </div>`,
 			)
 			.join("");
@@ -452,12 +450,12 @@ export class AdversaryView extends ItemView {
 		return Array.from(
 			{ length: count },
 			(_, index) => `
-            <div class="hp-tickboxes">
-                <span class="hp-stress">HP</span>${this.generateTickboxes(adversary.hp, "hp-tick")}
-                <span class="adversary-count">${index + 1}</span>
+            <div class="df-hp-tickboxes">
+                <span class="df-hp-stress">HP</span>${this.generateTickboxes(adversary.hp, "hp-tick")}
+                <span class="df-adversary-count">${index + 1}</span>
             </div>
-            <div class="stress-tickboxes">
-                <span class="hp-stress">Stress</span>${this.generateTickboxes(String(adversary.stress ?? 0), "stress-tick")}
+            <div class="df-stress-tickboxes">
+                <span class="df-hp-stress">Stress</span>${this.generateTickboxes(String(adversary.stress ?? 0), "stress-tick")}
             </div>
         `,
 		).join("");
@@ -468,7 +466,7 @@ export class AdversaryView extends ItemView {
 		return Array.from(
 			{ length: numCount },
 			(_, i) =>
-				`<input type="checkbox" id="${prefix}-${i}" class="${prefix}box" />`,
+				`<input type="checkbox" id="${prefix}-${i}" class="df-${prefix}box" />`,
 		).join("");
 	}
 }

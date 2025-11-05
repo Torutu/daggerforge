@@ -1,13 +1,14 @@
 import { Notice, TFile, Editor, Modal } from "obsidian";
-import type DaggerForgePlugin from "../../main";
+import type DaggerForgePlugin from "../../../main";
 import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-} from "../../utils/formHelpers";
-import { addFeature, getFeatureValues } from "./featureManager";
-import { buildCardHTML } from "./cardBuilder";
-import { FormInputs, FeatureElements } from "./types";
+} from "../../../utils/formHelpers";
+import { addFeature, getFeatureValues } from "./FeatureManager";
+import { buildCardHTML } from "./CardBuilder";
+import { FormInputs } from "../../../types/shared";
+import { FeatureElements, SavedFeatureState } from "../../../types/adversary";
 
 export async function buildCustomAdversary(
 	app: any,
@@ -132,9 +133,9 @@ export class TextInputModal extends Modal {
 
 		contentEl.empty();
 		const title = this.cardElement ? "Edit Adversary" : "Create Adversary";
-		contentEl.createEl("h2", { text: title, cls: "modal-title" });
+		contentEl.createEl("h2", { text: title, cls: "df-modal-title" });
 
-		const firstRow = contentEl.createDiv({ cls: "form-row" });
+		const firstRow = contentEl.createDiv({ cls: "df-form-row" });
 
 		// Name field
 		createInlineField(firstRow, this.inputs, {
@@ -142,7 +143,7 @@ export class TextInputModal extends Modal {
 			key: "name",
 			type: "input",
 			savedValues: saved,
-			customClass: "adversary-name-input",
+			customClass: "df-adversary-name-input",
 		});
 
 		// Tier dropdown
@@ -152,7 +153,7 @@ export class TextInputModal extends Modal {
 			type: "select",
 			options: ["1", "2", "3", "4"],
 			savedValues: saved,
-			customClass: "tier-select",
+			customClass: "df-tier-select",
 		});
 
 		// Type dropdown
@@ -173,7 +174,7 @@ export class TextInputModal extends Modal {
 				"Support",
 			],
 			savedValues: saved,
-			customClass: "type-select",
+			customClass: "df-type-select",
 		});
 
 		// contentEl.createEl('br');
@@ -245,11 +246,11 @@ export class TextInputModal extends Modal {
 			"Experience (optional) ",
 			"xp",
 			"input",
-			"experience-input",
+			"df-experience-input",
 			saved,
 		);
 
-		this.featureContainer = contentEl.createDiv("feature-container");
+		this.featureContainer = contentEl.createDiv("df-feature-container");
 		this.features = [];
 		this.featureContainer.empty();
 
@@ -265,7 +266,7 @@ export class TextInputModal extends Modal {
 
 		this.addFeatureBtn = contentEl.createEl("button", {
 			text: "Add Feature",
-			cls: "add-feature-btn",
+			cls: "df-add-feature-btn",
 		});
 		this.addFeatureBtn.onclick = () =>
 			addFeature(this.featureContainer, this.features, setValueIfSaved);
@@ -275,7 +276,7 @@ export class TextInputModal extends Modal {
 			key: "count",
 			type: "input",
 			savedValues: saved,
-			customClass: "count-input",
+			customClass: "df-count-input",
 		});
 
 		if (!saved["count"]) {
@@ -285,7 +286,7 @@ export class TextInputModal extends Modal {
 		// Modified button handling
 		this.insertBtn = contentEl.createEl("button", {
 			text: this.cardElement ? "Update Card" : "Insert Card",
-			cls: "insert-card-btn",
+			cls: "df-insert-card-btn",
 		});
 
 		//--------INSERT BUTTON CLICK

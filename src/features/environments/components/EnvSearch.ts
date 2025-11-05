@@ -1,6 +1,6 @@
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice, TFile } from "obsidian";
-import { ENVIRONMENTS } from "../data/environments";
-import { EnvironmentData } from "./envTypes";
+import { ENVIRONMENTS } from "../../../data/environments";
+import { EnvironmentData } from "../../../types/environment";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 
@@ -105,7 +105,7 @@ export class EnvironmentView extends ItemView {
 			const button = document.createElement("button");
 			button.textContent =
 				tierLabel === "ALL" ? "ALL" : `Tier ${tierLabel}`;
-			button.classList.add("tier-filter-btn");
+			button.classList.add("df-tier-filter-btn");
 			button.addEventListener("click", () => {
 				input.value = "";
 				const filtered =
@@ -234,17 +234,17 @@ export class EnvironmentView extends ItemView {
 
 		container.createEl("h2", {
 			text: "Environment Browser",
-			cls: "env-title",
+			cls: "df-env-title",
 		});
 
 		const input = container.createEl("input", {
 			attr: { type: "text", placeholder: "Search environments..." },
-			cls: "env-search-box",
+			cls: "df-env-search-box",
 		}) as HTMLInputElement;
 		this.searchInput = input;
 
 		const resultsDiv = container.createEl("div", {
-			cls: "env-results",
+			cls: "df-env-results",
 			text: "Results will appear here.",
 		});
 		this.resultsDiv = resultsDiv;
@@ -271,22 +271,21 @@ export class EnvironmentView extends ItemView {
 
 	createEnvironmentCard(env: any): HTMLElement {
 		const card = document.createElement("div");
-		card.classList.add("env-card");
+		card.classList.add("df-env-card");
 
 		// Add source-specific class
-		const source = env.source || "core"; // Default to 'core' if not specified
-		card.classList.add(`source-${source.toLowerCase()}`);
+		const source = env.source || "core";
+		card.classList.add(`df-source-${source.toLowerCase()}`);
 
 		// Tier and type
 		const tier = document.createElement("p");
-		tier.classList.add("tier-text");
+		tier.classList.add("df-tier-text");
 		tier.textContent = `Tier ${env.tier} ${env.type}`;
 
 		// Add source badge
 		const sourceBadge = document.createElement("span");
 		sourceBadge.classList.add(
-			`source-badge-${source.toLowerCase()}`,
-			`source-${source.toLowerCase()}`,
+			`df-source-badge-${source.toLowerCase()}`,
 		);
 
 		// Customize badge text based on source
@@ -294,7 +293,6 @@ export class EnvironmentView extends ItemView {
 			core: "Core",
 			custom: "Custom",
 			umbra: "Umbra",
-			// Add more sources as needed
 		};
 		sourceBadge.textContent = badgeTexts[source] || source;
 		tier.appendChild(sourceBadge);
@@ -303,13 +301,13 @@ export class EnvironmentView extends ItemView {
 
 		// Name
 		const title = document.createElement("h3");
-		title.classList.add("title-small-padding");
+		title.classList.add("df-title-small-padding");
 		title.textContent = env.name || "Unnamed Environment";
 		card.appendChild(title);
 
 		// Description
 		const desc = document.createElement("p");
-		desc.classList.add("desc-small-padding");
+		desc.classList.add("df-desc-small-padding");
 		desc.textContent = env.desc || "No description available.";
 		card.appendChild(desc);
 
@@ -336,20 +334,20 @@ export class EnvironmentView extends ItemView {
 							? f.bullets
 									.map(
 										(b: string) =>
-											`<div class="env-bullet">${b}</div>`,
+											`<div class="df-env-bullet">${b}</div>`,
 									)
 									.join("")
 							: "";
 
 					const questionsHTML =
 						f.questions && f.questions.length
-							? `<div class="env-questions">${f.questions.map((q: string) => `${q}`).join("")}</div>`
+							? `<div class="df-env-questions">${f.questions.map((q: string) => `${q}`).join("")}</div>`
 							: "";
 
 					return `
-				<div class="feature">
-					<div class="env-feat-name-type">${f.name} - ${f.type}: ${costHTML}
-						<span class="env-feat-text"> ${f.text}</span>
+				<div class="df-feature">
+					<div class="df-env-feat-name-type">${f.name} - ${f.type}: ${costHTML}
+						<span class="df-env-feat-text"> ${f.text}</span>
 					</div>
 					
 					${bulletsHTML}
@@ -360,17 +358,17 @@ export class EnvironmentView extends ItemView {
 				.join("");
 			// Compose the full HTML block
 			const envHTML = `
-<div class="env-card-outer">
-			<div class="env-card-inner">
-				<div class="env-name">${env.name}</div>
-				<div class="env-feat-tier-type">Tier ${env.tier} ${env.type}</div>
-				<p class="env-desc">${env.desc}</p>
+<div class="df-env-card-outer">
+			<div class="df-env-card-inner">
+				<div class="df-env-name">${env.name}</div>
+				<div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type}</div>
+				<p class="df-env-desc">${env.desc}</p>
 				<p><strong>Impulse:</strong> ${env.impulse || ""}</p>
-				<div class="env-card-diff-pot">
-				<p><span class="bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
-				<p><span class="bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
+				<div class="df-env-card-diff-pot">
+				<p><span class="df-bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
+				<p><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
 				</div>
-				<div class="features-section">
+				<div class="df-features-section">
 				<h3>Features</h3>
 				${featuresHTML}
 				</div>

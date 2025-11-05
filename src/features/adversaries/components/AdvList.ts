@@ -1,5 +1,5 @@
 import { Editor, Notice } from "obsidian";
-import { ADVERSARIES } from "../data/adversaries";
+import { ADVERSARIES } from "../../../data/adversaries";
 
 const tierDataMap: Record<string, any[]> = {
 	"1": ADVERSARIES.tier1,
@@ -25,7 +25,8 @@ export async function loadAdversaryTier(tier: string, editor: Editor) {
 					desc: a.desc ?? "",
 					motives: a.motives ?? "",
 					difficulty: a.difficulty ?? "",
-					thresholds: a.thresholds ?? "",
+					thresholdMajor: a.thresholds?.split('/')[0] ?? "",
+					thresholdSevere: a.thresholds?.split('/')[1] ?? "",
 					hp: a.hp ?? "",
 					stress: a.stress ?? "",
 					atk: a.atk ?? "",
@@ -33,6 +34,7 @@ export async function loadAdversaryTier(tier: string, editor: Editor) {
 					weaponRange: a.weaponRange ?? "",
 					weaponDamage: a.weaponDamage ?? "",
 					xp: a.xp ?? "",
+					count: "1",
 				},
 				a.features ?? [],
 			),
@@ -54,7 +56,8 @@ function buildCardHTML(
 		desc,
 		motives,
 		difficulty,
-		thresholds,
+		thresholdMajor,
+		thresholdSevere,
 		hp,
 		stress,
 		atk,
@@ -64,63 +67,63 @@ function buildCardHTML(
 		xp,
 	} = values;
 
-	const hptick = Number(hp) || 0; // fallback to 0 if undefined
+	const hptick = Number(hp) || 0;
 	const hpTickboxes = Array.from(
 		{ length: hptick },
 		(_, i) => `
-    <input type="checkbox" id="hp-tick-${i}" class="hp-tickbox" />
+    <input type="checkbox" id="hp-tick-${i}" class="df-hp-tickbox" />
     `,
 	).join("");
-	const stresstick = Number(stress) ?? 0; // nullish coalescing fallback to 0
+	const stresstick = Number(stress) ?? 0;
 	const stressTickboxes = Array.from(
 		{ length: stresstick },
 		(_, i) => `
-    <input type="checkbox" id="stress-tick-${i}" class="stress-tickbox" />
+    <input type="checkbox" id="stress-tick-${i}" class="df-stress-tickbox" />
     `,
 	).join("");
 
 	const stressBlock = stress
-		? `Stress: <span class="stat">${stress}</span><br>`
+		? `Stress: <span class="df-stat">${stress}</span><br>`
 		: "";
 
 	const featuresHTML = features
 		.map(
 			(f) => `
-			<div class="feature">
-			<span class="feature-title">
+			<div class="df-feature">
+			<span class="df-feature-title">
 				${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ":"}
 			</span>
-			<span class="feature-desc">${f.desc}</span>
+			<span class="df-feature-desc">${f.desc}</span>
 			</div>`,
 		)
 		.join("");
 
 	const cardHTML = `
 
-<section class="card-outer pseudo-cut-corners outer">
-  <div class="card-inner pseudo-cut-corners inner">
-    <div class="hp-tickboxes">
-    <span class="hp-stress">HP</span>${hpTickboxes}
+<section class="df-card-outer df-pseudo-cut-corners outer">
+  <div class="df-card-inner df-pseudo-cut-corners inner">
+    <div class="df-hp-tickboxes">
+    <span class="df-hp-stress">HP</span>${hpTickboxes}
     </div>
-    <div class="stress-tickboxes">
-        <span class="hp-stress">Stress</span>${stressTickboxes}
+    <div class="df-stress-tickboxes">
+        <span class="df-hp-stress">Stress</span>${stressTickboxes}
     </div>
     <h2>${name}</h2>
-    <div class="subtitle">Tier ${tier} ${type}</div>
-    <div class="desc">${desc}</div>
-    <div class="motives">Motives & Tactics:
-      <span class="motives-desc">${motives}</span>
+    <div class="df-subtitle">Tier ${tier} ${type}</div>
+    <div class="df-desc">${desc}</div>
+    <div class="df-motives">Motives & Tactics:
+      <span class="df-motives-desc">${motives}</span>
     </div>
-    <div class="stats">
-      Difficulty: <span class="stat">${difficulty} |</span>
-      Thresholds: <span class="stat">${thresholds} |</span>
-      HP: <span class="stat">${hp} |</span>
+    <div class="df-stats">
+      Difficulty: <span class="df-stat">${difficulty} |</span>
+      Thresholds: <span class="df-stat">${thresholdMajor}/${thresholdSevere} |</span>
+      HP: <span class="df-stat">${hp} |</span>
       ${stressBlock}
-      ATK: <span class="stat">${atk} |</span>
-      ${weaponName}: <span class="stat">${weaponRange} | ${weaponDamage}</span><br>
-      <div class="experience-line">Experience: <span class="stat">${xp}</span></div>
+      ATK: <span class="df-stat">${atk} |</span>
+      ${weaponName}: <span class="df-stat">${weaponRange} | ${weaponDamage}</span><br>
+      <div class="df-experience-line">Experience: <span class="df-stat">${xp}</span></div>
     </div>
-    <div class="section">FEATURES</div>
+    <div class="df-section">FEATURES</div>
     ${featuresHTML}
   </div>
 </section>

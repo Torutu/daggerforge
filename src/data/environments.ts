@@ -1,7 +1,7 @@
-import envTier1 from "../../../env/env-tier-1.json";
-import envTier2 from "../../../env/env-tier-2.json";
-import envTier3 from "../../../env/env-tier-3.json";
-import envTier4 from "../../../env/env-tier-4.json";
+import envTier1 from "env/env-tier-1.json";
+import envTier2 from "env/env-tier-2.json";
+import envTier3 from "env/env-tier-3.json";
+import envTier4 from "env/env-tier-4.json";
 
 export const ENVIRONMENTS = {
 	tier1: envTier1,

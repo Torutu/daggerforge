@@ -1,80 +1,80 @@
 :root {
-	--corner: 10px;
-	--font: "Myriad Pro";
-	--color-primary: #000;
-	--color-bg-outer: #cab996;
-	--color-bg-inner: #f5f1e8;
-	--color-border: #c2af88;
+  --df-corner: 10px;
+  --df-font: "Myriad Pro";
+  --df-color-primary: #000;
+  --df-color-bg-outer: #bfa980;
+  --df-color-bg-inner: #f5f0e9;
+  --df-color-border: #bfa980;
 }
 
-.pseudo-cut-corners {
-	position: relative;
-	clip-path: none;
-	--corner: 4px;
+.df-pseudo-cut-corners {
+  position: relative;
+  clip-path: none;
+  --df-corner: 4px;
 }
 
-.pseudo-cut-corners::before {
-	content: "";
-	position: absolute;
-	z-index: -1;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	clip-path: polygon(
-		var(--corner) 0%,
-		calc(100% - var(--corner)) 0%,
-		100% var(--corner),
-		100% calc(100% - var(--corner)),
-		calc(100% - var(--corner)) 100%,
-		var(--corner) 100%,
-		0% calc(100% - var(--corner)),
-		0% var(--corner)
-	);
+.df-pseudo-cut-corners::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(
+    var(--df-corner) 0%,
+    calc(100% - var(--df-corner)) 0%,
+    100% var(--df-corner),
+    100% calc(100% - var(--df-corner)),
+    calc(100% - var(--df-corner)) 100%,
+    var(--df-corner) 100%,
+    0% calc(100% - var(--df-corner)),
+    0% var(--df-corner)
+  );
 }
 
-.pseudo-cut-corners.outer {
-	filter: drop-shadow(0.2em 0.2em 0.4em rgba(0, 0, 0, 0.5));
-	padding: 1.4px;
-	max-width: 400px;
-	width: 100%;
-	box-sizing: border-box;
-	margin: 0 auto;
+.df-pseudo-cut-corners.outer {
+  filter: drop-shadow(0.2em 0.2em 0.4em rgba(0, 0, 0, 0.5));
+  padding: 1.4px;
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
-.pseudo-cut-corners.outer::before {
-	background-color: var(--color-bg-outer);
+.df-pseudo-cut-corners.outer::before {
+  background-color: var(--df-color-bg-outer);
 }
 
-.pseudo-cut-corners.inner {
-	padding: 5px;
-	box-sizing: border-box;
+.df-pseudo-cut-corners.inner {
+  padding: 5px;
+  box-sizing: border-box;
 }
 
-.pseudo-cut-corners.inner::before {
-	background-color: var(--color-bg-inner);
+.df-pseudo-cut-corners.inner::before {
+  background-color: var(--df-color-bg-inner);
 }
 
-.card-inner {
-	font-family: var(--font-text);
-	color: var(--color-primary);
-	font-weight: 1000;
+.df-card-inner {
+  font-family: var(--df-font-text);
+  color: var(--df-color-primary);
+  font-weight: 1000;
 }
 
-.card-inner * {
-	font-family: inherit;
-	color: inherit;
+.df-card-inner * {
+  font-family: inherit;
+  color: inherit;
 }
 
-.hp-tickboxes {
+.df-hp-tickboxes {
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
 }
 
-.stress-tickboxes .stress-tickbox,
-.hp-tickboxes .hp-tickbox {
+.df-stress-tickboxes .df-stress-tickbox,
+.df-hp-tickboxes .df-hp-tickbox {
 	width: 23px;
 	height: 14px;
 	cursor: pointer;
@@ -84,134 +84,149 @@
 	background-color: white;
 }
 
-.hp-tickboxes .hp-tickbox:checked,
-.hp-tickboxes .hp-tickbox:checked:hover,
-.hp-tickboxes .hp-tickbox:checked:focus,
-.stress-tickboxes .stress-tickbox:checked,
-.stress-tickboxes .stress-tickbox:checked:hover,
-.stress-tickboxes .stress-tickbox:checked:focus {
+.df-hp-tickboxes .df-hp-tickbox:checked,
+.df-hp-tickboxes .df-hp-tickbox:checked:hover,
+.df-hp-tickboxes .df-hp-tickbox:checked:focus,
+.df-stress-tickboxes .df-stress-tickbox:checked,
+.df-stress-tickboxes .df-stress-tickbox:checked:hover,
+.df-stress-tickboxes .df-stress-tickbox:checked:focus {
 	background-color: rgb(41, 41, 41);
 	border-color: rgb(41, 41, 41);
 }
 
-.hp-tickboxes .hp-tickbox:checked:after,
-.stress-tickboxes .stress-tickbox:after {
+.df-hp-tickboxes .df-hp-tickbox:checked:after,
+.df-stress-tickboxes .df-stress-tickbox:after {
 	/* hides the check mark */
 	background-color: transparent !important;
 }
 
-.hp-stress {
+.df-hp-stress {
 	font-weight: 700;
 	font-size: 0.9em;
 	margin-right: 5px;
 }
 
-.stress-tickboxes {
+.df-stress-tickboxes {
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
-	border-bottom: 1px solid var(--color-border);
+	border-bottom: 1px solid var(--df--color-border);
 }
 
-.card-inner h2 {
+.df-card-inner h2 {
 	font-size: 1.3em;
 	font-weight: 700;
 	margin: 0;
 }
-.card-inner .subtitle,
-.card-inner .section,
-.card-inner .feature-title {
+.df-card-inner .df-subtitle,
+.df-card-inner .df-section,
+.df-card-inner .df-feature-title {
 	font-weight: bold;
 }
 
-.card-inner .desc {
+.df-card-inner .df-desc {
 	font-weight: 500;
 	font-style: italic;
 	font-size: 0.8em;
 }
 
-.card-inner .motives {
+.df-card-inner .df-motives {
 	font-weight: 700;
 }
 
-.card-inner .motives-desc,
-.card-inner .feature-desc {
+.df-card-inner .df-motives-desc,
+.df-card-inner .df-feature-desc {
 	font-weight: 500;
 	font-size: small;
 }
 
-.card-inner .stats {
+.df-card-inner .df-stats {
 	margin: 2px 0;
-	padding-left: 10px;
+	padding-left: 5px;
 	font-weight: 600;
 	background-color: #fff;
 	font-size: 0.9em;
-	border-top: 2px solid var(--color-border);
-	border-bottom: 2px solid var(--color-border);
+	border-top: 2px solid #c2af89;
+	border-bottom: 2px solid #c2af89;
 }
 
-.card-inner .stat {
+.df-card-inner .df-stat {
 	font-weight: 400;
 }
 
-.stats .experience-line {
-	border-top: 1px dashed var(--color-border);
+/* .df-stats .df-experience-line {
+	border-top: 1px dotted black;
+	margin-top: 1px;
+	padding-top: 1px;
+	background-color: #fff;
+} */
+
+.df-stats {
 	margin-top: 1px;
 	padding-top: 1px;
 	background-color: #fff;
 }
 
-.card-inner .feature {
+.df-experience-line {
+	border-top: 1px dotted black;
+	width: 98%;
+	margin: auto;
+	margin-top: 1px;
+	padding-top: 1px;
+	background-color: #fff;
+}
+
+.df-card-inner .df-feature {
 	margin-bottom: 2px;
 }
 
-.input-field {
+.df-input-field {
 	width: 100%;
 	max-width: 120px;
 	margin-bottom: 10px;
 }
 
-input.input-help {
+input.df-input-help {
 	width: 100%;
 	max-width: 360px;
 }
 
-select.input-field {
+select.df-input-field {
 	width: 120px;
 }
 
-.tier-select {
+.df-tier-select {
 	width: 20%;
 }
 
-.type-select {
+.df-type-select {
 	width: 20%;
 }
 
-.features-heading {
+.df-features-heading {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
 
-.tier-filter-btn {
+.df-tier-filter-btn {
 	margin-left: 5px;
 	margin-top: 3px;
 }
 
-.adv-title,
-.env-title {
+.df-adv-title,
+.df-env-title {
 	margin-top: 0px;
 	margin-bottom: 10px;
 }
 
-.inline-input.count-input {
+.df-inline-input.count-input {
 	width: 20%;
 }
 
 /* sidebar result container */
-.env-card,
-.adversary-card {
+.df-env-card,
+.df-adversary-card {
 	border-left: 4px solid transparent;
 	border-top: 1px solid #555555;
 	border-bottom: 1px solid #555555;
@@ -222,7 +237,7 @@ select.input-field {
 }
 
 /* Source badge styling */
-.source-badge-core {
+.df-source-badge-core {
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -233,7 +248,7 @@ select.input-field {
 	text-transform: capitalize;
 }
 
-.source-badge-custom {
+.df-source-badge-custom {
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -245,30 +260,30 @@ select.input-field {
 }
 
 /* Color schemes for different sources */
-.source-core {
+.df-source-core {
 	border-color: #555555;
 }
-.source-custom {
+.df-source-custom {
 	border-color: #d3d3d3;
 }
-.source-umbra {
+.df-source-umbra {
 	/* background-color: #6a1b9a; Purple */
 	border-color: #6a1b9a;
 }
 
 /* Card border colors matching badges */
-.source-core {
+.df-source-core {
 	border-left-color: #555555;
 }
-.source-custom {
+.df-source-custom {
 	border-left-color: #d3d3d3;
 }
-.source-umbra {
+.df-source-umbra {
 	border-left-color: #6a1b9a;
 }
 
 /* The tier inside the sidebar result container (adv + env)*/
-.tier-text {
+.df-tier-text {
 	font-size: 0.8em;
 	padding: 1px;
 	margin-top: 1px;
@@ -276,20 +291,20 @@ select.input-field {
 	font-weight: bold;
 }
 /* name of the adversary in the sidebar container (adv + env)*/
-.title-small-padding {
+.df-title-small-padding {
 	padding: 1px;
 	margin-top: 1px;
 	margin-bottom: 1px;
 }
 /* small description  (adv + env)*/
-.desc-small-padding {
+.df-desc-small-padding {
 	padding: 1px;
 	margin-top: 1px;
 	margin-bottom: 1px;
 	font-size: 0.9em;
 }
 
-.adversary-controls-row {
+.df-adversary-controls-row {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -298,37 +313,37 @@ select.input-field {
 	width: 100%;
 }
 
-.adversary-counter-container {
+.df-adversary-counter-container {
 	flex-shrink: 0;
 }
 
-.adversary-search-box {
+.df-adversary-search-box {
 	flex-grow: 1;
 	min-width: 0;
 	max-width: 100%;
 }
 
-.adversary-counter-btn {
+.df-adversary-counter-btn {
 	margin: 0 0px;
 }
 
-.adversary-counter-display {
+.df-adversary-counter-display {
 	padding: 0 8px;
 	font-weight: bold;
 }
 
-.env-results, /* the space between results and the search bar in the sidebar*/
-.adversary-results {
+.df-env-results, /* the space between results and the search bar in the sidebar*/
+.df-adversary-results {
 	margin-top: 10px;
 }
 
 /* modal styles */
 
-.inline-label {
+.df-inline-label {
 	align-self: auto;
 }
 
-.modal-title {
+.df-modal-title {
 	font-size: 1.2em;
 	font-weight: bold;
 	margin-bottom: 10px;
@@ -336,35 +351,35 @@ select.input-field {
 }
 
 /* styles.css */
-.form-row {
+.df-form-row {
 	display: flex;
 	gap: 10px;
 	align-items: center;
 }
 
-.adv-first-inline-field {
+.df-adv-first-inline-field {
 	display: flex;
 	align-items: flex-start;
 	flex-grow: 1;
 	flex-direction: column;
 }
 
-.adv-first-inline-field label {
+.df-adv-first-inline-field label {
 	margin-right: 5px;
 	white-space: nowrap;
 }
 
-.inline-input {
+.df-inline-input {
 	width: 100%;
 }
 
 /* Specific field adjustments */
-.adversary-name-input {
+.df-adversary-name-input {
 	min-width: 120px;
 }
 
 /* warpper for field rows */
-.field-row {
+.df-field-row {
 	display: flex;
 	align-items: stretch;
 	align-content: flex-start;
@@ -372,81 +387,81 @@ select.input-field {
 }
 
 /* adversary-name-textarea is used for the textarea input for the adversary name */
-.adversary-name-textarea {
+.df-adversary-name-textarea {
 	width: 220px;
 	height: 30px;
 	margin-bottom: 10px;
 }
 
 /* for Tier*/
-.input-field-first-row-tier {
+.df-input-field-first-row-tier {
 	width: 100%;
 	max-width: 50px;
 	margin-bottom: 10px;
 }
 /* for Type */
-.input-field-first-row {
+.df-input-field-first-row {
 	width: 100%;
 	max-width: 100px;
 	margin-bottom: 10px;
 }
 
-.description-textarea {
+.df-description-textarea {
 	min-width: 100%;
 	height: 60px;
 	margin-bottom: 10px;
 	overflow: auto;
 }
 
-.motives-input {
+.df-motives-input {
 	width: 100%;
 	max-width: 340px;
 }
 
-.flex-row {
+.df-flex-row {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
 	justify-content: flex-start;
 }
 
-.inline-field {
+.df-inline-field {
 	display: flex;
 	flex-direction: column;
 }
 
-.experience-input {
+.df-experience-input {
 	width: 100%;
 	max-width: 240px;
 }
 
-.feature-block {
+.df-feature-block {
 	margin-bottom: 1px;
 }
 
-.feature-row {
+.df-feature-row {
 	display: flex;
 	gap: 10px;
 	margin-bottom: 6px;
 }
 
-.input-feature-name {
+.df-input-feature-name {
 	flex: 1;
 	max-width: 200px;
 	margin-bottom: 3px;
 }
 
-.field-feature-type {
+.df-field-feature-type {
 	max-width: 100px;
 	margin-bottom: 6px;
 }
 
-.input-feature-cost {
+.df-input-feature-cost {
 	margin-bottom: 6px;
 	display: block;
 }
 
-.feature-desc-input {
+.df-feature-desc-input {
 	width: 100%;
 	margin-bottom: 6px;
 	display: block;
@@ -456,15 +471,15 @@ select.input-field {
 	overflow: auto;
 }
 
-.remove-feature-btn {
+.df-remove-feature-btn {
 	margin-bottom: 10px;
 }
 
-.add-feature-btn {
+.df-add-feature-btn {
 	margin-top: 10px;
 }
 
-.insert-card-btn {
+.df-insert-card-btn {
 	display: block;
 	margin-left: auto;
 	margin-top: 10px;
@@ -474,7 +489,7 @@ select.input-field {
 
 /* Env Styles */
 
-.env-card-outer {
+.df-env-card-outer {
 	max-width: 400px;
 	margin: 1em auto;
 	padding: 1em 1em;
@@ -486,7 +501,7 @@ select.input-field {
 	box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
 }
 
-.env-card-inner h2 {
+.df-env-card-inner h2 {
 	font-weight: 900;
 	font-size: 1.8rem;
 	margin-bottom: auto;
@@ -494,24 +509,24 @@ select.input-field {
 	margin-top: auto;
 }
 
-.env-card-inner > div:first-of-type {
+.df-env-card-inner > div:first-of-type {
 	font-weight: 900;
 	font-size: 1.4rem;
 	margin-bottom: -7px;
 	letter-spacing: -0.9px;
 }
 
-.env-desc {
+.df-env-desc {
 	font-style: italic;
 }
 
-.env-card-inner p {
+.df-env-card-inner p {
 	margin: 0.1em 0;
 	font-size: 0.9rem;
 	line-height: 1.25;
 }
 
-.env-card-diff-pot {
+.df-env-card-diff-pot {
 	border-top: solid 1px #221e20;
 	border-bottom: solid 1px #221e20;
 	padding-right: 20px;
@@ -521,12 +536,12 @@ select.input-field {
 	padding-bottom: 3px;
 }
 
-.bold-title {
+.df-bold-title {
 	font-weight: 700;
 	font-size: 0.9rem;
 }
 
-.env-card-inner p strong {
+.df-env-card-inner p strong {
 	font-weight: 700;
 }
 
@@ -535,17 +550,17 @@ select.input-field {
   padding-top: 1em;
 } */
 
-.env-name {
+.df-env-name {
 	font-weight: 700;
 	font-size: 1.3rem;
 	margin-bottom: 0.5em;
 }
-.env-feat-tier-type {
+.df-env-feat-tier-type {
 	font-weight: 700;
 	font-size: 1rem;
 }
 
-.features-section h3 {
+.df-features-section h3 {
 	font-weight: 700;
 	font-size: 1.1rem;
 	margin-bottom: 3px;
@@ -557,14 +572,14 @@ select.input-field {
   margin-bottom: 1em;
 } */
 
-.feature h4 {
+.df-feature h4 {
 	font-weight: 700;
 	font-size: 1.1rem;
 	margin-bottom: 0.3em;
 	margin-top: auto;
 }
 
-.env-feat-name-type {
+.df-env-feat-name-type {
 	font-weight: 700;
 	font-size: 0.9rem;
 	font-style: italic;
@@ -573,37 +588,37 @@ select.input-field {
 	line-height: 1.25;
 }
 
-.env-feat-text {
+.df-env-feat-text {
 	font-weight: 400;
 	font-size: 0.9rem;
 	font-style: normal;
 	color: #221e20;
 }
 
-.env-bullet {
+.df-env-bullet {
 	margin-left: 0.6em;
 	list-style-type: disc;
 	font-size: 0.9rem;
 	line-height: 1.25;
 }
 
-.env-questions {
+.df-env-questions {
 	font-weight: 500;
 	font-size: 0.9rem;
 	font-style: italic;
 	margin-top: 0.5em;
 }
 
-.feature span p {
+.df-feature span p {
 	margin: 0.15em 0;
 	font-size: 0.95rem;
 }
 
-.feature span p:last-child {
+.df-feature span p:last-child {
 	margin-bottom: 0;
 }
 
-.feature p {
+.df-feature p {
 	margin-top: 5px;
 	font-weight: 500;
 	font-size: 0.9rem;
@@ -612,28 +627,28 @@ select.input-field {
 
 /*ENV CREATOR*/
 
-.environment-creator-form {
+.df-environment-creator-form {
 	padding: 1rem;
 	font-family: var(--font-family);
 }
 
-.environment-creator-form h2 {
+.df-environment-creator-form h2 {
 	margin-bottom: 1.5rem;
 	color: var(--text-normal);
 }
 
-.env-form-row {
+.df-env-form-row {
 	display: flex;
 	gap: 0.3rem;
 	margin-bottom: 6px;
 }
 
-.env-form-row label {
+.df-env-form-row label {
 	font-weight: bold;
 }
 
-.env-form-row input,
-.env-form-row select {
+.df-env-form-row input,
+.df-env-form-row select {
 	flex: 1;
 	padding: 0.5rem;
 	border: 1px solid var(--background-modifier-border);
@@ -642,20 +657,20 @@ select.input-field {
 	color: var(--text-normal);
 }
 
-.env-form-second-row {
+.df-env-form-second-row {
 	margin-bottom: 6px;
 }
 
-.env-form-third-row {
+.df-env-form-third-row {
 	margin-bottom: 6px;
 }
 
-.env-form-forth-row {
+.df-env-form-forth-row {
 	width: 100%;
 	height: 100%;
 }
-
-textarea {
+/* IMPORTANT MUST CHECK*/
+.df-textarea {
 	width: 100%;
 	min-height: 80px;
 	margin-bottom: 1rem;
@@ -666,13 +681,13 @@ textarea {
 	color: var(--text-normal);
 }
 
-.env-features-section {
+.df-env-features-section {
 	margin-top: 2rem;
 	border-top: 1px solid var(--background-modifier-border);
 	padding-top: 1rem;
 }
 
-.env-feature-entry {
+.df-env-feature-entry {
 	padding: 1rem;
 	margin-bottom: 1rem;
 	border: 1px solid var(--background-modifier-border);
@@ -680,19 +695,19 @@ textarea {
 	background-color: var(--background-secondary);
 }
 
-.env-add-feature-btn {
+.df-env-add-feature-btn {
 	background-color: var(--interactive-accent);
 	color: white;
 	margin-top: 6px;
 }
 
-.env-remove-feature-btn {
+.df-env-remove-feature-btn {
 	background-color: var(--background-modifier-error);
 	color: white;
 	margin-bottom: 6px;
 }
 
-.env-insert-card-btn {
+.df-env-insert-card-btn {
 	margin-top: 6px;
 	float: right;
 }
@@ -700,9 +715,9 @@ textarea {
 /*env creation settings*/
 
 /* Name Setting */
-.env-name-setting,
-.env-tier-setting,
-.env-type-setting {
+.df-env-name-setting,
+.df-env-tier-setting,
+.df-env-type-setting {
 	border-bottom: unset;
 	width: 150px;
 	padding: unset;
@@ -710,29 +725,29 @@ textarea {
 }
 
 /* Impulse Setting */
-.env-impulse-setting {
+.df-env-impulse-setting {
 	width: 10px;
 }
 
 /* Difficulty Setting */
-.env-diff-setting {
+.df-env-diff-setting {
 	width: 10px;
 }
 
 /* Adversaries Setting */
-.env-adv-setting {
+.df-env-adv-setting {
 	width: 10px;
 }
 
-.env-desc-setting {
+.df-env-desc-setting {
 	width: 260px;
 	border: unset;
 }
 
 /* Common styles for all environment settings */
-.env-impulse-setting,
-.env-diff-setting,
-.env-adv-setting {
+.df-env-impulse-setting,
+.df-env-diff-setting,
+.df-env-adv-setting {
 	/* name-type-tier */
 	border-bottom: unset;
 	width: 150px;
@@ -741,11 +756,11 @@ textarea {
 	border-top: unset;
 }
 
-.basic-info-section {
+.df-basic-info-section {
 	width: 100%;
 }
 
-.feature-header {
+.df-feature-header {
 	width: auto;
 	display: flex;
 	justify-content: space-between;
@@ -754,27 +769,27 @@ textarea {
 	margin-top: 5px;
 }
 
-.add-question-btn {
+.df-add-question-btn {
 	margin-bottom: 6px;
 }
 
-.feature-container {
+.df-feature-container {
 	border-bottom: 1px solid grey;
 }
 
-.env-difficulity-input {
+.df-env-difficulity-input {
 	width: 20%;
 	margin-bottom: 6px;
 }
 
-.adversary-count {
+.df-adversary-count {
 	float: right;
 }
 
 /* Environment Browser */
 
 /* Flex container for search and filter */
-.search-filter-container {
+.df-search-filter-container {
 	display: flex;
 	gap: 10px;
 	align-items: center;
@@ -783,7 +798,7 @@ textarea {
 }
 
 /* Search box styling */
-.env-search-box {
+.df-env-search-box {
 	flex: 1;
 	padding: 8px 12px;
 	border-radius: 4px;
@@ -794,12 +809,12 @@ textarea {
 }
 
 /* Dropdown container */
-.tier-dropdown {
+.df-tier-dropdown {
 	min-width: 120px; /* Give the dropdown some minimum width */
 }
 
 /* Dropdown styling (updated from previous version) */
-.tier-dropdown select.tier-filter-select {
+.df-tier-dropdown select.df-tier-filter-select {
 	padding: 8px 12px;
 	border-radius: 4px;
 	border: 1px solid var(--background-modifier-border);
@@ -810,25 +825,25 @@ textarea {
 	height: 36px; /* Match the search input height */
 }
 
-.tier-option {
+.df-tier-option {
 	background-color: #222;
 	color: #fff;
 	padding: 4px;
 }
 
 /* Hover/focus states */
-/* .tier-dropdown select.tier-filter-select:hover {
+/* .df-tier-dropdown select.df-tier-filter-select:hover {
     border-color: var(--interactive-accent);
 }
 
-.tier-dropdown select.tier-filter-select:focus,
-.env-search-box:focus {
+.df-tier-dropdown select.df-tier-filter-select:focus,
+.df-env-search-box:focus {
     outline: none;
     box-shadow: 0 0 0 2px var(--interactive-accent);
 } */
 
 /*custom cards*/
-.custom-badge {
+.df-custom-badge {
 	margin-left: 8px;
 	padding: 2px 6px;
 	background-color: var(--interactive-accent);
@@ -837,7 +852,7 @@ textarea {
 	font-size: 0.8em;
 	font-weight: bold;
 }
-.custom-adversary {
+.df-custom-adversary {
 	border-left: 3px solid var(--interactive-accent);
 	position: relative;
 }
