@@ -1,17 +1,13 @@
 import { Editor, Notice } from "obsidian";
 import { ADVERSARIES } from "../../../data/adversaries";
-
-const tierDataMap: Record<string, any[]> = {
-	"1": ADVERSARIES.tier1,
-	"2": ADVERSARIES.tier2,
-	"3": ADVERSARIES.tier3,
-	"4": ADVERSARIES.tier4,
-};
+import { filterByTier } from "../../../utils/dataFilters";
 
 export async function loadAdversaryTier(tier: string, editor: Editor) {
-	const data = tierDataMap[tier];
+	// Filter adversaries by the requested tier
+	const data = filterByTier(ADVERSARIES, tier);
+	
 	if (!data || !Array.isArray(data) || data.length === 0) {
-		new Notice(`No adversaries found in Tier ${tier} JSON.`);
+		new Notice(`No adversaries found in Tier ${tier}.`);
 		return;
 	}
 

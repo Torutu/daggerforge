@@ -1,10 +1,11 @@
-import { ItemView, WorkspaceLeaf, Notice, MarkdownView, TFile } from "obsidian";
+import { ItemView, WorkspaceLeaf, Notice, MarkdownView } from "obsidian";
 import { ADVERSARIES } from "../../../data/adversaries";
 import {
 	getAdversaryCount,
 	incrementAdversaryCount,
 	decrementAdversaryCount,
 } from "../../../utils/adversaryCounter";
+import { getTier, getSource } from "../../../utils/dataFilters";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -35,6 +36,28 @@ interface Adversary {
 	isCustom?: boolean;
 }
 
+// Type for raw adversary data from JSON that may have either naming convention
+type RawAdversaryData = {
+	[K in keyof Adversary]: Adversary[K];
+} | {
+	Name: string;
+	Type: string;
+	Tier: string | number;
+	Desc: string;
+	Motives: string;
+	Difficulty: string;
+	Thresholds: string;
+	HP: string;
+	Stress?: string;
+	ATK: string;
+	WeaponName: string;
+	WeaponRange: string;
+	WeaponDamage: string;
+	XP: string;
+	Features: AdversaryFeature[];
+	Source?: string;
+};
+
 export class AdversaryView extends ItemView {
 	private adversaries: Adversary[] = [];
 	private lastActiveMarkdown: MarkdownView | null = null;
@@ -55,6 +78,31 @@ export class AdversaryView extends ItemView {
 		return "venetian-mask";
 	}
 
+	private async deleteCustomAdversary(adversary: Adversary): Promise<void> {
+	try {
+		const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
+		if (!plugin || !plugin.dataManager) {
+			new Notice("DaggerForge plugin not found.");
+			return;
+		}
+
+		// Find the index of the adversary in custom adversaries
+		const customAdvs = plugin.dataManager.getAdversaries();
+		const index = customAdvs.findIndex((a: Adversary) => a.name === adversary.name);
+
+		if (index !== -1) {
+			await plugin.dataManager.deleteAdversary(index);
+			new Notice(`Deleted adversary: ${adversary.name}`);
+			this.refresh(); // Refresh the view
+		} else {
+			new Notice("Adversary not found in custom list.");
+		}
+	} catch (error) {
+		console.error("Error deleting custom adversary:", error);
+		new Notice("Failed to delete adversary.");
+	}
+	}
+
 	async onOpen() {
 		this.initializeView();
 		this.registerEventListeners();
@@ -65,7 +113,7 @@ export class AdversaryView extends ItemView {
 		const container = this.containerEl.children[1];
 		container.empty();
 		this.initializeView();
-		await this.loadAdversaryData();
+		this.loadAdversaryData();
 	}
 
 	private initializeView() {
@@ -99,105 +147,91 @@ export class AdversaryView extends ItemView {
 		);
 	}
 
-	private async loadCustomAdversaries(): Promise<Adversary[]> {
-		const CUSTOM_FILE = "custom@Adversaries.md";
+	private normalizeAdversary(a: RawAdversaryData): Adversary {
+		// Handle both lowercase and uppercase property names
+		const raw = a as any; // Cast to any to access both property naming conventions
+		return {
+			name: raw.name || raw.Name || "",
+			type: raw.type || raw.Type || "",
+			tier: typeof (raw.tier || raw.Tier) === "string" 
+				? parseInt(raw.tier || raw.Tier, 10) 
+				: (raw.tier || raw.Tier || 1),
+			desc: raw.desc || raw.Desc || "",
+			motives: raw.motives || raw.Motives || "",
+			difficulty: raw.difficulty || raw.Difficulty || "",
+			thresholds: raw.thresholds || raw.Thresholds || "",
+			hp: raw.hp || raw.HP || "",
+			stress: raw.stress || raw.Stress,
+			atk: raw.atk || raw.ATK || "",
+			weaponName: raw.weaponName || raw.WeaponName || "",
+			weaponRange: raw.weaponRange || raw.WeaponRange || "",
+			weaponDamage: raw.weaponDamage || raw.WeaponDamage || "",
+			xp: raw.xp || raw.XP || "",
+			features: raw.features || raw.Features || [],
+			source: raw.source || raw.Source || "core",
+			isCustom: raw.isCustom || false,
+		};
+	}
+
+	private loadCustomAdversaries(): Adversary[] {
 		try {
-			const vault = this.app.vault;
-			const file = vault.getAbstractFileByPath(CUSTOM_FILE) as TFile;
-
-			if (!file) {
-				return []; // File doesn't exist yet
+			// Get plugin instance to access dataManager
+			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
+			if (!plugin || !plugin.dataManager) {
+				console.warn("DaggerForge plugin or dataManager not found");
+				return [];
 			}
 
-			const content = await vault.read(file);
-			const customAdversaries: Adversary[] = [];
+			// Load custom adversaries from DataManager (Obsidian storage)
+			const customAdvs = plugin.dataManager.getAdversaries();
 
-			// Parse the markdown file for JSON blocks
-			const jsonBlocks = content.match(/```json\n([\s\S]*?)\n```/g);
-
-			if (jsonBlocks) {
-				jsonBlocks.forEach((block) => {
-					try {
-						const jsonContent = block.replace(
-							/```json\n|\n```/g,
-							"",
-						);
-						const adversary = JSON.parse(jsonContent) as Adversary;
-
-						// Convert tier to number if it's a string
-						if (typeof adversary.tier === "string") {
-							adversary.tier = parseInt(adversary.tier, 10);
-						}
-
-						// Mark as custom
-						adversary.isCustom = true;
-						customAdversaries.push(adversary);
-					} catch (e) {
-						console.error("Error parsing custom adversary:", e);
-					}
-				});
-			}
-
-			return customAdversaries;
+			// Convert to display format and mark as custom
+			return customAdvs.map((adv: any) => ({
+				...adv,
+				tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier,
+				isCustom: true,
+				source: "custom",
+			}));
 		} catch (error) {
-			console.error("Error loading custom adversaries:", error);
+			console.error("Error loading custom adversaries from DataManager:", error);
 			return [];
 		}
 	}
 
-	private async loadAdversaryData() {
+	private loadAdversaryData() {
 		const container = this.containerEl.children[1];
-		const resultsDiv = container.createEl("div", {
-			cls: "adversary-results",
-			text: "Loading adversaries...",
-		});
+		const resultsDiv = container.querySelector(
+			".df-adversary-results",
+		) as HTMLElement;
 
 		try {
-			// Load built-in adversaries with source="core"
-			const builtInAdversaries = [
-				...ADVERSARIES.tier1,
-				...ADVERSARIES.tier2,
-				...ADVERSARIES.tier3,
-				...ADVERSARIES.tier4,
-			].map((a) => ({
-				...a,
-				tier:
-					typeof a.tier === "string" ? parseInt(a.tier, 10) : a.tier,
-				isCustom: false,
-				source: a.source || "core", // Default to core if not specified
-			}));
-
-			// Load expansion adversaries (example for umbra) //UMBRA
-			// const umbraAdversaries = [
-			//     ...UMBRA_ADVERSARIES.tier1,
-			//     ...UMBRA_ADVERSARIES.tier2,
-			//     // ... etc ...
-			// ].map(a => ({
-			//     ...a,
-			//     tier: typeof a.tier === "string" ? parseInt(a.tier, 10) : a.tier,
-			//     isCustom: false,
-			//     source: "umbra" // Explicitly set
-			// }));
-
-			// Load custom adversaries with source="custom"
-			const customAdversaries = (await this.loadCustomAdversaries()).map(
-				(a) => ({
-					...a,
-					source: "custom", // Always custom
-				}),
+			// Load built-in adversaries - all are now in one flat array
+			const builtInAdversaries = ADVERSARIES.map((a) => 
+				this.normalizeAdversary({
+					...(a as any),
+					isCustom: false,
+					source: (a as any).source ?? (a as any).Source ?? "core",
+					//print the source field
+					tier: (a as any).tier ?? (a as any).Tier ?? "1",
+				})
 			);
+
+			// Load custom adversaries from DataManager (Obsidian storage)
+			const custom_Adversaries = this.loadCustomAdversaries();
 
 			// Combine all lists
 			this.adversaries = [
 				...builtInAdversaries,
-				// ...umbraAdversaries, //UMBRA
-				...customAdversaries,
+				...custom_Adversaries,
 			];
 
 			this.renderResults(this.adversaries);
 		} catch (e) {
+			console.error("Error loading adversary data:", e);
 			new Notice("Failed to load adversary data.");
-			resultsDiv.setText("Error loading adversary data.");
+			if (resultsDiv) {
+				resultsDiv.setText("Error loading adversary data.");
+			}
 		}
 	}
 
@@ -211,9 +245,14 @@ export class AdversaryView extends ItemView {
 			cls: "df-adversary-counter-btn",
 		});
 
-		const counterDisplay = counterContainer.createEl("span", {
-			text: getAdversaryCount().toString(),
-			cls: "df-adversary-counter-display",
+		const counterInput = counterContainer.createEl("input", {
+			attr: {
+				type: "number",
+				min: "1",
+				value: getAdversaryCount().toString(),
+				placeholder: "Count",
+			},
+			cls: "df-inline-input count-input",
 		});
 
 		const plusBtn = counterContainer.createEl("button", {
@@ -223,13 +262,38 @@ export class AdversaryView extends ItemView {
 
 		minusBtn.onclick = () => {
 			decrementAdversaryCount();
-			counterDisplay.textContent = getAdversaryCount().toString();
+			counterInput.value = getAdversaryCount().toString();
 		};
 
 		plusBtn.onclick = () => {
-			incrementAdversaryCount();
-			counterDisplay.textContent = getAdversaryCount().toString();
+			incrementAdversaryCount(1);
+			counterInput.value = getAdversaryCount().toString();
 		};
+
+		counterInput.addEventListener("change", () => {
+			let value = parseInt(counterInput.value, 10);
+			if (isNaN(value) || value < 1) {
+				value = 1;
+			}
+			// Update the adversary count to the new value
+			const currentCount = getAdversaryCount();
+			const difference = value - currentCount;
+			if (difference > 0) {
+				incrementAdversaryCount(difference);
+			} else if (difference < 0) {
+				for (let i = 0; i < Math.abs(difference); i++) {
+					decrementAdversaryCount();
+				}
+			}
+			counterInput.value = getAdversaryCount().toString();
+		});
+
+		counterInput.addEventListener("input", () => {
+			// Allow typing but only validate on blur or change
+			if (counterInput.value === "" || counterInput.value === "-") {
+				return;
+			}
+		});
 
 		return counterContainer;
 	}
@@ -346,6 +410,16 @@ export class AdversaryView extends ItemView {
 		tier.appendChild(sourceBadge);
 
 		card.appendChild(tier);
+
+		if (badgeTexts[source] == "Custom") {
+			const deleteBtn = document.createElement("button");
+			deleteBtn.textContent = "Delete";
+			deleteBtn.addEventListener("click", (e: MouseEvent) => {
+				e.stopPropagation();
+				this.deleteCustomAdversary(adversary);
+			});
+			card.appendChild(deleteBtn);
+		}
 
 		// Name
 		const title = document.createElement("h3");

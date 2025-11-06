@@ -1,4 +1,4 @@
-import { Modal, Editor } from "obsidian";
+import { Modal, Editor, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../../main";
 import { createInlineField } from "../../../utils/formHelpers";
 import { FormInputs } from "../../../types/shared";
@@ -8,7 +8,6 @@ import {
 	EnvironmentData,
 } from "../../../types/environment";
 import { environmentToHTML } from "../components/EnvToHTML";
-import { buildCustomEnvironment, EnvironmentView } from "../components/EnvSearch";
 
 export class EnvironmentModal extends Modal {
 	plugin: DaggerForgePlugin;
@@ -33,14 +32,23 @@ export class EnvironmentModal extends Modal {
 		const { contentEl } = this;
 		const saved = this.plugin.savedInputStateEnv || {};
 		contentEl.empty();
-		const firstRow = contentEl.createDiv({ cls: "df-env-form-row" });
-		// === Main input fields ===
+
+		// ===== TITLE =====
+		contentEl.createEl("h2", { text: "Create Environment", cls: "df-modal-title" });
+
+		// ===== BASIC INFO SECTION =====
+		const basicInfoSection = contentEl.createDiv({ cls: "df-env-form-section" });
+		basicInfoSection.createEl("h3", { text: "Basic Information", cls: "df-section-title" });
+
+		const firstRow = basicInfoSection.createDiv({ cls: "df-env-form-row" });
+
+		// Name field
 		createInlineField(firstRow, this.inputs, {
 			label: "Name",
 			key: "name",
 			type: "input",
 			savedValues: saved,
-			customClass: "df-env-name-setting",
+			customClass: "df-env-field-name",
 		});
 
 		// Tier dropdown
@@ -50,7 +58,7 @@ export class EnvironmentModal extends Modal {
 			type: "select",
 			options: ["1", "2", "3", "4"],
 			savedValues: saved,
-			customClass: "df-env-tier-setting",
+			customClass: "df-env-field-tier",
 		});
 
 		// Type dropdown
@@ -60,46 +68,61 @@ export class EnvironmentModal extends Modal {
 			type: "select",
 			options: ["Event", "Exploration", "Social", "Traversal"],
 			savedValues: saved,
-			customClass: "df-env-type-setting",
+			customClass: "df-env-field-type",
 		});
 
-		const secondRow = contentEl.createDiv({ cls: "df-env-form-second-row" });
-		createInlineField(secondRow, this.inputs, {
+		// ===== DETAILS SECTION =====
+		const detailsSection = basicInfoSection.createDiv({ cls: "df-env-form-section-content" });
+
+		const descRow = detailsSection.createDiv({ cls: "df-env-form-row" });
+		createInlineField(descRow, this.inputs, {
 			label: "Description",
 			key: "desc",
 			type: "input",
 			savedValues: saved,
-			customClass: "df-env-desc-setting",
+			customClass: "df-env-field-desc",
 		});
 
-		const thirdRow = contentEl.createDiv({ cls: "df-env-form-third-row" });
-		createInlineField(thirdRow, this.inputs, {
+		// ===== GAMEPLAY SECTION =====
+		const gameplaySection = contentEl.createDiv({ cls: "df-env-form-section" });
+		gameplaySection.createEl("h3", { text: "Gameplay", cls: "df-section-title" });
+
+		const impulseRow = gameplaySection.createDiv({ cls: "df-env-form-row" });
+		createInlineField(impulseRow, this.inputs, {
 			label: "Impulses",
 			key: "impulse",
 			type: "input",
 			savedValues: saved,
-			customClass: "df-env-impulse-setting",
+			customClass: "df-env-field-impulse",
 		});
 
-		const forthRow = contentEl.createDiv({ cls: "df-env-form-forth-row" });
-		createInlineField(forthRow, this.inputs, {
-			label: "Difficulity",
+		// ===== DIFFICULTY SECTION =====
+		const difficultySection = contentEl.createDiv({ cls: "df-env-form-section" });
+		difficultySection.createEl("h3", { text: "Difficulty & Adversaries", cls: "df-section-title" });
+
+		const diffRow = difficultySection.createDiv({ cls: "df-env-form-row" });
+
+		createInlineField(diffRow, this.inputs, {
+			label: "Difficulty",
 			key: "difficulty",
 			type: "input",
 			savedValues: saved,
-			customClass: "df-env-diff-setting",
+			customClass: "df-env-field-difficulty",
 		});
 
-		createInlineField(forthRow, this.inputs, {
+		createInlineField(diffRow, this.inputs, {
 			label: "Potential Adversaries",
 			key: "potentialAdversaries",
 			type: "input",
 			savedValues: saved,
-			customClass: "df-env-adv-setting",
+			customClass: "df-env-field-adversaries",
 		});
 
-		// === Features ===
-		this.featureContainer = contentEl.createDiv("df-feature-container");
+		// ===== FEATURES SECTION =====
+		const featuresSection = contentEl.createDiv({ cls: "df-env-form-section" });
+		featuresSection.createEl("h3", { text: "Features", cls: "df-section-title" });
+
+		this.featureContainer = featuresSection.createDiv({ cls: "df-env-feature-container" });
 		this.features = [];
 
 		const setValueIfSaved = (
@@ -119,18 +142,20 @@ export class EnvironmentModal extends Modal {
 
 		if (savedFeatures.length === 0) this.addFeature();
 
-		const addBtn = contentEl.createEl("button", {
-			text: "Add Feature",
-			cls: "df-env-add-feature-btn",
+		const addBtn = featuresSection.createEl("button", {
+			text: "+ Add Feature",
+			cls: "df-env-btn-add-feature",
 		});
 		addBtn.onclick = () => this.addFeature();
 
-		const insertBtn = contentEl.createEl("button", {
+		// ===== ACTION BUTTONS =====
+		const buttonContainer = contentEl.createDiv({ cls: "df-env-form-buttons" });
+
+		const insertBtn = buttonContainer.createEl("button", {
 			text: "Insert Environment",
-			cls: "df-env-insert-card-btn",
+			cls: "df-env-btn-insert",
 		});
 
-		//------------INSERT BUTTON
 		insertBtn.onclick = async () => {
 			const values = Object.fromEntries(
 				Object.entries(this.inputs).map(([k, el]) => [
@@ -140,15 +165,27 @@ export class EnvironmentModal extends Modal {
 			);
 			const features = this.getFeatureValues();
 
-			// First save to custom environments file
-			const env = await buildCustomEnvironment(
-				this.plugin.app,
-				values,
+			// Create environment data
+			const env: EnvironmentData = {
+				name: values.name || "",
+				tier: Number(values.tier) || 1,
+				type: values.type || "",
+				desc: values.desc || "",
+				impulse: values.impulse || "",
+				difficulty: values.difficulty || "",
+				potentialAdversaries: values.potentialAdversaries || "",
+				source: "custom",
 				features,
-			);
+			};
 
-			if (env) {
-				// Then insert into current note
+			try {
+				// Save using DataManager (Obsidian's saveData)
+				await this.plugin.dataManager.addEnvironment(env);
+				new Notice(
+					`Environment "${env.name}" saved successfully!`,
+				);
+
+				// Insert into current note
 				const htmlContent = environmentToHTML(env);
 				this.editor.replaceSelection(
 					`<div class="environment-block">\n${htmlContent}\n</div>\n`,
@@ -177,15 +214,7 @@ export class EnvironmentModal extends Modal {
 				this.featureContainer.empty();
 				this.plugin.savedInputStateEnv = {};
 
-				// Refresh EnvironmentView if open
-				const envViews = this.plugin.app.workspace
-					.getLeavesOfType("environment-view")
-					.map((l) => l.view)
-					.filter(
-						(v) => typeof (v as any).refresh === "function",
-					) as EnvironmentView[];
-
-				// Refresh EnvironmentView if open
+				// Refresh EnvironmentView if open to show the new environment
 				const envLeaves =
 					this.plugin.app.workspace.getLeavesOfType(
 						"environment-view",
@@ -193,32 +222,37 @@ export class EnvironmentModal extends Modal {
 				for (const leaf of envLeaves) {
 					const v = leaf.view as any;
 					if (typeof v?.refresh === "function") {
-						await v.refresh(); // no args
+						await v.refresh();
 					}
 				}
 				this.close();
+			} catch (error) {
+				console.error("Error saving environment:", error);
+				new Notice(
+					"Failed to save environment. Check console for details.",
+				);
 			}
 		};
 	}
 
 	addFeature(savedFeature?: SavedFeatureState) {
 		const wrapper = this.featureContainer.createDiv({
-			cls: "df-feature-block",
+			cls: "df-env-feature-block",
 		});
 
 		// Feature header row (name - type : cost)
-		const headerRow = wrapper.createDiv({ cls: "df-feature-header" });
+		const headerRow = wrapper.createDiv({ cls: "df-env-feature-row" });
 
 		// Name input
 		const nameEl = headerRow.createEl("input", {
-			cls: "df-input-feature-name",
+			cls: "df-env-feature-input-name",
 			placeholder: "Feature Name",
 		});
 		nameEl.value = savedFeature?.name || "";
 
 		// Type dropdown
 		const typeEl = headerRow.createEl("select", {
-			cls: "df-field-feature-type",
+			cls: "df-env-feature-input-type",
 		});
 		["Action", "Reaction", "Passive"].forEach((opt) =>
 			typeEl.createEl("option", {
@@ -231,7 +265,7 @@ export class EnvironmentModal extends Modal {
 
 		// Cost dropdown
 		const costEl = headerRow.createEl("select", {
-			cls: "df-input-feature-cost",
+			cls: "df-env-feature-input-cost",
 		});
 		["", "Spend a Fear"].forEach((opt) =>
 			costEl.createEl("option", {
@@ -244,36 +278,34 @@ export class EnvironmentModal extends Modal {
 
 		// Main feature description
 		const descEl = wrapper.createEl("textarea", {
-			cls: "df-feature-desc",
+			cls: "df-env-feature-input-desc",
 			placeholder: "Feature description text...",
 		});
 		descEl.value = savedFeature?.text || "";
 
-		// Single question section
+		// Question section
 		const questionContainer = wrapper.createDiv({
-			cls: "df-question-container",
+			cls: "df-env-feature-question-container",
 		});
 		questionContainer.createDiv({
-			cls: "df-question-header",
+			cls: "df-env-feature-question-header",
 			text: "GM Prompt Question:",
 		});
 
 		const questionEl = questionContainer.createEl("textarea", {
-			cls: "df-feature-question",
+			cls: "df-env-feature-question-input",
 			placeholder: "Q: Enter question for players...",
 		});
 
-		// Set value if saved question exists (take first question only if multiple existed)
+		// Set value if saved question exists
 		if (savedFeature?.questions && savedFeature.questions.length > 0) {
-			questionEl.value = savedFeature.questions[0]
-				? savedFeature.questions[0]
-				: `${savedFeature.questions[0]}`;
+			questionEl.value = savedFeature.questions[0] || "";
 		}
 
 		// Remove button
 		const removeBtn = wrapper.createEl("button", {
 			text: "Remove Feature",
-			cls: "df-env-remove-feature-btn",
+			cls: "df-env-btn-remove-feature",
 		});
 		removeBtn.onclick = () => {
 			const index = this.features.findIndex((f) => f.nameEl === nameEl);
@@ -289,7 +321,7 @@ export class EnvironmentModal extends Modal {
 			costEl,
 			textEl: descEl,
 			bulletEls: [],
-			questionEls: [questionEl], // Single question as array with one element
+			questionEls: [questionEl],
 		});
 	}
 

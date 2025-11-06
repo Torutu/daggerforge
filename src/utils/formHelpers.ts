@@ -9,21 +9,21 @@ export const createField = (
 	customClass?: string,
 	savedValues?: Record<string, string>,
 ) => {
-	const wrapper = parent.createDiv({ cls: "field-row" });
+	const wrapper = parent.createDiv({ cls: "df-field-row" });
 	wrapper.createEl("label", {
 		text: label,
-		cls: "inline-label",
+		cls: "df-field-label",
 	});
 
 	const field =
 		type === "input"
 			? wrapper.createEl("input", {
-					cls: ["input-field", customClass].filter(
+					cls: ["df-field-input", customClass].filter(
 						Boolean,
 					) as string[],
 				})
 			: wrapper.createEl("textarea", {
-					cls: ["input-field", customClass].filter(
+					cls: ["df-field-textarea", customClass].filter(
 						Boolean,
 					) as string[],
 				});
@@ -50,19 +50,19 @@ export const createShortTripleFields = (
 	dropdownOptions?: string[],
 	savedValues?: Record<string, string>,
 ) => {
-	const row = parent.createDiv({ cls: "flex-row" });
+	const row = parent.createDiv({ cls: "df-triple-fields-row" });
 
 	const createField = (label: string, key: string) => {
-		const wrapper = row.createDiv({ cls: "inline-field" });
-		wrapper.createEl("label", { text: label });
+		const wrapper = row.createDiv({ cls: "df-triple-field-item" });
+		wrapper.createEl("label", { text: label, cls: "df-field-label" });
 
 		if (dropdownFieldKey === key) {
-			const select = wrapper.createEl("select", { cls: "input-field" });
+			const select = wrapper.createEl("select", { cls: "df-field-select" });
 			dropdownOptions?.forEach((opt) => {
 				select.createEl("option", {
 					text: opt,
 					value: opt,
-					cls: "tier-option",
+					cls: "df-select-option",
 				});
 			});
 			inputs[key] = select;
@@ -70,7 +70,7 @@ export const createShortTripleFields = (
 				select.value = savedValues[key];
 		} else {
 			const input = wrapper.createEl("input", {
-				cls: "input-field",
+				cls: "df-field-input",
 				attr: { type: "text" },
 			});
 			inputs[key] = input;
@@ -96,12 +96,12 @@ export const createInlineField = (
 		customClass?: string;
 	},
 ) => {
-	const wrapper = parent.createDiv({ cls: "adv-first-inline-field" });
-	wrapper.createEl("label", { text: config.label, cls: "inline-label" });
+	const wrapper = parent.createDiv({ cls: "df-inline-field-wrapper" });
+	wrapper.createEl("label", { text: config.label, cls: "df-field-label" });
 
 	if (config.type === "select" && config.options) {
 		const select = wrapper.createEl("select", {
-			cls: ["inline-input", config.customClass].filter(
+			cls: ["df-field-select", config.customClass].filter(
 				Boolean,
 			) as string[],
 		});
@@ -110,7 +110,7 @@ export const createInlineField = (
 			select.createEl("option", {
 				text: opt,
 				value: opt,
-				cls: "tier-option",
+				cls: "df-select-option",
 			});
 		});
 
@@ -125,7 +125,7 @@ export const createInlineField = (
 		return select;
 	} else {
 		const input = wrapper.createEl("input", {
-			cls: ["inline-input", config.customClass].filter(
+			cls: ["df-field-input", config.customClass].filter(
 				Boolean,
 			) as string[],
 		});

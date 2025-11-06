@@ -1,73 +1,8 @@
-import { ItemView, WorkspaceLeaf, MarkdownView, Notice, TFile } from "obsidian";
+import { ItemView, WorkspaceLeaf, MarkdownView, Notice } from "obsidian";
 import { ENVIRONMENTS } from "../../../data/environments";
 import { EnvironmentData } from "../../../types/environment";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
-
-export async function buildCustomEnvironment(
-	app: any,
-	values: any,
-	features: any[],
-) {
-	const customEnvironment: EnvironmentData = {
-		name: values.name || "",
-		tier: Number(values.tier) || 1,
-		type: values.type || "",
-		desc: values.desc || "",
-		impulse: values.impulse || "",
-		difficulty: values.difficulty || "",
-		potentialAdversaries: values.potentialAdversaries || "",
-		source: "custom", // Always set to custom for user-created
-		features: features.map((f) => ({
-			name: f.name || "",
-			type: f.type || "",
-			cost: f.cost || "",
-			text: f.text || "",
-			bullets: f.bullets || [],
-			questions: f.questions || [],
-		})),
-	};
-
-	try {
-		// Define the filename and path
-		const filename = "custom@Environments.md";
-		const vault = app.vault;
-
-		// Check if file exists, create if it doesn't
-		let file = vault.getAbstractFileByPath(filename) as TFile;
-		if (!file) {
-			file = await vault.create(filename, "## Custom Environments\n\n");
-			new Notice(`Created new custom environments file: ${filename}`);
-		}
-
-		// Read current content
-		let content = await vault.read(file);
-
-		// Prepare the new environment entry
-		const environmentHeader = `\n\n### ${customEnvironment.name}\n`;
-		const environmentContent =
-			"```json\n" +
-			JSON.stringify(customEnvironment, null, 2) +
-			"\n```\n";
-
-		// Append the new environment to the file
-		await vault.modify(
-			file,
-			content + environmentHeader + environmentContent,
-		);
-
-		new Notice(
-			`Custom environment "${customEnvironment.name}" added to ${filename}`,
-		);
-		return customEnvironment;
-	} catch (error) {
-		console.error("Error saving custom environment:", error);
-		new Notice(
-			"Failed to save custom environment. Check console for details.",
-		);
-		return null;
-	}
-}
 
 export class EnvironmentView extends ItemView {
 	private environments: any[] = [];
@@ -91,10 +26,35 @@ export class EnvironmentView extends ItemView {
 		return "mountain";
 	}
 
-	public async refresh() {
+	public refresh() {
 		if (!this.resultsDiv) return;
-		await this.loadEnvironmentData(); // will also re-render
+		this.loadEnvironmentData(); // will also re-render
 	}
+
+	private async deleteCustomEnvironment(env: EnvironmentData): Promise<void> {
+	try {
+		const plugin = (this.app as any).plugins.plugins['daggerforge'] as any;
+		if (!plugin || !plugin.dataManager) {
+			new Notice("DaggerForge plugin not found.");
+			return;
+		}
+
+		// Find the index of the environment in custom environments
+		const customEnvs = plugin.dataManager.getEnvironments();
+		const index = customEnvs.findIndex((e: EnvironmentData) => e.name === env.name);
+
+		if (index !== -1) {
+			await plugin.dataManager.deleteEnvironment(index);
+			new Notice(`Deleted environment: ${env.name}`);
+			this.refresh(); // Refresh the view
+		} else {
+			new Notice("Environment not found in custom list.");
+		}
+	} catch (error) {
+		console.error("Error deleting custom environment:", error);
+		new Notice("Failed to delete environment.");
+	}
+}
 
 	private createTierButtons(container: HTMLElement, input: HTMLInputElement) {
 		const buttonContainer = document.createElement("span");
@@ -136,45 +96,32 @@ export class EnvironmentView extends ItemView {
 		});
 	}
 
-	private async loadCustomEnvironments(): Promise<EnvironmentData[]> {
-		const CUSTOM_FILE = "custom@Environments.md";
+	private loadCustomEnvironments(): EnvironmentData[] {
 		try {
-			const vault = this.app.vault;
-			const file = vault.getAbstractFileByPath(CUSTOM_FILE) as TFile;
-
-			if (!file) return [];
-
-			const content = await vault.read(file);
-			const customEnvironments: EnvironmentData[] = [];
-
-			const jsonBlocks = content.match(/```json\n([\s\S]*?)\n```/g);
-
-			if (jsonBlocks) {
-				jsonBlocks.forEach((block) => {
-					try {
-						const jsonContent = block.replace(
-							/```json\n|\n```/g,
-							"",
-						);
-						const environment = JSON.parse(
-							jsonContent,
-						) as EnvironmentData;
-						environment.source = "custom"; // Ensure source is set
-						customEnvironments.push(environment);
-					} catch (e) {
-						console.error("Error parsing custom environment:", e);
-					}
-				});
+			// Get plugin instance to access dataManager (exactly like Adversary)
+			const plugin = (this.app as any).plugins.plugins['daggerforge'];
+			if (!plugin || !plugin.dataManager) {
+				console.warn("DaggerForge plugin or dataManager not found");
+				return [];
 			}
 
-			return customEnvironments;
+			// Load custom environments from DataManager (Obsidian storage)
+			const customEnvs = plugin.dataManager.getEnvironments();
+
+			// Convert to display format and mark as custom
+			return customEnvs.map((env: any) => ({
+				...env,
+				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
+				isCustom: true,
+				source: "custom",
+			}));
 		} catch (error) {
-			console.error("Error loading custom environments:", error);
+			console.error("Error loading custom environments from DataManager:", error);
 			return [];
 		}
 	}
 
-	private async loadEnvironmentData() {
+	private loadEnvironmentData() {
 		if (!this.resultsDiv) return;
 
 		try {
@@ -187,8 +134,8 @@ export class EnvironmentView extends ItemView {
 				...ENVIRONMENTS.tier4,
 			].map((e) => ({ ...e, source: e.source || "core" }));
 
-			const customEnvironments = await this.loadCustomEnvironments();
-			this.environments = [...builtInEnvironments, ...customEnvironments];
+			const custom_Environments = this.loadCustomEnvironments();
+			this.environments = [...builtInEnvironments, ...custom_Environments];
 
 			const q = (this.searchInput?.value || "").toLowerCase();
 			const filtered = q
@@ -258,7 +205,7 @@ export class EnvironmentView extends ItemView {
 				...ENVIRONMENTS.tier3,
 				...ENVIRONMENTS.tier4,
 			];
-			await this.loadEnvironmentData(); // loads custom + renders
+			this.loadEnvironmentData(); // loads custom + renders
 		} catch (e) {
 			new Notice("Failed to load environment data.");
 			resultsDiv.setText("Error loading environment data.");
@@ -294,6 +241,17 @@ export class EnvironmentView extends ItemView {
 			custom: "Custom",
 			umbra: "Umbra",
 		};
+
+		if (badgeTexts[source] == "Custom") {
+			const deleteBtn = document.createElement("button");
+			deleteBtn.textContent = "Delete";
+			deleteBtn.addEventListener("click", (e: MouseEvent) => {
+				e.stopPropagation();
+				this.deleteCustomEnvironment(env);
+			});
+			card.appendChild(deleteBtn);
+		}
+
 		sourceBadge.textContent = badgeTexts[source] || source;
 		tier.appendChild(sourceBadge);
 

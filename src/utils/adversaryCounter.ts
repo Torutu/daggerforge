@@ -5,7 +5,7 @@ export function getAdversaryCount(): number {
 	return adversaryCount;
 }
 
-export function incrementAdversaryCount(): void {
+export function incrementAdversaryCount(difference: number): void {
 	adversaryCount++;
 }
 

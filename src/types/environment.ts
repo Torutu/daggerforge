@@ -26,7 +26,7 @@ export type EnvironmentData = {
 	impulse: string;
 	difficulty: string;
 	potentialAdversaries: string;
-	source: string;
+	source?: string; // Source of the environment (e.g., 'custom', 'broskies', 'core', 'umbra')
 	features: EnvironmentFeature[];
 };
 

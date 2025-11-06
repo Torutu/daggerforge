@@ -5,6 +5,7 @@
   --df-color-bg-outer: #bfa980;
   --df-color-bg-inner: #f5f0e9;
   --df-color-border: #bfa980;
+  --df-color-Incredible: #6b009c;
 }
 
 .df-pseudo-cut-corners {
@@ -155,23 +156,8 @@
 	font-weight: 400;
 }
 
-/* .df-stats .df-experience-line {
+.df-stats .df-experience-line {
 	border-top: 1px dotted black;
-	margin-top: 1px;
-	padding-top: 1px;
-	background-color: #fff;
-} */
-
-.df-stats {
-	margin-top: 1px;
-	padding-top: 1px;
-	background-color: #fff;
-}
-
-.df-experience-line {
-	border-top: 1px dotted black;
-	width: 98%;
-	margin: auto;
 	margin-top: 1px;
 	padding-top: 1px;
 	background-color: #fff;
@@ -196,6 +182,404 @@ select.df-input-field {
 	width: 120px;
 }
 
+/* ===== Modal Styling ===== */
+.df-modal-title {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-bottom: 15px;
+	margin-top: 0;
+}
+
+.df-section-title {
+	font-size: 1em;
+	font-weight: 700;
+	margin: 1px 0 5px 0;
+	padding-bottom: 5px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.df-inline-label {
+	align-self: auto;
+}
+
+/* Delete Button Styling - for Custom items */
+.df-delete-btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	background-color: #ff6b6b;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s ease;
+	z-index: 10;
+}
+
+.df-delete-btn:hover {
+	background-color: #ff5252;
+}
+
+.df-delete-btn:active {
+	transform: scale(0.95);
+}
+
+/* Apply position relative to cards that contain delete button */
+.df-env-card,
+.df-adversary-card {
+	position: relative;
+}
+
+/* ===== ADVERSARY FORM STYLES ===== */
+
+.df-feature-desc-input{
+	width: 100%;
+	min-height: 60px;
+	padding: 6px 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background-color: var(--background-primary);
+	font-weight: 500;
+	font-size: 0.9em;
+	resize: vertical;
+	overflow: auto;
+}
+
+.df-feature-row{
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	margin-bottom: 0;
+}
+
+.df-triple-fields-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 equal columns */
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.df-triple-field-item {
+    display: flex;
+    flex-direction: column;
+    flex: 1;  /* Shares space equally */
+    min-width: 0;  /* Allows proper grid constraint */
+}
+
+.df-triple-field-item input,
+.df-triple-field-item select {
+    width: 100%;  /* Full width of grid cell */
+    /* ... styling ... */
+}
+
+.df-adv-form-section {
+	padding: 5px 0;
+}
+
+.df-adv-form-section-content {
+	margin-left: 0;
+	margin-top: 5px;
+}
+
+.df-adv-form-row {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	align-items: flex-start;
+	/* margin-bottom: 10px; */
+	width: 100%;
+}
+
+/* Adversary form fields */
+.df-adv-field-name,
+.df-adv-field-tier,
+.df-adv-field-type,
+.df-adv-field-desc,
+.df-adv-field-motives,
+.df-adv-field-xp,
+.df-adv-field-count {
+	display: flex;
+	max-width: 100%;
+	width: 100%;
+}
+
+.df-adv-field-name input,
+.df-adv-field-tier select,
+.df-adv-field-type select {
+	min-width: 100px;
+	padding: 6px 8px;
+}
+
+.df-adv-field-desc textarea,
+.df-adv-field-motives input,
+.df-adv-field-xp input {
+	width: 100%;
+	max-width: 100%;
+	padding: 6px 8px;
+	min-height: 50px;
+}
+
+.df-adv-field-count input {
+	width: 80px;
+	padding: 6px 8px;
+}
+
+/* Adversary feature container and blocks */
+.df-adv-feature-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 10px;
+	background-color: var(--background-secondary);
+	border-radius: 4px;
+	border: 1px solid var(--background-modifier-border);
+}
+
+.df-adv-feature-container > div:first-child {
+	border-top: none;
+}
+
+.df-adv-btn-add-feature {
+	margin-top: 10px;
+	padding: 6px 12px;
+	background-color: var(--interactive-accent);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.df-adv-btn-add-feature:hover {
+	opacity: 0.9;
+}
+
+/* Adversary action buttons */
+.df-adv-form-buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 20px;
+	padding-top: 15px;
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.df-adv-btn-insert {
+	padding: 8px 20px;
+	background-color: var(--interactive-accent);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 1.1em;
+}
+
+.df-adv-btn-insert:hover {
+	opacity: 0.9;
+}
+
+/* ===== ENVIRONMENT FORM STYLES ===== */
+.df-env-form-section {
+	margin-bottom: 15px;
+	padding: 10px 0;
+}
+
+.df-env-form-section-content {
+	margin-left: 0;
+	margin-top: 5px;
+}
+
+.df-env-form-row {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	align-items: flex-start;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+/* Environment form fields */
+.df-env-field-name,
+.df-env-field-tier,
+.df-env-field-type,
+.df-env-field-desc,
+.df-env-field-impulse,
+.df-env-field-difficulty,
+.df-env-field-adversaries {
+	display: flex;
+	flex-direction: column;
+}
+
+.df-env-field-name input,
+.df-env-field-tier select,
+.df-env-field-type select {
+	min-width: 100px;
+	padding: 6px 8px;
+}
+
+.df-env-field-desc input,
+.df-env-field-impulse input,
+.df-env-field-difficulty input,
+.df-env-field-adversaries input {
+	width: 100%;
+	max-width: 400px;
+	padding: 6px 8px;
+	min-height: 40px;
+}
+
+/* Environment feature container and blocks */
+.df-env-feature-container {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 10px;
+	padding: 10px;
+	background-color: var(--background-secondary);
+	border-radius: 4px;
+	border: 1px solid var(--background-modifier-border);
+}
+
+.df-env-feature-block {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 10px;
+	background-color: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	margin-bottom: 0;
+}
+
+.df-env-feature-row {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	margin-bottom: 0;
+}
+
+.df-env-feature-input-name {
+	flex: 1;
+	min-width: 150px;
+	padding: 6px 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background-color: var(--background-primary);
+}
+
+.df-env-feature-input-type,
+.df-env-feature-input-cost {
+	min-width: 120px;
+	padding: 6px 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background-color: var(--background-primary);
+}
+
+.df-env-feature-input-desc {
+	width: 100%;
+	min-height: 60px;
+	padding: 6px 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background-color: var(--background-primary);
+	font-weight: 500;
+	font-size: 0.9em;
+	resize: vertical;
+	overflow: auto;
+}
+
+.df-env-feature-question-container {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding-top: 8px;
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.df-env-feature-question-header {
+	font-weight: 600;
+	font-size: 0.9em;
+	color: var(--text-normal);
+}
+
+.df-env-feature-question-input {
+	width: 100%;
+	min-height: 50px;
+	padding: 6px 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background-color: var(--background-primary);
+	font-size: 0.9em;
+	resize: vertical;
+	overflow: auto;
+}
+
+.df-env-btn-add-feature {
+	margin-top: 10px;
+	padding: 6px 12px;
+	background-color: var(--interactive-accent);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.df-env-btn-add-feature:hover {
+	opacity: 0.9;
+}
+
+.df-env-btn-remove-feature {
+	align-self: flex-end;
+	padding: 4px 8px;
+	background-color: var(--background-modifier-error);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 0.85em;
+}
+
+.df-env-btn-remove-feature:hover {
+	opacity: 0.9;
+}
+
+/* Environment action buttons */
+.df-env-form-buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 20px;
+	padding-top: 15px;
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.df-env-btn-insert {
+	padding: 8px 20px;
+	background-color: var(--interactive-accent);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 1.1em;
+}
+
+.df-env-btn-insert:hover {
+	opacity: 0.9;
+}
+
+/* ===== SHARED STYLES ===== */
 .df-tier-select {
 	width: 20%;
 }
@@ -221,7 +605,9 @@ select.df-input-field {
 }
 
 .df-inline-input.count-input {
-	width: 20%;
+	width: 25%;
+	text-align: center;
+	padding: 1px;
 }
 
 /* sidebar result container */
@@ -261,28 +647,38 @@ select.df-input-field {
 
 /* Color schemes for different sources */
 .df-source-core {
-	border-color: #555555;
+	border-color: #5e5e5e;
 }
+
 .df-source-custom {
-	border-color: #d3d3d3;
+	border-color: #e4e4e4;
 }
+
 .df-source-umbra {
-	/* background-color: #6a1b9a; Purple */
 	border-color: #6a1b9a;
+}
+
+.df-source-incredible{
+	border-color: var(--df-color-Incredible);
 }
 
 /* Card border colors matching badges */
 .df-source-core {
 	border-left-color: #555555;
 }
+
 .df-source-custom {
 	border-left-color: #d3d3d3;
 }
+
 .df-source-umbra {
 	border-left-color: #6a1b9a;
 }
+/* .df-source-incredible{
+	border-left-color: #4a026b;
+} */
 
-/* The tier inside the sidebar result container (adv + env)*/
+/* The tier inside the sidebar result container (adv + env) */
 .df-tier-text {
 	font-size: 0.8em;
 	padding: 1px;
@@ -290,13 +686,15 @@ select.df-input-field {
 	margin-bottom: 1px;
 	font-weight: bold;
 }
-/* name of the adversary in the sidebar container (adv + env)*/
+
+/* name of the adversary in the sidebar container (adv + env) */
 .df-title-small-padding {
 	padding: 1px;
 	margin-top: 1px;
 	margin-bottom: 1px;
 }
-/* small description  (adv + env)*/
+
+/* small description (adv + env) */
 .df-desc-small-padding {
 	padding: 1px;
 	margin-top: 1px;
@@ -314,7 +712,7 @@ select.df-input-field {
 }
 
 .df-adversary-counter-container {
-	flex-shrink: 0;
+	width: 100px;
 }
 
 .df-adversary-search-box {
@@ -324,7 +722,9 @@ select.df-input-field {
 }
 
 .df-adversary-counter-btn {
-	margin: 0 0px;
+	margin: 0 5px;
+	width: 1%;
+	padding: 10px;
 }
 
 .df-adversary-counter-display {
@@ -332,163 +732,12 @@ select.df-input-field {
 	font-weight: bold;
 }
 
-.df-env-results, /* the space between results and the search bar in the sidebar*/
+.df-env-results,
 .df-adversary-results {
 	margin-top: 10px;
 }
 
-/* modal styles */
-
-.df-inline-label {
-	align-self: auto;
-}
-
-.df-modal-title {
-	font-size: 1.2em;
-	font-weight: bold;
-	margin-bottom: 10px;
-	margin-top: 10px;
-}
-
-/* styles.css */
-.df-form-row {
-	display: flex;
-	gap: 10px;
-	align-items: center;
-}
-
-.df-adv-first-inline-field {
-	display: flex;
-	align-items: flex-start;
-	flex-grow: 1;
-	flex-direction: column;
-}
-
-.df-adv-first-inline-field label {
-	margin-right: 5px;
-	white-space: nowrap;
-}
-
-.df-inline-input {
-	width: 100%;
-}
-
-/* Specific field adjustments */
-.df-adversary-name-input {
-	min-width: 120px;
-}
-
-/* warpper for field rows */
-.df-field-row {
-	display: flex;
-	align-items: stretch;
-	align-content: flex-start;
-	flex-direction: column;
-}
-
-/* adversary-name-textarea is used for the textarea input for the adversary name */
-.df-adversary-name-textarea {
-	width: 220px;
-	height: 30px;
-	margin-bottom: 10px;
-}
-
-/* for Tier*/
-.df-input-field-first-row-tier {
-	width: 100%;
-	max-width: 50px;
-	margin-bottom: 10px;
-}
-/* for Type */
-.df-input-field-first-row {
-	width: 100%;
-	max-width: 100px;
-	margin-bottom: 10px;
-}
-
-.df-description-textarea {
-	min-width: 100%;
-	height: 60px;
-	margin-bottom: 10px;
-	overflow: auto;
-}
-
-.df-motives-input {
-	width: 100%;
-	max-width: 340px;
-}
-
-.df-flex-row {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-	justify-content: flex-start;
-}
-
-.df-inline-field {
-	display: flex;
-	flex-direction: column;
-}
-
-.df-experience-input {
-	width: 100%;
-	max-width: 240px;
-}
-
-.df-feature-block {
-	margin-bottom: 1px;
-}
-
-.df-feature-row {
-	display: flex;
-	gap: 10px;
-	margin-bottom: 6px;
-}
-
-.df-input-feature-name {
-	flex: 1;
-	max-width: 200px;
-	margin-bottom: 3px;
-}
-
-.df-field-feature-type {
-	max-width: 100px;
-	margin-bottom: 6px;
-}
-
-.df-input-feature-cost {
-	margin-bottom: 6px;
-	display: block;
-}
-
-.df-feature-desc-input {
-	width: 100%;
-	margin-bottom: 6px;
-	display: block;
-	font-weight: 500;
-	font-size: small;
-	resize: vertical;
-	overflow: auto;
-}
-
-.df-remove-feature-btn {
-	margin-bottom: 10px;
-}
-
-.df-add-feature-btn {
-	margin-top: 10px;
-}
-
-.df-insert-card-btn {
-	display: block;
-	margin-left: auto;
-	margin-top: 10px;
-	width: fit-content;
-	float: right;
-}
-
-/* Env Styles */
-
+/* ===== ENVIRONMENT CARD DISPLAY ===== */
 .df-env-card-outer {
 	max-width: 400px;
 	margin: 1em auto;
@@ -545,16 +794,12 @@ select.df-input-field {
 	font-weight: 700;
 }
 
-/* .features-section {
-  margin-top: 1.5em;
-  padding-top: 1em;
-} */
-
 .df-env-name {
 	font-weight: 700;
 	font-size: 1.3rem;
 	margin-bottom: 0.5em;
 }
+
 .df-env-feat-tier-type {
 	font-weight: 700;
 	font-size: 1rem;
@@ -567,10 +812,6 @@ select.df-input-field {
 	text-transform: uppercase;
 	margin-top: 3px;
 }
-
-/* .feature {
-  margin-bottom: 1em;
-} */
 
 .df-feature h4 {
 	font-weight: 700;
@@ -625,170 +866,7 @@ select.df-input-field {
 	font-style: italic;
 }
 
-/*ENV CREATOR*/
-
-.df-environment-creator-form {
-	padding: 1rem;
-	font-family: var(--font-family);
-}
-
-.df-environment-creator-form h2 {
-	margin-bottom: 1.5rem;
-	color: var(--text-normal);
-}
-
-.df-env-form-row {
-	display: flex;
-	gap: 0.3rem;
-	margin-bottom: 6px;
-}
-
-.df-env-form-row label {
-	font-weight: bold;
-}
-
-.df-env-form-row input,
-.df-env-form-row select {
-	flex: 1;
-	padding: 0.5rem;
-	border: 1px solid var(--background-modifier-border);
-	border-radius: 4px;
-	background-color: var(--background-primary);
-	color: var(--text-normal);
-}
-
-.df-env-form-second-row {
-	margin-bottom: 6px;
-}
-
-.df-env-form-third-row {
-	margin-bottom: 6px;
-}
-
-.df-env-form-forth-row {
-	width: 100%;
-	height: 100%;
-}
-/* IMPORTANT MUST CHECK*/
-.df-textarea {
-	width: 100%;
-	min-height: 80px;
-	margin-bottom: 1rem;
-	padding: 0.5rem;
-	border: 1px solid var(--background-modifier-border);
-	border-radius: 4px;
-	background-color: var(--background-primary);
-	color: var(--text-normal);
-}
-
-.df-env-features-section {
-	margin-top: 2rem;
-	border-top: 1px solid var(--background-modifier-border);
-	padding-top: 1rem;
-}
-
-.df-env-feature-entry {
-	padding: 1rem;
-	margin-bottom: 1rem;
-	border: 1px solid var(--background-modifier-border);
-	border-radius: 4px;
-	background-color: var(--background-secondary);
-}
-
-.df-env-add-feature-btn {
-	background-color: var(--interactive-accent);
-	color: white;
-	margin-top: 6px;
-}
-
-.df-env-remove-feature-btn {
-	background-color: var(--background-modifier-error);
-	color: white;
-	margin-bottom: 6px;
-}
-
-.df-env-insert-card-btn {
-	margin-top: 6px;
-	float: right;
-}
-
-/*env creation settings*/
-
-/* Name Setting */
-.df-env-name-setting,
-.df-env-tier-setting,
-.df-env-type-setting {
-	border-bottom: unset;
-	width: 150px;
-	padding: unset;
-	border-top: unset;
-}
-
-/* Impulse Setting */
-.df-env-impulse-setting {
-	width: 10px;
-}
-
-/* Difficulty Setting */
-.df-env-diff-setting {
-	width: 10px;
-}
-
-/* Adversaries Setting */
-.df-env-adv-setting {
-	width: 10px;
-}
-
-.df-env-desc-setting {
-	width: 260px;
-	border: unset;
-}
-
-/* Common styles for all environment settings */
-.df-env-impulse-setting,
-.df-env-diff-setting,
-.df-env-adv-setting {
-	/* name-type-tier */
-	border-bottom: unset;
-	width: 150px;
-	height: 100px;
-	padding: unset;
-	border-top: unset;
-}
-
-.df-basic-info-section {
-	width: 100%;
-}
-
-.df-feature-header {
-	width: auto;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-	align-items: center;
-	margin-top: 5px;
-}
-
-.df-add-question-btn {
-	margin-bottom: 6px;
-}
-
-.df-feature-container {
-	border-bottom: 1px solid grey;
-}
-
-.df-env-difficulity-input {
-	width: 20%;
-	margin-bottom: 6px;
-}
-
-.df-adversary-count {
-	float: right;
-}
-
 /* Environment Browser */
-
-/* Flex container for search and filter */
 .df-search-filter-container {
 	display: flex;
 	gap: 10px;
@@ -797,7 +875,6 @@ select.df-input-field {
 	width: 100%;
 }
 
-/* Search box styling */
 .df-env-search-box {
 	flex: 1;
 	padding: 8px 12px;
@@ -808,12 +885,10 @@ select.df-input-field {
 	font-size: 14px;
 }
 
-/* Dropdown container */
 .df-tier-dropdown {
-	min-width: 120px; /* Give the dropdown some minimum width */
+	min-width: 120px;
 }
 
-/* Dropdown styling (updated from previous version) */
 .df-tier-dropdown select.df-tier-filter-select {
 	padding: 8px 12px;
 	border-radius: 4px;
@@ -821,8 +896,7 @@ select.df-input-field {
 	background-color: var(--background-primary);
 	color: var(--text-normal);
 	font-size: 14px;
-	/* cursor: pointer; */
-	height: 36px; /* Match the search input height */
+	height: 36px;
 }
 
 .df-tier-option {
@@ -831,18 +905,7 @@ select.df-input-field {
 	padding: 4px;
 }
 
-/* Hover/focus states */
-/* .df-tier-dropdown select.df-tier-filter-select:hover {
-    border-color: var(--interactive-accent);
-}
-
-.df-tier-dropdown select.df-tier-filter-select:focus,
-.df-env-search-box:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--interactive-accent);
-} */
-
-/*custom cards*/
+/* Custom cards */
 .df-custom-badge {
 	margin-left: 8px;
 	padding: 2px 6px;
@@ -852,7 +915,19 @@ select.df-input-field {
 	font-size: 0.8em;
 	font-weight: bold;
 }
+
 .df-custom-adversary {
 	border-left: 3px solid var(--interactive-accent);
 	position: relative;
+}
+
+.df-source-badge-incredible{
+	margin-left: 8px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #fff;
+	background-color: #6b009c;
+	text-transform: capitalize;
 }

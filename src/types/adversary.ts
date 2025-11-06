@@ -17,6 +17,7 @@ export type CardData = {
 	weaponDamage: string;
 	xp: string;
 	count?: string;
+	source?: string; // Source of the adversary (e.g., 'custom', 'broskies', 'core', 'umbra')
 	features: Feature[];
 };
 

@@ -1,5 +1,6 @@
 import { Notice, TFile, Editor, Modal } from "obsidian";
 import type DaggerForgePlugin from "../../../main";
+import { CardData } from "../../../types/adversary";
 import {
 	createField,
 	createShortTripleFields,
@@ -8,21 +9,24 @@ import {
 import { addFeature, getFeatureValues } from "./FeatureManager";
 import { buildCardHTML } from "./CardBuilder";
 import { FormInputs } from "../../../types/shared";
-import { FeatureElements, SavedFeatureState } from "../../../types/adversary";
+import { FeatureElements, SavedFeatureState } from "../../../types/adversary"; 
 
+// This function is now replaced by DataManager.addAdversary()
+// Keeping it for backward compatibility if needed
 export async function buildCustomAdversary(
-	app: any,
+	plugin: DaggerForgePlugin,
 	values: any,
 	features: any[],
 ) {
-	const customAdversary = {
+	const customAdversary: CardData = {
 		name: values.name || "",
 		tier: values.tier || "",
 		type: values.type || "",
 		desc: values.desc || "",
 		motives: values.motives || "",
 		difficulty: values.difficulty || "",
-		thresholds: `${values.thresholdMajor || ""}/${values.thresholdSevere || ""}`,
+		thresholdMajor: values.thresholdMajor || "",
+		thresholdSevere: values.thresholdSevere || "",
 		hp: values.hp || "",
 		stress: values.stress || "",
 		atk: values.atk || "",
@@ -30,7 +34,7 @@ export async function buildCustomAdversary(
 		weaponRange: values.weaponRange || "",
 		weaponDamage: values.weaponDamage || "",
 		xp: values.xp || "",
-		source: values.source || "custom", // Default to "custom" for user-created
+		count: values.count || "1",
 		features: features.map((f) => ({
 			name: f.name || "",
 			type: f.type || "",
@@ -40,30 +44,10 @@ export async function buildCustomAdversary(
 	};
 
 	try {
-		// Define the filename and path
-		const filename = "custom@Adversaries.md";
-		const vault = app.vault;
-
-		// Check if file exists, create if it doesn't
-		let file = vault.getAbstractFileByPath(filename) as TFile;
-		if (!file) {
-			file = await vault.create(filename, "## Custom Adversaries\n\n");
-			new Notice(`Created new custom adversaries file: ${filename}`);
-		}
-
-		// Read current content
-		let content = await vault.read(file);
-
-		// Prepare the new adversary entry
-		const adversaryHeader = `\n\n### ${customAdversary.name}\n`;
-		const adversaryContent =
-			"```json\n" + JSON.stringify(customAdversary, null, 2) + "\n```\n";
-
-		// Append the new adversary to the file
-		await vault.modify(file, content + adversaryHeader + adversaryContent);
-
+		// Save using DataManager (Obsidian's saveData)
+		await plugin.dataManager.addAdversary(customAdversary);
 		new Notice(
-			`Custom adversary "${customAdversary.name}" added to ${filename}`,
+			`Custom adversary "${customAdversary.name}" saved successfully!`,
 		);
 		return customAdversary;
 	} catch (error) {
@@ -85,14 +69,14 @@ export class TextInputModal extends Modal {
 	plugin: DaggerForgePlugin;
 	savedInputStateAdv: Record<string, any> = {};
 	editor: Editor;
-	onSubmit?: (newHTML: string) => void; // Add this new property
-	isEditMode: boolean = false; // Add this flag
+	onSubmit?: (newHTML: string) => void;
+	isEditMode: boolean = false;
 
 	constructor(
 		plugin: DaggerForgePlugin,
 		editor: Editor,
 		cardElement?: HTMLElement,
-		cardData?: Record<string, any> // Add this parameter
+		cardData?: Record<string, any>
 	) {
 		super(plugin.app);
 		this.plugin = plugin;
@@ -100,21 +84,19 @@ export class TextInputModal extends Modal {
 		this.cardElement = cardElement;
 		this.isEditMode = !!cardElement;
 		if (cardElement && cardData) {
-					console.log("Editing existing card with provided data", cardElement);
-					// Use the cardData that was already extracted
-					this.savedInputStateAdv = {
-						...cardData,
-						// Convert features array to saved format
-					features: cardData.features?.map((f: any) => ({
-							featureName: f.name || f.featureName,
-							featureType: f.type || f.featureType,
-							featureCost: f.cost || f.featureCost,
-							featureDesc: f.desc || f.featureDesc,
-						})) || [],
-					};
-				console.log("Saved input state:", this.savedInputStateAdv);
-			}
+			console.log("Editing existing card with provided data", cardElement);
+			this.savedInputStateAdv = {
+				...cardData,
+				features: cardData.features?.map((f: any) => ({
+					featureName: f.name || f.featureName,
+					featureType: f.type || f.featureType,
+					featureCost: f.cost || f.featureCost,
+					featureDesc: f.desc || f.featureDesc,
+				})) || [],
+			};
+			console.log("Saved input state:", this.savedInputStateAdv);
 		}
+	}
 
 	onOpen() {
 		console.log("savedInputStateAdv on open:", this.savedInputStateAdv);
@@ -135,7 +117,11 @@ export class TextInputModal extends Modal {
 		const title = this.cardElement ? "Edit Adversary" : "Create Adversary";
 		contentEl.createEl("h2", { text: title, cls: "df-modal-title" });
 
-		const firstRow = contentEl.createDiv({ cls: "df-form-row" });
+		// ===== BASIC INFO SECTION =====
+		const basicInfoSection = contentEl.createDiv({ cls: "df-adv-form-section" });
+		basicInfoSection.createEl("h3", { text: "Basic Information", cls: "df-section-title" });
+
+		const firstRow = basicInfoSection.createDiv({ cls: "df-adv-form-row" });
 
 		// Name field
 		createInlineField(firstRow, this.inputs, {
@@ -143,7 +129,7 @@ export class TextInputModal extends Modal {
 			key: "name",
 			type: "input",
 			savedValues: saved,
-			customClass: "df-adversary-name-input",
+			customClass: "df-adv-field-name",
 		});
 
 		// Tier dropdown
@@ -153,7 +139,7 @@ export class TextInputModal extends Modal {
 			type: "select",
 			options: ["1", "2", "3", "4"],
 			savedValues: saved,
-			customClass: "df-tier-select",
+			customClass: "df-adv-field-tier",
 		});
 
 		// Type dropdown
@@ -174,32 +160,38 @@ export class TextInputModal extends Modal {
 				"Support",
 			],
 			savedValues: saved,
-			customClass: "df-type-select",
+			customClass: "df-adv-field-type",
 		});
 
-		// contentEl.createEl('br');
+		// ===== DETAILS SECTION =====
+		const detailsSection = basicInfoSection.createDiv({ cls: "df-adv-form-section-content" });
+
 		createField(
-			contentEl,
+			detailsSection,
 			this.inputs,
 			"Description",
 			"desc",
 			"textarea",
-			"description-textarea",
-			saved,
-		);
-		createField(
-			contentEl,
-			this.inputs,
-			"Motives ",
-			"motives",
-			"input",
-			"motives-input",
+			"df-adv-field-desc",
 			saved,
 		);
 
-		// Create stat fields
+		createField(
+			detailsSection,
+			this.inputs,
+			"Motives",
+			"motives",
+			"input",
+			"df-adv-field-motives",
+			saved,
+		);
+
+		// ===== STATS SECTION =====
+		const statsSection = contentEl.createDiv({ cls: "df-adv-form-section" });
+		statsSection.createEl("h3", { text: "Statistics", cls: "df-section-title" });
+
 		createShortTripleFields(
-			contentEl,
+			statsSection,
 			this.inputs,
 			"Difficulty",
 			"difficulty",
@@ -213,7 +205,7 @@ export class TextInputModal extends Modal {
 		);
 
 		createShortTripleFields(
-			contentEl,
+			statsSection,
 			this.inputs,
 			"HP",
 			"hp",
@@ -226,14 +218,18 @@ export class TextInputModal extends Modal {
 			saved,
 		);
 
+		// ===== WEAPON SECTION =====
+		const weaponSection = contentEl.createDiv({ cls: "df-adv-form-section" });
+		weaponSection.createEl("h3", { text: "Weapon", cls: "df-section-title" });
+
 		createShortTripleFields(
-			contentEl,
+			weaponSection,
 			this.inputs,
-			"Weapon Name",
+			"Name",
 			"weaponName",
-			"Weapon Range",
+			"Range",
 			"weaponRange",
-			"Weapon Damage",
+			"Damage",
 			"weaponDamage",
 			"weaponRange",
 			["Melee", "Very Close", "Close", "Far", "Very Far"],
@@ -241,16 +237,34 @@ export class TextInputModal extends Modal {
 		);
 
 		createField(
-			contentEl,
+			weaponSection,
 			this.inputs,
-			"Experience (optional) ",
+			"Experience (optional)",
 			"xp",
 			"input",
-			"df-experience-input",
+			"df-adv-field-xp",
 			saved,
 		);
 
-		this.featureContainer = contentEl.createDiv("df-feature-container");
+		// ===== COUNT FIELD =====
+		const countRow = weaponSection.createDiv({ cls: "df-adv-form-row" });
+		createInlineField(countRow, this.inputs, {
+			label: "Count",
+			key: "count",
+			type: "input",
+			savedValues: saved,
+			customClass: "df-adv-field-count",
+		});
+
+		if (!saved["count"]) {
+			this.inputs["count"].value = "1";
+		}
+
+		// ===== FEATURES SECTION =====
+		const featuresSection = contentEl.createDiv({ cls: "df-adv-form-section" });
+		featuresSection.createEl("h3", { text: "Features", cls: "df-section-title" });
+
+		this.featureContainer = featuresSection.createDiv({ cls: "df-adv-feature-container" });
 		this.features = [];
 		this.featureContainer.empty();
 
@@ -264,32 +278,21 @@ export class TextInputModal extends Modal {
 			addFeature(this.featureContainer, this.features, setValueIfSaved);
 		}
 
-		this.addFeatureBtn = contentEl.createEl("button", {
-			text: "Add Feature",
-			cls: "df-add-feature-btn",
+		this.addFeatureBtn = featuresSection.createEl("button", {
+			text: "+ Add Feature",
+			cls: "df-adv-btn-add-feature",
 		});
 		this.addFeatureBtn.onclick = () =>
 			addFeature(this.featureContainer, this.features, setValueIfSaved);
 
-		createInlineField(firstRow, this.inputs, {
-			label: "Count",
-			key: "count",
-			type: "input",
-			savedValues: saved,
-			customClass: "df-count-input",
-		});
+		// ===== ACTION BUTTONS =====
+		const buttonContainer = contentEl.createDiv({ cls: "df-adv-form-buttons" });
 
-		if (!saved["count"]) {
-			this.inputs["count"].value = "1";
-		}
-
-		// Modified button handling
-		this.insertBtn = contentEl.createEl("button", {
+		this.insertBtn = buttonContainer.createEl("button", {
 			text: this.cardElement ? "Update Card" : "Insert Card",
-			cls: "df-insert-card-btn",
+			cls: "df-adv-btn-insert",
 		});
 
-		//--------INSERT BUTTON CLICK
 		this.insertBtn.onclick = async () => {
 			const values = Object.fromEntries(
 				Object.entries(this.inputs).map(([key, el]) => [
@@ -299,8 +302,7 @@ export class TextInputModal extends Modal {
 			);
 
 			const features = getFeatureValues(this.features);
-			// WAIT for the file to be saved
-			await buildCustomAdversary(this.plugin.app, values, features);
+			await buildCustomAdversary(this.plugin, values, features);
 			const wrapper = document.createElement("div");
 			const newHTML = buildCardHTML(values, features);
 			wrapper.innerHTML = newHTML.trim();
@@ -310,6 +312,8 @@ export class TextInputModal extends Modal {
 			} else {
 				this.editor.replaceSelection(newHTML + "\n");
 			}
+
+			// Clear inputs
 			for (const el of Object.values(this.inputs)) {
 				if (
 					el instanceof HTMLInputElement ||
@@ -321,6 +325,7 @@ export class TextInputModal extends Modal {
 				}
 			}
 
+			// Clear features
 			this.features.forEach(({ nameEl, typeEl, costEl, descEl }) => {
 				nameEl.value = "";
 				typeEl.selectedIndex = 0;

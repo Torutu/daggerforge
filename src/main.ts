@@ -17,17 +17,24 @@ import { EnvironmentModal } from "./features/environments/creator/EnvModal";
 import { CardData } from "./types";
 import { extractCardData } from "./features/adversaries/editor/CardDataHelpers";
 import { AdversaryEditorModal } from "./features/adversaries/editor/AdvEditorModal";
+import { DataManager } from "./services/DataManager";
+import { ImportDataModal } from "./ui/ImportDataModal";
 
 export default class DaggerForgePlugin extends Plugin {
-	updateCardData(cardElement: HTMLElement, currentData: CardData) {
-		throw new Error("Method not implemented.");
-	}
-	savedInputStateAdv: Record<string, any> = {};
-	savedInputStateEnv: Record<string, any> = {};
+updateCardData(cardElement: HTMLElement, currentData: CardData) {
+throw new Error("Method not implemented.");
+}
+dataManager: DataManager;
+savedInputStateAdv: Record<string, any> = {};
+savedInputStateEnv: Record<string, any> = {};
 	private isEditListenerAdded = false;
 
 
 	async onload() {
+		// Initialize DataManager
+		this.dataManager = new DataManager(this);
+		await this.dataManager.load();
+
 		this.addStatusBarItem().setText("DaggerForge Active");
 
 		if (!this.isEditListenerAdded) {
@@ -78,6 +85,15 @@ export default class DaggerForgePlugin extends Plugin {
 						.setTitle("Environment Creator")
 						.setIcon("landmark")
 						.onClick(() => this.openCreator("environment")),
+				);
+
+				menu.addSeparator();
+
+				menu.addItem((item) =>
+					item
+						.setTitle("Import Data")
+						.setIcon("upload")
+						.onClick(() => new ImportDataModal(this.app, this).open()),
 				);
 
 				menu.showAtMouseEvent(evt);
@@ -140,6 +156,14 @@ this.addRibbonIcon("plus", "Add Hello Card", async () => {
 			id: "environment-creator",
 			name: "Environment Creator",
 			callback: () => this.openCreator("environment"),
+		});
+
+		this.addCommand({
+			id: "import-data",
+			name: "Import Data from JSON File",
+			callback: () => {
+				new ImportDataModal(this.app, this).open();
+			},
 		});
 	}
 
