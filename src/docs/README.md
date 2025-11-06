@@ -238,22 +238,4 @@ This prevents conflicts with other plugins.
 - **CSS class?** → Check QUICK_REFERENCE.md → CSS Classes Reference
 - **File to edit?** → Check QUICK_REFERENCE.md → Key Files by Feature
 
----
-
-## Contributing
-
-When contributing to DaggerForge:
-
-1. ✅ Update type definitions if changing data structures
-2. ✅ Update this documentation if adding new functions
-3. ✅ Follow existing code style (TypeScript, Obsidian patterns)
-4. ✅ Test with empty and populated data
-5. ✅ Check form persistence works
-6. ✅ Verify custom content saves correctly
-
----
-
-**Last Updated:** 2025
-**Plugin:** DaggerForge
-**Platform:** Obsidian Plugin
 
