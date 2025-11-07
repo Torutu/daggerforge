@@ -207,6 +207,29 @@ export class DataManager {
 		await this.save();
 	}
 
+	/**
+	 * Delete the data.json file completely
+	 * This will remove all stored plugin data from disk
+	 */
+	async deleteDataFile(): Promise<void> {
+		try {
+			// Reset in-memory data first
+			this.data = {
+				version: '2.0',
+				adversaries: [],
+				environments: [],
+				lastUpdated: Date.now()
+			};
+			
+			// Delete the actual data.json file
+			await this.plugin.saveData(null);
+			console.log('DataManager: data.json file deleted successfully');
+		} catch (err) {
+			console.error('DataManager: Error deleting data.json file', err);
+			throw err;
+		}
+	}
+
 	getStatistics() {
 		const advBySource = this.groupBySource(this.data.adversaries);
 		const envBySource = this.groupBySource(this.data.environments);

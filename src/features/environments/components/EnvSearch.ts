@@ -113,7 +113,7 @@ export class EnvironmentView extends ItemView {
 				...env,
 				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
 				isCustom: true,
-				source: "custom",
+				source: env.source || "custom",
 			}));
 		} catch (error) {
 			console.error("Error loading custom environments from DataManager:", error);
@@ -239,7 +239,7 @@ export class EnvironmentView extends ItemView {
 		const badgeTexts: Record<string, string> = {
 			core: "Core",
 			custom: "Custom",
-			umbra: "Umbra",
+			incredible: "Incredible"
 		};
 
 		if (badgeTexts[source] == "Custom") {

@@ -5,7 +5,6 @@ import {
 	incrementAdversaryCount,
 	decrementAdversaryCount,
 } from "../../../utils/adversaryCounter";
-import { getTier, getSource } from "../../../utils/dataFilters";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -23,7 +22,8 @@ interface Adversary {
 	desc: string;
 	motives: string;
 	difficulty: string;
-	thresholds: string;
+	thresholdMajor: string;
+	thresholdSevere: string;
 	hp: string;
 	stress?: string;
 	atk: string;
@@ -159,7 +159,8 @@ export class AdversaryView extends ItemView {
 			desc: raw.desc || raw.Desc || "",
 			motives: raw.motives || raw.Motives || "",
 			difficulty: raw.difficulty || raw.Difficulty || "",
-			thresholds: raw.thresholds || raw.Thresholds || "",
+			thresholdMajor: raw.thresholdMajor || (raw.Thresholds ? raw.Thresholds.split('/')[0] : "") || "",
+			thresholdSevere: raw.thresholdSevere || (raw.Thresholds ? raw.Thresholds.split('/')[1] : "") || "",
 			hp: raw.hp || raw.HP || "",
 			stress: raw.stress || raw.Stress,
 			atk: raw.atk || raw.ATK || "",
@@ -184,13 +185,13 @@ export class AdversaryView extends ItemView {
 
 			// Load custom adversaries from DataManager (Obsidian storage)
 			const customAdvs = plugin.dataManager.getAdversaries();
-
+			// console.log("source of custom adversaries:", customAdvs.map((adv: any) => adv.source));
 			// Convert to display format and mark as custom
 			return customAdvs.map((adv: any) => ({
 				...adv,
 				tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier,
 				isCustom: true,
-				source: "custom",
+				source: adv.source || "custom",
 			}));
 		} catch (error) {
 			console.error("Error loading custom adversaries from DataManager:", error);
@@ -404,13 +405,12 @@ export class AdversaryView extends ItemView {
 		const badgeTexts: Record<string, string> = {
 			core: "Core",
 			custom: "Custom",
-			umbra: "Umbra",
+			incredible: "Incredible"
 		};
 		sourceBadge.textContent = badgeTexts[source] || source;
 		tier.appendChild(sourceBadge);
 
 		card.appendChild(tier);
-
 		if (badgeTexts[source] == "Custom") {
 			const deleteBtn = document.createElement("button");
 			deleteBtn.textContent = "Delete";
@@ -489,7 +489,7 @@ export class AdversaryView extends ItemView {
         </div>
         <div class="df-stats">
             Difficulty: <span class="df-stat">${adversary.difficulty} |</span>
-            Thresholds: <span class="df-stat">${adversary.thresholds} |</span>
+            Thresholds: <span class="df-stat">${adversary.thresholdMajor}/${adversary.thresholdSevere} |</span>
             HP: <span class="df-stat">${adversary.hp} |</span>
             Stress: <span class="df-stat">${adversary.stress || ""}</span>
             <div>ATK: <span class="df-stat">${adversary.atk} |</span>

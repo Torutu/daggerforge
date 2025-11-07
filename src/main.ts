@@ -95,6 +95,12 @@ savedInputStateEnv: Record<string, any> = {};
 						.setIcon("upload")
 						.onClick(() => new ImportDataModal(this.app, this).open()),
 				);
+				menu.addItem((item) =>
+					item
+						.setTitle("Delete Data File")
+						.setIcon("trash")
+						.onClick(() => this.confirmDeleteDataFile()),
+				);
 
 				menu.showAtMouseEvent(evt);
 			},
@@ -164,6 +170,12 @@ this.addRibbonIcon("plus", "Add Hello Card", async () => {
 			callback: () => {
 				new ImportDataModal(this.app, this).open();
 			},
+		});
+
+		this.addCommand({
+			id: "delete-data-file",
+			name: "Delete Data File",
+			callback: () => this.confirmDeleteDataFile(),
 		});
 	}
 
@@ -285,6 +297,52 @@ this.addRibbonIcon("plus", "Add Hello Card", async () => {
 			}
 		};
 	};
+
+	/**
+	 * Confirm before deleting the data file
+	 */
+	private async confirmDeleteDataFile() {
+		const confirmed = confirm(
+			"Are you sure you want to delete the data.json file?\n\n" +
+			"This will permanently remove ALL stored adversaries and environments.\n" +
+			"This action cannot be undone!"
+		);
+
+		if (confirmed) {
+			try {
+				await this.dataManager.deleteDataFile();
+				new Notice("Data file deleted successfully!");
+				// Refresh both browsers
+				this.refreshBrowsers();
+			} catch (err) {
+				new Notice("Error deleting data file: " + err.message);
+				console.error("Error deleting data file:", err);
+			}
+		}
+	}
+
+	/**
+	 * Refresh all open adversary and environment browsers
+	 */
+	public refreshBrowsers() {
+		// Refresh adversary browsers
+		const adversaryLeaves = this.app.workspace.getLeavesOfType(ADVERSARY_VIEW_TYPE);
+		adversaryLeaves.forEach((leaf) => {
+			const view = leaf.view as AdversaryView;
+			if (view && typeof view.refresh === 'function') {
+				view.refresh();
+			}
+		});
+
+		// Refresh environment browsers
+		const environmentLeaves = this.app.workspace.getLeavesOfType(ENVIRONMENT_VIEW_TYPE);
+		environmentLeaves.forEach((leaf) => {
+			const view = leaf.view as EnvironmentView;
+			if (view && typeof view.refresh === 'function') {
+				view.refresh();
+			}
+		});
+	}
 
 	onunload() {
 		document.removeEventListener("click", this.handleCardEditClick);

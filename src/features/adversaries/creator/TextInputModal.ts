@@ -34,7 +34,7 @@ export async function buildCustomAdversary(
 		weaponRange: values.weaponRange || "",
 		weaponDamage: values.weaponDamage || "",
 		xp: values.xp || "",
-		count: values.count || "1",
+		source: "custom",
 		features: features.map((f) => ({
 			name: f.name || "",
 			type: f.type || "",

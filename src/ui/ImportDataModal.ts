@@ -87,6 +87,10 @@ export class ImportDataModal extends Modal {
 					await this.plugin.dataManager.importData(JSON.stringify(data));
 					
 					new Notice(`Successfully imported data from ${file.name}`);
+					
+					// Refresh browsers after successful import
+					this.plugin.refreshBrowsers();
+					
 					resolve();
 				} catch (error) {
 					reject(error);

@@ -6,7 +6,8 @@
     "desc": "A decaying mage adorned in dark, tattered robes.",
     "motives": "Corrupt, decay, flee to fight another day,resurrect",
     "difficulty": "21",
-    "thresholds": "33/66",
+    "thresholdMajor": "33",
+    "thresholdSevere": "66",
     "hp": "9",
     "stress": "8",
     "atk": "+6",
@@ -55,7 +56,8 @@
     "desc": "A cursed soul bound to the Fallen’s will.",
     "motives": "Crush, dominate, earn relief, punish",
     "difficulty": "18",
-    "thresholds": "None",
+    "thresholdMajor": "None",
+    "thresholdSevere": "",
     "hp": "1",
     "stress": "1",
     "atk": "+2",
@@ -92,7 +94,8 @@
     "desc": "A powerful mage bound by the bargains they made in life.",
     "motives": "Acquire, dishearten, dominate, torment",
     "difficulty": "19",
-    "thresholds": "26/42",
+    "thresholdMajor": "26",
+    "thresholdSevere": "42",
     "hp": "6",
     "stress": "5",
     "atk": "+4",
@@ -124,27 +127,8 @@
         "name": "Shackles of Guilt",
         "type": "Reaction",
         "cost": "",
-        "desc": "Countdown (Loop 2d6). When the Sorcerer is in the spotlight for the first time, activate the countdown. When it triggers, all targets within Far range become Vulnerable and must mark a Stress as they relive their greatest regrets. A target can break free from their regret with a successful Presence or Strength Roll. When a PC fails to break free, they lose a Hope."
-      }
-    ]
-  },
-  {
-    "name": "FALLEN WARLORD:REALM-BREAKER",
-    "tier": "4",
-    "type": "Solo",
-    "desc": "A Fallen God, wreathed in rage and resentment, bearing millennia of experience in breaking heroes’ spirits.",
-    "motives": "Corrupt, dominate, punish, break the weak",
-    "difficulty": "20",
-    "thresholds": "36/66",
-    "hp": "8",
-    "stress": "5",
-    "atk": "+7",
-    "weaponName": "Barbed Whip",
-    "weaponRange": "Close",
-    "weaponDamage": "4d8+7 phy",
-    "xp": "Conquest +3, History +2, Intimidation +3",
-    "source": "core",
-    "features": [
+        "desc": "Countdown (Loop 2d6). When the Sorcerer is in the spotlight for the first time, activate the countdown. When it triggers, all targets within Far range become Vulnerable and must mark a Stress as they relive their greatest regrets. A target can break free from their regret with a successful Presence or Strength Roll. When a PC fails to break free, they lose a Hope. FALLEN WARLORD:REALM-BREAKER Tier  Solo A Fallen God, wreathed in rage and resentment, bearing millennia of experience in breaking heroes’ spirits. Motives \u0026 Tactics: Corrupt, dominate, punish, break the weak Difficulty: 20 | Thresholds: 36/66 | HP: 8 | Stress: 5 ATK: +7 | Barbed Whip: Close | 4d8+7 phy Experience: Conquest +3, History +2, Intimidation +3 FEATURES"
+      },
       {
         "name": "Relentless (2)",
         "type": "Passive",
@@ -179,27 +163,8 @@
         "name": "I Have Never Known Defeat (Phase Change)",
         "type": "Reaction",
         "cost": "",
-        "desc": "When the Realm-Breaker marks their last HP, replace them with the Undefeated Champion and immediately spotlight them."
-      }
-    ]
-  },
-  {
-    "name": "FALLEN WARLORD:UNDEFEATED CHAMPION",
-    "tier": "4",
-    "type": "Solo",
-    "desc": "That which only the most feared have a chance to fear.",
-    "motives": "Dispatch merciless death, punish the defiant, secure victory at any cost",
-    "difficulty": "18",
-    "thresholds": "35/58",
-    "hp": "11",
-    "stress": "5",
-    "atk": "+8",
-    "weaponName": "Heart-Shattering Sword",
-    "weaponRange": "Very Close",
-    "weaponDamage": "4d12+13 phy",
-    "xp": "Conquest +3, History +2, Intimidation +3",
-    "source": "core",
-    "features": [
+        "desc": "When the Realm-Breaker marks their last HP, replace them with the Undefeated Champion and immediately spotlight them. FALLEN WARLORD:UNDEFEATED CHAMPION Tier  Solo That which only the most feared have a chance to fear. Motives \u0026 Tactics: Dispatch merciless death, punish the defiant, secure victory at any cost Difficulty: 18 | Thresholds: 35/58 | HP: 11 | Stress: 5 ATK: +8 | Heart-Shattering Sword: Very Close | 4d12+13 phy Experience: Conquest +3, History +2, Intimidation +3 FEATURES"
+      },
       {
         "name": "Relentless (3)",
         "type": "Passive",
@@ -251,7 +216,8 @@
     "desc": "Spirit soldiers with sanctified bows.",
     "motives": "Focus fire, obey, reposition, volley",
     "difficulty": "19",
-    "thresholds": "25/45",
+    "thresholdMajor": "25",
+    "thresholdSevere": "45",
     "hp": "3",
     "stress": "2",
     "atk": "+4",
@@ -282,7 +248,8 @@
     "desc": "Souls of the faithful, lifted up with divine weaponry.",
     "motives": "Obey, outmaneuver, punish, swarm",
     "difficulty": "18",
-    "thresholds": "None",
+    "thresholdMajor": "None",
+    "thresholdSevere": "",
     "hp": "1",
     "stress": "2",
     "atk": "+2",
@@ -319,7 +286,8 @@
     "desc": "A divine champion, head of a hallowed host of warriors who enforce their god’s will.",
     "motives": "Enforce dogma, fly, pronounce judgment, smite",
     "difficulty": "20",
-    "thresholds": "37/70",
+    "thresholdMajor": "37",
+    "thresholdSevere": "70",
     "hp": "7",
     "stress": "5",
     "atk": "+8",
@@ -368,7 +336,8 @@
     "desc": "A legendary beast of the sea, bigger than the largest galleon, with sucker-laden tentacles and a terrifying maw.",
     "motives": "Consume, crush, drown, grapple",
     "difficulty": "20",
-    "thresholds": "35/70",
+    "thresholdMajor": "35",
+    "thresholdSevere": "70",
     "hp": "11",
     "stress": "8",
     "atk": "+7",
@@ -417,7 +386,8 @@
     "desc": "A towering immortal and incarnation of fate, cursed to only see bad outcomes.",
     "motives": "Change environment, condemn, dishearten,toss aside",
     "difficulty": "20",
-    "thresholds": "38/68",
+    "thresholdMajor": "38",
+    "thresholdSevere": "68",
     "hp": "11",
     "stress": "10",
     "atk": "+8",
@@ -472,7 +442,8 @@
     "desc": "A chaotic mockery of life, constantly in flux.",
     "motives": "Demolish, devour, undermine",
     "difficulty": "19",
-    "thresholds": "35/71",
+    "thresholdMajor": "35",
+    "thresholdSevere": "71",
     "hp": "7",
     "stress": "5",
     "atk": "+2d4",
@@ -504,7 +475,7 @@
         "name": "Unreal Form",
         "type": "Reaction",
         "cost": "",
-        "desc": "When the Abomination takes damage, reduce it by 1d20. If the Abomination marks 1 or fewer Hit Points from a successful attack against them, you gain a Fear."
+        "desc": "When the Abomination takes damage, reduce it by 1d2 0. If the Abomination marks 1 or fewer Hit Points from a successful attack against them, you gain a Fear."
       }
     ]
   },
@@ -515,7 +486,8 @@
     "desc": "A shifting, formless mass seemingly made of chromatic light.",
     "motives": "Confuse, distract, overwhelm",
     "difficulty": "19",
-    "thresholds": "27/47",
+    "thresholdMajor": "27",
+    "thresholdSevere": "47",
     "hp": "4",
     "stress": "3",
     "atk": "+7",
@@ -546,7 +518,8 @@
     "desc": "A vaguely humanoid form stripped of memory and identity.",
     "motives": "Destroy, disgust, disorient, intimidate",
     "difficulty": "17",
-    "thresholds": "None",
+    "thresholdMajor": "None",
+    "thresholdSevere": "",
     "hp": "1",
     "stress": "1",
     "atk": "+3",
@@ -566,27 +539,8 @@
         "name": "Group Attack",
         "type": "Action",
         "cost": "Spend a Fear",
-        "desc": "to choose a target and spotlight all Outer Realm Thralls within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 11 physical damage each. Combine this damage."
-      }
-    ]
-  },
-  {
-    "name": "VOLCANIC DRAGON:MOLTEN SCOURGE",
-    "tier": "4",
-    "type": "Solo",
-    "desc": "Enraged by their wounds, the dragon bursts into molten lava.",
-    "motives": "Douse with lava, incinerate, repel Invaders, reposition",
-    "difficulty": "20",
-    "thresholds": "30/58",
-    "hp": "7",
-    "stress": "5",
-    "atk": "+9",
-    "weaponName": "Lava-Coated Claws",
-    "weaponRange": "Close",
-    "weaponDamage": "4d12+4 phy",
-    "xp": "Hunt from Above +5",
-    "source": "core",
-    "features": [
+        "desc": "to choose a target and spotlight all Outer Realm Thralls within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 11 physical damage each. Combine this damage. VOLCANIC DRAGON:MOLTEN SCOURGE Tier  Solo Enraged by their wounds, the dragon bursts into molten lava. Motives \u0026 Tactics: Douse with lava, incinerate, repel Invaders, reposition Difficulty: 20 | Thresholds: 30/58 | HP: 7 | Stress: 5 ATK: +9 | Lava-Coated Claws: Close | 4d12+4 phy Experience: Hunt from Above +5 FEATURES"
+      },
       {
         "name": "Relentless (3)",
         "type": "Passive",
@@ -615,7 +569,7 @@
         "name": "Volcanic Breath",
         "type": "Reaction",
         "cost": "",
-        "desc": "When the Molten Scourge takes Major damage, roll a d10. On a result of 8 or higher, the Molten Scourge breathes a flow of lava in front of them within Far range. All targets in that area must make an Agility Reaction Roll. Targets who fail take 2d10+4 physical damage, mark 1d4 Stress, and are Vulnerable until they clear a Stress. Targets who succeed take half damage and must mark a Stress."
+        "desc": "When the Molten Scourge takes Major damage, roll a d1 0. On a result of 8 or higher, the Molten Scourge breathes a flow of lava in front of them within Far range. All targets in that area must make an Agility Reaction Roll. Targets who fail take 2d10+4 physical damage, mark 1d4 Stress, and are Vulnerable until they clear a Stress. Targets who succeed take half damage and must mark a Stress."
       },
       {
         "name": "Lava Splash",
@@ -627,27 +581,8 @@
         "name": "Ashen Vengeance (Phase Change)",
         "type": "Reaction",
         "cost": "",
-        "desc": "When the Molten Scourge marks their last HP, replace them with the Ashen Tyrant and immediately spotlight them."
-      }
-    ]
-  },
-  {
-    "name": "VOLCANIC DRAGON: OBSIDIAN PREDATOR",
-    "tier": "4",
-    "type": "Solo",
-    "desc": "A massive winged creature with obsidian scales and impossibly sharp claws.",
-    "motives": "Defend lair, dive-bomb, fly, hunt, intimidate",
-    "difficulty": "19",
-    "thresholds": "33/65",
-    "hp": "6",
-    "stress": "5",
-    "atk": "+8",
-    "weaponName": "Obsidian Claws",
-    "weaponRange": "Close",
-    "weaponDamage": "4d10+4 phy",
-    "xp": "Hunt from Above +5",
-    "source": "core",
-    "features": [
+        "desc": "When the Molten Scourge marks their last HP, replace them with the Ashen Tyrant and immediately spotlight them. VOLCANIC DRAGON: OBSIDIAN PREDATOR Tier  Solo A massive winged creature with obsidian scales and impossibly sharp claws. Motives \u0026 Tactics: Defend lair, dive-bomb, fly, hunt, intimidate Difficulty: 19 | Thresholds: 33/65 | HP: 6 | Stress: 5 ATK: +8 | Obsidian Claws: Close | 4d10+4 phy Experience: Hunt from Above +5 FEATURES"
+      },
       {
         "name": "Relentless (2)",
         "type": "Passive",
@@ -682,27 +617,8 @@
         "name": "Erupting Rage (Phase Change)",
         "type": "Reaction",
         "cost": "",
-        "desc": "When the Obsidian Predator marks their last HP, replace them with the Molten Scourge and immediately spotlight them."
-      }
-    ]
-  },
-  {
-    "name": "VOLCANIC DRAGON: ASHEN TYRANT",
-    "tier": "4",
-    "type": "Solo",
-    "desc": "No enemy has ever had the insolence to wound the dragon so. As the lava settles, it’s ground to ash like the dragon’s past foes.",
-    "motives": "Choke, fly, intimidate, kill or be killed",
-    "difficulty": "18",
-    "thresholds": "29/55",
-    "hp": "8",
-    "stress": "5",
-    "atk": "+10",
-    "weaponName": "Claws and Teeth",
-    "weaponRange": "Close",
-    "weaponDamage": "4d12+15 phy",
-    "xp": "Hunt from Above +5",
-    "source": "core",
-    "features": [
+        "desc": "When the Obsidian Predator marks their last HP, replace them with the Molten Scourge and immediately spotlight them. VOLCANIC DRAGON: ASHEN TYRANT Tier  Solo No enemy has ever had the insolence to wound the dragon so. As the lava settles, it’s ground to ash like the dragon’s past foes. Motives \u0026 Tactics: Choke, fly, intimidate, kill or be killed Difficulty: 18 | Thresholds: 29/55 | HP: 8 | Stress: 5 ATK: +10 | Claws and Teeth: Close | 4d12+15 phy Experience: Hunt from Above +5 FEATURES"
+      },
       {
         "name": "Relentless (4)",
         "type": "Passive",
@@ -754,7 +670,8 @@
     "desc": "A towering, muscular zombie with magically infused strength and skill.",
     "motives": "Consume, hound, maim, terrify",
     "difficulty": "20",
-    "thresholds": "40/70",
+    "thresholdMajor": "40",
+    "thresholdSevere": "70",
     "hp": "9",
     "stress": "4",
     "atk": "+4",
@@ -797,7 +714,8 @@
     "desc": "A large pack of undead, still powerful despite their rotting flesh.",
     "motives": "Consume brain, shred flesh, surround",
     "difficulty": "17",
-    "thresholds": "25/45",
+    "thresholdMajor": "25",
+    "thresholdSevere": "45",
     "hp": "8",
     "stress": "5",
     "atk": "+2",
