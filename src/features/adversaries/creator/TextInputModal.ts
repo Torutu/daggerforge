@@ -9,7 +9,8 @@ import {
 import { addFeature, getFeatureValues } from "./FeatureManager";
 import { buildCardHTML } from "./CardBuilder";
 import { FormInputs } from "../../../types/shared";
-import { FeatureElements, SavedFeatureState } from "../../../types/adversary"; 
+import { FeatureElements, SavedFeatureState } from "../../../types/adversary";
+import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers"; 
 
 // This function is now replaced by DataManager.addAdversary()
 // Keeping it for backward compatibility if needed
@@ -114,12 +115,12 @@ export class TextInputModal extends Modal {
 		};
 
 		contentEl.empty();
-		const title = this.cardElement ? "Edit Adversary" : "Create Adversary";
+		const title = this.cardElement ? "Edit adversary" : "Create adversary";
 		contentEl.createEl("h2", { text: title, cls: "df-modal-title" });
 
 		// ===== BASIC INFO SECTION =====
 		const basicInfoSection = contentEl.createDiv({ cls: "df-adv-form-section" });
-		basicInfoSection.createEl("h3", { text: "Basic Information", cls: "df-section-title" });
+		basicInfoSection.createEl("h3", { text: "Basic information", cls: "df-section-title" });
 
 		const firstRow = basicInfoSection.createDiv({ cls: "df-adv-form-row" });
 
@@ -279,7 +280,7 @@ export class TextInputModal extends Modal {
 		}
 
 		this.addFeatureBtn = featuresSection.createEl("button", {
-			text: "+ Add Feature",
+			text: "+ Add feature",
 			cls: "df-adv-btn-add-feature",
 		});
 		this.addFeatureBtn.onclick = () =>
@@ -289,7 +290,7 @@ export class TextInputModal extends Modal {
 		const buttonContainer = contentEl.createDiv({ cls: "df-adv-form-buttons" });
 
 		this.insertBtn = buttonContainer.createEl("button", {
-			text: this.cardElement ? "Update Card" : "Insert Card",
+			text: this.cardElement ? "Update card" : "Insert card",
 			cls: "df-adv-btn-insert",
 		});
 
@@ -303,14 +304,34 @@ export class TextInputModal extends Modal {
 
 			const features = getFeatureValues(this.features);
 			await buildCustomAdversary(this.plugin, values, features);
-			const wrapper = document.createElement("div");
 			const newHTML = buildCardHTML(values, features);
-			wrapper.innerHTML = newHTML.trim();
-			const newCardEl = wrapper.firstChild as HTMLElement;
+
+			const isCanvas = isCanvasActive(this.app);
+			const isMarkdown = isMarkdownActive(this.app);
+			
+			// Check if we're editing an existing card
 			if (this.cardElement) {
+				const wrapper = document.createElement("div");
+				wrapper.innerHTML = newHTML.trim();
+				const newCardEl = wrapper.firstChild as HTMLElement;
 				this.cardElement.replaceWith(newCardEl);
 			} else {
-				this.editor.replaceSelection(newHTML + "\n");
+				// Check if we're on a canvas
+				if (isCanvas) {
+					const position = getAvailableCanvasPosition(this.plugin.app);
+					const success = createCanvasCard(this.plugin.app, newHTML, {
+						x: position.x,
+						y: position.y,
+						width: 400,
+						height: 600
+					});
+					if (success) {
+						new Notice("Environment inserted into canvas successfully!");
+					}
+				} else if (isMarkdown) {
+					// Insert into markdown editor
+					this.editor.replaceSelection(newHTML + "\n");
+				}
 			}
 
 			// Clear inputs

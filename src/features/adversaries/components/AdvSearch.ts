@@ -5,6 +5,7 @@ import {
 	incrementAdversaryCount,
 	decrementAdversaryCount,
 } from "../../../utils/adversaryCounter";
+import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -149,7 +150,7 @@ export class AdversaryView extends ItemView {
 
 	private normalizeAdversary(a: RawAdversaryData): Adversary {
 		// Handle both lowercase and uppercase property names
-		const raw = a as any; // Cast to any to access both property naming conventions
+		const raw = a as any;
 		return {
 			name: raw.name || raw.Name || "",
 			type: raw.type || raw.Type || "",
@@ -442,12 +443,31 @@ export class AdversaryView extends ItemView {
 	}
 
 	private insertAdversaryIntoNote(adversary: Adversary) {
+		const isCanvas = isCanvasActive(this.app);
+		new Notice(`canvas: ${isCanvas}`);
+		const isMarkdown = isMarkdownActive(this.app);
+		// Check if we're on a canvas
+		if (isCanvas) {
+			const adversaryText = this.generateAdversaryMarkdown(adversary);
+			const position = getAvailableCanvasPosition(this.app);
+			const success = createCanvasCard(this.app, adversaryText, {
+				x: position.x,
+				y: position.y,
+				width: 400,
+				height: 600
+			});
+			if (success) {
+				new Notice("Environment inserted into canvas successfully!");
+			}
+		}
+
+		// Otherwise, insert into markdown note
 		const view =
 			this.app.workspace.getActiveViewOfType(MarkdownView) ||
 			this.lastActiveMarkdown;
 
 		if (!view) {
-			new Notice("No note is open. Click on a note to activate it.");
+			new Notice("No note or canvas is open. Click on a note to activate it.");
 			return;
 		}
 

@@ -11,8 +11,8 @@ export async function adversariesSidebar(plugin: ObsidianPlugin) {
 			type: ADVERSARY_VIEW_TYPE,
 			active: true,
 		});
+		plugin.app.workspace.revealLeaf(leaf);
 	}
-	plugin.app.workspace.rightSplit.expand();
 }
 
 export async function openEnvironmentSidebar(plugin: ObsidianPlugin) {
@@ -23,6 +23,6 @@ export async function openEnvironmentSidebar(plugin: ObsidianPlugin) {
 			type: ENVIRONMENT_VIEW_TYPE,
 			active: true,
 		});
+		plugin.app.workspace.revealLeaf(leaf);
 	}
-	plugin.app.workspace.rightSplit.expand();
 }

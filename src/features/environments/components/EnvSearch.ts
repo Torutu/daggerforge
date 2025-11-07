@@ -1,6 +1,7 @@
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice } from "obsidian";
 import { ENVIRONMENTS } from "../../../data/environments";
 import { EnvironmentData } from "../../../types/environment";
+import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 
@@ -270,18 +271,6 @@ export class EnvironmentView extends ItemView {
 		card.appendChild(desc);
 
 		card.addEventListener("click", () => {
-			const view =
-				this.app.workspace.getActiveViewOfType(MarkdownView) ||
-				this.lastActiveMarkdown;
-			if (!view) {
-				new Notice("No markdown file is open.");
-				return;
-			}
-			const editor = view.editor;
-			if (!editor) {
-				new Notice("Cannot find editor in markdown view.");
-				return;
-			}
 			// Format features as HTML blocks
 			const featuresHTML = (env.features || [])
 				.map((f: any) => {
@@ -333,9 +322,43 @@ export class EnvironmentView extends ItemView {
 			</div>
 </div>
 `;
+			const isCanvas = isCanvasActive(this.app);
+			const isMarkdown = isMarkdownActive(this.app);
+			// Check if we're on a canvas
+			if (isCanvas)  {
+				const position = getAvailableCanvasPosition(this.app);
+				const success = createCanvasCard(this.app, envHTML, {
+					x: position.x,
+					y: position.y,
+					width: 400,
+					height: 650
+				});
+				if (success) {
+					new Notice(`Inserted environment ${env.name} into canvas.`);
+				} else {
+					new Notice("Failed to insert environment into canvas.");
+				}
+				return;
+			} else if (isMarkdown) {
+			// Otherwise, insert into markdown note
+			const view =
+				this.app.workspace.getActiveViewOfType(MarkdownView) ||
+				this.lastActiveMarkdown;
+			if (!view) {
+				new Notice("No markdown file or canvas is open.");
+				return;
+			}
+			const editor = view.editor;
+			if (!editor) {
+				new Notice("Cannot find editor in markdown view.");
+				return;
+			}
 			editor.replaceSelection(envHTML);
 			new Notice(`Inserted environment ${env.name} into the note.`);
-		});
+			} else { 
+					new Notice("No active editor or canvas");
+			}
+});
 		return card;
 	}
 }

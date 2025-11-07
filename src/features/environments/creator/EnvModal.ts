@@ -8,6 +8,7 @@ import {
 	EnvironmentData,
 } from "../../../types/environment";
 import { environmentToHTML } from "../components/EnvToHTML";
+import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
 
 export class EnvironmentModal extends Modal {
 	plugin: DaggerForgePlugin;
@@ -34,11 +35,11 @@ export class EnvironmentModal extends Modal {
 		contentEl.empty();
 
 		// ===== TITLE =====
-		contentEl.createEl("h2", { text: "Create Environment", cls: "df-modal-title" });
+		contentEl.createEl("h2", { text: "Create environment", cls: "df-modal-title" });
 
 		// ===== BASIC INFO SECTION =====
 		const basicInfoSection = contentEl.createDiv({ cls: "df-env-form-section" });
-		basicInfoSection.createEl("h3", { text: "Basic Information", cls: "df-section-title" });
+		basicInfoSection.createEl("h3", { text: "Basic information", cls: "df-section-title" });
 
 		const firstRow = basicInfoSection.createDiv({ cls: "df-env-form-row" });
 
@@ -98,7 +99,7 @@ export class EnvironmentModal extends Modal {
 
 		// ===== DIFFICULTY SECTION =====
 		const difficultySection = contentEl.createDiv({ cls: "df-env-form-section" });
-		difficultySection.createEl("h3", { text: "Difficulty & Adversaries", cls: "df-section-title" });
+		difficultySection.createEl("h3", { text: "Difficulty & adversaries", cls: "df-section-title" });
 
 		const diffRow = difficultySection.createDiv({ cls: "df-env-form-row" });
 
@@ -143,7 +144,7 @@ export class EnvironmentModal extends Modal {
 		if (savedFeatures.length === 0) this.addFeature();
 
 		const addBtn = featuresSection.createEl("button", {
-			text: "+ Add Feature",
+			text: "+ Add feature",
 			cls: "df-env-btn-add-feature",
 		});
 		addBtn.onclick = () => this.addFeature();
@@ -152,7 +153,7 @@ export class EnvironmentModal extends Modal {
 		const buttonContainer = contentEl.createDiv({ cls: "df-env-form-buttons" });
 
 		const insertBtn = buttonContainer.createEl("button", {
-			text: "Insert Environment",
+			text: "Insert environment",
 			cls: "df-env-btn-insert",
 		});
 
@@ -185,11 +186,30 @@ export class EnvironmentModal extends Modal {
 					`Environment "${env.name}" saved successfully!`,
 				);
 
-				// Insert into current note
+				// Generate HTML content
 				const htmlContent = environmentToHTML(env);
-				this.editor.replaceSelection(
-					`<div class="environment-block">\n${htmlContent}\n</div>\n`,
-				);
+				const wrappedHTML = `<div class="environment-block">\n${htmlContent}\n</div>\n`;
+
+				const isCanvas = isCanvasActive(this.app);
+				new Notice(`canvas: ${isCanvas}`);
+				const isMarkdown = isMarkdownActive(this.app);
+
+				// Check if we're on a canvas
+				if (isCanvas) {
+					const position = getAvailableCanvasPosition(this.plugin.app);
+					const success = createCanvasCard(this.plugin.app, wrappedHTML, {
+						x: position.x,
+						y: position.y,
+						width: 400,
+						height: 650
+					});
+					if (success) {
+						new Notice("Environment inserted into canvas successfully!");
+					}
+				} else if (isMarkdown) {
+					// Insert into markdown editor
+					this.editor.replaceSelection(wrappedHTML);
+				}
 
 				// Reset form
 				for (const el of Object.values(this.inputs)) {
@@ -289,7 +309,7 @@ export class EnvironmentModal extends Modal {
 		});
 		questionContainer.createDiv({
 			cls: "df-env-feature-question-header",
-			text: "GM Prompt Question:",
+			text: "GM prompt question:",
 		});
 
 		const questionEl = questionContainer.createEl("textarea", {
@@ -304,7 +324,7 @@ export class EnvironmentModal extends Modal {
 
 		// Remove button
 		const removeBtn = wrapper.createEl("button", {
-			text: "Remove Feature",
+			text: "Remove feature",
 			cls: "df-env-btn-remove-feature",
 		});
 		removeBtn.onclick = () => {

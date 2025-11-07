@@ -745,7 +745,7 @@ select.df-input-field {
 	border: 1px solid #8d8d91;
 	border-radius: 8px;
 	background: #edecec;
-	font-family: var(--font-text);
+	/* font-family: var(--font-text); */
 	color: #221e20;
 	box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
 }

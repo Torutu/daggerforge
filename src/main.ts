@@ -19,6 +19,7 @@ import { extractCardData } from "./features/adversaries/editor/CardDataHelpers";
 import { AdversaryEditorModal } from "./features/adversaries/editor/AdvEditorModal";
 import { DataManager } from "./services/DataManager";
 import { ImportDataModal } from "./ui/ImportDataModal";
+import { openEncounterCalculator } from "./features/Encounters/difficultyCalc";
 
 export default class DaggerForgePlugin extends Plugin {
 updateCardData(cardElement: HTMLElement, currentData: CardData) {
@@ -55,19 +56,19 @@ savedInputStateEnv: Record<string, any> = {};
 		// Combined ribbon icon
 		this.addRibbonIcon(
 			"scroll-text",
-			"DaggerForge Menu",
+			"DaggerForge menu",
 			(evt: MouseEvent) => {
 				const menu = new Menu();
 
 				menu.addItem((item) =>
 					item
-						.setTitle("Adversary Browser")
+						.setTitle("Adversary browser")
 						.setIcon("venetian-mask")
 						.onClick(() => adversariesSidebar(this)),
 				);
 				menu.addItem((item) =>
 					item
-						.setTitle("Environment Browser")
+						.setTitle("Environment browser")
 						.setIcon("mountain")
 						.onClick(() => openEnvironmentSidebar(this)),
 				);
@@ -76,13 +77,13 @@ savedInputStateEnv: Record<string, any> = {};
 
 				menu.addItem((item) =>
 					item
-						.setTitle("Adversary Creator")
+						.setTitle("Adversary creator")
 						.setIcon("swords")
 						.onClick(() => this.openCreator("adversary")),
 				);
 				menu.addItem((item) =>
 					item
-						.setTitle("Environment Creator")
+						.setTitle("Environment creator")
 						.setIcon("landmark")
 						.onClick(() => this.openCreator("environment")),
 				);
@@ -91,13 +92,22 @@ savedInputStateEnv: Record<string, any> = {};
 
 				menu.addItem((item) =>
 					item
-						.setTitle("Import Data")
+						.setTitle("Encounter calculator")
+						.setIcon("dice")
+						.onClick(() => openEncounterCalculator(this)),
+				);
+
+				menu.addSeparator();
+
+				menu.addItem((item) =>
+					item
+						.setTitle("Import data")
 						.setIcon("upload")
 						.onClick(() => new ImportDataModal(this.app, this).open()),
 				);
 				menu.addItem((item) =>
 					item
-						.setTitle("Delete Data File")
+						.setTitle("Delete data file")
 						.setIcon("trash")
 						.onClick(() => this.confirmDeleteDataFile()),
 				);
@@ -106,47 +116,11 @@ savedInputStateEnv: Record<string, any> = {};
 			},
 		);
 
-this.addRibbonIcon("plus", "Add Hello Card", async () => {
-    let canvasLeaves = this.app.workspace.getLeavesOfType("canvas");
-    let file: TFile;
-    let canvasView: any;
-
-    // Create or open canvas
-    if (!canvasLeaves.length) {
-        file = await this.app.vault.create(
-            "TestCanvas.canvas",
-            JSON.stringify({ nodes: {}, edges: {} }, null, 2)
-        );
-        const leaf = this.app.workspace.getLeaf(true);
-        await leaf.openFile(file);
-        canvasLeaves = this.app.workspace.getLeavesOfType("canvas");
-    } else {
-        file = (canvasLeaves[0].view as any).file;
-    }
-
-    // Get the canvas view
-    canvasView = canvasLeaves[0].view as any;
-    const canvas = canvasView.canvas;
-
-    // Create a new text card node
-    canvas.createTextNode({
-        pos: { x: 100, y: 100 },
-        text: "Hello from plugin!",
-        size: { width: 200, height: 100 }
-    });
-
-    // Save updated canvas JSON
-    canvas.requestSave?.();
-
-    new Notice("Added 'hello' card to canvas.");
-});
-
-
 		// Commands
 		[1, 2, 3, 4].forEach((tier) => {
 			this.addCommand({
 				id: `load-tier-${tier}`,
-				name: `Load Tier ${tier} Adversaries`,
+				name: `Load tier ${tier} adversaries`,
 				callback: () =>
 					this.loadContentToMarkdown(`tier-${tier}-adversaries`),
 			});
@@ -154,19 +128,19 @@ this.addRibbonIcon("plus", "Add Hello Card", async () => {
 
 		this.addCommand({
 			id: "adversary-creator",
-			name: "Adversary Creator",
+			name: "Adversary creator",
 			callback: () => this.openCreator("adversary"),
 		});
 
 		this.addCommand({
 			id: "environment-creator",
-			name: "Environment Creator",
+			name: "Environment creator",
 			callback: () => this.openCreator("environment"),
 		});
 
 		this.addCommand({
 			id: "import-data",
-			name: "Import Data from JSON File",
+			name: "Import data from JSON file",
 			callback: () => {
 				new ImportDataModal(this.app, this).open();
 			},
@@ -174,15 +148,38 @@ this.addRibbonIcon("plus", "Add Hello Card", async () => {
 
 		this.addCommand({
 			id: "delete-data-file",
-			name: "Delete Data File",
+			name: "Delete data file",
 			callback: () => this.confirmDeleteDataFile(),
 		});
+
+		// Debug command to check canvas detection
+		// this.addCommand({
+		// 	id: "debug-view-type",
+		// 	name: "Debug: Show current view type",
+		// 	callback: () => debugCurrentView(this.app),
+		// });
 	}
 
 	private async openCreator(type: "adversary" | "environment") {
+		// Check if we're on a canvas
+		const activeLeaf = this.app.workspace.activeLeaf;
+		if (activeLeaf?.view?.getViewType() === "canvas") {
+			// On canvas - create a dummy editor (won't be used but required for modal constructor)
+			const dummyEditor = null as any;
+			if (type === "adversary") {
+				new TextInputModal(this, dummyEditor).open();
+			} else {
+				new EnvironmentModal(this, dummyEditor, (result) => {
+					// This won't be called for canvas
+				}).open();
+			}
+			return;
+		}
+
+		// Check if we're in a markdown view
 		const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 		if (!activeView) {
-			new Notice("Please open a note first.");
+			new Notice("Please open a note or canvas first.");
 			return;
 		}
 
