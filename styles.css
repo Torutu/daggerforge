@@ -203,7 +203,7 @@ select.df-input-field {
 }
 
 /* Delete Button Styling - for Custom items */
-.df-delete-btn {
+.df-adv-delete-btn {
 	position: absolute;
 	top: 8px;
 	right: 8px;
@@ -222,11 +222,38 @@ select.df-input-field {
 	z-index: 10;
 }
 
-.df-delete-btn:hover {
+.df-adv-delete-btn:hover {
 	background-color: #ec3f3f;
 }
 
-.df-delete-btn:active {
+.df-adv-delete-btn:active {
+	transform: scale(0.95);
+}
+
+.df-env-delete-btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	border: none;
+	border-radius: 4px;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s ease;
+	z-index: 10;
+}
+
+.df-env-delete-btn:hover {
+	background-color: #ec3f3f;
+}
+
+.df-env-delete-btn:active {
 	transform: scale(0.95);
 }
 

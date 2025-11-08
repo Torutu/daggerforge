@@ -29,6 +29,7 @@ export function environmentToHTML(env: EnvironmentData): string {
 	return `
 <div class="df-env-card-outer">
     <div class="df-env-card-inner">
+        <button class="df-env-edit-button" data-edit-mode-only="true">📝</button>
         <div class="df-env-name">${env.name}</div>
         <div class="df-env-feat-tier-type">Tier ${env.tier.toString()} ${env.type}</div>
         <p class="df-env-desc">${env.desc}</p>

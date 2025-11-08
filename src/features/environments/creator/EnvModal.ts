@@ -332,7 +332,7 @@ export class EnvironmentModal extends Modal {
 
 		// Remove button
 		const removeBtn = wrapper.createEl("button", {
-			text: "Remove feature",
+			text: "Remove",
 			cls: "df-env-btn-remove-feature",
 		});
 		removeBtn.onclick = () => {

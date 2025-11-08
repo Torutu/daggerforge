@@ -1,4 +1,4 @@
-import { ItemView, WorkspaceLeaf, Notice, MarkdownView } from "obsidian";
+import { ItemView, WorkspaceLeaf, Notice, MarkdownView, setIcon } from "obsidian";
 import { ADVERSARIES } from "../../../data/adversaries";
 import {
 	getAdversaryCount,
@@ -6,6 +6,7 @@ import {
 	decrementAdversaryCount,
 } from "../../../utils/adversaryCounter";
 import { isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
+import { buildCardHTML } from "../creator/CardBuilder";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -414,8 +415,8 @@ export class AdversaryView extends ItemView {
 		card.appendChild(tier);
 		if (badgeTexts[source] == "Custom") {
 			const deleteBtn = document.createElement("button");
-			deleteBtn.classList.add("df-delete-btn");
-			deleteBtn.textContent = "X";
+			deleteBtn.classList.add("df-adv-delete-btn");
+			setIcon(deleteBtn, "trash");
 			deleteBtn.addEventListener("click", (e: MouseEvent) => {
 				e.stopPropagation();
 				this.deleteCustomAdversary(adversary);
@@ -485,79 +486,30 @@ export class AdversaryView extends ItemView {
 		new Notice(`Inserted ${adversary.name}.`);
 	}
 
-	private generateAdversaryMarkdown(adversary: Adversary): string {
+		private generateAdversaryMarkdown(adversary: Adversary): string {
 		const currentCount = getAdversaryCount();
-		const featuresHTML = this.generateFeaturesHTML(adversary.features);
-		const multipleTickboxes = this.generateMultipleTickboxes(
-			adversary,
-			currentCount,
+
+		// Reuse your shared builder
+		return buildCardHTML(
+			{
+				name: adversary.name,
+				tier: String(adversary.tier),
+				type: adversary.type,
+				desc: adversary.desc,
+				motives: adversary.motives,
+				difficulty: adversary.difficulty,
+				thresholdMajor: adversary.thresholdMajor,
+				thresholdSevere: adversary.thresholdSevere,
+				hp: String(adversary.hp),
+				stress: String(adversary.stress ?? 0),
+				atk: adversary.atk,
+				weaponName: adversary.weaponName,
+				weaponRange: adversary.weaponRange,
+				weaponDamage: adversary.weaponDamage,
+				xp: String(adversary.xp),
+				count: String(currentCount),
+			},
+			adversary.features.map(f => ({ ...f, cost: f.cost || "" })),
 		);
-
-		return `
-<section class="df-card-outer df-pseudo-cut-corners outer">
-    <div class="df-card-inner df-pseudo-cut-corners inner">
-        ${multipleTickboxes}
-        <h2>${adversary.name}</h2>
-        <div class="df-subtitle">Tier ${adversary.tier} ${adversary.type}</div>
-        <div class="df-desc">${adversary.desc}</div>
-        <div class="df-motives">Motives & Tactics:
-            <span class="df-motives-desc">${adversary.motives}</span>
-        </div>
-        <div class="df-stats">
-            Difficulty: <span class="df-stat">${adversary.difficulty} |</span>
-            Thresholds: <span class="df-stat">${adversary.thresholdMajor}/${adversary.thresholdSevere} |</span>
-            HP: <span class="df-stat">${adversary.hp} |</span>
-            Stress: <span class="df-stat">${adversary.stress || ""}</span>
-            <div>ATK: <span class="df-stat">${adversary.atk} |</span>
-            ${adversary.weaponName}: <span class="df-stat">${adversary.weaponRange} | ${adversary.weaponDamage}</span></div>
-            <div class="df-experience-line">Experience: <span class="df-stat">${adversary.xp}</span></div>
-        </div>
-        <div class="df-section">FEATURES</div>
-        ${featuresHTML}
-    </div>
-</section>
-`;
 	}
-
-	private generateFeaturesHTML(features: AdversaryFeature[]): string {
-		return features
-			.map(
-				(feature) => `
-            <div class="df-feature">
-                <span class="df-feature-title">
-                    ${feature.name} - ${feature.type}${feature.cost ? `: ${feature.cost}` : ":"}
-                </span>
-                <span class="df-feature-desc">${feature.desc}</span>
-            </div>`,
-			)
-			.join("");
-	}
-
-	private generateMultipleTickboxes(
-		adversary: Adversary,
-		count: number,
-	): string {
-		return Array.from(
-			{ length: count },
-			(_, index) => `
-            <div class="df-hp-tickboxes">
-                <span class="df-hp-stress">HP</span>${this.generateTickboxes(adversary.hp, "hp-tick")}
-                <span class="df-adversary-count">${index + 1}</span>
-            </div>
-            <div class="df-stress-tickboxes">
-                <span class="df-hp-stress">Stress</span>${this.generateTickboxes(String(adversary.stress ?? 0), "stress-tick")}
-            </div>
-        `,
-		).join("");
-	}
-
-	private generateTickboxes(count: string, prefix: string): string {
-		const numCount = Number(count);
-		return Array.from(
-			{ length: numCount },
-			(_, i) =>
-				`<input type="checkbox" id="${prefix}-${i}" class="df-${prefix}box" />`,
-		).join("");
-	}
-
 }

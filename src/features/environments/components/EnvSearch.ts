@@ -1,4 +1,4 @@
-import { ItemView, WorkspaceLeaf, MarkdownView, Notice } from "obsidian";
+import { ItemView, WorkspaceLeaf, MarkdownView, Notice, setIcon } from "obsidian";
 import { ENVIRONMENTS } from "../../../data/environments";
 import { EnvironmentData } from "../../../types/environment";
 import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
@@ -245,7 +245,8 @@ export class EnvironmentView extends ItemView {
 
 		if (badgeTexts[source] == "Custom") {
 			const deleteBtn = document.createElement("button");
-			deleteBtn.textContent = "Delete";
+			deleteBtn.classList.add("df-env-delete-btn");
+			setIcon(deleteBtn, "trash");
 			deleteBtn.addEventListener("click", (e: MouseEvent) => {
 				e.stopPropagation();
 				this.deleteCustomEnvironment(env);
@@ -307,6 +308,7 @@ export class EnvironmentView extends ItemView {
 			const envHTML = `
 <div class="df-env-card-outer">
 			<div class="df-env-card-inner">
+				<button class="df-env-edit-button" data-edit-mode-only="true">📝</button>
 				<div class="df-env-name">${env.name}</div>
 				<div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type}</div>
 				<p class="df-env-desc">${env.desc}</p>
