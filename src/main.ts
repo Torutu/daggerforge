@@ -15,8 +15,6 @@ import {
 import { environmentToHTML } from "./features/environments/components/EnvToHTML";
 import { EnvironmentModal } from "./features/environments/creator/EnvModal";
 import { CardData } from "./types";
-import { extractCardData } from "./features/adversaries/editor/CardDataHelpers";
-import { AdversaryEditorModal } from "./features/adversaries/editor/AdvEditorModal";
 import { DataManager } from "./services/DataManager";
 import { ImportDataModal } from "./ui/ImportDataModal";
 import { openDiceRoller } from "./features/dice/diceRoller";
@@ -30,7 +28,6 @@ throw new Error("Method not implemented.");
 dataManager: DataManager;
 savedInputStateAdv: Record<string, any> = {};
 savedInputStateEnv: Record<string, any> = {};
-	private isEditListenerAdded = false;
 
 	async onload() {
 		// Initialize DataManager
@@ -253,75 +250,6 @@ savedInputStateEnv: Record<string, any> = {};
 			editor.replaceSelection(html);
 		}
 	}
-
-	// private handleCardEditClick = (evt: MouseEvent) => {
-	// 	// Check if we're in edit mode first
-	// 	const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-	// 	if (activeView?.getMode() !== 'source') {
-	// 		if ((evt.target as HTMLElement).closest('.edit-button')) {
-	// 			new Notice("Please switch to Edit mode.");
-	// 		}
-	// 		return;
-	// 	}
-	// 	const clicked = evt.target as HTMLElement;
-	// 	const editBtn = clicked.closest(".edit-button");
-	// 	if (!editBtn) return;
-	// 	evt.stopPropagation();
-	// 	const card = editBtn.closest(".card-outer") as HTMLElement;
-	// 	const editor = this.app.workspace.activeEditor?.editor;
-	// 	if (!card || !editor) return;
-	// 	const cardData = extractCardData(card);
-	// 	console.log("Extracted Features:", cardData.features); 
-	// 	const modal = new AdversaryEditorModal(this, editor, card, cardData);
-	// 	console.log("modal cardData:", modal.cardData);
-	// 	modal.open();
-	// 	modal.onSubmit = async (newHTML: string) => {
-	// 		console.log("=== DEBUG: onSubmit started ===");
-			
-	// 		const wrapper = document.createElement("div");
-	// 		wrapper.innerHTML = newHTML;
-	// 		const newCard = wrapper.firstElementChild as HTMLElement;
-			
-	// 		// Check features in the new HTML
-	// 		const featuresInNewHTML = newCard.querySelectorAll('.feature');
-	// 		console.log("Features in new HTML:", featuresInNewHTML.length);
-	// 		featuresInNewHTML.forEach((feat, i) => {
-	// 			console.log(`Feature ${i}:`, feat.outerHTML);
-	// 		});
-			
-	// 		const editor = this.app.workspace.activeEditor?.editor;
-	// 		if (!editor) return;
-			
-	// 		const originalContent = editor.getValue();
-	// 		console.log("Original content length:", originalContent.length);
-			
-	// 		const cardOuterHTML = card.outerHTML;
-	// 		console.log("Card outer HTML length:", cardOuterHTML.length);
-			
-	// 		const cardStart = originalContent.indexOf(cardOuterHTML);
-	// 		console.log("Card found at position:", cardStart);
-			
-	// 		if (cardStart !== -1) { // cardStart is always -1 for some reason need to check it asap
-	// 			const oldContent = originalContent.substring(cardStart, cardStart + cardOuterHTML.length);
-	// 			console.log("Old content to replace:", oldContent);
-	// 			console.log("New content to insert:", newHTML);
-				
-	// 			const updatedContent = originalContent.substring(0, cardStart) + 
-	// 								newHTML + 
-	// 								originalContent.substring(cardStart + cardOuterHTML.length);
-				
-	// 			editor.setValue(updatedContent);
-	// 			console.log("=== Content updated successfully ===");
-
-	// 			const updatedFeatures = editor.getValue().match(/class="feature"/g) || [];
-	// 			console.log("Features in updated editor:", updatedFeatures.length);
-				
-	// 		} else {
-	// 			console.log("Card not found in source, using DOM replacement");
-	// 			card.replaceWith(newCard);
-	// 		}
-	// 	};
-	// };
 
 	/**
 	 * Confirm before deleting the data file
