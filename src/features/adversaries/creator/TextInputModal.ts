@@ -20,6 +20,7 @@ export async function buildCustomAdversary(
 	features: any[],
 ) {
 	const customAdversary: CardData = {
+		id: values.id || "",
 		name: values.name || "",
 		tier: values.tier || "",
 		type: values.type || "",

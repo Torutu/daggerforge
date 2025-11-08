@@ -19,6 +19,7 @@ export type SavedFeatureState = {
 };
 
 export type EnvironmentData = {
+	id: string; // Unique ID like CE001, IE001, etc.
 	name: string;
 	tier: number;
 	type: string;

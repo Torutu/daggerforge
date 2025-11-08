@@ -129,10 +129,7 @@ export class EnvironmentView extends ItemView {
 			const scrollTop = this.resultsDiv.scrollTop;
 
 			const builtInEnvironments = [
-				...ENVIRONMENTS.tier1,
-				...ENVIRONMENTS.tier2,
-				...ENVIRONMENTS.tier3,
-				...ENVIRONMENTS.tier4,
+				...ENVIRONMENTS.coreEnv,
 			].map((e) => ({ ...e, source: e.source || "core" }));
 
 			const custom_Environments = this.loadCustomEnvironments();
@@ -201,10 +198,7 @@ export class EnvironmentView extends ItemView {
 
 		try {
 			this.environments = [
-				...ENVIRONMENTS.tier1,
-				...ENVIRONMENTS.tier2,
-				...ENVIRONMENTS.tier3,
-				...ENVIRONMENTS.tier4,
+				...ENVIRONMENTS.coreEnv,
 			];
 			this.loadEnvironmentData(); // loads custom + renders
 		} catch (e) {

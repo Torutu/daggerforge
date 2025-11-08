@@ -178,6 +178,7 @@ export class EnvironmentModal extends Modal {
 
 			// Create environment data
 			const env: EnvironmentData = {
+				id: values.id || "",
 				name: values.name || "",
 				tier: Number(values.tier) || 1,
 				type: values.type || "",

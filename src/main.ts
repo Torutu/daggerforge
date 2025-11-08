@@ -21,6 +21,7 @@ import { DataManager } from "./services/DataManager";
 import { ImportDataModal } from "./ui/ImportDataModal";
 import { openDiceRoller } from "./features/dice/diceRoller";
 import { openEncounterCalculator } from "./features/Encounters/encounterCalc";
+import { onEditClick } from "./features/environments/editor/envEditor";
 
 export default class DaggerForgePlugin extends Plugin {
 updateCardData(cardElement: HTMLElement, currentData: CardData) {
@@ -38,10 +39,30 @@ savedInputStateEnv: Record<string, any> = {};
 
 		this.addStatusBarItem().setText("DaggerForge Active");
 
-		if (!this.isEditListenerAdded) {
-			document.addEventListener("click", this.handleCardEditClick);
-			this.isEditListenerAdded = true;
-		}
+		/* Handle edit button clicks on cards */
+		this.registerDomEvent(document, "click", (evt) => {
+			const target = evt.target as HTMLElement;
+			if (!target) return;
+			let cardType: "env" | "adv" | null = null;
+
+			if (target.matches(".df-env-edit-button")) cardType = "env";
+			else if (target.closest(".df-adv-edit-button")) cardType = "adv";
+
+			if (!cardType) return;
+
+			const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+			if (!view) return;
+
+			const isEditMode = view.getMode() === "source";
+
+			if (isEditMode) {
+				//warning emoji in notice
+				new Notice("Edit feature is coming soon ⚠️");
+				onEditClick(evt, cardType);
+			} else {
+				// new Notice("Clicked in READING mode!");
+			}
+		});
 
 		// Register views
 		this.registerView(
@@ -232,74 +253,75 @@ savedInputStateEnv: Record<string, any> = {};
 			editor.replaceSelection(html);
 		}
 	}
-	private handleCardEditClick = (evt: MouseEvent) => {
-		// Check if we're in edit mode first
-		const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-		if (activeView?.getMode() !== 'source') {
-			if ((evt.target as HTMLElement).closest('.edit-button')) {
-				new Notice("Please switch to Edit mode.");
-			}
-			return;
-		}
-		const clicked = evt.target as HTMLElement;
-		const editBtn = clicked.closest(".edit-button");
-		if (!editBtn) return;
-		evt.stopPropagation();
-		const card = editBtn.closest(".card-outer") as HTMLElement;
-		const editor = this.app.workspace.activeEditor?.editor;
-		if (!card || !editor) return;
-		const cardData = extractCardData(card);
-		console.log("Extracted Features:", cardData.features); 
-		const modal = new AdversaryEditorModal(this, editor, card, cardData);
-		console.log("modal cardData:", modal.cardData);
-		modal.open();
-		modal.onSubmit = async (newHTML: string) => {
-			console.log("=== DEBUG: onSubmit started ===");
-			
-			const wrapper = document.createElement("div");
-			wrapper.innerHTML = newHTML;
-			const newCard = wrapper.firstElementChild as HTMLElement;
-			
-			// Check features in the new HTML
-			const featuresInNewHTML = newCard.querySelectorAll('.feature');
-			console.log("Features in new HTML:", featuresInNewHTML.length);
-			featuresInNewHTML.forEach((feat, i) => {
-				console.log(`Feature ${i}:`, feat.outerHTML);
-			});
-			
-			const editor = this.app.workspace.activeEditor?.editor;
-			if (!editor) return;
-			
-			const originalContent = editor.getValue();
-			console.log("Original content length:", originalContent.length);
-			
-			const cardOuterHTML = card.outerHTML;
-			console.log("Card outer HTML length:", cardOuterHTML.length);
-			
-			const cardStart = originalContent.indexOf(cardOuterHTML);
-			console.log("Card found at position:", cardStart);
-			
-			if (cardStart !== -1) { // cardStart is always -1 for some reason need to check it asap
-				const oldContent = originalContent.substring(cardStart, cardStart + cardOuterHTML.length);
-				console.log("Old content to replace:", oldContent);
-				console.log("New content to insert:", newHTML);
-				
-				const updatedContent = originalContent.substring(0, cardStart) + 
-									newHTML + 
-									originalContent.substring(cardStart + cardOuterHTML.length);
-				
-				editor.setValue(updatedContent);
-				console.log("=== Content updated successfully ===");
 
-				const updatedFeatures = editor.getValue().match(/class="feature"/g) || [];
-				console.log("Features in updated editor:", updatedFeatures.length);
+	// private handleCardEditClick = (evt: MouseEvent) => {
+	// 	// Check if we're in edit mode first
+	// 	const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+	// 	if (activeView?.getMode() !== 'source') {
+	// 		if ((evt.target as HTMLElement).closest('.edit-button')) {
+	// 			new Notice("Please switch to Edit mode.");
+	// 		}
+	// 		return;
+	// 	}
+	// 	const clicked = evt.target as HTMLElement;
+	// 	const editBtn = clicked.closest(".edit-button");
+	// 	if (!editBtn) return;
+	// 	evt.stopPropagation();
+	// 	const card = editBtn.closest(".card-outer") as HTMLElement;
+	// 	const editor = this.app.workspace.activeEditor?.editor;
+	// 	if (!card || !editor) return;
+	// 	const cardData = extractCardData(card);
+	// 	console.log("Extracted Features:", cardData.features); 
+	// 	const modal = new AdversaryEditorModal(this, editor, card, cardData);
+	// 	console.log("modal cardData:", modal.cardData);
+	// 	modal.open();
+	// 	modal.onSubmit = async (newHTML: string) => {
+	// 		console.log("=== DEBUG: onSubmit started ===");
+			
+	// 		const wrapper = document.createElement("div");
+	// 		wrapper.innerHTML = newHTML;
+	// 		const newCard = wrapper.firstElementChild as HTMLElement;
+			
+	// 		// Check features in the new HTML
+	// 		const featuresInNewHTML = newCard.querySelectorAll('.feature');
+	// 		console.log("Features in new HTML:", featuresInNewHTML.length);
+	// 		featuresInNewHTML.forEach((feat, i) => {
+	// 			console.log(`Feature ${i}:`, feat.outerHTML);
+	// 		});
+			
+	// 		const editor = this.app.workspace.activeEditor?.editor;
+	// 		if (!editor) return;
+			
+	// 		const originalContent = editor.getValue();
+	// 		console.log("Original content length:", originalContent.length);
+			
+	// 		const cardOuterHTML = card.outerHTML;
+	// 		console.log("Card outer HTML length:", cardOuterHTML.length);
+			
+	// 		const cardStart = originalContent.indexOf(cardOuterHTML);
+	// 		console.log("Card found at position:", cardStart);
+			
+	// 		if (cardStart !== -1) { // cardStart is always -1 for some reason need to check it asap
+	// 			const oldContent = originalContent.substring(cardStart, cardStart + cardOuterHTML.length);
+	// 			console.log("Old content to replace:", oldContent);
+	// 			console.log("New content to insert:", newHTML);
 				
-			} else {
-				console.log("Card not found in source, using DOM replacement");
-				card.replaceWith(newCard);
-			}
-		};
-	};
+	// 			const updatedContent = originalContent.substring(0, cardStart) + 
+	// 								newHTML + 
+	// 								originalContent.substring(cardStart + cardOuterHTML.length);
+				
+	// 			editor.setValue(updatedContent);
+	// 			console.log("=== Content updated successfully ===");
+
+	// 			const updatedFeatures = editor.getValue().match(/class="feature"/g) || [];
+	// 			console.log("Features in updated editor:", updatedFeatures.length);
+				
+	// 		} else {
+	// 			console.log("Card not found in source, using DOM replacement");
+	// 			card.replaceWith(newCard);
+	// 		}
+	// 	};
+	// };
 
 	/**
 	 * Confirm before deleting the data file
@@ -345,10 +367,5 @@ savedInputStateEnv: Record<string, any> = {};
 				view.refresh();
 			}
 		});
-	}
-
-	onunload() {
-		document.removeEventListener("click", this.handleCardEditClick);
-		this.isEditListenerAdded = false;
 	}
 }

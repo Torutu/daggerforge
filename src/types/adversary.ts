@@ -1,6 +1,7 @@
 import type { Feature, FormInputs } from './shared';
 
 export type CardData = {
+	id: string; // Unique ID like CA001, IA001, etc.
 	name: string;
 	tier: string;
 	type: string;

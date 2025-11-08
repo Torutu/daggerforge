@@ -1,35 +1,34 @@
 import { Notice } from "obsidian";
-import DaggerForgePlugin from "src/main"; // if you need the plugin instance
 
-/**
- * Attaches edit button handlers to a container.
- * Uses event delegation so dynamically created cards work.
- */
-export function attachEnvEditButtons(container: HTMLElement, plugin: DaggerForgePlugin) {
-    container.addEventListener("click", (evt) => {
-        const target = evt.target as HTMLElement;
-        const editBtn = target.closest(".df-env-edit-button");
-        if (!editBtn) return;
+export const onEditClick = (evt: Event, cardType: string) => {
+	evt.stopPropagation();
 
-        evt.stopPropagation();
+	// Get the button that was clicked
+	const button = evt.target as HTMLElement;
 
-        // Find the card outer element
-        const card = editBtn.closest(".df-env-card") as HTMLElement;
-        if (!card) return;
+	// Find the outer card element depending on the type
+	let cardElement: HTMLElement | null = null;
 
-        const editor = plugin.app.workspace.activeEditor?.editor;
-        if (!editor) {
-            new Notice("Please open a note in Edit mode to edit environments.");
-            return;
-        }
+	if (cardType === "env") {
+		cardElement = button.closest(".df-env-card-outer");
+	} else if (cardType === "adv") {
+		cardElement = button.closest(".df-card-outer");
+	}
 
-        // You can pass the env data here if needed
-        new Notice("Pressed edit!");
+	if (!cardElement) {
+		// new Notice("Could not find card element!");
+		return;
+	}
 
-        // Example: open your EnvironmentModal
-        // const envData = extractEnvData(card); // implement this function
-        // new EnvironmentModal(plugin, editor, (result) => {
-        //     plugin.insertEnvironment(editor, result);
-        // }).open();
-    });
-}
+	// Now grab the name depending on the type
+	let cardName = "";
+	if (cardType === "env") {
+		const nameEl = cardElement.querySelector(".df-env-name");
+		cardName = nameEl?.textContent?.trim() ?? "(unknown environment)";
+	} else if (cardType === "adv") {
+		const nameEl = cardElement.querySelector("h2");
+		cardName = nameEl?.textContent?.trim() ?? "(unknown adversary)";
+	}
+
+	// new Notice(`Editing ${cardType.toUpperCase()} card: ${cardName}`);
+};
