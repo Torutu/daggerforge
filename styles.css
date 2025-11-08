@@ -254,8 +254,11 @@ select.df-input-field {
 .df-feature-row{
 	display: flex;
 	gap: 8px;
-	align-items: center;
-	margin-bottom: 0;
+	margin-bottom: 6px;
+}
+
+.df-input-feature-name{
+	width: 100%;
 }
 
 .df-triple-fields-row {
@@ -341,6 +344,17 @@ select.df-input-field {
 	border: 1px solid var(--background-modifier-border);
 }
 
+.df-feature-block{
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 10px;
+	background-color: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	margin-bottom: 0;
+}
+
 .df-adv-feature-container > div:first-child {
 	border-top: none;
 }
@@ -360,12 +374,23 @@ select.df-input-field {
 	opacity: 0.9;
 }
 
+.df-remove-feature-btn {
+	align-self: flex-end;
+	padding: 4px 8px;
+	background-color: var(--background-modifier-error);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 0.85em;
+}
+
 /* Adversary action buttons */
 .df-adv-form-buttons {
 	display: flex;
 	justify-content: flex-end;
 	gap: 10px;
-	margin-top: 20px;
 	padding-top: 15px;
 	border-top: 1px solid var(--background-modifier-border);
 }
@@ -557,7 +582,6 @@ select.df-input-field {
 }
 
 .df-env-btn-add-feature {
-	margin-top: 10px;
 	padding: 6px 12px;
 	background-color: var(--interactive-accent);
 	color: white;
@@ -592,7 +616,6 @@ select.df-input-field {
 	display: flex;
 	justify-content: flex-end;
 	gap: 10px;
-	margin-top: 20px;
 	padding-top: 15px;
 	border-top: 1px solid var(--background-modifier-border);
 }

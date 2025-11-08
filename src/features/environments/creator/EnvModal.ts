@@ -320,7 +320,9 @@ export class EnvironmentModal extends Modal {
 
 		const questionEl = questionContainer.createEl("textarea", {
 			cls: "df-env-feature-question-input",
-			placeholder: "Q: Enter question for players...",
+			attr: {
+				placeholder: "e.g. “Why did this environment feature occur?”",
+			}
 		});
 
 		// Set value if saved question exists
