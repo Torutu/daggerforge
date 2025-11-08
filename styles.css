@@ -101,6 +101,32 @@
 	background-color: transparent !important;
 }
 
+.df-env-edit-button, .df-adv-edit-button{
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	border: none;
+	border-radius: 4px;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s ease;
+	z-index: 10;
+}
+.df-env-edit-button:hover, .df-adv-edit-button:hover {
+	background-color: #3f83f8;
+	color: white;
+}
+.df-env-edit-button:active, .df-adv-edit-button:active {
+	transform: scale(0.95);
+}
+
 .df-hp-stress {
 	font-weight: 700;
 	font-size: 0.9em;
@@ -831,6 +857,7 @@ select.df-input-field {
 	/* font-family: var(--font-text); */
 	color: #221e20;
 	box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+	position: relative;
 }
 
 .df-env-card-inner h2 {
@@ -1016,7 +1043,7 @@ select.df-input-field {
 }
 
 /*****************************************/
-/* DEBUGGING STYLES - TO BE REMOVED LATER */
+/*DICE ROLLER        |BATTLE GUIDE       */
 /*****************************************/
 
 /* floatingWindow.css */
