@@ -5,7 +5,7 @@ import {
 	incrementAdversaryCount,
 	decrementAdversaryCount,
 } from "../../../utils/adversaryCounter";
-import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
+import { isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -16,25 +16,25 @@ interface AdversaryFeature {
 	desc: string;
 }
 
-interface Adversary {
-	name: string;
-	type: string;
-	tier: number;
-	desc: string;
-	motives: string;
-	difficulty: string;
-	thresholdMajor: string;
-	thresholdSevere: string;
-	hp: string;
-	stress?: string;
-	atk: string;
-	weaponName: string;
-	weaponRange: string;
-	weaponDamage: string;
-	xp: string;
-	features: AdversaryFeature[];
-	source?: string; // New field for source/version
-	isCustom?: boolean;
+export interface Adversary {
+		name: string;
+		type: string;
+		tier: number;
+		desc: string;
+		motives: string;
+		difficulty: string;
+		thresholdMajor: string;
+		thresholdSevere: string;
+		hp: string;
+		stress?: string;
+		atk: string;
+		weaponName: string;
+		weaponRange: string;
+		weaponDamage: string;
+		xp: string;
+		features: AdversaryFeature[];
+		source?: string; // New field for source/version
+		isCustom?: boolean;
 }
 
 // Type for raw adversary data from JSON that may have either naming convention
@@ -414,7 +414,8 @@ export class AdversaryView extends ItemView {
 		card.appendChild(tier);
 		if (badgeTexts[source] == "Custom") {
 			const deleteBtn = document.createElement("button");
-			deleteBtn.textContent = "Delete";
+			deleteBtn.classList.add("df-delete-btn");
+			deleteBtn.textContent = "X";
 			deleteBtn.addEventListener("click", (e: MouseEvent) => {
 				e.stopPropagation();
 				this.deleteCustomAdversary(adversary);
@@ -444,8 +445,6 @@ export class AdversaryView extends ItemView {
 
 	private insertAdversaryIntoNote(adversary: Adversary) {
 		const isCanvas = isCanvasActive(this.app);
-		new Notice(`canvas: ${isCanvas}`);
-		const isMarkdown = isMarkdownActive(this.app);
 		// Check if we're on a canvas
 		if (isCanvas) {
 			const adversaryText = this.generateAdversaryMarkdown(adversary);
@@ -456,9 +455,6 @@ export class AdversaryView extends ItemView {
 				width: 400,
 				height: 600
 			});
-			if (success) {
-				new Notice("Environment inserted into canvas successfully!");
-			}
 		}
 
 		// Otherwise, insert into markdown note
@@ -486,7 +482,7 @@ export class AdversaryView extends ItemView {
 
 		const adversaryText = this.generateAdversaryMarkdown(adversary);
 		editor.replaceSelection(adversaryText);
-		new Notice(`Inserted ${adversary.name} into the note.`);
+		new Notice(`Inserted ${adversary.name}.`);
 	}
 
 	private generateAdversaryMarkdown(adversary: Adversary): string {
@@ -563,4 +559,5 @@ export class AdversaryView extends ItemView {
 				`<input type="checkbox" id="${prefix}-${i}" class="df-${prefix}box" />`,
 		).join("");
 	}
+
 }

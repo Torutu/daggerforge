@@ -75,14 +75,22 @@ export class EnvironmentModal extends Modal {
 		// ===== DETAILS SECTION =====
 		const detailsSection = basicInfoSection.createDiv({ cls: "df-env-form-section-content" });
 
-		const descRow = detailsSection.createDiv({ cls: "df-env-form-row" });
-		createInlineField(descRow, this.inputs, {
-			label: "Description",
-			key: "desc",
-			type: "input",
-			savedValues: saved,
-			customClass: "df-env-field-desc",
+		// Description textarea (full width, resizable)
+		// const descLabel = detailsSection.createEl("label", { 
+		// 	text: "Description", 
+		// 	cls: "df-field-label" 
+		// });
+		const descTextarea = detailsSection.createEl("textarea", {
+			cls: "df-env-field-desc-textarea",
+			attr: {
+				placeholder: "Enter environment description...",
+				rows: "4"
+			}
 		});
+		this.inputs["desc"] = descTextarea;
+		if (saved["desc"]) {
+			descTextarea.value = saved["desc"];
+		}
 
 		// ===== GAMEPLAY SECTION =====
 		const gameplaySection = contentEl.createDiv({ cls: "df-env-form-section" });
@@ -111,8 +119,10 @@ export class EnvironmentModal extends Modal {
 			customClass: "df-env-field-difficulty",
 		});
 
-		createInlineField(diffRow, this.inputs, {
-			label: "Potential Adversaries",
+		// Potential Adversaries on its own row
+		const advRow = difficultySection.createDiv({ cls: "df-env-form-row df-env-row-adversaries" });
+		createInlineField(advRow, this.inputs, {
+			label: "Potential adversaries",
 			key: "potentialAdversaries",
 			type: "input",
 			savedValues: saved,
@@ -153,7 +163,7 @@ export class EnvironmentModal extends Modal {
 		const buttonContainer = contentEl.createDiv({ cls: "df-env-form-buttons" });
 
 		const insertBtn = buttonContainer.createEl("button", {
-			text: "Insert environment",
+			text: "Insert card",
 			cls: "df-env-btn-insert",
 		});
 
@@ -191,7 +201,6 @@ export class EnvironmentModal extends Modal {
 				const wrappedHTML = `<div class="environment-block">\n${htmlContent}\n</div>\n`;
 
 				const isCanvas = isCanvasActive(this.app);
-				new Notice(`canvas: ${isCanvas}`);
 				const isMarkdown = isMarkdownActive(this.app);
 
 				// Check if we're on a canvas
@@ -203,9 +212,6 @@ export class EnvironmentModal extends Modal {
 						width: 400,
 						height: 650
 					});
-					if (success) {
-						new Notice("Environment inserted into canvas successfully!");
-					}
 				} else if (isMarkdown) {
 					// Insert into markdown editor
 					this.editor.replaceSelection(wrappedHTML);

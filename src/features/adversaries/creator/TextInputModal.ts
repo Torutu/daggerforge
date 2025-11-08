@@ -325,9 +325,6 @@ export class TextInputModal extends Modal {
 						width: 400,
 						height: 600
 					});
-					if (success) {
-						new Notice("Environment inserted into canvas successfully!");
-					}
 				} else if (isMarkdown) {
 					// Insert into markdown editor
 					this.editor.replaceSelection(newHTML + "\n");

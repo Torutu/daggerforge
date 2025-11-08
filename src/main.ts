@@ -19,7 +19,8 @@ import { extractCardData } from "./features/adversaries/editor/CardDataHelpers";
 import { AdversaryEditorModal } from "./features/adversaries/editor/AdvEditorModal";
 import { DataManager } from "./services/DataManager";
 import { ImportDataModal } from "./ui/ImportDataModal";
-import { openEncounterCalculator } from "./features/Encounters/difficultyCalc";
+import { openDiceRoller } from "./features/dice/diceRoller";
+import { openEncounterCalculator } from "./features/Encounters/encounterCalc";
 
 export default class DaggerForgePlugin extends Plugin {
 updateCardData(cardElement: HTMLElement, currentData: CardData) {
@@ -29,7 +30,6 @@ dataManager: DataManager;
 savedInputStateAdv: Record<string, any> = {};
 savedInputStateEnv: Record<string, any> = {};
 	private isEditListenerAdded = false;
-
 
 	async onload() {
 		// Initialize DataManager
@@ -92,9 +92,16 @@ savedInputStateEnv: Record<string, any> = {};
 
 				menu.addItem((item) =>
 					item
-						.setTitle("Encounter calculator")
+						.setTitle("Dice roller")
 						.setIcon("dice")
-						.onClick(() => openEncounterCalculator(this)),
+						.onClick(() => openDiceRoller()),
+				);
+
+				menu.addItem((item) =>
+					item
+						.setTitle("Battle calculator")
+						.setIcon("flame")
+						.onClick(() => openEncounterCalculator()),
 				);
 
 				menu.addSeparator();
@@ -152,12 +159,11 @@ savedInputStateEnv: Record<string, any> = {};
 			callback: () => this.confirmDeleteDataFile(),
 		});
 
-		// Debug command to check canvas detection
-		// this.addCommand({
-		// 	id: "debug-view-type",
-		// 	name: "Debug: Show current view type",
-		// 	callback: () => debugCurrentView(this.app),
-		// });
+		this.addCommand({
+			id: "open-floating-window",
+			name: "Open Floating Window",
+			callback: () => openDiceRoller(),
+		});
 	}
 
 	private async openCreator(type: "adversary" | "environment") {

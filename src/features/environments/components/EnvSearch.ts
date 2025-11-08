@@ -334,7 +334,7 @@ export class EnvironmentView extends ItemView {
 					height: 650
 				});
 				if (success) {
-					new Notice(`Inserted environment ${env.name} into canvas.`);
+					new Notice(`Inserted environment ${env.name}.`);
 				} else {
 					new Notice("Failed to insert environment into canvas.");
 				}
@@ -354,7 +354,7 @@ export class EnvironmentView extends ItemView {
 				return;
 			}
 			editor.replaceSelection(envHTML);
-			new Notice(`Inserted environment ${env.name} into the note.`);
+			new Notice(`Inserted environment ${env.name}.`);
 			} else { 
 					new Notice("No active editor or canvas");
 			}

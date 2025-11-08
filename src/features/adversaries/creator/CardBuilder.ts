@@ -164,11 +164,10 @@ export const buildCardHTML = (
         </div>`,
 		)
 		.join("");
-	
+	// <button class="df-edit-button" data-edit-mode-only="true">Edit</button>
 	return `
 <section id="custom" class="df-card-outer df-pseudo-cut-corners outer" data-weapon-range="${weaponRange || ''}" data-type="${type || ''}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
-		<button class="df-edit-button" data-edit-mode-only="true">Edit</button>
         ${hpStressRepeat}
         <h2>${name}</h2>
         <div class="df-subtitle">Tier ${tier} ${type} </div>

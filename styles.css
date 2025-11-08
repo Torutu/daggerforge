@@ -207,8 +207,6 @@ select.df-input-field {
 	position: absolute;
 	top: 8px;
 	right: 8px;
-	background-color: #ff6b6b;
-	color: white;
 	border: none;
 	border-radius: 4px;
 	width: 28px;
@@ -225,7 +223,7 @@ select.df-input-field {
 }
 
 .df-delete-btn:hover {
-	background-color: #ff5252;
+	background-color: #ec3f3f;
 }
 
 .df-delete-btn:active {
@@ -388,9 +386,14 @@ select.df-input-field {
 }
 
 /* ===== ENVIRONMENT FORM STYLES ===== */
+.df-inline-field-wrapper{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
 .df-env-form-section {
 	margin-bottom: 15px;
-	padding: 10px 0;
 }
 
 .df-env-form-section-content {
@@ -402,9 +405,8 @@ select.df-input-field {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 10px;
-	align-items: flex-start;
-	margin-bottom: 10px;
 	width: 100%;
+	justify-items: center;
 }
 
 /* Environment form fields */
@@ -434,6 +436,37 @@ select.df-input-field {
 	max-width: 400px;
 	padding: 6px 8px;
 	min-height: 40px;
+}
+
+/* Normal rows (unchanged) */
+.df-env-form-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+/* Make potential adversaries span full width and stack vertically */
+.df-env-row-adversaries {
+	flex-direction: column;         /* stack label and input vertically */
+	align-items: flex-start;        /* align left */
+	width: 100%;                    /* span full modal width */
+}
+
+/* Optional: make the input wider or resizable */
+.df-env-field-adversaries {
+	width: 100%;
+	resize: vertical;
+}
+
+
+.df-env-field-desc-textarea{
+	width: 100%;
+	max-width: 100%;
+	padding: 6px 8px;
+	min-height: 60px;
+	resize: vertical;
+	overflow: auto;
 }
 
 /* Environment feature container and blocks */
@@ -931,3 +964,218 @@ select.df-input-field {
 	background-color: #6b009c;
 	text-transform: capitalize;
 }
+
+/*****************************************/
+/* DEBUGGING STYLES - TO BE REMOVED LATER */
+/*****************************************/
+
+/* floatingWindow.css */
+.df-floating-window {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    /* transform: translate(-50%, -50%); */
+    background: #1e1e1e;
+    color: white;
+    border: 1px solid #888;
+    border-radius: 6px;
+    padding: 10px;
+    z-index: 9999;
+    width: 400px;
+}
+
+.df-close-btn {
+    float: right;
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	background: transparent;
+	border: none;
+	color: white;
+	font-size: 13px;
+	cursor: pointer;
+	padding: 5px;
+}
+
+.df-floating-header {
+	cursor: grab;
+	font-weight: bold;
+	border-bottom: 2px dotted var(--background-modifier-border);
+	padding-bottom: 12px;
+	margin-bottom: 5px;
+}
+
+.df-dice-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.df-dice-roll-body {
+    padding: 10px;
+}
+
+.df-log-container {
+    height: 120px;
+    overflow: auto;
+    background: #222;
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.df-label {
+    margin-bottom: 4px;
+}
+
+.df-roll-count {
+    width: 50px;
+    margin-bottom: 8px;
+}
+
+.df-dice-btn {
+	padding: 6px 10px;
+	border-radius: 6px;
+	border: 1px solid var(--background-modifier-border);
+	background-color: var(--interactive-normal);
+	cursor: pointer;
+}
+
+.df-dice-btn:hover {
+	background-color: var(--interactive-hover);
+}
+
+.df-dice-queue {
+    margin-bottom: 8px;
+}
+
+.df-multi-roll {
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.df-dice-log {
+	background-color: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	padding: 6px;
+	height: 150px;
+	overflow-y: auto;
+	margin-bottom: 8px;
+	font-family: monospace;
+}
+
+.df-dice-controls {
+	display: flex;
+	justify-content: space-between;
+}
+
+.df-clear-log-btn {
+    margin-left: 5px;
+}
+
+/****************************************/
+/* ===== BATTLE GUIDE ===== */
+/****************************************/
+
+.df-bg-floating-window {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    /* transform: translate(-50%, -50%); */
+    background: #1e1e1e;
+    color: white;
+    border: 1px solid #888;
+    border-radius: 6px;
+    padding: 10px;
+    z-index: 9999;
+    width: 800px;
+}
+
+.df-battle-guide {
+    background-color: #222;
+    color: #eee;
+    padding: 8px;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.df-battle-guide h4 {
+    margin-top: 0;
+}
+
+.df-battle-guide ul {
+    padding-left: 20px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+}
+
+.df-encounter-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.df-encounter-columns {
+    display: flex;
+    gap: 10px;
+}
+
+.df-bg-h5{
+	margin: 0;
+	margin-bottom: 6px;
+}
+
+.df-bg-button {
+    /* optional styling for buttons themselves */
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #888;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+}
+
+.df-encounter-buttons {
+	margin-bottom: 10px;
+}
+
+.df-bg-button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: repeat(2, auto);  /* 2 rows */
+    gap: 5px; /* spacing between buttons */
+}
+
+.df-adjustments-column, .df-spending-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: 300px; /* adjust as needed */
+    border: 1px solid #444;
+    padding: 5px;
+    background: #1b1b1b;
+}
+
+.df-sticky-header {
+    position: sticky;
+    top: 0;
+    background: #1b1b1b;
+    font-weight: bold;
+    padding: 5px 0;
+    border-bottom: 1px solid #555;
+    z-index: 10;
+}
+
+.df-scrollable-list {
+    overflow-y: auto;
+    flex: 1;
+    padding: 5px 0;
+}
+

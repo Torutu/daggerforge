@@ -119,8 +119,6 @@ export class ImportDataModal extends Modal {
 			} else {
 				return { incredible_Adversaries: array };
 			}
-		} else if (lowerName.includes('brosk')) {
-			return { custom_Broskies: array };
 		} else if (lowerName.includes('env')) {
 			return { custom_Environments: array };
 		} else {
