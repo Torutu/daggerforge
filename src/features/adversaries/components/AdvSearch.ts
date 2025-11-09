@@ -123,7 +123,7 @@ export class AdversaryView extends ItemView {
 		container.empty();
 		// Create title
 		container.createEl("h2", {
-			text: "Adversary Browser",
+			text: "Adversary browser",
 			cls: "df-adv-title",
 		});
 		// Create controls row
@@ -331,7 +331,7 @@ export class AdversaryView extends ItemView {
 
 		const defaultOption = document.createElement("option");
 		defaultOption.value = "ALL";
-		defaultOption.textContent = "All Tiers";
+		defaultOption.textContent = "All tiers";
 		defaultOption.selected = true;
 		defaultOption.classList.add("df-tier-option");
 		dropdown.appendChild(defaultOption);
