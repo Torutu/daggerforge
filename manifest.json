@@ -1,7 +1,7 @@
 {
 	"id": "daggerforge",
 	"name": "DaggerForge",
-	"version": "1.9.9",
+	"version": "1.9.10",
 	"minAppVersion": "1.8.10",
 	"description": "Easy access to DaggerHeart's Adversaries, Environments + creating your own.",
 	"author": "Waleed Alnaimi",
