@@ -141,16 +141,6 @@ savedInputStateEnv: Record<string, any> = {};
 			},
 		);
 
-		// Commands
-		[1, 2, 3, 4].forEach((tier) => {
-			this.addCommand({
-				id: `load-tier-${tier}`,
-				name: `Load tier ${tier} adversaries`,
-				callback: () =>
-					this.loadContentToMarkdown(`tier-${tier}-adversaries`),
-			});
-		});
-
 		this.addCommand({
 			id: "adversary-creator",
 			name: "Adversary creator",
@@ -179,8 +169,26 @@ savedInputStateEnv: Record<string, any> = {};
 
 		this.addCommand({
 			id: "open-floating-window",
-			name: "Open Floating Window",
+			name: "Open dice roller",
 			callback: () => openDiceRoller(),
+		});
+
+		this.addCommand({
+			id: "open-encounter-calculator",
+			name: "Open battle calculator",
+			callback: () => openEncounterCalculator(),
+		});
+
+		this.addCommand({
+			id: "open-adversary-browser",
+			name: "Open adversary browser",
+			callback: () => adversariesSidebar(this),
+		});
+
+		this.addCommand({
+			id: "open-environment-browser",
+			name: "Open environment browser",
+			callback: () => openEnvironmentSidebar(this),
 		});
 	}
 
