@@ -1256,3 +1256,60 @@ select.df-input-field {
     padding: 5px 0;
 }
 
+/*********************************************/
+/* ===== DELETE CONFIRM MODAL ===== */
+/*********************************************/
+
+/* Delete Confirm Modal Styles */
+.df-delete-warning {
+	margin: 12px 0;
+	font-size: 14px;
+	color: var(--text-normal);
+}
+
+.df-delete-warning-bold {
+	margin: 12px 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--text-muted);
+}
+
+.df-delete-button-container {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+	margin-top: 20px;
+	padding-top: 15px;
+	border-top: 1px solid var(--divider-color);
+}
+
+.df-delete-confirm-btn {
+	padding: 8px 16px;
+	background-color: var(--color-red);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 600;
+	transition: background-color 0.2s;
+}
+
+.df-delete-confirm-btn:hover {
+	background-color: var(--color-red-bright);
+	opacity: 0.9;
+}
+
+.df-delete-cancel-btn {
+	padding: 8px 16px;
+	background-color: var(--background-secondary);
+	color: var(--text-normal);
+	border: 1px solid var(--divider-color);
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 600;
+	transition: background-color 0.2s;
+}
+
+.df-delete-cancel-btn:hover {
+	background-color: var(--background-tertiary);
+}

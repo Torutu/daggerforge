@@ -134,12 +134,14 @@ export class ImportDataModal extends Modal {
 		}
 
 		// Check for required fields (at least one should exist)
-		const hasAdversaries = Array.isArray(data.custom_Adversaries) || 
-							   Array.isArray(data.incredible_Adversaries) ||
-							   Array.isArray(data.custom_Broskies);
+		const hasAdversaries = Array.isArray(data.adversaries) || 
+						   Array.isArray(data.custom_Adversaries) || 
+						   Array.isArray(data.incredible_Adversaries) ||
+						   Array.isArray(data.custom_Broskies);
 		
-		const hasEnvironments = Array.isArray(data.custom_Environments) ||
-								Array.isArray(data.incredible_Environments);
+		const hasEnvironments = Array.isArray(data.environments) ||
+							  Array.isArray(data.custom_Environments) ||
+							  Array.isArray(data.incredible_Environments);
 
 		return hasAdversaries || hasEnvironments;
 	}

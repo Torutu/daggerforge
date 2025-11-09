@@ -30,6 +30,10 @@ export class EnvironmentView extends ItemView {
 	public refresh() {
 		if (!this.resultsDiv) return;
 		this.loadEnvironmentData(); // will also re-render
+		// Force focus back to the search input to restore keyboard interactions
+		if (this.searchInput instanceof HTMLElement) {
+			this.searchInput.focus();
+		}
 	}
 
 	private async deleteCustomEnvironment(env: EnvironmentData): Promise<void> {

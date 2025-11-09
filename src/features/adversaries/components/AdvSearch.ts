@@ -115,7 +115,11 @@ export class AdversaryView extends ItemView {
 		const container = this.containerEl.children[1];
 		container.empty();
 		this.initializeView();
-		this.loadAdversaryData();
+		await this.loadAdversaryData();
+		// Force focus back to the container to restore keyboard interactions
+		if (container instanceof HTMLElement) {
+			container.focus();
+		}
 	}
 
 	private initializeView() {

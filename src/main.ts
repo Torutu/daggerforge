@@ -17,6 +17,7 @@ import { EnvironmentModal } from "./features/environments/creator/EnvModal";
 import { CardData } from "./types";
 import { DataManager } from "./services/DataManager";
 import { ImportDataModal } from "./ui/ImportDataModal";
+import { DeleteConfirmModal } from "./ui/DeleteConfirmModal";
 import { openDiceRoller } from "./features/dice/diceRoller";
 import { openEncounterCalculator } from "./features/Encounters/encounterCalc";
 import { onEditClick } from "./features/environments/editor/envEditor";
@@ -229,23 +230,23 @@ savedInputStateEnv: Record<string, any> = {};
 		}
 	}
 
-	private async loadContentToMarkdown(contentType: string) {
-		const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-		if (!activeView) {
-			new Notice("Please open a note first.");
-			return;
-		}
+	// private async loadContentToMarkdown(contentType: string) {
+	// 	const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+	// 	if (!activeView) {
+	// 		new Notice("Please open a note first.");
+	// 		return;
+	// 	}
 
-		let content = "";
-		if (contentType.startsWith("tier-")) {
-			const tier = contentType.split("-")[1];
-			content = await this.getAdversaryTierContent(tier);
-		}
+	// 	let content = "";
+	// 	if (contentType.startsWith("tier-")) {
+	// 		const tier = contentType.split("-")[1];
+	// 		content = await this.getAdversaryTierContent(tier);
+	// 	}
 
-		if (content) {
-			activeView.editor.replaceSelection(content);
-		}
-	}
+	// 	if (content) {
+	// 		activeView.editor.replaceSelection(content);
+	// 	}
+	// }
 
 	private async getAdversaryTierContent(tier: string): Promise<string> {
 		// Implement your logic to get markdown content for the tier
@@ -263,23 +264,16 @@ savedInputStateEnv: Record<string, any> = {};
 	 * Confirm before deleting the data file
 	 */
 	private async confirmDeleteDataFile() {
-		const confirmed = confirm(
-			"Are you sure you want to delete the data.json file?\n\n" +
-			"This will permanently remove ALL stored adversaries and environments.\n" +
-			"This action cannot be undone!"
-		);
-
-		if (confirmed) {
-			try {
+		const modal = new DeleteConfirmModal(
+			this.app,
+			this,
+			async () => {
 				await this.dataManager.deleteDataFile();
-				new Notice("Data file deleted successfully!");
 				// Refresh both browsers
 				this.refreshBrowsers();
-			} catch (err) {
-				new Notice("Error deleting data file: " + err.message);
-				console.error("Error deleting data file:", err);
 			}
-		}
+		);
+		modal.open();
 	}
 
 	/**
