@@ -123,6 +123,13 @@ savedInputStateEnv: Record<string, any> = {};
 						.onClick(() => openEncounterCalculator()),
 				);
 
+				menu.addItem((item) =>
+					item
+						.setTitle("Player dashboard")
+						.setIcon("dashboard")
+						.onClick(() => { new Notice("Coming soon!"); }),
+				);
+
 				menu.addSeparator();
 
 				menu.addItem((item) =>
@@ -191,6 +198,12 @@ savedInputStateEnv: Record<string, any> = {};
 			name: "Open environment browser",
 			callback: () => openEnvironmentSidebar(this),
 		});
+
+		this.addCommand({
+			id: "open-player-dashboard",
+			name: "Open player dashboard",
+			callback: () => { new Notice("Coming soon!"); },
+		})
 	}
 
 	private async openCreator(type: "adversary" | "environment") {
