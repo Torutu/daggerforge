@@ -126,7 +126,7 @@ savedInputStateEnv: Record<string, any> = {};
 				menu.addItem((item) =>
 					item
 						.setTitle("Player dashboard")
-						.setIcon("dashboard")
+						.setIcon("file-user")
 						.onClick(() => { new Notice("Coming soon!"); }),
 				);
 
