@@ -1,6 +1,6 @@
 {
 	"name": "daggerforge",
-	"version": "1.9.9",
+	"version": "1.9.10",
 	"description": "A DaggerHeart toolkit for Obsidian, providing easy access to DaggerHeart's Adversaries and the ability to create your own.",
 	"type": "module",
 	"main": "main.js",
