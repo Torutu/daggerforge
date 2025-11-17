@@ -31,16 +31,10 @@ savedInputStateAdv: Record<string, any> = {};
 savedInputStateEnv: Record<string, any> = {};
 
 	async onload() {
-		// Initialize DataManager
 		this.dataManager = new DataManager(this);
 		await this.dataManager.load();
-
 		this.addStatusBarItem().setText("DaggerForge Active");
-
-		/* Handle edit button clicks on cards */
 		this.registerDomEvent(document, "click", (evt) => handleCardEditClick(evt, this.app));
-
-		// Register views
 		this.registerView(
 			ADVERSARY_VIEW_TYPE,
 			(leaf) => new AdversaryView(leaf),
@@ -50,7 +44,6 @@ savedInputStateEnv: Record<string, any> = {};
 			(leaf) => new EnvironmentView(leaf),
 		);
 
-		// Combined ribbon icon
 		this.addRibbonIcon(
 			"scroll-text",
 			"DaggerForge menu",
