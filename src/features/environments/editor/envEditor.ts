@@ -1,5 +1,4 @@
-import { Notice } from "obsidian";
-
+import { MarkdownView, Notice, App } from "obsidian";
 export const onEditClick = (evt: Event, cardType: string) => {
 	evt.stopPropagation();
 
@@ -32,3 +31,27 @@ export const onEditClick = (evt: Event, cardType: string) => {
 
 	// new Notice(`Editing ${cardType.toUpperCase()} card: ${cardName}`);
 };
+
+
+export function handleCardEditClick(evt: MouseEvent, app: App) {
+    const target = evt.target as HTMLElement;
+    if (!target) return;
+
+    let cardType: "env" | "adv" | null = null;
+    if (target.matches(".df-env-edit-button")) cardType = "env";
+    else if (target.closest(".df-adv-edit-button")) cardType = "adv";
+
+    if (!cardType) return;
+
+    const view = app.workspace.getActiveViewOfType(MarkdownView);
+    if (!view) return;
+
+    const isEditMode = view.getMode() === "source";
+
+    if (isEditMode) {
+        new Notice("Edit feature is coming soon ⚠️ 1");
+        onEditClick(evt, cardType); // call whatever handler you have
+    } else {
+        // optional: handle reading mode click
+    }
+}

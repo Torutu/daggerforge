@@ -5,7 +5,9 @@
   --df-color-bg-outer: #bfa980;
   --df-color-bg-inner: #f5f0e9;
   --df-color-border: #bfa980;
-  --df-color-Incredible: #6b009c;
+  --df-color-void: #784d99;
+  --df-color-umbra: #464ca5;
+  --df-color-Incredible: #3c00c7;
 }
 
 .df-pseudo-cut-corners {
@@ -743,7 +745,7 @@ select.df-input-field {
 	text-transform: capitalize;
 }
 
-.df-source-badge-custom {
+.df-source-badge-custom{
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -760,32 +762,20 @@ select.df-input-field {
 }
 
 .df-source-custom {
-	border-color: #e4e4e4;
+	border-left-color: #d3d3d3;
 }
 
 .df-source-umbra {
-	border-color: #6a1b9a;
+	border-color: var(--df-color-umbra);
 }
 
 .df-source-incredible{
 	border-color: var(--df-color-Incredible);
 }
 
-/* Card border colors matching badges */
-.df-source-core {
-	border-left-color: #555555;
+.df-source-void{
+	border-color: var(--df-color-void);
 }
-
-.df-source-custom {
-	border-left-color: #d3d3d3;
-}
-
-.df-source-umbra {
-	border-left-color: #6a1b9a;
-}
-/* .df-source-incredible{
-	border-left-color: #4a026b;
-} */
 
 /* The tier inside the sidebar result container (adv + env) */
 .df-tier-text {
@@ -1015,6 +1005,11 @@ select.df-input-field {
 	padding: 4px;
 }
 
+.df-custom-adversary {
+	border-left: 3px solid var(--interactive-accent);
+	position: relative;
+}
+
 /* Custom cards */
 .df-custom-badge {
 	margin-left: 8px;
@@ -1026,11 +1021,6 @@ select.df-input-field {
 	font-weight: bold;
 }
 
-.df-custom-adversary {
-	border-left: 3px solid var(--interactive-accent);
-	position: relative;
-}
-
 .df-source-badge-incredible{
 	margin-left: 8px;
 	padding: 2px 8px;
@@ -1038,7 +1028,29 @@ select.df-input-field {
 	font-size: 0.8em;
 	font-weight: bold;
 	color: #fff;
-	background-color: #6b009c;
+	background-color: var(--df-color-Incredible);
+	text-transform: capitalize;
+}
+
+.df-source-badge-void{
+	margin-left: 8px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #fff;
+	background-color: var(--df-color-void);
+	text-transform: capitalize;
+}
+
+.df-source-badge-umbra{
+	margin-left: 8px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #fff;
+	background-color: var(--df-color-umbra);
 	text-transform: capitalize;
 }
 

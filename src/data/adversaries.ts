@@ -1,7 +1,11 @@
-import coreAdv from "adversaries/coreAdv.json";
+import advCore from "adv/advcore.json";
+import advInc from "adv/advinc.json";
+import advVoid from "adv/advvoid.json";
 
 export const ADVERSARIES = [
-	...coreAdv
+	...advCore,
+	...advInc,
+	...advVoid,
 ];
 
-export type AdversaryData = (typeof coreAdv)[0];
+export type AdversaryData = (typeof advCore)[0];

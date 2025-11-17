@@ -34,7 +34,7 @@ export interface Adversary {
 		weaponDamage: string;
 		xp: string;
 		features: AdversaryFeature[];
-		source?: string; // New field for source/version
+		source?: string;
 		isCustom?: boolean;
 }
 
@@ -88,14 +88,13 @@ export class AdversaryView extends ItemView {
 			return;
 		}
 
-		// Find the index of the adversary in custom adversaries
 		const customAdvs = plugin.dataManager.getAdversaries();
 		const index = customAdvs.findIndex((a: Adversary) => a.name === adversary.name);
 
 		if (index !== -1) {
 			await plugin.dataManager.deleteAdversary(index);
 			new Notice(`Deleted adversary: ${adversary.name}`);
-			this.refresh(); // Refresh the view
+			this.refresh();
 		} else {
 			new Notice("Adversary not found in custom list.");
 		}
@@ -115,8 +114,8 @@ export class AdversaryView extends ItemView {
 		const container = this.containerEl.children[1];
 		container.empty();
 		this.initializeView();
-		await this.loadAdversaryData();
-		// Force focus back to the container to restore keyboard interactions
+		this.loadAdversaryData();
+
 		if (container instanceof HTMLElement) {
 			container.focus();
 		}
@@ -134,11 +133,8 @@ export class AdversaryView extends ItemView {
 		const controlsRow = container.createDiv({
 			cls: "df-adversary-controls-row",
 		});
-		// Add counter controls
 		this.createCounterControls(controlsRow);
-		// Add search input
 		this.createSearchInput(controlsRow);
-		// Add tier dropdown
 		this.createTierDropdown(controlsRow);
 	}
 
@@ -154,7 +150,6 @@ export class AdversaryView extends ItemView {
 	}
 
 	private normalizeAdversary(a: RawAdversaryData): Adversary {
-		// Handle both lowercase and uppercase property names
 		const raw = a as any;
 		return {
 			name: raw.name || raw.Name || "",
@@ -182,7 +177,6 @@ export class AdversaryView extends ItemView {
 
 	private loadCustomAdversaries(): Adversary[] {
 		try {
-			// Get plugin instance to access dataManager
 			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
 			if (!plugin || !plugin.dataManager) {
 				console.warn("DaggerForge plugin or dataManager not found");
@@ -207,38 +201,23 @@ export class AdversaryView extends ItemView {
 
 	private loadAdversaryData() {
 		const container = this.containerEl.children[1];
-		const resultsDiv = container.querySelector(
-			".df-adversary-results",
-		) as HTMLElement;
-
+		const resultsDiv = container.querySelector(".df-adversary-results") as HTMLElement;
 		try {
-			// Load built-in adversaries - all are now in one flat array
-			const builtInAdversaries = ADVERSARIES.map((a) => 
-				this.normalizeAdversary({
-					...(a as any),
+			const builtInAdversaries = ADVERSARIES.map((a: any) =>({
+					...a,
 					isCustom: false,
-					source: (a as any).source ?? (a as any).Source ?? "core",
-					//print the source field
-					tier: (a as any).tier ?? (a as any).Tier ?? "1",
+					source: a.source,
+					tier: a.tier,
 				})
 			);
 
-			// Load custom adversaries from DataManager (Obsidian storage)
-			const custom_Adversaries = this.loadCustomAdversaries();
-
-			// Combine all lists
-			this.adversaries = [
-				...builtInAdversaries,
-				...custom_Adversaries,
-			];
-
+			const custom = this.loadCustomAdversaries();
+			this.adversaries = [...builtInAdversaries, ...custom];
 			this.renderResults(this.adversaries);
 		} catch (e) {
 			console.error("Error loading adversary data:", e);
 			new Notice("Failed to load adversary data.");
-			if (resultsDiv) {
-				resultsDiv.setText("Error loading adversary data.");
-			}
+			resultsDiv?.setText("Error loading adversary data.");
 		}
 	}
 
@@ -392,16 +371,13 @@ export class AdversaryView extends ItemView {
 		const card = document.createElement("div");
 		card.classList.add("df-adversary-card");
 
-		// Add source-specific class to card
 		const source = adversary.source || "core";
 		card.classList.add(`df-source-${source.toLowerCase()}`);
 
-		// Tier and type
 		const tier = document.createElement("p");
 		tier.classList.add("df-tier-text");
 		tier.textContent = `Tier ${adversary.tier} ${adversary.type}`;
 
-		// Add source badge
 		const sourceBadge = document.createElement("span");
 		sourceBadge.classList.add(
 			`df-source-badge-${source.toLowerCase()}`,
@@ -411,7 +387,9 @@ export class AdversaryView extends ItemView {
 		const badgeTexts: Record<string, string> = {
 			core: "Core",
 			custom: "Custom",
-			incredible: "Incredible"
+			incredible: "Incredible",
+			umbra: "Umbra",
+			void: "Void",
 		};
 		sourceBadge.textContent = badgeTexts[source] || source;
 		tier.appendChild(sourceBadge);

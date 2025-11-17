@@ -19,7 +19,7 @@ export type SavedFeatureState = {
 };
 
 export type EnvironmentData = {
-	id: string; // Unique ID like CE001, IE001, etc.
+	id: string;
 	name: string;
 	tier: number;
 	type: string;
@@ -27,7 +27,7 @@ export type EnvironmentData = {
 	impulse: string;
 	difficulty: string;
 	potentialAdversaries: string;
-	source?: string; // Source of the environment (e.g., 'custom', 'broskies', 'core', 'umbra')
+	source?: string;
 	features: EnvironmentFeature[];
 };
 

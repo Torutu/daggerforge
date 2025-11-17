@@ -20,7 +20,7 @@ import { ImportDataModal } from "./ui/ImportDataModal";
 import { DeleteConfirmModal } from "./ui/DeleteConfirmModal";
 import { openDiceRoller } from "./features/dice/diceRoller";
 import { openEncounterCalculator } from "./features/Encounters/encounterCalc";
-import { onEditClick } from "./features/environments/editor/envEditor";
+import { handleCardEditClick } from "./features/environments/editor/envEditor";
 
 export default class DaggerForgePlugin extends Plugin {
 updateCardData(cardElement: HTMLElement, currentData: CardData) {
@@ -38,29 +38,7 @@ savedInputStateEnv: Record<string, any> = {};
 		this.addStatusBarItem().setText("DaggerForge Active");
 
 		/* Handle edit button clicks on cards */
-		this.registerDomEvent(document, "click", (evt) => {
-			const target = evt.target as HTMLElement;
-			if (!target) return;
-			let cardType: "env" | "adv" | null = null;
-
-			if (target.matches(".df-env-edit-button")) cardType = "env";
-			else if (target.closest(".df-adv-edit-button")) cardType = "adv";
-
-			if (!cardType) return;
-
-			const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-			if (!view) return;
-
-			const isEditMode = view.getMode() === "source";
-
-			if (isEditMode) {
-				//warning emoji in notice
-				new Notice("Edit feature is coming soon ⚠️");
-				onEditClick(evt, cardType);
-			} else {
-				// new Notice("Clicked in READING mode!");
-			}
-		});
+		this.registerDomEvent(document, "click", (evt) => handleCardEditClick(evt, this.app));
 
 		// Register views
 		this.registerView(

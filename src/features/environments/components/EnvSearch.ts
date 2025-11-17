@@ -44,7 +44,6 @@ export class EnvironmentView extends ItemView {
 			return;
 		}
 
-		// Find the index of the environment in custom environments
 		const customEnvs = plugin.dataManager.getEnvironments();
 		const index = customEnvs.findIndex((e: EnvironmentData) => e.name === env.name);
 
@@ -127,32 +126,21 @@ export class EnvironmentView extends ItemView {
 	}
 
 	private loadEnvironmentData() {
-		if (!this.resultsDiv) return;
-
 		try {
-			const scrollTop = this.resultsDiv.scrollTop;
+			const builtIn = ENVIRONMENTS.map((e: any) => ({
+				...e,
+				isCustom: false,
+				source: e.source ?? "core",
+				type: e.type,
+			}));
 
-			const builtInEnvironments = [
-				...ENVIRONMENTS.coreEnv,
-			].map((e) => ({ ...e, source: e.source || "core" }));
-
-			const custom_Environments = this.loadCustomEnvironments();
-			this.environments = [...builtInEnvironments, ...custom_Environments];
-
-			const q = (this.searchInput?.value || "").toLowerCase();
-			const filtered = q
-				? this.environments.filter(
-						(env) =>
-							env.name.toLowerCase().includes(q) ||
-							env.type.toLowerCase().includes(q),
-					)
-				: this.environments;
-
-			this.renderResults(filtered);
-			this.resultsDiv.scrollTop = scrollTop;
+			const custom = this.loadCustomEnvironments();
+			this.environments = [...builtIn, ...custom];
+			this.renderResults(this.environments);
 		} catch (e) {
-			new Notice("Failed to refresh environment data.");
-			console.error(e);
+			console.error("Error loading environment data:", e);
+			new Notice("Failed to load environment data.");
+			this.resultsDiv?.setText("Error loading environment data.");
 		}
 	}
 
@@ -178,7 +166,7 @@ export class EnvironmentView extends ItemView {
 				const view = leaf?.view;
 				if (view instanceof MarkdownView)
 					this.lastActiveMarkdown = view;
-			}),
+			})
 		);
 
 		container.createEl("h2", {
@@ -201,17 +189,15 @@ export class EnvironmentView extends ItemView {
 		this.createTierButtons(container, input);
 
 		try {
-			this.environments = [
-				...ENVIRONMENTS.coreEnv,
-			];
-			this.loadEnvironmentData(); // loads custom + renders
+			// SINGLE source of truth → this loads + filters + renders
+			this.loadEnvironmentData();
 		} catch (e) {
 			new Notice("Failed to load environment data.");
 			resultsDiv.setText("Error loading environment data.");
 			return;
 		}
 
-		this.renderResults(this.environments);
+		// Setup search AFTER initial load
 		this.setupSearchInput(input);
 	}
 
@@ -238,7 +224,9 @@ export class EnvironmentView extends ItemView {
 		const badgeTexts: Record<string, string> = {
 			core: "Core",
 			custom: "Custom",
-			incredible: "Incredible"
+			incredible: "Incredible",
+			umbra: "Umbra",
+			void: "Void",
 		};
 
 		if (badgeTexts[source] == "Custom") {

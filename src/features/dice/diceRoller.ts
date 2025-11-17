@@ -1,8 +1,7 @@
-// ui/floatingWindow.ts
-import { rollDice } from "./dice"; // your shared dice function
+import { rollDice } from "./dice";
 
 let floatingWindowContainer: HTMLDivElement | null = null;
-const diceLog: string[] = []; // persists while plugin is open
+const diceLog: string[] = [];
 
 export function openDiceRoller() {
     // If already open, remove it first

@@ -1,4 +1,3 @@
-// dice.ts
 export function rollDice(expression: string): { total: number; details: string } {
     const parts = expression.split("+").map(p => p.trim());
     let total = 0;
