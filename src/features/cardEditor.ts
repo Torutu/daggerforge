@@ -1,6 +1,7 @@
 import { MarkdownView, Notice, App } from "obsidian";
 import { extractCardData } from "./adversaries/editor/CardDataHelpers";
 import { TextInputModal } from "./adversaries/creator/TextInputModal";
+import { EnvironmentModal } from "./environments/creator/EnvModal";
 import type DaggerForgePlugin from "../main";
 
 export const onEditClick = (
@@ -144,7 +145,175 @@ export const onEditClick = (
 		};
 		modal.open();
 	} else if (cardType === "env") {
-		new Notice("Environment editing is coming soon!");
+		const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
+		if (!view) {
+			new Notice("Please open a markdown note first.");
+			return;
+		}
+
+		const editor = view.editor;
+		const fullContent = editor.getValue();
+		
+		// For environments, find the section tag that contains this environment card
+		const sectionPattern = /<section[^>]*class="[^"]*df-env-card-outer[^"]*"[^>]*>/i;
+		const sectionMatch = fullContent.match(sectionPattern);
+		
+		if (!sectionMatch) {
+			new Notice("Could not find environment section in markdown.");
+			return;
+		}
+		
+		// Find the index of this section tag
+		const sectionStartIndex = fullContent.indexOf(sectionMatch[0]);
+		
+		// Find the corresponding closing </section> tag
+		let closeCount = 1;
+		let searchIndex = sectionStartIndex + sectionMatch[0].length;
+		let sectionEndIndex = -1;
+		
+		while (closeCount > 0 && searchIndex < fullContent.length) {
+			const nextOpen = fullContent.indexOf('<section', searchIndex);
+			const nextClose = fullContent.indexOf('</section>', searchIndex);
+			
+			if (nextClose === -1) break;
+			
+			if (nextOpen !== -1 && nextOpen < nextClose) {
+				closeCount++;
+				searchIndex = nextOpen + 1;
+			} else {
+				closeCount--;
+				if (closeCount === 0) {
+					sectionEndIndex = nextClose + 10; // length of </section>
+				}
+				searchIndex = nextClose + 1;
+			}
+		}
+		
+		if (sectionStartIndex === -1 || sectionEndIndex === -1) {
+			new Notice("Could not find complete environment structure in markdown.");
+			return;
+		}
+		
+		const oldHTML = fullContent.substring(sectionStartIndex, sectionEndIndex);
+		
+		// Extract environment data from the card element by parsing the rendered HTML
+		// Get all text content and parse it
+		const innerDiv = cardElement.querySelector('.df-env-card-inner');
+		
+		// Extract tier and type from "Tier X Type"
+		const tierTypeText = innerDiv?.querySelector('.df-env-feat-tier-type')?.textContent?.trim() || '';
+		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+(.*)/);
+		const tier = tierMatch ? tierMatch[1] : '1';
+		const type = tierMatch ? tierMatch[2] : 'Exploration';
+		
+		// Extract description
+		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
+		
+		// Extract impulse (after "Impulse:" text)
+		const impulseEl = Array.from(innerDiv?.querySelectorAll('p') || []).find(p => 
+			p.textContent?.includes('Impulse:')
+		);
+		const impulse = impulseEl ? impulseEl.textContent?.replace('Impulse:', '').trim() : '';
+		
+		// Extract difficulty and potential adversaries
+		const diffPotEl = innerDiv?.querySelector('.df-env-card-diff-pot');
+		const diffEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
+			p.textContent?.includes('Difficulty')
+		);
+		const advEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
+			p.textContent?.includes('Potential Adversaries')
+		);
+		
+		const difficulty = diffEl ? diffEl.textContent?.split(':')[1]?.trim() : '';
+		const potentialAdversaries = advEl ? advEl.textContent?.split(':')[1]?.trim() : '';
+		
+		// Extract features
+		const featuresSection = innerDiv?.querySelector('.df-features-section');
+		const features = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
+			const name = feat.getAttribute('data-feature-name') || '';
+			const featType = feat.getAttribute('data-feature-type') || 'Passive';
+			const cost = feat.getAttribute('data-feature-cost') || undefined;
+			
+			// Get the text content
+			const textEl = feat.querySelector('.df-env-feat-text');
+			const text = textEl?.textContent?.trim() || '';
+			
+			// Get questions
+			const questionsDiv = feat.querySelector('.df-env-questions');
+			const questions = questionsDiv ? 
+				Array.from(questionsDiv.querySelectorAll('.df-env-question')).map((q: Element) => q.textContent?.trim() || '') :
+				[];
+			
+			return {
+				name,
+				type: featType,
+				cost: cost || undefined,
+				text,
+				bullets: [],
+				questions: questions.filter(q => q),
+			};
+		});
+		
+		const envData: any = {
+			name: cardName,
+			tier: parseInt(tier),
+			type,
+			desc,
+			impulse,
+			difficulty,
+			potentialAdversaries,
+			source: 'custom',
+			features,
+		};
+		
+		// Open the environment editor modal
+		const modal = new EnvironmentModal(plugin, editor, async (newEnvData) => {
+			const { environmentToHTML } = await import('./environments/components/EnvToHTML');
+			
+			// Generate new HTML
+			const newHTML = environmentToHTML(newEnvData);
+			const finalHTML = `<section class="df-env-card-outer">\n${newHTML}\n</section>`;
+			
+			// Get fresh content
+			const content = editor.getValue();
+			
+			// Find and replace
+			const beforeCard = content.substring(0, sectionStartIndex);
+			const afterCard = content.substring(sectionEndIndex);
+			const newContent = beforeCard + finalHTML + afterCard;
+			
+			// Update editor
+			editor.setValue(newContent);
+			
+			// Save the file
+			const file = view.file;
+			if (file) {
+				await plugin.app.vault.modify(file, newContent);
+			}
+			
+			// Save as custom environment
+			try {
+				await plugin.dataManager.addEnvironment(newEnvData);
+				new Notice(`Updated environment: ${cardName}`);
+			} catch (error) {
+				console.error("Error saving environment:", error);
+				new Notice("Error saving environment. Check console for details.");
+			}
+			
+			// Refresh EnvironmentView if open
+			const envView = plugin.app.workspace
+				.getLeavesOfType("environment-view")
+				.map((l) => l.view)
+				.find((v) => typeof (v as any).refresh === "function") as any;
+
+			if (envView) {
+				await envView.refresh();
+			}
+		});
+		
+		// Pre-populate the modal with environment data
+		plugin.savedInputStateEnv = envData;
+		modal.open();
 	}
 };
 

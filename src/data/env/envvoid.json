@@ -222,12 +222,11 @@
         "type": "Passive",
         "text": "This city has the solution to any problem, if you can fi nd it. A PC seeking a particular item with wondrous properties can make an Instinct or Presence Roll to fi nd it in the city’s pandimensional marketplace.",
         "bullets": [
-          "•Critical Success: The PC fi nds the perfect item, and the",
-          "•Success with Hope: The PC fi nds the perfect item, and can",
-          "•Success with Fear: The PC fi nds the perfect item, but the",
-          "•Any Failure: The PC must mark a Stress as they go on a wild"
+          "•Critical Success: The PC fi nds the perfect item, and the merchant who has it only wants something the PC considers inconsequential in exchange.",
+          "•Success with Hope: The PC fi nds the perfect item, and can exchange something of equal value for it.",
+          "•Success with Fear: The PC fi nds the perfect item, but the merchant who has it will only exchange it for something the party can’t give them... yet.",
+          "•Any Failure: The PC must mark a Stress as they go on a wild goose chase but come up empty-handed. The PC can mark an additional Stress to change this result into a success with Fear."
         ],
-        "textAfter": "merchant who has it only wants something the PC considers inconsequential in exchange. exchange something of equal value for it. merchant who has it will only exchange it for something the party can’t give them... yet. goose chase but come up empty-handed. The PC can mark an additional Stress to change this result into a success with Fear.",
         "questions": [
           "Who has the item the party needs?",
           "What do they want in return?"

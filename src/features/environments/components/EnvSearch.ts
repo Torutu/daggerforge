@@ -258,7 +258,6 @@ export class EnvironmentView extends ItemView {
 		card.appendChild(desc);
 
 		card.addEventListener("click", () => {
-			// Format features as HTML blocks
 			const featuresHTML = (env.features || [])
 				.map((f: any) => {
 					const costHTML = f.cost ? `<span>${f.cost}</span>` : "";
@@ -278,6 +277,10 @@ export class EnvironmentView extends ItemView {
 							? `<div class="df-env-questions">${f.questions.map((q: string) => `${q}`).join("")}</div>`
 							: "";
 
+					const afterTextHTML = f.textAfter
+						? `<div class="df-env-text-after">${f.textAfter}</div>`
+						: "";
+
 					return `
 				<div class="df-feature">
 					<div class="df-env-feat-name-type">${f.name} - ${f.type}: ${costHTML}
@@ -285,6 +288,7 @@ export class EnvironmentView extends ItemView {
 					</div>
 					
 					${bulletsHTML}
+					${afterTextHTML}
 					${questionsHTML}
 				</div>
 			`;
@@ -292,7 +296,7 @@ export class EnvironmentView extends ItemView {
 				.join("");
 			// Compose the full HTML block
 			const envHTML = `
-<div class="df-env-card-outer">
+<section class="df-env-card-outer">
 			<div class="df-env-card-inner">
 				<button class="df-env-edit-button" data-edit-mode-only="true">📝</button>
 				<div class="df-env-name">${env.name}</div>
@@ -308,7 +312,7 @@ export class EnvironmentView extends ItemView {
 				${featuresHTML}
 				</div>
 			</div>
-</div>
+</section>
 `;
 			const isCanvas = isCanvasActive(this.app);
 			const isMarkdown = isMarkdownActive(this.app);

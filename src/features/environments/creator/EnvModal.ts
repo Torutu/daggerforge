@@ -76,10 +76,6 @@ export class EnvironmentModal extends Modal {
 		const detailsSection = basicInfoSection.createDiv({ cls: "df-env-form-section-content" });
 
 		// Description textarea (full width, resizable)
-		// const descLabel = detailsSection.createEl("label", { 
-		// 	text: "Description", 
-		// 	cls: "df-field-label" 
-		// });
 		const descTextarea = detailsSection.createEl("textarea", {
 			cls: "df-env-field-desc-textarea",
 			attr: {
@@ -136,22 +132,15 @@ export class EnvironmentModal extends Modal {
 		this.featureContainer = featuresSection.createDiv({ cls: "df-env-feature-container" });
 		this.features = [];
 
-		const setValueIfSaved = (
-			key: string,
-			el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
-		) => {
-			if (saved[key] !== undefined) {
-				el.value = saved[key];
-			}
-		};
-
 		// Load saved features if available
 		const savedFeatures: SavedFeatureState[] = saved.features || [];
-		savedFeatures.forEach((f) => {
-			this.addFeature(f);
-		});
-
-		if (savedFeatures.length === 0) this.addFeature();
+		if (savedFeatures.length > 0) {
+			savedFeatures.forEach((f) => {
+				this.addFeature(f);
+			});
+		} else {
+			this.addFeature();
+		}
 
 		const addBtn = featuresSection.createEl("button", {
 			text: "+ Add feature",
@@ -230,11 +219,14 @@ export class EnvironmentModal extends Modal {
 					}
 				}
 
-				this.features.forEach(({ nameEl, typeEl, costEl, textEl }) => {
+				this.features.forEach(({ nameEl, typeEl, costEl, textEl, bulletEls, afterTextEl, questionEls }) => {
 					nameEl.value = "";
 					typeEl.selectedIndex = 0;
 					if (costEl) costEl.selectedIndex = 0;
 					textEl.value = "";
+					bulletEls.forEach(b => b.value = "");
+					afterTextEl.value = "";
+					questionEls.forEach(q => q.value = "");
 				});
 
 				this.features = [];
@@ -303,37 +295,140 @@ export class EnvironmentModal extends Modal {
 		);
 		costEl.value = savedFeature?.cost || "";
 
-		// Main feature description
-		const descEl = wrapper.createEl("textarea", {
+		// Primary feature description
+		const descLabel = wrapper.createDiv({ cls: "df-env-feature-desc-label", text: "Description:" });
+		const textEl = wrapper.createEl("textarea", {
 			cls: "df-env-feature-input-desc",
-			placeholder: "Feature description text...",
+			placeholder: "Feature description...",
+			attr: {
+				rows: "3"
+			}
 		});
-		descEl.value = savedFeature?.text || "";
+		textEl.value = savedFeature?.text || "";
 
-		// Question section
+		// Bullets section
+		const bulletsHeader = wrapper.createDiv({
+			cls: "df-env-feature-bullets-header",
+			text: "Bullet Points:",
+		});
+
+		const bulletsContainer = wrapper.createDiv({
+			cls: "df-env-feature-bullets-container",
+		});
+
+		const bulletEls: HTMLTextAreaElement[] = [];
+		
+		if (savedFeature?.bullets && savedFeature.bullets.length > 0) {
+			savedFeature.bullets.forEach((bullet) => {
+				const bulletEl = bulletsContainer.createEl("textarea", {
+					cls: "df-env-feature-input-bullet",
+					placeholder: "Bullet point...",
+					attr: {
+						rows: "2"
+					}
+				});
+				bulletEl.value = bullet;
+				bulletEls.push(bulletEl);
+			});
+		} else {
+			// Add one empty bullet by default
+			const bulletEl = bulletsContainer.createEl("textarea", {
+				cls: "df-env-feature-input-bullet",
+				placeholder: "Bullet point...",
+				attr: {
+					rows: "2"
+				}
+			});
+			bulletEls.push(bulletEl);
+		}
+
+		const addBulletBtn = bulletsContainer.createEl("button", {
+			text: "+ Add bullet point",
+			cls: "df-env-btn-add-bullet",
+		});
+		addBulletBtn.onclick = () => {
+			const bulletEl = bulletsContainer.createEl("textarea", {
+				cls: "df-env-feature-input-bullet",
+				placeholder: "Bullet point...",
+				attr: {
+					rows: "2"
+				}
+			});
+			bulletEls.push(bulletEl);
+		};
+
+		// After description section
+		const afterDescHeader = wrapper.createDiv({
+			cls: "df-env-feature-after-desc-header",
+			text: "Continue Description (after bullets):",
+		});
+
+		const afterTextEl = wrapper.createEl("textarea", {
+			cls: "df-env-feature-input-after-desc",
+			placeholder: "Additional description text (appears after bullet points)...",
+			attr: {
+				rows: "3"
+			}
+		});
+		afterTextEl.value = savedFeature?.textAfter || "";
+
+		// Questions section
 		const questionContainer = wrapper.createDiv({
 			cls: "df-env-feature-question-container",
 		});
-		questionContainer.createDiv({
+		const questionHeader = questionContainer.createDiv({
 			cls: "df-env-feature-question-header",
-			text: "GM prompt question:",
+			text: "GM Prompt Questions:",
 		});
 
-		const questionEl = questionContainer.createEl("textarea", {
-			cls: "df-env-feature-question-input",
-			attr: {
-				placeholder: "e.g. “Why did this environment feature occur?”",
-			}
+		const questionsWrapper = questionContainer.createDiv({
+			cls: "df-env-questions-wrapper",
 		});
 
-		// Set value if saved question exists
+		const questionEls: HTMLTextAreaElement[] = [];
+
 		if (savedFeature?.questions && savedFeature.questions.length > 0) {
-			questionEl.value = savedFeature.questions[0] || "";
+			savedFeature.questions.forEach((question) => {
+				const questionEl = questionsWrapper.createEl("textarea", {
+					cls: "df-env-feature-input-question",
+					placeholder: 'e.g. "Why did this feature occur?"',
+					attr: {
+						rows: "2"
+					}
+				});
+				questionEl.value = question;
+				questionEls.push(questionEl);
+			});
+		} else {
+			// Add one empty question by default
+			const questionEl = questionsWrapper.createEl("textarea", {
+				cls: "df-env-feature-input-question",
+				placeholder: 'e.g. "Why did this feature occur?"',
+				attr: {
+					rows: "2"
+				}
+			});
+			questionEls.push(questionEl);
 		}
+
+		const addQuestionBtn = questionsWrapper.createEl("button", {
+			text: "+ Add question",
+			cls: "df-env-btn-add-question",
+		});
+		addQuestionBtn.onclick = () => {
+			const questionEl = questionsWrapper.createEl("textarea", {
+				cls: "df-env-feature-input-question",
+				placeholder: 'e.g. "Why did this feature occur?"',
+				attr: {
+					rows: "2"
+				}
+			});
+			questionEls.push(questionEl);
+		};
 
 		// Remove button
 		const removeBtn = wrapper.createEl("button", {
-			text: "Remove",
+			text: "Remove Feature",
 			cls: "df-env-btn-remove-feature",
 		});
 		removeBtn.onclick = () => {
@@ -348,23 +443,29 @@ export class EnvironmentModal extends Modal {
 			nameEl,
 			typeEl,
 			costEl,
-			textEl: descEl,
-			bulletEls: [],
-			questionEls: [questionEl],
+			textEl,
+			bulletEls,
+			afterTextEl,
+			questionEls,
 		});
 	}
 
-	getFeatureValues(): EnvironmentData["features"] {
-		return this.features.map((f) => ({
-			name: f.nameEl.value.trim(),
-			type: f.typeEl.value.trim(),
-			cost: f.costEl?.value.trim() || undefined,
-			text: f.textEl.value.trim(),
-			bullets: f.bulletEls.map((b) => b.value.trim()).filter((b) => b),
-			questions: f.questionEls
-				.map((q) => q.value.trim())
-				.filter((q) => q),
-		}));
+	getFeatureValues() {
+		return this.features.map((f) => {
+			const featureValue: SavedFeatureState = {
+				name: f.nameEl.value.trim(),
+				type: f.typeEl.value.trim(),
+				cost: f.costEl?.value.trim() || undefined,
+				text: f.textEl.value.trim(),
+				bullets: f.bulletEls.map((b) => b.value.trim()).filter((b) => b) || null,
+				textAfter: f.afterTextEl.value.trim() || undefined,
+				questions: f.questionEls
+					.map((q) => q.value.trim())
+					.filter((q) => q),
+			};
+			
+			return featureValue;
+		});
 	}
 
 	onClose(): void {

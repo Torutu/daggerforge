@@ -6,6 +6,7 @@ export type FeatureElements = {
 	costEl?: HTMLSelectElement;
 	textEl: HTMLTextAreaElement;
 	bulletEls: HTMLTextAreaElement[];
+	afterTextEl: HTMLTextAreaElement;
 	questionEls: HTMLTextAreaElement[];
 };
 
@@ -14,7 +15,8 @@ export type SavedFeatureState = {
 	type: string;
 	cost?: string;
 	text: string;
-	bullets: string[];
+	bullets: string[] | null;
+	textAfter?: string;
 	questions: string[];
 };
 
@@ -36,6 +38,7 @@ type EnvironmentFeature = {
 	type: string;
 	text: string;
 	cost?: string;
-	bullets: string[];
+	bullets: string[] | null;
+	textAfter?: string;
 	questions: string[];
 };

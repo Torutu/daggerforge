@@ -1,9 +1,13 @@
 {
 	"compilerOptions": {
-		"types": ["obsidian"],
+		"types": [
+			"obsidian"
+		],
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": [
+				"src/*"
+			]
 		},
 		"inlineSourceMap": true,
 		"inlineSources": true,
@@ -17,12 +21,19 @@
 		"importHelpers": true,
 		"isolatedModules": true,
 		"strictNullChecks": true,
-		"lib": ["DOM", "ES5", "ES6", "ES7", "ES2019"],
+		"lib": [
+			"DOM",
+			"ES5",
+			"ES6",
+			"ES7",
+			"ES2019"
+		],
 		"outDir": "dist", // Recommended to separate compiled files
 		"rootDir": "src", // Ensures only src is compiled
-		"ignoreDeprecations": "6.0"
 	},
-	"include": ["src/**/*.ts"],
+	"include": [
+		"src/**/*.ts"
+	],
 	"exclude": [
 		"archive/**", // Explicitly exclude archived files
 		"**/*.test.ts", // Exclude test files

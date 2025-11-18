@@ -17,9 +17,8 @@
         "bullets": [
           "•Traces of a battle (broken weapons and branches, gouges in the ground) litter the ground.",
           "•A moss-covered tree trunk is actually the corpse of a treant.",
-          "•Still-standing trees are twisted in strange ways, as if by"
+          "•Still-standing trees are twisted in strange ways, as if by powerful magic."
         ],
-        "textAfter": "powerful magic.",
         "questions": [
           "Why did these groups come to blows?",
           "Why is the grove unused now?"
@@ -318,9 +317,8 @@
           "•Critical Success: Learn about two major events. The PC can ask one follow-up question about one of the rumors and get atruthful (if not always complete) answer.",
           "•Success with Hope: Learn about two events, at least one of which is relevant to the character’s background.",
           "•Success with Fear: Learn an alarming rumor related to the character’s background.",
-          "•Any Failure: The locals respond poorly to their inquiries. The"
+          "•Any Failure: The locals respond poorly to their inquiries. The PC must mark a Stress to learn one relevant rumor."
         ],
-        "textAfter": "PC must mark a Stress to learn one relevant rumor.",
         "questions": [
           "What news do the PCs have that they could pass along to curious travelers?",
           "What do the locals think about these events?"
@@ -496,9 +494,8 @@
           "•Critical Success: The PC gains clear information. Additionally, they gain 1d4 Hope, which can be distributed between the party if they share the vision and guidance they received.",
           "•Success with Hope: The PC receives clear information.",
           "•Success with Fear: The PC receives brief flashes of insight and an emotional impression conveying an answer.",
-          "•Any Failure: The PC receives only vague flashes. They can"
+          "•Any Failure: The PC receives only vague flashes. They can mark a Stress to receive one clear image without context."
         ],
-        "textAfter": "mark a Stress to receive one clear image without context.",
         "questions": [
           "What does it feel like as you are touched by this vision?",
           "What feeling lingers after the images have passed?"
@@ -544,9 +541,8 @@
           "•Critical Success: Gain valuable information and a related useful item.",
           "•Success with Hope: Gain valuable information.",
           "•Success with Fear: Uncover vague or incomplete information.",
-          "•Any Failure: Mark a Stress to find a lead after an exhaustive"
+          "•Any Failure: Mark a Stress to find a lead after an exhaustive search."
         ],
-        "textAfter": "search.",
         "questions": [
           "What greater secrets does the city contain?",
           "Why have so many ghosts lingered here?",
@@ -669,9 +665,8 @@
         "bullets": [
           "•On a success: They learn three of the below details. On a success with Fear, they learn two.",
           "•On a failure: They can mark a Stress to learn one and gain advantage on the next action roll to investigate this environment.",
-          "•Details: This is a result of Fallen magic. The corruption is"
+          "•Details: This is a result of Fallen magic. The corruption is spread through the ashen moss. It can be cleansed only by a ritual of nature magic with a Progress Countdown (8)."
         ],
-        "textAfter": "spread through the ashen moss. It can be cleansed only by a ritual of nature magic with a Progress Countdown (8).",
         "questions": [
           "What Fallen cult corrupted these woods?",
           "What have they already done with the cursed wood and sap from this tree?"
