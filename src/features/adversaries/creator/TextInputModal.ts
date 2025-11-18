@@ -71,7 +71,7 @@ export class TextInputModal extends Modal {
 	plugin: DaggerForgePlugin;
 	savedInputStateAdv: Record<string, any> = {};
 	editor: Editor;
-	onSubmit?: (newHTML: string) => void;
+	onSubmit?: (newHTML: string, newData?: any) => void | Promise<void>;
 	isEditMode: boolean = false;
 
 	constructor(
@@ -102,7 +102,8 @@ export class TextInputModal extends Modal {
 
 	onOpen() {
 		console.log("savedInputStateAdv on open:", this.savedInputStateAdv);
-		const saved = this.plugin.savedInputStateAdv || {};
+		// Use savedInputStateAdv if in edit mode, otherwise use plugin's saved state
+		const saved = this.isEditMode ? this.savedInputStateAdv : (this.plugin.savedInputStateAdv || {});
 		console.log("Opening modal with saved state:", saved);
 		const { contentEl } = this;
 
@@ -304,32 +305,58 @@ export class TextInputModal extends Modal {
 			);
 
 			const features = getFeatureValues(this.features);
-			await buildCustomAdversary(this.plugin, values, features);
 			const newHTML = buildCardHTML(values, features);
+
+			// If we have an onSubmit callback (from edit mode), use it
+			if (this.onSubmit) {
+				// Build the adversary data object
+				const newData: CardData = {
+					id: values.id || "",
+					name: values.name || "",
+					tier: values.tier || "",
+					type: values.type || "",
+					desc: values.desc || "",
+					motives: values.motives || "",
+					difficulty: values.difficulty || "",
+					thresholdMajor: values.thresholdMajor || "",
+					thresholdSevere: values.thresholdSevere || "",
+					hp: values.hp || "",
+					stress: values.stress || "",
+					atk: values.atk || "",
+					weaponName: values.weaponName || "",
+					weaponRange: values.weaponRange || "",
+					weaponDamage: values.weaponDamage || "",
+					xp: values.xp || "",
+					source: "custom",
+					features: features.map((f) => ({
+						name: f.name || "",
+						type: f.type || "",
+						cost: f.cost || "",
+						desc: f.desc || "",
+					})),
+				};
+				this.onSubmit(newHTML, newData);
+				this.close();
+				return;
+			}
+
+			await buildCustomAdversary(this.plugin, values, features);
 
 			const isCanvas = isCanvasActive(this.app);
 			const isMarkdown = isMarkdownActive(this.app);
 			
-			// Check if we're editing an existing card
-			if (this.cardElement) {
-				const wrapper = document.createElement("div");
-				wrapper.innerHTML = newHTML.trim();
-				const newCardEl = wrapper.firstChild as HTMLElement;
-				this.cardElement.replaceWith(newCardEl);
-			} else {
-				// Check if we're on a canvas
-				if (isCanvas) {
-					const position = getAvailableCanvasPosition(this.plugin.app);
-					const success = createCanvasCard(this.plugin.app, newHTML, {
-						x: position.x,
-						y: position.y,
-						width: 400,
-						height: 600
-					});
-				} else if (isMarkdown) {
-					// Insert into markdown editor
-					this.editor.replaceSelection(newHTML + "\n");
-				}
+			// Check if we're on a canvas
+			if (isCanvas) {
+				const position = getAvailableCanvasPosition(this.plugin.app);
+				const success = createCanvasCard(this.plugin.app, newHTML, {
+					x: position.x,
+					y: position.y,
+					width: 400,
+					height: 600
+				});
+			} else if (isMarkdown) {
+				// Insert into markdown editor
+				this.editor.replaceSelection(newHTML + "\n");
 			}
 
 			// Clear inputs

@@ -20,7 +20,7 @@ import { ImportDataModal } from "./ui/ImportDataModal";
 import { DeleteConfirmModal } from "./ui/DeleteConfirmModal";
 import { openDiceRoller } from "./features/dice/diceRoller";
 import { openEncounterCalculator } from "./features/Encounters/encounterCalc";
-import { handleCardEditClick } from "./features/environments/editor/envEditor";
+import { handleCardEditClick } from "./features/cardEditor";
 
 export default class DaggerForgePlugin extends Plugin {
 updateCardData(cardElement: HTMLElement, currentData: CardData) {
@@ -34,7 +34,7 @@ savedInputStateEnv: Record<string, any> = {};
 		this.dataManager = new DataManager(this);
 		await this.dataManager.load();
 		this.addStatusBarItem().setText("DaggerForge Active");
-		this.registerDomEvent(document, "click", (evt) => handleCardEditClick(evt, this.app));
+		this.registerDomEvent(document, "click", (evt) => handleCardEditClick(evt, this.app, this));
 		this.registerView(
 			ADVERSARY_VIEW_TYPE,
 			(leaf) => new AdversaryView(leaf),
@@ -64,7 +64,6 @@ savedInputStateEnv: Record<string, any> = {};
 				);
 
 				menu.addSeparator();
-
 				menu.addItem((item) =>
 					item
 						.setTitle("Adversary creator")

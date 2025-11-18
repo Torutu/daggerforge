@@ -218,12 +218,41 @@ select.df-input-field {
 	margin-top: 0;
 }
 
+.df-adv-form-section {
+	padding: 5px 0;
+}
+
 .df-section-title {
 	font-size: 1em;
 	font-weight: 700;
 	margin: 1px 0 5px 0;
 	padding-bottom: 5px;
 	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.df-adv-form-row {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	align-items: flex-start;
+	/* margin-bottom: 10px; */
+	width: 100%;
+}
+
+.df-inline-field-wrapper{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+/* Name Label Styling */
+.df-field-label {
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.df-field-input, .df-adv-field-name{
+	width: 100%;
 }
 
 .df-inline-label {
@@ -330,28 +359,15 @@ select.df-input-field {
     min-width: 0;  /* Allows proper grid constraint */
 }
 
-.df-triple-field-item input,
-.df-triple-field-item select {
-    width: 100%;  /* Full width of grid cell */
-    /* ... styling ... */
-}
-
-.df-adv-form-section {
-	padding: 5px 0;
-}
-
 .df-adv-form-section-content {
 	margin-left: 0;
 	margin-top: 5px;
 }
 
-.df-adv-form-row {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 10px;
-	align-items: flex-start;
-	/* margin-bottom: 10px; */
-	width: 100%;
+.df-triple-field-item input,
+.df-triple-field-item select {
+    width: 100%;  /* Full width of grid cell */
+    /* ... styling ... */
 }
 
 /* Adversary form fields */
@@ -466,11 +482,7 @@ select.df-input-field {
 }
 
 /* ===== ENVIRONMENT FORM STYLES ===== */
-.df-inline-field-wrapper{
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-}
+
 
 .df-env-form-section {
 	margin-bottom: 15px;
@@ -1246,7 +1258,7 @@ select.df-input-field {
     flex: 1;
     display: flex;
     flex-direction: column;
-    max-height: 300px; /* adjust as needed */
+    max-height: 300px; /* adjust as needed d*/
     border: 1px solid #444;
     padding: 5px;
     background: #1b1b1b;
