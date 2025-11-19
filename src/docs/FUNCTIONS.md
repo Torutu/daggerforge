@@ -1,39 +1,43 @@
-# Functions & Features
+# Functions & Features Documentation
 
 ## State Management
 
-**State Isolation** - Edit mode and create mode maintain separate state objects. When exiting edit mode (with or without save), `plugin.savedInputStateEnv` is completely cleared to prevent contamination. When exiting create mode without saving, state is also cleared.
+**State Isolation** - Create and edit modes maintain separate state. Edit mode uses isolated `editModeState`. Create mode uses `plugin.savedInputStateEnv`. Both clear completely on modal close to prevent contamination.
 
-**Modal State Detection** - EnvironmentModal automatically detects edit vs create mode by checking if `savedInputStateEnv` contains environment-specific fields (impulse, potentialAdversaries). Edit mode loads into isolated `editModeState`, create mode uses plugin's saved state.
+**Modal Detection** - Environment and adversary modals detect mode by checking saved state. Environment checks for impulse/potentialAdversaries fields. Isolation prevents data leakage between operations.
 
-## Feature Management
+## Features
 
-**Feature Components** - Features include name, type (Action/Reaction/Passive), optional cost, description, bullet points, continuation text, and GM prompt questions. Dynamic add/remove for all sub-components.
+**Feature Components** - Contain name, type (Action/Reaction/Passive), cost (optional), text, bullets (array), textAfter (optional), and questions (array). Dynamically add/remove each component.
 
-**getFeatureValues()** - Collects feature data from UI elements and returns array of feature objects with text normalized and empty values filtered.
+**getFeatureValues()** - Collects all feature UI data, filters empty values, returns normalized feature array.
 
-## Card Data Flow
+## Data Flow
 
-**Create Flow** - User opens creator → enters all fields → submits → system saves to persistent storage and inserts rendered HTML to markdown/canvas → state preserved for next create.
+**Create** - Open creator → enter fields → submit → save to storage → render to markdown/canvas → persist state for next create.
 
-**Edit Flow** - User clicks edit button → system extracts card data from rendered HTML → modal opens in edit mode with prefilled data → user modifies → system updates both markdown and persistent storage → state completely cleared on close.
+**Edit** - Click edit → extract rendered card data → open modal with prefilled data → modify → update storage and markdown → clear state.
 
-**Search & Browse** - Both adversary and environment browsers load data from persistent storage, merge with built-in data, and allow instant insert without modal.
+**Browse** - Load from persistent storage + built-in data → search/filter → instant insert without modal.
 
-## Type System
+## Type Definitions
 
-**EnvironmentData** - name, tier (1-4), type (Event/Exploration/Social/Traversal), desc, impulse, difficulty, potentialAdversaries, source, features array.
+**EnvironmentData** - id, name, tier (1-4), type, desc, impulse, difficulty, potentialAdversaries, source, features[].
 
-**SavedFeatureState** - name, type, cost (optional), text, bullets (array), textAfter (optional), questions (array).
+**SavedFeatureState** - name, type, cost?, text, bullets[], textAfter?, questions[].
 
-**FormInputs** - Dictionary of form field references: HTMLInputElement, HTMLTextAreaElement, HTMLSelectElement keyed by field name.
+**FormInputs** - Dictionary mapping field names to form element references.
 
-## Utility Functions
+## Utilities
 
-**extractCardData()** - Parses rendered adversary card HTML and returns structured data object for editing.
+**extractCardData()** - Parse rendered card HTML → return structured data for editing.
 
-**environmentToHTML()** - Transforms environment data into formatted HTML with sections for features, impulses, difficulty, and adversaries.
+**environmentToHTML()** - Convert environment object → formatted HTML with features, impulses, difficulty.
 
-**isMarkdownActive()** / **isCanvasActive()** - View type detection for routing output (markdown vs canvas).
+**isMarkdownActive() / isCanvasActive()** - Detect current view type for output routing.
 
-**createCanvasCard()** - Inserts HTML as canvas node with position, width, height parameters.
+**createCanvasCard()** - Insert HTML as canvas node at specified position/dimensions.
+
+**openDiceRoller()** - Modal for dice notation rolls ("3d6", "2d8+5").
+
+**openEncounterCalculator()** - Calculate encounter difficulty from adversary tier and count.

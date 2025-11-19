@@ -2,8 +2,9 @@ import { MarkdownView, Notice, App } from "obsidian";
 import type DaggerForgePlugin from "../main";
 import { extractCardData } from "../features/adversaries/editor/CardDataHelpers";
 import { TextInputModal } from "../features/adversaries/creator/TextInputModal";
-import { EnvironmentModal } from "../features/environments/creator/EnvModal";
+import { EnvironmentEditorModal } from "../features/environments";
 import { environmentToHTML } from "../features/environments/components/EnvToHTML";
+import type { EnvironmentData, SavedFeatureState } from "../types/environment";
 
 export const onEditClick = (
 	evt: Event,
@@ -12,10 +13,7 @@ export const onEditClick = (
 ) => {
 	evt.stopPropagation();
 
-	// Get the button that was clicked
 	const button = evt.target as HTMLElement;
-
-	// Find the outer card element depending on the type
 	let cardElement: HTMLElement | null = null;
 
 	if (cardType === "env") {
@@ -29,7 +27,6 @@ export const onEditClick = (
 		return;
 	}
 
-	// Now grab the name depending on the type
 	let cardName = "";
 	if (cardType === "env") {
 		const nameEl = cardElement.querySelector(".df-env-name");
@@ -39,7 +36,6 @@ export const onEditClick = (
 		cardName = nameEl?.textContent?.trim() ?? "(unknown adversary)";
 	}
 
-	// Handle editing based on card type
 	if (cardType === "adv") {
 		const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
 		if (!view) {
@@ -49,23 +45,18 @@ export const onEditClick = (
 
 		const editor = view.editor;
 		const cardData = extractCardData(cardElement);
-		
-		// Get the full content
 		const fullContent = editor.getValue();
 		
-		// Use the card name to find the card in the markdown
 		const cardNameEscaped = cardName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 		const h2Pattern = new RegExp(`<h2[^>]*>${cardNameEscaped}</h2>`, 'i');
-		
 		const h2Match = fullContent.match(h2Pattern);
+		
 		if (!h2Match) {
 			new Notice("Could not find card name in markdown.");
 			return;
 		}
 		
 		const h2Index = fullContent.indexOf(h2Match[0]);
-		
-		// Find the start of the section by looking backwards for <section
 		let sectionStartIndex = h2Index;
 		const beforeContent = fullContent.substring(0, h2Index);
 		const lastSectionStart = beforeContent.lastIndexOf('<section');
@@ -74,15 +65,13 @@ export const onEditClick = (
 			sectionStartIndex = lastSectionStart;
 		}
 		
-		// Find the end of the section by looking forward for </section>
 		const afterContent = fullContent.substring(h2Index);
 		const sectionEndMatch = afterContent.match(/<\/section>/);
 		let sectionEndIndex = h2Index + afterContent.indexOf('</section>');
 		
 		if (sectionEndMatch && sectionEndIndex !== -1) {
-			sectionEndIndex += 10; // length of </section>
+			sectionEndIndex += 10;
 		} else {
-			// If no section tag found, fall back to finding the card div
 			const cardDivPattern = /<div[^>]*class="[^"]*df-card-outer[^"]*"[^>]*>/i;
 			const beforeH2 = fullContent.substring(Math.max(0, h2Index - 500), h2Index);
 			const divMatch = beforeH2.match(cardDivPattern);
@@ -99,33 +88,25 @@ export const onEditClick = (
 		
 		const oldHTML = fullContent.substring(sectionStartIndex, sectionEndIndex);
 		
-		// Open the adversary editor modal with the card data
 		const modal = new TextInputModal(plugin, editor, cardElement, cardData);
 		modal.onSubmit = async (newHTML: string, newData: any) => {
-			// Get fresh content
 			const content = editor.getValue();
-			
-			// Wrap new HTML in section tags if the old one had them
 			let finalHTML = newHTML;
 			if (oldHTML.includes('<section')) {
 				finalHTML = `<section>\n${newHTML}\n</section>`;
 			}
 			
-			// Find and replace the old card with new card
 			const beforeCard = content.substring(0, sectionStartIndex);
 			const afterCard = content.substring(sectionEndIndex);
 			const newContent = beforeCard + finalHTML + afterCard;
 			
-			// Set the new content
 			editor.setValue(newContent);
 			
-			// Save the file
 			const file = view.file;
 			if (file) {
 				await plugin.app.vault.modify(file, newContent);
 			}
 			
-			// Save as custom adversary to DataManager (same as creation)
 			try {
 				await plugin.dataManager.addAdversary(newData);
 				new Notice(`Updated adversary: ${cardName}`);
@@ -134,7 +115,6 @@ export const onEditClick = (
 				new Notice("Error saving adversary. Check console for details.");
 			}
 			
-			// Refresh AdversaryView if open
 			const advView = plugin.app.workspace
 				.getLeavesOfType("adversary-view")
 				.map((l) => l.view)
@@ -155,7 +135,6 @@ export const onEditClick = (
 		const editor = view.editor;
 		const fullContent = editor.getValue();
 		
-		// For environments, find the section tag that contains this environment card
 		const sectionPattern = /<section[^>]*class="[^"]*df-env-card-outer[^"]*"[^>]*>/i;
 		const sectionMatch = fullContent.match(sectionPattern);
 		
@@ -164,10 +143,8 @@ export const onEditClick = (
 			return;
 		}
 		
-		// Find the index of this section tag
 		const sectionStartIndex = fullContent.indexOf(sectionMatch[0]);
 		
-		// Find the corresponding closing </section> tag
 		let closeCount = 1;
 		let searchIndex = sectionStartIndex + sectionMatch[0].length;
 		let sectionEndIndex = -1;
@@ -177,14 +154,13 @@ export const onEditClick = (
 			const nextClose = fullContent.indexOf('</section>', searchIndex);
 			
 			if (nextClose === -1) break;
-			
 			if (nextOpen !== -1 && nextOpen < nextClose) {
 				closeCount++;
 				searchIndex = nextOpen + 1;
 			} else {
 				closeCount--;
 				if (closeCount === 0) {
-					sectionEndIndex = nextClose + 10; // length of </section>
+					sectionEndIndex = nextClose + 10;
 				}
 				searchIndex = nextClose + 1;
 			}
@@ -197,26 +173,21 @@ export const onEditClick = (
 		
 		const oldHTML = fullContent.substring(sectionStartIndex, sectionEndIndex);
 		
-		// Extract environment data from the card element by parsing the rendered HTML
-		// Get all text content and parse it
 		const innerDiv = cardElement.querySelector('.df-env-card-inner');
 		
-		// Extract tier and type from "Tier X Type"
 		const tierTypeText = innerDiv?.querySelector('.df-env-feat-tier-type')?.textContent?.trim() || '';
 		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+(.*)/);
 		const tier = tierMatch ? tierMatch[1] : '1';
 		const type = tierMatch ? tierMatch[2] : 'Exploration';
 		
-		// Extract description
+		const name = cardName;
 		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
 		
-		// Extract impulse (after "Impulse:" text)
 		const impulseEl = Array.from(innerDiv?.querySelectorAll('p') || []).find(p => 
 			p.textContent?.includes('Impulse:')
 		);
 		const impulse = impulseEl ? impulseEl.textContent?.replace('Impulse:', '').trim() : '';
 		
-		// Extract difficulty and potential adversaries
 		const diffPotEl = innerDiv?.querySelector('.df-env-card-diff-pot');
 		const diffEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
 			p.textContent?.includes('Difficulty')
@@ -228,35 +199,47 @@ export const onEditClick = (
 		const difficulty = diffEl ? diffEl.textContent?.split(':')[1]?.trim() : '';
 		const potentialAdversaries = advEl ? advEl.textContent?.split(':')[1]?.trim() : '';
 		
-		// Extract features
+		// SIMPLE FEATURE EXTRACTION FROM DATA ATTRIBUTES
 		const featuresSection = innerDiv?.querySelector('.df-features-section');
-		const features = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
-			const name = feat.getAttribute('data-feature-name') || '';
+		const features: SavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
+			// Get from data attributes
+			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';
 			const cost = feat.getAttribute('data-feature-cost') || undefined;
 			
-			// Get the text content
-			const textEl = feat.querySelector('.df-env-feat-text');
-			const text = textEl?.textContent?.trim() || '';
+			console.log(`✅ Feature name: "${featName}", type: "${featType}", cost: "${cost}"`);
+			
+			// Get bullets
+			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
+			
+			// Get text
+			const textDiv = feat.querySelector('.df-env-feat-text');
+			const text = textDiv?.textContent?.trim() || '';
+			
+			// Get text after
+			const afterTextEl = feat.querySelector('#textafter');
+			const textAfter = afterTextEl ? afterTextEl.textContent?.trim() : undefined;
 			
 			// Get questions
 			const questionsDiv = feat.querySelector('.df-env-questions');
 			const questions = questionsDiv ? 
-				Array.from(questionsDiv.querySelectorAll('.df-env-question')).map((q: Element) => q.textContent?.trim() || '') :
+				Array.from(questionsDiv.querySelectorAll('.df-env-question')).map((q: Element) => q.textContent?.trim() || '').filter(q => q) :
 				[];
 			
 			return {
-				name,
+				name: featName,
 				type: featType,
-				cost: cost || undefined,
+				cost: cost && cost !== '' ? cost : undefined,
 				text,
-				bullets: [],
-				questions: questions.filter(q => q),
+				bullets: bullets.filter(b => b),
+				textAfter,
+				questions,
 			};
 		});
 		
-		const envData: any = {
-			name: cardName,
+		const envData: EnvironmentData = {
+			id: "",
+			name,
 			tier: parseInt(tier),
 			type,
 			desc,
@@ -267,39 +250,27 @@ export const onEditClick = (
 			features,
 		};
 		
-		// Open the environment editor modal
-		const modal = new EnvironmentModal(plugin, editor, async (newEnvData) => {
-			// Generate new HTML
-			const newHTML = environmentToHTML(newEnvData);
-			const finalHTML = `<section class="df-env-card-outer">\n${newHTML}\n</section>`;
-			
-			// Get fresh content
+		console.log("🌍 Extracted environment data:", envData);
+		
+		const modal = new EnvironmentEditorModal(plugin, editor, cardElement, envData);
+		modal.onSubmit = async (newHTML: string) => {
 			const content = editor.getValue();
+			// newHTML already includes the full <section> wrapper from environmentToHTML()
+			const finalHTML = newHTML;
 			
-			// Find and replace
 			const beforeCard = content.substring(0, sectionStartIndex);
 			const afterCard = content.substring(sectionEndIndex);
 			const newContent = beforeCard + finalHTML + afterCard;
 			
-			// Update editor
 			editor.setValue(newContent);
 			
-			// Save the file
 			const file = view.file;
 			if (file) {
 				await plugin.app.vault.modify(file, newContent);
 			}
 			
-			// Save as custom environment
-			try {
-				await plugin.dataManager.addEnvironment(newEnvData);
-				new Notice(`Updated environment: ${cardName}`);
-			} catch (error) {
-				console.error("Error saving environment:", error);
-				new Notice("Error saving environment. Check console for details.");
-			}
+			new Notice(`Updated environment: ${cardName}`);
 			
-			// Refresh EnvironmentView if open
 			const envView = plugin.app.workspace
 				.getLeavesOfType("environment-view")
 				.map((l) => l.view)
@@ -308,10 +279,7 @@ export const onEditClick = (
 			if (envView) {
 				await envView.refresh();
 			}
-		});
-		
-		// Pre-populate the modal with environment data
-		plugin.savedInputStateEnv = envData;
+		};
 		modal.open();
 	}
 };

@@ -949,10 +949,24 @@ select.df-input-field {
 }
 
 .df-env-bullet {
-	margin-left: 0.6em;
-	list-style-type: disc;
+	list-style: disc;
+	padding-left: 1rem;
+	margin: auto;
 	font-size: 0.9rem;
-	line-height: 1.25;
+}
+
+.df-env-bullet .df-env-bullet-item {
+	position: relative;
+	margin-left: 0.5rem;
+	text-indent: -0.6rem;
+}
+
+.df-env-bullet .df-env-bullet-item::before {
+	position: absolute;
+	left: -1rem;
+	top: 0;
+	font-size: 1.5em;
+	line-height: 1;
 }
 
 .df-env-questions {
@@ -1336,4 +1350,18 @@ select.df-input-field {
 
 .df-delete-cancel-btn:hover {
 	background-color: var(--background-tertiary);
+}
+
+.df-env-feature-input-bullet{
+	width: 100%;
+	margin-bottom: 6px;
+	border-radius: 4px;
+	border: 1px solid var(--background-modifier-border);
+	background-color: var(--background-secondary);
+	color: var(--text-normal);
+	font-size: 14px;
+	line-height: 1.4;
+	outline: none;
+	resize: none;
+	padding: 6px;
 }

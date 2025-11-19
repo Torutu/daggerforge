@@ -305,12 +305,18 @@ export class EnvironmentModal extends Modal {
 		const nameEl = headerRow.createEl("input", {
 			cls: "df-env-feature-input-name",
 			placeholder: "Feature Name",
+			attr: {
+				name: "data-feature-name",
+			}
 		});
 		nameEl.value = savedFeature?.name || "";
 
 		// Type dropdown
 		const typeEl = headerRow.createEl("select", {
 			cls: "df-env-feature-input-type",
+			attr: {
+				name: "data-feature-type",
+			}
 		});
 		["Action", "Reaction", "Passive"].forEach((opt) =>
 			typeEl.createEl("option", {
@@ -324,6 +330,9 @@ export class EnvironmentModal extends Modal {
 		// Cost dropdown
 		const costEl = headerRow.createEl("select", {
 			cls: "df-env-feature-input-cost",
+			attr: {
+				name: "data-feature-cost",
+			}
 		});
 		["", "Spend a Fear"].forEach((opt) =>
 			costEl.createEl("option", {
@@ -340,7 +349,8 @@ export class EnvironmentModal extends Modal {
 			cls: "df-env-feature-input-desc",
 			placeholder: "Feature description...",
 			attr: {
-				rows: "3"
+				rows: "3",
+				name: "data-feature-text",
 			}
 		});
 		textEl.value = savedFeature?.text || "";
@@ -355,45 +365,39 @@ export class EnvironmentModal extends Modal {
 			cls: "df-env-feature-bullets-container",
 		});
 
-		const bulletEls: HTMLTextAreaElement[] = [];
+		const bulletEls: HTMLInputElement[] = [];
+		
+		// Create button first (we'll insert bullets before it)
+		const addBulletBtn = document.createElement("button");
+		addBulletBtn.textContent = "+ Add bullet point";
+		addBulletBtn.className = "df-env-btn-add-bullet";
+		bulletsContainer.appendChild(addBulletBtn);
+		
+		// Helper function to add bullet above the button
+		const createBullet = (bulletText?: string) => {
+			const bulletEl = document.createElement("textarea");
+			bulletEl.className = "df-env-feature-input-bullet";
+			bulletEl.placeholder = "Bullet point...";
+			bulletEl.rows = 2;
+			bulletEl.value = bulletText || "";
+			bulletEl.setAttribute("name", "data-feature-bullet");
+			// Insert before the button
+			bulletsContainer.insertBefore(bulletEl, addBulletBtn);
+			bulletEls.push(bulletEl as HTMLInputElement);
+			return bulletEl;
+		};
 		
 		if (savedFeature?.bullets && savedFeature.bullets.length > 0) {
 			savedFeature.bullets.forEach((bullet) => {
-				const bulletEl = bulletsContainer.createEl("textarea", {
-					cls: "df-env-feature-input-bullet",
-					placeholder: "Bullet point...",
-					attr: {
-						rows: "2"
-					}
-				});
-				bulletEl.value = bullet;
-				bulletEls.push(bulletEl);
+				createBullet(bullet);
 			});
 		} else {
 			// Add one empty bullet by default
-			const bulletEl = bulletsContainer.createEl("textarea", {
-				cls: "df-env-feature-input-bullet",
-				placeholder: "Bullet point...",
-				attr: {
-					rows: "2"
-				}
-			});
-			bulletEls.push(bulletEl);
+			createBullet();
 		}
 
-		const addBulletBtn = bulletsContainer.createEl("button", {
-			text: "+ Add bullet point",
-			cls: "df-env-btn-add-bullet",
-		});
 		addBulletBtn.onclick = () => {
-			const bulletEl = bulletsContainer.createEl("textarea", {
-				cls: "df-env-feature-input-bullet",
-				placeholder: "Bullet point...",
-				attr: {
-					rows: "2"
-				}
-			});
-			bulletEls.push(bulletEl);
+			createBullet();
 		};
 
 		// After description section

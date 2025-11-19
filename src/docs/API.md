@@ -2,44 +2,42 @@
 
 ## Core Components
 
-**EnvironmentModal** - Modal for creating and editing environment cards. Handles form inputs for name, tier, type, description, impulses, difficulty, and features with full state isolation between create/edit modes.
+**EnvironmentModal** - Creates and edits environment cards. Manages form state for name, tier, type, desc, impulse, difficulty, potentialAdversaries, and features with isolated create/edit modes.
 
-**EnvSearch** - Environment browser with search and tier filtering. Displays built-in and custom environments with source badges and delete capability for custom entries.
+**EnvironmentEditorModal** - Edits existing environment cards with full feature population. Loads all feature data including name, type, cost, description, bullets, textAfter, and questions.
 
-**EnvToHTML** - Converts environment data objects to rendered HTML cards compatible with both markdown and canvas views.
+**EnvSearch** - Environment browser with search and filtering. Displays core and custom environments with delete capability.
 
-**TextInputModal** - Modal for adversary card creation and editing with support for stats, weapons, HP/stress boxes, powers, and armor values.
+**EnvToHTML** - Converts environment objects to HTML cards for markdown and canvas rendering.
 
-**AdversaryView** - Adversary browser with search, filtering, and management of adversaries by tier or type. Handles custom adversary deletion and refresh.
+**AdversaryEditorModal** - Edits adversary cards with all stats, weapons, features, and properties pre-populated from existing data.
 
-**DataManager** - Service layer for persistent storage. Methods: `addAdversary()`, `addEnvironment()`, `getAdversaries()`, `getEnvironments()`, `deleteAdversary()`, `deleteEnvironment()`, `deleteDataFile()`.
+**AdvEditor** - Handles adversary card editing workflow including data extraction and HTML regeneration.
+
+**TextInputModal** - Creates adversary cards with stats, weapons, features, and damage values.
+
+**DataManager** - Persistence layer. Methods: `addAdversary()`, `addEnvironment()`, `getAdversaries()`, `getEnvironments()`, `deleteAdversary()`, `deleteEnvironment()`.
 
 ## Form Utilities
 
-**createInlineField** - Creates labeled form fields for single-row layouts with optional dropdown options and preset values from saved state.
+**createInlineField** - Creates labeled form fields for single-row layouts with optional dropdowns and preset values.
 
-**createShortTripleFields** - Creates three compact fields in a single row for tier, type, and similar grouped inputs.
+**createField** - Generates textarea/input fields with labels and value population.
 
-**createField** - Generates textarea or input fields with labels, placeholders, and automatic value population from saved data.
+**createShortTripleFields** - Creates three compact fields in one row.
 
-## Canvas & Markdown Helpers
+## Canvas & Markdown
 
-**isCanvasActive** - Detects if current view is an Obsidian canvas.
+**isCanvasActive**, **isMarkdownActive** - View detection.
 
-**isMarkdownActive** - Detects if current view is a markdown editor in edit mode.
+**createCanvasCard** - Inserts HTML as new canvas node.
 
-**createCanvasCard** - Inserts HTML content as a new canvas node at specified position and dimensions.
+**getAvailableCanvasPosition** - Calculates placement coordinates to avoid overlap.
 
-**getAvailableCanvasPosition** - Calculates optimal coordinates for placing new canvas cards without overlap.
+## Utilities
 
-## Dice & Encounters
+**openDiceRoller** - Dice rolling modal with notation support.
 
-**openDiceRoller** - Modal interface for rolling dice in formats like "3d6", "2d8+5" with results display.
+**openEncounterCalculator** - Battle difficulty calculator.
 
-**openEncounterCalculator** - Battle calculator estimating encounter difficulty based on adversary count, tier, and player group size.
-
-## Editor
-
-**onEditClick** - Routes edit operations for adversaries and environments. Extracts card data from markdown, opens appropriate modal, handles updates.
-
-**handleCardEditClick** - Entry point for edit button clicks on rendered cards. Validates editor state and delegates to onEditClick.
+**onEditClick** - Routes edit operations for both card types.

@@ -1,23 +1,16 @@
-# DaggerForge Documentation
+# DaggerForge - Tabletop Gaming Plugin
 
-DaggerForge is an Obsidian plugin for tabletop gaming that generates and manages adversary and environment cards for game masters. This documentation covers the plugin's architecture and features.
+An Obsidian plugin for game masters to create, manage, and organize adversary and environment cards for tabletop campaigns.
 
-## Quick Start
+## Features
 
-- **Adversary Browser**: View and insert pre-built or custom adversary cards
-- **Environment Browser**: View and insert environment cards with impulses and features
-- **Adversary Creator**: Build new adversary cards with stats, weapons, and special abilities
-- **Environment Creator**: Design environments with tier, type, impulses, and features
-- **Dice Roller**: Quick dice rolling with multiple dice formats
-- **Battle Calculator**: Calculate encounter difficulty and resource requirements
-- **Import/Export**: Load data from JSON files or manage custom adversaries/environments
+- **Adversary Management**: Create adversaries with stats, weapons, features, and special abilities
+- **Environment Design**: Build locations with tier/type, impulses for GM guidance, and features with cost mechanics
+- **Card Creation & Editing**: Full CRUD workflows for both card types with persistent storage
+- **Dice Rolling**: Quick roll system with multiple dice notation support
+- **Encounter Calculator**: Balance party difficulty against adversary threats
+- **Data Import/Export**: Load core content or backup custom data via JSON
 
-## Core Features
+## Getting Started
 
-**Adversaries** manage combat encounters with hit points, attack values, special powers, and armor. **Environments** define locations with atmospheric details, impulses for GM guidance, and potential encounter combinations. Both support full create/edit workflows with persistent storage.
-
-## Documentation Files
-
-- **API.md** - Component and service reference
-- **FUNCTIONS.md** - Function signatures and utilities
-- This file contains overview and architecture
+Create adversary and environment cards through dedicated creators, edit existing cards with full feature management, roll dice for encounters, and calculate balanced party encounters. All data persists to JSON files with optional export functionality.

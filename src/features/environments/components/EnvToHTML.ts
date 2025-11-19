@@ -44,24 +44,6 @@ function markdownToHTML(markdown: string): string {
 	
 	html = processedLines.join("<br>");
 
-	// Handle numbered lists (1. item, 2. item, etc)
-	const numberedPattern = /(\d+)\. (.*)/g;
-	const hasNumbered = numberedPattern.test(html);
-	
-	if (hasNumbered) {
-		html = html.replace(/(\d+)\. (.*?)(?=<br>|$)/g, (match, num, text) => {
-			return `<li>${text}</li>`;
-		});
-		
-		// Wrap in ol tags
-		html = html.replace(/(<li>.*?<\/li>)(?=<br>|$)/s, (match) => {
-			if (!match.includes("<ol>")) {
-				return `<ol>${match}</ol>`;
-			}
-			return match;
-		});
-	}
-
 	// Clean up excessive line breaks
 	html = html.replace(/<br><br>/g, "<br>");
 
@@ -73,10 +55,11 @@ export function environmentToHTML(env: EnvironmentData): string {
 		.map((f) => {
 			const costHTML = f.cost ? `<span>${f.cost}</span>` : "";
 
+			// Use <ul> with class for bullets
 			const bulletsHTML = f.bullets && f.bullets.length
-				? f.bullets
-						.map((b) => `<div class="df-env-bullet">${b}</div>`)
-						.join("")
+				? `<ul class="df-env-bullet">${f.bullets
+						.map((b) => `<li class="df-env-bullet-item">${b}</li>`)
+						.join("")}</ul>`
 				: "";
 
 			// Convert Markdown text to HTML
