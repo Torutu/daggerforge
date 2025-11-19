@@ -1,8 +1,9 @@
 import { MarkdownView, Notice, App } from "obsidian";
-import { extractCardData } from "./adversaries/editor/CardDataHelpers";
-import { TextInputModal } from "./adversaries/creator/TextInputModal";
-import { EnvironmentModal } from "./environments/creator/EnvModal";
 import type DaggerForgePlugin from "../main";
+import { extractCardData } from "../features/adversaries/editor/CardDataHelpers";
+import { TextInputModal } from "../features/adversaries/creator/TextInputModal";
+import { EnvironmentModal } from "../features/environments/creator/EnvModal";
+import { environmentToHTML } from "../features/environments/components/EnvToHTML";
 
 export const onEditClick = (
 	evt: Event,
@@ -268,8 +269,6 @@ export const onEditClick = (
 		
 		// Open the environment editor modal
 		const modal = new EnvironmentModal(plugin, editor, async (newEnvData) => {
-			const { environmentToHTML } = await import('./environments/components/EnvToHTML');
-			
 			// Generate new HTML
 			const newHTML = environmentToHTML(newEnvData);
 			const finalHTML = `<section class="df-env-card-outer">\n${newHTML}\n</section>`;

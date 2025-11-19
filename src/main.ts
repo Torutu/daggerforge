@@ -1,34 +1,40 @@
-import { Editor, MarkdownView, Menu, Notice, Plugin, TFile} from "obsidian";
+import { Editor, MarkdownView, Menu, Notice, Plugin, TFile } from "obsidian";
+
+// Features
 import {
 	AdversaryView,
 	ADVERSARY_VIEW_TYPE,
-} from "./features/adversaries/components/AdvSearch";
-import {
 	EnvironmentView,
 	ENVIRONMENT_VIEW_TYPE,
-} from "./features/environments/components/EnvSearch";
-import { TextInputModal } from "./features/adversaries/creator/TextInputModal";
+	TextInputModal,
+	EnvironmentModal,
+	environmentToHTML,
+	openDiceRoller,
+	openEncounterCalculator,
+	handleCardEditClick,
+} from "./features";
+
+// UI
 import {
-		adversariesSidebar,
-		openEnvironmentSidebar,
- } from "./ui/Sidebar";
-import { environmentToHTML } from "./features/environments/components/EnvToHTML";
-import { EnvironmentModal } from "./features/environments/creator/EnvModal";
-import { CardData } from "./types";
+	adversariesSidebar,
+	openEnvironmentSidebar,
+	DeleteConfirmModal,
+	ImportDataModal,
+} from "./ui";
+
+// Services
 import { DataManager } from "./services/DataManager";
-import { ImportDataModal } from "./ui/ImportDataModal";
-import { DeleteConfirmModal } from "./ui/DeleteConfirmModal";
-import { openDiceRoller } from "./features/dice/diceRoller";
-import { openEncounterCalculator } from "./features/Encounters/encounterCalc";
-import { handleCardEditClick } from "./features/cardEditor";
+
+// Types
+import type { CardData } from "./types";
 
 export default class DaggerForgePlugin extends Plugin {
-updateCardData(cardElement: HTMLElement, currentData: CardData) {
-throw new Error("Method not implemented.");
-}
-dataManager: DataManager;
-savedInputStateAdv: Record<string, any> = {};
-savedInputStateEnv: Record<string, any> = {};
+	updateCardData(cardElement: HTMLElement, currentData: CardData) {
+		throw new Error("Method not implemented.");
+	}
+	dataManager: DataManager;
+	savedInputStateAdv: Record<string, any> = {};
+	savedInputStateEnv: Record<string, any> = {};
 
 	async onload() {
 		this.dataManager = new DataManager(this);
@@ -211,29 +217,6 @@ savedInputStateEnv: Record<string, any> = {};
 				this.insertEnvironment(activeView.editor, result);
 			}).open();
 		}
-	}
-
-	// private async loadContentToMarkdown(contentType: string) {
-	// 	const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-	// 	if (!activeView) {
-	// 		new Notice("Please open a note first.");
-	// 		return;
-	// 	}
-
-	// 	let content = "";
-	// 	if (contentType.startsWith("tier-")) {
-	// 		const tier = contentType.split("-")[1];
-	// 		content = await this.getAdversaryTierContent(tier);
-	// 	}
-
-	// 	if (content) {
-	// 		activeView.editor.replaceSelection(content);
-	// 	}
-	// }
-
-	private async getAdversaryTierContent(tier: string): Promise<string> {
-		// Implement your logic to get markdown content for the tier
-		return `# Tier ${tier} Adversaries\n\n...`;
 	}
 
 	private insertEnvironment(editor: Editor, result: any) {
