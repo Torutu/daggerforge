@@ -17,6 +17,8 @@ export class EnvironmentModal extends Modal {
 	features: FeatureElements[] = [];
 	featureContainer: HTMLElement;
 	onSubmit: (result: EnvironmentData) => void;
+	isEditMode: boolean = false;
+	editModeState: Record<string, any> = {};
 
 	constructor(
 		plugin: DaggerForgePlugin,
@@ -27,15 +29,43 @@ export class EnvironmentModal extends Modal {
 		this.plugin = plugin;
 		this.editor = editor;
 		this.onSubmit = onSubmit;
+		
+		// Detect edit mode: if there's environment-specific data in plugin.savedInputStateEnv
+		const savedState = plugin.savedInputStateEnv;
+		this.isEditMode = !!(savedState && 
+			(savedState.impulse !== undefined || 
+			 savedState.potentialAdversaries !== undefined));
+		
+		console.log("🔧 EnvironmentModal constructor - isEditMode:", this.isEditMode);
+		
+		if (this.isEditMode) {
+			console.log("✏️ EDIT MODE: Using environment data for editing");
+			this.editModeState = {
+				...savedState,
+				features: savedState.features || []
+			};
+			console.log("✏️ EDIT MODE: editModeState:", this.editModeState);
+		} else {
+			console.log("📝 CREATE MODE: No edit data, starting fresh");
+		}
 	}
 
 	onOpen(): void {
+		console.log("═══════════════════════════════════════");
+		console.log("📖 onOpen() called");
+		console.log("IS EDIT MODE:", this.isEditMode);
+		
 		const { contentEl } = this;
-		const saved = this.plugin.savedInputStateEnv || {};
+		// Use editModeState if editing, otherwise use plugin's saved state
+		const saved = this.isEditMode ? this.editModeState : (this.plugin.savedInputStateEnv || {});
+		
+		console.log("Using state from:", this.isEditMode ? "✏️ EDIT MODE (local/isolated)" : "📝 CREATE MODE (plugin saved)");
+		console.log("═══════════════════════════════════════");
 		contentEl.empty();
 
 		// ===== TITLE =====
-		contentEl.createEl("h2", { text: "Create environment", cls: "df-modal-title" });
+		const title = this.isEditMode ? "Edit environment" : "Create environment";
+		contentEl.createEl("h2", { text: title, cls: "df-modal-title" });
 
 		// ===== BASIC INFO SECTION =====
 		const basicInfoSection = contentEl.createDiv({ cls: "df-env-form-section" });
@@ -152,7 +182,7 @@ export class EnvironmentModal extends Modal {
 		const buttonContainer = contentEl.createDiv({ cls: "df-env-form-buttons" });
 
 		const insertBtn = buttonContainer.createEl("button", {
-			text: "Insert card",
+			text: this.isEditMode ? "Update card" : "Insert card",
 			cls: "df-env-btn-insert",
 		});
 
@@ -185,6 +215,13 @@ export class EnvironmentModal extends Modal {
 				new Notice(
 					`Environment "${env.name}" saved successfully!`,
 				);
+
+				// If in edit mode, call onSubmit callback to handle markdown updates
+				if (this.isEditMode) {
+					this.onSubmit(env);
+					this.close();
+					return;
+				}
 
 				// Generate HTML content
 				const htmlContent = environmentToHTML(env);
@@ -469,6 +506,22 @@ export class EnvironmentModal extends Modal {
 	}
 
 	onClose(): void {
+		console.log("═══════════════════════════════════════");
+		console.log("🔚 onClose() called");
+		console.log("IS EDIT MODE:", this.isEditMode);
+		
+		// If in edit mode, don't save state at all - just clear everything
+		if (this.isEditMode) {
+			console.log("✏️ EDIT MODE: Clearing edit state without saving to plugin");
+			console.log("✅ plugin.savedInputStateEnv is UNTOUCHED - next create mode will be fresh");
+			this.editModeState = {};
+			this.features = [];
+			console.log("═══════════════════════════════════════");
+			return; // Exit early, don't touch plugin.savedInputStateEnv
+		}
+
+		// CREATE MODE ONLY: Save state for next time
+		console.log("📝 CREATE MODE: Saving state to plugin.savedInputStateEnv");
 		this.plugin.savedInputStateEnv = {};
 
 		for (const [key, el] of Object.entries(this.inputs)) {
@@ -476,5 +529,7 @@ export class EnvironmentModal extends Modal {
 		}
 
 		this.plugin.savedInputStateEnv.features = this.getFeatureValues();
+		console.log("📝 CREATE MODE: State saved:", this.plugin.savedInputStateEnv);
+		console.log("═══════════════════════════════════════");
 	}
 }

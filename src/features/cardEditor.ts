@@ -316,7 +316,7 @@ export const onEditClick = (
 	}
 };
 
-export function handleCardEditClick(evt: MouseEvent, app: App, plugin?: DaggerForgePlugin) {
+export async function handleCardEditClick(evt: MouseEvent, app: App, plugin?: DaggerForgePlugin) {
 	const target = evt.target as HTMLElement;
 	if (!target) return;
 
@@ -338,6 +338,16 @@ export function handleCardEditClick(evt: MouseEvent, app: App, plugin?: DaggerFo
 			new Notice("Plugin instance not available for editing.");
 		}
 	} else {
-		// optional: handle reading mode click
+		const state = view.leaf.view.getState();
+		state.mode = 'source';
+		await view.leaf.setViewState({
+			type: 'markdown',
+			state: state
+		});
+		if (plugin) {
+			onEditClick(evt, cardType, plugin);
+		} else {
+			new Notice("Plugin instance not available for editing.");
+		}
 	}
 }
