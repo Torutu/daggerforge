@@ -278,12 +278,13 @@ export class EnvironmentView extends ItemView {
 							: "";
 
 					const afterTextHTML = f.textAfter
-						? `<div class="df-env-text-after">${f.textAfter}</div>`
+						? `<div id="textafter" class="df-env-feat-text">${f.textAfter}</div>`
 						: "";
 
 					return `
 				<div class="df-feature">
-					<div class="df-env-feat-name-type">${f.name} - ${f.type}: ${costHTML}
+					<div class="df-env-feat-name-type">
+						<span class="df-env-feat-name">${f.name}</span> - <span class="df-env-feat-type">${f.type}:</span> ${costHTML}
 						<span class="df-env-feat-text"> ${f.text}</span>
 					</div>
 					

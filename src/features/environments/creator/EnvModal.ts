@@ -19,6 +19,7 @@ export class EnvironmentModal extends Modal {
 	onSubmit: (result: EnvironmentData) => void;
 	isEditMode: boolean = false;
 	editModeState: Record<string, any> = {};
+	isSubmitted: boolean = false;
 
 	constructor(
 		plugin: DaggerForgePlugin,
@@ -187,6 +188,7 @@ export class EnvironmentModal extends Modal {
 		});
 
 		insertBtn.onclick = async () => {
+			this.isSubmitted = true;
 			const values = Object.fromEntries(
 				Object.entries(this.inputs).map(([k, el]) => [
 					k,
@@ -509,19 +511,30 @@ export class EnvironmentModal extends Modal {
 		console.log("═══════════════════════════════════════");
 		console.log("🔚 onClose() called");
 		console.log("IS EDIT MODE:", this.isEditMode);
+		console.log("IS SUBMITTED:", this.isSubmitted);
 		
-		// If in edit mode, don't save state at all - just clear everything
+		// If in edit mode, ALWAYS clear plugin state (whether submitted or not)
 		if (this.isEditMode) {
-			console.log("✏️ EDIT MODE: Clearing edit state without saving to plugin");
-			console.log("✅ plugin.savedInputStateEnv is UNTOUCHED - next create mode will be fresh");
+			console.log("✏️ EDIT MODE: Clearing plugin.savedInputStateEnv completely");
+			this.plugin.savedInputStateEnv = {};
 			this.editModeState = {};
 			this.features = [];
+			console.log("✅ Next create will be fresh - no contamination from edit data");
 			console.log("═══════════════════════════════════════");
-			return; // Exit early, don't touch plugin.savedInputStateEnv
+			return; // Exit early
 		}
 
-		// CREATE MODE ONLY: Save state for next time
-		console.log("📝 CREATE MODE: Saving state to plugin.savedInputStateEnv");
+		// If not submitted (user closed without saving), don't save state
+		if (!this.isSubmitted) {
+			console.log("📝 CREATE MODE: User cancelled (not submitted) - clearing state");
+			this.plugin.savedInputStateEnv = {};
+			this.features = [];
+			console.log("═══════════════════════════════════════");
+			return;
+		}
+
+		// CREATE MODE + SUBMITTED: Save state for next time
+		console.log("📝 CREATE MODE: User submitted - Saving state to plugin.savedInputStateEnv");
 		this.plugin.savedInputStateEnv = {};
 
 		for (const [key, el] of Object.entries(this.inputs)) {

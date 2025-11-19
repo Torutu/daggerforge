@@ -1,78 +1,45 @@
-# DaggerForge API Reference
+# API Reference
 
-## Features
+## Core Components
 
-### Adversaries
-- **AdvSearch** - Renders the adversary browser view with search/filter capabilities
-- **AdvList** - Displays a paginated list of adversaries
-- **AdvCounter** - Counter component for tracking adversary statistics
-- **CardBuilder** - Generates HTML markup for adversary cards
-- **FeatureManager** - Manages adversary feature creation and modification
-- **TextInputModal** - Modal dialog for creating/editing adversary cards
-- **AdvEditor** - Core editor for adversary card data
-- **AdvEditorModal** - Modal wrapper for the adversary editor
-- **CardDataHelpers** - Utility functions for extracting and processing adversary card data
+**EnvironmentModal** - Modal for creating and editing environment cards. Handles form inputs for name, tier, type, description, impulses, difficulty, and features with full state isolation between create/edit modes.
 
-### Environments
-- **EnvSearch** - Renders the environment browser view with search/filter capabilities
-- **EnvToHTML** - Converts environment data objects to HTML markup
-- **EnvModal** - Modal dialog for creating/editing environment cards
+**EnvSearch** - Environment browser with search and tier filtering. Displays built-in and custom environments with source badges and delete capability for custom entries.
 
-### Encounters
-- **encounterCalc** - Battle calculator for encounter difficulty and resource management
+**EnvToHTML** - Converts environment data objects to rendered HTML cards compatible with both markdown and canvas views.
 
-### Dice
-- **dice** - Core dice rolling logic and probability calculations
-- **diceRoller** - Modal interface for the dice rolling tool
+**TextInputModal** - Modal for adversary card creation and editing with support for stats, weapons, HP/stress boxes, powers, and armor values.
 
-### Card Editor
-- **cardEditor** - Handles inline editing of adversary and environment cards in markdown
+**AdversaryView** - Adversary browser with search, filtering, and management of adversaries by tier or type. Handles custom adversary deletion and refresh.
 
-## Services
+**DataManager** - Service layer for persistent storage. Methods: `addAdversary()`, `addEnvironment()`, `getAdversaries()`, `getEnvironments()`, `deleteAdversary()`, `deleteEnvironment()`, `deleteDataFile()`.
 
-### DataManager
-- `load()` - Loads data from vault storage
-- `addAdversary(data)` - Saves a new/updated adversary
-- `addEnvironment(data)` - Saves a new/updated environment
-- `deleteDataFile()` - Removes all stored data
-- `getAdversaries()` - Retrieves all stored adversaries
-- `getEnvironments()` - Retrieves all stored environments
+## Form Utilities
 
-## UI Components
+**createInlineField** - Creates labeled form fields for single-row layouts with optional dropdown options and preset values from saved state.
 
-### Sidebar
-- **adversariesSidebar** - Opens the adversary browser sidebar
-- **openEnvironmentSidebar** - Opens the environment browser sidebar
+**createShortTripleFields** - Creates three compact fields in a single row for tier, type, and similar grouped inputs.
 
-### Modals
-- **DeleteConfirmModal** - Confirmation dialog for destructive actions
-- **ImportDataModal** - Modal for importing JSON data files
+**createField** - Generates textarea or input fields with labels, placeholders, and automatic value population from saved data.
 
-## Types
+## Canvas & Markdown Helpers
 
-### Adversary
-- `name` - Adversary name
-- `tier` - Challenge tier (1-5)
-- `type` - Adversary category
-- `powers` - Array of powers/abilities
-- `source` - Data origin (builtin/custom)
+**isCanvasActive** - Detects if current view is an Obsidian canvas.
 
-### Environment
-- `name` - Environment name
-- `tier` - Challenge tier (1-5)
-- `type` - Environment type
-- `desc` - Short description
-- `impulse` - GM impulse/objective
-- `difficulty` - Challenge difficulty
-- `potentialAdversaries` - Comma-separated list
-- `features` - Array of environment features
+**isMarkdownActive** - Detects if current view is a markdown editor in edit mode.
 
-### Shared
-- `CardData` - Common card interface
+**createCanvasCard** - Inserts HTML content as a new canvas node at specified position and dimensions.
 
-## Utilities
+**getAvailableCanvasPosition** - Calculates optimal coordinates for placing new canvas cards without overlap.
 
-- **dataFilters** - Search and filtering functions
-- **formHelpers** - Form validation and input processing
-- **adversaryCounter** - Adversary counting and grouping logic
-- **canvasHelpers** - Canvas rendering utilities
+## Dice & Encounters
+
+**openDiceRoller** - Modal interface for rolling dice in formats like "3d6", "2d8+5" with results display.
+
+**openEncounterCalculator** - Battle calculator estimating encounter difficulty based on adversary count, tier, and player group size.
+
+## Editor
+
+**onEditClick** - Routes edit operations for adversaries and environments. Extracts card data from markdown, opens appropriate modal, handles updates.
+
+**handleCardEditClick** - Entry point for edit button clicks on rendered cards. Validates editor state and delegates to onEditClick.

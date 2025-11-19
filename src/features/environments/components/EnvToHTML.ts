@@ -91,11 +91,12 @@ export function environmentToHTML(env: EnvironmentData): string {
 
 			return `
             <div class="df-feature" data-feature-name="${f.name}" data-feature-type="${f.type}" data-feature-cost="${f.cost || ''}">
-                <div class="df-env-feat-name-type">${f.name} - ${f.type}: ${costHTML}
+                <div class="df-env-feat-name-type">
+                    <span class="df-env-feat-name">${f.name}</span> - <span class="df-env-feat-type">${f.type}:</span> ${costHTML}
                     <div class="df-env-feat-text">${textHTML}</div>
                 </div>
                 ${bulletsHTML}
-                ${textAfterHTML ? `<div class="df-env-text-after">${textAfterHTML}</div>` : ""}
+                ${textAfterHTML ? `<div id="textafter" class="df-env-feat-text">${textAfterHTML}</div>` : ""}
                 ${questionsHTML}
             </div>
         `;
