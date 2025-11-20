@@ -958,15 +958,15 @@ select.df-input-field {
 
 .df-env-bullet {
 	list-style: disc;
-	padding-left: 1rem;
-	margin: auto;
+	padding-left: 0.5rem;
+	margin-left: 0.5rem;
 	font-size: 0.9rem;
 }
 
 .df-env-bullet .df-env-bullet-item {
 	position: relative;
-	margin-left: 0.5rem;
-	text-indent: -0.6rem;
+	/* margin-left: 0.5rem;
+	text-indent: -0.6rem; */
 }
 
 .df-env-bullet .df-env-bullet-item::before {
