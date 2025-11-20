@@ -5,7 +5,7 @@ export type FeatureElements = {
 	typeEl: HTMLSelectElement;
 	costEl?: HTMLSelectElement;
 	textEl: HTMLTextAreaElement;
-	bulletEls: HTMLTextAreaElement[];
+	bulletEls: HTMLInputElement[];
 	afterTextEl: HTMLTextAreaElement;
 	questionEls: HTMLTextAreaElement[];
 };

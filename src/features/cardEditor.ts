@@ -255,7 +255,6 @@ export const onEditClick = (
 		const modal = new EnvironmentEditorModal(plugin, editor, cardElement, envData);
 		modal.onSubmit = async (newHTML: string) => {
 			const content = editor.getValue();
-			// newHTML already includes the full <section> wrapper from environmentToHTML()
 			const finalHTML = newHTML;
 			
 			const beforeCard = content.substring(0, sectionStartIndex);
@@ -294,17 +293,29 @@ export async function handleCardEditClick(evt: MouseEvent, app: App, plugin?: Da
 
 	if (!cardType) return;
 
+	if (!plugin) {
+		new Notice("Plugin instance not available for editing.");
+		return;
+	}
+
+	// Check if we're on a canvas
+	const activeLeaf = app.workspace.activeLeaf;
+	const isCanvas = activeLeaf?.view?.getViewType?.() === "canvas";
+
+	if (isCanvas) {
+		// Handle canvas card editing
+		handleCanvasCardEdit(evt, cardType, plugin);
+		return;
+	}
+
+	// Handle markdown card editing
 	const view = app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) return;
 
 	const isEditMode = view.getMode() === "source";
 
 	if (isEditMode) {
-		if (plugin) {
-			onEditClick(evt, cardType, plugin);
-		} else {
-			new Notice("Plugin instance not available for editing.");
-		}
+		onEditClick(evt, cardType, plugin);
 	} else {
 		const state = view.leaf.view.getState();
 		state.mode = 'source';
@@ -312,10 +323,176 @@ export async function handleCardEditClick(evt: MouseEvent, app: App, plugin?: Da
 			type: 'markdown',
 			state: state
 		});
-		if (plugin) {
-			onEditClick(evt, cardType, plugin);
-		} else {
-			new Notice("Plugin instance not available for editing.");
-		}
+		onEditClick(evt, cardType, plugin);
+	}
+}
+
+async function handleCanvasCardEdit(
+	evt: Event,
+	cardType: string,
+	plugin: DaggerForgePlugin
+) {
+	evt.stopPropagation();
+
+	const button = evt.target as HTMLElement;
+	let cardElement: HTMLElement | null = null;
+
+	if (cardType === "env") {
+		cardElement = button.closest(".df-env-card-outer");
+	} else if (cardType === "adv") {
+		cardElement = button.closest(".df-card-outer");
+	}
+
+	if (!cardElement) {
+		new Notice("Could not find card element!");
+		return;
+	}
+
+	let cardName = "";
+	if (cardType === "env") {
+		const nameEl = cardElement.querySelector(".df-env-name");
+		cardName = nameEl?.textContent?.trim() ?? "(unknown environment)";
+	} else if (cardType === "adv") {
+		const nameEl = cardElement.querySelector("h2");
+		cardName = nameEl?.textContent?.trim() ?? "(unknown adversary)";
+	}
+
+	if (cardType === "adv") {
+		const cardData = extractCardData(cardElement);
+		const modal = new TextInputModal(plugin, null as any, cardElement, cardData);
+		modal.onSubmit = async (newHTML: string, newData: any) => {
+			try {
+				// Update the card element in the canvas
+				cardElement!.innerHTML = newHTML;
+				
+				// Save to data manager
+				await plugin.dataManager.addAdversary(newData);
+				new Notice(`Updated adversary: ${cardName}`);
+			} catch (error) {
+				console.error("Error updating adversary:", error);
+				new Notice("Error updating adversary. Check console for details.");
+			}
+			
+			const advView = plugin.app.workspace
+				.getLeavesOfType("adversary-view")
+				.map((l) => l.view)
+				.find((v) => typeof (v as any).refresh === "function") as any;
+
+			if (advView) {
+				await advView.refresh();
+			}
+		};
+		modal.open();
+	} else if (cardType === "env") {
+		const innerDiv = cardElement.querySelector('.df-env-card-inner');
+		
+		const tierTypeText = innerDiv?.querySelector('.df-env-feat-tier-type')?.textContent?.trim() || '';
+		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+(.*)/);
+		const tier = tierMatch ? tierMatch[1] : '1';
+		const type = tierMatch ? tierMatch[2] : 'Exploration';
+		
+		const name = cardName;
+		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
+		
+		const impulseEl = Array.from(innerDiv?.querySelectorAll('p') || []).find(p => 
+			p.textContent?.includes('Impulse:')
+		);
+		const impulse = impulseEl ? impulseEl.textContent?.replace('Impulse:', '').trim() : '';
+		
+		const diffPotEl = innerDiv?.querySelector('.df-env-card-diff-pot');
+		const diffEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
+			p.textContent?.includes('Difficulty')
+		);
+		const advEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
+			p.textContent?.includes('Potential Adversaries')
+		);
+		
+		const difficulty = diffEl ? diffEl.textContent?.split(':')[1]?.trim() : '';
+		const potentialAdversaries = advEl ? advEl.textContent?.split(':')[1]?.trim() : '';
+		
+		// SIMPLE FEATURE EXTRACTION FROM DATA ATTRIBUTES
+		const featuresSection = innerDiv?.querySelector('.df-features-section');
+		const features: SavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
+			// Get from data attributes
+			const featName = feat.getAttribute('data-feature-name') || '';
+			const featType = feat.getAttribute('data-feature-type') || 'Passive';
+			const cost = feat.getAttribute('data-feature-cost') || undefined;
+			
+			console.log(`✅ Feature name: "${featName}", type: "${featType}", cost: "${cost}"`);
+			
+			// Get bullets
+			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
+			
+			// Get text
+			const textDiv = feat.querySelector('.df-env-feat-text');
+			const text = textDiv?.textContent?.trim() || '';
+			
+			// Get text after
+			const afterTextEl = feat.querySelector('#textafter');
+			const textAfter = afterTextEl ? afterTextEl.textContent?.trim() : undefined;
+			
+			// Get questions
+			const questionsDiv = feat.querySelector('.df-env-questions');
+			const questions = questionsDiv ? 
+				Array.from(questionsDiv.querySelectorAll('.df-env-question')).map((q: Element) => q.textContent?.trim() || '').filter(q => q) :
+				[];
+			
+			return {
+				name: featName,
+				type: featType,
+				cost: cost && cost !== '' ? cost : undefined,
+				text,
+				bullets: bullets.filter(b => b),
+				textAfter,
+				questions,
+			};
+		});
+		
+		const envData: EnvironmentData = {
+			id: "",
+			name,
+			tier: parseInt(tier),
+			type,
+			desc,
+			impulse,
+			difficulty,
+			potentialAdversaries,
+			source: 'custom',
+			features,
+		};
+		
+		const modal = new EnvironmentEditorModal(plugin, null as any, cardElement, envData);
+		modal.onSubmit = async (newHTML: string) => {
+			try {
+				const parser = new DOMParser();
+				const doc = parser.parseFromString(newHTML, 'text/html');
+				const innerContent = doc.querySelector('.df-env-card-inner');
+				
+				if (innerContent) {
+					const existingInner = cardElement!.querySelector('.df-env-card-inner');
+					if (existingInner) {
+						existingInner.innerHTML = innerContent.innerHTML;
+					}
+				} else {
+					// Fallback: use the entire HTML
+					cardElement!.innerHTML = newHTML;
+				}
+				
+				new Notice(`Updated environment: ${cardName}`);
+			} catch (error) {
+				console.error("Error updating environment:", error);
+				new Notice("Error updating environment. Check console for details.");
+			}
+			
+			const envView = plugin.app.workspace
+				.getLeavesOfType("environment-view")
+				.map((l) => l.view)
+				.find((v) => typeof (v as any).refresh === "function") as any;
+
+			if (envView) {
+				await envView.refresh();
+			}
+		};
+		modal.open();
 	}
 }

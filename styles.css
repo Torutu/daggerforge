@@ -495,7 +495,7 @@ select.df-input-field {
 
 .df-env-form-row {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: 70% 10% 15%;
 	gap: 10px;
 	width: 100%;
 	justify-items: center;
@@ -510,7 +510,9 @@ select.df-input-field {
 .df-env-field-difficulty,
 .df-env-field-adversaries {
 	display: flex;
-	flex-direction: column;
+	padding-left: 5px;
+	padding-right: unset;
+	/* flex-direction: column; */
 }
 
 .df-env-field-name input,
@@ -531,12 +533,12 @@ select.df-input-field {
 }
 
 /* Normal rows (unchanged) */
-.df-env-form-row {
+/* .df-env-form-row {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 	margin-bottom: 8px;
-}
+} */
 
 /* Make potential adversaries span full width and stack vertically */
 .df-env-row-adversaries {
@@ -634,6 +636,12 @@ select.df-input-field {
 	font-weight: 600;
 	font-size: 0.9em;
 	color: var(--text-normal);
+}
+
+.df-env-questions-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
 
 .df-env-feature-question-input {
@@ -1352,15 +1360,18 @@ select.df-input-field {
 	background-color: var(--background-tertiary);
 }
 
+/*Bullet Points*/
+
 .df-env-feature-input-bullet{
 	width: 100%;
-	margin-bottom: 6px;
+	height: 2rem;
+	margin-bottom: 3px;
 	border-radius: 4px;
 	border: 1px solid var(--background-modifier-border);
 	background-color: var(--background-secondary);
 	color: var(--text-normal);
 	font-size: 14px;
-	line-height: 1.4;
+	line-height: 0.8rem;
 	outline: none;
 	resize: none;
 	padding: 6px;

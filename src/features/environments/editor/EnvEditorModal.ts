@@ -157,7 +157,7 @@ export class EnvironmentEditorModal extends Modal {
 		type: "input" | "textarea" = "input",
 		value: string = ""
 	) {
-		const wrapper = container.createDiv({ cls: "df-env-form-field" });
+		const wrapper = container.createDiv({ cls: "df-inline-field-wrapper" });
 		wrapper.createEl("label", { text: label, cls: "df-env-form-label" });
 
 		const input = wrapper.createEl(type === "textarea" ? "textarea" : "input", {
@@ -179,7 +179,7 @@ export class EnvironmentEditorModal extends Modal {
 		label: string,
 		options: string[]
 	): HTMLSelectElement {
-		const wrapper = container.createDiv({ cls: "df-env-form-field" });
+		const wrapper = container.createDiv({ cls: "df-inline-field-wrapper" });
 		wrapper.createEl("label", { text: label, cls: "df-env-form-label" });
 
 		const select = wrapper.createEl("select", { cls: "df-env-form-select" });
@@ -197,7 +197,7 @@ export class EnvironmentEditorModal extends Modal {
 		label: string,
 		value: string = ""
 	): HTMLTextAreaElement {
-		const wrapper = container.createDiv({ cls: "df-env-form-field" });
+		const wrapper = container.createDiv({ cls: "df-inline-field-wrapper" });
 		wrapper.createEl("label", { text: label, cls: "df-env-form-label" });
 
 		const textarea = wrapper.createEl("textarea", {

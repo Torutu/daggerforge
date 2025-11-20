@@ -375,15 +375,14 @@ export class EnvironmentModal extends Modal {
 		
 		// Helper function to add bullet above the button
 		const createBullet = (bulletText?: string) => {
-			const bulletEl = document.createElement("textarea");
+			const bulletEl = document.createElement("input");
 			bulletEl.className = "df-env-feature-input-bullet";
 			bulletEl.placeholder = "Bullet point...";
-			bulletEl.rows = 2;
 			bulletEl.value = bulletText || "";
 			bulletEl.setAttribute("name", "data-feature-bullet");
 			// Insert before the button
 			bulletsContainer.insertBefore(bulletEl, addBulletBtn);
-			bulletEls.push(bulletEl as HTMLInputElement);
+			bulletEls.push(bulletEl);
 			return bulletEl;
 		};
 		
