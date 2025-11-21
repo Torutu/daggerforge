@@ -28,8 +28,8 @@ export interface SearchableItem {
 	[key: string]: any;
 }
 
-export class SearchEngine {
-	private items: SearchableItem[] = [];
+export class SearchEngine<T extends SearchableItem = SearchableItem> {
+	private items: T[] = [];
 	private filters: SearchFilters = {
 		query: "",
 		tier: null,
@@ -37,14 +37,14 @@ export class SearchEngine {
 		type: null,
 	};
 
-	constructor(items: SearchableItem[] = []) {
+	constructor(items: T[] = []) {
 		this.items = items;
 	}
 
 	/**
 	 * Set items to search through
 	 */
-	public setItems(items: SearchableItem[]): void {
+	public setItems(items: T[]): void {
 		this.items = items;
 	}
 
@@ -77,14 +77,14 @@ export class SearchEngine {
 	/**
 	 * Perform search with current filters
 	 */
-	public search(): SearchableItem[] {
-		return this.items.filter((item: SearchableItem) => this.matchesAllFilters(item));
+	public search(): T[] {
+		return this.items.filter((item: T) => this.matchesAllFilters(item));
 	}
 
 	/**
 	 * Search with specific filters (doesn't modify internal state)
 	 */
-	public searchWith(filters: Partial<SearchFilters>): SearchableItem[] {
+	public searchWith(filters: Partial<SearchFilters>): T[] {
 		const oldFilters = this.filters;
 		this.filters = { ...this.filters, ...filters };
 		const results = this.search();
@@ -95,7 +95,7 @@ export class SearchEngine {
 	/**
 	 * Check if item matches all active filters
 	 */
-	private matchesAllFilters(item: SearchableItem): boolean {
+	private matchesAllFilters(item: T): boolean {
 		return (
 			this.matchesQuery(item) &&
 			this.matchesTier(item) &&
@@ -107,7 +107,7 @@ export class SearchEngine {
 	/**
 	 * Text search in name, type, and description
 	 */
-	private matchesQuery(item: SearchableItem): boolean {
+	private matchesQuery(item: T): boolean {
 		if (!this.filters.query.trim()) return true;
 
 		const query = this.filters.query.toLowerCase();
@@ -125,7 +125,7 @@ export class SearchEngine {
 	/**
 	 * Filter by tier
 	 */
-	private matchesTier(item: SearchableItem): boolean {
+	private matchesTier(item: T): boolean {
 		if (this.filters.tier === null) return true;
 		return item.tier === this.filters.tier;
 	}
@@ -133,7 +133,7 @@ export class SearchEngine {
 	/**
 	 * Filter by source/version
 	 */
-	private matchesSource(item: SearchableItem): boolean {
+	private matchesSource(item: T): boolean {
 		if (!this.filters.source) return true;
 		const itemSource = (item.source || "core").toLowerCase();
 		return itemSource === this.filters.source.toLowerCase();
@@ -142,7 +142,7 @@ export class SearchEngine {
 	/**
 	 * Filter by type (for adversaries: Bruiser, Solo, etc. or environments: Exploration, Combat, etc.)
 	 */
-	private matchesType(item: SearchableItem): boolean {
+	private matchesType(item: T): boolean {
 		if (!this.filters.type) return true;
 		return (item.type || "").toLowerCase() === this.filters.type.toLowerCase();
 	}
@@ -153,7 +153,7 @@ export class SearchEngine {
 	public getAvailableOptions(filterName: keyof SearchFilters): string[] {
 		const options = new Set<string>();
 
-		this.items.forEach((item: SearchableItem) => {
+		this.items.forEach((item: T) => {
 			if (filterName === "tier" && item.tier !== undefined) {
 				options.add(String(item.tier));
 			} else if (filterName === "source") {

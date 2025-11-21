@@ -48,8 +48,7 @@ export function getActiveCanvas(app: App): any | null {
 		const canvas = (view as any).canvas;
 		
 		if (canvas) {
-			console.log("✓ Got canvas object from active leaf");
-			return canvas;
+return canvas;
 		}
 	}
 	
@@ -62,13 +61,10 @@ export function getActiveCanvas(app: App): any | null {
 		const canvas = (canvasLeaf.view as any).canvas;
 		
 		if (canvas) {
-			console.log("✓ Got canvas object from workspace leaf");
-			return canvas;
+return canvas;
 		}
 	}
-	
-	console.log("✗ No canvas object found");
-	return null;
+return null;
 }
 
 /**
@@ -84,13 +80,9 @@ export function createCanvasCard(
 		y?: number;
 	}
 ): boolean {
-	console.log("=== CREATE CANVAS CARD ===");
-	console.log("Attempting to create canvas card...");
-	
 	const canvas = getActiveCanvas(app);
 	
 	if (!canvas) {
-		console.error("✗ No canvas found!");
 		return false;
 	}
 
@@ -174,9 +166,7 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 			y += 50;
 			attempts++;
 		}
-
-		console.log(`Found position after ${attempts} attempts:`, { x, y });
-		return { x, y };
+return { x, y };
 		
 	} catch (error) {
 		console.error("Error calculating position:", error);

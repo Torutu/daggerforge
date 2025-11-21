@@ -149,7 +149,7 @@
 // 		// Clear previous features
 // 		this.features = [];
 // 		this.featureContainer.empty();
-// 		console.log("feature.length:", saved.features?.length);
+// 		("feature.length:", saved.features?.length);
 
 // 		if (Array.isArray(saved.features) && saved.features.length > 0) {
 // 			saved.features.forEach((data: { [key: string]: string }) => {

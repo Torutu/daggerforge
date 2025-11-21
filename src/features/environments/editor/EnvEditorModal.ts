@@ -32,9 +32,7 @@ export class EnvironmentEditorModal extends Modal {
 		this.editor = editor;
 		this.cardElement = cardElement;
 		this.cardData = cardData;
-
-		console.log("🌍 EnvironmentEditorModal constructor - cardData:", cardData);
-	}
+}
 
 	onOpen() {
 		const { contentEl } = this;
@@ -133,10 +131,7 @@ export class EnvironmentEditorModal extends Modal {
 				source: this.cardData.source,
 				features: this.getFeatureValues(),
 			};
-
-			console.log("🌍 Updated environment:", updatedEnv);
-
-			// Save to data manager
+// Save to data manager
 			this.plugin.dataManager.addEnvironment(updatedEnv);
 
 			// Generate new HTML

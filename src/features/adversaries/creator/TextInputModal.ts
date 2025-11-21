@@ -86,8 +86,7 @@ export class TextInputModal extends Modal {
 		this.cardElement = cardElement;
 		this.isEditMode = !!cardElement;
 		if (cardElement && cardData) {
-			console.log("Editing existing card with provided data", cardElement);
-			this.savedInputStateAdv = {
+this.savedInputStateAdv = {
 				...cardData,
 				features: cardData.features?.map((f: any) => ({
 					featureName: f.name || f.featureName,
@@ -96,17 +95,12 @@ export class TextInputModal extends Modal {
 					featureDesc: f.desc || f.featureDesc,
 				})) || [],
 			};
-			console.log("Saved input state:", this.savedInputStateAdv);
-		}
+}
 	}
 
 	onOpen() {
-		console.log("IS EDIT MODE:", this.isEditMode);
-		console.log("savedInputStateAdv on open:", this.savedInputStateAdv);
 		// Use savedInputStateAdv if in edit mode, otherwise use plugin's saved state
 		const saved = this.isEditMode ? this.savedInputStateAdv : (this.plugin.savedInputStateAdv || {});
-		console.log("Opening modal with saved state:", saved);
-		console.log("Using state from:", this.isEditMode ? "EDIT MODE (local)" : "CREATE MODE (plugin)");
 		const { contentEl } = this;
 
 		const setValueIfSaved = (
@@ -402,8 +396,7 @@ export class TextInputModal extends Modal {
 	onClose() {
 		// If in edit mode, don't save state at all - just clear everything
 		if (this.isEditMode) {
-			console.log("Edit mode closed - clearing state without saving");
-			this.savedInputStateAdv = {};
+this.savedInputStateAdv = {};
 			this.features = [];
 			return; // Exit early, don't touch plugin.savedInputStateAdv
 		}

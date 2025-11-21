@@ -282,7 +282,7 @@ export class EnvironmentView extends ItemView {
 
 			const envHTML = `<section class="df-env-card-outer">
 <div class="df-env-card-inner">
-<button class="df-env-edit-button" data-edit-mode-only="true">📝</button>
+<button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
 <div class="df-env-name">${env.name}</div>
 <div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type}</div>
 <p class="df-env-desc">${env.desc}</p>

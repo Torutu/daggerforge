@@ -63,12 +63,10 @@ export class DataManager {
 			// Append migrated data
 			if (allAdversaries.length > 0) {
 				this.data.adversaries.push(...allAdversaries);
-				console.log(`Migrated ${allAdversaries.length} adversaries`);
-			}
+}
 			if (allEnvironments.length > 0) {
 				this.data.environments.push(...allEnvironments);
-				console.log(`Migrated ${allEnvironments.length} environments`);
-			}
+}
 
 			// Clean up old keys
 			delete (this.data as any).custom_Adversaries;
@@ -78,8 +76,7 @@ export class DataManager {
 			delete (this.data as any).custom_Broskies;
 
 			await this.save();
-			console.log('DataManager: Unified data loaded successfully');
-		} catch (err) {
+} catch (err) {
 			console.error('DataManager: Error loading data', err);
 		}
 	}
@@ -191,10 +188,6 @@ export class DataManager {
 		this.data.adversaries.push(...newAdversaries);
 		this.data.environments.push(...newEnvironments);
 		await this.save();
-
-		console.log(
-			`Imported ${newAdversaries.length} adversaries and ${newEnvironments.length} environments`
-		);
 	}
 
 	async clearAllData(): Promise<void> {
@@ -223,8 +216,7 @@ export class DataManager {
 			
 			// Delete the actual data.json file
 			await this.plugin.saveData(null);
-			console.log('DataManager: data.json file deleted successfully');
-		} catch (err) {
+} catch (err) {
 			console.error('DataManager: Error deleting data.json file', err);
 			throw err;
 		}

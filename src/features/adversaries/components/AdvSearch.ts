@@ -67,7 +67,7 @@ type RawAdversaryData = {
 export class AdversaryView extends ItemView {
 	private adversaries: Adversary[] = [];
 	private lastActiveMarkdown: MarkdownView | null = null;
-	private searchEngine: SearchEngine = new SearchEngine();
+	private searchEngine: SearchEngine<Adversary> = new SearchEngine<Adversary>();
 	private searchControlsUI: SearchControlsUI | null = null;
 	private resultsDiv: HTMLElement | null = null;
 
@@ -118,18 +118,16 @@ export class AdversaryView extends ItemView {
 	}
 
 	public async refresh() {
-		const container = this.containerEl.children[1];
+		const container = this.containerEl.children[1] as HTMLElement;
 		container.empty();
 		this.initializeView();
 		this.loadAdversaryData();
 
-		if (container instanceof HTMLElement) {
-			container.focus();
-		}
+		container.focus();
 	}
 
 	private initializeView() {
-		const container = this.containerEl.children[1];
+		const container = this.containerEl.children[1] as HTMLElement;
 		container.empty();
 
 		// Create title

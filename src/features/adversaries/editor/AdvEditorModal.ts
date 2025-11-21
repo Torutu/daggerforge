@@ -36,8 +36,7 @@ export class AdversaryEditorModal extends Modal {
 	}
 
 	onOpen() {
-		console.log("Editing card with data:", this.cardData);
-		const { contentEl } = this;
+const { contentEl } = this;
 
 		contentEl.empty();
 		contentEl.createEl("h2", { text: "Edit Adversary", cls: "df-modal-title" });
@@ -211,10 +210,10 @@ export class AdversaryEditorModal extends Modal {
 
             // MAKE SURE YOU'RE COLLECTING THE FEATURES
             const features = getFeatureValues(this.features); // This line is crucial!
-            console.log("Features collected in modal:", features); // Debug log
+// Debug log
             
             const newHTML = buildCardHTML(values, features); // Pass features here
-            console.log("New HTML generated:", newHTML); // Debug log
+// Debug log
             
             if (this.onSubmit) {
                 this.onSubmit(newHTML);

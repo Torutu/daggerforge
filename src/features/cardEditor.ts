@@ -206,10 +206,7 @@ export const onEditClick = (
 			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';
 			const cost = feat.getAttribute('data-feature-cost') || undefined;
-			
-			console.log(`✅ Feature name: "${featName}", type: "${featType}", cost: "${cost}"`);
-			
-			// Get bullets
+// Get bullets
 			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
 			
 			// Get text
@@ -249,10 +246,7 @@ export const onEditClick = (
 			source: 'custom',
 			features,
 		};
-		
-		console.log("🌍 Extracted environment data:", envData);
-		
-		const modal = new EnvironmentEditorModal(plugin, editor, cardElement, envData);
+const modal = new EnvironmentEditorModal(plugin, editor, cardElement, envData);
 		modal.onSubmit = async (newHTML: string) => {
 			const content = editor.getValue();
 			const finalHTML = newHTML;
@@ -417,10 +411,7 @@ async function handleCanvasCardEdit(
 			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';
 			const cost = feat.getAttribute('data-feature-cost') || undefined;
-			
-			console.log(`✅ Feature name: "${featName}", type: "${featType}", cost: "${cost}"`);
-			
-			// Get bullets
+// Get bullets
 			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
 			
 			// Get text

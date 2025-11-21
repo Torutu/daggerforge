@@ -77,16 +77,14 @@ export function environmentToHTML(env: EnvironmentData): string {
 <span class="df-env-feat-name">${f.name}</span> - <span class="df-env-feat-type">${f.type}:</span> ${costHTML}
 <div class="df-env-feat-text">${textHTML}</div>
 </div>
-${bulletsHTML}
-${textAfterHTML ? `<div id="textafter" class="df-env-feat-text">${textAfterHTML}</div>` : ""}
-${questionsHTML}
+${bulletsHTML}${textAfterHTML ? `<div id="textafter" class="df-env-feat-text">${textAfterHTML}</div>` : ""}${questionsHTML}
 </div>`;
 		})
 		.join("");
 	return `
 <section class="df-env-card-outer">
 <div class="df-env-card-inner">
-<button class="df-env-edit-button" data-edit-mode-only="true">📝</button>
+<button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
 <div class="df-env-name">${env.name}</div>
 <div class="df-env-feat-tier-type">Tier ${env.tier.toString()} ${env.type}</div>
 <p class="df-env-desc">${env.desc}</p>
@@ -96,8 +94,7 @@ ${questionsHTML}
 <p><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
 </div>
 <div class="df-features-section">
-<h3>Features</h3>
-${featuresHTML}
+<h3>Features</h3>${featuresHTML}
 </div>
 </div>
 </section>

@@ -124,6 +124,7 @@
 .df-env-edit-button:hover, .df-adv-edit-button:hover {
 	background-color: #3f83f8;
 	color: white;
+	content:attr(data-tooltip);
 }
 .df-env-edit-button:active, .df-adv-edit-button:active {
 	transform: scale(0.95);

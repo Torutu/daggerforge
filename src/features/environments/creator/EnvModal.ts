@@ -36,33 +36,20 @@ export class EnvironmentModal extends Modal {
 		this.isEditMode = !!(savedState && 
 			(savedState.impulse !== undefined || 
 			 savedState.potentialAdversaries !== undefined));
-		
-		console.log("🔧 EnvironmentModal constructor - isEditMode:", this.isEditMode);
-		
-		if (this.isEditMode) {
-			console.log("✏️ EDIT MODE: Using environment data for editing");
-			this.editModeState = {
+if (this.isEditMode) {
+this.editModeState = {
 				...savedState,
 				features: savedState.features || []
 			};
-			console.log("✏️ EDIT MODE: editModeState:", this.editModeState);
-		} else {
-			console.log("📝 CREATE MODE: No edit data, starting fresh");
-		}
+} else {
+}
 	}
 
 	onOpen(): void {
-		console.log("═══════════════════════════════════════");
-		console.log("📖 onOpen() called");
-		console.log("IS EDIT MODE:", this.isEditMode);
-		
-		const { contentEl } = this;
+const { contentEl } = this;
 		// Use editModeState if editing, otherwise use plugin's saved state
 		const saved = this.isEditMode ? this.editModeState : (this.plugin.savedInputStateEnv || {});
-		
-		console.log("Using state from:", this.isEditMode ? "✏️ EDIT MODE (local/isolated)" : "📝 CREATE MODE (plugin saved)");
-		console.log("═══════════════════════════════════════");
-		contentEl.empty();
+contentEl.empty();
 
 		// ===== TITLE =====
 		const title = this.isEditMode ? "Edit environment" : "Create environment";
@@ -454,9 +441,14 @@ export class EnvironmentModal extends Modal {
 		}
 
 		const addQuestionBtn = questionsWrapper.createEl("button", {
-			text: "+ Add question",
+			text: "+Add question",
 			cls: "df-env-btn-add-question",
 		});
+		
+		const moveButtonToEnd = () => {
+			questionsWrapper.appendChild(addQuestionBtn);
+		};
+		
 		addQuestionBtn.onclick = () => {
 			const questionEl = questionsWrapper.createEl("textarea", {
 				cls: "df-env-feature-input-question",
@@ -466,6 +458,8 @@ export class EnvironmentModal extends Modal {
 				}
 			});
 			questionEls.push(questionEl);
+			// Move button to end after adding new question
+			moveButtonToEnd();
 		};
 
 		// Remove button
@@ -511,41 +505,29 @@ export class EnvironmentModal extends Modal {
 	}
 
 	onClose(): void {
-		console.log("═══════════════════════════════════════");
-		console.log("🔚 onClose() called");
-		console.log("IS EDIT MODE:", this.isEditMode);
-		console.log("IS SUBMITTED:", this.isSubmitted);
 		
 		// If in edit mode, ALWAYS clear plugin state (whether submitted or not)
 		if (this.isEditMode) {
-			console.log("✏️ EDIT MODE: Clearing plugin.savedInputStateEnv completely");
-			this.plugin.savedInputStateEnv = {};
+this.plugin.savedInputStateEnv = {};
 			this.editModeState = {};
 			this.features = [];
-			console.log("✅ Next create will be fresh - no contamination from edit data");
-			console.log("═══════════════════════════════════════");
 			return; // Exit early
 		}
 
 		// If not submitted (user closed without saving), don't save state
 		if (!this.isSubmitted) {
-			console.log("📝 CREATE MODE: User cancelled (not submitted) - clearing state");
 			this.plugin.savedInputStateEnv = {};
 			this.features = [];
-			console.log("═══════════════════════════════════════");
-			return;
+return;
 		}
 
 		// CREATE MODE + SUBMITTED: Save state for next time
-		console.log("📝 CREATE MODE: User submitted - Saving state to plugin.savedInputStateEnv");
-		this.plugin.savedInputStateEnv = {};
+this.plugin.savedInputStateEnv = {};
 
 		for (const [key, el] of Object.entries(this.inputs)) {
 			this.plugin.savedInputStateEnv[key] = el.value;
 		}
 
 		this.plugin.savedInputStateEnv.features = this.getFeatureValues();
-		console.log("📝 CREATE MODE: State saved:", this.plugin.savedInputStateEnv);
-		console.log("═══════════════════════════════════════");
 	}
 }
