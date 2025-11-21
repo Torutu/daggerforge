@@ -3,12 +3,11 @@ export {
 	AdversaryView,
 	ADVERSARY_VIEW_TYPE,
 } from './adversaries/components/AdvSearch';
-export { default as AdvList } from './adversaries/components/AdvList';
-export { default as AdvCounter } from './adversaries/components/AdvCounter';
+export { loadAdversaryTier } from './adversaries/components/AdvList';
+export * as AdvCounter from './adversaries/components/AdvCounter';
 export * from './adversaries/creator/CardBuilder';
 export * from './adversaries/creator/FeatureManager';
 export * from './adversaries/creator/TextInputModal';
-export * from './adversaries/editor/AdvEditor';
 export * from './adversaries/editor/AdvEditorModal';
 export * from './adversaries/editor/CardDataHelpers';
 
