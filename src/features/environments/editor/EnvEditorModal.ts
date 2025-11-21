@@ -42,7 +42,7 @@ export class EnvironmentEditorModal extends Modal {
 		// ===== BASIC INFO SECTION =====
 		const basicInfoSection = contentEl.createDiv({ cls: "df-env-form-section" });
 		basicInfoSection.createEl("h3", { text: "Basic information", cls: "df-section-title" });
-		const basicRow = basicInfoSection.createDiv({ cls: "df-env-form-row" });
+		const basicRow = basicInfoSection.createDiv({ cls: "df-env-row-basic-info" });
 
 		// Name
 		this.createField(basicRow, "name", "Name", "input", this.cardData.name);
@@ -70,19 +70,19 @@ export class EnvironmentEditorModal extends Modal {
 		const gameplaySection = contentEl.createDiv({ cls: "df-env-form-section" });
 		gameplaySection.createEl("h3", { text: "Gameplay", cls: "df-section-title" });
 
-		const impulseRow = gameplaySection.createDiv({ cls: "df-env-form-row" });
+		const impulseRow = gameplaySection.createDiv({ cls: "df-env-row-impulse" });
 		this.createField(impulseRow, "impulse", "Impulse", "input", this.cardData.impulse);
 
 		// ===== DIFFICULTY SECTION =====
 		const difficultySection = contentEl.createDiv({ cls: "df-env-form-section" });
 		difficultySection.createEl("h3", { text: "Difficulty & adversaries", cls: "df-section-title" });
 
-		const diffRow = difficultySection.createDiv({ cls: "df-env-form-row" });
+		const diffRow = difficultySection.createDiv({ cls: "df-env-row-difficulty" });
 
 		this.createField(diffRow, "difficulty", "Difficulty", "input", this.cardData.difficulty);
 
 		// Potential Adversaries on its own row
-		const advRow = difficultySection.createDiv({ cls: "df-env-form-row df-env-row-adversaries" });
+		const advRow = difficultySection.createDiv({ cls: "df-env-row-difficulty" });
 		this.createField(
 			advRow,
 			"potentialAdversaries",

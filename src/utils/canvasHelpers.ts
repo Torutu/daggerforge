@@ -133,11 +133,14 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 	}
 
 	try {
-		const viewport = canvas.viewport;
-		
-		// Start at center of viewport
-		let x = viewport.x + viewport.width / 2 - 200;
-		let y = viewport.y + viewport.height / 2 - 300;
+		// Get the camera position (center of what user is looking at)
+		const centerX = canvas.tx ?? 0; // Camera X position
+		const centerY = canvas.ty ?? 0; // Camera Y position
+		const zoom = canvas.zoom ?? 1; // Camera zoom level
+
+		// Convert viewport center to canvas coordinates
+		let x = centerX - 200; // Center card horizontally (400 / 2)
+		let y = centerY - 300; // Center card vertically (600 / 2)
 
 		// Get all existing nodes
 		const nodes = canvas.nodes ? Array.from(canvas.nodes.values()) : [];
@@ -166,7 +169,8 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 			y += 50;
 			attempts++;
 		}
-return { x, y };
+
+		return { x, y };
 		
 	} catch (error) {
 		console.error("Error calculating position:", error);

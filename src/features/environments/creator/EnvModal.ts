@@ -59,7 +59,7 @@ contentEl.empty();
 		const basicInfoSection = contentEl.createDiv({ cls: "df-env-form-section" });
 		basicInfoSection.createEl("h3", { text: "Basic information", cls: "df-section-title" });
 
-		const firstRow = basicInfoSection.createDiv({ cls: "df-env-form-row" });
+		const firstRow = basicInfoSection.createDiv({ cls: "df-env-row-basic-info" });
 
 		// Name field
 		createInlineField(firstRow, this.inputs, {
@@ -110,7 +110,7 @@ contentEl.empty();
 		const gameplaySection = contentEl.createDiv({ cls: "df-env-form-section" });
 		gameplaySection.createEl("h3", { text: "Gameplay", cls: "df-section-title" });
 
-		const impulseRow = gameplaySection.createDiv({ cls: "df-env-form-row" });
+		const impulseRow = gameplaySection.createDiv({ cls: "df-env-row-impulse" });
 		createInlineField(impulseRow, this.inputs, {
 			label: "Impulses",
 			key: "impulse",
@@ -123,7 +123,7 @@ contentEl.empty();
 		const difficultySection = contentEl.createDiv({ cls: "df-env-form-section" });
 		difficultySection.createEl("h3", { text: "Difficulty & adversaries", cls: "df-section-title" });
 
-		const diffRow = difficultySection.createDiv({ cls: "df-env-form-row" });
+		const diffRow = difficultySection.createDiv({ cls: "df-env-row-difficulty" });
 
 		createInlineField(diffRow, this.inputs, {
 			label: "Difficulty",
@@ -134,7 +134,7 @@ contentEl.empty();
 		});
 
 		// Potential Adversaries on its own row
-		const advRow = difficultySection.createDiv({ cls: "df-env-form-row df-env-row-adversaries" });
+		const advRow = difficultySection.createDiv({ cls: "df-env-row-adversaries" });
 		createInlineField(advRow, this.inputs, {
 			label: "Potential adversaries",
 			key: "potentialAdversaries",

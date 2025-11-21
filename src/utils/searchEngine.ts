@@ -41,30 +41,18 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		this.items = items;
 	}
 
-	/**
-	 * Set items to search through
-	 */
 	public setItems(items: T[]): void {
 		this.items = items;
 	}
 
-	/**
-	 * Update search filters
-	 */
 	public setFilters(filters: Partial<SearchFilters>): void {
 		this.filters = { ...this.filters, ...filters };
 	}
 
-	/**
-	 * Get current filters
-	 */
 	public getFilters(): SearchFilters {
 		return { ...this.filters };
 	}
 
-	/**
-	 * Clear all filters
-	 */
 	public clearFilters(): void {
 		this.filters = {
 			query: "",
@@ -74,16 +62,10 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		};
 	}
 
-	/**
-	 * Perform search with current filters
-	 */
 	public search(): T[] {
 		return this.items.filter((item: T) => this.matchesAllFilters(item));
 	}
 
-	/**
-	 * Search with specific filters (doesn't modify internal state)
-	 */
 	public searchWith(filters: Partial<SearchFilters>): T[] {
 		const oldFilters = this.filters;
 		this.filters = { ...this.filters, ...filters };
@@ -92,9 +74,6 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		return results;
 	}
 
-	/**
-	 * Check if item matches all active filters
-	 */
 	private matchesAllFilters(item: T): boolean {
 		return (
 			this.matchesQuery(item) &&
@@ -104,9 +83,6 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		);
 	}
 
-	/**
-	 * Text search in name, type, and description
-	 */
 	private matchesQuery(item: T): boolean {
 		if (!this.filters.query.trim()) return true;
 
@@ -122,34 +98,28 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		);
 	}
 
-	/**
-	 * Filter by tier
-	 */
 	private matchesTier(item: T): boolean {
 		if (this.filters.tier === null) return true;
 		return item.tier === this.filters.tier;
 	}
 
-	/**
-	 * Filter by source/version
-	 */
+
 	private matchesSource(item: T): boolean {
 		if (!this.filters.source) return true;
 		const itemSource = (item.source || "core").toLowerCase();
 		return itemSource === this.filters.source.toLowerCase();
 	}
 
-	/**
-	 * Filter by type (for adversaries: Bruiser, Solo, etc. or environments: Exploration, Combat, etc.)
-	 */
 	private matchesType(item: T): boolean {
 		if (!this.filters.type) return true;
-		return (item.type || "").toLowerCase() === this.filters.type.toLowerCase();
+		const filterType = this.filters.type.toLowerCase();
+		const itemType = (item.type || "").toLowerCase();
+		const itemDisplayType = (item.displayType || "").toLowerCase();
+		
+		// Match against base type or display type
+		return itemType === filterType || itemDisplayType === filterType;
 	}
 
-	/**
-	 * Get available options for a filter
-	 */
 	public getAvailableOptions(filterName: keyof SearchFilters): string[] {
 		const options = new Set<string>();
 
@@ -159,7 +129,12 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 			} else if (filterName === "source") {
 				options.add(item.source || "core");
 			} else if (filterName === "type") {
-				options.add(item.type || "");
+				if (item.type) {
+					options.add(item.type);
+				}
+				if ((item as any).displayType) {
+					options.add((item as any).displayType);
+				}
 			}
 		});
 
@@ -168,16 +143,10 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 			.sort();
 	}
 
-	/**
-	 * Get count of results for current filters
-	 */
 	public getResultCount(): number {
 		return this.search().length;
 	}
 
-	/**
-	 * Get count of results for specific filters
-	 */
 	public getCountWith(filters: Partial<SearchFilters>): number {
 		return this.searchWith(filters).length;
 	}

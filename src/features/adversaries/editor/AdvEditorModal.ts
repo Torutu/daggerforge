@@ -41,7 +41,7 @@ const { contentEl } = this;
 		contentEl.empty();
 		contentEl.createEl("h2", { text: "Edit Adversary", cls: "df-modal-title" });
 
-		const firstRow = contentEl.createDiv({ cls: "df-form-row" });
+		const firstRow = contentEl.createDiv({ cls: "df-form-row df-adv-row-basic-info" });
 
 		// Name field - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
@@ -78,6 +78,9 @@ const { contentEl } = this;
 				"Solo",
 				"Standard",
 				"Support",
+				"Leader (Umbra-Touched)",
+				"Minion (Umbra-Touched)",
+				"Solo (Umbra-Touched)",
 			],
 			savedValues: this.cardData,
 			customClass: "df-type-select",

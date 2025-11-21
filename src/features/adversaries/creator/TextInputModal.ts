@@ -157,6 +157,9 @@ this.savedInputStateAdv = {
 				"Solo",
 				"Standard",
 				"Support",
+				"Leader (Umbra-Touched)",
+				"Minion (Umbra-Touched)",
+				"Solo (Umbra-Touched)",
 			],
 			savedValues: saved,
 			customClass: "df-adv-field-type",
@@ -246,7 +249,7 @@ this.savedInputStateAdv = {
 		);
 
 		// ===== COUNT FIELD =====
-		const countRow = weaponSection.createDiv({ cls: "df-adv-form-row" });
+		const countRow = weaponSection.createDiv({ cls: "df-adv-form-row-weapon" });
 		createInlineField(countRow, this.inputs, {
 			label: "Count",
 			key: "count",

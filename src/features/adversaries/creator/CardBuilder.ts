@@ -21,6 +21,7 @@ export const buildCardHTML = (
 		weaponDamage,
 		xp,
 		count,
+		source,
 	} = values;
 
 	const hptick = Number(hp) || 0;
@@ -57,6 +58,9 @@ export const buildCardHTML = (
 	const stressBlock = stress
 		? `Stress: <span class="df-stat">${stress}</span>`
 		: "";
+
+	const sourceBadge = source ? `<span class="df-source-badge-${source.toLowerCase()}">${source.toLowerCase()}</span>` : "";
+
 	const featuresHTML = features
 		.map(
 			(f) => `
@@ -74,7 +78,7 @@ export const buildCardHTML = (
 		<button class="df-adv-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
         ${hpStressRepeat}
         <h2>${name}</h2>
-        <div class="df-subtitle">Tier ${tier} ${type} </div>
+        <div class="df-subtitle">Tier ${tier} ${type} ${sourceBadge}</div>
         <div class="df-desc">${desc}</div>
         <div class="df-motives">Motives & Tactics:
             <span class="df-motives-desc">${motives}</span>

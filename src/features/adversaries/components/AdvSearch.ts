@@ -23,7 +23,8 @@ interface AdversaryFeature {
 
 export interface Adversary {
 		name: string;
-		type: string;
+		type: string;  // Base type (e.g., "Leader")
+		displayType?: string;  // Full type for display (e.g., "Leader (Umbra-Touched)")
 		tier: number;
 		desc: string;
 		motives: string;
@@ -147,8 +148,10 @@ export class AdversaryView extends ItemView {
 			placeholderText: "Search by name, type, or description...",
 			showTypeFilter: true,
 			availableTiers: [1, 2, 3, 4],
-			availableSources: ["core", "void", "custom"],
-			availableTypes: ["Bruiser", "Horde", "Leader", "Minion", "Ranged", "Skulk", "Social", "Solo", "Standard", "Support"],
+			availableSources: ["core", "sablewood", "umbra", "void", "custom"],
+			availableTypes: ["Bruiser", "Horde",
+				"Leader", "Minion", "Ranged", "Skulk", "Social", "Solo", "Standard", "Support",
+				"Leader (Umbra-Touched)", "Minion (Umbra-Touched)", "Solo (Umbra-Touched)"],
 			onSearchChange: (query) => this.handleSearchChange(query),
 			onTierChange: (tier) => this.handleTierChange(tier),
 			onSourceChange: (source) => this.handleSourceChange(source),
@@ -177,9 +180,13 @@ export class AdversaryView extends ItemView {
 
 	private normalizeAdversary(a: RawAdversaryData): Adversary {
 		const raw = a as any;
+		const fullType = raw.type || raw.Type || "";
+		const baseType = this.extractBaseType(fullType);
+		
 		return {
 			name: raw.name || raw.Name || "",
-			type: raw.type || raw.Type || "",
+			type: baseType,
+			displayType: fullType !== baseType ? fullType : undefined,
 			tier: typeof (raw.tier || raw.Tier) === "string" 
 				? parseInt(raw.tier || raw.Tier, 10) 
 				: (raw.tier || raw.Tier || 1),
@@ -201,6 +208,12 @@ export class AdversaryView extends ItemView {
 		};
 	}
 
+	private extractBaseType(fullType: string): string {
+		// Extract base type before any parentheses
+		const match = fullType.match(/^([^(]+)/);
+		return match ? match[1].trim() : fullType;
+	}
+
 	private loadCustomAdversaries(): Adversary[] {
 		try {
 			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
@@ -210,12 +223,19 @@ export class AdversaryView extends ItemView {
 			}
 
 			const customAdvs = plugin.dataManager.getAdversaries();
-			return customAdvs.map((adv: any) => ({
-				...adv,
-				tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier,
-				isCustom: true,
-				source: adv.source || "custom",
-			}));
+			return customAdvs.map((adv: any) => {
+				const fullType = adv.type || "";
+				const baseType = this.extractBaseType(fullType);
+				
+				return {
+					...adv,
+					type: baseType,
+					displayType: fullType !== baseType ? fullType : undefined,
+					tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier,
+					isCustom: true,
+					source: adv.source || "custom",
+				};
+			});
 		} catch (error) {
 			console.error("Error loading custom adversaries from DataManager:", error);
 			return [];
@@ -224,16 +244,18 @@ export class AdversaryView extends ItemView {
 
 	private loadAdversaryData() {
 		try {
-			const builtInAdversaries = ADVERSARIES.map((a: any) =>({
-					...a,
-					isCustom: false,
-					source: a.source,
-					tier: a.tier,
-				})
+			const builtInAdversaries = ADVERSARIES.map((a: any) =>
+				this.normalizeAdversary(a)
 			);
 
 			const custom = this.loadCustomAdversaries();
 			this.adversaries = [...builtInAdversaries, ...custom];
+			
+			// Convert all tiers to numbers for consistent filtering
+			this.adversaries = this.adversaries.map(adv => ({
+				...adv,
+				tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier
+			}));
 
 			// Initialize search engine
 			this.searchEngine.setItems(this.adversaries);
@@ -242,8 +264,10 @@ export class AdversaryView extends ItemView {
 			if (this.searchControlsUI) {
 				const sources = this.searchEngine.getAvailableOptions("source");
 				const types = this.searchEngine.getAvailableOptions("type");
+				const tiers = this.searchEngine.getAvailableOptions("tier").map(t => parseInt(t, 10)).sort((a, b) => a - b);
 				this.searchControlsUI.updateAvailableOptions("sources", sources);
 				this.searchControlsUI.updateAvailableOptions("types", types);
+				this.searchControlsUI.updateAvailableOptions("tiers", tiers);
 			}
 
 			// Render initial results
@@ -373,25 +397,19 @@ export class AdversaryView extends ItemView {
 
 		const tier = document.createElement("p");
 		tier.classList.add("df-tier-text");
-		tier.textContent = `Tier ${adversary.tier} ${adversary.type}`;
-
+		const typeDisplay = adversary.displayType || adversary.type;
+		
 		const sourceBadge = document.createElement("span");
 		sourceBadge.classList.add(
 			`df-source-badge-${source.toLowerCase()}`,
 		);
-
-		const badgeTexts: Record<string, string> = {
-			core: "Core",
-			custom: "Custom",
-			incredible: "Incredible",
-			umbra: "Umbra",
-			void: "Void",
-		};
-		sourceBadge.textContent = badgeTexts[source] || source;
+		sourceBadge.textContent = `${source.toLowerCase()}`;
+		
+		tier.textContent = `Tier ${adversary.tier} ${typeDisplay} `;
 		tier.appendChild(sourceBadge);
 
 		card.appendChild(tier);
-		if (badgeTexts[source] == "Custom") {
+		if (source.toLowerCase() === "custom") {
 			const deleteBtn = document.createElement("button");
 			deleteBtn.classList.add("df-adv-delete-btn");
 			setIcon(deleteBtn, "trash");
@@ -424,12 +442,15 @@ export class AdversaryView extends ItemView {
 		if (isCanvas) {
 			const adversaryText = this.generateAdversaryMarkdown(adversary);
 			const position = getAvailableCanvasPosition(this.app);
+			
 			createCanvasCard(this.app, adversaryText, {
 				x: position.x,
 				y: position.y,
 				width: 400,
 				height: 600
 			});
+			new Notice(`Inserted adversary ${adversary.name}.`);
+			return;
 		}
 
 		const view =
@@ -466,7 +487,7 @@ export class AdversaryView extends ItemView {
 			{
 				name: adversary.name,
 				tier: String(adversary.tier),
-				type: adversary.type,
+				type: adversary.displayType || adversary.type,
 				desc: adversary.desc,
 				motives: adversary.motives,
 				difficulty: adversary.difficulty,
@@ -480,6 +501,7 @@ export class AdversaryView extends ItemView {
 				weaponDamage: adversary.weaponDamage,
 				xp: String(adversary.xp),
 				count: String(currentCount),
+				source: adversary.source || "core",
 			},
 			adversary.features.map(f => ({ ...f, cost: f.cost || "" })),
 		);

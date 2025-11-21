@@ -7,6 +7,7 @@
   --df-color-border: #bfa980;
   --df-color-void: #784d99;
   --df-color-umbra: #464ca5;
+  --df-color-sablewood: #14805f;
   --df-color-Incredible: #3c00c7;
 }
 
@@ -233,11 +234,15 @@ select.df-input-field {
 
 .df-adv-form-row {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: 70% 10% 15%;
 	gap: 10px;
-	align-items: flex-start;
+	align-items: center;
 	/* margin-bottom: 10px; */
 	width: 100%;
+}
+
+.df-adv-form-row-weapon {
+	width: 10%;
 }
 
 .df-inline-field-wrapper{
@@ -494,12 +499,30 @@ select.df-input-field {
 	margin-top: 5px;
 }
 
-.df-env-form-row {
+.df-env-row-adversaries {
 	display: grid;
-	grid-template-columns: 70% 10% 15%;
-	gap: 10px;
+	align-items: flex-start;
 	width: 100%;
-	justify-items: center;
+}
+
+.df-env-row-basic-info {
+    display: grid;
+    grid-template-columns: 70% 10% 15%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.df-env-row-difficulty {
+	display: grid;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.df-env-row-impulse {
+	display: grid;
+	align-items: flex-start;
+	width: 100%;
 }
 
 /* Environment form fields */
@@ -532,14 +555,6 @@ select.df-input-field {
 	padding: 6px 8px;
 	min-height: 40px;
 }
-
-/* Normal rows (unchanged) */
-/* .df-env-form-row {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	margin-bottom: 8px;
-} */
 
 /* Make potential adversaries span full width and stack vertically */
 .df-env-row-adversaries {
@@ -789,6 +804,10 @@ select.df-input-field {
 
 .df-source-umbra {
 	border-color: var(--df-color-umbra);
+}
+
+.df-source-sablewood {
+	border-color: var(--df-color-sablewood);
 }
 
 .df-source-incredible{
@@ -1126,6 +1145,17 @@ select.df-input-field {
 	font-weight: bold;
 	color: #fff;
 	background-color: var(--df-color-umbra);
+	text-transform: capitalize;
+}
+
+.df-source-badge-sablewood{
+	margin-left: 8px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #fff;
+	background-color: var(--df-color-sablewood);
 	text-transform: capitalize;
 }
 

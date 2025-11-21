@@ -24,7 +24,7 @@ export class SearchControlsUI {
 		this.config = {
 			placeholderText: "Search by name...",
 			showTypeFilter: false,
-			availableTiers: [1, 2, 3, 4],
+			availableTiers: [],
 			availableSources: [],
 			availableTypes: [],
 			...config,
@@ -166,7 +166,6 @@ export class SearchControlsUI {
 				this.config.onSourceChange?.(value);
 			});
 		}
-
 		return select;
 	}
 

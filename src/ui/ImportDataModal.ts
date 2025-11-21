@@ -105,6 +105,8 @@ export class ImportDataModal extends Modal {
 				? "umbra"
 				: lower.includes("void")
 				? "void"
+				: lower.includes("sablewood")
+				? "sablewood"
 				: "custom";
 
 		// Identify type

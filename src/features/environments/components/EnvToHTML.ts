@@ -86,7 +86,7 @@ ${bulletsHTML}${textAfterHTML ? `<div id="textafter" class="df-env-feat-text">${
 <div class="df-env-card-inner">
 <button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
 <div class="df-env-name">${env.name}</div>
-<div class="df-env-feat-tier-type">Tier ${env.tier.toString()} ${env.type}</div>
+<div class="df-env-feat-tier-type">Tier ${env.tier.toString()} ${env.type} <span class="df-source-badge-${(env.source || "core").toLowerCase()}">${(env.source || "core").toLowerCase()}</span></div>
 <p class="df-env-desc">${env.desc}</p>
 <p><strong>Impulse:</strong> ${env.impulse || ""}</p>
 <div class="df-env-card-diff-pot">

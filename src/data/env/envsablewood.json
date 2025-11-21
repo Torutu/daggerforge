@@ -1,0 +1,197 @@
+[
+  {
+    "id": "SE001",
+    "name": "BANDIT HIDEOUT",
+    "tier": 1,
+    "type": "Exploration",
+    "desc": "A shabby but well-defended hideout nestled among the brambles of the Sablewood.",
+    "impulse": "Keep out intruders, take watch, maintain readiness to fight",
+    "difficulty": "12",
+    "potentialAdversaries": "Jagged Knife Bandits (Bandit, Shadow, Hexer, Sniper, Lieutenant, Lackey, Kneebreaker)",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Thorn Fence",
+        "type": "Passive",
+        "text": "Make an attack against a target within Close range. On a success, deal 1d8+4 physical damage and pull the target into Melee.",
+        "bullets": null,
+        "questions": [
+          "How would the bandits notice the brambles have been disturbed?",
+          "How did the wall get there—do they have a druid or ranger among their number?"
+        ]
+      },
+      {
+        "name": "Patrols",
+        "type": "Passive",
+        "text": "The bandits post a constant watch, mostly directed outside the camp. Entrance will require stealth (Finesse), deception (Presence), or special information (Knowledge).",
+        "bullets": null,
+        "questions": [
+          "When do they change the watch?",
+          "What weapons do they have prepared in case of attack?"
+        ]
+      },
+      {
+        "name": "Fight Your Way Through",
+        "type": "Passive",
+        "text": "If the party decides to fight their way through but you want to abstract the battle to save time, call for a Group Action, asking each member of the party how they contribute to the fight, with one PC making the main roll for the group. On a success with Fear, each PC must mark Stress and 1 HP or 1 armor slot. On a failure, each PC must mark 2 Stress and some combination of 2 HP and/or armor slots.",
+        "bullets": null,
+        "questions": [
+          "What defenses do the bandits have to bring to bear?",
+          "Does anyone notice the combat or is it over before other bandits take notice?"
+        ]
+      },
+      {
+        "name": "On The Hunt",
+        "type": "Action",
+        "cost": "Spend a Fear",
+        "text": "to have a pack of 1d4+2 hungry Strixwolves infiltrate the hideout, desperate for food.",
+        "bullets": null,
+        "questions": [
+          "Do the PCs avoid the animals?",
+          "Do they try to use them as a distraction or backup?",
+          "Do the PCs have food on them that would draw the animals' attention?"
+        ]
+      },
+      {
+        "name": "Alarm",
+        "type": "Reaction",
+        "text": "On a failure or success with fear, some of the bandits grow suspicious and more actively patrol. Attempts to pass through the hideout using stealth have disadvantage for the rest of the scene or until the actively patrolling bandits are defeated or distracted by something else.",
+        "bullets": null,
+        "questions": [
+          "How is it clear the bandits are on higher alert?",
+          "What additional defense tactics are they preparing?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SE002",
+    "name": "UNDERROOT TUNNELS",
+    "tier": 1,
+    "type": "Traversal",
+    "desc": "Fortified and well-kept tunnels leading to underborne communities within the great forest.",
+    "impulse": "Confound travelers, bar passage, connect communities",
+    "difficulty": "11",
+    "potentialAdversaries": "Acid Burrower, Stonewraith, Jagged Knife Bandits",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Hidden Entrance",
+        "type": "Passive",
+        "text": "The first challenge of the Underroot Tunnels is finding them. PCs must complete a Progress Countdown (3) to find a viable entrance to the tunnels (Instinct and Knowledge are most applicable, though Finesse could be used to search manually for a seam or switch and Presence could be used to gain information from a denizen of the Sablewood).",
+        "bullets": null,
+        "questions": [
+          "How do they camouflage the tunnels so well?",
+          "What traps might they leave in the way?"
+        ]
+      },
+      {
+        "name": "A Series of Passageways, All Alike",
+        "type": "Passive",
+        "text": "Navigating to a particular location in the tunnels requires a Progress Countdown (4 for most known settlements, 6 for less well-known or more-remote destinations). Potential Challenges include identical passageways, damaged stairwells leading to a lower level, root blockage, flooded tunnel.",
+        "bullets": null,
+        "questions": [
+          "How was this place built to purposefully confuse outsiders?",
+          "How are patrols run within the tunnels?"
+        ]
+      },
+      {
+        "name": "Root Blockage",
+        "type": "Action",
+        "text": "Reveal that the path ahead has been blocked by the shifting of a great Sablewood tree. The party can dig around the root (Finesse), try to cut through it (Strength), or double back to find another path (Instinct).",
+        "bullets": null,
+        "questions": [
+          "What other obstacles did the Underroot community build their passages around?",
+          "What unique approach have they taken to dealing with them?"
+        ]
+      },
+      {
+        "name": "Toll-Keepers",
+        "type": "Action",
+        "cost": "Spend a Fear",
+        "text": "",
+        "bullets": null,
+        "questions": [
+          "to introduce a number of Jagged Knife Lackeys equal to the size of the party plus two Jagged Knife Bandits and a Jagged Knife Lieutenant seeking a 'toll' of two handfuls of gold per character for passing through their \"protected territory.\" How do the Underroot folk feel about these toll-keepers?",
+          "What else might they be guarding?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SE003",
+    "name": "THE VILLAGE OF HUSH",
+    "tier": 1,
+    "type": "Social",
+    "desc": "A small but friendly village nestled into the heart of the Sablewood.",
+    "impulse": "Display hospitality, provide respite from danger",
+    "difficulty": "10",
+    "potentialAdversaries": "Merchant, Bladed Guards, Strixwolves",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Guest Privileges",
+        "type": "Passive",
+        "text": "Any overnight visitor is taken in by a family and given shelter for three nights. During this time, the guest's needs have priority and they can use anything that belongs to their hosts. After three nights, the visitors must trade families or leave the town.",
+        "bullets": null,
+        "questions": [
+          "Which family takes in the PCs?",
+          "What visitor has been abusing guest privileges and what do they want here?"
+        ]
+      },
+      {
+        "name": "Clover's Tavern",
+        "type": "Passive",
+        "text": "At the center of the town is a massive six-story tavern built around the trunk of an ancient tree. The tavern is where most of the village gathers in the evening. Here, PCs can learn rumors, meet the villagers, and relax. When they leave, the shoes they put up on the clothing line have minor trinkets inside that reflect how the villagers see them or that provide some minor portent of challenges to come.",
+        "bullets": null,
+        "questions": [
+          "What's the talk of the tavern?",
+          "What clues do the trinkets left in the PC's shoes/boots provide?"
+        ]
+      },
+      {
+        "name": "Preparations",
+        "type": "Action",
+        "text": "A prominent member of the community approaches the PCs asking for help with unique preparations for the arrival of the town's leaders, the Faceless Six.",
+        "bullets": null,
+        "questions": [
+          "Why are the Faceless Six coming to town?",
+          "What preparations must be done that the party is particularly equipped to help with?"
+        ]
+      },
+      {
+        "name": "Leave it to the Trees",
+        "type": "Reaction",
+        "cost": "Spend a Fear",
+        "text": "when someone abuses guest privileges to summon twelve Young Dryads. They kidnap the culprit and drag them off to face the justice of the Sablewoods.",
+        "bullets": null,
+        "questions": [
+          "Do the villagers notice when this happens?",
+          "How do they alert the guardians to these abuses, or do the dryads just know?",
+          "What is the origin of the guest privilege custom?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SE004",
+    "name": "THE OPEN VALE",
+    "tier": 1,
+    "type": "Exploration",
+    "desc": "A vast, windswept expanse of rolling grassland and ancient stone monuments.",
+    "impulse": "Guard the fallen, rise against trespassers",
+    "difficulty": "11",
+    "potentialAdversaries": "Ancient Skeletons",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Vengeance of the Vale",
+        "type": "Action",
+        "cost": "Spend a Fear",
+        "text": "to summon two additional Ancient Skeletons from the ground within Very Close range of a PC.",
+        "bullets": null,
+        "questions": null
+      }
+    ]
+  }
+]
