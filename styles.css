@@ -736,9 +736,10 @@ select.df-input-field {
 }
 
 .df-inline-input.count-input {
-	width: 25%;
+	width: 10%;
 	text-align: center;
 	padding: 1px;
+	margin-bottom: 7px;
 }
 
 /* sidebar result container */
@@ -831,7 +832,46 @@ select.df-input-field {
 }
 
 .df-adversary-counter-container {
-	width: 100px;
+	width: 100%;
+}
+
+.df-search-controls{
+	margin-bottom: 10px;
+}
+
+.df-search-row{
+	margin-bottom: 10px;
+}
+
+.df-filter-row {
+	display: flex;
+	overflow-x: auto;
+	flex-wrap: nowrap;
+    scroll-behavior: smooth;
+	flex-grow: 1;
+	min-width: 0;
+	max-width: 100%;
+	width: 100%;
+	padding: 1px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background-color: var(--background-primary);
+	font-weight: bold;
+	font-size: 0.9em;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	justify-content:space-between;
+}
+
+.df-clear-filters-btn{
+	/**/
+}
+
+.df-search-input{
+	width: 100%;
 }
 
 .df-adversary-search-box {

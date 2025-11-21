@@ -2,14 +2,17 @@ import { ItemView, WorkspaceLeaf, MarkdownView, Notice, setIcon } from "obsidian
 import { ENVIRONMENTS } from "../../../data/environments";
 import { EnvironmentData } from "../../../types/environment";
 import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
+import { SearchEngine } from "../../../utils/searchEngine";
+import { SearchControlsUI } from "../../../utils/searchControlsUI";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 
 export class EnvironmentView extends ItemView {
 	private environments: any[] = [];
 	private lastActiveMarkdown: MarkdownView | null = null;
+	private searchEngine: SearchEngine = new SearchEngine();
+	private searchControlsUI: SearchControlsUI | null = null;
 	private resultsDiv: HTMLElement | null = null;
-	private searchInput: HTMLInputElement | null = null;
 
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
@@ -28,11 +31,40 @@ export class EnvironmentView extends ItemView {
 	}
 
 	public refresh() {
-		if (!this.resultsDiv) return;
+		this.initializeView();
 		this.loadEnvironmentData();
-		if (this.searchInput instanceof HTMLElement) {
-			this.searchInput.focus();
-		}
+	}
+
+	private initializeView() {
+		const container = this.containerEl.children[1] as HTMLElement;
+		container.empty();
+
+		// Create title
+		container.createEl("h2", {
+			text: "Environment Browser",
+			cls: "df-env-title",
+		});
+
+		// Create search controls (will be populated with available options after data loads)
+		this.searchControlsUI = new SearchControlsUI({
+			placeholderText: "Search by name, type, or description...",
+			showTypeFilter: true,
+			availableTiers: [1, 2, 3, 4],
+			availableSources: ["core", "void", "custom"],
+			availableTypes: ["Social", "Exploration", "Event", "Traversal"],
+			onSearchChange: (query) => this.handleSearchChange(query),
+			onTierChange: (tier) => this.handleTierChange(tier),
+			onSourceChange: (source) => this.handleSourceChange(source),
+			onTypeChange: (type) => this.handleTypeChange(type),
+			onClear: () => this.handleClearFilters(),
+		});
+
+		this.searchControlsUI.create(container);
+
+		// Create results container
+		this.resultsDiv = container.createEl("div", {
+			cls: "df-environment-results",
+		});
 	}
 
 	private async deleteCustomEnvironment(env: EnvironmentData): Promise<void> {
@@ -57,46 +89,6 @@ export class EnvironmentView extends ItemView {
 			console.error("Error deleting custom environment:", error);
 			new Notice("Failed to delete environment.");
 		}
-	}
-
-	private createTierButtons(container: HTMLElement, input: HTMLInputElement) {
-		const buttonContainer = document.createElement("span");
-		buttonContainer.className = "tier-buttons";
-		const tiers = ["ALL", "1", "2", "3", "4"];
-
-		tiers.forEach((tierLabel) => {
-			const button = document.createElement("button");
-			button.textContent =
-				tierLabel === "ALL" ? "ALL" : `Tier ${tierLabel}`;
-			button.classList.add("df-tier-filter-btn");
-			button.addEventListener("click", () => {
-				input.value = "";
-				const filtered =
-					tierLabel === "ALL"
-						? this.environments
-						: this.environments.filter(
-								(e) => e.tier.toString() === tierLabel,
-							);
-				this.renderResults(filtered);
-			});
-			buttonContainer.appendChild(button);
-		});
-
-		if (this.resultsDiv)
-			container.insertBefore(buttonContainer, this.resultsDiv);
-	}
-
-	private renderResults(filtered: any[]) {
-		if (!this.resultsDiv) return;
-		this.resultsDiv.empty();
-		if (filtered.length === 0) {
-			this.resultsDiv.setText("No environments found.");
-			return;
-		}
-		filtered.forEach((env) => {
-			const card = this.createEnvironmentCard(env);
-			this.resultsDiv!.appendChild(card);
-		});
 	}
 
 	private loadCustomEnvironments(): EnvironmentData[] {
@@ -132,31 +124,68 @@ export class EnvironmentView extends ItemView {
 
 			const custom = this.loadCustomEnvironments();
 			this.environments = [...builtIn, ...custom];
+
+			// Initialize search engine
+			this.searchEngine.setItems(this.environments);
+
+			// Update filter UI with available options
+			if (this.searchControlsUI) {
+				const sources = this.searchEngine.getAvailableOptions("source");
+				const types = this.searchEngine.getAvailableOptions("type");
+				this.searchControlsUI.updateAvailableOptions("sources", sources);
+				this.searchControlsUI.updateAvailableOptions("types", types);
+			}
+
+			// Render initial results
 			this.renderResults(this.environments);
 		} catch (e) {
 			console.error("Error loading environment data:", e);
 			new Notice("Failed to load environment data.");
-			this.resultsDiv?.setText("Error loading environment data.");
+			if (this.resultsDiv) {
+				this.resultsDiv.setText("Error loading environment data.");
+			}
 		}
 	}
 
-	private setupSearchInput(input: HTMLInputElement) {
-		input.addEventListener("input", () => {
-			const q = input.value.toLowerCase();
-			const filtered = this.environments.filter(
-				(env) =>
-					env.name.toLowerCase().includes(q) ||
-					env.type.toLowerCase().includes(q) ||
-					env.source.toLowerCase().includes(q),
-			);
-			this.renderResults(filtered);
+	private handleSearchChange(query: string) {
+		this.searchEngine.setFilters({ query });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleTierChange(tier: number | null) {
+		this.searchEngine.setFilters({ tier });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleSourceChange(source: string | null) {
+		this.searchEngine.setFilters({ source });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleTypeChange(type: string | null) {
+		this.searchEngine.setFilters({ type });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleClearFilters() {
+		// No specific action needed for environment clear,
+		// filters are already reset by SearchControlsUI
+	}
+
+	private renderResults(filtered: any[]) {
+		if (!this.resultsDiv) return;
+		this.resultsDiv.empty();
+		if (filtered.length === 0) {
+			this.resultsDiv.setText("No environments found.");
+			return;
+		}
+		filtered.forEach((env) => {
+			const card = this.createEnvironmentCard(env);
+			this.resultsDiv!.appendChild(card);
 		});
 	}
 
 	async onOpen() {
-		const container = this.containerEl.children[1] as HTMLElement;
-		container.empty();
-
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", (leaf) => {
 				const view = leaf?.view;
@@ -165,34 +194,8 @@ export class EnvironmentView extends ItemView {
 			})
 		);
 
-		container.createEl("h2", {
-			text: "Environment Browser",
-			cls: "df-env-title",
-		});
-
-		const input = container.createEl("input", {
-			attr: { type: "text", placeholder: "Search environments..." },
-			cls: "df-env-search-box",
-		}) as HTMLInputElement;
-		this.searchInput = input;
-
-		const resultsDiv = container.createEl("div", {
-			cls: "df-env-results",
-			text: "Results will appear here.",
-		});
-		this.resultsDiv = resultsDiv;
-
-		this.createTierButtons(container, input);
-
-		try {
-			this.loadEnvironmentData();
-		} catch (e) {
-			new Notice("Failed to load environment data.");
-			resultsDiv.setText("Error loading environment data.");
-			return;
-		}
-
-		this.setupSearchInput(input);
+		this.initializeView();
+		this.loadEnvironmentData();
 	}
 
 	createEnvironmentCard(env: any): HTMLElement {
@@ -246,7 +249,6 @@ export class EnvironmentView extends ItemView {
 		card.appendChild(desc);
 
 		card.addEventListener("click", () => {
-			// Build features HTML with data attributes
 			const featuresHTML = (env.features || [])
 				.map((f: any) => {
 					const costHTML = f.cost ? `<span>${f.cost}</span>` : "";
@@ -270,40 +272,31 @@ export class EnvironmentView extends ItemView {
 						? `<div id="textafter" class="df-env-feat-text">${f.textAfter}</div>`
 						: "";
 
-					// ADD DATA ATTRIBUTES TO FEATURE DIV
-					return `
-				<div class="df-feature" data-feature-name="${f.name}" data-feature-type="${f.type}" data-feature-cost="${f.cost || ''}">
-					<div class="df-env-feat-name-type">
-						<span class="df-env-feat-name">${f.name}</span> - <span class="df-env-feat-type">${f.type}:</span> ${costHTML}
-						<div class="df-env-feat-text">${f.text}</div>
-					</div>
-					${bulletsHTML}
-					${afterTextHTML}
-					${questionsHTML}
-				</div>
-			`;
+					return `<div class="df-feature" data-feature-name="${f.name}" data-feature-type="${f.type}" data-feature-cost="${f.cost || ''}">
+<div class="df-env-feat-name-type">
+<span class="df-env-feat-name">${f.name}</span> - <span class="df-env-feat-type">${f.type}:</span> ${costHTML}
+<div class="df-env-feat-text">${f.text}</div>
+</div>${bulletsHTML}${afterTextHTML}${questionsHTML}</div>`;
 				})
 				.join("");
 
-			const envHTML = `
-<section class="df-env-card-outer">
-	<div class="df-env-card-inner">
-		<button class="df-env-edit-button" data-edit-mode-only="true">📝</button>
-		<div class="df-env-name">${env.name}</div>
-		<div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type}</div>
-		<p class="df-env-desc">${env.desc}</p>
-		<p><strong>Impulse:</strong> ${env.impulse || ""}</p>
-		<div class="df-env-card-diff-pot">
-			<p><span class="df-bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
-			<p><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
-		</div>
-		<div class="df-features-section">
-			<h3>Features</h3>
-			${featuresHTML}
-		</div>
-	</div>
-</section>
-`;
+			const envHTML = `<section class="df-env-card-outer">
+<div class="df-env-card-inner">
+<button class="df-env-edit-button" data-edit-mode-only="true">📝</button>
+<div class="df-env-name">${env.name}</div>
+<div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type}</div>
+<p class="df-env-desc">${env.desc}</p>
+<p><strong>Impulse:</strong> ${env.impulse || ""}</p>
+<div class="df-env-card-diff-pot">
+<p><span class="df-bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
+<p><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
+</div>
+<div class="df-features-section">
+<h3>Features</h3>
+${featuresHTML}
+</div>
+</div>
+</section>`.trim();
 
 			const isCanvas = isCanvasActive(this.app);
 			const isMarkdown = isMarkdownActive(this.app);

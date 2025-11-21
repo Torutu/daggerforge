@@ -4,9 +4,13 @@ import {
 	getAdversaryCount,
 	incrementAdversaryCount,
 	decrementAdversaryCount,
+	setAdversaryCount,
+	resetAdversaryCount,
 } from "../../../utils/adversaryCounter";
 import { isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
 import { buildCardHTML } from "../creator/CardBuilder";
+import { SearchEngine } from "../../../utils/searchEngine";
+import { SearchControlsUI } from "../../../utils/searchControlsUI";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -63,6 +67,9 @@ type RawAdversaryData = {
 export class AdversaryView extends ItemView {
 	private adversaries: Adversary[] = [];
 	private lastActiveMarkdown: MarkdownView | null = null;
+	private searchEngine: SearchEngine = new SearchEngine();
+	private searchControlsUI: SearchControlsUI | null = null;
+	private resultsDiv: HTMLElement | null = null;
 
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
@@ -124,18 +131,39 @@ export class AdversaryView extends ItemView {
 	private initializeView() {
 		const container = this.containerEl.children[1];
 		container.empty();
+
 		// Create title
 		container.createEl("h2", {
-			text: "Adversary browser",
+			text: "Adversary Browser",
 			cls: "df-adv-title",
 		});
-		// Create controls row
-		const controlsRow = container.createDiv({
-			cls: "df-adversary-controls-row",
+
+		// Create counter controls
+		const counterContainer = container.createDiv({
+			cls: "df-adversary-counter-container",
 		});
-		this.createCounterControls(controlsRow);
-		this.createSearchInput(controlsRow);
-		this.createTierDropdown(controlsRow);
+		this.createCounterControls(counterContainer);
+
+		// Create search controls (will be populated with available options after data loads)
+		this.searchControlsUI = new SearchControlsUI({
+			placeholderText: "Search by name, type, or description...",
+			showTypeFilter: true,
+			availableTiers: [1, 2, 3, 4],
+			availableSources: ["core", "void", "custom"],
+			availableTypes: ["Bruiser", "Horde", "Leader", "Minion", "Ranged", "Skulk", "Social", "Solo", "Standard", "Support"],
+			onSearchChange: (query) => this.handleSearchChange(query),
+			onTierChange: (tier) => this.handleTierChange(tier),
+			onSourceChange: (source) => this.handleSourceChange(source),
+			onTypeChange: (type) => this.handleTypeChange(type),
+			onClear: () => this.handleClearFilters(),
+		});
+
+		this.searchControlsUI.create(container);
+
+		// Create results container
+		this.resultsDiv = container.createEl("div", {
+			cls: "df-adversary-results",
+		});
 	}
 
 	private registerEventListeners() {
@@ -183,10 +211,7 @@ export class AdversaryView extends ItemView {
 				return [];
 			}
 
-			// Load custom adversaries from DataManager (Obsidian storage)
 			const customAdvs = plugin.dataManager.getAdversaries();
-			// console.log("source of custom adversaries:", customAdvs.map((adv: any) => adv.source));
-			// Convert to display format and mark as custom
 			return customAdvs.map((adv: any) => ({
 				...adv,
 				tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier,
@@ -200,8 +225,6 @@ export class AdversaryView extends ItemView {
 	}
 
 	private loadAdversaryData() {
-		const container = this.containerEl.children[1];
-		const resultsDiv = container.querySelector(".df-adversary-results") as HTMLElement;
 		try {
 			const builtInAdversaries = ADVERSARIES.map((a: any) =>({
 					...a,
@@ -213,25 +236,68 @@ export class AdversaryView extends ItemView {
 
 			const custom = this.loadCustomAdversaries();
 			this.adversaries = [...builtInAdversaries, ...custom];
+
+			// Initialize search engine
+			this.searchEngine.setItems(this.adversaries);
+
+			// Update filter UI with available options
+			if (this.searchControlsUI) {
+				const sources = this.searchEngine.getAvailableOptions("source");
+				const types = this.searchEngine.getAvailableOptions("type");
+				this.searchControlsUI.updateAvailableOptions("sources", sources);
+				this.searchControlsUI.updateAvailableOptions("types", types);
+			}
+
+			// Render initial results
 			this.renderResults(this.adversaries);
 		} catch (e) {
 			console.error("Error loading adversary data:", e);
 			new Notice("Failed to load adversary data.");
-			resultsDiv?.setText("Error loading adversary data.");
+			if (this.resultsDiv) {
+				this.resultsDiv.setText("Error loading adversary data.");
+			}
 		}
 	}
 
-	private createCounterControls(container: HTMLElement): HTMLElement {
-		const counterContainer = container.createDiv({
-			cls: "df-adversary-counter-container",
-		});
+	private handleSearchChange(query: string) {
+		this.searchEngine.setFilters({ query });
+		this.renderResults(this.searchEngine.search());
+	}
 
-		const minusBtn = counterContainer.createEl("button", {
+	private handleTierChange(tier: number | null) {
+		this.searchEngine.setFilters({ tier });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleSourceChange(source: string | null) {
+		this.searchEngine.setFilters({ source });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleTypeChange(type: string | null) {
+		this.searchEngine.setFilters({ type });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleClearFilters() {
+		// Reset counter to 1 when clear button is clicked
+		resetAdversaryCount();
+		// Update the counter display
+		const counterInputs = this.containerEl.querySelectorAll(".count-input");
+		counterInputs.forEach((input) => {
+			if (input instanceof HTMLInputElement) {
+				input.value = "1";
+			}
+		});
+	}
+
+	private createCounterControls(container: HTMLElement): void {
+		const minusBtn = container.createEl("button", {
 			text: "-",
 			cls: "df-adversary-counter-btn",
 		});
 
-		const counterInput = counterContainer.createEl("input", {
+		const counterInput = container.createEl("input", {
 			attr: {
 				type: "number",
 				min: "1",
@@ -241,7 +307,7 @@ export class AdversaryView extends ItemView {
 			cls: "df-inline-input count-input",
 		});
 
-		const plusBtn = counterContainer.createEl("button", {
+		const plusBtn = container.createEl("button", {
 			text: "+",
 			cls: "df-adversary-counter-btn",
 		});
@@ -256,114 +322,47 @@ export class AdversaryView extends ItemView {
 			counterInput.value = getAdversaryCount().toString();
 		};
 
-		counterInput.addEventListener("change", () => {
+		// Select all text on focus to allow easy replacement
+		counterInput.addEventListener("focus", () => {
+			counterInput.select();
+		});
+
+		// Update counter in real-time as user types
+		counterInput.addEventListener("input", () => {
+			if (counterInput.value === "" || counterInput.value === "-") {
+				return;
+			}
 			let value = parseInt(counterInput.value, 10);
 			if (isNaN(value) || value < 1) {
 				value = 1;
 			}
-			// Update the adversary count to the new value
-			const currentCount = getAdversaryCount();
-			const difference = value - currentCount;
-			if (difference > 0) {
-				incrementAdversaryCount(difference);
-			} else if (difference < 0) {
-				for (let i = 0; i < Math.abs(difference); i++) {
-					decrementAdversaryCount();
-				}
+			// Directly set the count to the typed value
+			setAdversaryCount(value);
+		});
+
+		// Fallback for blur event to ensure final value is valid
+		counterInput.addEventListener("blur", () => {
+			let value = parseInt(counterInput.value, 10);
+			if (isNaN(value) || value < 1) {
+				value = 1;
 			}
-			counterInput.value = getAdversaryCount().toString();
+			counterInput.value = value.toString();
 		});
-
-		counterInput.addEventListener("input", () => {
-			// Allow typing but only validate on blur or change
-			if (counterInput.value === "" || counterInput.value === "-") {
-				return;
-			}
-		});
-
-		return counterContainer;
-	}
-
-	private createSearchInput(container: HTMLElement): HTMLInputElement {
-		const input = container.createEl("input", {
-			attr: {
-				type: "text",
-				placeholder: "Search adversaries...",
-			},
-			cls: "df-adversary-search-box",
-		});
-
-		input.addEventListener("input", () => {
-			const query = input.value.toLowerCase();
-			const filtered = this.adversaries.filter(
-				(a) =>
-					a.name.toLowerCase().includes(query) ||
-					a.type.toLowerCase().includes(query) ||
-					a.source?.toLowerCase().includes(query),
-			);
-			this.renderResults(filtered);
-		});
-
-		return input;
-	}
-
-	private createTierDropdown(container: HTMLElement): HTMLSelectElement {
-		const dropdown = container.createEl("select", {
-			cls: "df-tier-dropdown",
-		});
-
-		const defaultOption = document.createElement("option");
-		defaultOption.value = "ALL";
-		defaultOption.textContent = "All tiers";
-		defaultOption.selected = true;
-		defaultOption.classList.add("df-tier-option");
-		dropdown.appendChild(defaultOption);
-
-		["1", "2", "3", "4"].forEach((tier) => {
-			const option = document.createElement("option");
-			option.value = tier;
-			option.textContent = `Tier ${tier}`;
-			option.classList.add("df-tier-option");
-			dropdown.appendChild(option);
-		});
-
-		dropdown.addEventListener("change", (e) => {
-			const selectedTier = (e.target as HTMLSelectElement).value;
-			const filtered =
-				selectedTier === "ALL"
-					? this.adversaries
-					: this.adversaries.filter(
-							(a) => a.tier.toString() === selectedTier,
-						);
-
-			this.renderResults(filtered);
-		});
-
-		return dropdown;
 	}
 
 	private renderResults(adversaries: Adversary[]) {
-		const container = this.containerEl.children[1];
-		let resultsDiv = container.querySelector(
-			".df-adversary-results",
-		) as HTMLElement;
+		if (!this.resultsDiv) return;
 
-		if (!resultsDiv) {
-			resultsDiv = container.createEl("div", {
-				cls: "df-adversary-results",
-			});
-		} else {
-			resultsDiv.empty();
-		}
+		this.resultsDiv.empty();
 
 		if (adversaries.length === 0) {
-			resultsDiv.setText("No adversaries found.");
+			this.resultsDiv.setText("No adversaries found.");
 			return;
 		}
 
 		adversaries.forEach((adversary) => {
 			const card = this.createAdversaryCard(adversary);
-			resultsDiv.appendChild(card);
+			this.resultsDiv!.appendChild(card);
 		});
 	}
 
@@ -383,7 +382,6 @@ export class AdversaryView extends ItemView {
 			`df-source-badge-${source.toLowerCase()}`,
 		);
 
-		// Customize badge text based on source
 		const badgeTexts: Record<string, string> = {
 			core: "Core",
 			custom: "Custom",
@@ -406,19 +404,16 @@ export class AdversaryView extends ItemView {
 			card.appendChild(deleteBtn);
 		}
 
-		// Name
 		const title = document.createElement("h3");
 		title.classList.add("df-title-small-padding");
 		title.textContent = adversary.name || "Unnamed Adversary";
 		card.appendChild(title);
 
-		// Description
 		const desc = document.createElement("p");
 		desc.classList.add("df-desc-small-padding");
 		desc.textContent = adversary.desc || "No description available.";
 		card.appendChild(desc);
 
-		// Click handler
 		card.addEventListener("click", () =>
 			this.insertAdversaryIntoNote(adversary),
 		);
@@ -428,11 +423,10 @@ export class AdversaryView extends ItemView {
 
 	private insertAdversaryIntoNote(adversary: Adversary) {
 		const isCanvas = isCanvasActive(this.app);
-		// Check if we're on a canvas
 		if (isCanvas) {
 			const adversaryText = this.generateAdversaryMarkdown(adversary);
 			const position = getAvailableCanvasPosition(this.app);
-			const success = createCanvasCard(this.app, adversaryText, {
+			createCanvasCard(this.app, adversaryText, {
 				x: position.x,
 				y: position.y,
 				width: 400,
@@ -440,7 +434,6 @@ export class AdversaryView extends ItemView {
 			});
 		}
 
-		// Otherwise, insert into markdown note
 		const view =
 			this.app.workspace.getActiveViewOfType(MarkdownView) ||
 			this.lastActiveMarkdown;
@@ -468,10 +461,9 @@ export class AdversaryView extends ItemView {
 		new Notice(`Inserted ${adversary.name}.`);
 	}
 
-		private generateAdversaryMarkdown(adversary: Adversary): string {
+	private generateAdversaryMarkdown(adversary: Adversary): string {
 		const currentCount = getAdversaryCount();
 
-		// Reuse your shared builder
 		return buildCardHTML(
 			{
 				name: adversary.name,
