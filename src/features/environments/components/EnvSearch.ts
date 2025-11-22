@@ -32,6 +32,7 @@ export class EnvironmentView extends ItemView {
 
 	public refresh() {
 		this.initializeView();
+		this.searchEngine.clearFilters();
 		this.loadEnvironmentData();
 	}
 
@@ -168,8 +169,8 @@ export class EnvironmentView extends ItemView {
 	}
 
 	private handleClearFilters() {
-		// No specific action needed for environment clear,
-		// filters are already reset by SearchControlsUI
+		this.searchEngine.clearFilters();
+		this.renderResults(this.searchEngine.search());
 	}
 
 	private renderResults(filtered: any[]) {

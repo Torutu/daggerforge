@@ -121,6 +121,7 @@ export class AdversaryView extends ItemView {
 	public async refresh() {
 		const container = this.containerEl.children[1] as HTMLElement;
 		container.empty();
+		this.searchEngine.clearFilters();
 		this.initializeView();
 		this.loadAdversaryData();
 
