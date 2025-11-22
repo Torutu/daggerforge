@@ -91,10 +91,8 @@ export const onEditClick = (
 		const modal = new TextInputModal(plugin, editor, cardElement, cardData);
 		modal.onSubmit = async (newHTML: string, newData: any) => {
 			const content = editor.getValue();
-			let finalHTML = newHTML;
-			if (oldHTML.includes('<section')) {
-				finalHTML = `<section>\n${newHTML}\n</section>`;
-			}
+			// Use the new HTML as-is, don't add extra sections
+			const finalHTML = newHTML;
 			
 			const beforeCard = content.substring(0, sectionStartIndex);
 			const afterCard = content.substring(sectionEndIndex);
@@ -356,8 +354,30 @@ async function handleCanvasCardEdit(
 		const modal = new TextInputModal(plugin, null as any, cardElement, cardData);
 		modal.onSubmit = async (newHTML: string, newData: any) => {
 			try {
-				// Update the card element in the canvas
-				cardElement!.innerHTML = newHTML;
+				// Parse the new HTML to extract inner content
+				const parser = new DOMParser();
+				const doc = parser.parseFromString(newHTML, 'text/html');
+				
+				// Find the inner div in the new HTML
+				const newInner = doc.querySelector('.df-card-inner');
+				
+				if (newInner && cardElement) {
+					// Find the existing inner div and replace only its content
+					const existingInner = cardElement.querySelector('.df-card-inner');
+					if (existingInner) {
+						// Clear and update
+						existingInner.innerHTML = '';
+						existingInner.innerHTML = newInner.innerHTML;
+						
+						// Force canvas to re-render by triggering a small style update
+						cardElement.style.opacity = '0.99';
+						requestAnimationFrame(() => {
+							if (cardElement) {
+								cardElement.style.opacity = '1';
+							}
+						});
+					}
+				}
 				
 				// Save to data manager
 				await plugin.dataManager.addAdversary(newData);
@@ -464,6 +484,14 @@ async function handleCanvasCardEdit(
 					const existingInner = cardElement!.querySelector('.df-env-card-inner');
 					if (existingInner) {
 						existingInner.innerHTML = innerContent.innerHTML;
+						
+						// Force canvas to re-render
+						cardElement!.style.opacity = '0.99';
+						requestAnimationFrame(() => {
+							if (cardElement) {
+								cardElement.style.opacity = '1';
+							}
+						});
 					}
 				} else {
 					// Fallback: use the entire HTML
