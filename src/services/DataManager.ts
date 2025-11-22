@@ -1,6 +1,7 @@
 import { Plugin } from 'obsidian';
 import { CardData } from '../types/adversary';
 import { EnvironmentData } from '../types/environment';
+import { generateUniqueId } from '../utils/idGenerator';
 
 export interface StoredData {
 	version: string;
@@ -63,10 +64,10 @@ export class DataManager {
 			// Append migrated data
 			if (allAdversaries.length > 0) {
 				this.data.adversaries.push(...allAdversaries);
-}
+			}
 			if (allEnvironments.length > 0) {
 				this.data.environments.push(...allEnvironments);
-}
+			}
 
 			// Clean up old keys
 			delete (this.data as any).custom_Adversaries;
@@ -75,8 +76,12 @@ export class DataManager {
 			delete (this.data as any).incredible_Environments;
 			delete (this.data as any).custom_Broskies;
 
+			// Ensure all items have IDs (migration from old data)
+			this.ensureAdversariesHaveIds();
+			this.ensureEnvironmentsHaveIds();
+
 			await this.save();
-} catch (err) {
+		} catch (err) {
 			console.error('DataManager: Error loading data', err);
 		}
 	}
@@ -92,6 +97,10 @@ export class DataManager {
 	// ==================== ADVERSARIES ====================
 
 	async addAdversary(adversary: CardData): Promise<void> {
+		// Generate ID if missing
+		if (!(adversary as any).id) {
+			(adversary as any).id = generateUniqueId();
+		}
 		this.data.adversaries.push(adversary);
 		await this.save();
 	}
@@ -112,6 +121,24 @@ export class DataManager {
 		await this.save();
 	}
 
+	/**
+	 * Delete adversary by unique ID
+	 * @param id The unique ID of the adversary to delete
+	 */
+	async deleteAdversaryById(id: string): Promise<void> {
+		const index = this.data.adversaries.findIndex(a => (a as any).id === id);
+		if (index === -1) {
+			throw new Error(`Adversary with ID ${id} not found`);
+		}
+		this.data.adversaries.splice(index, 1);
+		await this.save();
+	}
+
+	/**
+	 * Delete adversary by index (deprecated - use deleteAdversaryById)
+	 * @param index The array index of the adversary to delete
+	 * @deprecated Use deleteAdversaryById instead
+	 */
 	async deleteAdversary(index: number): Promise<void> {
 		if (index < 0 || index >= this.data.adversaries.length) return;
 		this.data.adversaries.splice(index, 1);
@@ -127,6 +154,10 @@ export class DataManager {
 	// ==================== ENVIRONMENTS ====================
 
 	async addEnvironment(env: EnvironmentData): Promise<void> {
+		// Generate ID if missing
+		if (!(env as any).id) {
+			(env as any).id = generateUniqueId();
+		}
 		this.data.environments.push(env);
 		await this.save();
 	}
@@ -147,6 +178,24 @@ export class DataManager {
 		await this.save();
 	}
 
+	/**
+	 * Delete environment by unique ID
+	 * @param id The unique ID of the environment to delete
+	 */
+	async deleteEnvironmentById(id: string): Promise<void> {
+		const index = this.data.environments.findIndex(e => (e as any).id === id);
+		if (index === -1) {
+			throw new Error(`Environment with ID ${id} not found`);
+		}
+		this.data.environments.splice(index, 1);
+		await this.save();
+	}
+
+	/**
+	 * Delete environment by index (deprecated - use deleteEnvironmentById)
+	 * @param index The array index of the environment to delete
+	 * @deprecated Use deleteEnvironmentById instead
+	 */
 	async deleteEnvironment(index: number): Promise<void> {
 		if (index < 0 || index >= this.data.environments.length) return;
 		this.data.environments.splice(index, 1);
@@ -160,6 +209,28 @@ export class DataManager {
 	}
 
 	// ==================== UTILITIES ====================
+
+	/**
+	 * Ensure all adversaries have unique IDs
+	 * (for migration from old data without IDs)
+	 */
+	private ensureAdversariesHaveIds(): void {
+		this.data.adversaries = this.data.adversaries.map(adv => ({
+			...adv,
+			id: (adv as any).id || generateUniqueId()
+		}));
+	}
+
+	/**
+	 * Ensure all environments have unique IDs
+	 * (for migration from old data without IDs)
+	 */
+	private ensureEnvironmentsHaveIds(): void {
+		this.data.environments = this.data.environments.map(env => ({
+			...env,
+			id: (env as any).id || generateUniqueId()
+		}));
+	}
 
 	async exportData(): Promise<string> {
 		return JSON.stringify(this.data, null, 2);
@@ -187,6 +258,11 @@ export class DataManager {
 
 		this.data.adversaries.push(...newAdversaries);
 		this.data.environments.push(...newEnvironments);
+
+		// Ensure all items have IDs
+		this.ensureAdversariesHaveIds();
+		this.ensureEnvironmentsHaveIds();
+
 		await this.save();
 	}
 
@@ -216,7 +292,7 @@ export class DataManager {
 			
 			// Delete the actual data.json file
 			await this.plugin.saveData(null);
-} catch (err) {
+		} catch (err) {
 			console.error('DataManager: Error deleting data.json file', err);
 			throw err;
 		}

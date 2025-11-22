@@ -12,6 +12,7 @@ export function extractCardData(cardElement: HTMLElement): CardData {
     const count = adversaryCount > 0 ? adversaryCount.toString() : '1';
 
     return {
+        id: cardElement.getAttribute('data-id') || '',
         name: cardElement.querySelector('h2')?.textContent?.trim() || '',
         tier: cardElement.querySelector('.df-subtitle')?.textContent?.match(/Tier (\d+)/)?.[1]?.trim() || '1',
         type: type || cardElement.querySelector('.df-subtitle')?.textContent?.split(/\s+/)[3]?.trim() || 'Standard',

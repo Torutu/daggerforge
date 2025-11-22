@@ -4,6 +4,7 @@ import { EnvironmentData } from "../../../types/environment";
 import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
 import { SearchEngine } from "../../../utils/searchEngine";
 import { SearchControlsUI } from "../../../utils/searchControlsUI";
+import { generateUniqueId } from "../../../utils/idGenerator";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 
@@ -68,6 +69,10 @@ export class EnvironmentView extends ItemView {
 		});
 	}
 
+	/**
+	 * Delete a custom environment by its unique ID
+	 * @param env The environment object to delete
+	 */
 	private async deleteCustomEnvironment(env: EnvironmentData): Promise<void> {
 		try {
 			const plugin = (this.app as any).plugins.plugins['daggerforge'] as any;
@@ -76,16 +81,18 @@ export class EnvironmentView extends ItemView {
 				return;
 			}
 
-			const customEnvs = plugin.dataManager.getEnvironments();
-			const index = customEnvs.findIndex((e: EnvironmentData) => e.name === env.name);
-
-			if (index !== -1) {
-				await plugin.dataManager.deleteEnvironment(index);
-				new Notice(`Deleted environment: ${env.name}`);
-				this.refresh();
-			} else {
-				new Notice("Environment not found in custom list.");
+			// Use ID if available
+			const envId = (env as any).id;
+			
+			if (!envId) {
+				new Notice("Cannot delete environment: missing ID.");
+				return;
 			}
+
+			// Call updated DataManager method that uses ID instead of name
+			await plugin.dataManager.deleteEnvironmentById(envId);
+			new Notice(`Deleted environment: ${env.name}`);
+			this.refresh();
 		} catch (error) {
 			console.error("Error deleting custom environment:", error);
 			new Notice("Failed to delete environment.");
@@ -104,6 +111,7 @@ export class EnvironmentView extends ItemView {
 
 			return customEnvs.map((env: any) => ({
 				...env,
+				id: env.id || generateUniqueId(),  // Generate ID if missing
 				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
 				isCustom: true,
 				source: env.source || "custom",
@@ -118,6 +126,7 @@ export class EnvironmentView extends ItemView {
 		try {
 			const builtIn = ENVIRONMENTS.map((e: any) => ({
 				...e,
+				id: e.id || generateUniqueId(),  // Generate ID if missing
 				isCustom: false,
 				source: e.source ?? "core",
 				type: e.type,

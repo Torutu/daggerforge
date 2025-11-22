@@ -11,6 +11,7 @@ import { isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "..
 import { buildCardHTML } from "../creator/CardBuilder";
 import { SearchEngine } from "../../../utils/searchEngine";
 import { SearchControlsUI } from "../../../utils/searchControlsUI";
+import { generateUniqueId } from "../../../utils/idGenerator";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -22,6 +23,7 @@ interface AdversaryFeature {
 }
 
 export interface Adversary {
+		id?: string;  // Unique identifier for the adversary
 		name: string;
 		type: string;  // Base type (e.g., "Leader")
 		displayType?: string;  // Full type for display (e.g., "Leader (Umbra-Touched)")
@@ -88,28 +90,34 @@ export class AdversaryView extends ItemView {
 		return "venetian-mask";
 	}
 
+	/**
+	 * Delete a custom adversary by its unique ID
+	 * @param adversary The adversary object to delete
+	 */
 	private async deleteCustomAdversary(adversary: Adversary): Promise<void> {
-	try {
-		const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
-		if (!plugin || !plugin.dataManager) {
-			new Notice("DaggerForge plugin not found.");
-			return;
-		}
+		try {
+			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
+			if (!plugin || !plugin.dataManager) {
+				new Notice("DaggerForge plugin not found.");
+				return;
+			}
 
-		const customAdvs = plugin.dataManager.getAdversaries();
-		const index = customAdvs.findIndex((a: Adversary) => a.name === adversary.name);
+			// Use ID if available
+			const adversaryId = adversary.id;
+			
+			if (!adversaryId) {
+				new Notice("Cannot delete adversary: missing ID.");
+				return;
+			}
 
-		if (index !== -1) {
-			await plugin.dataManager.deleteAdversary(index);
+			// Call updated DataManager method that uses ID instead of name
+			await plugin.dataManager.deleteAdversaryById(adversaryId);
 			new Notice(`Deleted adversary: ${adversary.name}`);
 			this.refresh();
-		} else {
-			new Notice("Adversary not found in custom list.");
+		} catch (error) {
+			console.error("Error deleting custom adversary:", error);
+			new Notice("Failed to delete adversary.");
 		}
-	} catch (error) {
-		console.error("Error deleting custom adversary:", error);
-		new Notice("Failed to delete adversary.");
-	}
 	}
 
 	async onOpen() {
@@ -185,6 +193,7 @@ export class AdversaryView extends ItemView {
 		const baseType = this.extractBaseType(fullType);
 		
 		return {
+			id: raw.id || generateUniqueId(),  // Generate ID if missing
 			name: raw.name || raw.Name || "",
 			type: baseType,
 			displayType: fullType !== baseType ? fullType : undefined,
@@ -230,6 +239,7 @@ export class AdversaryView extends ItemView {
 				
 				return {
 					...adv,
+					id: adv.id || generateUniqueId(),  // Generate ID if missing
 					type: baseType,
 					displayType: fullType !== baseType ? fullType : undefined,
 					tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier,
