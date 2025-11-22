@@ -176,7 +176,7 @@ export const onEditClick = (
 		const innerDiv = cardElement.querySelector('.df-env-card-inner');
 		
 		const tierTypeText = innerDiv?.querySelector('.df-env-feat-tier-type')?.textContent?.trim() || '';
-		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+(.*)/);
+		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+([A-Za-z]+)/);
 		const tier = tierMatch ? tierMatch[1] : '1';
 		const type = tierMatch ? tierMatch[2] : 'Exploration';
 		
@@ -381,9 +381,10 @@ async function handleCanvasCardEdit(
 		const innerDiv = cardElement.querySelector('.df-env-card-inner');
 		
 		const tierTypeText = innerDiv?.querySelector('.df-env-feat-tier-type')?.textContent?.trim() || '';
-		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+(.*)/);
+		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+([A-Za-z]+)/);
 		const tier = tierMatch ? tierMatch[1] : '1';
 		const type = tierMatch ? tierMatch[2] : 'Exploration';
+		console.log("type:", type);
 		
 		const name = cardName;
 		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
