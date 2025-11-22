@@ -770,6 +770,11 @@ select.df-input-field {
 	border-radius: 4px;
 }
 
+.df-env-card:hover,
+.df-adversary-card:hover {
+	background-color: var(--background-modifier-hover);
+}
+
 /* Source badge styling */
 .df-source-badge-core {
 	margin-left: 8px;
