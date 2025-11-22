@@ -59,7 +59,7 @@ export const buildCardHTML = (
 		? `Stress: <span class="df-stat">${stress}</span>`
 		: "";
 
-	const sourceBadge = source ? `<span class="df-source-badge-${source.toLowerCase()}">${source.toLowerCase()}</span>` : "";
+	const sourceBadge = source ? `<span class="df-source-badge-${source.toLowerCase()}">${source.toLowerCase()}</span>` : `<span class="df-source-badge-custom">custom</span>`;
 
 	const featuresHTML = features
 		.map(
@@ -73,7 +73,7 @@ export const buildCardHTML = (
 		)
 		.join("");
 	return `
-<section id="custom" class="df-card-outer df-pseudo-cut-corners outer" data-weapon-range="${weaponRange || ''}" data-type="${type || ''}" data-count="${count || '1'}">
+<section id="custom" class="df-card-outer df-pseudo-cut-corners outer" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
 		<button class="df-adv-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
         ${hpStressRepeat}
