@@ -891,8 +891,10 @@ select.df-input-field {
 	justify-content:space-between;
 }
 
-.df-clear-filters-btn{
-	/**/
+/* goes down when clicked*/
+.df-clear-filters-btn:active{
+	transform: translateY(1px);
+	transform: scale(0.99);
 }
 
 .df-search-input{
