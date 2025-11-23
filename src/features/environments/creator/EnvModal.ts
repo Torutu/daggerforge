@@ -315,8 +315,8 @@ contentEl.empty();
 		const descLabel = wrapper.createDiv({ cls: "df-env-feature-desc-label", text: "Description:" });
 		const textEl = wrapper.createEl("textarea", {
 			cls: "df-env-feature-input-desc",
-			placeholder: "Feature description...",
 			attr: {
+				placeholder: "Feature description...",
 				rows: "3",
 				name: "data-feature-text",
 			}
@@ -369,8 +369,8 @@ contentEl.empty();
 
 		const afterTextEl = wrapper.createEl("textarea", {
 			cls: "df-env-feature-input-after-desc",
-			placeholder: "Additional description text (appears after bullet points)...",
 			attr: {
+				placeholder: "Additional description text (appears after bullet points)...",
 				rows: "3"
 			}
 		});
@@ -394,8 +394,8 @@ contentEl.empty();
 			savedFeature.questions.forEach((question) => {
 				const questionEl = questionsWrapper.createEl("textarea", {
 					cls: "df-env-feature-input-question",
-					placeholder: 'e.g. "Why did this feature occur?"',
 					attr: {
+						placeholder: 'e.g. "Why did this feature occur?"',
 						rows: "2"
 					}
 				});
@@ -405,8 +405,8 @@ contentEl.empty();
 		} else {
 			const questionEl = questionsWrapper.createEl("textarea", {
 				cls: "df-env-feature-input-question",
-				placeholder: 'e.g. "Why did this feature occur?"',
 				attr: {
+					placeholder: 'e.g. "Why did this feature occur?"',
 					rows: "2"
 				}
 			});
@@ -425,8 +425,8 @@ contentEl.empty();
 		addQuestionBtn.onclick = () => {
 			const questionEl = questionsWrapper.createEl("textarea", {
 				cls: "df-env-feature-input-question",
-				placeholder: 'e.g. "Why did this feature occur?"',
 				attr: {
+					placeholder: 'e.g. "Why did this feature occur?"',
 					rows: "2"
 				}
 			});

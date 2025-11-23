@@ -232,6 +232,29 @@ export class SearchControlsUI {
 	}
 
 	/**
+	 * Restore filter UI values from current filters
+	 */
+	public restoreFiltersUI(filters: any): void {
+		const selects = this.container?.querySelectorAll("select");
+		if (!selects) return;
+
+		selects.forEach((select: HTMLSelectElement) => {
+			if (select.classList.contains("df-tier-filter")) {
+				select.value = filters.tier ? String(filters.tier) : "";
+			} else if (select.classList.contains("df-source-filter")) {
+				select.value = filters.source || "";
+			} else if (select.classList.contains("df-type-filter")) {
+				select.value = filters.type || "";
+			}
+		});
+
+		const searchInput = this.container?.querySelector(".df-search-input") as HTMLInputElement;
+		if (searchInput) {
+			searchInput.value = filters.query || "";
+		}
+	}
+
+	/**
 	 * Update available options for filters
 	 */
 	public updateAvailableOptions(
@@ -245,5 +268,4 @@ export class SearchControlsUI {
 		} else if (filterName === "types") {
 			this.config.availableTypes = options as string[];
 		}
-	}
-}
+	}}
