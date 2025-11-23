@@ -34,13 +34,9 @@ export class EnvironmentView extends ItemView {
 	public refresh() {
 		// Preserve current filters before refresh
 		const currentFilters = this.searchEngine.getFilters();
-		this.initializeView();
 		this.loadEnvironmentData();
-		// Restore filters after data reload
+		// Restore filters and re-render results
 		this.searchEngine.setFilters(currentFilters);
-		if (this.searchControlsUI) {
-			this.searchControlsUI.restoreFiltersUI(currentFilters);
-		}
 		this.renderResults(this.searchEngine.search());
 	}
 

@@ -125,20 +125,12 @@ export class AdversaryView extends ItemView {
 	}
 
 	public async refresh() {
-		const container = this.containerEl.children[1] as HTMLElement;
 		// Preserve current filters before refresh
 		const currentFilters = this.searchEngine.getFilters();
-		container.empty();
-		this.initializeView();
 		this.loadAdversaryData();
-		// Restore filters after data reload
+		// Restore filters and re-render results
 		this.searchEngine.setFilters(currentFilters);
-		if (this.searchControlsUI) {
-			this.searchControlsUI.restoreFiltersUI(currentFilters);
-		}
 		this.renderResults(this.searchEngine.search());
-
-		container.focus();
 	}
 
 	private initializeView() {
