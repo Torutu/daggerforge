@@ -6,6 +6,89 @@ import { EnvironmentEditorModal } from "../features/environments";
 import { environmentToHTML } from "../features/environments/components/EnvToHTML";
 import type { EnvironmentData, EnvSavedFeatureState } from "../types/environment";
 
+// Helper: Find which position this card is at in the DOM (for cards with duplicate names)
+function findCardIndexInDOM(cardElement: HTMLElement, cardType: string): number {
+	const selector = cardType === "env" ? ".df-env-card-outer" : ".df-card-outer";
+	const allCards = Array.from(document.querySelectorAll(selector));
+	return allCards.indexOf(cardElement);
+}
+
+// Helper: Find the correct card section in markdown by name and DOM position
+function findCardInMarkdown(fullContent: string, cardName: string, domIndex: number, cardType: string): { startIndex: number; endIndex: number } {
+	const cardNameEscaped = cardName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	
+	// First, find all section opening tags that match the card type
+	let sectionOpenings = [];
+	const sectionTagPattern = cardType === "adv" 
+		? /<section[^>]*class="[^"]*df-card-outer[^"]*"[^>]*>/gi
+		: /<section[^>]*class="[^"]*df-env-card-outer[^"]*"[^>]*>/gi;
+	
+	let match;
+	const sectionRegex = new RegExp(sectionTagPattern.source, sectionTagPattern.flags);
+	while ((match = sectionRegex.exec(fullContent)) !== null) {
+		sectionOpenings.push(match.index);
+	}
+	
+	if (sectionOpenings.length === 0) {
+		return { startIndex: -1, endIndex: -1 };
+	}
+	
+	// Now find which sections contain the card name
+	let namePattern: RegExp;
+	if (cardType === "adv") {
+		namePattern = new RegExp(`<h2[^>]*>${cardNameEscaped}<\\/h2>`, 'i');
+	} else {
+		namePattern = new RegExp(`<[^>]*class="[^"]*df-env-name[^"]*"[^>]*>${cardNameEscaped}<\\/[^>]*>`, 'i');
+	}
+	
+	let matchingSections = [];
+	for (let i = 0; i < sectionOpenings.length; i++) {
+		const sectionStart = sectionOpenings[i];
+		const nextSectionStart = i + 1 < sectionOpenings.length ? sectionOpenings[i + 1] : fullContent.length;
+		
+		// Search for the card name within this section
+		const sectionContent = fullContent.substring(sectionStart, nextSectionStart);
+		if (namePattern.test(sectionContent)) {
+			matchingSections.push(sectionStart);
+		}
+	}
+	
+	if (matchingSections.length === 0) {
+		return { startIndex: -1, endIndex: -1 };
+	}
+	
+	// Pick the correct section based on DOM index
+	const targetSectionIndex = Math.min(domIndex, matchingSections.length - 1);
+	const sectionStartIndex = matchingSections[targetSectionIndex];
+	
+	// Now find the closing </section> tag for this specific section
+	let closeCount = 1;
+	let searchIndex = sectionStartIndex + 8; // Skip past '<section'
+	let sectionEndIndex = -1;
+	
+	while (closeCount > 0 && searchIndex < fullContent.length) {
+		const nextOpen = fullContent.indexOf('<section', searchIndex);
+		const nextClose = fullContent.indexOf('</section>', searchIndex);
+		
+		if (nextClose === -1) break;
+		
+		if (nextOpen !== -1 && nextOpen < nextClose) {
+			// Found opening tag before closing tag
+			closeCount++;
+			searchIndex = nextOpen + 8;
+		} else {
+			// Closing tag comes next
+			closeCount--;
+			if (closeCount === 0) {
+				sectionEndIndex = nextClose + 10;
+			}
+			searchIndex = nextClose + 10;
+		}
+	}
+	
+	return { startIndex: sectionStartIndex, endIndex: sectionEndIndex };
+}
+
 export const onEditClick = (
 	evt: Event,
 	cardType: string,
@@ -47,42 +130,12 @@ export const onEditClick = (
 		const cardData = extractCardData(cardElement);
 		const fullContent = editor.getValue();
 		
-		const cardNameEscaped = cardName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-		const h2Pattern = new RegExp(`<h2[^>]*>${cardNameEscaped}</h2>`, 'i');
-		const h2Match = fullContent.match(h2Pattern);
-		
-		if (!h2Match) {
-			new Notice("Could not find card name in markdown.");
-			return;
-		}
-		
-		const h2Index = fullContent.indexOf(h2Match[0]);
-		let sectionStartIndex = h2Index;
-		const beforeContent = fullContent.substring(0, h2Index);
-		const lastSectionStart = beforeContent.lastIndexOf('<section');
-		
-		if (lastSectionStart !== -1) {
-			sectionStartIndex = lastSectionStart;
-		}
-		
-		const afterContent = fullContent.substring(h2Index);
-		const sectionEndMatch = afterContent.match(/<\/section>/);
-		let sectionEndIndex = h2Index + afterContent.indexOf('</section>');
-		
-		if (sectionEndMatch && sectionEndIndex !== -1) {
-			sectionEndIndex += 10;
-		} else {
-			const cardDivPattern = /<div[^>]*class="[^"]*df-card-outer[^"]*"[^>]*>/i;
-			const beforeH2 = fullContent.substring(Math.max(0, h2Index - 500), h2Index);
-			const divMatch = beforeH2.match(cardDivPattern);
-			if (divMatch) {
-				sectionStartIndex = h2Index - beforeH2.length + beforeH2.lastIndexOf(divMatch[0]);
-			}
-			sectionEndIndex = fullContent.indexOf('</div>', h2Index) + 6;
-		}
+		// FIX: Use helper function to get DOM index and markdown position
+		const domIndex = findCardIndexInDOM(cardElement, "adv");
+		const { startIndex: sectionStartIndex, endIndex: sectionEndIndex } = findCardInMarkdown(fullContent, cardName, domIndex, "adv");
 		
 		if (sectionStartIndex === -1 || sectionEndIndex === -1) {
-			new Notice("Could not find complete card structure in markdown.");
+			new Notice("Could not find card in markdown.");
 			return;
 		}
 		
@@ -133,39 +186,12 @@ export const onEditClick = (
 		const editor = view.editor;
 		const fullContent = editor.getValue();
 		
-		const sectionPattern = /<section[^>]*class="[^"]*df-env-card-outer[^"]*"[^>]*>/i;
-		const sectionMatch = fullContent.match(sectionPattern);
-		
-		if (!sectionMatch) {
-			new Notice("Could not find environment section in markdown.");
-			return;
-		}
-		
-		const sectionStartIndex = fullContent.indexOf(sectionMatch[0]);
-		
-		let closeCount = 1;
-		let searchIndex = sectionStartIndex + sectionMatch[0].length;
-		let sectionEndIndex = -1;
-		
-		while (closeCount > 0 && searchIndex < fullContent.length) {
-			const nextOpen = fullContent.indexOf('<section', searchIndex);
-			const nextClose = fullContent.indexOf('</section>', searchIndex);
-			
-			if (nextClose === -1) break;
-			if (nextOpen !== -1 && nextOpen < nextClose) {
-				closeCount++;
-				searchIndex = nextOpen + 1;
-			} else {
-				closeCount--;
-				if (closeCount === 0) {
-					sectionEndIndex = nextClose + 10;
-				}
-				searchIndex = nextClose + 1;
-			}
-		}
+		// FIX: Use helper function to get DOM index and markdown position
+		const domIndex = findCardIndexInDOM(cardElement, "env");
+		const { startIndex: sectionStartIndex, endIndex: sectionEndIndex } = findCardInMarkdown(fullContent, cardName, domIndex, "env");
 		
 		if (sectionStartIndex === -1 || sectionEndIndex === -1) {
-			new Notice("Could not find complete environment structure in markdown.");
+			new Notice("Could not find environment card in markdown.");
 			return;
 		}
 		
@@ -204,7 +230,7 @@ export const onEditClick = (
 			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';
 			const cost = feat.getAttribute('data-feature-cost') || undefined;
-// Get bullets
+			// Get bullets
 			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
 			
 			// Get text
@@ -244,7 +270,8 @@ export const onEditClick = (
 			source: 'custom',
 			features,
 		};
-const modal = new EnvironmentEditorModal(plugin, editor, cardElement, envData);
+		
+		const modal = new EnvironmentEditorModal(plugin, editor, cardElement, envData);
 		modal.onSubmit = async (newHTML: string) => {
 			const content = editor.getValue();
 			const finalHTML = newHTML;
@@ -431,7 +458,7 @@ async function handleCanvasCardEdit(
 			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';
 			const cost = feat.getAttribute('data-feature-cost') || undefined;
-// Get bullets
+			// Get bullets
 			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
 			
 			// Get text
