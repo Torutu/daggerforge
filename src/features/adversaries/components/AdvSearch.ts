@@ -11,7 +11,7 @@ import { isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "..
 import { buildCardHTML } from "../creator/CardBuilder";
 import { SearchEngine } from "../../../utils/searchEngine";
 import { SearchControlsUI } from "../../../utils/searchControlsUI";
-import { generateUniqueId } from "../../../utils/idGenerator";
+import { generateAdvUniqueId } from "../../../utils/idGenerator";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
@@ -187,7 +187,7 @@ export class AdversaryView extends ItemView {
 		const baseType = this.extractBaseType(fullType);
 		
 		return {
-			id: raw.id || generateUniqueId(),
+			id: raw.id || generateAdvUniqueId(),
 			name: raw.name || raw.Name || "",
 			type: baseType,
 			displayType: fullType !== baseType ? fullType : undefined,
@@ -232,7 +232,7 @@ export class AdversaryView extends ItemView {
 				
 				return {
 					...adv,
-					id: adv.id || generateUniqueId(),  // Generate ID if missing
+					id: adv.id || generateAdvUniqueId(),  // Generate ID if missing
 					type: baseType,
 					displayType: fullType !== baseType ? fullType : undefined,
 					tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier,
@@ -302,7 +302,9 @@ export class AdversaryView extends ItemView {
 	}
 
 	private handleClearFilters() {
+		// Reset counter to 1 when clear button is clicked
 		resetAdversaryCount();
+		// Update the counter display
 		const counterInputs = this.containerEl.querySelectorAll(".count-input");
 		counterInputs.forEach((input) => {
 			if (input instanceof HTMLInputElement) {
@@ -356,7 +358,6 @@ export class AdversaryView extends ItemView {
 			if (isNaN(value) || value < 1) {
 				value = 1;
 			}
-			// Directly set the count to the typed value
 			setAdversaryCount(value);
 		});
 

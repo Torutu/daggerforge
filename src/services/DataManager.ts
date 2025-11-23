@@ -1,7 +1,7 @@
 import { Plugin } from 'obsidian';
 import { CardData } from '../types/adversary';
 import { EnvironmentData } from '../types/environment';
-import { generateUniqueId } from '../utils/idGenerator';
+import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/idGenerator';
 
 export interface StoredData {
 	version: string;
@@ -92,7 +92,7 @@ export class DataManager {
 
 	async addAdversary(adversary: CardData): Promise<void> {
 		if (!(adversary as any).id) {
-			(adversary as any).id = generateUniqueId();
+			(adversary as any).id = generateAdvUniqueId();
 		}
 		this.data.adversaries.push(adversary);
 		await this.save();
@@ -148,7 +148,7 @@ export class DataManager {
 
 	async addEnvironment(env: EnvironmentData): Promise<void> {
 		if (!(env as any).id) {
-			(env as any).id = generateUniqueId();
+			(env as any).id = generateEnvUniqueId();
 		}
 		this.data.environments.push(env);
 		await this.save();
@@ -209,7 +209,7 @@ export class DataManager {
 	private ensureAdversariesHaveIds(): void {
 		this.data.adversaries = this.data.adversaries.map(adv => ({
 			...adv,
-			id: (adv as any).id || generateUniqueId()
+			id: (adv as any).id || generateAdvUniqueId()
 		}));
 	}
 
@@ -220,7 +220,7 @@ export class DataManager {
 	private ensureEnvironmentsHaveIds(): void {
 		this.data.environments = this.data.environments.map(env => ({
 			...env,
-			id: (env as any).id || generateUniqueId()
+			id: (env as any).id || generateEnvUniqueId()
 		}));
 	}
 

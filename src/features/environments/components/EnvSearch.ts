@@ -4,7 +4,7 @@ import { EnvironmentData } from "../../../types/environment";
 import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
 import { SearchEngine } from "../../../utils/searchEngine";
 import { SearchControlsUI } from "../../../utils/searchControlsUI";
-import { generateUniqueId } from "../../../utils/idGenerator";
+import { generateEnvUniqueId } from "../../../utils/idGenerator";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 
@@ -106,7 +106,7 @@ export class EnvironmentView extends ItemView {
 
 			return customEnvs.map((env: any) => ({
 				...env,
-				id: env.id || generateUniqueId(),  
+				id: env.id || generateEnvUniqueId(),  
 				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
 				isCustom: true,
 				source: env.source || "custom",
@@ -121,7 +121,7 @@ export class EnvironmentView extends ItemView {
 		try {
 			const builtIn = ENVIRONMENTS.map((e: any) => ({
 				...e,
-				id: e.id || generateUniqueId(),
+				id: e.id || generateEnvUniqueId(),
 				isCustom: false,
 				source: e.source ?? "core",
 				type: e.type,
