@@ -3,8 +3,8 @@ import type DaggerForgePlugin from "../../../main";
 import { createInlineField } from "../../../utils/formHelpers";
 import { FormInputs } from "../../../types/shared";
 import {
-	FeatureElements,
-	SavedFeatureState,
+	EnvFeatureElements,
+	EnvSavedFeatureState,
 	EnvironmentData,
 } from "../../../types/environment";
 import { environmentToHTML } from "../components/EnvToHTML";
@@ -14,7 +14,7 @@ export class EnvironmentModal extends Modal {
 	plugin: DaggerForgePlugin;
 	editor: Editor;
 	inputs: FormInputs = {};
-	features: FeatureElements[] = [];
+	features: EnvFeatureElements[] = [];
 	featureContainer: HTMLElement;
 	onSubmit: (result: EnvironmentData) => void;
 	isEditMode: boolean = false;
@@ -31,7 +31,6 @@ export class EnvironmentModal extends Modal {
 		this.editor = editor;
 		this.onSubmit = onSubmit;
 		
-		// Detect edit mode: if there's environment-specific data in plugin.savedInputStateEnv
 		const savedState = plugin.savedInputStateEnv;
 		this.isEditMode = !!(savedState && 
 			(savedState.impulse !== undefined || 
@@ -47,7 +46,6 @@ this.editModeState = {
 
 	onOpen(): void {
 const { contentEl } = this;
-		// Use editModeState if editing, otherwise use plugin's saved state
 		const saved = this.isEditMode ? this.editModeState : (this.plugin.savedInputStateEnv || {});
 contentEl.empty();
 
@@ -61,7 +59,6 @@ contentEl.empty();
 
 		const firstRow = basicInfoSection.createDiv({ cls: "df-env-row-basic-info" });
 
-		// Name field
 		createInlineField(firstRow, this.inputs, {
 			label: "Name",
 			key: "name",
@@ -70,7 +67,6 @@ contentEl.empty();
 			customClass: "df-env-field-name",
 		});
 
-		// Tier dropdown
 		createInlineField(firstRow, this.inputs, {
 			label: "Tier",
 			key: "tier",
@@ -80,7 +76,6 @@ contentEl.empty();
 			customClass: "df-env-field-tier",
 		});
 
-		// Type dropdown
 		createInlineField(firstRow, this.inputs, {
 			label: "Type",
 			key: "type",
@@ -93,7 +88,6 @@ contentEl.empty();
 		// ===== DETAILS SECTION =====
 		const detailsSection = basicInfoSection.createDiv({ cls: "df-env-form-section-content" });
 
-		// Description textarea (full width, resizable)
 		const descTextarea = detailsSection.createEl("textarea", {
 			cls: "df-env-field-desc-textarea",
 			attr: {
@@ -133,7 +127,6 @@ contentEl.empty();
 			customClass: "df-env-field-difficulty",
 		});
 
-		// Potential Adversaries on its own row
 		const advRow = difficultySection.createDiv({ cls: "df-env-row-adversaries" });
 		createInlineField(advRow, this.inputs, {
 			label: "Potential adversaries",
@@ -150,8 +143,7 @@ contentEl.empty();
 		this.featureContainer = featuresSection.createDiv({ cls: "df-env-feature-container" });
 		this.features = [];
 
-		// Load saved features if available
-		const savedFeatures: SavedFeatureState[] = saved.features || [];
+		const savedFeatures: EnvSavedFeatureState[] = saved.features || [];
 		if (savedFeatures.length > 0) {
 			savedFeatures.forEach((f) => {
 				this.addFeature(f);
@@ -184,7 +176,6 @@ contentEl.empty();
 			);
 			const features = this.getFeatureValues();
 
-			// Create environment data
 			const env: EnvironmentData = {
 				id: values.id || "",
 				name: values.name || "",
@@ -199,27 +190,23 @@ contentEl.empty();
 			};
 
 			try {
-				// Save using DataManager (Obsidian's saveData)
 				await this.plugin.dataManager.addEnvironment(env);
 				new Notice(
 					`Environment "${env.name}" saved successfully!`,
 				);
 
-				// If in edit mode, call onSubmit callback to handle markdown updates
 				if (this.isEditMode) {
 					this.onSubmit(env);
 					this.close();
 					return;
 				}
 
-				// Generate HTML content
 				const htmlContent = environmentToHTML(env);
 				const wrappedHTML = `<div class="environment-block">\n${htmlContent}\n</div>\n`;
 
 				const isCanvas = isCanvasActive(this.app);
 				const isMarkdown = isMarkdownActive(this.app);
 
-				// Check if we're on a canvas
 				if (isCanvas) {
 					const position = getAvailableCanvasPosition(this.plugin.app);
 					const success = createCanvasCard(this.plugin.app, wrappedHTML, {
@@ -229,11 +216,9 @@ contentEl.empty();
 						height: 650
 					});
 				} else if (isMarkdown) {
-					// Insert into markdown editor
 					this.editor.replaceSelection(wrappedHTML);
 				}
 
-				// Reset form
 				for (const el of Object.values(this.inputs)) {
 					if (
 						el instanceof HTMLInputElement ||
@@ -259,7 +244,6 @@ contentEl.empty();
 				this.featureContainer.empty();
 				this.plugin.savedInputStateEnv = {};
 
-				// Refresh EnvironmentView if open to show the new environment
 				const envLeaves =
 					this.plugin.app.workspace.getLeavesOfType(
 						"environment-view",
@@ -280,7 +264,7 @@ contentEl.empty();
 		};
 	}
 
-	addFeature(savedFeature?: SavedFeatureState) {
+	addFeature(savedFeature?: EnvSavedFeatureState) {
 		const wrapper = this.featureContainer.createDiv({
 			cls: "df-env-feature-block",
 		});
@@ -298,7 +282,6 @@ contentEl.empty();
 		});
 		nameEl.value = savedFeature?.name || "";
 
-		// Type dropdown
 		const typeEl = headerRow.createEl("select", {
 			cls: "df-env-feature-input-type",
 			attr: {
@@ -314,7 +297,6 @@ contentEl.empty();
 		);
 		typeEl.value = savedFeature?.type || "Passive";
 
-		// Cost dropdown
 		const costEl = headerRow.createEl("select", {
 			cls: "df-env-feature-input-cost",
 			attr: {
@@ -330,7 +312,6 @@ contentEl.empty();
 		);
 		costEl.value = savedFeature?.cost || "";
 
-		// Primary feature description
 		const descLabel = wrapper.createDiv({ cls: "df-env-feature-desc-label", text: "Description:" });
 		const textEl = wrapper.createEl("textarea", {
 			cls: "df-env-feature-input-desc",
@@ -342,7 +323,6 @@ contentEl.empty();
 		});
 		textEl.value = savedFeature?.text || "";
 
-		// Bullets section
 		const bulletsHeader = wrapper.createDiv({
 			cls: "df-env-feature-bullets-header",
 			text: "Bullet Points:",
@@ -354,20 +334,17 @@ contentEl.empty();
 
 		const bulletEls: HTMLInputElement[] = [];
 		
-		// Create button first (we'll insert bullets before it)
 		const addBulletBtn = document.createElement("button");
 		addBulletBtn.textContent = "+ Add bullet point";
 		addBulletBtn.className = "df-env-btn-add-bullet";
 		bulletsContainer.appendChild(addBulletBtn);
 		
-		// Helper function to add bullet above the button
 		const createBullet = (bulletText?: string) => {
 			const bulletEl = document.createElement("input");
 			bulletEl.className = "df-env-feature-input-bullet";
 			bulletEl.placeholder = "Bullet point...";
 			bulletEl.value = bulletText || "";
 			bulletEl.setAttribute("name", "data-feature-bullet");
-			// Insert before the button
 			bulletsContainer.insertBefore(bulletEl, addBulletBtn);
 			bulletEls.push(bulletEl);
 			return bulletEl;
@@ -378,7 +355,6 @@ contentEl.empty();
 				createBullet(bullet);
 			});
 		} else {
-			// Add one empty bullet by default
 			createBullet();
 		}
 
@@ -386,7 +362,6 @@ contentEl.empty();
 			createBullet();
 		};
 
-		// After description section
 		const afterDescHeader = wrapper.createDiv({
 			cls: "df-env-feature-after-desc-header",
 			text: "Continue Description (after bullets):",
@@ -401,7 +376,6 @@ contentEl.empty();
 		});
 		afterTextEl.value = savedFeature?.textAfter || "";
 
-		// Questions section
 		const questionContainer = wrapper.createDiv({
 			cls: "df-env-feature-question-container",
 		});
@@ -429,7 +403,6 @@ contentEl.empty();
 				questionEls.push(questionEl);
 			});
 		} else {
-			// Add one empty question by default
 			const questionEl = questionsWrapper.createEl("textarea", {
 				cls: "df-env-feature-input-question",
 				placeholder: 'e.g. "Why did this feature occur?"',
@@ -458,11 +431,9 @@ contentEl.empty();
 				}
 			});
 			questionEls.push(questionEl);
-			// Move button to end after adding new question
 			moveButtonToEnd();
 		};
 
-		// Remove button
 		const removeBtn = wrapper.createEl("button", {
 			text: "Remove Feature",
 			cls: "df-env-btn-remove-feature",
@@ -488,7 +459,7 @@ contentEl.empty();
 
 	getFeatureValues() {
 		return this.features.map((f) => {
-			const featureValue: SavedFeatureState = {
+			const featureValue: EnvSavedFeatureState = {
 				name: f.nameEl.value.trim(),
 				type: f.typeEl.value.trim(),
 				cost: f.costEl?.value.trim() || undefined,
@@ -506,22 +477,19 @@ contentEl.empty();
 
 	onClose(): void {
 		
-		// If in edit mode, ALWAYS clear plugin state (whether submitted or not)
 		if (this.isEditMode) {
 this.plugin.savedInputStateEnv = {};
 			this.editModeState = {};
 			this.features = [];
-			return; // Exit early
+			return;
 		}
 
-		// If not submitted (user closed without saving), don't save state
 		if (!this.isSubmitted) {
 			this.plugin.savedInputStateEnv = {};
 			this.features = [];
 return;
 		}
 
-		// CREATE MODE + SUBMITTED: Save state for next time
 this.plugin.savedInputStateEnv = {};
 
 		for (const [key, el] of Object.entries(this.inputs)) {

@@ -1,4 +1,3 @@
-// UI exports
 export {
 	adversariesSidebar,
 	openEnvironmentSidebar,

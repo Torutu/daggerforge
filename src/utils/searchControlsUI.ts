@@ -39,14 +39,12 @@ export class SearchControlsUI {
 			cls: "df-search-controls",
 		});
 
-		// Create main row with search box
 		const searchRow = this.container.createDiv({
 			cls: "df-search-row",
 		});
 
 		this.createSearchInput(searchRow);
 
-		// Create filter row
 		const filterRow = this.container.createDiv({
 			cls: "df-filter-row",
 		});
@@ -92,7 +90,6 @@ export class SearchControlsUI {
 		});
 
 		wrapper.createEl("label", {
-			// text: "Tier:",
 			cls: "df-filter-label",
 		});
 
@@ -100,13 +97,11 @@ export class SearchControlsUI {
 			cls: "df-tier-filter",
 		}) as HTMLSelectElement;
 
-		// All option
 		const allOption = document.createElement("option");
 		allOption.value = "";
 		allOption.textContent = "All Tiers";
 		select.appendChild(allOption);
 
-		// Tier options
 		if (this.config.availableTiers) {
 			this.config.availableTiers.forEach((tier: number) => {
 				const option = document.createElement("option");
@@ -135,7 +130,6 @@ export class SearchControlsUI {
 		});
 
 		wrapper.createEl("label", {
-			// text: "Source:",
 			cls: "df-filter-label",
 		});
 
@@ -143,13 +137,11 @@ export class SearchControlsUI {
 			cls: "df-source-filter",
 		}) as HTMLSelectElement;
 
-		// All option
 		const allOption = document.createElement("option");
 		allOption.value = "";
 		allOption.textContent = "All Sources";
 		select.appendChild(allOption);
 
-		// Source options
 		if (this.config.availableSources && this.config.availableSources.length > 0) {
 			this.config.availableSources.forEach((source: string) => {
 				const option = document.createElement("option");
@@ -178,7 +170,6 @@ export class SearchControlsUI {
 		});
 
 		wrapper.createEl("label", {
-			// text: "Type:",
 			cls: "df-filter-label",
 		});
 
@@ -186,13 +177,11 @@ export class SearchControlsUI {
 			cls: "df-type-filter",
 		}) as HTMLSelectElement;
 
-		// All option
 		const allOption = document.createElement("option");
 		allOption.value = "";
 		allOption.textContent = "All Types";
 		select.appendChild(allOption);
 
-		// Type options
 		if (this.config.availableTypes && this.config.availableTypes.length > 0) {
 			this.config.availableTypes.forEach((type: string) => {
 				const option = document.createElement("option");
@@ -222,7 +211,7 @@ export class SearchControlsUI {
 		}) as HTMLButtonElement;
 
 		button.addEventListener("click", () => {
-			// Reset all inputs
+
 			const inputs = this.container?.querySelectorAll("input, select");
 			inputs?.forEach((el: Element) => {
 				if (el instanceof HTMLInputElement) {
@@ -232,12 +221,10 @@ export class SearchControlsUI {
 				}
 			});
 
-			// Trigger change events
 			this.config.onSearchChange?.("")
 			this.config.onTierChange?.(null);
 			this.config.onSourceChange?.(null);
 			this.config.onTypeChange?.(null);
-			// Trigger clear callback for counter reset
 			this.config.onClear?.();
 		});
 

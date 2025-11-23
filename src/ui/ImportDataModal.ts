@@ -66,7 +66,6 @@ export class ImportDataModal extends Modal {
 					const text = e.target?.result as string;
 					let data = JSON.parse(text);
 
-					// If data is a plain array, wrap it based on filename
 					if (Array.isArray(data)) {
 						data = this.wrapArrayBasedOnFilename(file.name, data);
 					}
@@ -74,7 +73,6 @@ export class ImportDataModal extends Modal {
 						reject(new Error("Invalid data format"));
 						return;
 					}
-					// Import the data
 					await this.plugin.dataManager.importData(JSON.stringify(data));
 					new Notice(`Successfully imported data from ${file.name}`);
 					this.plugin.refreshBrowsers();
@@ -97,7 +95,6 @@ export class ImportDataModal extends Modal {
 	private wrapArrayBasedOnFilename(filename: string, array: any[]): any {
 		const lower = filename.toLowerCase();
 
-		// Identify category
 		const category =
 				lower.includes("inc")
 				? "incredible"
@@ -108,11 +105,8 @@ export class ImportDataModal extends Modal {
 				: lower.includes("sablewood")
 				? "sablewood"
 				: "custom";
-
-		// Identify type
 		const type = lower.includes("env") ? "Environments" : "Adversaries";
 
-		// Build key dynamically
 		const key = `${category}_${type}`;
 
 		return { [key]: array };
@@ -120,12 +114,10 @@ export class ImportDataModal extends Modal {
 
 
 	private validateImportData(data: any): boolean {
-		// Basic validation - check if it has the expected structure
 		if (typeof data !== "object" || data === null) {
 			return false;
 		}
 
-		// Check for required fields (at least one should exist)
 		const hasAdversaries = Array.isArray(data.adversaries) || 
 						   Array.isArray(data.custom_Adversaries) || 
 						   Array.isArray(data.incredible_Adversaries);

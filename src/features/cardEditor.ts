@@ -4,7 +4,7 @@ import { extractCardData } from "../features/adversaries/editor/CardDataHelpers"
 import { TextInputModal } from "../features/adversaries/creator/TextInputModal";
 import { EnvironmentEditorModal } from "../features/environments";
 import { environmentToHTML } from "../features/environments/components/EnvToHTML";
-import type { EnvironmentData, SavedFeatureState } from "../types/environment";
+import type { EnvironmentData, EnvSavedFeatureState } from "../types/environment";
 
 export const onEditClick = (
 	evt: Event,
@@ -199,7 +199,7 @@ export const onEditClick = (
 		
 		// SIMPLE FEATURE EXTRACTION FROM DATA ATTRIBUTES
 		const featuresSection = innerDiv?.querySelector('.df-features-section');
-		const features: SavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
+		const features: EnvSavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
 			// Get from data attributes
 			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';
@@ -404,7 +404,6 @@ async function handleCanvasCardEdit(
 		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+([A-Za-z]+)/);
 		const tier = tierMatch ? tierMatch[1] : '1';
 		const type = tierMatch ? tierMatch[2] : 'Exploration';
-		console.log("type:", type);
 		
 		const name = cardName;
 		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
@@ -427,7 +426,7 @@ async function handleCanvasCardEdit(
 		
 		// SIMPLE FEATURE EXTRACTION FROM DATA ATTRIBUTES
 		const featuresSection = innerDiv?.querySelector('.df-features-section');
-		const features: SavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
+		const features: EnvSavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
 			// Get from data attributes
 			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';

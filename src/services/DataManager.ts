@@ -36,14 +36,11 @@ export class DataManager {
 			const saved = await this.plugin.loadData();
 			if (!saved) return;
 
-			// Merge base
 			this.data = { ...this.data, ...saved };
 
-			// Migrate all older keys if present
 			const allAdversaries: CardData[] = [];
 			const allEnvironments: EnvironmentData[] = [];
 
-			// Collect all known legacy arrays
 			if (Array.isArray((saved as any).custom_Adversaries))
 				allAdversaries.push(...(saved as any).custom_Adversaries);
 			if (Array.isArray((saved as any).incredible_Adversaries))
@@ -61,7 +58,6 @@ export class DataManager {
 			if (Array.isArray((saved as any).incredible_Environments))
 				allEnvironments.push(...(saved as any).incredible_Environments);
 
-			// Append migrated data
 			if (allAdversaries.length > 0) {
 				this.data.adversaries.push(...allAdversaries);
 			}
@@ -69,14 +65,12 @@ export class DataManager {
 				this.data.environments.push(...allEnvironments);
 			}
 
-			// Clean up old keys
 			delete (this.data as any).custom_Adversaries;
 			delete (this.data as any).incredible_Adversaries;
 			delete (this.data as any).custom_Environments;
 			delete (this.data as any).incredible_Environments;
 			delete (this.data as any).custom_Broskies;
 
-			// Ensure all items have IDs (migration from old data)
 			this.ensureAdversariesHaveIds();
 			this.ensureEnvironmentsHaveIds();
 
@@ -97,7 +91,6 @@ export class DataManager {
 	// ==================== ADVERSARIES ====================
 
 	async addAdversary(adversary: CardData): Promise<void> {
-		// Generate ID if missing
 		if (!(adversary as any).id) {
 			(adversary as any).id = generateUniqueId();
 		}
@@ -154,7 +147,6 @@ export class DataManager {
 	// ==================== ENVIRONMENTS ====================
 
 	async addEnvironment(env: EnvironmentData): Promise<void> {
-		// Generate ID if missing
 		if (!(env as any).id) {
 			(env as any).id = generateUniqueId();
 		}
@@ -239,7 +231,6 @@ export class DataManager {
 	async importData(jsonString: string): Promise<void> {
 		const imported = JSON.parse(jsonString);
 
-		// Migrate any old fields into unified arrays
 		const newAdversaries: CardData[] = [
 			...(imported.adversaries ?? []),
 			...(imported.custom_Adversaries ?? []),
@@ -259,7 +250,6 @@ export class DataManager {
 		this.data.adversaries.push(...newAdversaries);
 		this.data.environments.push(...newEnvironments);
 
-		// Ensure all items have IDs
 		this.ensureAdversariesHaveIds();
 		this.ensureEnvironmentsHaveIds();
 
@@ -282,7 +272,6 @@ export class DataManager {
 	 */
 	async deleteDataFile(): Promise<void> {
 		try {
-			// Reset in-memory data first
 			this.data = {
 				version: '2.0',
 				adversaries: [],
@@ -290,7 +279,6 @@ export class DataManager {
 				lastUpdated: Date.now()
 			};
 			
-			// Delete the actual data.json file
 			await this.plugin.saveData(null);
 		} catch (err) {
 			console.error('DataManager: Error deleting data.json file', err);

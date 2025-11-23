@@ -1,6 +1,5 @@
-import type { FormInputs } from './shared';
 
-export type FeatureElements = {
+export type EnvFeatureElements = {
 	nameEl: HTMLInputElement;
 	typeEl: HTMLSelectElement;
 	costEl?: HTMLSelectElement;
@@ -10,7 +9,7 @@ export type FeatureElements = {
 	questionEls: HTMLTextAreaElement[];
 };
 
-export type SavedFeatureState = {
+export type EnvSavedFeatureState = {
 	name: string;
 	type: string;
 	cost?: string;

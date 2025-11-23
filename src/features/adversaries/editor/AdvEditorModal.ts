@@ -43,7 +43,6 @@ const { contentEl } = this;
 
 		const firstRow = contentEl.createDiv({ cls: "df-form-row df-adv-row-basic-info" });
 
-		// Name field - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
 			label: "Name",
 			key: "name",
@@ -52,7 +51,6 @@ const { contentEl } = this;
 			customClass: "df-adversary-name-input",
 		});
 
-		// Tier dropdown - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
 			label: "Tier",
 			key: "tier",
@@ -62,7 +60,6 @@ const { contentEl } = this;
 			customClass: "df-tier-select",
 		});
 
-		// Type dropdown - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
 			label: "Type",
 			key: "type",
@@ -86,7 +83,6 @@ const { contentEl } = this;
 			customClass: "df-type-select",
 		});
 
-		// Description - prefill with existing data
 		createField(
 			contentEl,
 			this.inputs,
@@ -97,7 +93,6 @@ const { contentEl } = this;
 			this.cardData,
 		);
 
-		// Motives - prefill with existing data
 		createField(
 			contentEl,
 			this.inputs,
@@ -108,7 +103,6 @@ const { contentEl } = this;
 			this.cardData,
 		);
 
-		// Stat fields - prefill with existing data
 		createShortTripleFields(
 			contentEl,
 			this.inputs,
@@ -161,7 +155,6 @@ const { contentEl } = this;
 			this.cardData,
 		);
 
-		// Features section - prefill with existing data
 		this.featureContainer = contentEl.createDiv("df-feature-container");
 		this.features = [];
 		this.featureContainer.empty();
@@ -184,7 +177,6 @@ const { contentEl } = this;
 		this.addFeatureBtn.onclick = () =>
 			addFeature(this.featureContainer, this.features, () => {});
 
-		// Count field - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
 			label: "Count",
 			key: "count",
@@ -197,7 +189,6 @@ const { contentEl } = this;
 			this.inputs["count"].value = "1";
 		}
 
-		// Update button
 		this.insertBtn = contentEl.createEl("button", {
 			text: "Update Card",
 			cls: "df-insert-card-btn",
@@ -212,11 +203,8 @@ const { contentEl } = this;
             );
 
             // MAKE SURE YOU'RE COLLECTING THE FEATURES
-            const features = getFeatureValues(this.features); // This line is crucial!
-// Debug log
-            
-            const newHTML = buildCardHTML(values, features); // Pass features here
-// Debug log
+            const features = getFeatureValues(this.features); 
+            const newHTML = buildCardHTML(values, features);
             
             if (this.onSubmit) {
                 this.onSubmit(newHTML);
@@ -227,7 +215,6 @@ const { contentEl } = this;
 	}
 
 	onClose() {
-		// No need to save state for editing - it's a one-time operation
 		this.contentEl.empty();
 	}
 }

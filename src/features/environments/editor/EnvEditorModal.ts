@@ -1,6 +1,6 @@
 import { Modal, Editor } from "obsidian";
 import type DaggerForgePlugin from "../../../main";
-import { EnvironmentData, SavedFeatureState } from "../../../types/environment";
+import { EnvironmentData, EnvSavedFeatureState } from "../../../types/environment";
 import { environmentToHTML } from "../components/EnvToHTML";
 
 export class EnvironmentEditorModal extends Modal {
@@ -205,7 +205,7 @@ export class EnvironmentEditorModal extends Modal {
 		return textarea;
 	}
 
-	private addFeature(savedFeature?: SavedFeatureState) {
+	private addFeature(savedFeature?: EnvSavedFeatureState) {
 		const wrapper = this.featureContainer.createDiv({
 			cls: "df-env-feature-block",
 		});
@@ -368,7 +368,7 @@ export class EnvironmentEditorModal extends Modal {
 		});
 	}
 
-	private getFeatureValues(): SavedFeatureState[] {
+	private getFeatureValues(): EnvSavedFeatureState[] {
 		return this.features.map((f) => ({
 			name: f.nameEl.value.trim(),
 			type: f.typeEl.value.trim(),

@@ -1,6 +1,5 @@
 import { EnvironmentData } from "../../../types/environment";
 
-// Helper function to convert Markdown to HTML
 function markdownToHTML(markdown: string): string {
 	if (!markdown) return "";
 
@@ -37,14 +36,12 @@ function markdownToHTML(markdown: string): string {
 		}
 	});
 	
-	// Close any open bullet list at the end
 	if (inBulletList) {
 		processedLines.push("</ul>");
 	}
 	
 	html = processedLines.join("<br>");
 
-	// Clean up excessive line breaks
 	html = html.replace(/<br><br>/g, "<br>");
 
 	return html;
@@ -62,10 +59,8 @@ export function environmentToHTML(env: EnvironmentData): string {
 						.join("")}</ul>`
 				: "";
 
-			// Convert Markdown text to HTML
 			const textHTML = markdownToHTML(f.text);
 
-			// Handle text after bullets
 			const textAfterHTML = f.textAfter ? markdownToHTML(f.textAfter) : "";
 			const questionsHTML = f.questions?.length
 				? `<div class="df-env-questions">${f.questions.map((q) => `<div class="df-env-question">${markdownToHTML(q)}</div>`).join("")}</div>`

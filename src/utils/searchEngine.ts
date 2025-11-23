@@ -116,7 +116,6 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		const itemType = (item.type || "").toLowerCase();
 		const itemDisplayType = (item.displayType || "").toLowerCase();
 		
-		// Match against base type or display type
 		return itemType === filterType || itemDisplayType === filterType;
 	}
 

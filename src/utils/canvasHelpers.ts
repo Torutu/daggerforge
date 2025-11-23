@@ -6,11 +6,9 @@ import { App, Notice, MarkdownView } from "obsidian";
  */
 
 export function getActiveViewType(app: App): string | null {
-	// Markdown
 	const mdView = app.workspace.getActiveViewOfType(MarkdownView);
 	if (mdView) return "markdown";
 
-	// Canvas (no public type, so check manually)
 	const leaf = app.workspace.getMostRecentLeaf();
 	const view = leaf?.view;
 
@@ -40,7 +38,6 @@ export function isMarkdownActive(app: App): boolean {
  * Get the canvas view - checks active leaf first, then any canvas in workspace
  */
 export function getActiveCanvas(app: App): any | null {
-	// First try active leaf
 	const activeLeaf = app.workspace.activeLeaf;
 	
 	if (activeLeaf?.view) {
@@ -52,11 +49,9 @@ return canvas;
 		}
 	}
 	
-	// If active leaf doesn't have canvas, find any canvas leaf in workspace
 	const canvasLeaves = app.workspace.getLeavesOfType("canvas");
 	
 	if (canvasLeaves.length > 0) {
-		// Get the most recently used canvas
 		const canvasLeaf = canvasLeaves[0];
 		const canvas = (canvasLeaf.view as any).canvas;
 		
@@ -88,12 +83,10 @@ export function createCanvasCard(
 
 	try {
 		
-		// Get viewport center or use provided coordinates
 		const viewport = canvas.viewport;
 		const defaultX = options?.x ?? (viewport.x + viewport.width / 2 - 200);
 		const defaultY = options?.y ?? (viewport.y + viewport.height / 2 - 150);
 
-		// Create the card node
 		const node = canvas.createTextNode({
 			pos: { 
 				x: defaultX, 
@@ -106,7 +99,6 @@ export function createCanvasCard(
 			}
 		});
 
-		// Save the canvas
 		if (canvas.requestSave) {
 			canvas.requestSave();
 		} else {
@@ -134,18 +126,15 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 
 	try {
 		// Get the camera position (center of what user is looking at)
-		const centerX = canvas.tx ?? 0; // Camera X position
-		const centerY = canvas.ty ?? 0; // Camera Y position
-		const zoom = canvas.zoom ?? 1; // Camera zoom level
+		const centerX = canvas.tx ?? 0;
+		const centerY = canvas.ty ?? 0;
+		const zoom = canvas.zoom ?? 1;
 
-		// Convert viewport center to canvas coordinates
-		let x = centerX - 200; // Center card horizontally (400 / 2)
-		let y = centerY - 300; // Center card vertically (600 / 2)
+		let x = centerX - 200;
+		let y = centerY - 300;
 
-		// Get all existing nodes
 		const nodes = canvas.nodes ? Array.from(canvas.nodes.values()) : [];
 		
-		// Check if position overlaps with any existing node
 		const overlaps = (testX: number, testY: number): boolean => {
 			return nodes.some((node: any) => {
 				const nodeX = node.x;
@@ -162,7 +151,6 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 			});
 		};
 
-		// If overlaps, offset to the right and down
 		let attempts = 0;
 		while (overlaps(x, y) && attempts < 20) {
 			x += 50;

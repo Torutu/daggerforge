@@ -11,9 +11,6 @@ import { buildCardHTML } from "./CardBuilder";
 import { FormInputs } from "../../../types/shared";
 import { FeatureElements, SavedFeatureState } from "../../../types/adversary";
 import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers"; 
-
-// This function is now replaced by DataManager.addAdversary()
-// Keeping it for backward compatibility if needed
 export async function buildCustomAdversary(
 	plugin: DaggerForgePlugin,
 	values: any,
@@ -46,7 +43,6 @@ export async function buildCustomAdversary(
 	};
 
 	try {
-		// Save using DataManager (Obsidian's saveData)
 		await plugin.dataManager.addAdversary(customAdversary);
 		new Notice(
 			`Custom adversary "${customAdversary.name}" saved successfully!`,
@@ -99,7 +95,6 @@ this.savedInputStateAdv = {
 	}
 
 	onOpen() {
-		// Use savedInputStateAdv if in edit mode, otherwise use plugin's saved state
 		const saved = this.isEditMode ? this.savedInputStateAdv : (this.plugin.savedInputStateAdv || {});
 		const { contentEl } = this;
 
@@ -122,7 +117,6 @@ this.savedInputStateAdv = {
 
 		const firstRow = basicInfoSection.createDiv({ cls: "df-adv-form-row" });
 
-		// Name field
 		createInlineField(firstRow, this.inputs, {
 			label: "Name",
 			key: "name",
@@ -131,7 +125,6 @@ this.savedInputStateAdv = {
 			customClass: "df-adv-field-name",
 		});
 
-		// Tier dropdown
 		createInlineField(firstRow, this.inputs, {
 			label: "Tier",
 			key: "tier",
@@ -141,7 +134,6 @@ this.savedInputStateAdv = {
 			customClass: "df-adv-field-tier",
 		});
 
-		// Type dropdown
 		createInlineField(firstRow, this.inputs, {
 			label: "Type",
 			key: "type",
@@ -306,9 +298,7 @@ this.savedInputStateAdv = {
 			const features = getFeatureValues(this.features);
 			const newHTML = buildCardHTML(values, features);
 
-			// If we have an onSubmit callback (from edit mode), use it
 			if (this.onSubmit) {
-				// Build the adversary data object
 				const newData: CardData = {
 					id: values.id || "",
 					name: values.name || "",
@@ -344,7 +334,6 @@ this.savedInputStateAdv = {
 			const isCanvas = isCanvasActive(this.app);
 			const isMarkdown = isMarkdownActive(this.app);
 			
-			// Check if we're on a canvas
 			if (isCanvas) {
 				const position = getAvailableCanvasPosition(this.plugin.app);
 				const success = createCanvasCard(this.plugin.app, newHTML, {
@@ -354,11 +343,9 @@ this.savedInputStateAdv = {
 					height: 600
 				});
 			} else if (isMarkdown) {
-				// Insert into markdown editor
 				this.editor.replaceSelection(newHTML + "\n");
 			}
 
-			// Clear inputs
 			for (const el of Object.values(this.inputs)) {
 				if (
 					el instanceof HTMLInputElement ||
@@ -370,7 +357,6 @@ this.savedInputStateAdv = {
 				}
 			}
 
-			// Clear features
 			this.features.forEach(({ nameEl, typeEl, costEl, descEl }) => {
 				nameEl.value = "";
 				typeEl.selectedIndex = 0;
@@ -382,7 +368,6 @@ this.savedInputStateAdv = {
 			this.features = [];
 			this.featureContainer.empty();
 
-			// Refresh AdversaryView if open
 			const advView = this.plugin.app.workspace
 				.getLeavesOfType("adversary-view")
 				.map((l) => l.view)
@@ -397,17 +382,14 @@ this.savedInputStateAdv = {
 	}
 
 	onClose() {
-		// If in edit mode, don't save state at all - just clear everything
 		if (this.isEditMode) {
 this.savedInputStateAdv = {};
 			this.features = [];
-			return; // Exit early, don't touch plugin.savedInputStateAdv
+			return;
 		}
 
-		// CREATE MODE ONLY: Save state for next time
 		this.plugin.savedInputStateAdv = {};
 
-		// Save top-level inputs
 		for (const [key, el] of Object.entries(this.inputs)) {
 			const value = (
 				el as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -415,7 +397,6 @@ this.savedInputStateAdv = {};
 			this.plugin.savedInputStateAdv[key] = value;
 		}
 
-		// Save features
 		this.plugin.savedInputStateAdv.features = this.features.map(
 			({ nameEl, typeEl, costEl, descEl }) => ({
 				featureName: nameEl.value,

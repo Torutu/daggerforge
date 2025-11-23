@@ -41,13 +41,11 @@ export class EnvironmentView extends ItemView {
 		const container = this.containerEl.children[1] as HTMLElement;
 		container.empty();
 
-		// Create title
 		container.createEl("h2", {
 			text: "Environment Browser",
 			cls: "df-env-title",
 		});
 
-		// Create search controls (will be populated with available options after data loads)
 		this.searchControlsUI = new SearchControlsUI({
 			placeholderText: "Search by name, type, or description...",
 			showTypeFilter: true,
@@ -63,7 +61,6 @@ export class EnvironmentView extends ItemView {
 
 		this.searchControlsUI.create(container);
 
-		// Create results container
 		this.resultsDiv = container.createEl("div", {
 			cls: "df-environment-results",
 		});
@@ -81,7 +78,6 @@ export class EnvironmentView extends ItemView {
 				return;
 			}
 
-			// Use ID if available
 			const envId = (env as any).id;
 			
 			if (!envId) {
@@ -89,7 +85,6 @@ export class EnvironmentView extends ItemView {
 				return;
 			}
 
-			// Call updated DataManager method that uses ID instead of name
 			await plugin.dataManager.deleteEnvironmentById(envId);
 			new Notice(`Deleted environment: ${env.name}`);
 			this.refresh();
@@ -111,7 +106,7 @@ export class EnvironmentView extends ItemView {
 
 			return customEnvs.map((env: any) => ({
 				...env,
-				id: env.id || generateUniqueId(),  // Generate ID if missing
+				id: env.id || generateUniqueId(),  
 				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
 				isCustom: true,
 				source: env.source || "custom",
@@ -126,7 +121,7 @@ export class EnvironmentView extends ItemView {
 		try {
 			const builtIn = ENVIRONMENTS.map((e: any) => ({
 				...e,
-				id: e.id || generateUniqueId(),  // Generate ID if missing
+				id: e.id || generateUniqueId(),
 				isCustom: false,
 				source: e.source ?? "core",
 				type: e.type,
@@ -135,10 +130,8 @@ export class EnvironmentView extends ItemView {
 			const custom = this.loadCustomEnvironments();
 			this.environments = [...builtIn, ...custom];
 
-			// Initialize search engine
 			this.searchEngine.setItems(this.environments);
 
-			// Update filter UI with available options
 			if (this.searchControlsUI) {
 				const sources = this.searchEngine.getAvailableOptions("source");
 				const types = this.searchEngine.getAvailableOptions("type");
@@ -146,7 +139,6 @@ export class EnvironmentView extends ItemView {
 				this.searchControlsUI.updateAvailableOptions("types", types);
 			}
 
-			// Render initial results
 			this.renderResults(this.environments);
 		} catch (e) {
 			console.error("Error loading environment data:", e);

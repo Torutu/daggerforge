@@ -1,6 +1,5 @@
 let encounterWindowContainer: HTMLDivElement | null = null;
 
-// Persistent state that survives window close/reopen
 interface EncounterState {
     baseBP: number;
     adjustments: { value: number; reason: string }[];
@@ -92,13 +91,11 @@ export function openEncounterCalculator() {
 
     document.body.appendChild(container);
 
-    // Close button
     container.querySelector("#df-encounter-close")!.addEventListener("click", () => {
         container.remove();
         encounterWindowContainer = null;
     });
 
-    // Drag logic
     const header = container.querySelector(".df-floating-header") as HTMLElement;
     let isDragging = false, offsetX = 0, offsetY = 0;
 
@@ -135,7 +132,6 @@ export function openEncounterCalculator() {
     }
 
     function updateDisplay() {
-        // Update adjustments list
         adjustmentsList.innerHTML = "";
         encounterState.adjustments.forEach(adj => {
             const div = document.createElement("div");
@@ -143,7 +139,6 @@ export function openEncounterCalculator() {
             adjustmentsList.appendChild(div);
         });
 
-        // Update spending list
         spendingList.innerHTML = "";
         encounterState.spentItems.forEach(item => {
             const div = document.createElement("div");
@@ -151,17 +146,14 @@ export function openEncounterCalculator() {
             spendingList.appendChild(div);
         });
 
-        // Update totals
         const { totalAdj, remaining } = calculateTotals();
         adjustmentsTotal.textContent = totalAdj.toString();
         remainingBP.textContent = remaining.toString();
 
-        // Scroll to bottom of lists
         adjustmentsList.scrollTop = adjustmentsList.scrollHeight;
         spendingList.scrollTop = spendingList.scrollHeight;
     }
 
-    // Calculate base BP button
     container.querySelector("#df-calc-base")!.addEventListener("click", () => {
         encounterState.pcCount = Number(pcInput.value);
         encounterState.baseBP = 3 * encounterState.pcCount + 2;
@@ -170,7 +162,6 @@ export function openEncounterCalculator() {
         updateDisplay();
     });
 
-    // Adjustment buttons
     container.querySelectorAll("[data-adjust]").forEach(btn => {
         btn.addEventListener("click", () => {
             const val = parseInt((btn as HTMLElement).dataset.adjust!);
@@ -181,7 +172,6 @@ export function openEncounterCalculator() {
         });
     });
 
-    // Spending buttons
     container.querySelectorAll("[data-cost]").forEach(btn => {
         btn.addEventListener("click", () => {
             let cost = parseInt((btn as HTMLElement).dataset.cost!);
@@ -197,7 +187,6 @@ export function openEncounterCalculator() {
         });
     });
 
-    // Clear log button
     clearLogBtn.addEventListener("click", () => {
         encounterState = {
             baseBP: 0,
@@ -208,11 +197,9 @@ export function openEncounterCalculator() {
         updateDisplay();
     });
 
-    // Update PC count in state when changed
     pcInput.addEventListener("change", () => {
         encounterState.pcCount = Number(pcInput.value);
     });
 
-    // Initial display update (restore previous state)
     updateDisplay();
 }

@@ -3,11 +3,9 @@ import { CardData } from "../../../types/adversary";
 export function extractCardData(cardElement: HTMLElement): CardData {
     const statsText = cardElement.querySelector('.df-stats')?.textContent || '';
     
-    // Extract dropdown values from data attributes
     const weaponRange = cardElement.getAttribute('data-weapon-range') || '';
     const type = cardElement.getAttribute('data-type') || '';
 
-    // Count the number of adversary instances (HP tickbox containers)
     const adversaryCount = cardElement.querySelectorAll('.df-hp-tickboxes').length;
     const count = adversaryCount > 0 ? adversaryCount.toString() : '1';
 
@@ -25,11 +23,9 @@ export function extractCardData(cardElement: HTMLElement): CardData {
         stress: statsText.match(/Stress: ([^|A]+|A(?!TK:))/)?.[1]?.trim() || '',
         atk: statsText.match(/ATK: ([^|]+)/)?.[1]?.trim() || '',
         weaponName: (() => {
-            // Match various ATK patterns followed by pipe and weapon name
             const match = statsText.match(/ATK[:\s]*[^|]*\|\s*([^:]+):/);
             if (!match) return '';
             
-            // Extract and clean the weapon name (remove any leading/trailing whitespace)
             return match[1].trim();
         })(),
         weaponRange: weaponRange,
@@ -39,7 +35,7 @@ export function extractCardData(cardElement: HTMLElement): CardData {
             return last.replace(/Experience:.*/i, '').trim();
         })(),
         xp: cardElement.querySelector('.df-experience-line')?.textContent?.replace('Experience:', '')?.trim() || '',
-        count: count, // Add the count here
+        count: count,
         features: Array.from(cardElement.querySelectorAll('.df-feature')).map(feat => ({
             name: feat.querySelector('.df-feature-title')?.textContent?.split(' - ')[0]?.trim() || '',
             type: feat.querySelector('.df-feature-title')?.textContent?.split(' - ')[1]?.split(':')[0]?.trim() || '',

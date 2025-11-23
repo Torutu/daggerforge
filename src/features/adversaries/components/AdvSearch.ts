@@ -23,10 +23,10 @@ interface AdversaryFeature {
 }
 
 export interface Adversary {
-		id?: string;  // Unique identifier for the adversary
+		id?: string;
 		name: string;
-		type: string;  // Base type (e.g., "Leader")
-		displayType?: string;  // Full type for display (e.g., "Leader (Umbra-Touched)")
+		type: string;
+		displayType?: string;
 		tier: number;
 		desc: string;
 		motives: string;
@@ -102,7 +102,6 @@ export class AdversaryView extends ItemView {
 				return;
 			}
 
-			// Use ID if available
 			const adversaryId = adversary.id;
 			
 			if (!adversaryId) {
@@ -110,7 +109,6 @@ export class AdversaryView extends ItemView {
 				return;
 			}
 
-			// Call updated DataManager method that uses ID instead of name
 			await plugin.dataManager.deleteAdversaryById(adversaryId);
 			new Notice(`Deleted adversary: ${adversary.name}`);
 			this.refresh();
@@ -140,19 +138,16 @@ export class AdversaryView extends ItemView {
 		const container = this.containerEl.children[1] as HTMLElement;
 		container.empty();
 
-		// Create title
 		container.createEl("h2", {
 			text: "Adversary Browser",
 			cls: "df-adv-title",
 		});
 
-		// Create counter controls
 		const counterContainer = container.createDiv({
 			cls: "df-adversary-counter-container",
 		});
 		this.createCounterControls(counterContainer);
 
-		// Create search controls (will be populated with available options after data loads)
 		this.searchControlsUI = new SearchControlsUI({
 			placeholderText: "Search by name, type, or description...",
 			showTypeFilter: true,
@@ -170,7 +165,6 @@ export class AdversaryView extends ItemView {
 
 		this.searchControlsUI.create(container);
 
-		// Create results container
 		this.resultsDiv = container.createEl("div", {
 			cls: "df-adversary-results",
 		});
@@ -193,7 +187,7 @@ export class AdversaryView extends ItemView {
 		const baseType = this.extractBaseType(fullType);
 		
 		return {
-			id: raw.id || generateUniqueId(),  // Generate ID if missing
+			id: raw.id || generateUniqueId(),
 			name: raw.name || raw.Name || "",
 			type: baseType,
 			displayType: fullType !== baseType ? fullType : undefined,
@@ -219,7 +213,6 @@ export class AdversaryView extends ItemView {
 	}
 
 	private extractBaseType(fullType: string): string {
-		// Extract base type before any parentheses
 		const match = fullType.match(/^([^(]+)/);
 		return match ? match[1].trim() : fullType;
 	}
@@ -262,16 +255,13 @@ export class AdversaryView extends ItemView {
 			const custom = this.loadCustomAdversaries();
 			this.adversaries = [...builtInAdversaries, ...custom];
 			
-			// Convert all tiers to numbers for consistent filtering
 			this.adversaries = this.adversaries.map(adv => ({
 				...adv,
 				tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier
 			}));
 
-			// Initialize search engine
 			this.searchEngine.setItems(this.adversaries);
 
-			// Update filter UI with available options
 			if (this.searchControlsUI) {
 				const sources = this.searchEngine.getAvailableOptions("source");
 				const types = this.searchEngine.getAvailableOptions("type");
@@ -281,7 +271,6 @@ export class AdversaryView extends ItemView {
 				this.searchControlsUI.updateAvailableOptions("tiers", tiers);
 			}
 
-			// Render initial results
 			this.renderResults(this.adversaries);
 		} catch (e) {
 			console.error("Error loading adversary data:", e);
@@ -313,9 +302,7 @@ export class AdversaryView extends ItemView {
 	}
 
 	private handleClearFilters() {
-		// Reset counter to 1 when clear button is clicked
 		resetAdversaryCount();
-		// Update the counter display
 		const counterInputs = this.containerEl.querySelectorAll(".count-input");
 		counterInputs.forEach((input) => {
 			if (input instanceof HTMLInputElement) {

@@ -4,7 +4,6 @@ let floatingWindowContainer: HTMLDivElement | null = null;
 const diceLog: string[] = [];
 
 export function openDiceRoller() {
-    // If already open, remove it first
     if (floatingWindowContainer) {
         floatingWindowContainer.remove();
         floatingWindowContainer = null;
@@ -135,6 +134,5 @@ export function openDiceRoller() {
         updateLog();
     });
 
-    // Show previous logs if they exist
     updateLog();
 }

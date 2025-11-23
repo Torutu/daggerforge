@@ -1,4 +1,3 @@
-// Adversary counter state management
 let adversaryCount = 1;
 
 export function getAdversaryCount(): number {
