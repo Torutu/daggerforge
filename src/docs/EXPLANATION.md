@@ -4,7 +4,7 @@
 
 **State Isolation** - Create and edit modes maintain separate state. Edit mode uses isolated `editModeState`. Create mode uses `plugin.savedInputStateEnv`. Both clear completely on modal close to prevent contamination.
 
-**Modal Detection** - Environment and adversary modals detect mode by checking saved state. Environment checks for impulse/potentialAdversaries fields. Isolation prevents data leakage between operations.
+**Modal Detection** - Environment and adversary modals detect mode by checking saved state. Isolation prevents data leakage between operations.
 
 ## Features
 
