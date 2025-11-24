@@ -36,8 +36,8 @@
 		"src/**/*.ts"
 	],
 	"exclude": [
-		"archive/**", // Explicitly exclude archived files
-		"**/*.test.ts", // Exclude test files
+		"archive/**",
+		"**/*.test.ts",
 		"node_modules"
 	]
 }
