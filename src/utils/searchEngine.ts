@@ -93,7 +93,7 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 			item.desc,
 		].filter(Boolean);
 
-		return searchFields.some((field: any) =>
+		return searchFields.some((field: string) =>
 			field.toLowerCase().includes(query)
 		);
 	}

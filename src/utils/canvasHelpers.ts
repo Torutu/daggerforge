@@ -107,7 +107,7 @@ export function createCanvasCard(
 		return true;
 		
 	} catch (error) {
-		console.error("✗ Error creating canvas card:", error);
+		console.error("Error creating canvas card:", error);
 		new Notice(`Error creating canvas card: ${error.message}`);
 		return false;
 	}

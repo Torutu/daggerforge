@@ -89,7 +89,7 @@ export default class DaggerForgePlugin extends Plugin {
 					item
 						.setTitle("Dice roller")
 						.setIcon("dice")
-						.onClick(() => openDiceRoller()),
+						.onClick(() => openDiceRoller(this)),
 				);
 
 				menu.addItem((item) =>
@@ -154,7 +154,7 @@ export default class DaggerForgePlugin extends Plugin {
 		this.addCommand({
 			id: "open-floating-window",
 			name: "Open dice roller",
-			callback: () => openDiceRoller(),
+			callback: () => openDiceRoller(this),
 		});
 
 		this.addCommand({
@@ -186,13 +186,11 @@ export default class DaggerForgePlugin extends Plugin {
 		// Check if we're on a canvas
 		const activeLeaf = this.app.workspace.activeLeaf;
 		if (activeLeaf?.view?.getViewType() === "canvas") {
-			// On canvas - create a dummy editor (won't be used but required for modal constructor)
-			const dummyEditor = null as any;
+			const dummyEditor: Editor | null = null;
 			if (type === "adversary") {
-				new TextInputModal(this, dummyEditor).open();
+				new TextInputModal(this, dummyEditor as any).open();
 			} else {
-				new EnvironmentModal(this, dummyEditor, (result) => {
-					// This won't be called for canvas
+				new EnvironmentModal(this, dummyEditor as any, (result) => {
 				}).open();
 			}
 			return;
@@ -235,7 +233,6 @@ export default class DaggerForgePlugin extends Plugin {
 			this,
 			async () => {
 				await this.dataManager.deleteDataFile();
-				// Refresh both browsers
 				this.refreshBrowsers();
 			}
 		);
@@ -246,7 +243,6 @@ export default class DaggerForgePlugin extends Plugin {
 	 * Refresh all open adversary and environment browsers
 	 */
 	public refreshBrowsers() {
-		// Refresh adversary browsers
 		const adversaryLeaves = this.app.workspace.getLeavesOfType(ADVERSARY_VIEW_TYPE);
 		adversaryLeaves.forEach((leaf) => {
 			const view = leaf.view as AdversaryView;
@@ -255,7 +251,6 @@ export default class DaggerForgePlugin extends Plugin {
 			}
 		});
 
-		// Refresh environment browsers
 		const environmentLeaves = this.app.workspace.getLeavesOfType(ENVIRONMENT_VIEW_TYPE);
 		environmentLeaves.forEach((leaf) => {
 			const view = leaf.view as EnvironmentView;

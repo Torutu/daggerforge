@@ -47,7 +47,6 @@ export function createTagButtons(
 		cls: "df-feature-tag-button-container",
 	});
 
-	// Container inline styles
 	buttonContainer.style.display = "flex";
 	buttonContainer.style.gap = "6px";
 	buttonContainer.style.flexWrap = "wrap";
@@ -64,7 +63,6 @@ export function createTagButtons(
 			},
 		});
 
-		// Inline styles
 		button.style.padding = "4px 12px";
 		button.style.border = "1px solid var(--background-modifier-border)";
 		button.style.borderRadius = "4px";
@@ -76,7 +74,6 @@ export function createTagButtons(
 		button.style.transition = "all 0.2s ease";
 		button.style.whiteSpace = "nowrap";
 
-		// Hover
 		button.addEventListener("mouseenter", () => {
 			button.style.backgroundColor = "var(--interactive-accent)";
 			button.style.color = "white";
@@ -94,7 +91,6 @@ export function createTagButtons(
 		});
 
 		button.type = "button";
-
 		button.addEventListener("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();

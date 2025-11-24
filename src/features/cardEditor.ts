@@ -392,17 +392,27 @@ async function handleCanvasCardEdit(
 					// Find the existing inner div and replace only its content
 					const existingInner = cardElement.querySelector('.df-card-inner');
 					if (existingInner) {
-						// Clear and update
-						existingInner.innerHTML = '';
-						existingInner.innerHTML = newInner.innerHTML;
+						// Clone the new content safely
+						const clonedContent = newInner.cloneNode(true) as HTMLElement;
+						
+						// Clear existing content safely
+						while (existingInner.firstChild) {
+							existingInner.removeChild(existingInner.firstChild);
+						}
+						
+						// Append cloned nodes
+						while (clonedContent.firstChild) {
+							existingInner.appendChild(clonedContent.firstChild);
+						}
 						
 						// Force canvas to re-render by triggering a small style update
-						cardElement.style.opacity = '0.99';
+						cardElement.classList.add('df-canvas-force-rerender');
 						requestAnimationFrame(() => {
-							if (cardElement) {
-								cardElement.style.opacity = '1';
-							}
-						});
+						if (cardElement) {
+						cardElement.classList.remove('df-canvas-force-rerender');
+						 cardElement.classList.add('df-canvas-normal-opacity');
+						 }
+								});
 					}
 				}
 				
@@ -509,19 +519,43 @@ async function handleCanvasCardEdit(
 				if (innerContent) {
 					const existingInner = cardElement!.querySelector('.df-env-card-inner');
 					if (existingInner) {
-						existingInner.innerHTML = innerContent.innerHTML;
+						// Clone the new content safely
+						const clonedContent = innerContent.cloneNode(true) as HTMLElement;
+						
+						// Clear existing content safely
+						while (existingInner.firstChild) {
+							existingInner.removeChild(existingInner.firstChild);
+						}
+						
+						// Append cloned nodes
+						while (clonedContent.firstChild) {
+							existingInner.appendChild(clonedContent.firstChild);
+						}
 						
 						// Force canvas to re-render
-						cardElement!.style.opacity = '0.99';
+						cardElement!.classList.add('df-canvas-force-rerender');
 						requestAnimationFrame(() => {
-							if (cardElement) {
-								cardElement.style.opacity = '1';
-							}
-						});
+						if (cardElement) {
+						cardElement.classList.remove('df-canvas-force-rerender');
+						 cardElement.classList.add('df-canvas-normal-opacity');
+						 }
+										});
 					}
 				} else {
-					// Fallback: use the entire HTML
-					cardElement!.innerHTML = newHTML;
+					// Fallback: use DOMParser for safe HTML parsing
+					const tempParser = new DOMParser();
+					const tempDoc = tempParser.parseFromString(newHTML, 'text/html');
+					
+					// Clear and replace entire card safely
+					while (cardElement!.firstChild) {
+						cardElement!.removeChild(cardElement!.firstChild);
+					}
+					
+					// Clone and append all parsed content
+					Array.from(tempDoc.body.childNodes).forEach(node => {
+						const clonedNode = node.cloneNode(true);
+						cardElement!.appendChild(clonedNode);
+					});
 				}
 				
 				new Notice(`Updated environment: ${cardName}`);

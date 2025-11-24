@@ -558,9 +558,9 @@ select.df-input-field {
 
 /* Make potential adversaries span full width and stack vertically */
 .df-env-row-adversaries {
-	flex-direction: column;         /* stack label and input vertically */
-	align-items: flex-start;        /* align left */
-	width: 100%;                    /* span full modal width */
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
 }
 
 /* Optional: make the input wider or resizable */
@@ -1276,6 +1276,34 @@ select.df-input-field {
 .df-clear-log-btn {
     margin-left: 5px;
 }
+
+
+/* Reset transform - used when drag starts */
+.df-dragging-active {
+  transform: none !important;
+}
+
+/* During drag movement */
+.df-dragging {
+  cursor: grabbing;
+}
+
+/* Default grab cursor */
+.df-grab-cursor {
+  cursor: grab;
+}
+
+/* Reset grab cursor state */
+.df-grab-reset {
+  cursor: grab;
+}
+
+/* Position updates during drag (applied with JS calculation) */
+.df-drag-positioning {
+  position: fixed;
+  z-index: 9999;
+}
+
 
 /****************************************/
 /* ===== BATTLE GUIDE ===== */

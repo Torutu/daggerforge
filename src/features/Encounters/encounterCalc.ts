@@ -1,4 +1,5 @@
 let encounterWindowContainer: HTMLDivElement | null = null;
+let cleanupListeners: (() => void)[] = [];
 
 interface EncounterState {
     baseBP: number;
@@ -19,110 +20,130 @@ export function openEncounterCalculator() {
     if (encounterWindowContainer) {
         encounterWindowContainer.remove();
         encounterWindowContainer = null;
+        cleanupListeners.forEach(cleanup => cleanup());
+        cleanupListeners = [];
     }
 
     const container = document.createElement("div");
     encounterWindowContainer = container;
     container.classList.add("df-bg-floating-window");
 
-    container.innerHTML = `
-        <div class="df-floating-header">
-            Battle guide
-            <button id="df-encounter-close" class="df-close-btn">✖</button>
-        </div>
-        <div class="df-floating-body df-encounter-body">
-            <!-- Player input -->
-            <div class="df-encounter-inputs">
-                <label>Number of PCs:</label>
-                <input type="number" id="df-pc-count" min="1" value="${encounterState.pcCount}" />
-                <button id="df-calc-base">Calculate Base BP</button>
-            </div>
+    // Build UI safely without innerHTML
+    const header = container.createEl("div", { cls: "df-floating-header" });
+    header.createEl("span", { text: "Battle guide" });
+    const closeBtn = header.createEl("button", { text: "✖", cls: "df-close-btn" });
 
-            <!-- Two columns -->
-            <div class="df-encounter-columns">
-                <!-- Left: Adjustments -->
-                <div class="df-adjustments-column">
-                    <div class="df-sticky-header">Adjusting Battle Points</div>
-                    <div id="df-adjustments-list" class="df-scrollable-list"></div>
-                    <p>Total Adjustments: <span id="df-adjustments-total">0</span></p>
-                </div>
+    const body = container.createEl("div", { cls: "df-floating-body df-encounter-body" });
 
-                <!-- Right: Spending -->
-                <div class="df-spending-column">
-                    <div class="df-sticky-header">Spending Battle Points</div>
-                    <div id="df-spending-list" class="df-scrollable-list"></div>
-                    <p>Remaining BP: <span id="df-remaining-bp">0</span></p>
-                </div>
-            </div>
+    // Player input section
+    const inputsDiv = body.createEl("div", { cls: "df-encounter-inputs" });
+    inputsDiv.createEl("label", { text: "Number of PCs:" });
+    const pcInput = inputsDiv.createEl("input") as HTMLInputElement;
+    pcInput.type = "number";
+    pcInput.min = "1";
+    pcInput.value = encounterState.pcCount.toString();
+    const calcBtn = inputsDiv.createEl("button", { text: "Calculate Base BP" });
 
+    // Two columns
+    const columnsDiv = body.createEl("div", { cls: "df-encounter-columns" });
 
-            <!-- Adjustment Buttons -->
-            <div class="df-encounter-buttons">
-                <h5 class="df-bg-h5" >Adjust BP:</h5>
-                    <div class="df-bg-button-container">
-                    <button class="df-bg-button" data-adjust="-1">Less difficult/shorter (-1)</button>
-                    <button class="df-bg-button" data-adjust="-2">2+ Solo adversaries (-2)</button>
-                    <button class="df-bg-button" data-adjust="-2">+1d4 or +2 damage (-2)</button>
-                    <button class="df-bg-button" data-adjust="+1">Lower tier adversary (+1)</button>
-                    <button class="df-bg-button" data-adjust="+1">No Bruisers/Hordes/Leaders/Solos (+1)</button>
-                    <button class="df-bg-button" data-adjust="+2">More dangerous/longer (+2)</button>
-                    </div>
-            </div>
+    // Left: Adjustments
+    const adjColumn = columnsDiv.createEl("div", { cls: "df-adjustments-column" });
+    adjColumn.createEl("div", { text: "Adjusting Battle Points", cls: "df-sticky-header" });
+    const adjustmentsList = adjColumn.createEl("div", { cls: "df-scrollable-list" });
+    const adjTotal = adjColumn.createEl("p");
+    adjTotal.createEl("span", { text: "Total Adjustments: " });
+    adjTotal.createEl("span", { text: "0" });
 
-            <!-- Spending Buttons -->
-            <div class="df-encounter-buttons">
-                <h5 class="df-bg-h5">Spend BP:</h5>
-                    <div class="df-bg-button-container">
-                    <button class="df-bg-button" data-cost="1">Minions (Party size) [-1]</button>
-                    <button class="df-bg-button" data-cost="1">Social / Support [-1]</button>
-                    <button class="df-bg-button" data-cost="2">Horde / Ranged / Skulk / Standard [-2]</button>
-                    <button class="df-bg-button" data-cost="3">Leader [-3]</button>
-                    <button class="df-bg-button" data-cost="4">Bruiser [-4]</button>
-                    <button class="df-bg-button" data-cost="5">Solo [-5]</button>
-                    </div>
-            </div>
+    // Right: Spending
+    const spendColumn = columnsDiv.createEl("div", { cls: "df-spending-column" });
+    spendColumn.createEl("div", { text: "Spending Battle Points", cls: "df-sticky-header" });
+    const spendingList = spendColumn.createEl("div", { cls: "df-scrollable-list" });
+    const remainingBP = spendColumn.createEl("p");
+    remainingBP.createEl("span", { text: "Remaining BP: " });
+    remainingBP.createEl("span", { text: "0" });
 
-            <!-- Clear Log Button -->
-            <div class="df-encounter-buttons">
-                <button id="df-clear-encounter-log" class="df-clear-log-btn">Clear Log</button>
-            </div>
-        </div>
-    `;
+    // Adjustment buttons
+    const adjButtonsDiv = body.createEl("div", { cls: "df-encounter-buttons" });
+    adjButtonsDiv.createEl("h5", { text: "Adjust BP:", cls: "df-bg-h5" });
+    const adjBtnContainer = adjButtonsDiv.createEl("div", { cls: "df-bg-button-container" });
+    
+    const adjustments = [
+        { value: -1, label: "Less difficult/shorter (-1)" },
+        { value: -2, label: "2+ Solo adversaries (-2)" },
+        { value: -2, label: "+1d4 or +2 damage (-2)" },
+        { value: 1, label: "Lower tier adversary (+1)" },
+        { value: 1, label: "No Bruisers/Hordes/Leaders/Solos (+1)" },
+        { value: 2, label: "More dangerous/longer (+2)" },
+    ];
+    
+    adjustments.forEach(adj => {
+        const btn = adjBtnContainer.createEl("button", { text: adj.label, cls: "df-bg-button" });
+        btn.setAttribute("data-adjust", adj.value.toString());
+    });
+
+    // Spending buttons
+    const spendButtonsDiv = body.createEl("div", { cls: "df-encounter-buttons" });
+    spendButtonsDiv.createEl("h5", { text: "Spend BP:", cls: "df-bg-h5" });
+    const spendBtnContainer = spendButtonsDiv.createEl("div", { cls: "df-bg-button-container" });
+    
+    const spendOptions = [
+        { cost: 1, label: "Minions (Party size) [-1]" },
+        { cost: 1, label: "Social / Support [-1]" },
+        { cost: 2, label: "Horde / Ranged / Skulk / Standard [-2]" },
+        { cost: 3, label: "Leader [-3]" },
+        { cost: 4, label: "Bruiser [-4]" },
+        { cost: 5, label: "Solo [-5]" },
+    ];
+    
+    spendOptions.forEach(opt => {
+        const btn = spendBtnContainer.createEl("button", { text: opt.label, cls: "df-bg-button" });
+        btn.setAttribute("data-cost", opt.cost.toString());
+    });
+
+    // Clear log button
+    const clearDiv = body.createEl("div", { cls: "df-encounter-buttons" });
+    const clearLogBtn = clearDiv.createEl("button", { text: "Clear Log", cls: "df-clear-log-btn" });
 
     document.body.appendChild(container);
 
-    container.querySelector("#df-encounter-close")!.addEventListener("click", () => {
+    // Close handler
+    const onClose = () => {
         container.remove();
         encounterWindowContainer = null;
-    });
+        cleanupListeners.forEach(cleanup => cleanup());
+        cleanupListeners = [];
+    };
+    closeBtn.addEventListener("click", onClose);
+    cleanupListeners.push(() => closeBtn.removeEventListener("click", onClose));
 
-    const header = container.querySelector(".df-floating-header") as HTMLElement;
+    // Drag logic with proper cleanup
     let isDragging = false, offsetX = 0, offsetY = 0;
 
-    header.onmousedown = (e) => {
+    const onMouseDown = (e: MouseEvent) => {
         isDragging = true;
-        offsetX = e.clientX - container.offsetLeft;
-        offsetY = e.clientY - container.offsetTop;
-        header.style.cursor = "grabbing";
-    };
-    document.onmousemove = (e) => {
-        if (!isDragging) return;
-        container.style.left = e.clientX - offsetX + "px";
-        container.style.top = e.clientY - offsetY + "px";
-        container.style.transform = "";
-    };
-    document.onmouseup = () => {
-        isDragging = false;
-        header.style.cursor = "grab";
+        container.classList.add("df-dragging-active");
+        header.classList.add("df-grab-cursor-active");
     };
 
-    // --- Elements ---
-    const pcInput = container.querySelector("#df-pc-count") as HTMLInputElement;
-    const adjustmentsList = container.querySelector("#df-adjustments-list")!;
-    const adjustmentsTotal = container.querySelector("#df-adjustments-total")!;
-    const spendingList = container.querySelector("#df-spending-list")!;
-    const remainingBP = container.querySelector("#df-remaining-bp")!;
-    const clearLogBtn = container.querySelector("#df-clear-encounter-log")!;
+    const onMouseMove = (e: MouseEvent) => {
+        // Left/top positioning stays as inline (dynamic)
+    };
+
+    const onMouseUp = () => {
+        header.classList.remove("df-grab-cursor-active");
+        container.classList.remove("df-dragging-active");
+    };
+
+    header.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+
+    cleanupListeners.push(() => {
+        header.removeEventListener("mousedown", onMouseDown);
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", onMouseUp);
+    });
 
     // --- Helper functions ---
     function calculateTotals() {
@@ -132,50 +153,52 @@ export function openEncounterCalculator() {
     }
 
     function updateDisplay() {
-        adjustmentsList.innerHTML = "";
+        adjustmentsList.empty();
         encounterState.adjustments.forEach(adj => {
-            const div = document.createElement("div");
-            div.textContent = `${adj.reason} → ${adj.value > 0 ? "+" : ""}${adj.value}`;
-            adjustmentsList.appendChild(div);
+            adjustmentsList.createEl("div", { text: `${adj.reason} → ${adj.value > 0 ? "+" : ""}${adj.value}` });
         });
 
-        spendingList.innerHTML = "";
+        spendingList.empty();
         encounterState.spentItems.forEach(item => {
-            const div = document.createElement("div");
-            div.textContent = `${item.label} → ${item.cost} BP`;
-            spendingList.appendChild(div);
+            spendingList.createEl("div", { text: `${item.label} → ${item.cost} BP` });
         });
 
         const { totalAdj, remaining } = calculateTotals();
-        adjustmentsTotal.textContent = totalAdj.toString();
-        remainingBP.textContent = remaining.toString();
+        const adjTotalSpan = adjTotal.querySelector("span:last-child");
+        if (adjTotalSpan) adjTotalSpan.textContent = totalAdj.toString();
+        
+        const remainingSpan = remainingBP.querySelector("span:last-child");
+        if (remainingSpan) remainingSpan.textContent = remaining.toString();
 
         adjustmentsList.scrollTop = adjustmentsList.scrollHeight;
         spendingList.scrollTop = spendingList.scrollHeight;
     }
 
-    container.querySelector("#df-calc-base")!.addEventListener("click", () => {
+    const onCalcBase = () => {
         encounterState.pcCount = Number(pcInput.value);
         encounterState.baseBP = 3 * encounterState.pcCount + 2;
         encounterState.adjustments = [];
         encounterState.spentItems = [];
         updateDisplay();
-    });
+    };
+    calcBtn.addEventListener("click", onCalcBase);
 
+    // Adjustment buttons
     container.querySelectorAll("[data-adjust]").forEach(btn => {
-        btn.addEventListener("click", () => {
+        const onClick = () => {
             const val = parseInt((btn as HTMLElement).dataset.adjust!);
             const reason = (btn as HTMLElement).textContent!;
-            
             encounterState.adjustments.push({ value: val, reason });
             updateDisplay();
-        });
+        };
+        btn.addEventListener("click", onClick);
     });
 
+    // Spending buttons
     container.querySelectorAll("[data-cost]").forEach(btn => {
-        btn.addEventListener("click", () => {
-            let cost = parseInt((btn as HTMLElement).dataset.cost!);
-            let label = (btn as HTMLElement).textContent!;
+        const onClick = () => {
+            const cost = parseInt((btn as HTMLElement).dataset.cost!);
+            const label = (btn as HTMLElement).textContent!;
 
             const { remaining } = calculateTotals();
             if (remaining >= cost) {
@@ -184,10 +207,11 @@ export function openEncounterCalculator() {
             } else {
                 alert("Not enough Battle Points!");
             }
-        });
+        };
+        btn.addEventListener("click", onClick);
     });
 
-    clearLogBtn.addEventListener("click", () => {
+    const onClearLog = () => {
         encounterState = {
             baseBP: 0,
             adjustments: [],
@@ -195,11 +219,13 @@ export function openEncounterCalculator() {
             pcCount: Number(pcInput.value)
         };
         updateDisplay();
-    });
+    };
+    clearLogBtn.addEventListener("click", onClearLog);
 
-    pcInput.addEventListener("change", () => {
+    const onPcChange = () => {
         encounterState.pcCount = Number(pcInput.value);
-    });
+    };
+    pcInput.addEventListener("change", onPcChange);
 
     updateDisplay();
 }
