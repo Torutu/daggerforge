@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"ignoreDeprecations": "6.0",
 		"types": [
 			"obsidian"
 		],
@@ -28,8 +29,8 @@
 			"ES7",
 			"ES2019"
 		],
-		"outDir": "dist", // Recommended to separate compiled files
-		"rootDir": "src", // Ensures only src is compiled
+		"outDir": "dist",
+		"rootDir": "src",
 	},
 	"include": [
 		"src/**/*.ts"
