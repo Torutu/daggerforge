@@ -80,9 +80,6 @@ export class DataManager {
 		}
 	}
 
-	/**
-	 * Save data to disk
-	 */
 	private async save(): Promise<void> {
 		this.data.lastUpdated = Date.now();
 		await this.plugin.saveData(this.data);
@@ -126,18 +123,7 @@ export class DataManager {
 		this.data.adversaries.splice(index, 1);
 		await this.save();
 	}
-
-	/**
-	 * Delete adversary by index (deprecated - use deleteAdversaryById)
-	 * @param index The array index of the adversary to delete
-	 * @deprecated Use deleteAdversaryById instead
-	 */
-	async deleteAdversary(index: number): Promise<void> {
-		if (index < 0 || index >= this.data.adversaries.length) return;
-		this.data.adversaries.splice(index, 1);
-		await this.save();
-	}
-
+	
 	searchAdversaries(query: string): CardData[] {
 		return this.data.adversaries.filter(a =>
 			a.name.toLowerCase().includes(query.toLowerCase())
@@ -183,17 +169,6 @@ export class DataManager {
 		await this.save();
 	}
 
-	/**
-	 * Delete environment by index (deprecated - use deleteEnvironmentById)
-	 * @param index The array index of the environment to delete
-	 * @deprecated Use deleteEnvironmentById instead
-	 */
-	async deleteEnvironment(index: number): Promise<void> {
-		if (index < 0 || index >= this.data.environments.length) return;
-		this.data.environments.splice(index, 1);
-		await this.save();
-	}
-
 	searchEnvironments(query: string): EnvironmentData[] {
 		return this.data.environments.filter(e =>
 			e.name.toLowerCase().includes(query.toLowerCase())
@@ -228,6 +203,10 @@ export class DataManager {
 		return JSON.stringify(this.data, null, 2);
 	}
 
+	/*
+	 * Import data from a JSON string
+	 * @param jsonString The JSON string to import
+	 */
 	async importData(jsonString: string): Promise<void> {
 		const imported = JSON.parse(jsonString);
 

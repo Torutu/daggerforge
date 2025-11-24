@@ -9,7 +9,7 @@ import {
 import { addFeature, getFeatureValues } from "./FeatureManager";
 import { buildCardHTML } from "./CardBuilder";
 import { FormInputs } from "../../../types/shared";
-import { FeatureElements, SavedFeatureState } from "../../../types/adversary";
+import { FeatureElements } from "../../../types/adversary";
 import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers"; 
 export async function buildCustomAdversary(
 	plugin: DaggerForgePlugin,

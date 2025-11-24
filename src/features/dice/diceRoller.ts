@@ -15,7 +15,6 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
     floatingWindowContainer = container;
     container.classList.add("df-floating-window");
     
-    // Build UI safely without innerHTML
     const header = container.createEl("div", { cls: "df-floating-header" });
     header.createEl("span", { text: "Dice roller" });
     const closeBtn = header.createEl("button", { text: "✖", cls: "df-close-btn" });
@@ -50,8 +49,6 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
     const diceQueue: string[] = [];
 
     // --- Drag logic with proper cleanup ---
-    let offsetX = 0, offsetY = 0, isDragging = false;
-    
     const onMouseDown = (e: MouseEvent) => {
         header.classList.add("df-grab-cursor-active");
     };

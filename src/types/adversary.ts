@@ -1,4 +1,4 @@
-import type { Feature, FormInputs } from './shared';
+import type { Feature } from './shared';
 
 export type CardData = {
 	id: string;

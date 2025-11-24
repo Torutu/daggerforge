@@ -1,4 +1,3 @@
-// Adversaries feature exports
 export { loadAdversaryTier } from './components/AdvList';
 export * from './components/AdvSearch';
 export * as AdvCounter from './components/AdvCounter';
