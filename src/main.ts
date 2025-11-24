@@ -22,10 +22,8 @@ import {
 
 import { DataManager } from "./data/index";
 
-import type { CardData } from "./types";
-
 export default class DaggerForgePlugin extends Plugin {
-	updateCardData(cardElement: HTMLElement, currentData: CardData) {
+	updateCardData() {
 		throw new Error("Method not implemented.");
 	}
 	dataManager: DataManager;
