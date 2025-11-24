@@ -1,10 +1,7 @@
 // Adversaries exports
-export {
-	AdversaryView,
-	ADVERSARY_VIEW_TYPE,
-} from './adversaries/components/AdvSearch';
-export { loadAdversaryTier } from './adversaries/components/AdvList';
-export * as AdvCounter from './adversaries/components/AdvCounter';
+export * from './adversaries/components/AdvSearch';
+export * from './adversaries/components/AdvList';
+export * from './adversaries/components/AdvCounter';
 export * from './adversaries/creator/CardBuilder';
 export * from './adversaries/creator/FeatureManager';
 export * from './adversaries/creator/TextInputModal';
@@ -12,18 +9,13 @@ export * from './adversaries/editor/AdvEditorModal';
 export * from './adversaries/editor/CardDataHelpers';
 
 // Environments exports
-export {
-	EnvironmentView,
-	ENVIRONMENT_VIEW_TYPE,
-} from './environments/components/EnvSearch';
-export { environmentToHTML } from './environments/components/EnvToHTML';
-export * from './environments/creator/EnvModal';
+export * from './environments/index';
 
 // Encounters exports
-export { openEncounterCalculator } from './Encounters/encounterCalc';
+export * from './extra';
 
 // Dice exports
-export { openDiceRoller } from './dice/diceRoller';
+export * from './extra';
 
 // Card Editor exports
-export { handleCardEditClick, onEditClick } from './cardEditor';
+export * from './CardEditor';

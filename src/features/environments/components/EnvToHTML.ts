@@ -1,4 +1,4 @@
-import { EnvironmentData } from "../../../types/environment";
+import { EnvironmentData } from "../../../types/index";
 
 function markdownToHTML(markdown: string): string {
 	if (!markdown) return "";

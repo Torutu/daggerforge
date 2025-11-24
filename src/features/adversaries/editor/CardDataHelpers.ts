@@ -1,4 +1,4 @@
-import { CardData } from "../../../types/adversary";
+import { CardData } from "../../../types/index";
 
 export function extractCardData(cardElement: HTMLElement): CardData {
     const statsText = cardElement.querySelector('.df-stats')?.textContent || '';

@@ -1,4 +1,3 @@
-
 export type EnvFeatureElements = {
 	nameEl: HTMLInputElement;
 	typeEl: HTMLSelectElement;

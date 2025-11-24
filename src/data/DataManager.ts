@@ -1,7 +1,6 @@
 import { Plugin } from 'obsidian';
-import { CardData } from '../types/adversary';
-import { EnvironmentData } from '../types/environment';
-import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/idGenerator';
+import { CardData ,EnvironmentData} from '../types/index';
+import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
 
 export interface StoredData {
 	version: string;

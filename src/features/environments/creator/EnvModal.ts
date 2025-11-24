@@ -1,14 +1,19 @@
 import { Modal, Editor, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../../main";
-import { createInlineField } from "../../../utils/formHelpers";
-import { FormInputs } from "../../../types/shared";
+import {environmentToHTML } from "../components/EnvToHTML";
 import {
 	EnvFeatureElements,
 	EnvSavedFeatureState,
 	EnvironmentData,
-} from "../../../types/environment";
-import { environmentToHTML } from "../components/EnvToHTML";
-import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
+	FormInputs
+	} from "../../../types/index";
+import { 
+	isMarkdownActive, 
+	isCanvasActive, 
+	createCanvasCard, 
+	getAvailableCanvasPosition,
+	createInlineField 
+	} from "../../../utils/index";
 
 export class EnvironmentModal extends Modal {
 	plugin: DaggerForgePlugin;

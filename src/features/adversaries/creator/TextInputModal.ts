@@ -1,16 +1,17 @@
-import { Notice, TFile, Editor, Modal } from "obsidian";
+import { Notice, Editor, Modal } from "obsidian";
+import { addFeature, getFeatureValues, buildCardHTML } from "../index";
 import type DaggerForgePlugin from "../../../main";
-import { CardData } from "../../../types/adversary";
+import { CardData, FeatureElements, FormInputs } from "../../../types/index";
 import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-} from "../../../utils/formHelpers";
-import { addFeature, getFeatureValues } from "./FeatureManager";
-import { buildCardHTML } from "./CardBuilder";
-import { FormInputs } from "../../../types/shared";
-import { FeatureElements } from "../../../types/adversary";
-import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers"; 
+	isMarkdownActive,
+	isCanvasActive,
+	createCanvasCard, 
+	getAvailableCanvasPosition 
+	} from "../../../utils/index";
+	
 export async function buildCustomAdversary(
 	plugin: DaggerForgePlugin,
 	values: any,

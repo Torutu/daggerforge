@@ -1,10 +1,15 @@
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice, setIcon } from "obsidian";
-import { ENVIRONMENTS } from "../../../data/environments";
-import { EnvironmentData } from "../../../types/environment";
-import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
-import { SearchEngine } from "../../../utils/searchEngine";
-import { SearchControlsUI } from "../../../utils/searchControlsUI";
-import { generateEnvUniqueId } from "../../../utils/idGenerator";
+import { ENVIRONMENTS } from "../../../data/index";
+import { EnvironmentData } from "../../../types/index";
+import { 
+	isMarkdownActive, 
+	isCanvasActive, 
+	createCanvasCard, 
+	getAvailableCanvasPosition, 
+	SearchEngine, 
+	SearchControlsUI, 
+	generateEnvUniqueId
+	} from "../../../utils/index";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 

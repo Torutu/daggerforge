@@ -1,6 +1,5 @@
 import { Editor, MarkdownView, Menu, Notice, Plugin, TFile } from "obsidian";
 
-// Features
 import {
 	AdversaryView,
 	ADVERSARY_VIEW_TYPE,
@@ -12,20 +11,17 @@ import {
 	openDiceRoller,
 	openEncounterCalculator,
 	handleCardEditClick,
-} from "./features";
+} from "./features/index";
 
-// UI
 import {
 	adversariesSidebar,
 	openEnvironmentSidebar,
 	DeleteConfirmModal,
 	ImportDataModal,
-} from "./ui";
+} from "./ui/index";
 
-// Services
-import { DataManager } from "./services/DataManager";
+import { DataManager } from "./data/index";
 
-// Types
 import type { CardData } from "./types";
 
 export default class DaggerForgePlugin extends Plugin {

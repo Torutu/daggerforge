@@ -1,17 +1,19 @@
 import { ItemView, WorkspaceLeaf, Notice, MarkdownView, setIcon } from "obsidian";
-import { ADVERSARIES } from "../../../data/adversaries";
+import { ADVERSARIES } from "../../../data/index";
 import {
 	getAdversaryCount,
 	incrementAdversaryCount,
 	decrementAdversaryCount,
 	setAdversaryCount,
 	resetAdversaryCount,
-} from "../../../utils/adversaryCounter";
-import { isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
-import { buildCardHTML } from "../creator/CardBuilder";
-import { SearchEngine } from "../../../utils/searchEngine";
-import { SearchControlsUI } from "../../../utils/searchControlsUI";
-import { generateAdvUniqueId } from "../../../utils/idGenerator";
+	isCanvasActive,
+	createCanvasCard,
+	getAvailableCanvasPosition,
+	SearchEngine,
+	SearchControlsUI,
+	generateAdvUniqueId
+	} from "../../../utils/index";
+import { buildCardHTML } from "../index";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 

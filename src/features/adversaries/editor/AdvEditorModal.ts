@@ -4,11 +4,9 @@ import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-} from "../../../utils/formHelpers";
-import { addFeature, getFeatureValues } from "../creator/FeatureManager";
-import { buildCardHTML } from "../creator/CardBuilder";
-import { FormInputs } from "../../../types/shared";
-import { FeatureElements } from "../../../types/adversary";
+} from "../../../utils/index";
+import { addFeature, getFeatureValues, buildCardHTML } from "../index";
+import { FormInputs, FeatureElements } from "../../../types/index";
 
 export class AdversaryEditorModal extends Modal {
 	inputs: FormInputs = {};

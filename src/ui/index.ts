@@ -1,6 +1,3 @@
-export {
-	adversariesSidebar,
-	openEnvironmentSidebar,
-} from './Sidebar';
-export { DeleteConfirmModal } from './DeleteConfirmModal';
-export { ImportDataModal } from './ImportDataModal';
+export * from './Sidebar';
+export * from './DeleteConfirmModal';
+export * from './ImportDataModal';

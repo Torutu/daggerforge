@@ -1,4 +1,4 @@
-import { Feature } from "../../../types/shared";
+import { Feature } from "../../../types/index";
 
 export const buildCardHTML = (
 	values: Record<string, string>,

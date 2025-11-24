@@ -1,6 +1,6 @@
-export { loadAdversaryTier } from './components/AdvList';
+export * from './components/AdvList';
 export * from './components/AdvSearch';
-export * as AdvCounter from './components/AdvCounter';
+export * from './components/AdvCounter';
 export * from './creator/CardBuilder';
 export * from './creator/FeatureManager';
 export * from './creator/TextInputModal';

@@ -1,7 +1,10 @@
 import { Modal, Editor } from "obsidian";
 import type DaggerForgePlugin from "../../../main";
-import { EnvironmentData, EnvSavedFeatureState } from "../../../types/environment";
-import { environmentToHTML } from "../components/EnvToHTML";
+import { environmentToHTML } from "../index";
+import { 
+	EnvironmentData, 
+	EnvSavedFeatureState 
+	} from "../../../types/index";
 
 export class EnvironmentEditorModal extends Modal {
 	plugin: DaggerForgePlugin;

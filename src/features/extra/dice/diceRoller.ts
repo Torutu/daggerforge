@@ -1,5 +1,5 @@
-import { rollDice } from "./dice";
-import type DaggerForgePlugin from "../../main";
+import { rollDice } from "..";
+import type DaggerForgePlugin from "../../../main";
 
 let floatingWindowContainer: HTMLDivElement | null = null;
 const diceLog: string[] = [];

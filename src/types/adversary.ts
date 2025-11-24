@@ -1,4 +1,4 @@
-import type { Feature } from './shared';
+import type { Feature } from './index';
 
 export type CardData = {
 	id: string;

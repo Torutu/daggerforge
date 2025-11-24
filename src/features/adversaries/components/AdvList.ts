@@ -1,6 +1,6 @@
 import { Editor, Notice } from "obsidian";
-import { ADVERSARIES } from "../../../data/adversaries";
-import { filterByTier } from "../../../utils/dataFilters";
+import { ADVERSARIES } from "../../../data/index";
+import { filterByTier } from "../../../utils/index";
 
 export async function loadAdversaryTier(tier: string, editor: Editor) {
 

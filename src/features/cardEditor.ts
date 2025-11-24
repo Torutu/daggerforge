@@ -1,10 +1,8 @@
 import { MarkdownView, Notice, App } from "obsidian";
 import type DaggerForgePlugin from "../main";
-import { extractCardData } from "../features/adversaries/editor/CardDataHelpers";
-import { TextInputModal } from "../features/adversaries/creator/TextInputModal";
-import { EnvironmentEditorModal } from "../features/environments";
-import { environmentToHTML } from "../features/environments/components/EnvToHTML";
-import type { EnvironmentData, EnvSavedFeatureState } from "../types/environment";
+import { EnvironmentEditorModal } from ".";
+import { extractCardData, TextInputModal } from "./adversaries/index";
+import type { EnvironmentData, EnvSavedFeatureState } from "../types/index";
 
 // Helper: Find which position this card is at in the DOM (for cards with duplicate names)
 function findCardIndexInDOM(cardElement: HTMLElement, cardType: string): number {
