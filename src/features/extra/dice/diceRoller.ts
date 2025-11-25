@@ -107,7 +107,7 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
     function updateQueue() {
         queueContainer.empty();
         diceQueue.forEach((expr, idx) => {
-            const div = queueContainer.createEl("div");
+            const div = queueContainer.createEl("div", { cls: "df-dice-queue-item" });
             div.createEl("span", { text: expr + " " });
             const removeBtn = div.createEl("button", { text: "x" });
             removeBtn.addEventListener("click", () => {

@@ -1225,9 +1225,17 @@ select.df-input-field {
     padding: 10px;
 }
 
+.df-dice-buttons{
+	display: flex;
+}
+.df-roll-btn{
+	margin-left: 3px;
+}
+
 .df-log-container {
     height: 120px;
     overflow: auto;
+	width: 333px;
     background: #222;
     padding: 5px;
     border-radius: 4px;
@@ -1236,6 +1244,7 @@ select.df-input-field {
 
 .df-label {
     margin-bottom: 4px;
+	margin-top: 1px;
 }
 
 .df-roll-count {
@@ -1245,6 +1254,7 @@ select.df-input-field {
 
 .df-dice-btn {
 	padding: 6px 10px;
+	margin: 3px;
 	border-radius: 6px;
 	border: 1px solid var(--background-modifier-border);
 	background-color: var(--interactive-normal);
@@ -1257,6 +1267,22 @@ select.df-input-field {
 
 .df-dice-queue {
     margin-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 333px;
+    justify-content: center;
+    flex-direction: row;
+    align-content: center;
+}
+
+.df-dice-queue-item {
+	display: inline-block;
+	margin-right: 6px;
+	padding: 4px 8px;
+	background-color: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	font-weight: 600;
 }
 
 .df-multi-roll {
@@ -1312,6 +1338,7 @@ select.df-input-field {
 
 .df-bg-floating-window {
     background-color: var(--background-primary);
+	max-width: fit-content;
 	left: var(--df-left, 100px);
     top: var(--df-top, 100px);
     color: var(--text-normal);
@@ -1332,6 +1359,10 @@ select.df-input-field {
     margin-bottom: 10px;
     font-size: 13px;
     line-height: 1.4;
+}
+
+.df-calc-btn{
+	margin-left: 5px;
 }
 
 .df-battle-guide h4 {

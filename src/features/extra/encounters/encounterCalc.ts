@@ -42,7 +42,7 @@ export function openEncounterCalculator() {
     pcInput.type = "number";
     pcInput.min = "1";
     pcInput.value = encounterState.pcCount.toString();
-    const calcBtn = inputsDiv.createEl("button", { text: "Calculate base BP" });
+    const calcBtn = inputsDiv.createEl("button", { text: "Calculate base BP", cls: "df-calc-btn" });
     const columnsDiv = body.createEl("div", { cls: "df-encounter-columns" });
 
     /**************************/

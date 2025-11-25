@@ -109,10 +109,10 @@
         "name": "Toll-Keepers",
         "type": "Action",
         "cost": "Spend a Fear",
-        "text": "",
+        "text": "to introduce a number of Jagged Knife Lackeys equal to the size of the party plus two Jagged Knife Bandits and a Jagged Knife Lieutenant seeking a 'toll' of two handfuls of gold per character for passing through their \"protected territory\".",
         "bullets": null,
         "questions": [
-          "to introduce a number of Jagged Knife Lackeys equal to the size of the party plus two Jagged Knife Bandits and a Jagged Knife Lieutenant seeking a 'toll' of two handfuls of gold per character for passing through their \"protected territory.\" How do the Underroot folk feel about these toll-keepers?",
+          "How do the Underroot folk feel about these toll-keepers?",
           "What else might they be guarding?"
         ]
       }
