@@ -1,4 +1,5 @@
 import { Feature } from "../../../types/index";
+import { generateAdvUniqueId } from "../../../utils/index";
 
 export const buildCardHTML = (
 	values: Record<string, string>,
@@ -23,6 +24,9 @@ export const buildCardHTML = (
 		count,
 		source,
 	} = values;
+
+	// Generate a unique ID for this card instance for edit tracking
+	const cardInstanceId = generateAdvUniqueId();
 
 	const hptick = Number(hp) || 0;
 	const stresstick = Number(stress) || 0;
@@ -73,7 +77,7 @@ export const buildCardHTML = (
 		)
 		.join("");
 	return `
-<section id="custom" class="df-card-outer df-pseudo-cut-corners outer" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
+<section id="card-${cardInstanceId}" class="df-card-outer df-pseudo-cut-corners outer" data-card-instance-id="${cardInstanceId}" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
 		<button class="df-adv-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
         ${hpStressRepeat}
