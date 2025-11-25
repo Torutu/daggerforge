@@ -13,7 +13,7 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
 
     const container = document.createElement("div");
     floatingWindowContainer = container;
-    container.classList.add("df-floating-window");
+    container.classList.add("df-bg-floating-window");
     
     const header = container.createEl("div", { cls: "df-floating-header" });
     header.createEl("span", { text: "Dice roller" });
@@ -48,22 +48,45 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
 
     const diceQueue: string[] = [];
 
-    // --- Drag logic with proper cleanup ---
-    const onMouseDown = (e: MouseEvent) => {
+    /**************/
+    /* Drag logic */
+    /**************/
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    const dragStyle = document.createElement("style");
+    document.head.appendChild(dragStyle);
+
+    header.addEventListener("mousedown", (e: MouseEvent) => {
+        isDragging = true;
         header.classList.add("df-grab-cursor-active");
-    };
+        container.classList.add("df-dragging");
 
-    const onMouseMove = (e: MouseEvent) => {
-        // No transform change needed
-    };
+        const rect = container.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
 
-    const onMouseUp = () => {
+    });
+
+    window.addEventListener("mousemove", (e: MouseEvent) => {
+        if (!isDragging) return;
+
+        const newLeft = e.clientX - offsetX;
+        const newTop = e.clientY - offsetY;
+
+        container.classList.add("df-bg-floating-window");
+
+        container.style.setProperty('--df-left', `${newLeft}px`);
+        container.style.setProperty('--df-top', `${newTop}px`);
+    });
+
+    window.addEventListener("mouseup", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        container.classList.remove("df-dragging");
         header.classList.remove("df-grab-cursor-active");
-    };
-
-    header.addEventListener("mousedown", onMouseDown);
-    plugin.registerDomEvent(document, "mousemove", onMouseMove);
-    plugin.registerDomEvent(document, "mouseup", onMouseUp);
+    });
 
     const onClose = () => {
         container.remove();

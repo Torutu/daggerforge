@@ -130,32 +130,43 @@ export function openEncounterCalculator() {
     /**************/
     /* Drag logic */
     /**************/
-    let isDragging = false, offsetX = 0, offsetY = 0;
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
 
-    const onMouseDown = (e: MouseEvent) => {
+    // Create a <style> tag to hold dynamic positions
+    const dragStyle = document.createElement("style");
+    document.head.appendChild(dragStyle);
+
+    header.addEventListener("mousedown", (e: MouseEvent) => {
         isDragging = true;
-        container.classList.add("df-dragging-active");
+        container.classList.add("df-dragging");
         header.classList.add("df-grab-cursor-active");
-    };
 
-    const onMouseMove = (e: MouseEvent) => {
-        // Left/top positioning stays as inline (dynamic)
-    };
-
-    const onMouseUp = () => {
-        header.classList.remove("df-grab-cursor-active");
-        container.classList.remove("df-dragging-active");
-    };
-
-    header.addEventListener("mousedown", onMouseDown);
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
-
-    cleanupListeners.push(() => {
-        header.removeEventListener("mousedown", onMouseDown);
-        document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("mouseup", onMouseUp);
+        const rect = container.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
     });
+
+    window.addEventListener("mousemove", (e: MouseEvent) => {
+        if (!isDragging) return;
+
+        const newLeft = e.clientX - offsetX;
+        const newTop = e.clientY - offsetY;
+
+        container.classList.add("df-bg-floating-window");
+
+        container.style.setProperty('--df-left', `${newLeft}px`);
+        container.style.setProperty('--df-top', `${newTop}px`);
+    });
+
+    window.addEventListener("mouseup", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        container.classList.remove("df-dragging");
+        header.classList.remove("df-grab-cursor-active");
+    });
+
 
     /********************/
     /* Helper functions */
