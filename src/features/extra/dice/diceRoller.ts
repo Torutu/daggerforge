@@ -15,7 +15,14 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
     floatingWindowContainer = container;
     container.classList.add("df-floating-window");
     
+    // Initialize position
+    container.style.position = "fixed";
+    container.style.left = "20px";
+    container.style.top = "20px";
+    container.style.zIndex = "10000";
+    
     const header = container.createEl("div", { cls: "df-floating-header" });
+    header.style.cursor = "grab";
     header.createEl("span", { text: "Dice roller" });
     const closeBtn = header.createEl("button", { text: "✖", cls: "df-close-btn" });
 
@@ -48,22 +55,51 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
 
     const diceQueue: string[] = [];
 
-    // --- Drag logic with proper cleanup ---
-    const onMouseDown = (e: MouseEvent) => {
-        header.classList.add("df-grab-cursor-active");
+    // --- Drag logic with proper implementation ---
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    const onMouseDown = (e: MouseEvent | TouchEvent) => {
+        isDragging = true;
+        header.style.cursor = "grabbing";
+        container.classList.add("df-grab-cursor-active");
+
+        const rect = container.getBoundingClientRect();
+        const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
+        const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+
+        offsetX = clientX - rect.left;
+        offsetY = clientY - rect.top;
     };
 
-    const onMouseMove = (e: MouseEvent) => {
-        // No transform change needed
+    const onMouseMove = (e: MouseEvent | TouchEvent) => {
+        if (!isDragging) return;
+
+        const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
+        const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+
+        const newLeft = clientX - offsetX;
+        const newTop = clientY - offsetY;
+
+        container.style.left = Math.max(0, newLeft) + "px";
+        container.style.top = Math.max(0, newTop) + "px";
     };
 
     const onMouseUp = () => {
-        header.classList.remove("df-grab-cursor-active");
+        if (isDragging) {
+            isDragging = false;
+            header.style.cursor = "grab";
+            container.classList.remove("df-grab-cursor-active");
+        }
     };
 
     header.addEventListener("mousedown", onMouseDown);
+    header.addEventListener("touchstart", onMouseDown);
     plugin.registerDomEvent(document, "mousemove", onMouseMove);
+    plugin.registerDomEvent(document, "touchmove", onMouseMove);
     plugin.registerDomEvent(document, "mouseup", onMouseUp);
+    plugin.registerDomEvent(document, "touchend", onMouseUp);
 
     const onClose = () => {
         container.remove();

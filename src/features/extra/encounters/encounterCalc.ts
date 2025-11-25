@@ -27,8 +27,15 @@ export function openEncounterCalculator() {
     const container = document.createElement("div");
     encounterWindowContainer = container;
     container.classList.add("df-bg-floating-window");
+    
+    // Initialize position
+    container.style.position = "fixed";
+    container.style.left = "20px";
+    container.style.top = "20px";
+    container.style.zIndex = "10000";
 
     const header = container.createEl("div", { cls: "df-floating-header" });
+    header.style.cursor = "grab";
     header.createEl("span", { text: "Battle guide" });
     const closeBtn = header.createEl("button", { text: "✖", cls: "df-close-btn" });
     const body = container.createEl("div", { cls: "df-floating-body df-encounter-body" });
@@ -130,31 +137,58 @@ export function openEncounterCalculator() {
     /**************/
     /* Drag logic */
     /**************/
-    let isDragging = false, offsetX = 0, offsetY = 0;
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
 
-    const onMouseDown = (e: MouseEvent) => {
+    const onMouseDown = (e: MouseEvent | TouchEvent) => {
         isDragging = true;
+        header.style.cursor = "grabbing";
         container.classList.add("df-dragging-active");
-        header.classList.add("df-grab-cursor-active");
+
+        const rect = container.getBoundingClientRect();
+        const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
+        const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+
+        offsetX = clientX - rect.left;
+        offsetY = clientY - rect.top;
     };
 
-    const onMouseMove = (e: MouseEvent) => {
-        // Left/top positioning stays as inline (dynamic)
+    const onMouseMove = (e: MouseEvent | TouchEvent) => {
+        if (!isDragging) return;
+
+        const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
+        const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+
+        const newLeft = clientX - offsetX;
+        const newTop = clientY - offsetY;
+
+        container.style.left = Math.max(0, newLeft) + "px";
+        container.style.top = Math.max(0, newTop) + "px";
     };
 
     const onMouseUp = () => {
-        header.classList.remove("df-grab-cursor-active");
-        container.classList.remove("df-dragging-active");
+        if (isDragging) {
+            isDragging = false;
+            header.style.cursor = "grab";
+            container.classList.remove("df-dragging-active");
+        }
     };
 
     header.addEventListener("mousedown", onMouseDown);
+    header.addEventListener("touchstart", onMouseDown);
     document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("touchmove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("touchend", onMouseUp);
 
     cleanupListeners.push(() => {
         header.removeEventListener("mousedown", onMouseDown);
+        header.removeEventListener("touchstart", onMouseDown);
         document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("touchmove", onMouseMove);
         document.removeEventListener("mouseup", onMouseUp);
+        document.removeEventListener("touchend", onMouseUp);
     });
 
     /********************/
