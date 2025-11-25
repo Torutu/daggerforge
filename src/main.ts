@@ -93,13 +93,6 @@ export default class DaggerForgePlugin extends Plugin {
 						.onClick(() => openEncounterCalculator()),
 				);
 
-				menu.addItem((item) =>
-					item
-						.setTitle("Player dashboard")
-						.setIcon("file-user")
-						.onClick(() => { new Notice("Coming soon!"); }),
-				);
-
 				menu.addSeparator();
 
 				menu.addItem((item) =>
