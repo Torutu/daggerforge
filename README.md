@@ -17,7 +17,7 @@ once you activate the plugin, you can find it here on the left ribbon.
 
 `ctrl + p` to open command palette, then search for `daggerforge` to find all the commands for this plugin
 
-## Roadmap
+## Roadmap COMPLETED
 
 - **Initial Release**: Publish the plugin [x]
 - **Environments**: Add enviornments stat blocks [x]
@@ -25,8 +25,8 @@ once you activate the plugin, you can find it here on the left ribbon.
 - **Store and Load Data**: customized Environments and Adversaries are now saved in data.json [x]
 - **Dice Roller**: roll multiple dices at once with logs [x]
 - **Battle Calculator**: built in battle calculator that follows the rulebook's Battle Guide [x]
-- **Edit content**: Edit Envrionments and Adversaries [ ] <-
-- **Improve Search engine** [ ]
+- **Edit content**: Edit Envrionments and Adversaries [x]
+- **Improve Search engine** [x]
 
 ## Supporters ❤️
 
