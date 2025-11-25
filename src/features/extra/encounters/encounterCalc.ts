@@ -230,12 +230,8 @@ export function openEncounterCalculator() {
             const label = (btn as HTMLElement).textContent!;
 
             const { remaining } = calculateTotals();
-            if (remaining >= cost) {
-                encounterState.spentItems.push({ cost, label });
-                updateDisplay();
-            } else {
-                alert("Not enough Battle Points!");
-            }
+            encounterState.spentItems.push({ cost, label });
+            updateDisplay();
         };
         btn.addEventListener("click", onClick);
     });
