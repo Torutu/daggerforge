@@ -1,15 +1,17 @@
 /**
- * Generate a unique ID with the given prefix
- * Format: "{prefix}_" + timestamp + randomString
+ * Generate a unique ID for adversaries and environments
+ * Format: "id_" + timestamp + randomString
  * 
- * @param prefix - The prefix for the ID (e.g., "CUA", "CUE")
  * @returns A unique string identifier
  */
-function generateUniqueId(prefix: string): string {
+export function generateAdvUniqueId(): string {
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(2, 10);
-    return `${prefix}_${timestamp}_${random}`;
+    return `CUA_${timestamp}_${random}`;
 }
 
-export const generateAdvUniqueId = () => generateUniqueId('CUA');
-export const generateEnvUniqueId = () => generateUniqueId('CUE');
+export function generateEnvUniqueId(): string {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 10);
+    return `CUE_${timestamp}_${random}`;
+}
