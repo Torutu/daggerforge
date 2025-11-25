@@ -389,6 +389,12 @@ select.df-input-field {
 	width: 100%;
 }
 
+.df-adv-field-tier,
+.df-adv-field-type,
+.df-field-select {
+	background-color: #333333;
+}
+
 .df-adv-field-name input,
 .df-adv-field-tier select,
 .df-adv-field-type select {
@@ -743,6 +749,11 @@ select.df-input-field {
 .df-tier-filter-btn {
 	margin-left: 5px;
 	margin-top: 3px;
+}
+
+.df-type-filter, .df-tier-filter,
+.df-source-filter{
+	background-color: #333333;
 }
 
 .df-adv-title,
