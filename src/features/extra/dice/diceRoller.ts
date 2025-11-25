@@ -15,14 +15,7 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
     floatingWindowContainer = container;
     container.classList.add("df-bg-floating-window");
     
-    // Initialize position
-    container.style.position = "fixed";
-    container.style.left = "20px";
-    container.style.top = "20px";
-    container.style.zIndex = "10000";
-    
     const header = container.createEl("div", { cls: "df-floating-header" });
-    header.style.cursor = "grab";
     header.createEl("span", { text: "Dice roller" });
     const closeBtn = header.createEl("button", { text: "✖", cls: "df-close-btn" });
 
@@ -67,13 +60,12 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
 
     header.addEventListener("mousedown", (e: MouseEvent) => {
         isDragging = true;
-        header.classList.add("df-grab-cursor-active");
         container.classList.add("df-dragging");
+        header.classList.add("df-grab-cursor-active");
 
         const rect = container.getBoundingClientRect();
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
-
     });
 
     window.addEventListener("mousemove", (e: MouseEvent) => {

@@ -27,15 +27,8 @@ export function openEncounterCalculator() {
     const container = document.createElement("div");
     encounterWindowContainer = container;
     container.classList.add("df-bg-floating-window");
-    
-    // Initialize position
-    container.style.position = "fixed";
-    container.style.left = "20px";
-    container.style.top = "20px";
-    container.style.zIndex = "10000";
 
     const header = container.createEl("div", { cls: "df-floating-header" });
-    header.style.cursor = "grab";
     header.createEl("span", { text: "Battle guide" });
     const closeBtn = header.createEl("button", { text: "✖", cls: "df-close-btn" });
     const body = container.createEl("div", { cls: "df-floating-body df-encounter-body" });
