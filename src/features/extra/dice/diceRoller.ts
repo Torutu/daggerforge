@@ -13,7 +13,7 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
 
     const container = document.createElement("div");
     floatingWindowContainer = container;
-    container.classList.add("df-floating-window");
+    container.classList.add("df-bg-floating-window");
     
     // Initialize position
     container.style.position = "fixed";
@@ -55,51 +55,45 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
 
     const diceQueue: string[] = [];
 
-    // --- Drag logic with proper implementation ---
+    /**************/
+    /* Drag logic */
+    /**************/
     let isDragging = false;
     let offsetX = 0;
     let offsetY = 0;
 
-    const onMouseDown = (e: MouseEvent | TouchEvent) => {
+    const dragStyle = document.createElement("style");
+    document.head.appendChild(dragStyle);
+
+    header.addEventListener("mousedown", (e: MouseEvent) => {
         isDragging = true;
-        header.style.cursor = "grabbing";
-        container.classList.add("df-grab-cursor-active");
+        header.classList.add("df-grab-cursor-active");
+        container.classList.add("df-dragging");
 
         const rect = container.getBoundingClientRect();
-        const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
-        const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
 
-        offsetX = clientX - rect.left;
-        offsetY = clientY - rect.top;
-    };
+    });
 
-    const onMouseMove = (e: MouseEvent | TouchEvent) => {
+    window.addEventListener("mousemove", (e: MouseEvent) => {
         if (!isDragging) return;
 
-        const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
-        const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+        const newLeft = e.clientX - offsetX;
+        const newTop = e.clientY - offsetY;
 
-        const newLeft = clientX - offsetX;
-        const newTop = clientY - offsetY;
+        container.classList.add("df-bg-floating-window");
 
-        container.style.left = Math.max(0, newLeft) + "px";
-        container.style.top = Math.max(0, newTop) + "px";
-    };
+        container.style.setProperty('--df-left', `${newLeft}px`);
+        container.style.setProperty('--df-top', `${newTop}px`);
+    });
 
-    const onMouseUp = () => {
-        if (isDragging) {
-            isDragging = false;
-            header.style.cursor = "grab";
-            container.classList.remove("df-grab-cursor-active");
-        }
-    };
-
-    header.addEventListener("mousedown", onMouseDown);
-    header.addEventListener("touchstart", onMouseDown);
-    plugin.registerDomEvent(document, "mousemove", onMouseMove);
-    plugin.registerDomEvent(document, "touchmove", onMouseMove);
-    plugin.registerDomEvent(document, "mouseup", onMouseUp);
-    plugin.registerDomEvent(document, "touchend", onMouseUp);
+    window.addEventListener("mouseup", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        container.classList.remove("df-dragging");
+        header.classList.remove("df-grab-cursor-active");
+    });
 
     const onClose = () => {
         container.remove();

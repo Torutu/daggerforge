@@ -1181,19 +1181,16 @@ select.df-input-field {
 /*DICE ROLLER        |BATTLE GUIDE       */
 /*****************************************/
 
-/* floatingWindow.css */
 .df-floating-window {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    /* transform: translate(-50%, -50%); */
-    background: #1e1e1e;
-    color: white;
-    border: 1px solid #888;
-    border-radius: 6px;
-    padding: 10px;
-    z-index: 9999;
-    width: 400px;
+    background-color: var(--background-primary);
+	left: 100px;
+    top: 100px;
+    color: var(--text-normal);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+	z-index: 9999;
+    position: absolute; /* default */
 }
 
 .df-close-btn {
@@ -1289,14 +1286,13 @@ select.df-input-field {
 }
 
 
-/* Reset transform - used when drag starts */
-.df-dragging-active {
-  transform: none !important;
+.df-grab-cursor-active {
+	cursor: grabbing;
 }
 
 /* During drag movement */
 .df-dragging {
-  cursor: grabbing;
+	  user-select: none;
 }
 
 /* Default grab cursor */
@@ -1309,29 +1305,21 @@ select.df-input-field {
   cursor: grab;
 }
 
-/* Position updates during drag (applied with JS calculation) */
-.df-drag-positioning {
-  position: fixed;
-  z-index: 9999;
-}
-
 
 /****************************************/
 /* ===== BATTLE GUIDE ===== */
 /****************************************/
 
 .df-bg-floating-window {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    /* transform: translate(-50%, -50%); */
-    background: #1e1e1e;
-    color: white;
-    border: 1px solid #888;
-    border-radius: 6px;
-    padding: 10px;
-    z-index: 9999;
-    width: 800px;
+    background-color: var(--background-primary);
+	left: var(--df-left, 100px);
+    top: var(--df-top, 100px);
+    color: var(--text-normal);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+	z-index: 9999;
+    position: absolute; /* default */
 }
 
 .df-battle-guide {
