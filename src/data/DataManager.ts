@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import { CardData ,EnvironmentData} from '../types/index';
+import { CardData, EnvironmentData } from '../types/index';
 import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
 
 export interface StoredData {
@@ -37,25 +37,19 @@ export class DataManager {
 
 			this.data = { ...this.data, ...saved };
 
-			const allAdversaries: CardData[] = [];
-			const allEnvironments: EnvironmentData[] = [];
+			const allAdversaries: CardData[] = [
+				...(saved as any).custom_Adversaries || [],
+				...(saved as any).incredible_Adversaries || [],
+				...((saved as any).custom_Broskies || []).map((a: any) => ({
+					...a,
+					source: 'broskies'
+				}))
+			];
 
-			if (Array.isArray((saved as any).custom_Adversaries))
-				allAdversaries.push(...(saved as any).custom_Adversaries);
-			if (Array.isArray((saved as any).incredible_Adversaries))
-				allAdversaries.push(...(saved as any).incredible_Adversaries);
-			if (Array.isArray((saved as any).custom_Broskies))
-				allAdversaries.push(
-					...(saved as any).custom_Broskies.map((a: any) => ({
-						...a,
-						source: 'broskies'
-					}))
-				);
-
-			if (Array.isArray((saved as any).custom_Environments))
-				allEnvironments.push(...(saved as any).custom_Environments);
-			if (Array.isArray((saved as any).incredible_Environments))
-				allEnvironments.push(...(saved as any).incredible_Environments);
+			const allEnvironments: EnvironmentData[] = [
+				...(saved as any).custom_Environments || [],
+				...(saved as any).incredible_Environments || []
+			];
 
 			if (allAdversaries.length > 0) {
 				this.data.adversaries.push(...allAdversaries);
@@ -64,11 +58,9 @@ export class DataManager {
 				this.data.environments.push(...allEnvironments);
 			}
 
-			delete (this.data as any).custom_Adversaries;
-			delete (this.data as any).incredible_Adversaries;
-			delete (this.data as any).custom_Environments;
-			delete (this.data as any).incredible_Environments;
-			delete (this.data as any).custom_Broskies;
+			['custom_Adversaries', 'incredible_Adversaries', 'custom_Broskies', 'custom_Environments', 'incredible_Environments'].forEach(
+				key => delete (this.data as any)[key]
+			);
 
 			this.ensureAdversariesHaveIds();
 			this.ensureEnvironmentsHaveIds();
@@ -84,10 +76,27 @@ export class DataManager {
 		await this.plugin.saveData(this.data);
 	}
 
+	private resetStoredData(): StoredData {
+		return {
+			version: '2.0',
+			adversaries: [],
+			environments: [],
+			lastUpdated: Date.now()
+		};
+	}
+
+	private getItemId(item: any): string {
+		return (item as any).id;
+	}
+
+	private getItemSource(item: any): string {
+		return ((item as any).source || 'unknown').toLowerCase();
+	}
+
 	// ==================== ADVERSARIES ====================
 
 	async addAdversary(adversary: CardData): Promise<void> {
-		if (!(adversary as any).id) {
+		if (!this.getItemId(adversary)) {
 			(adversary as any).id = generateAdvUniqueId();
 		}
 		this.data.adversaries.push(adversary);
@@ -100,7 +109,7 @@ export class DataManager {
 
 	getAdversariesBySource(source: string): CardData[] {
 		return this.data.adversaries.filter(
-			a => (a as any).source?.toLowerCase() === source.toLowerCase()
+			a => this.getItemSource(a) === source.toLowerCase()
 		);
 	}
 
@@ -115,24 +124,25 @@ export class DataManager {
 	 * @param id The unique ID of the adversary to delete
 	 */
 	async deleteAdversaryById(id: string): Promise<void> {
-		const index = this.data.adversaries.findIndex(a => (a as any).id === id);
+		const index = this.data.adversaries.findIndex(a => this.getItemId(a) === id);
 		if (index === -1) {
 			throw new Error(`Adversary with ID ${id} not found`);
 		}
 		this.data.adversaries.splice(index, 1);
 		await this.save();
 	}
-	
+
 	searchAdversaries(query: string): CardData[] {
+		const lowerQuery = query.toLowerCase();
 		return this.data.adversaries.filter(a =>
-			a.name.toLowerCase().includes(query.toLowerCase())
+			a.name.toLowerCase().includes(lowerQuery)
 		);
 	}
 
 	// ==================== ENVIRONMENTS ====================
 
 	async addEnvironment(env: EnvironmentData): Promise<void> {
-		if (!(env as any).id) {
+		if (!this.getItemId(env)) {
 			(env as any).id = generateEnvUniqueId();
 		}
 		this.data.environments.push(env);
@@ -145,7 +155,7 @@ export class DataManager {
 
 	getEnvironmentsBySource(source: string): EnvironmentData[] {
 		return this.data.environments.filter(
-			e => (e as any).source?.toLowerCase() === source.toLowerCase()
+			e => this.getItemSource(e) === source.toLowerCase()
 		);
 	}
 
@@ -160,7 +170,7 @@ export class DataManager {
 	 * @param id The unique ID of the environment to delete
 	 */
 	async deleteEnvironmentById(id: string): Promise<void> {
-		const index = this.data.environments.findIndex(e => (e as any).id === id);
+		const index = this.data.environments.findIndex(e => this.getItemId(e) === id);
 		if (index === -1) {
 			throw new Error(`Environment with ID ${id} not found`);
 		}
@@ -169,8 +179,9 @@ export class DataManager {
 	}
 
 	searchEnvironments(query: string): EnvironmentData[] {
+		const lowerQuery = query.toLowerCase();
 		return this.data.environments.filter(e =>
-			e.name.toLowerCase().includes(query.toLowerCase())
+			e.name.toLowerCase().includes(lowerQuery)
 		);
 	}
 
@@ -183,7 +194,7 @@ export class DataManager {
 	private ensureAdversariesHaveIds(): void {
 		this.data.adversaries = this.data.adversaries.map(adv => ({
 			...adv,
-			id: (adv as any).id || generateAdvUniqueId()
+			id: this.getItemId(adv) || generateAdvUniqueId()
 		}));
 	}
 
@@ -194,7 +205,7 @@ export class DataManager {
 	private ensureEnvironmentsHaveIds(): void {
 		this.data.environments = this.data.environments.map(env => ({
 			...env,
-			id: (env as any).id || generateEnvUniqueId()
+			id: this.getItemId(env) || generateEnvUniqueId()
 		}));
 	}
 
@@ -235,12 +246,7 @@ export class DataManager {
 	}
 
 	async clearAllData(): Promise<void> {
-		this.data = {
-			version: '2.0',
-			adversaries: [],
-			environments: [],
-			lastUpdated: Date.now()
-		};
+		this.data = this.resetStoredData();
 		await this.save();
 	}
 
@@ -250,13 +256,7 @@ export class DataManager {
 	 */
 	async deleteDataFile(): Promise<void> {
 		try {
-			this.data = {
-				version: '2.0',
-				adversaries: [],
-				environments: [],
-				lastUpdated: Date.now()
-			};
-			
+			this.data = this.resetStoredData();
 			await this.plugin.saveData(null);
 		} catch (err) {
 			console.error('DataManager: Error deleting data.json file', err);
@@ -280,7 +280,7 @@ export class DataManager {
 
 	private groupBySource(list: (CardData | EnvironmentData)[]): Record<string, number> {
 		return list.reduce((acc, item) => {
-			const src = (item as any).source || 'unknown';
+			const src = this.getItemSource(item);
 			acc[src] = (acc[src] || 0) + 1;
 			return acc;
 		}, {} as Record<string, number>);

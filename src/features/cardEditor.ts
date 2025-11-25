@@ -4,86 +4,104 @@ import { EnvironmentEditorModal } from ".";
 import { extractCardData, TextInputModal } from "./adversaries/index";
 import type { EnvironmentData, EnvSavedFeatureState } from "../types/index";
 
-// Helper: Find which position this card is at in the DOM (for cards with duplicate names)
-function findCardIndexInDOM(cardElement: HTMLElement, cardType: string): number {
-	const selector = cardType === "env" ? ".df-env-card-outer" : ".df-card-outer";
-	const allCards = Array.from(document.querySelectorAll(selector));
-	return allCards.indexOf(cardElement);
+// Helper: Get the card instance ID from the card element
+function getCardInstanceId(cardElement: HTMLElement): string {
+	return cardElement.getAttribute('data-card-instance-id') || '';
 }
 
-// Helper: Find the correct card section in markdown by name and DOM position
-function findCardInMarkdown(fullContent: string, cardName: string, domIndex: number, cardType: string): { startIndex: number; endIndex: number } {
-	const cardNameEscaped = cardName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-	
-	// First, find all section opening tags that match the card type
-	let sectionOpenings = [];
-	const sectionTagPattern = cardType === "adv" 
-		? /<section[^>]*class="[^"]*df-card-outer[^"]*"[^>]*>/gi
-		: /<section[^>]*class="[^"]*df-env-card-outer[^"]*"[^>]*>/gi;
-	
-	let match;
-	const sectionRegex = new RegExp(sectionTagPattern.source, sectionTagPattern.flags);
-	while ((match = sectionRegex.exec(fullContent)) !== null) {
-		sectionOpenings.push(match.index);
-	}
-	
-	if (sectionOpenings.length === 0) {
+// Helper: Find the correct card section in markdown by instance ID
+function findCardInMarkdownById(fullContent: string, cardInstanceId: string): { startIndex: number; endIndex: number } {
+	if (!cardInstanceId) {
 		return { startIndex: -1, endIndex: -1 };
 	}
-	
-	// Now find which sections contain the card name
-	let namePattern: RegExp;
-	if (cardType === "adv") {
-		namePattern = new RegExp(`<h2[^>]*>${cardNameEscaped}<\\/h2>`, 'i');
-	} else {
-		namePattern = new RegExp(`<[^>]*class="[^"]*df-env-name[^"]*"[^>]*>${cardNameEscaped}<\\/[^>]*>`, 'i');
-	}
-	
-	let matchingSections = [];
-	for (let i = 0; i < sectionOpenings.length; i++) {
-		const sectionStart = sectionOpenings[i];
-		const nextSectionStart = i + 1 < sectionOpenings.length ? sectionOpenings[i + 1] : fullContent.length;
-		
-		// Search for the card name within this section
-		const sectionContent = fullContent.substring(sectionStart, nextSectionStart);
-		if (namePattern.test(sectionContent)) {
-			matchingSections.push(sectionStart);
-		}
-	}
-	
-	if (matchingSections.length === 0) {
+
+	// Search for the section with matching data-card-instance-id
+	const idPattern = new RegExp(`data-card-instance-id="${cardInstanceId}"`, 'i');
+	const match = idPattern.exec(fullContent);
+
+	if (!match) {
 		return { startIndex: -1, endIndex: -1 };
 	}
-	
-	// Pick the correct section based on DOM index
-	const targetSectionIndex = Math.min(domIndex, matchingSections.length - 1);
-	const sectionStartIndex = matchingSections[targetSectionIndex];
-	
-	// Now find the closing </section> tag for this specific section
-	let closeCount = 1;
+
+	// Find the opening <section tag that contains this attribute
+	let sectionStartIndex = fullContent.lastIndexOf('<section', match.index);
+	if (sectionStartIndex === -1) {
+		return { startIndex: -1, endIndex: -1 };
+	}
+
+	// Find the closing </section> tag
+	let openCount = 1;
 	let searchIndex = sectionStartIndex + 8; // Skip past '<section'
 	let sectionEndIndex = -1;
-	
-	while (closeCount > 0 && searchIndex < fullContent.length) {
+
+	while (openCount > 0 && searchIndex < fullContent.length) {
 		const nextOpen = fullContent.indexOf('<section', searchIndex);
 		const nextClose = fullContent.indexOf('</section>', searchIndex);
-		
+
 		if (nextClose === -1) break;
-		
+
 		if (nextOpen !== -1 && nextOpen < nextClose) {
-			// Found opening tag before closing tag
-			closeCount++;
+			// Found nested opening tag before closing tag
+			openCount++;
 			searchIndex = nextOpen + 8;
 		} else {
 			// Closing tag comes next
-			closeCount--;
-			if (closeCount === 0) {
+			openCount--;
+			if (openCount === 0) {
 				sectionEndIndex = nextClose + 10;
 			}
 			searchIndex = nextClose + 10;
 		}
 	}
-	
+
+	return { startIndex: sectionStartIndex, endIndex: sectionEndIndex };
+}
+
+// Helper: Find environment card in markdown by instance ID
+function findEnvCardInMarkdownById(fullContent: string, cardInstanceId: string): { startIndex: number; endIndex: number } {
+	if (!cardInstanceId) {
+		return { startIndex: -1, endIndex: -1 };
+	}
+
+	// Search for the section with matching data-card-instance-id
+	const idPattern = new RegExp(`data-card-instance-id="${cardInstanceId}"`, 'i');
+	const match = idPattern.exec(fullContent);
+
+	if (!match) {
+		return { startIndex: -1, endIndex: -1 };
+	}
+
+	// Find the opening <section tag that contains this attribute
+	let sectionStartIndex = fullContent.lastIndexOf('<section', match.index);
+	if (sectionStartIndex === -1) {
+		return { startIndex: -1, endIndex: -1 };
+	}
+
+	// Find the closing </section> tag
+	let openCount = 1;
+	let searchIndex = sectionStartIndex + 8; // Skip past '<section'
+	let sectionEndIndex = -1;
+
+	while (openCount > 0 && searchIndex < fullContent.length) {
+		const nextOpen = fullContent.indexOf('<section', searchIndex);
+		const nextClose = fullContent.indexOf('</section>', searchIndex);
+
+		if (nextClose === -1) break;
+
+		if (nextOpen !== -1 && nextOpen < nextClose) {
+			// Found nested opening tag before closing tag
+			openCount++;
+			searchIndex = nextOpen + 8;
+		} else {
+			// Closing tag comes next
+			openCount--;
+			if (openCount === 0) {
+				sectionEndIndex = nextClose + 10;
+			}
+			searchIndex = nextClose + 10;
+		}
+	}
+
 	return { startIndex: sectionStartIndex, endIndex: sectionEndIndex };
 }
 
@@ -128,21 +146,18 @@ export const onEditClick = (
 		const cardData = extractCardData(cardElement);
 		const fullContent = editor.getValue();
 		
-		// FIX: Use helper function to get DOM index and markdown position
-		const domIndex = findCardIndexInDOM(cardElement, "adv");
-		const { startIndex: sectionStartIndex, endIndex: sectionEndIndex } = findCardInMarkdown(fullContent, cardName, domIndex, "adv");
+		// Get the unique instance ID of the card being edited
+		const cardInstanceId = getCardInstanceId(cardElement);
+		const { startIndex: sectionStartIndex, endIndex: sectionEndIndex } = findCardInMarkdownById(fullContent, cardInstanceId);
 		
 		if (sectionStartIndex === -1 || sectionEndIndex === -1) {
 			new Notice("Could not find card in markdown.");
 			return;
 		}
 		
-		const oldHTML = fullContent.substring(sectionStartIndex, sectionEndIndex);
-		
 		const modal = new TextInputModal(plugin, editor, cardElement, cardData);
 		modal.onSubmit = async (newHTML: string, newData: any) => {
 			const content = editor.getValue();
-			// Use the new HTML as-is, don't add extra sections
 			const finalHTML = newHTML;
 			
 			const beforeCard = content.substring(0, sectionStartIndex);
@@ -184,16 +199,14 @@ export const onEditClick = (
 		const editor = view.editor;
 		const fullContent = editor.getValue();
 		
-		// FIX: Use helper function to get DOM index and markdown position
-		const domIndex = findCardIndexInDOM(cardElement, "env");
-		const { startIndex: sectionStartIndex, endIndex: sectionEndIndex } = findCardInMarkdown(fullContent, cardName, domIndex, "env");
+		// Get the unique instance ID of the card being edited
+		const cardInstanceId = getCardInstanceId(cardElement);
+		const { startIndex: sectionStartIndex, endIndex: sectionEndIndex } = findEnvCardInMarkdownById(fullContent, cardInstanceId);
 		
 		if (sectionStartIndex === -1 || sectionEndIndex === -1) {
 			new Notice("Could not find environment card in markdown.");
 			return;
 		}
-		
-		const oldHTML = fullContent.substring(sectionStartIndex, sectionEndIndex);
 		
 		const innerDiv = cardElement.querySelector('.df-env-card-inner');
 		
@@ -202,7 +215,7 @@ export const onEditClick = (
 		const tier = tierMatch ? tierMatch[1] : '1';
 		const type = tierMatch ? tierMatch[2] : 'Exploration';
 		
-		const name = cardName;
+		const name = innerDiv?.querySelector(".df-env-name")?.textContent?.trim() ?? "(unknown environment)";
 		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
 		
 		const impulseEl = Array.from(innerDiv?.querySelectorAll('p') || []).find(p => 
@@ -221,25 +234,20 @@ export const onEditClick = (
 		const difficulty = diffEl ? diffEl.textContent?.split(':')[1]?.trim() : '';
 		const potentialAdversaries = advEl ? advEl.textContent?.split(':')[1]?.trim() : '';
 		
-		// SIMPLE FEATURE EXTRACTION FROM DATA ATTRIBUTES
+		// Extract features from data attributes
 		const featuresSection = innerDiv?.querySelector('.df-features-section');
 		const features: EnvSavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
-			// Get from data attributes
 			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';
 			const cost = feat.getAttribute('data-feature-cost') || undefined;
-			// Get bullets
 			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
 			
-			// Get text
 			const textDiv = feat.querySelector('.df-env-feat-text');
 			const text = textDiv?.textContent?.trim() || '';
 			
-			// Get text after
 			const afterTextEl = feat.querySelector('#textafter');
 			const textAfter = afterTextEl ? afterTextEl.textContent?.trim() : undefined;
 			
-			// Get questions
 			const questionsDiv = feat.querySelector('.df-env-questions');
 			const questions = questionsDiv ? 
 				Array.from(questionsDiv.querySelectorAll('.df-env-question')).map((q: Element) => q.textContent?.trim() || '').filter(q => q) :
@@ -285,7 +293,7 @@ export const onEditClick = (
 				await plugin.app.vault.modify(file, newContent);
 			}
 			
-			new Notice(`Updated environment: ${cardName}`);
+			new Notice(`Updated environment: ${name}`);
 			
 			const envView = plugin.app.workspace
 				.getLeavesOfType("environment-view")
@@ -440,7 +448,7 @@ async function handleCanvasCardEdit(
 		const tier = tierMatch ? tierMatch[1] : '1';
 		const type = tierMatch ? tierMatch[2] : 'Exploration';
 		
-		const name = cardName;
+		const name = innerDiv?.querySelector(".df-env-name")?.textContent?.trim() ?? "(unknown environment)";
 		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
 		
 		const impulseEl = Array.from(innerDiv?.querySelectorAll('p') || []).find(p => 
@@ -459,25 +467,20 @@ async function handleCanvasCardEdit(
 		const difficulty = diffEl ? diffEl.textContent?.split(':')[1]?.trim() : '';
 		const potentialAdversaries = advEl ? advEl.textContent?.split(':')[1]?.trim() : '';
 		
-		// SIMPLE FEATURE EXTRACTION FROM DATA ATTRIBUTES
+		// Extract features from data attributes
 		const featuresSection = innerDiv?.querySelector('.df-features-section');
 		const features: EnvSavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
-			// Get from data attributes
 			const featName = feat.getAttribute('data-feature-name') || '';
 			const featType = feat.getAttribute('data-feature-type') || 'Passive';
 			const cost = feat.getAttribute('data-feature-cost') || undefined;
-			// Get bullets
 			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
 			
-			// Get text
 			const textDiv = feat.querySelector('.df-env-feat-text');
 			const text = textDiv?.textContent?.trim() || '';
 			
-			// Get text after
 			const afterTextEl = feat.querySelector('#textafter');
 			const textAfter = afterTextEl ? afterTextEl.textContent?.trim() : undefined;
 			
-			// Get questions
 			const questionsDiv = feat.querySelector('.df-env-questions');
 			const questions = questionsDiv ? 
 				Array.from(questionsDiv.querySelectorAll('.df-env-question')).map((q: Element) => q.textContent?.trim() || '').filter(q => q) :
@@ -556,7 +559,7 @@ async function handleCanvasCardEdit(
 					});
 				}
 				
-				new Notice(`Updated environment: ${cardName}`);
+				new Notice(`Updated environment: ${name}`);
 			} catch (error) {
 				console.error("Error updating environment:", error);
 				new Notice("Error updating environment. Check console for details.");
