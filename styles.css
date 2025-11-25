@@ -5,7 +5,10 @@
   --df-color-bg-outer: #bfa980;
   --df-color-bg-inner: #f5f0e9;
   --df-color-border: #bfa980;
-  --df-color-Incredible: #6b009c;
+  --df-color-void: #784d99;
+  --df-color-umbra: #464ca5;
+  --df-color-sablewood: #14805f;
+  --df-color-Incredible: #3c00c7;
 }
 
 .df-pseudo-cut-corners {
@@ -122,6 +125,7 @@
 .df-env-edit-button:hover, .df-adv-edit-button:hover {
 	background-color: #3f83f8;
 	color: white;
+	content:attr(data-tooltip);
 }
 .df-env-edit-button:active, .df-adv-edit-button:active {
 	transform: scale(0.95);
@@ -216,12 +220,45 @@ select.df-input-field {
 	margin-top: 0;
 }
 
+.df-adv-form-section {
+	padding: 5px 0;
+}
+
 .df-section-title {
 	font-size: 1em;
 	font-weight: 700;
 	margin: 1px 0 5px 0;
 	padding-bottom: 5px;
 	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.df-adv-form-row {
+	display: grid;
+	grid-template-columns: 70% 10% 15%;
+	gap: 10px;
+	align-items: center;
+	/* margin-bottom: 10px; */
+	width: 100%;
+}
+
+.df-adv-form-row-weapon {
+	width: 10%;
+}
+
+.df-inline-field-wrapper{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+/* Name Label Styling */
+.df-field-label {
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.df-field-input, .df-adv-field-name{
+	width: 100%;
 }
 
 .df-inline-label {
@@ -328,28 +365,15 @@ select.df-input-field {
     min-width: 0;  /* Allows proper grid constraint */
 }
 
-.df-triple-field-item input,
-.df-triple-field-item select {
-    width: 100%;  /* Full width of grid cell */
-    /* ... styling ... */
-}
-
-.df-adv-form-section {
-	padding: 5px 0;
-}
-
 .df-adv-form-section-content {
 	margin-left: 0;
 	margin-top: 5px;
 }
 
-.df-adv-form-row {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 10px;
-	align-items: flex-start;
-	/* margin-bottom: 10px; */
-	width: 100%;
+.df-triple-field-item input,
+.df-triple-field-item select {
+    width: 100%;  /* Full width of grid cell */
+    /* ... styling ... */
 }
 
 /* Adversary form fields */
@@ -363,6 +387,12 @@ select.df-input-field {
 	display: flex;
 	max-width: 100%;
 	width: 100%;
+}
+
+.df-adv-field-tier,
+.df-adv-field-type,
+.df-field-select {
+	background-color: #333333;
 }
 
 .df-adv-field-name input,
@@ -464,11 +494,7 @@ select.df-input-field {
 }
 
 /* ===== ENVIRONMENT FORM STYLES ===== */
-.df-inline-field-wrapper{
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-}
+
 
 .df-env-form-section {
 	margin-bottom: 15px;
@@ -479,12 +505,30 @@ select.df-input-field {
 	margin-top: 5px;
 }
 
-.df-env-form-row {
+.df-env-row-adversaries {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 10px;
+	align-items: flex-start;
 	width: 100%;
-	justify-items: center;
+}
+
+.df-env-row-basic-info {
+    display: grid;
+    grid-template-columns: 70% 10% 15%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.df-env-row-difficulty {
+	display: grid;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.df-env-row-impulse {
+	display: grid;
+	align-items: flex-start;
+	width: 100%;
 }
 
 /* Environment form fields */
@@ -496,7 +540,9 @@ select.df-input-field {
 .df-env-field-difficulty,
 .df-env-field-adversaries {
 	display: flex;
-	flex-direction: column;
+	padding-left: 5px;
+	padding-right: unset;
+	/* flex-direction: column; */
 }
 
 .df-env-field-name input,
@@ -516,19 +562,11 @@ select.df-input-field {
 	min-height: 40px;
 }
 
-/* Normal rows (unchanged) */
-.df-env-form-row {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	margin-bottom: 8px;
-}
-
 /* Make potential adversaries span full width and stack vertically */
 .df-env-row-adversaries {
-	flex-direction: column;         /* stack label and input vertically */
-	align-items: flex-start;        /* align left */
-	width: 100%;                    /* span full modal width */
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
 }
 
 /* Optional: make the input wider or resizable */
@@ -622,6 +660,12 @@ select.df-input-field {
 	color: var(--text-normal);
 }
 
+.df-env-questions-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
 .df-env-feature-question-input {
 	width: 100%;
 	min-height: 50px;
@@ -707,6 +751,11 @@ select.df-input-field {
 	margin-top: 3px;
 }
 
+.df-type-filter, .df-tier-filter,
+.df-source-filter{
+	background-color: #333333;
+}
+
 .df-adv-title,
 .df-env-title {
 	margin-top: 0px;
@@ -714,9 +763,10 @@ select.df-input-field {
 }
 
 .df-inline-input.count-input {
-	width: 25%;
+	width: 10%;
 	text-align: center;
 	padding: 1px;
+	margin-bottom: 7px;
 }
 
 /* sidebar result container */
@@ -731,6 +781,11 @@ select.df-input-field {
 	border-radius: 4px;
 }
 
+.df-env-card:hover,
+.df-adversary-card:hover {
+	background-color: var(--background-modifier-hover);
+}
+
 /* Source badge styling */
 .df-source-badge-core {
 	margin-left: 8px;
@@ -743,7 +798,7 @@ select.df-input-field {
 	text-transform: capitalize;
 }
 
-.df-source-badge-custom {
+.df-source-badge-custom{
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -760,32 +815,24 @@ select.df-input-field {
 }
 
 .df-source-custom {
-	border-color: #e4e4e4;
+	border-left-color: #d3d3d3;
 }
 
 .df-source-umbra {
-	border-color: #6a1b9a;
+	border-color: var(--df-color-umbra);
+}
+
+.df-source-sablewood {
+	border-color: var(--df-color-sablewood);
 }
 
 .df-source-incredible{
 	border-color: var(--df-color-Incredible);
 }
 
-/* Card border colors matching badges */
-.df-source-core {
-	border-left-color: #555555;
+.df-source-void{
+	border-color: var(--df-color-void);
 }
-
-.df-source-custom {
-	border-left-color: #d3d3d3;
-}
-
-.df-source-umbra {
-	border-left-color: #6a1b9a;
-}
-/* .df-source-incredible{
-	border-left-color: #4a026b;
-} */
 
 /* The tier inside the sidebar result container (adv + env) */
 .df-tier-text {
@@ -821,7 +868,48 @@ select.df-input-field {
 }
 
 .df-adversary-counter-container {
-	width: 100px;
+	width: 100%;
+}
+
+.df-search-controls{
+	margin-bottom: 10px;
+}
+
+.df-search-row{
+	margin-bottom: 10px;
+}
+
+.df-filter-row {
+	display: flex;
+	overflow-x: auto;
+	flex-wrap: nowrap;
+    scroll-behavior: smooth;
+	flex-grow: 1;
+	min-width: 0;
+	max-width: 100%;
+	width: 100%;
+	padding: 1px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background-color: var(--background-primary);
+	font-weight: bold;
+	font-size: 0.9em;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	justify-content:space-between;
+}
+
+/* goes down when clicked*/
+.df-clear-filters-btn:active{
+	transform: translateY(1px);
+	transform: scale(0.99);
+}
+
+.df-search-input{
+	width: 100%;
 }
 
 .df-adversary-search-box {
@@ -947,10 +1035,24 @@ select.df-input-field {
 }
 
 .df-env-bullet {
-	margin-left: 0.6em;
-	list-style-type: disc;
+	list-style: disc;
+	padding-left: 0.5rem;
+	margin-left: 0.5rem;
 	font-size: 0.9rem;
-	line-height: 1.25;
+}
+
+.df-env-bullet .df-env-bullet-item {
+	position: relative;
+	/* margin-left: 0.5rem;
+	text-indent: -0.6rem; */
+}
+
+.df-env-bullet .df-env-bullet-item::before {
+	position: absolute;
+	left: -1rem;
+	top: 0;
+	font-size: 1.5em;
+	line-height: 1;
 }
 
 .df-env-questions {
@@ -1015,6 +1117,11 @@ select.df-input-field {
 	padding: 4px;
 }
 
+.df-custom-adversary {
+	border-left: 3px solid var(--interactive-accent);
+	position: relative;
+}
+
 /* Custom cards */
 .df-custom-badge {
 	margin-left: 8px;
@@ -1026,11 +1133,6 @@ select.df-input-field {
 	font-weight: bold;
 }
 
-.df-custom-adversary {
-	border-left: 3px solid var(--interactive-accent);
-	position: relative;
-}
-
 .df-source-badge-incredible{
 	margin-left: 8px;
 	padding: 2px 8px;
@@ -1038,7 +1140,40 @@ select.df-input-field {
 	font-size: 0.8em;
 	font-weight: bold;
 	color: #fff;
-	background-color: #6b009c;
+	background-color: var(--df-color-Incredible);
+	text-transform: capitalize;
+}
+
+.df-source-badge-void{
+	margin-left: 8px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #fff;
+	background-color: var(--df-color-void);
+	text-transform: capitalize;
+}
+
+.df-source-badge-umbra{
+	margin-left: 8px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #fff;
+	background-color: var(--df-color-umbra);
+	text-transform: capitalize;
+}
+
+.df-source-badge-sablewood{
+	margin-left: 8px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #fff;
+	background-color: var(--df-color-sablewood);
 	text-transform: capitalize;
 }
 
@@ -1153,6 +1288,34 @@ select.df-input-field {
     margin-left: 5px;
 }
 
+
+/* Reset transform - used when drag starts */
+.df-dragging-active {
+  transform: none !important;
+}
+
+/* During drag movement */
+.df-dragging {
+  cursor: grabbing;
+}
+
+/* Default grab cursor */
+.df-grab-cursor {
+  cursor: grab;
+}
+
+/* Reset grab cursor state */
+.df-grab-reset {
+  cursor: grab;
+}
+
+/* Position updates during drag (applied with JS calculation) */
+.df-drag-positioning {
+  position: fixed;
+  z-index: 9999;
+}
+
+
 /****************************************/
 /* ===== BATTLE GUIDE ===== */
 /****************************************/
@@ -1234,7 +1397,7 @@ select.df-input-field {
     flex: 1;
     display: flex;
     flex-direction: column;
-    max-height: 300px; /* adjust as needed */
+    max-height: 300px; /* adjust as needed d*/
     border: 1px solid #444;
     padding: 5px;
     background: #1b1b1b;
@@ -1312,4 +1475,21 @@ select.df-input-field {
 
 .df-delete-cancel-btn:hover {
 	background-color: var(--background-tertiary);
+}
+
+/*Bullet Points*/
+
+.df-env-feature-input-bullet{
+	width: 100%;
+	height: 2rem;
+	margin-bottom: 3px;
+	border-radius: 4px;
+	border: 1px solid var(--background-modifier-border);
+	background-color: var(--background-secondary);
+	color: var(--text-normal);
+	font-size: 14px;
+	line-height: 0.8rem;
+	outline: none;
+	resize: none;
+	padding: 6px;
 }

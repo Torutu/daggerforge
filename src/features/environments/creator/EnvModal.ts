@@ -1,22 +1,30 @@
 import { Modal, Editor, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../../main";
-import { createInlineField } from "../../../utils/formHelpers";
-import { FormInputs } from "../../../types/shared";
+import {environmentToHTML } from "../components/EnvToHTML";
 import {
-	FeatureElements,
-	SavedFeatureState,
+	EnvFeatureElements,
+	EnvSavedFeatureState,
 	EnvironmentData,
-} from "../../../types/environment";
-import { environmentToHTML } from "../components/EnvToHTML";
-import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
+	FormInputs
+	} from "../../../types/index";
+import { 
+	isMarkdownActive, 
+	isCanvasActive, 
+	createCanvasCard, 
+	getAvailableCanvasPosition,
+	createInlineField 
+	} from "../../../utils/index";
 
 export class EnvironmentModal extends Modal {
 	plugin: DaggerForgePlugin;
 	editor: Editor;
 	inputs: FormInputs = {};
-	features: FeatureElements[] = [];
+	features: EnvFeatureElements[] = [];
 	featureContainer: HTMLElement;
 	onSubmit: (result: EnvironmentData) => void;
+	isEditMode: boolean = false;
+	editModeState: Record<string, any> = {};
+	isSubmitted: boolean = false;
 
 	constructor(
 		plugin: DaggerForgePlugin,
@@ -27,23 +35,35 @@ export class EnvironmentModal extends Modal {
 		this.plugin = plugin;
 		this.editor = editor;
 		this.onSubmit = onSubmit;
+		
+		const savedState = plugin.savedInputStateEnv;
+		this.isEditMode = !!(savedState && 
+			(savedState.impulse !== undefined || 
+			 savedState.potentialAdversaries !== undefined));
+if (this.isEditMode) {
+this.editModeState = {
+				...savedState,
+				features: savedState.features || []
+			};
+} else {
+}
 	}
 
 	onOpen(): void {
-		const { contentEl } = this;
-		const saved = this.plugin.savedInputStateEnv || {};
-		contentEl.empty();
+const { contentEl } = this;
+		const saved = this.isEditMode ? this.editModeState : (this.plugin.savedInputStateEnv || {});
+contentEl.empty();
 
 		// ===== TITLE =====
-		contentEl.createEl("h2", { text: "Create environment", cls: "df-modal-title" });
+		const title = this.isEditMode ? "Edit environment" : "Create environment";
+		contentEl.createEl("h2", { text: title, cls: "df-modal-title" });
 
 		// ===== BASIC INFO SECTION =====
 		const basicInfoSection = contentEl.createDiv({ cls: "df-env-form-section" });
 		basicInfoSection.createEl("h3", { text: "Basic information", cls: "df-section-title" });
 
-		const firstRow = basicInfoSection.createDiv({ cls: "df-env-form-row" });
+		const firstRow = basicInfoSection.createDiv({ cls: "df-env-row-basic-info" });
 
-		// Name field
 		createInlineField(firstRow, this.inputs, {
 			label: "Name",
 			key: "name",
@@ -52,7 +72,6 @@ export class EnvironmentModal extends Modal {
 			customClass: "df-env-field-name",
 		});
 
-		// Tier dropdown
 		createInlineField(firstRow, this.inputs, {
 			label: "Tier",
 			key: "tier",
@@ -62,7 +81,6 @@ export class EnvironmentModal extends Modal {
 			customClass: "df-env-field-tier",
 		});
 
-		// Type dropdown
 		createInlineField(firstRow, this.inputs, {
 			label: "Type",
 			key: "type",
@@ -75,11 +93,6 @@ export class EnvironmentModal extends Modal {
 		// ===== DETAILS SECTION =====
 		const detailsSection = basicInfoSection.createDiv({ cls: "df-env-form-section-content" });
 
-		// Description textarea (full width, resizable)
-		// const descLabel = detailsSection.createEl("label", { 
-		// 	text: "Description", 
-		// 	cls: "df-field-label" 
-		// });
 		const descTextarea = detailsSection.createEl("textarea", {
 			cls: "df-env-field-desc-textarea",
 			attr: {
@@ -96,7 +109,7 @@ export class EnvironmentModal extends Modal {
 		const gameplaySection = contentEl.createDiv({ cls: "df-env-form-section" });
 		gameplaySection.createEl("h3", { text: "Gameplay", cls: "df-section-title" });
 
-		const impulseRow = gameplaySection.createDiv({ cls: "df-env-form-row" });
+		const impulseRow = gameplaySection.createDiv({ cls: "df-env-row-impulse" });
 		createInlineField(impulseRow, this.inputs, {
 			label: "Impulses",
 			key: "impulse",
@@ -109,7 +122,7 @@ export class EnvironmentModal extends Modal {
 		const difficultySection = contentEl.createDiv({ cls: "df-env-form-section" });
 		difficultySection.createEl("h3", { text: "Difficulty & adversaries", cls: "df-section-title" });
 
-		const diffRow = difficultySection.createDiv({ cls: "df-env-form-row" });
+		const diffRow = difficultySection.createDiv({ cls: "df-env-row-difficulty" });
 
 		createInlineField(diffRow, this.inputs, {
 			label: "Difficulty",
@@ -119,8 +132,7 @@ export class EnvironmentModal extends Modal {
 			customClass: "df-env-field-difficulty",
 		});
 
-		// Potential Adversaries on its own row
-		const advRow = difficultySection.createDiv({ cls: "df-env-form-row df-env-row-adversaries" });
+		const advRow = difficultySection.createDiv({ cls: "df-env-row-adversaries" });
 		createInlineField(advRow, this.inputs, {
 			label: "Potential adversaries",
 			key: "potentialAdversaries",
@@ -136,22 +148,14 @@ export class EnvironmentModal extends Modal {
 		this.featureContainer = featuresSection.createDiv({ cls: "df-env-feature-container" });
 		this.features = [];
 
-		const setValueIfSaved = (
-			key: string,
-			el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
-		) => {
-			if (saved[key] !== undefined) {
-				el.value = saved[key];
-			}
-		};
-
-		// Load saved features if available
-		const savedFeatures: SavedFeatureState[] = saved.features || [];
-		savedFeatures.forEach((f) => {
-			this.addFeature(f);
-		});
-
-		if (savedFeatures.length === 0) this.addFeature();
+		const savedFeatures: EnvSavedFeatureState[] = saved.features || [];
+		if (savedFeatures.length > 0) {
+			savedFeatures.forEach((f) => {
+				this.addFeature(f);
+			});
+		} else {
+			this.addFeature();
+		}
 
 		const addBtn = featuresSection.createEl("button", {
 			text: "+ Add feature",
@@ -163,11 +167,12 @@ export class EnvironmentModal extends Modal {
 		const buttonContainer = contentEl.createDiv({ cls: "df-env-form-buttons" });
 
 		const insertBtn = buttonContainer.createEl("button", {
-			text: "Insert card",
+			text: this.isEditMode ? "Update card" : "Insert card",
 			cls: "df-env-btn-insert",
 		});
 
 		insertBtn.onclick = async () => {
+			this.isSubmitted = true;
 			const values = Object.fromEntries(
 				Object.entries(this.inputs).map(([k, el]) => [
 					k,
@@ -176,7 +181,6 @@ export class EnvironmentModal extends Modal {
 			);
 			const features = this.getFeatureValues();
 
-			// Create environment data
 			const env: EnvironmentData = {
 				id: values.id || "",
 				name: values.name || "",
@@ -191,20 +195,23 @@ export class EnvironmentModal extends Modal {
 			};
 
 			try {
-				// Save using DataManager (Obsidian's saveData)
 				await this.plugin.dataManager.addEnvironment(env);
 				new Notice(
 					`Environment "${env.name}" saved successfully!`,
 				);
 
-				// Generate HTML content
+				if (this.isEditMode) {
+					this.onSubmit(env);
+					this.close();
+					return;
+				}
+
 				const htmlContent = environmentToHTML(env);
 				const wrappedHTML = `<div class="environment-block">\n${htmlContent}\n</div>\n`;
 
 				const isCanvas = isCanvasActive(this.app);
 				const isMarkdown = isMarkdownActive(this.app);
 
-				// Check if we're on a canvas
 				if (isCanvas) {
 					const position = getAvailableCanvasPosition(this.plugin.app);
 					const success = createCanvasCard(this.plugin.app, wrappedHTML, {
@@ -214,11 +221,9 @@ export class EnvironmentModal extends Modal {
 						height: 650
 					});
 				} else if (isMarkdown) {
-					// Insert into markdown editor
 					this.editor.replaceSelection(wrappedHTML);
 				}
 
-				// Reset form
 				for (const el of Object.values(this.inputs)) {
 					if (
 						el instanceof HTMLInputElement ||
@@ -230,18 +235,20 @@ export class EnvironmentModal extends Modal {
 					}
 				}
 
-				this.features.forEach(({ nameEl, typeEl, costEl, textEl }) => {
+				this.features.forEach(({ nameEl, typeEl, costEl, textEl, bulletEls, afterTextEl, questionEls }) => {
 					nameEl.value = "";
 					typeEl.selectedIndex = 0;
 					if (costEl) costEl.selectedIndex = 0;
 					textEl.value = "";
+					bulletEls.forEach(b => b.value = "");
+					afterTextEl.value = "";
+					questionEls.forEach(q => q.value = "");
 				});
 
 				this.features = [];
 				this.featureContainer.empty();
 				this.plugin.savedInputStateEnv = {};
 
-				// Refresh EnvironmentView if open to show the new environment
 				const envLeaves =
 					this.plugin.app.workspace.getLeavesOfType(
 						"environment-view",
@@ -262,7 +269,7 @@ export class EnvironmentModal extends Modal {
 		};
 	}
 
-	addFeature(savedFeature?: SavedFeatureState) {
+	addFeature(savedFeature?: EnvSavedFeatureState) {
 		const wrapper = this.featureContainer.createDiv({
 			cls: "df-env-feature-block",
 		});
@@ -274,12 +281,17 @@ export class EnvironmentModal extends Modal {
 		const nameEl = headerRow.createEl("input", {
 			cls: "df-env-feature-input-name",
 			placeholder: "Feature Name",
+			attr: {
+				name: "data-feature-name",
+			}
 		});
 		nameEl.value = savedFeature?.name || "";
 
-		// Type dropdown
 		const typeEl = headerRow.createEl("select", {
 			cls: "df-env-feature-input-type",
+			attr: {
+				name: "data-feature-type",
+			}
 		});
 		["Action", "Reaction", "Passive"].forEach((opt) =>
 			typeEl.createEl("option", {
@@ -290,9 +302,11 @@ export class EnvironmentModal extends Modal {
 		);
 		typeEl.value = savedFeature?.type || "Passive";
 
-		// Cost dropdown
 		const costEl = headerRow.createEl("select", {
 			cls: "df-env-feature-input-cost",
+			attr: {
+				name: "data-feature-cost",
+			}
 		});
 		["", "Spend a Fear"].forEach((opt) =>
 			costEl.createEl("option", {
@@ -303,37 +317,130 @@ export class EnvironmentModal extends Modal {
 		);
 		costEl.value = savedFeature?.cost || "";
 
-		// Main feature description
-		const descEl = wrapper.createEl("textarea", {
+		const descLabel = wrapper.createDiv({ cls: "df-env-feature-desc-label", text: "Description:" });
+		const textEl = wrapper.createEl("textarea", {
 			cls: "df-env-feature-input-desc",
-			placeholder: "Feature description text...",
+			attr: {
+				placeholder: "Feature description...",
+				rows: "3",
+				name: "data-feature-text",
+			}
 		});
-		descEl.value = savedFeature?.text || "";
+		textEl.value = savedFeature?.text || "";
 
-		// Question section
+		const bulletsHeader = wrapper.createDiv({
+			cls: "df-env-feature-bullets-header",
+			text: "Bullet Points:",
+		});
+
+		const bulletsContainer = wrapper.createDiv({
+			cls: "df-env-feature-bullets-container",
+		});
+
+		const bulletEls: HTMLInputElement[] = [];
+		
+		const addBulletBtn = document.createElement("button");
+		addBulletBtn.textContent = "+ Add bullet point";
+		addBulletBtn.className = "df-env-btn-add-bullet";
+		bulletsContainer.appendChild(addBulletBtn);
+		
+		const createBullet = (bulletText?: string) => {
+			const bulletEl = document.createElement("input");
+			bulletEl.className = "df-env-feature-input-bullet";
+			bulletEl.placeholder = "Bullet point...";
+			bulletEl.value = bulletText || "";
+			bulletEl.setAttribute("name", "data-feature-bullet");
+			bulletsContainer.insertBefore(bulletEl, addBulletBtn);
+			bulletEls.push(bulletEl);
+			return bulletEl;
+		};
+		
+		if (savedFeature?.bullets && savedFeature.bullets.length > 0) {
+			savedFeature.bullets.forEach((bullet) => {
+				createBullet(bullet);
+			});
+		} else {
+			createBullet();
+		}
+
+		addBulletBtn.onclick = () => {
+			createBullet();
+		};
+
+		const afterDescHeader = wrapper.createDiv({
+			cls: "df-env-feature-after-desc-header",
+			text: "Continue Description (after bullets):",
+		});
+
+		const afterTextEl = wrapper.createEl("textarea", {
+			cls: "df-env-feature-input-after-desc",
+			attr: {
+				placeholder: "Additional description text (appears after bullet points)...",
+				rows: "3"
+			}
+		});
+		afterTextEl.value = savedFeature?.textAfter || "";
+
 		const questionContainer = wrapper.createDiv({
 			cls: "df-env-feature-question-container",
 		});
-		questionContainer.createDiv({
+		const questionHeader = questionContainer.createDiv({
 			cls: "df-env-feature-question-header",
-			text: "GM prompt question:",
+			text: "GM Prompt Questions:",
 		});
 
-		const questionEl = questionContainer.createEl("textarea", {
-			cls: "df-env-feature-question-input",
-			attr: {
-				placeholder: "e.g. “Why did this environment feature occur?”",
-			}
+		const questionsWrapper = questionContainer.createDiv({
+			cls: "df-env-questions-wrapper",
 		});
 
-		// Set value if saved question exists
+		const questionEls: HTMLTextAreaElement[] = [];
+
 		if (savedFeature?.questions && savedFeature.questions.length > 0) {
-			questionEl.value = savedFeature.questions[0] || "";
+			savedFeature.questions.forEach((question) => {
+				const questionEl = questionsWrapper.createEl("textarea", {
+					cls: "df-env-feature-input-question",
+					attr: {
+						placeholder: 'e.g. "Why did this feature occur?"',
+						rows: "2"
+					}
+				});
+				questionEl.value = question;
+				questionEls.push(questionEl);
+			});
+		} else {
+			const questionEl = questionsWrapper.createEl("textarea", {
+				cls: "df-env-feature-input-question",
+				attr: {
+					placeholder: 'e.g. "Why did this feature occur?"',
+					rows: "2"
+				}
+			});
+			questionEls.push(questionEl);
 		}
 
-		// Remove button
+		const addQuestionBtn = questionsWrapper.createEl("button", {
+			text: "+Add question",
+			cls: "df-env-btn-add-question",
+		});
+		
+		const moveButtonToEnd = () => {
+			questionsWrapper.appendChild(addQuestionBtn);
+		};
+		
+		addQuestionBtn.onclick = () => {
+			const questionEl = questionsWrapper.createEl("textarea", {
+				cls: "df-env-feature-input-question",
+				attr: {
+					placeholder: 'e.g. "Why did this feature occur?"',
+					rows: "2"
+				}
+			});
+			questionEls.push(questionEl);
+			moveButtonToEnd();
+		};
+
 		const removeBtn = wrapper.createEl("button", {
-			text: "Remove",
+			text: "Remove Feature",
 			cls: "df-env-btn-remove-feature",
 		});
 		removeBtn.onclick = () => {
@@ -348,27 +455,47 @@ export class EnvironmentModal extends Modal {
 			nameEl,
 			typeEl,
 			costEl,
-			textEl: descEl,
-			bulletEls: [],
-			questionEls: [questionEl],
+			textEl,
+			bulletEls,
+			afterTextEl,
+			questionEls,
 		});
 	}
 
-	getFeatureValues(): EnvironmentData["features"] {
-		return this.features.map((f) => ({
-			name: f.nameEl.value.trim(),
-			type: f.typeEl.value.trim(),
-			cost: f.costEl?.value.trim() || undefined,
-			text: f.textEl.value.trim(),
-			bullets: f.bulletEls.map((b) => b.value.trim()).filter((b) => b),
-			questions: f.questionEls
-				.map((q) => q.value.trim())
-				.filter((q) => q),
-		}));
+	getFeatureValues() {
+		return this.features.map((f) => {
+			const featureValue: EnvSavedFeatureState = {
+				name: f.nameEl.value.trim(),
+				type: f.typeEl.value.trim(),
+				cost: f.costEl?.value.trim() || undefined,
+				text: f.textEl.value.trim(),
+				bullets: f.bulletEls.map((b) => b.value.trim()).filter((b) => b) || null,
+				textAfter: f.afterTextEl.value.trim() || undefined,
+				questions: f.questionEls
+					.map((q) => q.value.trim())
+					.filter((q) => q),
+			};
+			
+			return featureValue;
+		});
 	}
 
 	onClose(): void {
-		this.plugin.savedInputStateEnv = {};
+		
+		if (this.isEditMode) {
+this.plugin.savedInputStateEnv = {};
+			this.editModeState = {};
+			this.features = [];
+			return;
+		}
+
+		if (!this.isSubmitted) {
+			this.plugin.savedInputStateEnv = {};
+			this.features = [];
+return;
+		}
+
+this.plugin.savedInputStateEnv = {};
 
 		for (const [key, el] of Object.entries(this.inputs)) {
 			this.plugin.savedInputStateEnv[key] = el.value;

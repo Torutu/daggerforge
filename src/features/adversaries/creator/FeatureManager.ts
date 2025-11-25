@@ -1,4 +1,4 @@
-import { FeatureElements, SavedFeatureState } from "../../../types/adversary";
+import { FeatureElements, SavedFeatureState } from "../../../types/index";
 
 export const addFeature = (
 	featureContainer: HTMLElement,

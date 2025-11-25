@@ -1,68 +1,40 @@
-import { Editor, MarkdownView, Menu, Notice, Plugin, TFile} from "obsidian";
+import { Editor, MarkdownView, Menu, Notice, Plugin, TFile } from "obsidian";
+
 import {
 	AdversaryView,
 	ADVERSARY_VIEW_TYPE,
-} from "./features/adversaries/components/AdvSearch";
-import {
 	EnvironmentView,
 	ENVIRONMENT_VIEW_TYPE,
-} from "./features/environments/components/EnvSearch";
-import { TextInputModal } from "./features/adversaries/creator/TextInputModal";
+	TextInputModal,
+	EnvironmentModal,
+	environmentToHTML,
+	openDiceRoller,
+	openEncounterCalculator,
+	handleCardEditClick,
+} from "./features/index";
+
 import {
-		adversariesSidebar,
-		openEnvironmentSidebar,
- } from "./ui/Sidebar";
-import { environmentToHTML } from "./features/environments/components/EnvToHTML";
-import { EnvironmentModal } from "./features/environments/creator/EnvModal";
-import { CardData } from "./types";
-import { DataManager } from "./services/DataManager";
-import { ImportDataModal } from "./ui/ImportDataModal";
-import { DeleteConfirmModal } from "./ui/DeleteConfirmModal";
-import { openDiceRoller } from "./features/dice/diceRoller";
-import { openEncounterCalculator } from "./features/Encounters/encounterCalc";
-import { onEditClick } from "./features/environments/editor/envEditor";
+	adversariesSidebar,
+	openEnvironmentSidebar,
+	DeleteConfirmModal,
+	ImportDataModal,
+} from "./ui/index";
+
+import { DataManager } from "./data/index";
 
 export default class DaggerForgePlugin extends Plugin {
-updateCardData(cardElement: HTMLElement, currentData: CardData) {
-throw new Error("Method not implemented.");
-}
-dataManager: DataManager;
-savedInputStateAdv: Record<string, any> = {};
-savedInputStateEnv: Record<string, any> = {};
+	updateCardData() {
+		throw new Error("Method not implemented.");
+	}
+	dataManager: DataManager;
+	savedInputStateAdv: Record<string, any> = {};
+	savedInputStateEnv: Record<string, any> = {};
 
 	async onload() {
-		// Initialize DataManager
 		this.dataManager = new DataManager(this);
 		await this.dataManager.load();
-
 		this.addStatusBarItem().setText("DaggerForge Active");
-
-		/* Handle edit button clicks on cards */
-		this.registerDomEvent(document, "click", (evt) => {
-			const target = evt.target as HTMLElement;
-			if (!target) return;
-			let cardType: "env" | "adv" | null = null;
-
-			if (target.matches(".df-env-edit-button")) cardType = "env";
-			else if (target.closest(".df-adv-edit-button")) cardType = "adv";
-
-			if (!cardType) return;
-
-			const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-			if (!view) return;
-
-			const isEditMode = view.getMode() === "source";
-
-			if (isEditMode) {
-				//warning emoji in notice
-				new Notice("Edit feature is coming soon ⚠️");
-				onEditClick(evt, cardType);
-			} else {
-				// new Notice("Clicked in READING mode!");
-			}
-		});
-
-		// Register views
+		this.registerDomEvent(document, "click", (evt) => handleCardEditClick(evt, this.app, this));
 		this.registerView(
 			ADVERSARY_VIEW_TYPE,
 			(leaf) => new AdversaryView(leaf),
@@ -72,7 +44,6 @@ savedInputStateEnv: Record<string, any> = {};
 			(leaf) => new EnvironmentView(leaf),
 		);
 
-		// Combined ribbon icon
 		this.addRibbonIcon(
 			"scroll-text",
 			"DaggerForge menu",
@@ -93,7 +64,6 @@ savedInputStateEnv: Record<string, any> = {};
 				);
 
 				menu.addSeparator();
-
 				menu.addItem((item) =>
 					item
 						.setTitle("Adversary creator")
@@ -113,7 +83,7 @@ savedInputStateEnv: Record<string, any> = {};
 					item
 						.setTitle("Dice roller")
 						.setIcon("dice")
-						.onClick(() => openDiceRoller()),
+						.onClick(() => openDiceRoller(this)),
 				);
 
 				menu.addItem((item) =>
@@ -121,6 +91,13 @@ savedInputStateEnv: Record<string, any> = {};
 						.setTitle("Battle calculator")
 						.setIcon("flame")
 						.onClick(() => openEncounterCalculator()),
+				);
+
+				menu.addItem((item) =>
+					item
+						.setTitle("Player dashboard")
+						.setIcon("file-user")
+						.onClick(() => { new Notice("Coming soon!"); }),
 				);
 
 				menu.addSeparator();
@@ -171,7 +148,7 @@ savedInputStateEnv: Record<string, any> = {};
 		this.addCommand({
 			id: "open-floating-window",
 			name: "Open dice roller",
-			callback: () => openDiceRoller(),
+			callback: () => openDiceRoller(this),
 		});
 
 		this.addCommand({
@@ -191,19 +168,23 @@ savedInputStateEnv: Record<string, any> = {};
 			name: "Open environment browser",
 			callback: () => openEnvironmentSidebar(this),
 		});
+
+		this.addCommand({
+			id: "open-player-dashboard",
+			name: "Open player dashboard",
+			callback: () => { new Notice("Coming soon!"); },
+		})
 	}
 
 	private async openCreator(type: "adversary" | "environment") {
 		// Check if we're on a canvas
 		const activeLeaf = this.app.workspace.activeLeaf;
 		if (activeLeaf?.view?.getViewType() === "canvas") {
-			// On canvas - create a dummy editor (won't be used but required for modal constructor)
-			const dummyEditor = null as any;
+			const dummyEditor: Editor | null = null;
 			if (type === "adversary") {
-				new TextInputModal(this, dummyEditor).open();
+				new TextInputModal(this, dummyEditor as any).open();
 			} else {
-				new EnvironmentModal(this, dummyEditor, (result) => {
-					// This won't be called for canvas
+				new EnvironmentModal(this, dummyEditor as any, (result) => {
 				}).open();
 			}
 			return;
@@ -230,29 +211,6 @@ savedInputStateEnv: Record<string, any> = {};
 		}
 	}
 
-	// private async loadContentToMarkdown(contentType: string) {
-	// 	const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-	// 	if (!activeView) {
-	// 		new Notice("Please open a note first.");
-	// 		return;
-	// 	}
-
-	// 	let content = "";
-	// 	if (contentType.startsWith("tier-")) {
-	// 		const tier = contentType.split("-")[1];
-	// 		content = await this.getAdversaryTierContent(tier);
-	// 	}
-
-	// 	if (content) {
-	// 		activeView.editor.replaceSelection(content);
-	// 	}
-	// }
-
-	private async getAdversaryTierContent(tier: string): Promise<string> {
-		// Implement your logic to get markdown content for the tier
-		return `# Tier ${tier} Adversaries\n\n...`;
-	}
-
 	private insertEnvironment(editor: Editor, result: any) {
 		const html = environmentToHTML(result);
 		if (editor) {
@@ -269,7 +227,6 @@ savedInputStateEnv: Record<string, any> = {};
 			this,
 			async () => {
 				await this.dataManager.deleteDataFile();
-				// Refresh both browsers
 				this.refreshBrowsers();
 			}
 		);
@@ -280,7 +237,6 @@ savedInputStateEnv: Record<string, any> = {};
 	 * Refresh all open adversary and environment browsers
 	 */
 	public refreshBrowsers() {
-		// Refresh adversary browsers
 		const adversaryLeaves = this.app.workspace.getLeavesOfType(ADVERSARY_VIEW_TYPE);
 		adversaryLeaves.forEach((leaf) => {
 			const view = leaf.view as AdversaryView;
@@ -289,7 +245,6 @@ savedInputStateEnv: Record<string, any> = {};
 			}
 		});
 
-		// Refresh environment browsers
 		const environmentLeaves = this.app.workspace.getLeavesOfType(ENVIRONMENT_VIEW_TYPE);
 		environmentLeaves.forEach((leaf) => {
 			const view = leaf.view as EnvironmentView;

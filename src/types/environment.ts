@@ -1,25 +1,25 @@
-import type { FormInputs } from './shared';
-
-export type FeatureElements = {
+export type EnvFeatureElements = {
 	nameEl: HTMLInputElement;
 	typeEl: HTMLSelectElement;
 	costEl?: HTMLSelectElement;
 	textEl: HTMLTextAreaElement;
-	bulletEls: HTMLTextAreaElement[];
+	bulletEls: HTMLInputElement[];
+	afterTextEl: HTMLTextAreaElement;
 	questionEls: HTMLTextAreaElement[];
 };
 
-export type SavedFeatureState = {
+export type EnvSavedFeatureState = {
 	name: string;
 	type: string;
 	cost?: string;
 	text: string;
-	bullets: string[];
+	bullets: string[] | null;
+	textAfter?: string;
 	questions: string[];
 };
 
 export type EnvironmentData = {
-	id: string; // Unique ID like CE001, IE001, etc.
+	id: string;
 	name: string;
 	tier: number;
 	type: string;
@@ -27,7 +27,7 @@ export type EnvironmentData = {
 	impulse: string;
 	difficulty: string;
 	potentialAdversaries: string;
-	source?: string; // Source of the environment (e.g., 'custom', 'broskies', 'core', 'umbra')
+	source?: string;
 	features: EnvironmentFeature[];
 };
 
@@ -36,6 +36,7 @@ type EnvironmentFeature = {
 	type: string;
 	text: string;
 	cost?: string;
-	bullets: string[];
+	bullets: string[] | null;
+	textAfter?: string;
 	questions: string[];
 };

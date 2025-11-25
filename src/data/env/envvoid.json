@@ -1,0 +1,257 @@
+[
+  {
+    "id": "VE001",
+    "name": "GRAND FEAST",
+    "tier": 1,
+    "type": "Social",
+    "desc": "A community-wide celebration featuring way too much drink, food, and fun.",
+    "impulse": "Bring everyone together, celebrate a momentous occasion, encourage revelrous abandon",
+    "difficulty": "11",
+    "potentialAdversaries": "Apprentice Assassin, Guard, Merchant, Petty Noble, Sellsword, Spy",
+    "source": "void",
+    "features": [
+      {
+        "name": "Loose Lips and Fast Friends",
+        "type": "Passive",
+        "text": "Everyone is here to have a good time. PCs have advantage on Presence rolls to socialize with other revelers.",
+        "bullets": null,
+        "questions": [
+          "What is everyone celebrating?",
+          "Where’s the party?",
+          "Who’s footing the bill?"
+        ]
+      },
+      {
+        "name": "Are You Not Entertained?",
+        "type": "Action",
+        "text": "Spend the spotlight to have the host of the feast kick off the entertainment portion of the evening. All PCs can make an action roll to initiate a performance, competition, or other lighthearted diversion. Each PC who succeeds becomes an Honored Guest. Until the grand feast ends, an Honored Guest can claim one boon from the host, then clear the condition.",
+        "bullets": null,
+        "questions": [
+          "What does the host want to see or hear more than anything else?",
+          "What can they off er the PCs in return?"
+        ]
+      },
+      {
+        "name": "There’s Always That One...",
+        "type": "Action",
+        "cost": "Spend a Fear",
+        "text": "to Trap a PC in conversation with the most unpleasant person at the party until they succeed on an action roll to extricate themself from this social black hole. A Trapped PC can’t make any other action rolls except to try and remove this condition. When a Trapped PC fails an action roll, they must mark a Stress.",
+        "bullets": null,
+        "questions": [
+          "What makes this dud so unpleasant?",
+          "What’s something the PC cares about that the dud constantly diminishes or dismisses?",
+          "What boring or awful thing can the dud not shut up about?"
+        ]
+      },
+      {
+        "name": "Last Call",
+        "type": "Reaction",
+        "text": "After a long night, the partygoers start fi ltering out. When the feast concludes, all PCs who participated in the festivities clear all Stress and gain a Hope. Additionally, each Honored Guest clears all HP and gains an additional Hope, then clears the condition. PCs who overindulged must succeed on a Strength Reaction Roll or become Hungover until their next rest. Hungover PCs take a −1 penalty to all action rolls.",
+        "bullets": null,
+        "questions": [
+          "What crazy stories do the PCs share with one another as they leave the party?",
+          "Who do the PCs see unexpectedly canoodling afterward?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "VE002",
+    "name": "HEIST",
+    "tier": 2,
+    "type": "Event",
+    "desc": "The party must gain access to a hidden or well-protected location to acquire the information or items secured within.",
+    "impulse": "Make the party prepare, split them up, throw up obstacles, trap them inside, use up their resources",
+    "difficulty": "14",
+    "potentialAdversaries": "Head Guard, Minotaur Wrecker, SecretKeeper, Spectral Guardian",
+    "source": "void",
+    "features": [
+      {
+        "name": "Prep Work",
+        "type": "Passive",
+        "text": "Prior to the Heist, each PC has the opportunity to gather a key piece of information, surveil the location, or acquire a helpful tool or resource. Give each player the opportunity to describe one obstacle they expect to encounter and how they set themselves up to overcome it, then have them make an action roll. On a success, they get the advantage or asset they sought. On a success with Fear, it’s less useful than they expected (for example, they discover the location of a hidden access point but learn that breaching it will likely be diffi cult and noisy).",
+        "bullets": null,
+        "questions": [
+          "How does the PC gain this advantage?",
+          "Do they go it alone or ask for help?",
+          "What unforeseen complications arise during the Heist itself?"
+        ]
+      },
+      {
+        "name": "Infi ltration",
+        "type": "Passive",
+        "text": "Establish the goal of the Heist and start two dynamic countdowns: a Progress Countdown (12) to represent the party’s work toward their goal and a Consequence Countdown (10) to represent the rising risk of discovery and capture. Advance both according to the Dynamic Countdown Advancement table as the PCs make action rolls to complete the Heist. If the Progress Countdown triggers fi rst, spotlight this environment to use the “Exfi ltration” feature. If the Consequence Countdown triggers fi rst, gain 1d4 Fear, splotlight this environment, and use the “Sound the Alarm” feature.",
+        "bullets": null,
+        "questions": [
+          "What is the party going after, and where is it located?",
+          "What unexpected obstacles will they encounter?",
+          "What happens if the party gets caught?"
+        ]
+      },
+      {
+        "name": "Saw This Coming",
+        "type": "Passive",
+        "text": "Once per session, a PC can spend a Hope to explain how they prepared for the current situation and reveal a key piece of information (such as the location of a hidden passage or the password to a restricted area) or produce a helpful item (such as a cultist’s uniform left unattended or a common consumable hidden in their boot).",
+        "bullets": null,
+        "questions": [
+          "What did the PC prepare in advance?",
+          "How did they know they’d need it?",
+          "What did it cost them to set up, or whom do they owe a favor to?"
+        ]
+      },
+      {
+        "name": "Exfi ltration",
+        "type": "Reaction",
+        "text": "When the Progress Countdown triggers, the party acquires the object of the Heist and must succeed on a group action roll to escape without being caught. On a failure, each PC marks a Stress and takes 2d12 direct damage.",
+        "bullets": null,
+        "questions": [
+          "What makes getting out even more dangerous than getting in?",
+          "What unforeseen developments stymie the party’s original escape plan?"
+        ]
+      },
+      {
+        "name": "Sound the Alarm",
+        "type": "Reaction",
+        "text": "When the Consequence Countdown triggers, the party is discovered and the location enters High Alert. Immediately summon a number of Tier 2 adversaries equal to the number of PCs in the scene and spotlight one. While this environment is on High Alert, all adversaries gain a +1 bonus to their Difficulty.",
+        "bullets": null,
+        "questions": [
+          "What makes these adversaries uniquely suited to guard this location?",
+          "What do they know about this place that gives them an edge?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "VE003",
+    "name": "CRYSTAL WASTELAND",
+    "tier": 3,
+    "type": "Traversal",
+    "desc": "A harsh and alien landscape that shines with towers of glittering crystal.",
+    "impulse": "Cut them to their core, fracture their psyches, show their true refl ection",
+    "difficulty": "16",
+    "potentialAdversaries": "Adult Flickerfl y, Constructs, Crystal Guardians (Vault Guardians), Elemental Spark, Whisper Wraiths",
+    "source": "void",
+    "features": [
+      {
+        "name": "Harmonic Resonance",
+        "type": "Passive",
+        "text": "The crystals here reverberate with magical energy. A PC can make a downtime move to try and Attune to the environment with a successful Spellcast Roll. Spellcast Rolls made by an Attuned PC inside the Crystal Wasteland have advantage. A PC clears the condition when they leave the wasteland.",
+        "bullets": null,
+        "questions": [
+          "How does attunement to this place alter your sensory experience of it?",
+          "What sound or song from your childhood does this place conjure?"
+        ]
+      },
+      {
+        "name": "Gravitational Anomalies",
+        "type": "Action",
+        "text": "Strange, localized phenomena dot the landscape, warping distance and direction. Spend a Fear to alter the gravity at a point of your choice. All targets within Close range of that point must make a Knowledge Reaction Roll to calculate their new trajectories. Targets who fail take 3d8+4 physical damage as they are thrown up and away. Targets who succeed must mark a Stress or take half damage.",
+        "bullets": null,
+        "questions": [
+          "What does it feel like as your body and mind fi ght to re-establish equilibrium?",
+          "Is there any way to use this to your advantage?"
+        ]
+      },
+      {
+        "name": "Arcane Refl ection",
+        "type": "Action",
+        "cost": "Spend a Fear",
+        "text": "to have any number of PCs glimpse a refl ection in the crystal of who they once were or might become. Each target makes a Fate Roll. Targets who succeed see a vision of their better self and can replace one Experience. Targets see a vision of their dark past–or an even darker future–and must mark a Stress, and you gain a fear.",
+        "bullets": null,
+        "questions": [
+          "Who do the PCs see on the other side of the crystal?",
+          "How does it make them feel?"
+        ]
+      },
+      {
+        "name": "Razor-Sharp Terrain",
+        "type": "Reaction",
+        "text": "When a PC fails a roll to navigate the wasteland, they make a Finesse Reaction Roll. On a failure, they cut themselves on the sharp edges of the terrain. Shards of magic crystal become embedded in their wound and slowly grow, Crystallizing them. Activate a Crystal Countdown (1) for that PC. Until they remove the condition with a successful Knowledge Roll, a Crystallizing PC ticks up their Crystal Countdown at the start of each rest and has a penalty to their Evasion equal to its value. The countdown ends with the condition is cleared.",
+        "bullets": null,
+        "questions": [
+          "What does the crystal look like as it grows?",
+          "What does it feel like?"
+        ]
+      },
+      {
+        "name": "Psychic Shuffl e",
+        "type": "Reaction",
+        "text": "When the PCs take a long rest, you can spend a Fear to swap their psyches. Collect all the players’ character sheets, then shuffl e and randomly redistribute them. Each character sheet comes with that PC’s Domain cards and player aids. A PC can regain their psyche with a successful Knowledge Roll, at which point they trade sheets with the player who has their original character sheet.",
+        "bullets": null,
+        "questions": [
+          "How does it feel being in someone else’s skin?",
+          "If you could choose to stay like them in one way, what would it be?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "VE004",
+    "name": "CONVERGENCE, THE CITY OF PORTALS",
+    "tier": 4,
+    "type": "Social",
+    "desc": "A sprawling metropolis at the nexus of creation, where influential fi gures from across the realms gather.",
+    "impulse": "Confront tthem with alien customs, dazzle them with infi nite variety, tempt them with the impossible",
+    "difficulty": "20",
+    "potentialAdversaries": "Power Players (Monarch, Demon Lord Orthrax, Fire Giant Warlord, Arch-Necromancer, High Seraph, Vampire Lord, Oracle of Doom), Travelers and Residents (any)",
+    "source": "void",
+    "features": [
+      {
+        "name": "Impossibilities Abound",
+        "type": "Passive",
+        "text": "Convergence is a nexus of gods, monsters, aliens, and all manner of dimension-hoppers. Because mortal life is generally beneath these beings’ concern, PCs have disadvantage on action rolls to infl uence them unless they have leverage against them or know what the NPC cares about.",
+        "bullets": null,
+        "questions": [
+          "What manner of being currently holds sway in the city?",
+          "What strange customs do they practice?",
+          "Which PC is most confused or off ended by them, and which PC adopts these customs as their own?"
+        ]
+      },
+      {
+        "name": "Into the Multiverse",
+        "type": "Passive",
+        "text": "The city of Convergence has a portal or door to every plane of existence.",
+        "bullets": null,
+        "questions": [
+          "Where (or when) does the party want to go?",
+          "Where is that portal located, and who controls that area?"
+        ]
+      },
+      {
+        "name": "Everything Everywhere All at Once",
+        "type": "Passive",
+        "text": "This city has the solution to any problem, if you can fi nd it. A PC seeking a particular item with wondrous properties can make an Instinct or Presence Roll to fi nd it in the city’s pandimensional marketplace.",
+        "bullets": [
+          "Critical Success: The PC fi nds the perfect item, and the merchant who has it only wants something the PC considers inconsequential in exchange.",
+          "Success with Hope: The PC fi nds the perfect item, and can exchange something of equal value for it.",
+          "Success with Fear: The PC fi nds the perfect item, but the merchant who has it will only exchange it for something the party can’t give them... yet.",
+          "Any Failure: The PC must mark a Stress as they go on a wild goose chase but come up empty-handed. The PC can mark an additional Stress to change this result into a success with Fear."
+        ],
+        "questions": [
+          "Who has the item the party needs?",
+          "What do they want in return?"
+        ]
+      },
+      {
+        "name": "Don’t Make Waves",
+        "type": "Passive",
+        "text": "Countdown (6). Because anything is possible in Convergence, the city maintains a labyrinthine bureacracy that issues and enforces ordinances regarding all exchanges and interactions between the Realms. When the party arrives in Convergence, start a Countdown (6) that ticks down whenever a PC does something that upsets the city’s delicate political equilibrium. When it triggers, the PCs become Wanted until they clear their names with the authorities. When a Wanted PC rolls with Fear, you can summon 1d4 Temporal Enforcers who appear within Very Close range, immediately take the spotlight, and try to apprehend the party.",
+        "bullets": null,
+        "questions": [
+          "What has the party done (or what do they plan to do) that draws the attention and ire of the Consortium?",
+          "How can they fi x the problem they caused?"
+        ]
+      },
+      {
+        "name": "An Off er You Can’t Refuse",
+        "type": "Action",
+        "text": "Convergence is home to a tenuous network of rival factions. Spend a Fear to have one of them present the party with an easy solution to a diffi cult problem in exchange for their allegiance. If the party refuses, each PC must mark a Stress and they can’t return to that faction for help in the future.",
+        "bullets": null,
+        "questions": [
+          "Which faction off ers the party their support?",
+          "Who do they want the party to act against?"
+        ]
+      }
+    ]
+  }
+]

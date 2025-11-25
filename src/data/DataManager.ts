@@ -1,6 +1,6 @@
 import { Plugin } from 'obsidian';
-import { CardData } from '../types/adversary';
-import { EnvironmentData } from '../types/environment';
+import { CardData ,EnvironmentData} from '../types/index';
+import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
 
 export interface StoredData {
 	version: string;
@@ -35,14 +35,11 @@ export class DataManager {
 			const saved = await this.plugin.loadData();
 			if (!saved) return;
 
-			// Merge base
 			this.data = { ...this.data, ...saved };
 
-			// Migrate all older keys if present
 			const allAdversaries: CardData[] = [];
 			const allEnvironments: EnvironmentData[] = [];
 
-			// Collect all known legacy arrays
 			if (Array.isArray((saved as any).custom_Adversaries))
 				allAdversaries.push(...(saved as any).custom_Adversaries);
 			if (Array.isArray((saved as any).incredible_Adversaries))
@@ -60,33 +57,28 @@ export class DataManager {
 			if (Array.isArray((saved as any).incredible_Environments))
 				allEnvironments.push(...(saved as any).incredible_Environments);
 
-			// Append migrated data
 			if (allAdversaries.length > 0) {
 				this.data.adversaries.push(...allAdversaries);
-				console.log(`Migrated ${allAdversaries.length} adversaries`);
 			}
 			if (allEnvironments.length > 0) {
 				this.data.environments.push(...allEnvironments);
-				console.log(`Migrated ${allEnvironments.length} environments`);
 			}
 
-			// Clean up old keys
 			delete (this.data as any).custom_Adversaries;
 			delete (this.data as any).incredible_Adversaries;
 			delete (this.data as any).custom_Environments;
 			delete (this.data as any).incredible_Environments;
 			delete (this.data as any).custom_Broskies;
 
+			this.ensureAdversariesHaveIds();
+			this.ensureEnvironmentsHaveIds();
+
 			await this.save();
-			console.log('DataManager: Unified data loaded successfully');
 		} catch (err) {
 			console.error('DataManager: Error loading data', err);
 		}
 	}
 
-	/**
-	 * Save data to disk
-	 */
 	private async save(): Promise<void> {
 		this.data.lastUpdated = Date.now();
 		await this.plugin.saveData(this.data);
@@ -95,6 +87,9 @@ export class DataManager {
 	// ==================== ADVERSARIES ====================
 
 	async addAdversary(adversary: CardData): Promise<void> {
+		if (!(adversary as any).id) {
+			(adversary as any).id = generateAdvUniqueId();
+		}
 		this.data.adversaries.push(adversary);
 		await this.save();
 	}
@@ -115,12 +110,19 @@ export class DataManager {
 		await this.save();
 	}
 
-	async deleteAdversary(index: number): Promise<void> {
-		if (index < 0 || index >= this.data.adversaries.length) return;
+	/**
+	 * Delete adversary by unique ID
+	 * @param id The unique ID of the adversary to delete
+	 */
+	async deleteAdversaryById(id: string): Promise<void> {
+		const index = this.data.adversaries.findIndex(a => (a as any).id === id);
+		if (index === -1) {
+			throw new Error(`Adversary with ID ${id} not found`);
+		}
 		this.data.adversaries.splice(index, 1);
 		await this.save();
 	}
-
+	
 	searchAdversaries(query: string): CardData[] {
 		return this.data.adversaries.filter(a =>
 			a.name.toLowerCase().includes(query.toLowerCase())
@@ -130,6 +132,9 @@ export class DataManager {
 	// ==================== ENVIRONMENTS ====================
 
 	async addEnvironment(env: EnvironmentData): Promise<void> {
+		if (!(env as any).id) {
+			(env as any).id = generateEnvUniqueId();
+		}
 		this.data.environments.push(env);
 		await this.save();
 	}
@@ -150,8 +155,15 @@ export class DataManager {
 		await this.save();
 	}
 
-	async deleteEnvironment(index: number): Promise<void> {
-		if (index < 0 || index >= this.data.environments.length) return;
+	/**
+	 * Delete environment by unique ID
+	 * @param id The unique ID of the environment to delete
+	 */
+	async deleteEnvironmentById(id: string): Promise<void> {
+		const index = this.data.environments.findIndex(e => (e as any).id === id);
+		if (index === -1) {
+			throw new Error(`Environment with ID ${id} not found`);
+		}
 		this.data.environments.splice(index, 1);
 		await this.save();
 	}
@@ -164,14 +176,39 @@ export class DataManager {
 
 	// ==================== UTILITIES ====================
 
+	/**
+	 * Ensure all adversaries have unique IDs
+	 * (for migration from old data without IDs)
+	 */
+	private ensureAdversariesHaveIds(): void {
+		this.data.adversaries = this.data.adversaries.map(adv => ({
+			...adv,
+			id: (adv as any).id || generateAdvUniqueId()
+		}));
+	}
+
+	/**
+	 * Ensure all environments have unique IDs
+	 * (for migration from old data without IDs)
+	 */
+	private ensureEnvironmentsHaveIds(): void {
+		this.data.environments = this.data.environments.map(env => ({
+			...env,
+			id: (env as any).id || generateEnvUniqueId()
+		}));
+	}
+
 	async exportData(): Promise<string> {
 		return JSON.stringify(this.data, null, 2);
 	}
 
+	/*
+	 * Import data from a JSON string
+	 * @param jsonString The JSON string to import
+	 */
 	async importData(jsonString: string): Promise<void> {
 		const imported = JSON.parse(jsonString);
 
-		// Migrate any old fields into unified arrays
 		const newAdversaries: CardData[] = [
 			...(imported.adversaries ?? []),
 			...(imported.custom_Adversaries ?? []),
@@ -190,11 +227,11 @@ export class DataManager {
 
 		this.data.adversaries.push(...newAdversaries);
 		this.data.environments.push(...newEnvironments);
-		await this.save();
 
-		console.log(
-			`Imported ${newAdversaries.length} adversaries and ${newEnvironments.length} environments`
-		);
+		this.ensureAdversariesHaveIds();
+		this.ensureEnvironmentsHaveIds();
+
+		await this.save();
 	}
 
 	async clearAllData(): Promise<void> {
@@ -213,7 +250,6 @@ export class DataManager {
 	 */
 	async deleteDataFile(): Promise<void> {
 		try {
-			// Reset in-memory data first
 			this.data = {
 				version: '2.0',
 				adversaries: [],
@@ -221,9 +257,7 @@ export class DataManager {
 				lastUpdated: Date.now()
 			};
 			
-			// Delete the actual data.json file
 			await this.plugin.saveData(null);
-			console.log('DataManager: data.json file deleted successfully');
 		} catch (err) {
 			console.error('DataManager: Error deleting data.json file', err);
 			throw err;

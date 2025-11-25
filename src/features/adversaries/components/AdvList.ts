@@ -1,16 +1,15 @@
 import { Editor, Notice } from "obsidian";
-import { ADVERSARIES } from "../../../data/adversaries";
-import { filterByTier } from "../../../utils/dataFilters";
+import { ADVERSARIES } from "../../../data/index";
+import { filterByTier } from "../../../utils/index";
 
 export async function loadAdversaryTier(tier: string, editor: Editor) {
-	// Filter adversaries by the requested tier
+
 	const data = filterByTier(ADVERSARIES, tier);
-	
+
 	if (!data || !Array.isArray(data) || data.length === 0) {
 		new Notice(`No adversaries found in Tier ${tier}.`);
 		return;
 	}
-
 	const allCardsHTML = data
 		.map((a) =>
 			buildCardHTML(

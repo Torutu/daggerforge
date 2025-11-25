@@ -15,16 +15,12 @@ export class ImportDataModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.empty();
-
 		contentEl.createEl("h2", { text: "Import Data" });
-		
 		contentEl.createEl("p", { 
 			text: "Select a JSON file to import adversaries and environments. This will merge with your existing data."
 		});
 
-		// File input
 		const fileInputContainer = contentEl.createDiv({ cls: "df-file-input-container" });
-		
 		const fileInput = fileInputContainer.createEl("input", {
 			type: "file",
 			attr: {
@@ -32,7 +28,6 @@ export class ImportDataModal extends Modal {
 			}
 		});
 
-		// Import button
 		new Setting(contentEl)
 			.addButton((btn) =>
 				btn
@@ -44,7 +39,6 @@ export class ImportDataModal extends Modal {
 							new Notice("Please select a file first");
 							return;
 						}
-
 						try {
 							await this.importFile(file);
 							this.close();
@@ -72,25 +66,16 @@ export class ImportDataModal extends Modal {
 					const text = e.target?.result as string;
 					let data = JSON.parse(text);
 
-					// If data is a plain array, wrap it based on filename
 					if (Array.isArray(data)) {
 						data = this.wrapArrayBasedOnFilename(file.name, data);
 					}
-
-					// Validate the data structure
 					if (!this.validateImportData(data)) {
 						reject(new Error("Invalid data format"));
 						return;
 					}
-
-					// Import the data
 					await this.plugin.dataManager.importData(JSON.stringify(data));
-					
 					new Notice(`Successfully imported data from ${file.name}`);
-					
-					// Refresh browsers after successful import
 					this.plugin.refreshBrowsers();
-					
 					resolve();
 				} catch (error) {
 					reject(error);
@@ -100,7 +85,6 @@ export class ImportDataModal extends Modal {
 			reader.onerror = () => {
 				reject(new Error("Failed to read file"));
 			};
-
 			reader.readAsText(file);
 		});
 	}
@@ -109,35 +93,34 @@ export class ImportDataModal extends Modal {
 	 * Wrap a plain array in an object based on the filename
 	 */
 	private wrapArrayBasedOnFilename(filename: string, array: any[]): any {
-		const lowerName = filename.toLowerCase();
-		
-		// Check for source indicators in filename
-		if (lowerName.includes('inc') || lowerName.includes('incredible')) {
-			// Determine if it's adversaries or environments
-			if (lowerName.includes('env')) {
-				return { incredible_Environments: array };
-			} else {
-				return { incredible_Adversaries: array };
-			}
-		} else if (lowerName.includes('env')) {
-			return { custom_Environments: array };
-		} else {
-			// Default to custom adversaries
-			return { custom_Adversaries: array };
-		}
+		const lower = filename.toLowerCase();
+
+		const category =
+				lower.includes("inc")
+				? "incredible"
+				: lower.includes("umbra")
+				? "umbra"
+				: lower.includes("void")
+				? "void"
+				: lower.includes("sablewood")
+				? "sablewood"
+				: "custom";
+		const type = lower.includes("env") ? "Environments" : "Adversaries";
+
+		const key = `${category}_${type}`;
+
+		return { [key]: array };
 	}
 
+
 	private validateImportData(data: any): boolean {
-		// Basic validation - check if it has the expected structure
 		if (typeof data !== "object" || data === null) {
 			return false;
 		}
 
-		// Check for required fields (at least one should exist)
 		const hasAdversaries = Array.isArray(data.adversaries) || 
 						   Array.isArray(data.custom_Adversaries) || 
-						   Array.isArray(data.incredible_Adversaries) ||
-						   Array.isArray(data.custom_Broskies);
+						   Array.isArray(data.incredible_Adversaries);
 		
 		const hasEnvironments = Array.isArray(data.environments) ||
 							  Array.isArray(data.custom_Environments) ||

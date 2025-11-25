@@ -1,0 +1,239 @@
+[
+  {
+    "id": "SA001",
+    "name": "THISTLEFOLK THIEF",
+    "tier": "1",
+    "type": "Leader",
+    "desc": "Description: A nimble folk with serrated blades and cunning tactics.",
+    "motives": "Strike and scatter, use magic to blast enemies away",
+    "difficulty": "14",
+    "thresholdMajor": "7",
+    "thresholdSevere": "14",
+    "hp": "4",
+    "stress": "2",
+    "atk": "+3",
+    "weaponName": "Serrated Blade",
+    "weaponRange": "Melee",
+    "weaponDamage": "2d4+3 phy",
+    "xp": "",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Back Off",
+        "type": "Action",
+        "cost": "Spend a Fear",
+        "desc": "to make an attack roll against all targets within Melee range. Any they succeed against are blasted backwards, dealing 2d6+3 magic damage and pushing them into Far range."
+      }
+    ]
+  },
+  {
+    "id": "SA002",
+    "name": "THISTLEFOLK AMBUSHER",
+    "tier": "1",
+    "type": "Standard",
+    "desc": "A quick and deadly striker who waits for the perfect moment to strike.",
+    "motives": "Ambush, backstab, disappear",
+    "difficulty": "13",
+    "thresholdMajor": "6",
+    "thresholdSevere": "12",
+    "hp": "3",
+    "stress": "2",
+    "atk": "+1",
+    "weaponName": "Dagger",
+    "weaponRange": "Melee",
+    "weaponDamage": "1d8+5 phy",
+    "xp": "",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Ambush",
+        "type": "Reaction",
+        "cost": "",
+        "desc": "When the Ambusher enters the scene without being spotted first, they can immediately move into Melee with a target and make an attack against them. On a success, they strike with their dagger for 2d4+8 physical damage."
+      }
+    ]
+  },
+  {
+    "id": "SA003",
+    "name": "STRIXWOLF",
+    "tier": "1",
+    "type": "Skulk",
+    "desc": "A wolf-owl pack hunter with wings and a rotating head.",
+    "motives": "Stalk, surround, protect pack",
+    "difficulty": "13",
+    "thresholdMajor": "5",
+    "thresholdSevere": "10",
+    "hp": "4",
+    "stress": "2",
+    "atk": "+2",
+    "weaponName": "Bite and Claw",
+    "weaponRange": "Melee",
+    "weaponDamage": "1d6+3 phy",
+    "xp": "Tracker +4",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Pack Tactics",
+        "type": "Passive",
+        "cost": "",
+        "desc": "When making a Bite and Claw attack, if another Strixwolf is also in Melee range of the target, deal 2d8+2 physical damage instead."
+      },
+      {
+        "name": "Powerful Senses",
+        "type": "Passive",
+        "cost": "",
+        "desc": "This creature ignores the Hidden condition on anyone within Close range."
+      },
+      {
+        "name": "Fly",
+        "type": "Action",
+        "cost": "Mark a Stress",
+        "desc": "to make the Strixwolf take flight, increasing their Difficulty by +2 and making their attacks worth +2 damage until the Strixwolf lands."
+      }
+    ]
+  },
+  {
+    "id": "SA004",
+    "name": "ANCIENT SKELETON",
+    "tier": "1",
+    "type": "Standard",
+    "desc": "The weathered remains of a long-forgotten warrior, animated by dark magic.",
+    "motives": "Attack in numbers, overwhelm through coordination",
+    "difficulty": "12",
+    "thresholdMajor": "7",
+    "thresholdSevere": "None",
+    "hp": "2",
+    "stress": "1",
+    "atk": "+0",
+    "weaponName": "Rusted Sword",
+    "weaponRange": "Melee",
+    "weaponDamage": "1d6+1 phy",
+    "xp": "",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Group Attack",
+        "type": "Action",
+        "cost": "Spend a Fear",
+        "desc": "to choose a target and spotlight all Ancient Skeletons within Close range of them. Those creatures move into Melee range of the target and make one shared attack roll. On a success, they deal 4 physical damage each. Combine this damage."
+      }
+    ]
+  },
+  {
+    "id": "SA005",
+    "name": "FOREST WRAITH",
+    "tier": "1",
+    "type": "Bruiser",
+    "desc": "A spectral entity born from ancient sorrow, feeding on fear and memory.",
+    "motives": "Haunt, delve into trauma, untether souls",
+    "difficulty": "13",
+    "thresholdMajor": "7",
+    "thresholdSevere": "14",
+    "hp": "6",
+    "stress": "3",
+    "atk": "+3",
+    "weaponName": "Lifedrain",
+    "weaponRange": "Far",
+    "weaponDamage": "2d6+8 mag",
+    "xp": "",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Spectral Body",
+        "type": "Passive",
+        "cost": "",
+        "desc": "The Forest Wraith has resistance to physical damage."
+      },
+      {
+        "name": "Memory Delve",
+        "type": "Action",
+        "cost": "",
+        "desc": "Make an attack roll against a Close target. On a success, the Forest Wraith flies into Melee and places their hand upon the target's cheek. Ask the player to describe a terrifying moment from their character's childhood. Then deal 3d4+9 magic damage and make them Vulnerable until their next rest."
+      },
+      {
+        "name": "Pass-Through",
+        "type": "Action",
+        "cost": "Spend a Fear",
+        "desc": "and make an attack roll against a target in Melee. On a success, the Forest Wraith passes through the target, pushing their soul from their body momentarily, making them Untethered. They cannot act again until the Ritual Countdown ticks down, clearing this condition. If the entire party becomes Untethered at the same time, they all mark 2 Hit Points and their souls return, clearing the condition."
+      }
+    ]
+  },
+  {
+    "id": "SA006",
+    "name": "BULLFROG",
+    "tier": "1",
+    "type": "Bruiser",
+    "desc": "An amphibious bull-sized hybrid with springing legs and a powerful tongue.",
+    "motives": "Leap out of danger, spear with horns, lash with tongue",
+    "difficulty": "11",
+    "thresholdMajor": "8",
+    "thresholdSevere": "13",
+    "hp": "4",
+    "stress": "2",
+    "atk": "+1",
+    "weaponName": "Horns",
+    "weaponRange": "Melee",
+    "weaponDamage": "1d8+6 phy",
+    "xp": "Territorial +5",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Tongue Strike",
+        "type": "Action",
+        "cost": "",
+        "desc": "Make an attack against a target within Close range. On a success, deal 1d8+4 physical damage and pull the target into Melee."
+      },
+      {
+        "name": "Powerful Gore",
+        "type": "Action",
+        "cost": "Mark a Stress",
+        "desc": "to leap forward, making an attack with the Bullfrog's horns against all enemies in a straight line within Close range. Any that are hit take 2d4+8 physical damage and mark one armor slot that does not reduce any damage. The PC may still mark armor to reduce damage."
+      },
+      {
+        "name": "Leaping Dodge",
+        "type": "Reaction",
+        "cost": "",
+        "desc": "Whenever an attack against this creature misses, the Bullfrog may leap anywhere within Far range."
+      }
+    ]
+  },
+  {
+    "id": "SA007",
+    "name": "EELIGATOR",
+    "tier": "1",
+    "type": "Solo",
+    "desc": "A large reptile-fish hybrid with a powerful jaw and predatory instincts.",
+    "motives": "Hide, hunt, subsume prey beneath the waters",
+    "difficulty": "14",
+    "thresholdMajor": "12",
+    "thresholdSevere": "25",
+    "hp": "7",
+    "stress": "5",
+    "atk": "+3",
+    "weaponName": "Bite",
+    "weaponRange": "Very Close",
+    "weaponDamage": "1d12+4 phy",
+    "xp": "",
+    "source": "sablewood",
+    "features": [
+      {
+        "name": "Healing Skin",
+        "type": "Action",
+        "cost": "Mark a Stress",
+        "desc": "to heal 1 HP."
+      },
+      {
+        "name": "Pull Under",
+        "type": "Action",
+        "cost": "",
+        "desc": "If a target is within Close range of a body of water, you can spend a Fear to make an attack against them. On a success, deal 1d20 physical damage, then move both the Eeligator and the target into the water that's within Close range. The Eeligator pulls the target under, making them Restrained and Drowning. While Drowning, that target must mark a Stress for every action roll that is made."
+      },
+      {
+        "name": "Death Grip",
+        "type": "Action",
+        "cost": "",
+        "desc": "On a successful Bite attack, mark a Stress to lock this creature's jaw onto the target, dealing 1 additional hit point and making them Restrained until the Eeligator is dealt Major damage. When released, the target must mark a Stress."
+      }
+    ]
+  }
+]

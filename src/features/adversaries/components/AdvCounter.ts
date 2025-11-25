@@ -1,5 +1,3 @@
-// utils/adversaryCounter.ts
-
 let adversaryCount: number = 1;
 
 export const incrementAdversaryCount = (amount: number = 1): void => {

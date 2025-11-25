@@ -4,11 +4,9 @@ import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-} from "../../../utils/formHelpers";
-import { addFeature, getFeatureValues } from "../creator/FeatureManager";
-import { buildCardHTML } from "../creator/CardBuilder";
-import { FormInputs } from "../../../types/shared";
-import { FeatureElements } from "../../../types/adversary";
+} from "../../../utils/index";
+import { addFeature, getFeatureValues, buildCardHTML } from "../index";
+import { FormInputs, FeatureElements } from "../../../types/index";
 
 export class AdversaryEditorModal extends Modal {
 	inputs: FormInputs = {};
@@ -36,15 +34,13 @@ export class AdversaryEditorModal extends Modal {
 	}
 
 	onOpen() {
-		console.log("Editing card with data:", this.cardData);
-		const { contentEl } = this;
+const { contentEl } = this;
 
 		contentEl.empty();
 		contentEl.createEl("h2", { text: "Edit Adversary", cls: "df-modal-title" });
 
-		const firstRow = contentEl.createDiv({ cls: "df-form-row" });
+		const firstRow = contentEl.createDiv({ cls: "df-form-row df-adv-row-basic-info" });
 
-		// Name field - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
 			label: "Name",
 			key: "name",
@@ -53,7 +49,6 @@ export class AdversaryEditorModal extends Modal {
 			customClass: "df-adversary-name-input",
 		});
 
-		// Tier dropdown - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
 			label: "Tier",
 			key: "tier",
@@ -63,7 +58,6 @@ export class AdversaryEditorModal extends Modal {
 			customClass: "df-tier-select",
 		});
 
-		// Type dropdown - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
 			label: "Type",
 			key: "type",
@@ -79,12 +73,14 @@ export class AdversaryEditorModal extends Modal {
 				"Solo",
 				"Standard",
 				"Support",
+				"Leader (Umbra-Touched)",
+				"Minion (Umbra-Touched)",
+				"Solo (Umbra-Touched)",
 			],
 			savedValues: this.cardData,
 			customClass: "df-type-select",
 		});
 
-		// Description - prefill with existing data
 		createField(
 			contentEl,
 			this.inputs,
@@ -95,7 +91,6 @@ export class AdversaryEditorModal extends Modal {
 			this.cardData,
 		);
 
-		// Motives - prefill with existing data
 		createField(
 			contentEl,
 			this.inputs,
@@ -106,7 +101,6 @@ export class AdversaryEditorModal extends Modal {
 			this.cardData,
 		);
 
-		// Stat fields - prefill with existing data
 		createShortTripleFields(
 			contentEl,
 			this.inputs,
@@ -159,7 +153,6 @@ export class AdversaryEditorModal extends Modal {
 			this.cardData,
 		);
 
-		// Features section - prefill with existing data
 		this.featureContainer = contentEl.createDiv("df-feature-container");
 		this.features = [];
 		this.featureContainer.empty();
@@ -182,7 +175,6 @@ export class AdversaryEditorModal extends Modal {
 		this.addFeatureBtn.onclick = () =>
 			addFeature(this.featureContainer, this.features, () => {});
 
-		// Count field - prefill with existing data
 		createInlineField(firstRow, this.inputs, {
 			label: "Count",
 			key: "count",
@@ -195,7 +187,6 @@ export class AdversaryEditorModal extends Modal {
 			this.inputs["count"].value = "1";
 		}
 
-		// Update button
 		this.insertBtn = contentEl.createEl("button", {
 			text: "Update Card",
 			cls: "df-insert-card-btn",
@@ -210,11 +201,8 @@ export class AdversaryEditorModal extends Modal {
             );
 
             // MAKE SURE YOU'RE COLLECTING THE FEATURES
-            const features = getFeatureValues(this.features); // This line is crucial!
-            console.log("Features collected in modal:", features); // Debug log
-            
-            const newHTML = buildCardHTML(values, features); // Pass features here
-            console.log("New HTML generated:", newHTML); // Debug log
+            const features = getFeatureValues(this.features); 
+            const newHTML = buildCardHTML(values, features);
             
             if (this.onSubmit) {
                 this.onSubmit(newHTML);
@@ -225,7 +213,6 @@ export class AdversaryEditorModal extends Modal {
 	}
 
 	onClose() {
-		// No need to save state for editing - it's a one-time operation
 		this.contentEl.empty();
 	}
 }

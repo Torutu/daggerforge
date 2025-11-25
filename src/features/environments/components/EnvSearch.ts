@@ -1,15 +1,24 @@
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice, setIcon } from "obsidian";
-import { ENVIRONMENTS } from "../../../data/environments";
-import { EnvironmentData } from "../../../types/environment";
-import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers";
+import { ENVIRONMENTS } from "../../../data/index";
+import { EnvironmentData } from "../../../types/index";
+import { 
+	isMarkdownActive, 
+	isCanvasActive, 
+	createCanvasCard, 
+	getAvailableCanvasPosition, 
+	SearchEngine, 
+	SearchControlsUI, 
+	generateEnvUniqueId
+	} from "../../../utils/index";
 
 export const ENVIRONMENT_VIEW_TYPE = "environment-view";
 
 export class EnvironmentView extends ItemView {
 	private environments: any[] = [];
 	private lastActiveMarkdown: MarkdownView | null = null;
+	private searchEngine: SearchEngine = new SearchEngine();
+	private searchControlsUI: SearchControlsUI | null = null;
 	private resultsDiv: HTMLElement | null = null;
-	private searchInput: HTMLInputElement | null = null;
 
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
@@ -28,64 +37,149 @@ export class EnvironmentView extends ItemView {
 	}
 
 	public refresh() {
-		if (!this.resultsDiv) return;
-		this.loadEnvironmentData(); // will also re-render
-		// Force focus back to the search input to restore keyboard interactions
-		if (this.searchInput instanceof HTMLElement) {
-			this.searchInput.focus();
-		}
+		// Preserve current filters before refresh
+		const currentFilters = this.searchEngine.getFilters();
+		this.loadEnvironmentData();
+		// Restore filters and re-render results
+		this.searchEngine.setFilters(currentFilters);
+		this.renderResults(this.searchEngine.search());
 	}
 
-	private async deleteCustomEnvironment(env: EnvironmentData): Promise<void> {
-	try {
-		const plugin = (this.app as any).plugins.plugins['daggerforge'] as any;
-		if (!plugin || !plugin.dataManager) {
-			new Notice("DaggerForge plugin not found.");
-			return;
-		}
+	private initializeView() {
+		const container = this.containerEl.children[1] as HTMLElement;
+		container.empty();
 
-		// Find the index of the environment in custom environments
-		const customEnvs = plugin.dataManager.getEnvironments();
-		const index = customEnvs.findIndex((e: EnvironmentData) => e.name === env.name);
-
-		if (index !== -1) {
-			await plugin.dataManager.deleteEnvironment(index);
-			new Notice(`Deleted environment: ${env.name}`);
-			this.refresh(); // Refresh the view
-		} else {
-			new Notice("Environment not found in custom list.");
-		}
-	} catch (error) {
-		console.error("Error deleting custom environment:", error);
-		new Notice("Failed to delete environment.");
-	}
-}
-
-	private createTierButtons(container: HTMLElement, input: HTMLInputElement) {
-		const buttonContainer = document.createElement("span");
-		buttonContainer.className = "tier-buttons";
-		const tiers = ["ALL", "1", "2", "3", "4"];
-
-		tiers.forEach((tierLabel) => {
-			const button = document.createElement("button");
-			button.textContent =
-				tierLabel === "ALL" ? "ALL" : `Tier ${tierLabel}`;
-			button.classList.add("df-tier-filter-btn");
-			button.addEventListener("click", () => {
-				input.value = "";
-				const filtered =
-					tierLabel === "ALL"
-						? this.environments
-						: this.environments.filter(
-								(e) => e.tier.toString() === tierLabel,
-							);
-				this.renderResults(filtered);
-			});
-			buttonContainer.appendChild(button);
+		container.createEl("h2", {
+			text: "Environment Browser",
+			cls: "df-env-title",
 		});
 
-		if (this.resultsDiv)
-			container.insertBefore(buttonContainer, this.resultsDiv);
+		this.searchControlsUI = new SearchControlsUI({
+			placeholderText: "Search by name, type, or description...",
+			showTypeFilter: true,
+			availableTiers: [1, 2, 3, 4],
+			availableSources: ["core","sablewood", "void", "custom"],
+			availableTypes: ["Social", "Exploration", "Event", "Traversal"],
+			onSearchChange: (query) => this.handleSearchChange(query),
+			onTierChange: (tier) => this.handleTierChange(tier),
+			onSourceChange: (source) => this.handleSourceChange(source),
+			onTypeChange: (type) => this.handleTypeChange(type),
+			onClear: () => this.handleClearFilters(),
+		});
+
+		this.searchControlsUI.create(container);
+
+		this.resultsDiv = container.createEl("div", {
+			cls: "df-environment-results",
+		});
+	}
+
+	/**
+	 * Delete a custom environment by its unique ID
+	 * @param env The environment object to delete
+	 */
+	private async deleteCustomEnvironment(env: EnvironmentData): Promise<void> {
+		try {
+			const plugin = (this.app as any).plugins.plugins['daggerforge'] as any;
+			if (!plugin || !plugin.dataManager) {
+				new Notice("DaggerForge plugin not found.");
+				return;
+			}
+
+			const envId = (env as any).id;
+			
+			if (!envId) {
+				new Notice("Cannot delete environment: missing ID.");
+				return;
+			}
+
+			await plugin.dataManager.deleteEnvironmentById(envId);
+			new Notice(`Deleted environment: ${env.name}`);
+			this.refresh();
+		} catch (error) {
+			console.error("Error deleting custom environment:", error);
+			new Notice("Failed to delete environment.");
+		}
+	}
+
+	private loadCustomEnvironments(): EnvironmentData[] {
+		try {
+			const plugin = (this.app as any).plugins.plugins['daggerforge'];
+			if (!plugin || !plugin.dataManager) {
+				console.warn("DaggerForge plugin or dataManager not found");
+				return [];
+			}
+
+			const customEnvs = plugin.dataManager.getEnvironments();
+
+			return customEnvs.map((env: any) => ({
+				...env,
+				id: env.id || generateEnvUniqueId(),  
+				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
+				isCustom: true,
+				source: env.source || "custom",
+			}));
+		} catch (error) {
+			console.error("Error loading custom environments from DataManager:", error);
+			return [];
+		}
+	}
+
+	private loadEnvironmentData() {
+		try {
+			const builtIn = ENVIRONMENTS.map((e: any) => ({
+				...e,
+				id: e.id || generateEnvUniqueId(),
+				isCustom: false,
+				source: e.source ?? "core",
+				type: e.type,
+			}));
+
+			const custom = this.loadCustomEnvironments();
+			this.environments = [...builtIn, ...custom];
+
+			this.searchEngine.setItems(this.environments);
+
+			if (this.searchControlsUI) {
+				const sources = this.searchEngine.getAvailableOptions("source");
+				const types = this.searchEngine.getAvailableOptions("type");
+				this.searchControlsUI.updateAvailableOptions("sources", sources);
+				this.searchControlsUI.updateAvailableOptions("types", types);
+			}
+
+			this.renderResults(this.environments);
+		} catch (e) {
+			console.error("Error loading environment data:", e);
+			new Notice("Failed to load environment data.");
+			if (this.resultsDiv) {
+				this.resultsDiv.setText("Error loading environment data.");
+			}
+		}
+	}
+
+	private handleSearchChange(query: string) {
+		this.searchEngine.setFilters({ query });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleTierChange(tier: number | null) {
+		this.searchEngine.setFilters({ tier });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleSourceChange(source: string | null) {
+		this.searchEngine.setFilters({ source });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleTypeChange(type: string | null) {
+		this.searchEngine.setFilters({ type });
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private handleClearFilters() {
+		this.searchEngine.clearFilters();
+		this.renderResults(this.searchEngine.search());
 	}
 
 	private renderResults(filtered: any[]) {
@@ -101,144 +195,41 @@ export class EnvironmentView extends ItemView {
 		});
 	}
 
-	private loadCustomEnvironments(): EnvironmentData[] {
-		try {
-			// Get plugin instance to access dataManager (exactly like Adversary)
-			const plugin = (this.app as any).plugins.plugins['daggerforge'];
-			if (!plugin || !plugin.dataManager) {
-				console.warn("DaggerForge plugin or dataManager not found");
-				return [];
-			}
-
-			// Load custom environments from DataManager (Obsidian storage)
-			const customEnvs = plugin.dataManager.getEnvironments();
-
-			// Convert to display format and mark as custom
-			return customEnvs.map((env: any) => ({
-				...env,
-				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
-				isCustom: true,
-				source: env.source || "custom",
-			}));
-		} catch (error) {
-			console.error("Error loading custom environments from DataManager:", error);
-			return [];
-		}
-	}
-
-	private loadEnvironmentData() {
-		if (!this.resultsDiv) return;
-
-		try {
-			const scrollTop = this.resultsDiv.scrollTop;
-
-			const builtInEnvironments = [
-				...ENVIRONMENTS.coreEnv,
-			].map((e) => ({ ...e, source: e.source || "core" }));
-
-			const custom_Environments = this.loadCustomEnvironments();
-			this.environments = [...builtInEnvironments, ...custom_Environments];
-
-			const q = (this.searchInput?.value || "").toLowerCase();
-			const filtered = q
-				? this.environments.filter(
-						(env) =>
-							env.name.toLowerCase().includes(q) ||
-							env.type.toLowerCase().includes(q),
-					)
-				: this.environments;
-
-			this.renderResults(filtered);
-			this.resultsDiv.scrollTop = scrollTop;
-		} catch (e) {
-			new Notice("Failed to refresh environment data.");
-			console.error(e);
-		}
-	}
-
-	private setupSearchInput(input: HTMLInputElement) {
-		input.addEventListener("input", () => {
-			const q = input.value.toLowerCase();
-			const filtered = this.environments.filter(
-				(env) =>
-					env.name.toLowerCase().includes(q) ||
-					env.type.toLowerCase().includes(q) ||
-					env.source.toLowerCase().includes(q),
-			);
-			this.renderResults(filtered);
-		});
-	}
-
 	async onOpen() {
-		const container = this.containerEl.children[1] as HTMLElement;
-		container.empty();
-
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", (leaf) => {
 				const view = leaf?.view;
 				if (view instanceof MarkdownView)
 					this.lastActiveMarkdown = view;
-			}),
+			})
 		);
 
-		container.createEl("h2", {
-			text: "Environment Browser",
-			cls: "df-env-title",
-		});
-
-		const input = container.createEl("input", {
-			attr: { type: "text", placeholder: "Search environments..." },
-			cls: "df-env-search-box",
-		}) as HTMLInputElement;
-		this.searchInput = input;
-
-		const resultsDiv = container.createEl("div", {
-			cls: "df-env-results",
-			text: "Results will appear here.",
-		});
-		this.resultsDiv = resultsDiv;
-
-		this.createTierButtons(container, input);
-
-		try {
-			this.environments = [
-				...ENVIRONMENTS.coreEnv,
-			];
-			this.loadEnvironmentData(); // loads custom + renders
-		} catch (e) {
-			new Notice("Failed to load environment data.");
-			resultsDiv.setText("Error loading environment data.");
-			return;
-		}
-
-		this.renderResults(this.environments);
-		this.setupSearchInput(input);
+		this.initializeView();
+		this.loadEnvironmentData();
 	}
 
 	createEnvironmentCard(env: any): HTMLElement {
 		const card = document.createElement("div");
 		card.classList.add("df-env-card");
 
-		// Add source-specific class
 		const source = env.source || "core";
 		card.classList.add(`df-source-${source.toLowerCase()}`);
 
-		// Tier and type
 		const tier = document.createElement("p");
 		tier.classList.add("df-tier-text");
 		tier.textContent = `Tier ${env.tier} ${env.type}`;
 
-		// Add source badge
 		const sourceBadge = document.createElement("span");
 		sourceBadge.classList.add(
 			`df-source-badge-${source.toLowerCase()}`,
 		);
 
-		// Customize badge text based on source
 		const badgeTexts: Record<string, string> = {
 			core: "Core",
 			custom: "Custom",
-			incredible: "Incredible"
+			sablewood: "Sablewood",
+			umbra: "Umbra",
+			void: "Void",
 		};
 
 		if (badgeTexts[source] == "Custom") {
@@ -257,75 +248,70 @@ export class EnvironmentView extends ItemView {
 
 		card.appendChild(tier);
 
-		// Name
 		const title = document.createElement("h3");
 		title.classList.add("df-title-small-padding");
 		title.textContent = env.name || "Unnamed Environment";
 		card.appendChild(title);
 
-		// Description
 		const desc = document.createElement("p");
 		desc.classList.add("df-desc-small-padding");
 		desc.textContent = env.desc || "No description available.";
 		card.appendChild(desc);
 
 		card.addEventListener("click", () => {
-			// Format features as HTML blocks
 			const featuresHTML = (env.features || [])
 				.map((f: any) => {
 					const costHTML = f.cost ? `<span>${f.cost}</span>` : "";
 
 					const bulletsHTML =
 						Array.isArray(f.bullets) && f.bullets.length
-							? f.bullets
+							? `<ul class="df-env-bullet">${f.bullets
 									.map(
 										(b: string) =>
-											`<div class="df-env-bullet">${b}</div>`,
+											`<li class="df-env-bullet-item">${b}</li>`,
 									)
-									.join("")
+									.join("")}</ul>`
 							: "";
 
 					const questionsHTML =
 						f.questions && f.questions.length
-							? `<div class="df-env-questions">${f.questions.map((q: string) => `${q}`).join("")}</div>`
+							? `<div class="df-env-questions">${f.questions.map((q: string) => `<div class="df-env-question">${q}</div>`).join("")}</div>`
 							: "";
 
-					return `
-				<div class="df-feature">
-					<div class="df-env-feat-name-type">${f.name} - ${f.type}: ${costHTML}
-						<span class="df-env-feat-text"> ${f.text}</span>
-					</div>
-					
-					${bulletsHTML}
-					${questionsHTML}
-				</div>
-			`;
+					const afterTextHTML = f.textAfter
+						? `<div id="textafter" class="df-env-feat-text">${f.textAfter}</div>`
+						: "";
+
+					return `<div class="df-feature" data-feature-name="${f.name}" data-feature-type="${f.type}" data-feature-cost="${f.cost || ''}">
+<div class="df-env-feat-name-type">
+<span class="df-env-feat-name">${f.name}</span> - <span class="df-env-feat-type">${f.type}:</span> ${costHTML}
+<div class="df-env-feat-text">${f.text}</div>
+</div>${bulletsHTML}${afterTextHTML}${questionsHTML}</div>`;
 				})
 				.join("");
-			// Compose the full HTML block
-			const envHTML = `
-<div class="df-env-card-outer">
-			<div class="df-env-card-inner">
-				<button class="df-env-edit-button" data-edit-mode-only="true">📝</button>
-				<div class="df-env-name">${env.name}</div>
-				<div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type}</div>
-				<p class="df-env-desc">${env.desc}</p>
-				<p><strong>Impulse:</strong> ${env.impulse || ""}</p>
-				<div class="df-env-card-diff-pot">
-				<p><span class="df-bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
-				<p><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
-				</div>
-				<div class="df-features-section">
-				<h3>Features</h3>
-				${featuresHTML}
-				</div>
-			</div>
+
+			const envHTML = `<section class="df-env-card-outer">
+<div class="df-env-card-inner">
+<button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
+<div class="df-env-name">${env.name}</div>
+<div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type} <span class="df-source-badge-${(env.source || "core").toLowerCase()}">${(env.source || "core").toLowerCase()}</span></div>
+<p class="df-env-desc">${env.desc}</p>
+<p><strong>Impulse:</strong> ${env.impulse || ""}</p>
+<div class="df-env-card-diff-pot">
+<p><span class="df-bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
+<p><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
 </div>
-`;
+<div class="df-features-section">
+<h3>Features</h3>
+${featuresHTML}
+</div>
+</div>
+</section>`.trim();
+
 			const isCanvas = isCanvasActive(this.app);
 			const isMarkdown = isMarkdownActive(this.app);
-			// Check if we're on a canvas
-			if (isCanvas)  {
+
+			if (isCanvas) {
 				const position = getAvailableCanvasPosition(this.app);
 				const success = createCanvasCard(this.app, envHTML, {
 					x: position.x,
@@ -340,25 +326,25 @@ export class EnvironmentView extends ItemView {
 				}
 				return;
 			} else if (isMarkdown) {
-			// Otherwise, insert into markdown note
-			const view =
-				this.app.workspace.getActiveViewOfType(MarkdownView) ||
-				this.lastActiveMarkdown;
-			if (!view) {
-				new Notice("No markdown file or canvas is open.");
-				return;
+				const view =
+					this.app.workspace.getActiveViewOfType(MarkdownView) ||
+					this.lastActiveMarkdown;
+				if (!view) {
+					new Notice("No markdown file or canvas is open.");
+					return;
+				}
+				const editor = view.editor;
+				if (!editor) {
+					new Notice("Cannot find editor in markdown view.");
+					return;
+				}
+				editor.replaceSelection(envHTML);
+				new Notice(`Inserted environment ${env.name}.`);
+			} else {
+				new Notice("No active editor or canvas");
 			}
-			const editor = view.editor;
-			if (!editor) {
-				new Notice("Cannot find editor in markdown view.");
-				return;
-			}
-			editor.replaceSelection(envHTML);
-			new Notice(`Inserted environment ${env.name}.`);
-			} else { 
-					new Notice("No active editor or canvas");
-			}
-});
+		});
+
 		return card;
 	}
 }

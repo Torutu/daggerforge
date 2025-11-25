@@ -1,4 +1,3 @@
-// dice.ts
 export function rollDice(expression: string): { total: number; details: string } {
     const parts = expression.split("+").map(p => p.trim());
     let total = 0;
@@ -16,7 +15,6 @@ export function rollDice(expression: string): { total: number; details: string }
                 total += roll;
             }
         } else {
-            // Flat number
             const num = parseInt(part);
             if (!isNaN(num)) {
                 allRolls.push(num);

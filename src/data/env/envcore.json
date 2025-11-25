@@ -15,11 +15,10 @@
         "type": "Passive",
         "text": "There has been a battle here. A PC can make an Instinct Roll to identify evidence of that fight. On a success with Hope, learn all three pieces of information below. On a success with Fear, learn two. On a failure, a PC can mark a Stress to learn one and gain advantage on the next action roll to investigate this environment. A PC with an appropriate background or Experience can learn an additional detail and ask a follow-up question about the scene and get a truthful (if not always complete) answer.",
         "bullets": [
-          "•Traces of a battle (broken weapons and branches, gouges in the ground) litter the ground.",
-          "•A moss-covered tree trunk is actually the corpse of a treant.",
-          "•Still-standing trees are twisted in strange ways, as if by"
+          "Traces of a battle (broken weapons and branches, gouges in the ground) litter the ground.",
+          "A moss-covered tree trunk is actually the corpse of a treant.",
+          "Still-standing trees are twisted in strange ways, as if by powerful magic."
         ],
-        "textAfter": "powerful magic.",
         "questions": [
           "Why did these groups come to blows?",
           "Why is the grove unused now?"
@@ -193,11 +192,11 @@
         "type": "Passive",
         "text": "Climbing up the cliff side uses a Progress Countdown (12). It ticks down according to the following criteria when the PCs make an action roll to climb:",
         "bullets": [
-          "•Critical Success: Tick down 3",
-          "•Success with Hope: Tick down 2",
-          "•Success with Fear: Tick down 1",
-          "•Failure with Hope: No advancement",
-          "•Failure with Fear: Tick up 1"
+          "Critical Success: Tick down 3",
+          "Success with Hope: Tick down 2",
+          "Success with Fear: Tick down 1",
+          "Failure with Hope: No advancement",
+          "Failure with Fear: Tick up 1"
         ],
         "textAfter": "When the countdown triggers, the party has made it to the top of the cliff .",
         "questions": [
@@ -244,10 +243,10 @@
         "type": "Passive",
         "text": "A PC can ask the bartender, staff , or patrons about local events, rumors, and potential work with a Presence Roll. On a success, they can pick two of the below details to learn—or three if they critically succeed. On a failure, they can pick one and mark a Stress as the local carries on about something irrelevant.",
         "bullets": [
-          "•A fascinating rumor with a connection to a PC’s background",
-          "•A promising job for the party involving a nearby threat or situation",
-          "•Local folklore that relates to something they’ve seen",
-          "•Town gossip that hints at a community problem"
+          "A fascinating rumor with a connection to a PC’s background",
+          "A promising job for the party involving a nearby threat or situation",
+          "Local folklore that relates to something they’ve seen",
+          "Town gossip that hints at a community problem"
         ],
         "questions": [
           "Who has what kind of information?",
@@ -315,12 +314,11 @@
         "type": "Passive",
         "text": "Gossip is the fastest-traveling currency in the realm. A PC can inquire about major events by making a Presence Roll. What they learn depends on the outcome of their roll, based on the following criteria:",
         "bullets": [
-          "•Critical Success: Learn about two major events. The PC can ask one follow-up question about one of the rumors and get atruthful (if not always complete) answer.",
-          "•Success with Hope: Learn about two events, at least one of which is relevant to the character’s background.",
-          "•Success with Fear: Learn an alarming rumor related to the character’s background.",
-          "•Any Failure: The locals respond poorly to their inquiries. The"
+          "Critical Success: Learn about two major events. The PC can ask one follow-up question about one of the rumors and get atruthful (if not always complete) answer.",
+          "Success with Hope: Learn about two events, at least one of which is relevant to the character’s background.",
+          "Success with Fear: Learn an alarming rumor related to the character’s background.",
+          "Any Failure: The locals respond poorly to their inquiries. The PC must mark a Stress to learn one relevant rumor."
         ],
-        "textAfter": "PC must mark a Stress to learn one relevant rumor.",
         "questions": [
           "What news do the PCs have that they could pass along to curious travelers?",
           "What do the locals think about these events?"
@@ -436,9 +434,9 @@
         "type": "Action",
         "text": "A portion of the ritual’s power is diverted into a cult member to fight off interlopers. Choose one adversary to become Imbued with terrible magic until the scene ends or they’re defeated. An Imbued adversary immediately takes the spotlight and gains one of the following benefits, or all three if you spend a Fear:",
         "bullets": [
-          "•They gain advantage on all attacks.",
-          "•They deal an extra 1d10 damage on a successful attack.",
-          "•They gain the following feature:"
+          "They gain advantage on all attacks.",
+          "They deal an extra 1d10 damage on a successful attack.",
+          "They gain the following feature:"
         ],
         "textAfter": "Relentless (2) - Passive. This adversary can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight them.",
         "questions": [
@@ -493,12 +491,11 @@
         "type": "Passive",
         "text": "A PC who prays to a deity while in the Hallowed Temple can make an Instinct Roll to receive answers. If the god they beseech isn’t welcome in this temple, the roll is made with disadvantage.",
         "bullets": [
-          "•Critical Success: The PC gains clear information. Additionally, they gain 1d4 Hope, which can be distributed between the party if they share the vision and guidance they received.",
-          "•Success with Hope: The PC receives clear information.",
-          "•Success with Fear: The PC receives brief flashes of insight and an emotional impression conveying an answer.",
-          "•Any Failure: The PC receives only vague flashes. They can"
+          "Critical Success: The PC gains clear information. Additionally, they gain 1d4 Hope, which can be distributed between the party if they share the vision and guidance they received.",
+          "Success with Hope: The PC receives clear information.",
+          "Success with Fear: The PC receives brief flashes of insight and an emotional impression conveying an answer.",
+          "Any Failure: The PC receives only vague flashes. They can mark a Stress to receive one clear image without context."
         ],
-        "textAfter": "mark a Stress to receive one clear image without context.",
         "questions": [
           "What does it feel like as you are touched by this vision?",
           "What feeling lingers after the images have passed?"
@@ -541,12 +538,11 @@
         "type": "Passive",
         "text": "The city has countless mysteries to unfold. A PC who seeks knowledge about the fallen city can make an Instinct or Knowledge Roll to learn about this place and discover (potentially haunted) loot.",
         "bullets": [
-          "•Critical Success: Gain valuable information and a related useful item.",
-          "•Success with Hope: Gain valuable information.",
-          "•Success with Fear: Uncover vague or incomplete information.",
-          "•Any Failure: Mark a Stress to find a lead after an exhaustive"
+          "Critical Success: Gain valuable information and a related useful item.",
+          "Success with Hope: Gain valuable information.",
+          "Success with Fear: Uncover vague or incomplete information.",
+          "Any Failure: Mark a Stress to find a lead after an exhaustive search."
         ],
-        "textAfter": "search.",
         "questions": [
           "What greater secrets does the city contain?",
           "Why have so many ghosts lingered here?",
@@ -667,11 +663,10 @@
         "type": "Passive",
         "text": "PCs who approach the central tree can make a Knowledge Roll to try to identify the magic that consumed this environment.",
         "bullets": [
-          "•On a success: They learn three of the below details. On a success with Fear, they learn two.",
-          "•On a failure: They can mark a Stress to learn one and gain advantage on the next action roll to investigate this environment.",
-          "•Details: This is a result of Fallen magic. The corruption is"
+          "On a success: They learn three of the below details. On a success with Fear, they learn two.",
+          "On a failure: They can mark a Stress to learn one and gain advantage on the next action roll to investigate this environment.",
+          "Details: This is a result of Fallen magic. The corruption is spread through the ashen moss. It can be cleansed only by a ritual of nature magic with a Progress Countdown (8)."
         ],
-        "textAfter": "spread through the ashen moss. It can be cleansed only by a ritual of nature magic with a Progress Countdown (8).",
         "questions": [
           "What Fallen cult corrupted these woods?",
           "What have they already done with the cursed wood and sap from this tree?"
@@ -754,8 +749,8 @@
         "type": "Reaction",
         "text": "When an adversary is defeated, you can spend a Fear to have a stray attack from a siege weapon hit a point on the battlefield. All targets within Very Close range of that point must make an Agility Reaction Roll.",
         "bullets": [
-          "•Targets who fail take 3d8+3 physical or magic damage and must mark a Stress.",
-          "•Targets who succeed must mark a Stress."
+          "Targets who fail take 3d8+3 physical or magic damage and must mark a Stress.",
+          "Targets who succeed must mark a Stress."
         ],
         "questions": [
           "What debris is scattered by the attack?",

@@ -1,19 +1,17 @@
-import { Notice, TFile, Editor, Modal } from "obsidian";
+import { Notice, Editor, Modal } from "obsidian";
+import { addFeature, getFeatureValues, buildCardHTML } from "../index";
 import type DaggerForgePlugin from "../../../main";
-import { CardData } from "../../../types/adversary";
+import { CardData, FeatureElements, FormInputs } from "../../../types/index";
 import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-} from "../../../utils/formHelpers";
-import { addFeature, getFeatureValues } from "./FeatureManager";
-import { buildCardHTML } from "./CardBuilder";
-import { FormInputs } from "../../../types/shared";
-import { FeatureElements, SavedFeatureState } from "../../../types/adversary";
-import { isMarkdownActive, isCanvasActive, createCanvasCard, getAvailableCanvasPosition } from "../../../utils/canvasHelpers"; 
-
-// This function is now replaced by DataManager.addAdversary()
-// Keeping it for backward compatibility if needed
+	isMarkdownActive,
+	isCanvasActive,
+	createCanvasCard, 
+	getAvailableCanvasPosition 
+	} from "../../../utils/index";
+	
 export async function buildCustomAdversary(
 	plugin: DaggerForgePlugin,
 	values: any,
@@ -46,7 +44,6 @@ export async function buildCustomAdversary(
 	};
 
 	try {
-		// Save using DataManager (Obsidian's saveData)
 		await plugin.dataManager.addAdversary(customAdversary);
 		new Notice(
 			`Custom adversary "${customAdversary.name}" saved successfully!`,
@@ -71,7 +68,7 @@ export class TextInputModal extends Modal {
 	plugin: DaggerForgePlugin;
 	savedInputStateAdv: Record<string, any> = {};
 	editor: Editor;
-	onSubmit?: (newHTML: string) => void;
+	onSubmit?: (newHTML: string, newData?: any) => void | Promise<void>;
 	isEditMode: boolean = false;
 
 	constructor(
@@ -86,8 +83,7 @@ export class TextInputModal extends Modal {
 		this.cardElement = cardElement;
 		this.isEditMode = !!cardElement;
 		if (cardElement && cardData) {
-			console.log("Editing existing card with provided data", cardElement);
-			this.savedInputStateAdv = {
+this.savedInputStateAdv = {
 				...cardData,
 				features: cardData.features?.map((f: any) => ({
 					featureName: f.name || f.featureName,
@@ -96,14 +92,11 @@ export class TextInputModal extends Modal {
 					featureDesc: f.desc || f.featureDesc,
 				})) || [],
 			};
-			console.log("Saved input state:", this.savedInputStateAdv);
-		}
+}
 	}
 
 	onOpen() {
-		console.log("savedInputStateAdv on open:", this.savedInputStateAdv);
-		const saved = this.plugin.savedInputStateAdv || {};
-		console.log("Opening modal with saved state:", saved);
+		const saved = this.isEditMode ? this.savedInputStateAdv : (this.plugin.savedInputStateAdv || {});
 		const { contentEl } = this;
 
 		const setValueIfSaved = (
@@ -125,7 +118,6 @@ export class TextInputModal extends Modal {
 
 		const firstRow = basicInfoSection.createDiv({ cls: "df-adv-form-row" });
 
-		// Name field
 		createInlineField(firstRow, this.inputs, {
 			label: "Name",
 			key: "name",
@@ -134,7 +126,6 @@ export class TextInputModal extends Modal {
 			customClass: "df-adv-field-name",
 		});
 
-		// Tier dropdown
 		createInlineField(firstRow, this.inputs, {
 			label: "Tier",
 			key: "tier",
@@ -144,7 +135,6 @@ export class TextInputModal extends Modal {
 			customClass: "df-adv-field-tier",
 		});
 
-		// Type dropdown
 		createInlineField(firstRow, this.inputs, {
 			label: "Type",
 			key: "type",
@@ -160,6 +150,9 @@ export class TextInputModal extends Modal {
 				"Solo",
 				"Standard",
 				"Support",
+				"Leader (Umbra-Touched)",
+				"Minion (Umbra-Touched)",
+				"Solo (Umbra-Touched)",
 			],
 			savedValues: saved,
 			customClass: "df-adv-field-type",
@@ -249,7 +242,7 @@ export class TextInputModal extends Modal {
 		);
 
 		// ===== COUNT FIELD =====
-		const countRow = weaponSection.createDiv({ cls: "df-adv-form-row" });
+		const countRow = weaponSection.createDiv({ cls: "df-adv-form-row-weapon" });
 		createInlineField(countRow, this.inputs, {
 			label: "Count",
 			key: "count",
@@ -304,35 +297,56 @@ export class TextInputModal extends Modal {
 			);
 
 			const features = getFeatureValues(this.features);
-			await buildCustomAdversary(this.plugin, values, features);
 			const newHTML = buildCardHTML(values, features);
+
+			if (this.onSubmit) {
+				const newData: CardData = {
+					id: values.id || "",
+					name: values.name || "",
+					tier: values.tier || "",
+					type: values.type || "",
+					desc: values.desc || "",
+					motives: values.motives || "",
+					difficulty: values.difficulty || "",
+					thresholdMajor: values.thresholdMajor || "",
+					thresholdSevere: values.thresholdSevere || "",
+					hp: values.hp || "",
+					stress: values.stress || "",
+					atk: values.atk || "",
+					weaponName: values.weaponName || "",
+					weaponRange: values.weaponRange || "",
+					weaponDamage: values.weaponDamage || "",
+					xp: values.xp || "",
+					source: "custom",
+					features: features.map((f) => ({
+						name: f.name || "",
+						type: f.type || "",
+						cost: f.cost || "",
+						desc: f.desc || "",
+					})),
+				};
+				this.onSubmit(newHTML, newData);
+				this.close();
+				return;
+			}
+
+			await buildCustomAdversary(this.plugin, values, features);
 
 			const isCanvas = isCanvasActive(this.app);
 			const isMarkdown = isMarkdownActive(this.app);
 			
-			// Check if we're editing an existing card
-			if (this.cardElement) {
-				const wrapper = document.createElement("div");
-				wrapper.innerHTML = newHTML.trim();
-				const newCardEl = wrapper.firstChild as HTMLElement;
-				this.cardElement.replaceWith(newCardEl);
-			} else {
-				// Check if we're on a canvas
-				if (isCanvas) {
-					const position = getAvailableCanvasPosition(this.plugin.app);
-					const success = createCanvasCard(this.plugin.app, newHTML, {
-						x: position.x,
-						y: position.y,
-						width: 400,
-						height: 600
-					});
-				} else if (isMarkdown) {
-					// Insert into markdown editor
-					this.editor.replaceSelection(newHTML + "\n");
-				}
+			if (isCanvas) {
+				const position = getAvailableCanvasPosition(this.plugin.app);
+				const success = createCanvasCard(this.plugin.app, newHTML, {
+					x: position.x,
+					y: position.y,
+					width: 400,
+					height: 600
+				});
+			} else if (isMarkdown) {
+				this.editor.replaceSelection(newHTML + "\n");
 			}
 
-			// Clear inputs
 			for (const el of Object.values(this.inputs)) {
 				if (
 					el instanceof HTMLInputElement ||
@@ -344,7 +358,6 @@ export class TextInputModal extends Modal {
 				}
 			}
 
-			// Clear features
 			this.features.forEach(({ nameEl, typeEl, costEl, descEl }) => {
 				nameEl.value = "";
 				typeEl.selectedIndex = 0;
@@ -356,7 +369,6 @@ export class TextInputModal extends Modal {
 			this.features = [];
 			this.featureContainer.empty();
 
-			// Refresh AdversaryView if open
 			const advView = this.plugin.app.workspace
 				.getLeavesOfType("adversary-view")
 				.map((l) => l.view)
@@ -371,9 +383,14 @@ export class TextInputModal extends Modal {
 	}
 
 	onClose() {
+		if (this.isEditMode) {
+this.savedInputStateAdv = {};
+			this.features = [];
+			return;
+		}
+
 		this.plugin.savedInputStateAdv = {};
 
-		// Save top-level inputs
 		for (const [key, el] of Object.entries(this.inputs)) {
 			const value = (
 				el as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -381,7 +398,6 @@ export class TextInputModal extends Modal {
 			this.plugin.savedInputStateAdv[key] = value;
 		}
 
-		// Save features
 		this.plugin.savedInputStateAdv.features = this.features.map(
 			({ nameEl, typeEl, costEl, descEl }) => ({
 				featureName: nameEl.value,

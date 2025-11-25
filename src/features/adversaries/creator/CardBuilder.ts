@@ -1,4 +1,4 @@
-import { Feature } from "../../../types/shared";
+import { Feature } from "../../../types/index";
 
 export const buildCardHTML = (
 	values: Record<string, string>,
@@ -21,6 +21,7 @@ export const buildCardHTML = (
 		weaponDamage,
 		xp,
 		count,
+		source,
 	} = values;
 
 	const hptick = Number(hp) || 0;
@@ -57,6 +58,9 @@ export const buildCardHTML = (
 	const stressBlock = stress
 		? `Stress: <span class="df-stat">${stress}</span>`
 		: "";
+
+	const sourceBadge = source ? `<span class="df-source-badge-${source.toLowerCase()}">${source.toLowerCase()}</span>` : `<span class="df-source-badge-custom">custom</span>`;
+
 	const featuresHTML = features
 		.map(
 			(f) => `
@@ -69,12 +73,12 @@ export const buildCardHTML = (
 		)
 		.join("");
 	return `
-<section id="custom" class="df-card-outer df-pseudo-cut-corners outer" data-weapon-range="${weaponRange || ''}" data-type="${type || ''}" data-count="${count || '1'}">
+<section id="custom" class="df-card-outer df-pseudo-cut-corners outer" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
-		<button class="df-adv-edit-button" data-edit-mode-only="true">📝</button>
+		<button class="df-adv-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
         ${hpStressRepeat}
         <h2>${name}</h2>
-        <div class="df-subtitle">Tier ${tier} ${type} </div>
+        <div class="df-subtitle">Tier ${tier} ${type} ${sourceBadge}</div>
         <div class="df-desc">${desc}</div>
         <div class="df-motives">Motives & Tactics:
             <span class="df-motives-desc">${motives}</span>

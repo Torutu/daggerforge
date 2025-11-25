@@ -1,4 +1,3 @@
-// Adversary counter state management
 let adversaryCount = 1;
 
 export function getAdversaryCount(): number {
@@ -6,7 +5,7 @@ export function getAdversaryCount(): number {
 }
 
 export function incrementAdversaryCount(difference: number): void {
-	adversaryCount++;
+	adversaryCount += difference;
 }
 
 export function decrementAdversaryCount(): void {

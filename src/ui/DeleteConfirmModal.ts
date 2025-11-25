@@ -35,10 +35,8 @@ export class DeleteConfirmModal extends Modal {
 			cls: "df-delete-warning-bold"
 		});
 
-		// Button container
 		const buttonContainer = contentEl.createDiv({ cls: "df-delete-button-container" });
 
-		// Delete button
 		const deleteBtn = buttonContainer.createEl("button", {
 			text: "Delete",
 			cls: "df-delete-confirm-btn"
@@ -54,7 +52,6 @@ export class DeleteConfirmModal extends Modal {
 			}
 		});
 
-		// Cancel button
 		const cancelBtn = buttonContainer.createEl("button", {
 			text: "Cancel",
 			cls: "df-delete-cancel-btn"

@@ -51,7 +51,6 @@ export class AdversaryEditor {
 				"Failed to edit adversary. Please check console for details.",
 			);
 			console.error("Adversary editing error:", error);
-			console.log("Card HTML:", cardElement.outerHTML);
-		}
+}
 	}
 }

@@ -1,4 +1,3 @@
-// Shared types used across multiple features
 export type FormInputs = {
 	[key: string]: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 };

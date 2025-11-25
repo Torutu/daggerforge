@@ -6,11 +6,9 @@ import { App, Notice, MarkdownView } from "obsidian";
  */
 
 export function getActiveViewType(app: App): string | null {
-	// Markdown
 	const mdView = app.workspace.getActiveViewOfType(MarkdownView);
 	if (mdView) return "markdown";
 
-	// Canvas (no public type, so check manually)
 	const leaf = app.workspace.getMostRecentLeaf();
 	const view = leaf?.view;
 
@@ -40,7 +38,6 @@ export function isMarkdownActive(app: App): boolean {
  * Get the canvas view - checks active leaf first, then any canvas in workspace
  */
 export function getActiveCanvas(app: App): any | null {
-	// First try active leaf
 	const activeLeaf = app.workspace.activeLeaf;
 	
 	if (activeLeaf?.view) {
@@ -48,27 +45,21 @@ export function getActiveCanvas(app: App): any | null {
 		const canvas = (view as any).canvas;
 		
 		if (canvas) {
-			console.log("✓ Got canvas object from active leaf");
-			return canvas;
+return canvas;
 		}
 	}
 	
-	// If active leaf doesn't have canvas, find any canvas leaf in workspace
 	const canvasLeaves = app.workspace.getLeavesOfType("canvas");
 	
 	if (canvasLeaves.length > 0) {
-		// Get the most recently used canvas
 		const canvasLeaf = canvasLeaves[0];
 		const canvas = (canvasLeaf.view as any).canvas;
 		
 		if (canvas) {
-			console.log("✓ Got canvas object from workspace leaf");
-			return canvas;
+return canvas;
 		}
 	}
-	
-	console.log("✗ No canvas object found");
-	return null;
+return null;
 }
 
 /**
@@ -84,24 +75,18 @@ export function createCanvasCard(
 		y?: number;
 	}
 ): boolean {
-	console.log("=== CREATE CANVAS CARD ===");
-	console.log("Attempting to create canvas card...");
-	
 	const canvas = getActiveCanvas(app);
 	
 	if (!canvas) {
-		console.error("✗ No canvas found!");
 		return false;
 	}
 
 	try {
 		
-		// Get viewport center or use provided coordinates
 		const viewport = canvas.viewport;
 		const defaultX = options?.x ?? (viewport.x + viewport.width / 2 - 200);
 		const defaultY = options?.y ?? (viewport.y + viewport.height / 2 - 150);
 
-		// Create the card node
 		const node = canvas.createTextNode({
 			pos: { 
 				x: defaultX, 
@@ -114,7 +99,6 @@ export function createCanvasCard(
 			}
 		});
 
-		// Save the canvas
 		if (canvas.requestSave) {
 			canvas.requestSave();
 		} else {
@@ -123,7 +107,7 @@ export function createCanvasCard(
 		return true;
 		
 	} catch (error) {
-		console.error("✗ Error creating canvas card:", error);
+		console.error("Error creating canvas card:", error);
 		new Notice(`Error creating canvas card: ${error.message}`);
 		return false;
 	}
@@ -141,16 +125,16 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 	}
 
 	try {
-		const viewport = canvas.viewport;
-		
-		// Start at center of viewport
-		let x = viewport.x + viewport.width / 2 - 200;
-		let y = viewport.y + viewport.height / 2 - 300;
+		// Get the camera position (center of what user is looking at)
+		const centerX = canvas.tx ?? 0;
+		const centerY = canvas.ty ?? 0;
+		const zoom = canvas.zoom ?? 1;
 
-		// Get all existing nodes
+		let x = centerX - 200;
+		let y = centerY - 300;
+
 		const nodes = canvas.nodes ? Array.from(canvas.nodes.values()) : [];
 		
-		// Check if position overlaps with any existing node
 		const overlaps = (testX: number, testY: number): boolean => {
 			return nodes.some((node: any) => {
 				const nodeX = node.x;
@@ -167,7 +151,6 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 			});
 		};
 
-		// If overlaps, offset to the right and down
 		let attempts = 0;
 		while (overlaps(x, y) && attempts < 20) {
 			x += 50;
@@ -175,7 +158,6 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 			attempts++;
 		}
 
-		console.log(`Found position after ${attempts} attempts:`, { x, y });
 		return { x, y };
 		
 	} catch (error) {
