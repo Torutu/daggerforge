@@ -16,7 +16,7 @@
 
 **TextInputModal** - Creates adversary cards with stats, weapons, features, and damage values.
 
-**DataManager** - Persistence layer. Methods: `addAdversary()`, `addEnvironment()`, `getAdversaries()`, `getEnvironments()`, `deleteAdversary()`, `deleteEnvironment()`.
+**DataManager** - Persistence layer. Methods: `changeSetting()`, `addAdversary()`, `addEnvironment()`, `getAdversaries()`, `getEnvironments()`, `deleteAdversary()`, `deleteEnvironment()`.
 
 ## Form Utilities
 
@@ -41,3 +41,5 @@
 **openEncounterCalculator** - Battle difficulty calculator.
 
 **onEditClick** - Routes edit operations for both card types.
+
+**onCollapseClick** - Routes card collapse operations for both card types.
