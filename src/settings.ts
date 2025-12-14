@@ -26,6 +26,15 @@ export class DaggerForgeSettingTab extends PluginSettingTab {
 
     containerEl.empty();
 
-    
+    new Setting(containerEl)
+      .setName('Hide collapse arrow')
+      .setDesc('On cards, the collapse arrow will be hidden unless the name is hovered over.')
+      .addToggle(toggle => toggle 
+        .setValue(this.plugin.dataManager.settings.collapseButtonHidden)
+        .onChange(async (value) => { 
+            await this.plugin.dataManager.changeSetting('collapseButtonHidden', value);
+            collapseButtonToggle(value);
+        })
+      );
   }
 }
