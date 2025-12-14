@@ -1,5 +1,6 @@
 import { Plugin } from 'obsidian';
-import { CardData ,EnvironmentData} from '../types/index';
+import { DaggerForgeSettings, DEFAULT } from '../settings';
+import { CardData ,EnvironmentData } from '../types/index';
 import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
 
 export interface StoredData {
@@ -7,6 +8,7 @@ export interface StoredData {
 	adversaries: CardData[];
 	environments: EnvironmentData[];
 	lastUpdated: number;
+	settings: DaggerForgeSettings;
 }
 
 /**
@@ -16,11 +18,13 @@ export interface StoredData {
  */
 export class DataManager {
 	private plugin: Plugin;
+	public settings: DaggerForgeSettings;
 	private data: StoredData = {
 		version: '2.0',
 		adversaries: [],
 		environments: [],
-		lastUpdated: Date.now()
+		lastUpdated: Date.now(),
+		settings: Object.assign({},DEFAULT)
 	};
 
 	constructor(plugin: Plugin) {
@@ -35,7 +39,8 @@ export class DataManager {
 			const saved = await this.plugin.loadData();
 			if (!saved) return;
 
-			this.data = { ...this.data, ...saved };
+			this.data.settings = (saved as any).settings;
+			this.settings = this.data.settings;
 
 			const allAdversaries: CardData[] = [];
 			const allEnvironments: EnvironmentData[] = [];
@@ -82,6 +87,16 @@ export class DataManager {
 	private async save(): Promise<void> {
 		this.data.lastUpdated = Date.now();
 		await this.plugin.saveData(this.data);
+	}
+	
+	// ==================== SETTINGS ====================
+
+	async changeSetting<key extends keyof DaggerForgeSettings>(
+		setting: key,
+		value: DaggerForgeSettings[key],
+	): Promise<void> {
+		this.data.settings[setting] = value;
+		await this.save();
 	}
 
 	// ==================== ADVERSARIES ====================
@@ -234,15 +249,6 @@ export class DataManager {
 		await this.save();
 	}
 
-	async clearAllData(): Promise<void> {
-		this.data = {
-			version: '2.0',
-			adversaries: [],
-			environments: [],
-			lastUpdated: Date.now()
-		};
-		await this.save();
-	}
 
 	/**
 	 * Delete the data.json file completely
@@ -254,7 +260,8 @@ export class DataManager {
 				version: '2.0',
 				adversaries: [],
 				environments: [],
-				lastUpdated: Date.now()
+				lastUpdated: Date.now(),
+				settings: Object.assign({},DEFAULT)
 			};
 			
 			await this.plugin.saveData(null);

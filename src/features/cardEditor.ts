@@ -300,20 +300,20 @@ export const onEditClick = (
 	}
 };
 
-export async function handleCardEditClick(evt: MouseEvent, app: App, plugin?: DaggerForgePlugin) {
+export async function handleCardClick(evt: MouseEvent, app: App, plugin?: DaggerForgePlugin) {
 	const target = evt.target as HTMLElement;
 	if (!target) return;
+	
+	if (!plugin) {
+		new Notice("Plugin instance not available for editing.");
+		return;
+	}
 
 	let cardType: "env" | "adv" | null = null;
 	if (target.matches(".df-env-edit-button")) cardType = "env";
 	else if (target.closest(".df-adv-edit-button")) cardType = "adv";
 
 	if (!cardType) return;
-
-	if (!plugin) {
-		new Notice("Plugin instance not available for editing.");
-		return;
-	}
 
 	// Check if we're on a canvas
 	const activeLeaf = app.workspace.activeLeaf;

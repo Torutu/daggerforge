@@ -1,3 +1,4 @@
+/*
 import { Editor, Notice } from "obsidian";
 import { ADVERSARIES } from "../../../data/index";
 import { filterByTier } from "../../../utils/index";
@@ -124,4 +125,4 @@ function buildCardHTML(
 </section>
 `;
 	return cardHTML.trim().replace(/\s+$/, "");
-}
+}*/

@@ -10,7 +10,7 @@ import {
 	environmentToHTML,
 	openDiceRoller,
 	openEncounterCalculator,
-	handleCardEditClick,
+	handleCardClick,
 } from "./features/index";
 
 import {
@@ -21,6 +21,7 @@ import {
 } from "./ui/index";
 
 import { DataManager } from "./data/index";
+import { DaggerForgeSettingTab } from "./settings";
 
 export default class DaggerForgePlugin extends Plugin {
 	updateCardData() {
@@ -34,7 +35,7 @@ export default class DaggerForgePlugin extends Plugin {
 		this.dataManager = new DataManager(this);
 		await this.dataManager.load();
 		this.addStatusBarItem().setText("DaggerForge Active");
-		this.registerDomEvent(document, "click", (evt) => handleCardEditClick(evt, this.app, this));
+		this.registerDomEvent(document, "click", (evt) => handleCardClick(evt, this.app, this));
 		this.registerView(
 			ADVERSARY_VIEW_TYPE,
 			(leaf) => new AdversaryView(leaf),
@@ -43,6 +44,8 @@ export default class DaggerForgePlugin extends Plugin {
 			ENVIRONMENT_VIEW_TYPE,
 			(leaf) => new EnvironmentView(leaf),
 		);
+
+		this.addSettingTab(new DaggerForgeSettingTab(this.app, this));
 
 		this.addRibbonIcon(
 			"scroll-text",
