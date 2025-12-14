@@ -1,6 +1,6 @@
 import { MarkdownView, Notice, App } from "obsidian";
 import type DaggerForgePlugin from "../main";
-import { EnvironmentEditorModal } from ".";
+import { EnvironmentEditorModal, onCollapseClick } from ".";
 import { extractCardData, TextInputModal } from "./adversaries/index";
 import type { EnvironmentData, EnvSavedFeatureState } from "../types/index";
 
@@ -311,7 +311,9 @@ export async function handleCardClick(evt: MouseEvent, app: App, plugin?: Dagger
 
 	let cardType: "env" | "adv" | null = null;
 	if (target.matches(".df-env-edit-button")) cardType = "env";
-	else if (target.closest(".df-adv-edit-button")) cardType = "adv";
+	else if (target.matches(".df-adv-edit-button")) cardType = "adv";
+	// With the way the clicks are currently handled, I am not aware of a better way to check than this.
+	else if (target.matches(".df-adv-collapse-button")) onCollapseClick(evt, "adv");
 
 	if (!cardType) return;
 

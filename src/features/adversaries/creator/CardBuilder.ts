@@ -77,7 +77,10 @@ export const buildCardHTML = (
     <div class="df-card-inner df-pseudo-cut-corners inner">
 		<button class="df-adv-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
         ${hpStressRepeat}
+		<div class="df-name-container">
+		<button class="df-adv-collapse-button"></button>
         <h2>${name}</h2>
+		</div>
         <div class="df-subtitle">Tier ${tier} ${type} ${sourceBadge}</div>
         <div class="df-desc">${desc}</div>
         <div class="df-motives">Motives & Tactics:
@@ -93,7 +96,7 @@ export const buildCardHTML = (
             <div class="df-experience-line">Experience: <span class="df-stat">${xp}</span></div>
         </div>
         <div class="df-section">FEATURES</div>
-        ${featuresHTML}
+		${featuresHTML}
     </div>
 </section>
 `.trim();
