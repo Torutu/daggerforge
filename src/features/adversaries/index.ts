@@ -1,4 +1,3 @@
-export * from './components/AdvList';
 export * from './components/AdvSearch';
 export * from './components/AdvCounter';
 export * from './creator/CardBuilder';
