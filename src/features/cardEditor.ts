@@ -1,313 +1,585 @@
-import { MarkdownView, Notice, App } from "obsidian";
+import { App, Editor, MarkdownView, Notice } from "obsidian";
 import type DaggerForgePlugin from "../main";
-import { EnvironmentEditorModal } from ".";
+import { EnvironmentEditorModal, environmentToHTML } from ".";
 import { extractCardData, TextInputModal } from "./adversaries/index";
 import type { EnvironmentData, EnvSavedFeatureState } from "../types/index";
+// ─── Interfaces ────────────────────────────────────────────────────────────
 
-// Helper: Find which position this card is at in the DOM (for cards with duplicate names)
-function findCardIndexInDOM(cardElement: HTMLElement, cardType: string): number {
-	const selector = cardType === "env" ? ".df-env-card-outer" : ".df-card-outer";
-	const allCards = Array.from(document.querySelectorAll(selector));
-	return allCards.indexOf(cardElement);
+/**
+ * Matches any Obsidian ItemView that exposes a refresh() method.
+ * Browser panels (adversary-view, environment-view) implement this to reload
+ * their lists after a card is edited.
+ */
+interface RefreshableView {
+	refresh(): void | Promise<void>;
 }
 
-// Helper: Find the correct card section in markdown by name and DOM position
-function findCardInMarkdown(fullContent: string, cardName: string, domIndex: number, cardType: string): { startIndex: number; endIndex: number } {
-	const cardNameEscaped = cardName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-	
-	// First, find all section opening tags that match the card type
-	let sectionOpenings = [];
-	const sectionTagPattern = cardType === "adv" 
-		? /<section[^>]*class="[^"]*df-card-outer[^"]*"[^>]*>/gi
-		: /<section[^>]*class="[^"]*df-env-card-outer[^"]*"[^>]*>/gi;
-	
-	let match;
-	const sectionRegex = new RegExp(sectionTagPattern.source, sectionTagPattern.flags);
-	while ((match = sectionRegex.exec(fullContent)) !== null) {
-		sectionOpenings.push(match.index);
-	}
-	
-	if (sectionOpenings.length === 0) {
-		return { startIndex: -1, endIndex: -1 };
-	}
-	
-	// Now find which sections contain the card name
-	let namePattern: RegExp;
-	if (cardType === "adv") {
-		namePattern = new RegExp(`<h2[^>]*>${cardNameEscaped}<\\/h2>`, 'i');
-	} else {
-		namePattern = new RegExp(`<[^>]*class="[^"]*df-env-name[^"]*"[^>]*>${cardNameEscaped}<\\/[^>]*>`, 'i');
-	}
-	
-	let matchingSections = [];
-	for (let i = 0; i < sectionOpenings.length; i++) {
-		const sectionStart = sectionOpenings[i];
-		const nextSectionStart = i + 1 < sectionOpenings.length ? sectionOpenings[i + 1] : fullContent.length;
-		
-		// Search for the card name within this section
-		const sectionContent = fullContent.substring(sectionStart, nextSectionStart);
-		if (namePattern.test(sectionContent)) {
-			matchingSections.push(sectionStart);
-		}
-	}
-	
-	if (matchingSections.length === 0) {
-		return { startIndex: -1, endIndex: -1 };
-	}
-	
-	// Pick the correct section based on DOM index
-	const targetSectionIndex = Math.min(domIndex, matchingSections.length - 1);
-	const sectionStartIndex = matchingSections[targetSectionIndex];
-	
-	// Now find the closing </section> tag for this specific section
-	let closeCount = 1;
-	let searchIndex = sectionStartIndex + 8; // Skip past '<section'
-	let sectionEndIndex = -1;
-	
-	while (closeCount > 0 && searchIndex < fullContent.length) {
-		const nextOpen = fullContent.indexOf('<section', searchIndex);
-		const nextClose = fullContent.indexOf('</section>', searchIndex);
-		
-		if (nextClose === -1) break;
-		
-		if (nextOpen !== -1 && nextOpen < nextClose) {
-			// Found opening tag before closing tag
-			closeCount++;
-			searchIndex = nextOpen + 8;
-		} else {
-			// Closing tag comes next
-			closeCount--;
-			if (closeCount === 0) {
-				sectionEndIndex = nextClose + 10;
+function isRefreshableView(view: unknown): view is RefreshableView {
+	return (
+		typeof view === "object" &&
+		view !== null &&
+		"refresh" in view &&
+		typeof (view as RefreshableView).refresh === "function"
+	);
+}
+
+// ─── Markdown Section Boundary Detection ───────────────────────────────────
+// Cards are rendered as nested <section> blocks inside markdown HTML. To edit
+// one, we need its exact character range so we can splice in the new HTML.
+// We locate it by walking from the edit button's unique id attribute.
+
+/** Find the character index of `id="<id>"` in content, or -1 if absent. */
+function findIdAttribute(content: string, id: string): number {
+	return content.indexOf(`id="${id}"`);
+}
+
+/**
+ * Walk backward from `searchFrom` to find a <section> whose class attribute
+ * contains `df-card-outer`.
+ *
+ * Why not just take the nearest <section>? Adversary edit buttons sit several
+ * levels of nesting deep — intermediate sections (stats, features) would be
+ * found first. We need the specific outermost card wrapper.
+ */
+function findOuterCardSection(content: string, searchFrom: number): number {
+	let pos = searchFrom;
+
+	while (pos > 0) {
+		const sectionStart = content.lastIndexOf("<section", pos - 1);
+		if (sectionStart === -1) break;
+
+		const classPos = content.indexOf('class="', sectionStart);
+		if (classPos !== -1 && classPos < searchFrom) {
+			const classEnd = content.indexOf('"', classPos + 7);
+			if (content.substring(classPos + 7, classEnd).includes("df-card-outer")) {
+				return sectionStart;
 			}
-			searchIndex = nextClose + 10;
 		}
+
+		pos = sectionStart;
 	}
-	
-	return { startIndex: sectionStartIndex, endIndex: sectionEndIndex };
+
+	return -1;
 }
 
+/**
+ * Starting just after an opening <section> tag, count nested open/close pairs
+ * to find the matching </section>. Returns the index immediately after the
+ * closing tag, or -1 if the HTML structure is malformed.
+ */
+function findMatchingSectionEnd(content: string, openTagIndex: number): number {
+	let depth = 1;
+	let pos = openTagIndex + 8; // skip past '<section'
+
+	while (depth > 0 && pos < content.length) {
+		const nextOpen = content.indexOf("<section", pos);
+		const nextClose = content.indexOf("</section>", pos);
+
+		if (nextClose === -1) return -1;
+
+		if (nextOpen !== -1 && nextOpen < nextClose) {
+			depth++;
+			pos = nextOpen + 8;
+		} else {
+			depth--;
+			pos = nextClose + 10; // length of '</section>'
+		}
+	}
+
+	return depth === 0 ? pos : -1;
+}
+
+/**
+ * Locate the full <section> block that contains the element with the given id.
+ *
+ * The search strategy differs by card type:
+ *   adv — walks backward to find the ancestor with class `df-card-outer`
+ *   env — the id lives on or directly inside the outer section, so the nearest
+ *         preceding <section> tag is the right one
+ */
+function findCardSectionBounds(
+	content: string,
+	cardId: string,
+	cardType: "adv" | "env",
+): { startIndex: number; endIndex: number } {
+	const idPos = findIdAttribute(content, cardId);
+	if (idPos === -1) return { startIndex: -1, endIndex: -1 };
+
+	const sectionStart =
+		cardType === "adv"
+			? findOuterCardSection(content, idPos)
+			: content.lastIndexOf("<section", idPos);
+
+	if (sectionStart === -1) return { startIndex: -1, endIndex: -1 };
+
+	return {
+		startIndex: sectionStart,
+		endIndex: findMatchingSectionEnd(content, sectionStart),
+	};
+}
+
+// ─── Card Element & Name Resolution ────────────────────────────────────────
+
+/** Outermost container selector for each card type. */
+const CARD_OUTER_SELECTOR: Record<string, string> = {
+	adv: ".df-card-outer",
+	env: ".df-env-card-outer",
+};
+
+/** Walk up from a clicked edit button to the containing card element. */
+function findCardElement(
+	button: HTMLElement,
+	cardType: string,
+): HTMLElement | null {
+	return button.closest(CARD_OUTER_SELECTOR[cardType] ?? "");
+}
+
+/** Read the display name from a rendered card. */
+function getCardName(cardElement: HTMLElement, cardType: string): string {
+	if (cardType === "env") {
+		return (
+			cardElement.querySelector(".df-env-name")?.textContent?.trim() ??
+			"(unknown environment)"
+		);
+	}
+	return (
+		cardElement.querySelector("h2")?.textContent?.trim() ??
+		"(unknown adversary)"
+	);
+}
+
+// ─── Environment Data Extraction ───────────────────────────────────────────
+// Scrapes a rendered environment card's DOM back into an EnvironmentData object.
+// This is the reverse of environmentToHTML — it recovers the structured data the
+// editor modal needs. Card HTML is identical whether it appears in a markdown
+// note or on a canvas, so this logic is shared between both edit paths.
+
+/**
+ * The tier/type element renders as "Tier <n> <Type> <sourceBadge>".
+ * textContent gives e.g. "Tier 2 Exploration custom".
+ * Tier is the word at index 1, type is the word at index 2.
+ */
+function extractTierAndType(
+	innerCard: Element | null,
+): { tier: string; type: string } {
+	const text =
+		innerCard
+			?.querySelector(".df-env-feat-tier-type")
+			?.textContent?.trim() ?? "";
+	const words = text.split(" ").filter(Boolean);
+	// words[0] = "Tier", words[1] = number, words[2] = type, words[3] = source badge
+	return { tier: words[1] ?? "1", type: words[2] ?? "Exploration" };
+}
+
+function extractImpulse(innerCard: Element | null): string {
+	const el = Array.from(innerCard?.querySelectorAll("p") ?? []).find((p) =>
+		p.textContent?.includes("Impulse:"),
+	);
+	return el?.textContent?.replace("Impulse:", "").trim() ?? "";
+}
+
+function extractDifficultyAndAdversaries(innerCard: Element | null): {
+	difficulty: string;
+	potentialAdversaries: string;
+} {
+	const container = innerCard?.querySelector(".df-env-card-diff-pot");
+	const paragraphs = Array.from(container?.querySelectorAll("p") ?? []);
+
+	return {
+		difficulty:
+			paragraphs
+				.find((p) => p.textContent?.includes("Difficulty"))
+				?.textContent?.split(":")[1]
+				?.trim() ?? "",
+		potentialAdversaries:
+			paragraphs
+				.find((p) => p.textContent?.includes("Potential Adversaries"))
+				?.textContent?.split(":")[1]
+				?.trim() ?? "",
+	};
+}
+
+function extractSingleFeature(feat: Element): EnvSavedFeatureState {
+	const rawCost = feat.getAttribute("data-feature-cost") ?? "";
+
+	return {
+		name: feat.getAttribute("data-feature-name") ?? "",
+		type: feat.getAttribute("data-feature-type") ?? "Passive",
+		cost: rawCost !== "" ? rawCost : undefined,
+		text:
+			feat.querySelector(".df-env-feat-text")?.textContent?.trim() ?? "",
+		bullets: Array.from(feat.querySelectorAll(".df-env-bullet-item"))
+			.map((b) => b.textContent?.trim() ?? "")
+			.filter(Boolean),
+		textAfter:
+			feat.querySelector("#textafter")?.textContent?.trim() || undefined,
+		questions: Array.from(
+			feat.querySelector(".df-env-questions")?.querySelectorAll(".df-env-question") ?? [],
+		)
+			.map((q) => q.textContent?.trim() ?? "")
+			.filter(Boolean),
+	};
+}
+
+function extractEnvironmentData(
+	cardElement: HTMLElement,
+	cardName: string,
+): EnvironmentData {
+	const inner = cardElement.querySelector(".df-env-card-inner");
+	const { tier, type } = extractTierAndType(inner);
+	const { difficulty, potentialAdversaries } =
+		extractDifficultyAndAdversaries(inner);
+
+	const features = Array.from(
+		inner?.querySelector(".df-features-section")?.querySelectorAll(".df-feature") ?? [],
+	).map(extractSingleFeature);
+
+	return {
+		id: "",
+		name: cardName,
+		tier: tier,
+		type,
+		desc: inner?.querySelector(".df-env-desc")?.textContent?.trim() ?? "",
+		impulse: extractImpulse(inner),
+		difficulty,
+		potentialAdversaries,
+		source: "custom",
+		features,
+	};
+}
+
+// ─── Markdown Card Replacement ─────────────────────────────────────────────
+
+/**
+ * Splice new card HTML into the active markdown editor and persist the file.
+ *
+ * The card is re-located by id at call time (not at modal-open time) so that
+ * any edits the user made to the document while the modal was open are
+ * accounted for. Returns false if the card can no longer be found.
+ */
+async function replaceCardInMarkdown(
+	plugin: DaggerForgePlugin,
+	cardId: string,
+	cardType: "adv" | "env",
+	newHTML: string,
+): Promise<boolean> {
+	const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
+	if (!view) return false;
+
+	const content = view.editor.getValue();
+	const { startIndex, endIndex } = findCardSectionBounds(
+		content,
+		cardId,
+		cardType,
+	);
+	if (startIndex === -1 || endIndex === -1) return false;
+
+	const updated =
+		content.substring(0, startIndex) +
+		newHTML +
+		content.substring(endIndex);
+
+	view.editor.setValue(updated);
+
+	if (view.file) {
+		await plugin.app.vault.modify(view.file, updated);
+	}
+
+	return true;
+}
+
+// ─── Canvas Card DOM Mutation ──────────────────────────────────────────────
+// Canvas cards are live DOM nodes — there is no text to splice. We parse the
+// new HTML, extract the inner container, and swap its children in place.
+
+/**
+ * Replace a canvas card's inner content with freshly rendered HTML.
+ *
+ * `innerSelector` identifies the child element that holds the card body:
+ *   ".df-card-inner"     — adversary cards
+ *   ".df-env-card-inner" — environment cards
+ *
+ * If the inner element is missing from either the new or existing HTML, falls
+ * back to replacing the card's children entirely. This handles edge cases where
+ * the HTML generator produces a different top-level structure than expected.
+ */
+function replaceCardInCanvas(
+	cardElement: HTMLElement,
+	newHTML: string,
+	innerSelector: string,
+): void {
+	const parsed = new DOMParser().parseFromString(newHTML, "text/html");
+	const newInner = parsed.querySelector(innerSelector);
+	const existingInner = cardElement.querySelector(innerSelector);
+
+	if (newInner && existingInner) {
+		existingInner.innerHTML = "";
+		newInner.childNodes.forEach((node) => {
+			existingInner.appendChild(node.cloneNode(true));
+		});
+	} else {
+		cardElement.innerHTML = "";
+		parsed.body.childNodes.forEach((node) => {
+			cardElement.appendChild(node.cloneNode(true));
+		});
+	}
+
+	// Trigger a visual refresh. The class toggle forces Obsidian's canvas
+	// renderer to repaint this node.
+	cardElement.classList.add("df-canvas-force-rerender");
+	requestAnimationFrame(() => {
+		cardElement.classList.remove("df-canvas-force-rerender");
+		cardElement.classList.add("df-canvas-normal-opacity");
+	});
+}
+
+// ─── Browser View Refresh ──────────────────────────────────────────────────
+
+/**
+ * Find and refresh an open browser panel of the given view type. After any
+ * card edit the adversary or environment browser needs to reload its list.
+ */
+function refreshBrowserView(
+	plugin: DaggerForgePlugin,
+	viewType: string,
+): void {
+	const view = plugin.app.workspace
+		.getLeavesOfType(viewType)
+		.map((leaf) => leaf.view)
+		.find(isRefreshableView) as RefreshableView | undefined;
+
+	if (view) {
+		view.refresh();
+	}
+}
+
+// ─── Markdown Edit Flows ───────────────────────────────────────────────────
+
+async function editAdversaryInMarkdown(
+	cardElement: HTMLElement,
+	cardId: string,
+	cardName: string,
+	plugin: DaggerForgePlugin,
+): Promise<void> {
+	const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
+	if (!view) {
+		new Notice("Please open a markdown note first.");
+		return;
+	}
+
+	// Validate the card exists before opening the modal — gives the user
+	// immediate feedback if the card was removed while they were looking at it.
+	const { startIndex, endIndex } = findCardSectionBounds(
+		view.editor.getValue(),
+		cardId,
+		"adv",
+	);
+	if (startIndex === -1 || endIndex === -1) {
+		new Notice("Could not find card in markdown.");
+		return;
+	}
+
+	const cardData = extractCardData(cardElement);
+	const modal = new TextInputModal(plugin, view.editor, cardElement, cardData);
+
+	// newData arrives as `any` because TextInputModal.onSubmit is typed that
+	// way. At runtime it is a valid AdvData built by the modal before calling us.
+	modal.onEditUpdate = async (newHTML: string, newData: any) => {
+		const replaced = await replaceCardInMarkdown(
+			plugin,
+			cardId,
+			"adv",
+			newHTML,
+		);
+		if (!replaced) {
+			new Notice("Could not find card in markdown for update.");
+			return;
+		}
+
+		try {
+			await plugin.dataManager.addAdversary(newData);
+			new Notice(`Updated adversary: ${cardName}`);
+		} catch (error) {
+			console.error("Error saving adversary:", error);
+			new Notice("Error saving adversary. Check console for details.");
+		}
+
+		refreshBrowserView(plugin, "adversary-view");
+	};
+
+	modal.open();
+}
+
+async function editEnvironmentInMarkdown(
+	cardElement: HTMLElement,
+	cardId: string,
+	cardName: string,
+	plugin: DaggerForgePlugin,
+): Promise<void> {
+	const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
+	if (!view) {
+		new Notice("Please open a markdown note first.");
+		return;
+	}
+
+	const { startIndex, endIndex } = findCardSectionBounds(
+		view.editor.getValue(),
+		cardId,
+		"env",
+	);
+	if (startIndex === -1 || endIndex === -1) {
+		new Notice("Could not find environment card in markdown.");
+		return;
+	}
+
+	const envData = extractEnvironmentData(cardElement, cardName);
+
+	// EnvironmentEditorModal calls dataManager.addEnvironment() internally
+	// before invoking onSubmit. We only need to handle the HTML replacement here.
+	const modal = new EnvironmentEditorModal(
+		plugin,
+		view.editor,
+		cardElement,
+		envData,
+	);
+
+	modal.onSubmit = async (newHTML: string) => {
+		const replaced = await replaceCardInMarkdown(
+			plugin,
+			cardId,
+			"env",
+			newHTML,
+		);
+		if (!replaced) {
+			new Notice(
+				"Could not find environment card in markdown for update.",
+			);
+			return;
+		}
+
+		new Notice(`Updated environment: ${cardName}`);
+		refreshBrowserView(plugin, "environment-view");
+	};
+
+	modal.open();
+}
+
+// ─── Canvas Edit Flows ─────────────────────────────────────────────────────
+
+function editAdversaryInCanvas(
+	cardElement: HTMLElement,
+	cardName: string,
+	plugin: DaggerForgePlugin,
+): void {
+	const cardData = extractCardData(cardElement);
+	const modal = new TextInputModal(plugin, null, cardElement, cardData);
+
+	modal.onEditUpdate = async (newHTML: string, newData: any) => {
+		try {
+			replaceCardInCanvas(cardElement, newHTML, ".df-card-inner");
+			await plugin.dataManager.addAdversary(newData);
+			new Notice(`Updated adversary: ${cardName}`);
+		} catch (error) {
+			console.error("Error updating adversary:", error);
+			new Notice(
+				"Error updating adversary. Check console for details.",
+			);
+		}
+
+		refreshBrowserView(plugin, "adversary-view");
+	};
+
+	modal.open();
+}
+
+function editEnvironmentInCanvas(
+	cardElement: HTMLElement,
+	cardName: string,
+	plugin: DaggerForgePlugin,
+): void {
+	const envData = extractEnvironmentData(cardElement, cardName);
+
+	// Workaround: EnvironmentEditorModal types `editor` as non-nullable, but
+	// the value is never read when editing a canvas card. The modal constructor
+	// should be updated to accept Editor | null to remove this cast.
+	const modal = new EnvironmentEditorModal(
+		plugin,
+		null as unknown as Editor,
+		cardElement,
+		envData,
+	);
+
+	modal.onSubmit = async (newHTML: string) => {
+		try {
+			replaceCardInCanvas(cardElement, newHTML, ".df-env-card-inner");
+			new Notice(`Updated environment: ${cardName}`);
+		} catch (error) {
+			console.error("Error updating environment:", error);
+			new Notice(
+				"Error updating environment. Check console for details.",
+			);
+		}
+
+		refreshBrowserView(plugin, "environment-view");
+	};
+
+	modal.open();
+}
+
+// ─── Public Entry Points ───────────────────────────────────────────────────
+
+/**
+ * Handle an edit click on a card inside a markdown note. Resolves the card
+ * element and routes to the type-specific markdown edit flow.
+ */
 export const onEditClick = (
 	evt: Event,
-	cardType: string,
-	plugin: DaggerForgePlugin
-) => {
+	cardType: "adv" | "env",
+	plugin: DaggerForgePlugin,
+): void => {
 	evt.stopPropagation();
 
 	const button = evt.target as HTMLElement;
-	let cardElement: HTMLElement | null = null;
-
-	if (cardType === "env") {
-		cardElement = button.closest(".df-env-card-outer");
-	} else if (cardType === "adv") {
-		cardElement = button.closest(".df-card-outer");
-	}
+	const cardElement = findCardElement(button, cardType);
 
 	if (!cardElement) {
 		new Notice("Could not find card element!");
 		return;
 	}
 
-	let cardName = "";
-	if (cardType === "env") {
-		const nameEl = cardElement.querySelector(".df-env-name");
-		cardName = nameEl?.textContent?.trim() ?? "(unknown environment)";
-	} else if (cardType === "adv") {
-		const nameEl = cardElement.querySelector("h2");
-		cardName = nameEl?.textContent?.trim() ?? "(unknown adversary)";
+	const cardId = button.id;
+	if (!cardId) {
+		new Notice("Edit button missing ID!");
+		return;
 	}
 
+	const cardName = getCardName(cardElement, cardType);
+
 	if (cardType === "adv") {
-		const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
-		if (!view) {
-			new Notice("Please open a markdown note first.");
-			return;
-		}
-
-		const editor = view.editor;
-		const cardData = extractCardData(cardElement);
-		const fullContent = editor.getValue();
-		
-		// FIX: Use helper function to get DOM index and markdown position
-		const domIndex = findCardIndexInDOM(cardElement, "adv");
-		const { startIndex: sectionStartIndex, endIndex: sectionEndIndex } = findCardInMarkdown(fullContent, cardName, domIndex, "adv");
-		
-		if (sectionStartIndex === -1 || sectionEndIndex === -1) {
-			new Notice("Could not find card in markdown.");
-			return;
-		}
-		
-		const oldHTML = fullContent.substring(sectionStartIndex, sectionEndIndex);
-		
-		const modal = new TextInputModal(plugin, editor, cardElement, cardData);
-		modal.onSubmit = async (newHTML: string, newData: any) => {
-			const content = editor.getValue();
-			// Use the new HTML as-is, don't add extra sections
-			const finalHTML = newHTML;
-			
-			const beforeCard = content.substring(0, sectionStartIndex);
-			const afterCard = content.substring(sectionEndIndex);
-			const newContent = beforeCard + finalHTML + afterCard;
-			
-			editor.setValue(newContent);
-			
-			const file = view.file;
-			if (file) {
-				await plugin.app.vault.modify(file, newContent);
-			}
-			
-			try {
-				await plugin.dataManager.addAdversary(newData);
-				new Notice(`Updated adversary: ${cardName}`);
-			} catch (error) {
-				console.error("Error saving adversary:", error);
-				new Notice("Error saving adversary. Check console for details.");
-			}
-			
-			const advView = plugin.app.workspace
-				.getLeavesOfType("adversary-view")
-				.map((l) => l.view)
-				.find((v) => typeof (v as any).refresh === "function") as any;
-
-			if (advView) {
-				await advView.refresh();
-			}
-		};
-		modal.open();
-	} else if (cardType === "env") {
-		const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
-		if (!view) {
-			new Notice("Please open a markdown note first.");
-			return;
-		}
-
-		const editor = view.editor;
-		const fullContent = editor.getValue();
-		
-		// FIX: Use helper function to get DOM index and markdown position
-		const domIndex = findCardIndexInDOM(cardElement, "env");
-		const { startIndex: sectionStartIndex, endIndex: sectionEndIndex } = findCardInMarkdown(fullContent, cardName, domIndex, "env");
-		
-		if (sectionStartIndex === -1 || sectionEndIndex === -1) {
-			new Notice("Could not find environment card in markdown.");
-			return;
-		}
-		
-		const oldHTML = fullContent.substring(sectionStartIndex, sectionEndIndex);
-		
-		const innerDiv = cardElement.querySelector('.df-env-card-inner');
-		
-		const tierTypeText = innerDiv?.querySelector('.df-env-feat-tier-type')?.textContent?.trim() || '';
-		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+([A-Za-z]+)/);
-		const tier = tierMatch ? tierMatch[1] : '1';
-		const type = tierMatch ? tierMatch[2] : 'Exploration';
-		
-		const name = cardName;
-		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
-		
-		const impulseEl = Array.from(innerDiv?.querySelectorAll('p') || []).find(p => 
-			p.textContent?.includes('Impulse:')
-		);
-		const impulse = impulseEl ? impulseEl.textContent?.replace('Impulse:', '').trim() : '';
-		
-		const diffPotEl = innerDiv?.querySelector('.df-env-card-diff-pot');
-		const diffEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
-			p.textContent?.includes('Difficulty')
-		);
-		const advEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
-			p.textContent?.includes('Potential Adversaries')
-		);
-		
-		const difficulty = diffEl ? diffEl.textContent?.split(':')[1]?.trim() : '';
-		const potentialAdversaries = advEl ? advEl.textContent?.split(':')[1]?.trim() : '';
-		
-		// SIMPLE FEATURE EXTRACTION FROM DATA ATTRIBUTES
-		const featuresSection = innerDiv?.querySelector('.df-features-section');
-		const features: EnvSavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
-			// Get from data attributes
-			const featName = feat.getAttribute('data-feature-name') || '';
-			const featType = feat.getAttribute('data-feature-type') || 'Passive';
-			const cost = feat.getAttribute('data-feature-cost') || undefined;
-			// Get bullets
-			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
-			
-			// Get text
-			const textDiv = feat.querySelector('.df-env-feat-text');
-			const text = textDiv?.textContent?.trim() || '';
-			
-			// Get text after
-			const afterTextEl = feat.querySelector('#textafter');
-			const textAfter = afterTextEl ? afterTextEl.textContent?.trim() : undefined;
-			
-			// Get questions
-			const questionsDiv = feat.querySelector('.df-env-questions');
-			const questions = questionsDiv ? 
-				Array.from(questionsDiv.querySelectorAll('.df-env-question')).map((q: Element) => q.textContent?.trim() || '').filter(q => q) :
-				[];
-			
-			return {
-				name: featName,
-				type: featType,
-				cost: cost && cost !== '' ? cost : undefined,
-				text,
-				bullets: bullets.filter(b => b),
-				textAfter,
-				questions,
-			};
-		});
-		
-		const envData: EnvironmentData = {
-			id: "",
-			name,
-			tier: parseInt(tier),
-			type,
-			desc,
-			impulse,
-			difficulty,
-			potentialAdversaries,
-			source: 'custom',
-			features,
-		};
-		
-		const modal = new EnvironmentEditorModal(plugin, editor, cardElement, envData);
-		modal.onSubmit = async (newHTML: string) => {
-			const content = editor.getValue();
-			const finalHTML = newHTML;
-			
-			const beforeCard = content.substring(0, sectionStartIndex);
-			const afterCard = content.substring(sectionEndIndex);
-			const newContent = beforeCard + finalHTML + afterCard;
-			
-			editor.setValue(newContent);
-			
-			const file = view.file;
-			if (file) {
-				await plugin.app.vault.modify(file, newContent);
-			}
-			
-			new Notice(`Updated environment: ${cardName}`);
-			
-			const envView = plugin.app.workspace
-				.getLeavesOfType("environment-view")
-				.map((l) => l.view)
-				.find((v) => typeof (v as any).refresh === "function") as any;
-
-			if (envView) {
-				await envView.refresh();
-			}
-		};
-		modal.open();
+		editAdversaryInMarkdown(cardElement, cardId, cardName, plugin);
+	} else {
+		editEnvironmentInMarkdown(cardElement, cardId, cardName, plugin);
 	}
 };
 
-export async function handleCardEditClick(evt: MouseEvent, app: App, plugin?: DaggerForgePlugin) {
+/**
+ * Document-level click handler registered via registerDomEvent() in main.ts.
+ *
+ * Detects clicks on card edit buttons, determines whether the active view is
+ * canvas or markdown, and routes to the appropriate edit path. Switches
+ * markdown views into source mode if they are currently in preview.
+ */
+export async function handleCardEditClick(
+	evt: MouseEvent,
+	app: App,
+	plugin?: DaggerForgePlugin,
+): Promise<void> {
 	const target = evt.target as HTMLElement;
 	if (!target) return;
 
-	let cardType: "env" | "adv" | null = null;
+	let cardType: "adv" | "env" | null = null;
 	if (target.matches(".df-env-edit-button")) cardType = "env";
 	else if (target.closest(".df-adv-edit-button")) cardType = "adv";
-
 	if (!cardType) return;
 
 	if (!plugin) {
@@ -315,262 +587,41 @@ export async function handleCardEditClick(evt: MouseEvent, app: App, plugin?: Da
 		return;
 	}
 
-	// Check if we're on a canvas
 	const activeLeaf = app.workspace.activeLeaf;
 	const isCanvas = activeLeaf?.view?.getViewType?.() === "canvas";
 
+	// ── Canvas path ──
 	if (isCanvas) {
-		// Handle canvas card editing
-		handleCanvasCardEdit(evt, cardType, plugin);
+		evt.stopPropagation();
+
+		const button = evt.target as HTMLElement;
+		const cardElement = findCardElement(button, cardType);
+		if (!cardElement) {
+			new Notice("Could not find card element!");
+			return;
+		}
+
+		const cardName = getCardName(cardElement, cardType);
+
+		if (cardType === "adv") {
+			editAdversaryInCanvas(cardElement, cardName, plugin);
+		} else {
+			editEnvironmentInCanvas(cardElement, cardName, plugin);
+		}
 		return;
 	}
 
-	// Handle markdown card editing
+	// ── Markdown path ──
+	// Switch to source mode if in preview — the editor API isn't available
+	// in preview mode.
 	const view = app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) return;
 
-	const isEditMode = view.getMode() === "source";
-
-	if (isEditMode) {
-		onEditClick(evt, cardType, plugin);
-	} else {
+	if (view.getMode() !== "source") {
 		const state = view.leaf.view.getState();
-		state.mode = 'source';
-		await view.leaf.setViewState({
-			type: 'markdown',
-			state: state
-		});
-		onEditClick(evt, cardType, plugin);
-	}
-}
-
-async function handleCanvasCardEdit(
-	evt: Event,
-	cardType: string,
-	plugin: DaggerForgePlugin
-) {
-	evt.stopPropagation();
-
-	const button = evt.target as HTMLElement;
-	let cardElement: HTMLElement | null = null;
-
-	if (cardType === "env") {
-		cardElement = button.closest(".df-env-card-outer");
-	} else if (cardType === "adv") {
-		cardElement = button.closest(".df-card-outer");
+		state.mode = "source";
+		await view.leaf.setViewState({ type: "markdown", state });
 	}
 
-	if (!cardElement) {
-		new Notice("Could not find card element!");
-		return;
-	}
-
-	let cardName = "";
-	if (cardType === "env") {
-		const nameEl = cardElement.querySelector(".df-env-name");
-		cardName = nameEl?.textContent?.trim() ?? "(unknown environment)";
-	} else if (cardType === "adv") {
-		const nameEl = cardElement.querySelector("h2");
-		cardName = nameEl?.textContent?.trim() ?? "(unknown adversary)";
-	}
-
-	if (cardType === "adv") {
-		const cardData = extractCardData(cardElement);
-		const modal = new TextInputModal(plugin, null as any, cardElement, cardData);
-		modal.onSubmit = async (newHTML: string, newData: any) => {
-			try {
-				// Parse the new HTML to extract inner content
-				const parser = new DOMParser();
-				const doc = parser.parseFromString(newHTML, 'text/html');
-				
-				// Find the inner div in the new HTML
-				const newInner = doc.querySelector('.df-card-inner');
-				
-				if (newInner && cardElement) {
-					// Find the existing inner div and replace only its content
-					const existingInner = cardElement.querySelector('.df-card-inner');
-					if (existingInner) {
-						// Clone the new content safely
-						const clonedContent = newInner.cloneNode(true) as HTMLElement;
-						
-						// Clear existing content safely
-						while (existingInner.firstChild) {
-							existingInner.removeChild(existingInner.firstChild);
-						}
-						
-						// Append cloned nodes
-						while (clonedContent.firstChild) {
-							existingInner.appendChild(clonedContent.firstChild);
-						}
-						
-						// Force canvas to re-render by triggering a small style update
-						cardElement.classList.add('df-canvas-force-rerender');
-						requestAnimationFrame(() => {
-						if (cardElement) {
-						cardElement.classList.remove('df-canvas-force-rerender');
-						 cardElement.classList.add('df-canvas-normal-opacity');
-						 }
-								});
-					}
-				}
-				
-				// Save to data manager
-				await plugin.dataManager.addAdversary(newData);
-				new Notice(`Updated adversary: ${cardName}`);
-			} catch (error) {
-				console.error("Error updating adversary:", error);
-				new Notice("Error updating adversary. Check console for details.");
-			}
-			
-			const advView = plugin.app.workspace
-				.getLeavesOfType("adversary-view")
-				.map((l) => l.view)
-				.find((v) => typeof (v as any).refresh === "function") as any;
-
-			if (advView) {
-				await advView.refresh();
-			}
-		};
-		modal.open();
-	} else if (cardType === "env") {
-		const innerDiv = cardElement.querySelector('.df-env-card-inner');
-		
-		const tierTypeText = innerDiv?.querySelector('.df-env-feat-tier-type')?.textContent?.trim() || '';
-		const tierMatch = tierTypeText.match(/Tier\s+(\d+)\s+([A-Za-z]+)/);
-		const tier = tierMatch ? tierMatch[1] : '1';
-		const type = tierMatch ? tierMatch[2] : 'Exploration';
-		
-		const name = cardName;
-		const desc = innerDiv?.querySelector('.df-env-desc')?.textContent?.trim() || '';
-		
-		const impulseEl = Array.from(innerDiv?.querySelectorAll('p') || []).find(p => 
-			p.textContent?.includes('Impulse:')
-		);
-		const impulse = impulseEl ? impulseEl.textContent?.replace('Impulse:', '').trim() : '';
-		
-		const diffPotEl = innerDiv?.querySelector('.df-env-card-diff-pot');
-		const diffEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
-			p.textContent?.includes('Difficulty')
-		);
-		const advEl = Array.from(diffPotEl?.querySelectorAll('p') || []).find(p => 
-			p.textContent?.includes('Potential Adversaries')
-		);
-		
-		const difficulty = diffEl ? diffEl.textContent?.split(':')[1]?.trim() : '';
-		const potentialAdversaries = advEl ? advEl.textContent?.split(':')[1]?.trim() : '';
-		
-		// SIMPLE FEATURE EXTRACTION FROM DATA ATTRIBUTES
-		const featuresSection = innerDiv?.querySelector('.df-features-section');
-		const features: EnvSavedFeatureState[] = Array.from(featuresSection?.querySelectorAll('.df-feature') || []).map((feat: any) => {
-			// Get from data attributes
-			const featName = feat.getAttribute('data-feature-name') || '';
-			const featType = feat.getAttribute('data-feature-type') || 'Passive';
-			const cost = feat.getAttribute('data-feature-cost') || undefined;
-			// Get bullets
-			const bullets = Array.from(feat.querySelectorAll('.df-env-bullet-item')).map((b: Element) => b.textContent?.trim() || '');
-			
-			// Get text
-			const textDiv = feat.querySelector('.df-env-feat-text');
-			const text = textDiv?.textContent?.trim() || '';
-			
-			// Get text after
-			const afterTextEl = feat.querySelector('#textafter');
-			const textAfter = afterTextEl ? afterTextEl.textContent?.trim() : undefined;
-			
-			// Get questions
-			const questionsDiv = feat.querySelector('.df-env-questions');
-			const questions = questionsDiv ? 
-				Array.from(questionsDiv.querySelectorAll('.df-env-question')).map((q: Element) => q.textContent?.trim() || '').filter(q => q) :
-				[];
-			
-			return {
-				name: featName,
-				type: featType,
-				cost: cost && cost !== '' ? cost : undefined,
-				text,
-				bullets: bullets.filter(b => b),
-				textAfter,
-				questions,
-			};
-		});
-		
-		const envData: EnvironmentData = {
-			id: "",
-			name,
-			tier: parseInt(tier),
-			type,
-			desc,
-			impulse,
-			difficulty,
-			potentialAdversaries,
-			source: 'custom',
-			features,
-		};
-		
-		const modal = new EnvironmentEditorModal(plugin, null as any, cardElement, envData);
-		modal.onSubmit = async (newHTML: string) => {
-			try {
-				const parser = new DOMParser();
-				const doc = parser.parseFromString(newHTML, 'text/html');
-				const innerContent = doc.querySelector('.df-env-card-inner');
-				
-				if (innerContent) {
-					const existingInner = cardElement!.querySelector('.df-env-card-inner');
-					if (existingInner) {
-						// Clone the new content safely
-						const clonedContent = innerContent.cloneNode(true) as HTMLElement;
-						
-						// Clear existing content safely
-						while (existingInner.firstChild) {
-							existingInner.removeChild(existingInner.firstChild);
-						}
-						
-						// Append cloned nodes
-						while (clonedContent.firstChild) {
-							existingInner.appendChild(clonedContent.firstChild);
-						}
-						
-						// Force canvas to re-render
-						cardElement!.classList.add('df-canvas-force-rerender');
-						requestAnimationFrame(() => {
-						if (cardElement) {
-						cardElement.classList.remove('df-canvas-force-rerender');
-						 cardElement.classList.add('df-canvas-normal-opacity');
-						 }
-										});
-					}
-				} else {
-					// Fallback: use DOMParser for safe HTML parsing
-					const tempParser = new DOMParser();
-					const tempDoc = tempParser.parseFromString(newHTML, 'text/html');
-					
-					// Clear and replace entire card safely
-					while (cardElement!.firstChild) {
-						cardElement!.removeChild(cardElement!.firstChild);
-					}
-					
-					// Clone and append all parsed content
-					Array.from(tempDoc.body.childNodes).forEach(node => {
-						const clonedNode = node.cloneNode(true);
-						cardElement!.appendChild(clonedNode);
-					});
-				}
-				
-				new Notice(`Updated environment: ${cardName}`);
-			} catch (error) {
-				console.error("Error updating environment:", error);
-				new Notice("Error updating environment. Check console for details.");
-			}
-			
-			const envView = plugin.app.workspace
-				.getLeavesOfType("environment-view")
-				.map((l) => l.view)
-				.find((v) => typeof (v as any).refresh === "function") as any;
-
-			if (envView) {
-				await envView.refresh();
-			}
-		};
-		modal.open();
-	}
+	onEditClick(evt, cardType, plugin);
 }

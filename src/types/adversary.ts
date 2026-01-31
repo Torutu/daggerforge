@@ -1,6 +1,6 @@
 import type { Feature } from './index';
 
-export type CardData = {
+export type AdvData = {
 	id: string;
 	name: string;
 	tier: string;

@@ -1,16 +1,16 @@
 import { Plugin } from 'obsidian';
-import { CardData ,EnvironmentData} from '../types/index';
+import { AdvData ,EnvironmentData} from '../types/index';
 import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
 
 export interface StoredData {
 	version: string;
-	adversaries: CardData[];
+	adversaries: AdvData[];
 	environments: EnvironmentData[];
 	lastUpdated: number;
 }
 
 /**
- * DataManager — unified version
+ * DataManager -
  * Stores everything under:
  * .obsidian/plugins/daggerforge/data.json
  */
@@ -34,45 +34,8 @@ export class DataManager {
 		try {
 			const saved = await this.plugin.loadData();
 			if (!saved) return;
-
-			this.data = { ...this.data, ...saved };
-
-			const allAdversaries: CardData[] = [];
-			const allEnvironments: EnvironmentData[] = [];
-
-			if (Array.isArray((saved as any).custom_Adversaries))
-				allAdversaries.push(...(saved as any).custom_Adversaries);
-			if (Array.isArray((saved as any).incredible_Adversaries))
-				allAdversaries.push(...(saved as any).incredible_Adversaries);
-			if (Array.isArray((saved as any).custom_Broskies))
-				allAdversaries.push(
-					...(saved as any).custom_Broskies.map((a: any) => ({
-						...a,
-						source: 'broskies'
-					}))
-				);
-
-			if (Array.isArray((saved as any).custom_Environments))
-				allEnvironments.push(...(saved as any).custom_Environments);
-			if (Array.isArray((saved as any).incredible_Environments))
-				allEnvironments.push(...(saved as any).incredible_Environments);
-
-			if (allAdversaries.length > 0) {
-				this.data.adversaries.push(...allAdversaries);
-			}
-			if (allEnvironments.length > 0) {
-				this.data.environments.push(...allEnvironments);
-			}
-
-			delete (this.data as any).custom_Adversaries;
-			delete (this.data as any).incredible_Adversaries;
-			delete (this.data as any).custom_Environments;
-			delete (this.data as any).incredible_Environments;
-			delete (this.data as any).custom_Broskies;
-
 			this.ensureAdversariesHaveIds();
 			this.ensureEnvironmentsHaveIds();
-
 			await this.save();
 		} catch (err) {
 			console.error('DataManager: Error loading data', err);
@@ -86,7 +49,7 @@ export class DataManager {
 
 	// ==================== ADVERSARIES ====================
 
-	async addAdversary(adversary: CardData): Promise<void> {
+	async addAdversary(adversary: AdvData): Promise<void> {
 		if (!(adversary as any).id) {
 			(adversary as any).id = generateAdvUniqueId();
 		}
@@ -94,17 +57,17 @@ export class DataManager {
 		await this.save();
 	}
 
-	getAdversaries(): CardData[] {
+	getAdversaries(): AdvData[] {
 		return this.data.adversaries;
 	}
 
-	getAdversariesBySource(source: string): CardData[] {
+	getAdversariesBySource(source: string): AdvData[] {
 		return this.data.adversaries.filter(
 			a => (a as any).source?.toLowerCase() === source.toLowerCase()
 		);
 	}
 
-	async updateAdversary(index: number, adversary: CardData): Promise<void> {
+	async updateAdversary(index: number, adversary: AdvData): Promise<void> {
 		if (index < 0 || index >= this.data.adversaries.length) return;
 		this.data.adversaries[index] = adversary;
 		await this.save();
@@ -123,7 +86,7 @@ export class DataManager {
 		await this.save();
 	}
 	
-	searchAdversaries(query: string): CardData[] {
+	searchAdversaries(query: string): AdvData[] {
 		return this.data.adversaries.filter(a =>
 			a.name.toLowerCase().includes(query.toLowerCase())
 		);
@@ -209,7 +172,7 @@ export class DataManager {
 	async importData(jsonString: string): Promise<void> {
 		const imported = JSON.parse(jsonString);
 
-		const newAdversaries: CardData[] = [
+		const newAdversaries: AdvData[] = [
 			...(imported.adversaries ?? []),
 			...(imported.custom_Adversaries ?? []),
 			...(imported.incredible_Adversaries ?? []),
@@ -278,7 +241,7 @@ export class DataManager {
 		};
 	}
 
-	private groupBySource(list: (CardData | EnvironmentData)[]): Record<string, number> {
+	private groupBySource(list: (AdvData | EnvironmentData)[]): Record<string, number> {
 		return list.reduce((acc, item) => {
 			const src = (item as any).source || 'unknown';
 			acc[src] = (acc[src] || 0) + 1;

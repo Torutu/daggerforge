@@ -17,7 +17,7 @@ import {
 
 export class EnvironmentModal extends Modal {
 	plugin: DaggerForgePlugin;
-	editor: Editor;
+	editor: Editor | null;
 	inputs: FormInputs = {};
 	features: EnvFeatureElements[] = [];
 	featureContainer: HTMLElement;
@@ -28,7 +28,7 @@ export class EnvironmentModal extends Modal {
 
 	constructor(
 		plugin: DaggerForgePlugin,
-		editor: Editor,
+		editor: Editor | null,
 		onSubmit: (result: EnvironmentData) => void,
 	) {
 		super(plugin.app);
@@ -184,7 +184,7 @@ contentEl.empty();
 			const env: EnvironmentData = {
 				id: values.id || "",
 				name: values.name || "",
-				tier: Number(values.tier) || 1,
+				tier: values.tier || "",
 				type: values.type || "",
 				desc: values.desc || "",
 				impulse: values.impulse || "",
@@ -220,7 +220,7 @@ contentEl.empty();
 						width: 400,
 						height: 650
 					});
-				} else if (isMarkdown) {
+				} else if (isMarkdown && this.editor) {
 					this.editor.replaceSelection(wrappedHTML);
 				}
 

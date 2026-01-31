@@ -96,6 +96,7 @@
 .df-stress-tickboxes .df-stress-tickbox:checked:focus {
 	background-color: rgb(41, 41, 41);
 	border-color: rgb(41, 41, 41);
+	cursor: pointer;
 }
 
 .df-hp-tickboxes .df-hp-tickbox:checked:after,
@@ -125,6 +126,7 @@
 .df-env-edit-button:hover, .df-adv-edit-button:hover {
 	background-color: #3f83f8;
 	color: white;
+	cursor: pointer;
 	content:attr(data-tooltip);
 }
 .df-env-edit-button:active, .df-adv-edit-button:active {
@@ -287,6 +289,7 @@ select.df-input-field {
 
 .df-adv-delete-btn:hover {
 	background-color: #ec3f3f;
+	cursor: pointer;
 }
 
 .df-adv-delete-btn:active {
@@ -314,6 +317,7 @@ select.df-input-field {
 
 .df-env-delete-btn:hover {
 	background-color: #ec3f3f;
+	cursor: pointer;
 }
 
 .df-env-delete-btn:active {
@@ -454,6 +458,7 @@ select.df-input-field {
 }
 
 .df-adv-btn-add-feature:hover {
+	cursor: pointer;
 	opacity: 0.9;
 }
 
@@ -491,6 +496,7 @@ select.df-input-field {
 
 .df-adv-btn-insert:hover {
 	opacity: 0.9;
+	cursor: pointer;
 }
 
 /* ===== ENVIRONMENT FORM STYLES ===== */
@@ -690,6 +696,7 @@ select.df-input-field {
 
 .df-env-btn-add-feature:hover {
 	opacity: 0.9;
+	cursor: pointer;
 }
 
 .df-env-btn-remove-feature {
@@ -706,6 +713,7 @@ select.df-input-field {
 
 .df-env-btn-remove-feature:hover {
 	opacity: 0.9;
+	cursor: pointer;
 }
 
 /* Environment action buttons */
@@ -730,6 +738,7 @@ select.df-input-field {
 
 .df-env-btn-insert:hover {
 	opacity: 0.9;
+	cursor: pointer;
 }
 
 /* ===== SHARED STYLES ===== */
@@ -784,6 +793,7 @@ select.df-input-field {
 .df-env-card:hover,
 .df-adversary-card:hover {
 	background-color: var(--background-modifier-hover);
+	cursor: pointer;
 }
 
 /* Source badge styling */
@@ -897,7 +907,6 @@ select.df-input-field {
 	font-weight: bold;
 	font-size: 0.9em;
 	text-align: center;
-	cursor: pointer;
 	transition: all 0.2s ease-in-out;
 	justify-content:space-between;
 }
@@ -906,6 +915,11 @@ select.df-input-field {
 .df-clear-filters-btn:active{
 	transform: translateY(1px);
 	transform: scale(0.99);
+}
+
+.df-clear-filters-btn:hover{
+	background-color: var(--background-modifier-hover);
+	cursor: pointer;
 }
 
 .df-search-input{
@@ -922,6 +936,11 @@ select.df-input-field {
 	margin: 0 5px;
 	width: 1%;
 	padding: 10px;
+}
+
+.df-adversary-counter-btn:hover{
+	background-color: var(--background-modifier-hover);
+	cursor: pointer;
 }
 
 .df-adversary-counter-display {
@@ -1263,6 +1282,7 @@ select.df-input-field {
 
 .df-dice-btn:hover {
 	background-color: var(--interactive-hover);
+	cursor: pointer;
 }
 
 .df-dice-queue {
@@ -1479,6 +1499,7 @@ select.df-input-field {
 .df-delete-confirm-btn:hover {
 	background-color: var(--color-red-bright);
 	opacity: 0.9;
+	cursor: pointer;
 }
 
 .df-delete-cancel-btn {
@@ -1494,6 +1515,7 @@ select.df-input-field {
 
 .df-delete-cancel-btn:hover {
 	background-color: var(--background-tertiary);
+	cursor: pointer;
 }
 
 /*Bullet Points*/

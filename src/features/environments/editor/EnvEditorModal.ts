@@ -6,6 +6,10 @@ import {
 	EnvSavedFeatureState 
 	} from "../../../types/index";
 
+/* 
+	EnrionmentEditorModal is used to edit an environment card in the editor. 
+*/
+
 export class EnvironmentEditorModal extends Modal {
 	plugin: DaggerForgePlugin;
 	editor: Editor;
@@ -125,7 +129,7 @@ export class EnvironmentEditorModal extends Modal {
 			const updatedEnv: EnvironmentData = {
 				id: this.cardData.id,
 				name: (this.inputs.name as HTMLInputElement).value.trim(),
-				tier: Number((this.inputs.tier as HTMLSelectElement).value),
+				tier: (this.inputs.tier as HTMLSelectElement).value,
 				type: (this.inputs.type as HTMLSelectElement).value,
 				desc: (this.inputs.desc as HTMLTextAreaElement).value.trim(),
 				impulse: (this.inputs.impulse as HTMLInputElement).value.trim(),

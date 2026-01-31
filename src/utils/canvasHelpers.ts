@@ -128,7 +128,6 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 		// Get the camera position (center of what user is looking at)
 		const centerX = canvas.tx ?? 0;
 		const centerY = canvas.ty ?? 0;
-		const zoom = canvas.zoom ?? 1;
 
 		let x = centerX - 200;
 		let y = centerY - 300;

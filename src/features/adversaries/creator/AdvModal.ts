@@ -1,7 +1,7 @@
 import { Notice, Editor, Modal } from "obsidian";
 import { addFeature, getFeatureValues, buildCardHTML } from "../index";
 import type DaggerForgePlugin from "../../../main";
-import { CardData, FeatureElements, FormInputs } from "../../../types/index";
+import { AdvData, FeatureElements, FormInputs } from "../../../types/index";
 import {
 	createField,
 	createShortTripleFields,
@@ -17,7 +17,7 @@ export async function buildCustomAdversary(
 	values: any,
 	features: any[],
 ) {
-	const customAdversary: CardData = {
+	const customAdversary: AdvData = {
 		id: values.id || "",
 		name: values.name || "",
 		tier: values.tier || "",
@@ -67,13 +67,13 @@ export class TextInputModal extends Modal {
 	features: FeatureElements[] = [];
 	plugin: DaggerForgePlugin;
 	savedInputStateAdv: Record<string, any> = {};
-	editor: Editor;
-	onSubmit?: (newHTML: string, newData?: any) => void | Promise<void>;
+	editor: Editor | null;
+	onEditUpdate?: (newHTML: string, newData?: any) => void | Promise<void>;
 	isEditMode: boolean = false;
 
 	constructor(
 		plugin: DaggerForgePlugin,
-		editor: Editor,
+		editor: Editor | null,
 		cardElement?: HTMLElement,
 		cardData?: Record<string, any>
 	) {
@@ -83,7 +83,7 @@ export class TextInputModal extends Modal {
 		this.cardElement = cardElement;
 		this.isEditMode = !!cardElement;
 		if (cardElement && cardData) {
-this.savedInputStateAdv = {
+			this.savedInputStateAdv = {
 				...cardData,
 				features: cardData.features?.map((f: any) => ({
 					featureName: f.name || f.featureName,
@@ -92,7 +92,7 @@ this.savedInputStateAdv = {
 					featureDesc: f.desc || f.featureDesc,
 				})) || [],
 			};
-}
+		}
 	}
 
 	onOpen() {
@@ -299,8 +299,8 @@ this.savedInputStateAdv = {
 			const features = getFeatureValues(this.features);
 			const newHTML = buildCardHTML(values, features);
 
-			if (this.onSubmit) {
-				const newData: CardData = {
+			if (this.onEditUpdate) {
+				const newData: AdvData = {
 					id: values.id || "",
 					name: values.name || "",
 					tier: values.tier || "",
@@ -325,7 +325,7 @@ this.savedInputStateAdv = {
 						desc: f.desc || "",
 					})),
 				};
-				this.onSubmit(newHTML, newData);
+				this.onEditUpdate(newHTML, newData);
 				this.close();
 				return;
 			}
@@ -337,13 +337,13 @@ this.savedInputStateAdv = {
 			
 			if (isCanvas) {
 				const position = getAvailableCanvasPosition(this.plugin.app);
-				const success = createCanvasCard(this.plugin.app, newHTML, {
+				createCanvasCard(this.plugin.app, newHTML, {
 					x: position.x,
 					y: position.y,
 					width: 400,
 					height: 600
 				});
-			} else if (isMarkdown) {
+			} else if (isMarkdown && this.editor) {
 				this.editor.replaceSelection(newHTML + "\n");
 			}
 
@@ -384,7 +384,7 @@ this.savedInputStateAdv = {
 
 	onClose() {
 		if (this.isEditMode) {
-this.savedInputStateAdv = {};
+			this.savedInputStateAdv = {};
 			this.features = [];
 			return;
 		}

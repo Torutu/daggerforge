@@ -28,6 +28,7 @@ export const buildCardHTML = (
 	const stresstick = Number(stress) || 0;
 	let countNum = Number(count);
 	countNum = Number.isInteger(countNum) && countNum >= 1 ? countNum : 1;
+	const hiddenID = crypto.randomUUID();
 	
 	const hpStressRepeat = Array.from({ length: countNum }, (_, index) => {
 		const hpTickboxes = Array.from(
@@ -75,9 +76,9 @@ export const buildCardHTML = (
 	return `
 <section id="custom" class="df-card-outer df-pseudo-cut-corners outer" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
-		<button class="df-adv-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
+		<button class="df-adv-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit" id="${hiddenID}">📝</button>
         ${hpStressRepeat}
-        <h2>${name}</h2>
+        <h2 id="${hiddenID}">${name}</h2>
         <div class="df-subtitle">Tier ${tier} ${type} ${sourceBadge}</div>
         <div class="df-desc">${desc}</div>
         <div class="df-motives">Motives & Tactics:
