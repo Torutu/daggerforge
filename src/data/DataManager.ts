@@ -34,6 +34,14 @@ export class DataManager {
 		try {
 			const saved = await this.plugin.loadData();
 			if (!saved) return;
+			
+			this.data = {
+				version: saved.version || '2.0',
+				adversaries: saved.adversaries || [],
+				environments: saved.environments || [],
+				lastUpdated: saved.lastUpdated || Date.now()
+			};
+			
 			this.ensureAdversariesHaveIds();
 			this.ensureEnvironmentsHaveIds();
 			await this.save();
@@ -61,18 +69,6 @@ export class DataManager {
 		return this.data.adversaries;
 	}
 
-	getAdversariesBySource(source: string): AdvData[] {
-		return this.data.adversaries.filter(
-			a => (a as any).source?.toLowerCase() === source.toLowerCase()
-		);
-	}
-
-	async updateAdversary(index: number, adversary: AdvData): Promise<void> {
-		if (index < 0 || index >= this.data.adversaries.length) return;
-		this.data.adversaries[index] = adversary;
-		await this.save();
-	}
-
 	/**
 	 * Delete adversary by unique ID
 	 * @param id The unique ID of the adversary to delete
@@ -84,12 +80,6 @@ export class DataManager {
 		}
 		this.data.adversaries.splice(index, 1);
 		await this.save();
-	}
-	
-	searchAdversaries(query: string): AdvData[] {
-		return this.data.adversaries.filter(a =>
-			a.name.toLowerCase().includes(query.toLowerCase())
-		);
 	}
 
 	// ==================== ENVIRONMENTS ====================
@@ -106,18 +96,6 @@ export class DataManager {
 		return this.data.environments;
 	}
 
-	getEnvironmentsBySource(source: string): EnvironmentData[] {
-		return this.data.environments.filter(
-			e => (e as any).source?.toLowerCase() === source.toLowerCase()
-		);
-	}
-
-	async updateEnvironment(index: number, env: EnvironmentData): Promise<void> {
-		if (index < 0 || index >= this.data.environments.length) return;
-		this.data.environments[index] = env;
-		await this.save();
-	}
-
 	/**
 	 * Delete environment by unique ID
 	 * @param id The unique ID of the environment to delete
@@ -129,12 +107,6 @@ export class DataManager {
 		}
 		this.data.environments.splice(index, 1);
 		await this.save();
-	}
-
-	searchEnvironments(query: string): EnvironmentData[] {
-		return this.data.environments.filter(e =>
-			e.name.toLowerCase().includes(query.toLowerCase())
-		);
 	}
 
 	// ==================== UTILITIES ====================
@@ -161,10 +133,6 @@ export class DataManager {
 		}));
 	}
 
-	async exportData(): Promise<string> {
-		return JSON.stringify(this.data, null, 2);
-	}
-
 	/*
 	 * Import data from a JSON string
 	 * @param jsonString The JSON string to import
@@ -172,21 +140,8 @@ export class DataManager {
 	async importData(jsonString: string): Promise<void> {
 		const imported = JSON.parse(jsonString);
 
-		const newAdversaries: AdvData[] = [
-			...(imported.adversaries ?? []),
-			...(imported.custom_Adversaries ?? []),
-			...(imported.incredible_Adversaries ?? []),
-			...(imported.custom_Broskies ?? []).map((a: any) => ({
-				...a,
-				source: 'broskies'
-			}))
-		];
-
-		const newEnvironments: EnvironmentData[] = [
-			...(imported.environments ?? []),
-			...(imported.custom_Environments ?? []),
-			...(imported.incredible_Environments ?? [])
-		];
+		const newAdversaries: AdvData[] = imported.adversaries ?? [];
+		const newEnvironments: EnvironmentData[] = imported.environments ?? [];
 
 		this.data.adversaries.push(...newAdversaries);
 		this.data.environments.push(...newEnvironments);
@@ -194,16 +149,6 @@ export class DataManager {
 		this.ensureAdversariesHaveIds();
 		this.ensureEnvironmentsHaveIds();
 
-		await this.save();
-	}
-
-	async clearAllData(): Promise<void> {
-		this.data = {
-			version: '2.0',
-			adversaries: [],
-			environments: [],
-			lastUpdated: Date.now()
-		};
 		await this.save();
 	}
 
@@ -225,27 +170,5 @@ export class DataManager {
 			console.error('DataManager: Error deleting data.json file', err);
 			throw err;
 		}
-	}
-
-	getStatistics() {
-		const advBySource = this.groupBySource(this.data.adversaries);
-		const envBySource = this.groupBySource(this.data.environments);
-
-		return {
-			totalAdversaries: this.data.adversaries.length,
-			adversariesBySource: advBySource,
-			totalEnvironments: this.data.environments.length,
-			environmentsBySource: envBySource,
-			lastUpdated: new Date(this.data.lastUpdated).toLocaleString(),
-			version: this.data.version
-		};
-	}
-
-	private groupBySource(list: (AdvData | EnvironmentData)[]): Record<string, number> {
-		return list.reduce((acc, item) => {
-			const src = (item as any).source || 'unknown';
-			acc[src] = (acc[src] || 0) + 1;
-			return acc;
-		}, {} as Record<string, number>);
 	}
 }

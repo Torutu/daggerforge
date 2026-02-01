@@ -1,9 +1,7 @@
 import { Notice, Modal, App, Setting } from "obsidian";
 import type DaggerForgePlugin from "../main";
+import { refreshBrowsers } from "../utils/pluginOperations";
 
-/**
- * Modal for importing data from a JSON file
- */
 export class ImportDataModal extends Modal {
 	private plugin: DaggerForgePlugin;
 
@@ -64,18 +62,16 @@ export class ImportDataModal extends Modal {
 			reader.onload = async (e) => {
 				try {
 					const text = e.target?.result as string;
-					let data = JSON.parse(text);
+					const data = JSON.parse(text);
 
-					if (Array.isArray(data)) {
-						data = this.wrapArrayBasedOnFilename(file.name, data);
-					}
 					if (!this.validateImportData(data)) {
-						reject(new Error("Invalid data format"));
+						reject(new Error("Invalid data format. File must contain 'adversaries' or 'environments' arrays."));
 						return;
 					}
-					await this.plugin.dataManager.importData(JSON.stringify(data));
+
+					await this.plugin.dataManager.importData(text);
 					new Notice(`Successfully imported data from ${file.name}`);
-					this.plugin.refreshBrowsers();
+					refreshBrowsers(this.plugin);
 					resolve();
 				} catch (error) {
 					reject(error);
@@ -89,42 +85,13 @@ export class ImportDataModal extends Modal {
 		});
 	}
 
-	/**
-	 * Wrap a plain array in an object based on the filename
-	 */
-	private wrapArrayBasedOnFilename(filename: string, array: any[]): any {
-		const lower = filename.toLowerCase();
-
-		const category =
-				lower.includes("inc")
-				? "incredible"
-				: lower.includes("umbra")
-				? "umbra"
-				: lower.includes("void")
-				? "void"
-				: lower.includes("sablewood")
-				? "sablewood"
-				: "custom";
-		const type = lower.includes("env") ? "Environments" : "Adversaries";
-
-		const key = `${category}_${type}`;
-
-		return { [key]: array };
-	}
-
-
 	private validateImportData(data: any): boolean {
 		if (typeof data !== "object" || data === null) {
 			return false;
 		}
 
-		const hasAdversaries = Array.isArray(data.adversaries) || 
-						   Array.isArray(data.custom_Adversaries) || 
-						   Array.isArray(data.incredible_Adversaries);
-		
-		const hasEnvironments = Array.isArray(data.environments) ||
-							  Array.isArray(data.custom_Environments) ||
-							  Array.isArray(data.incredible_Environments);
+		const hasAdversaries = Array.isArray(data.adversaries);
+		const hasEnvironments = Array.isArray(data.environments);
 
 		return hasAdversaries || hasEnvironments;
 	}

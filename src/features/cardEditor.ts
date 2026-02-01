@@ -1,15 +1,13 @@
 import { App, Editor, MarkdownView, Notice } from "obsidian";
 import type DaggerForgePlugin from "../main";
-import { EnvironmentEditorModal, environmentToHTML } from ".";
+import { EnvironmentModal, extractEnvironmentData } from "./environments/index";
 import { extractCardData, TextInputModal } from "./adversaries/index";
-import type { EnvironmentData, EnvSavedFeatureState } from "../types/index";
-// ─── Interfaces ────────────────────────────────────────────────────────────
+import type { AdvData } from "../types/index";
 
-/**
- * Matches any Obsidian ItemView that exposes a refresh() method.
- * Browser panels (adversary-view, environment-view) implement this to reload
- * their lists after a card is edited.
- */
+// Refreshable View
+// Browser panels (adversary-view, environment-view) expose a refresh() method.
+// This interface + guard let us call it without `as any`.
+
 interface RefreshableView {
 	refresh(): void | Promise<void>;
 }
@@ -23,23 +21,28 @@ function isRefreshableView(view: unknown): view is RefreshableView {
 	);
 }
 
-// ─── Markdown Section Boundary Detection ───────────────────────────────────
-// Cards are rendered as nested <section> blocks inside markdown HTML. To edit
-// one, we need its exact character range so we can splice in the new HTML.
-// We locate it by walking from the edit button's unique id attribute.
+function refreshBrowserView(plugin: DaggerForgePlugin, viewType: string): void {
+	const view = plugin.app.workspace
+		.getLeavesOfType(viewType)
+		.map((leaf) => leaf.view)
+		.find(isRefreshableView) as RefreshableView | undefined;
 
-/** Find the character index of `id="<id>"` in content, or -1 if absent. */
+	if (view) view.refresh();
+}
+
+// Markdown Section Boundary Detection
+// Cards live inside <section> blocks in the raw markdown source. To replace
+// one we need its exact character range so we can splice in new HTML.
+
 function findIdAttribute(content: string, id: string): number {
 	return content.indexOf(`id="${id}"`);
 }
 
 /**
- * Walk backward from `searchFrom` to find a <section> whose class attribute
- * contains `df-card-outer`.
- *
- * Why not just take the nearest <section>? Adversary edit buttons sit several
- * levels of nesting deep — intermediate sections (stats, features) would be
- * found first. We need the specific outermost card wrapper.
+ * Walk backward from searchFrom to find a <section> whose class contains
+ * df-card-outer. Adversary edit buttons sit several nesting levels deep —
+ * intermediate sections (stats, features) would be found first if we just
+ * took the nearest one.
  */
 function findOuterCardSection(content: string, searchFrom: number): number {
 	let pos = searchFrom;
@@ -63,9 +66,9 @@ function findOuterCardSection(content: string, searchFrom: number): number {
 }
 
 /**
- * Starting just after an opening <section> tag, count nested open/close pairs
- * to find the matching </section>. Returns the index immediately after the
- * closing tag, or -1 if the HTML structure is malformed.
+ * Count nested open/close <section> pairs starting from an opening tag to
+ * find its matching </section>. Returns the index immediately after the
+ * closing tag, or -1 if the structure is malformed.
  */
 function findMatchingSectionEnd(content: string, openTagIndex: number): number {
 	let depth = 1;
@@ -82,7 +85,7 @@ function findMatchingSectionEnd(content: string, openTagIndex: number): number {
 			pos = nextOpen + 8;
 		} else {
 			depth--;
-			pos = nextClose + 10; // length of '</section>'
+			pos = nextClose + 10;
 		}
 	}
 
@@ -92,10 +95,8 @@ function findMatchingSectionEnd(content: string, openTagIndex: number): number {
 /**
  * Locate the full <section> block that contains the element with the given id.
  *
- * The search strategy differs by card type:
- *   adv — walks backward to find the ancestor with class `df-card-outer`
- *   env — the id lives on or directly inside the outer section, so the nearest
- *         preceding <section> tag is the right one
+ * adv cards need the ancestor search (df-card-outer); env cards have the id on
+ * or directly inside the outer section so the nearest preceding <section> works.
  */
 function findCardSectionBounds(
 	content: string,
@@ -118,145 +119,28 @@ function findCardSectionBounds(
 	};
 }
 
-// ─── Card Element & Name Resolution ────────────────────────────────────────
+// Card Element & Name Resolution
 
-/** Outermost container selector for each card type. */
 const CARD_OUTER_SELECTOR: Record<string, string> = {
 	adv: ".df-card-outer",
 	env: ".df-env-card-outer",
 };
 
-/** Walk up from a clicked edit button to the containing card element. */
-function findCardElement(
-	button: HTMLElement,
-	cardType: string,
-): HTMLElement | null {
+function findCardElement(button: HTMLElement, cardType: string): HTMLElement | null {
 	return button.closest(CARD_OUTER_SELECTOR[cardType] ?? "");
 }
 
-/** Read the display name from a rendered card. */
 function getCardName(cardElement: HTMLElement, cardType: string): string {
 	if (cardType === "env") {
-		return (
-			cardElement.querySelector(".df-env-name")?.textContent?.trim() ??
-			"(unknown environment)"
-		);
+		return cardElement.querySelector(".df-env-name")?.textContent?.trim() ?? "(unknown environment)";
 	}
-	return (
-		cardElement.querySelector("h2")?.textContent?.trim() ??
-		"(unknown adversary)"
-	);
+	return cardElement.querySelector("h2")?.textContent?.trim() ?? "(unknown adversary)";
 }
 
-// ─── Environment Data Extraction ───────────────────────────────────────────
-// Scrapes a rendered environment card's DOM back into an EnvironmentData object.
-// This is the reverse of environmentToHTML — it recovers the structured data the
-// editor modal needs. Card HTML is identical whether it appears in a markdown
-// note or on a canvas, so this logic is shared between both edit paths.
+// Markdown Card Replacement 
+// Re-locates the card by id at call time (not at modal-open time) so that any
+// edits the user made while the modal was open are accounted for.
 
-/**
- * The tier/type element renders as "Tier <n> <Type> <sourceBadge>".
- * textContent gives e.g. "Tier 2 Exploration custom".
- * Tier is the word at index 1, type is the word at index 2.
- */
-function extractTierAndType(
-	innerCard: Element | null,
-): { tier: string; type: string } {
-	const text =
-		innerCard
-			?.querySelector(".df-env-feat-tier-type")
-			?.textContent?.trim() ?? "";
-	const words = text.split(" ").filter(Boolean);
-	// words[0] = "Tier", words[1] = number, words[2] = type, words[3] = source badge
-	return { tier: words[1] ?? "1", type: words[2] ?? "Exploration" };
-}
-
-function extractImpulse(innerCard: Element | null): string {
-	const el = Array.from(innerCard?.querySelectorAll("p") ?? []).find((p) =>
-		p.textContent?.includes("Impulse:"),
-	);
-	return el?.textContent?.replace("Impulse:", "").trim() ?? "";
-}
-
-function extractDifficultyAndAdversaries(innerCard: Element | null): {
-	difficulty: string;
-	potentialAdversaries: string;
-} {
-	const container = innerCard?.querySelector(".df-env-card-diff-pot");
-	const paragraphs = Array.from(container?.querySelectorAll("p") ?? []);
-
-	return {
-		difficulty:
-			paragraphs
-				.find((p) => p.textContent?.includes("Difficulty"))
-				?.textContent?.split(":")[1]
-				?.trim() ?? "",
-		potentialAdversaries:
-			paragraphs
-				.find((p) => p.textContent?.includes("Potential Adversaries"))
-				?.textContent?.split(":")[1]
-				?.trim() ?? "",
-	};
-}
-
-function extractSingleFeature(feat: Element): EnvSavedFeatureState {
-	const rawCost = feat.getAttribute("data-feature-cost") ?? "";
-
-	return {
-		name: feat.getAttribute("data-feature-name") ?? "",
-		type: feat.getAttribute("data-feature-type") ?? "Passive",
-		cost: rawCost !== "" ? rawCost : undefined,
-		text:
-			feat.querySelector(".df-env-feat-text")?.textContent?.trim() ?? "",
-		bullets: Array.from(feat.querySelectorAll(".df-env-bullet-item"))
-			.map((b) => b.textContent?.trim() ?? "")
-			.filter(Boolean),
-		textAfter:
-			feat.querySelector("#textafter")?.textContent?.trim() || undefined,
-		questions: Array.from(
-			feat.querySelector(".df-env-questions")?.querySelectorAll(".df-env-question") ?? [],
-		)
-			.map((q) => q.textContent?.trim() ?? "")
-			.filter(Boolean),
-	};
-}
-
-function extractEnvironmentData(
-	cardElement: HTMLElement,
-	cardName: string,
-): EnvironmentData {
-	const inner = cardElement.querySelector(".df-env-card-inner");
-	const { tier, type } = extractTierAndType(inner);
-	const { difficulty, potentialAdversaries } =
-		extractDifficultyAndAdversaries(inner);
-
-	const features = Array.from(
-		inner?.querySelector(".df-features-section")?.querySelectorAll(".df-feature") ?? [],
-	).map(extractSingleFeature);
-
-	return {
-		id: "",
-		name: cardName,
-		tier: tier,
-		type,
-		desc: inner?.querySelector(".df-env-desc")?.textContent?.trim() ?? "",
-		impulse: extractImpulse(inner),
-		difficulty,
-		potentialAdversaries,
-		source: "custom",
-		features,
-	};
-}
-
-// ─── Markdown Card Replacement ─────────────────────────────────────────────
-
-/**
- * Splice new card HTML into the active markdown editor and persist the file.
- *
- * The card is re-located by id at call time (not at modal-open time) so that
- * any edits the user made to the document while the modal was open are
- * accounted for. Returns false if the card can no longer be found.
- */
 async function replaceCardInMarkdown(
 	plugin: DaggerForgePlugin,
 	cardId: string,
@@ -267,18 +151,10 @@ async function replaceCardInMarkdown(
 	if (!view) return false;
 
 	const content = view.editor.getValue();
-	const { startIndex, endIndex } = findCardSectionBounds(
-		content,
-		cardId,
-		cardType,
-	);
+	const { startIndex, endIndex } = findCardSectionBounds(content, cardId, cardType);
 	if (startIndex === -1 || endIndex === -1) return false;
 
-	const updated =
-		content.substring(0, startIndex) +
-		newHTML +
-		content.substring(endIndex);
-
+	const updated = content.substring(0, startIndex) + newHTML + content.substring(endIndex);
 	view.editor.setValue(updated);
 
 	if (view.file) {
@@ -288,21 +164,10 @@ async function replaceCardInMarkdown(
 	return true;
 }
 
-// ─── Canvas Card DOM Mutation ──────────────────────────────────────────────
-// Canvas cards are live DOM nodes — there is no text to splice. We parse the
-// new HTML, extract the inner container, and swap its children in place.
+// Canvas Card DOM Mutation
+// Canvas cards are live DOM nodes — there is no source text to splice. We
+// parse the new HTML, find the inner container, and swap its children in place.
 
-/**
- * Replace a canvas card's inner content with freshly rendered HTML.
- *
- * `innerSelector` identifies the child element that holds the card body:
- *   ".df-card-inner"     — adversary cards
- *   ".df-env-card-inner" — environment cards
- *
- * If the inner element is missing from either the new or existing HTML, falls
- * back to replacing the card's children entirely. This handles edge cases where
- * the HTML generator produces a different top-level structure than expected.
- */
 function replaceCardInCanvas(
 	cardElement: HTMLElement,
 	newHTML: string,
@@ -314,43 +179,19 @@ function replaceCardInCanvas(
 
 	if (newInner && existingInner) {
 		existingInner.innerHTML = "";
-		newInner.childNodes.forEach((node) => {
-			existingInner.appendChild(node.cloneNode(true));
-		});
+		newInner.childNodes.forEach((node) => existingInner.appendChild(node.cloneNode(true)));
 	} else {
+		// Fallback: replace the card's children entirely.
 		cardElement.innerHTML = "";
-		parsed.body.childNodes.forEach((node) => {
-			cardElement.appendChild(node.cloneNode(true));
-		});
+		parsed.body.childNodes.forEach((node) => cardElement.appendChild(node.cloneNode(true)));
 	}
 
-	// Trigger a visual refresh. The class toggle forces Obsidian's canvas
-	// renderer to repaint this node.
+	// Force Obsidian's canvas renderer to repaint this node.
 	cardElement.classList.add("df-canvas-force-rerender");
 	requestAnimationFrame(() => {
 		cardElement.classList.remove("df-canvas-force-rerender");
 		cardElement.classList.add("df-canvas-normal-opacity");
 	});
-}
-
-// ─── Browser View Refresh ──────────────────────────────────────────────────
-
-/**
- * Find and refresh an open browser panel of the given view type. After any
- * card edit the adversary or environment browser needs to reload its list.
- */
-function refreshBrowserView(
-	plugin: DaggerForgePlugin,
-	viewType: string,
-): void {
-	const view = plugin.app.workspace
-		.getLeavesOfType(viewType)
-		.map((leaf) => leaf.view)
-		.find(isRefreshableView) as RefreshableView | undefined;
-
-	if (view) {
-		view.refresh();
-	}
 }
 
 // ─── Markdown Edit Flows ───────────────────────────────────────────────────
@@ -367,13 +208,7 @@ async function editAdversaryInMarkdown(
 		return;
 	}
 
-	// Validate the card exists before opening the modal — gives the user
-	// immediate feedback if the card was removed while they were looking at it.
-	const { startIndex, endIndex } = findCardSectionBounds(
-		view.editor.getValue(),
-		cardId,
-		"adv",
-	);
+	const { startIndex, endIndex } = findCardSectionBounds(view.editor.getValue(), cardId, "adv");
 	if (startIndex === -1 || endIndex === -1) {
 		new Notice("Could not find card in markdown.");
 		return;
@@ -382,15 +217,8 @@ async function editAdversaryInMarkdown(
 	const cardData = extractCardData(cardElement);
 	const modal = new TextInputModal(plugin, view.editor, cardElement, cardData);
 
-	// newData arrives as `any` because TextInputModal.onSubmit is typed that
-	// way. At runtime it is a valid AdvData built by the modal before calling us.
-	modal.onEditUpdate = async (newHTML: string, newData: any) => {
-		const replaced = await replaceCardInMarkdown(
-			plugin,
-			cardId,
-			"adv",
-			newHTML,
-		);
+	modal.onEditUpdate = async (newHTML: string, newData: AdvData) => {
+		const replaced = await replaceCardInMarkdown(plugin, cardId, "adv", newHTML);
 		if (!replaced) {
 			new Notice("Could not find card in markdown for update.");
 			return;
@@ -422,49 +250,29 @@ async function editEnvironmentInMarkdown(
 		return;
 	}
 
-	const { startIndex, endIndex } = findCardSectionBounds(
-		view.editor.getValue(),
-		cardId,
-		"env",
-	);
+	const { startIndex, endIndex } = findCardSectionBounds(view.editor.getValue(), cardId, "env");
 	if (startIndex === -1 || endIndex === -1) {
 		new Notice("Could not find environment card in markdown.");
 		return;
 	}
 
 	const envData = extractEnvironmentData(cardElement, cardName);
+	const modal = new EnvironmentModal(plugin, view.editor, envData);
 
-	// EnvironmentEditorModal calls dataManager.addEnvironment() internally
-	// before invoking onSubmit. We only need to handle the HTML replacement here.
-	const modal = new EnvironmentEditorModal(
-		plugin,
-		view.editor,
-		cardElement,
-		envData,
-	);
-
-	modal.onSubmit = async (newHTML: string) => {
-		const replaced = await replaceCardInMarkdown(
-			plugin,
-			cardId,
-			"env",
-			newHTML,
-		);
+	modal.onEditUpdate = async (newHTML: string) => {
+		const replaced = await replaceCardInMarkdown(plugin, cardId, "env", newHTML);
 		if (!replaced) {
-			new Notice(
-				"Could not find environment card in markdown for update.",
-			);
+			new Notice("Could not find environment card in markdown for update.");
 			return;
 		}
 
-		new Notice(`Updated environment: ${cardName}`);
-		refreshBrowserView(plugin, "environment-view");
+refreshBrowserView(plugin, "environment-view");
 	};
 
 	modal.open();
 }
 
-// ─── Canvas Edit Flows ─────────────────────────────────────────────────────
+// Canvas Edit Flows
 
 function editAdversaryInCanvas(
 	cardElement: HTMLElement,
@@ -474,16 +282,14 @@ function editAdversaryInCanvas(
 	const cardData = extractCardData(cardElement);
 	const modal = new TextInputModal(plugin, null, cardElement, cardData);
 
-	modal.onEditUpdate = async (newHTML: string, newData: any) => {
+	modal.onEditUpdate = async (newHTML: string, newData: AdvData) => {
 		try {
 			replaceCardInCanvas(cardElement, newHTML, ".df-card-inner");
 			await plugin.dataManager.addAdversary(newData);
 			new Notice(`Updated adversary: ${cardName}`);
 		} catch (error) {
 			console.error("Error updating adversary:", error);
-			new Notice(
-				"Error updating adversary. Check console for details.",
-			);
+			new Notice("Error updating adversary. Check console for details.");
 		}
 
 		refreshBrowserView(plugin, "adversary-view");
@@ -498,26 +304,15 @@ function editEnvironmentInCanvas(
 	plugin: DaggerForgePlugin,
 ): void {
 	const envData = extractEnvironmentData(cardElement, cardName);
+	// EnvironmentModal now accepts Editor | null — no cast needed.
+	const modal = new EnvironmentModal(plugin, null, envData);
 
-	// Workaround: EnvironmentEditorModal types `editor` as non-nullable, but
-	// the value is never read when editing a canvas card. The modal constructor
-	// should be updated to accept Editor | null to remove this cast.
-	const modal = new EnvironmentEditorModal(
-		plugin,
-		null as unknown as Editor,
-		cardElement,
-		envData,
-	);
-
-	modal.onSubmit = async (newHTML: string) => {
+	modal.onEditUpdate = async (newHTML: string) => {
 		try {
 			replaceCardInCanvas(cardElement, newHTML, ".df-env-card-inner");
-			new Notice(`Updated environment: ${cardName}`);
 		} catch (error) {
 			console.error("Error updating environment:", error);
-			new Notice(
-				"Error updating environment. Check console for details.",
-			);
+			new Notice("Error updating environment. Check console for details.");
 		}
 
 		refreshBrowserView(plugin, "environment-view");
@@ -525,8 +320,6 @@ function editEnvironmentInCanvas(
 
 	modal.open();
 }
-
-// ─── Public Entry Points ───────────────────────────────────────────────────
 
 /**
  * Handle an edit click on a card inside a markdown note. Resolves the card
@@ -541,7 +334,6 @@ export const onEditClick = (
 
 	const button = evt.target as HTMLElement;
 	const cardElement = findCardElement(button, cardType);
-
 	if (!cardElement) {
 		new Notice("Could not find card element!");
 		return;
@@ -577,9 +369,7 @@ export async function handleCardEditClick(
 	const target = evt.target as HTMLElement;
 	if (!target) return;
 
-	let cardType: "adv" | "env" | null = null;
-	if (target.matches(".df-env-edit-button")) cardType = "env";
-	else if (target.closest(".df-adv-edit-button")) cardType = "adv";
+	const cardType = resolveCardType(target);
 	if (!cardType) return;
 
 	if (!plugin) {
@@ -590,33 +380,52 @@ export async function handleCardEditClick(
 	const activeLeaf = app.workspace.activeLeaf;
 	const isCanvas = activeLeaf?.view?.getViewType?.() === "canvas";
 
-	// ── Canvas path ──
 	if (isCanvas) {
 		evt.stopPropagation();
-
-		const button = evt.target as HTMLElement;
-		const cardElement = findCardElement(button, cardType);
-		if (!cardElement) {
-			new Notice("Could not find card element!");
-			return;
-		}
-
-		const cardName = getCardName(cardElement, cardType);
-
-		if (cardType === "adv") {
-			editAdversaryInCanvas(cardElement, cardName, plugin);
-		} else {
-			editEnvironmentInCanvas(cardElement, cardName, plugin);
-		}
+		handleCanvasEdit(target, cardType, plugin);
 		return;
 	}
 
-	// ── Markdown path ──
-	// Switch to source mode if in preview — the editor API isn't available
-	// in preview mode.
+	await handleMarkdownEdit(evt, app, cardType, plugin);
+}
+
+function resolveCardType(target: HTMLElement): "adv" | "env" | null {
+	if (target.matches(".df-env-edit-button")) return "env";
+	if (target.closest(".df-adv-edit-button")) return "adv";
+	return null;
+}
+
+function handleCanvasEdit(
+	target: HTMLElement,
+	cardType: "adv" | "env",
+	plugin: DaggerForgePlugin,
+) {
+	const cardElement = findCardElement(target, cardType);
+	if (!cardElement) {
+		new Notice("Could not find card element!");
+		return;
+	}
+
+	const cardName = getCardName(cardElement, cardType);
+
+	if (cardType === "adv") {
+		editAdversaryInCanvas(cardElement, cardName, plugin);
+	} else {
+		editEnvironmentInCanvas(cardElement, cardName, plugin);
+	}
+}
+
+async function handleMarkdownEdit(
+	evt: Event,
+	app: App,
+	cardType: "adv" | "env",
+	plugin: DaggerForgePlugin,
+) {
 	const view = app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) return;
 
+	// Switch to source mode if in preview — the editor API isn't available
+	// in preview mode.
 	if (view.getMode() !== "source") {
 		const state = view.leaf.view.getState();
 		state.mode = "source";

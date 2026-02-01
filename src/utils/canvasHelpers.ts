@@ -11,19 +11,13 @@ export function getActiveViewType(app: App): string | null {
 
 	const leaf = app.workspace.getMostRecentLeaf();
 	const view = leaf?.view;
-
 	if (!view) return null;
-
-	const type = view.getViewType?.();
-	if (type === "canvas" || view.constructor?.name === "CanvasView") {
-		return "canvas";
-	}
 
 	const file = (view as any).file;
 	if (file?.extension === "canvas") return "canvas";
 	if (file?.extension === "md") return "markdown";
 
-	return type ?? null;
+	return null;
 }
 
 export function isCanvasActive(app: App): boolean {

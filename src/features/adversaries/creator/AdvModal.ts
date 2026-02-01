@@ -8,16 +8,20 @@ import {
 	createInlineField,
 	isMarkdownActive,
 	isCanvasActive,
-	createCanvasCard, 
-	getAvailableCanvasPosition 
-	} from "../../../utils/index";
-	
-export async function buildCustomAdversary(
-	plugin: DaggerForgePlugin,
-	values: any,
-	features: any[],
-) {
-	const customAdversary: AdvData = {
+	createCanvasCard,
+	getAvailableCanvasPosition,
+} from "../../../utils/index";
+
+// Data Assembly
+// Builds a complete AdvData object from raw form values and feature arrays.
+// Used both when persisting a new adversary and when passing updated data back
+// through the onEditUpdate callback.
+
+function assembleAdvData(
+	values: Record<string, string>,
+	features: ReturnType<typeof getFeatureValues>,
+): AdvData {
+	return {
 		id: values.id || "",
 		name: values.name || "",
 		tier: values.tier || "",
@@ -42,83 +46,93 @@ export async function buildCustomAdversary(
 			desc: f.desc || "",
 		})),
 	};
+}
 
+async function persistAdversary(
+	plugin: DaggerForgePlugin,
+	data: AdvData,
+): Promise<void> {
 	try {
-		await plugin.dataManager.addAdversary(customAdversary);
-		new Notice(
-			`Custom adversary "${customAdversary.name}" saved successfully!`,
-		);
-		return customAdversary;
+		await plugin.dataManager.addAdversary(data);
+		new Notice(`Custom adversary "${data.name}" saved successfully!`);
 	} catch (error) {
 		console.error("Error saving custom adversary:", error);
-		new Notice(
-			"Failed to save custom adversary. Check console for details.",
-		);
-		return null;
+		new Notice("Failed to save custom adversary. Check console for details.");
 	}
 }
 
+// Modal
+// Single modal for both create and edit flows.
+//
+// Edit mode is activated by passing a cardElement + cardData to the
+// constructor. When present:
+//   • The form pre-fills from cardData instead of the plugin's saved state.
+//   • The submit button calls onEditUpdate (wired by cardEditor.ts) instead of
+//     persisting + inserting a new card.
+//   • onClose does not write back to the plugin's saved state — edit sessions
+//     are ephemeral.
+
 export class TextInputModal extends Modal {
-	inputs: FormInputs = {};
-	insertBtn: HTMLButtonElement;
-	addFeatureBtn: HTMLButtonElement;
-	featureContainer: HTMLElement;
-	cardElement?: HTMLElement;
-	features: FeatureElements[] = [];
-	plugin: DaggerForgePlugin;
-	savedInputStateAdv: Record<string, any> = {};
-	editor: Editor | null;
-	onEditUpdate?: (newHTML: string, newData?: any) => void | Promise<void>;
-	isEditMode: boolean = false;
+	private plugin: DaggerForgePlugin;
+	private editor: Editor | null;
+	private inputs: FormInputs = {};
+	private features: FeatureElements[] = [];
+	private featureContainer!: HTMLElement;
+
+	// Edit-mode fields
+	private isEditMode: boolean;
+	private editData: Record<string, unknown> = {};
+	onEditUpdate?: (newHTML: string, newData: AdvData) => void | Promise<void>;
 
 	constructor(
 		plugin: DaggerForgePlugin,
 		editor: Editor | null,
 		cardElement?: HTMLElement,
-		cardData?: Record<string, any>
+		cardData?: Record<string, unknown>,
 	) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.editor = editor;
-		this.cardElement = cardElement;
-		this.isEditMode = !!cardElement;
+		this.isEditMode = !!cardElement; // convert any value to boolean
+
 		if (cardElement && cardData) {
-			this.savedInputStateAdv = {
-				...cardData,
-				features: cardData.features?.map((f: any) => ({
-					featureName: f.name || f.featureName,
-					featureType: f.type || f.featureType,
-					featureCost: f.cost || f.featureCost,
-					featureDesc: f.desc || f.featureDesc,
-				})) || [],
-			};
+			this.editData = cardData;
 		}
 	}
+	// Form Construction
 
 	onOpen() {
-		const saved = this.isEditMode ? this.savedInputStateAdv : (this.plugin.savedInputStateAdv || {});
+		// In edit mode we use the card data; in create mode we use
+		// whatever the user left in the form last time (persisted on the plugin).
+		const saved = this.isEditMode
+			? this.editData
+			: this.plugin.savedInputStateAdv || {};
+
 		const { contentEl } = this;
-
-		const setValueIfSaved = (
-			key: string,
-			el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
-		) => {
-			if (saved[key] !== undefined) {
-				el.value = saved[key];
-			}
-		};
-
 		contentEl.empty();
-		const title = this.cardElement ? "Edit adversary" : "Create adversary";
-		contentEl.createEl("h2", { text: title, cls: "df-modal-title" });
 
-		// ===== BASIC INFO SECTION =====
-		const basicInfoSection = contentEl.createDiv({ cls: "df-adv-form-section" });
-		basicInfoSection.createEl("h3", { text: "Basic information", cls: "df-section-title" });
+		contentEl.createEl("h2", {
+			text: this.isEditMode ? "Edit adversary" : "Create adversary",
+			cls: "df-modal-title",
+		});
 
-		const firstRow = basicInfoSection.createDiv({ cls: "df-adv-form-row" });
+		this.buildBasicInfoSection(contentEl, saved);
+		this.buildStatsSection(contentEl, saved);
+		this.buildWeaponSection(contentEl, saved);
+		this.buildFeaturesSection(contentEl, saved);
+		this.buildActionButtons(contentEl);
+	}
 
-		createInlineField(firstRow, this.inputs, {
+	private buildBasicInfoSection(
+		contentEl: HTMLElement,
+		saved: Record<string, unknown>,
+	) {
+		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
+		section.createEl("h3", { text: "Basic information", cls: "df-section-title" });
+
+		const row = section.createDiv({ cls: "df-adv-form-row" });
+
+		createInlineField(row, this.inputs, {
 			label: "Name",
 			key: "name",
 			type: "input",
@@ -126,7 +140,7 @@ export class TextInputModal extends Modal {
 			customClass: "df-adv-field-name",
 		});
 
-		createInlineField(firstRow, this.inputs, {
+		createInlineField(row, this.inputs, {
 			label: "Tier",
 			key: "tier",
 			type: "select",
@@ -135,114 +149,68 @@ export class TextInputModal extends Modal {
 			customClass: "df-adv-field-tier",
 		});
 
-		createInlineField(firstRow, this.inputs, {
+		createInlineField(row, this.inputs, {
 			label: "Type",
 			key: "type",
 			type: "select",
 			options: [
-				"Bruiser",
-				"Horde",
-				"Leader",
-				"Minion",
-				"Ranged",
-				"Skulk",
-				"Social",
-				"Solo",
-				"Standard",
-				"Support",
-				"Leader (Umbra-Touched)",
-				"Minion (Umbra-Touched)",
-				"Solo (Umbra-Touched)",
+				"Bruiser", "Horde", "Leader", "Minion", "Ranged", "Skulk",
+				"Social", "Solo", "Standard", "Support",
+				"Leader (Umbra-Touched)", "Minion (Umbra-Touched)", "Solo (Umbra-Touched)",
 			],
 			savedValues: saved,
 			customClass: "df-adv-field-type",
 		});
 
-		// ===== DETAILS SECTION =====
-		const detailsSection = basicInfoSection.createDiv({ cls: "df-adv-form-section-content" });
+		const details = section.createDiv({ cls: "df-adv-form-section-content" });
 
-		createField(
-			detailsSection,
-			this.inputs,
-			"Description",
-			"desc",
-			"textarea",
-			"df-adv-field-desc",
-			saved,
-		);
+		createField(details, this.inputs, "Description", "desc", "textarea", "df-adv-field-desc", saved);
+		createField(details, this.inputs, "Motives", "motives", "input", "df-adv-field-motives", saved);
+	}
 
-		createField(
-			detailsSection,
-			this.inputs,
-			"Motives",
-			"motives",
-			"input",
-			"df-adv-field-motives",
-			saved,
-		);
-
-		// ===== STATS SECTION =====
-		const statsSection = contentEl.createDiv({ cls: "df-adv-form-section" });
-		statsSection.createEl("h3", { text: "Statistics", cls: "df-section-title" });
+	private buildStatsSection(
+		contentEl: HTMLElement,
+		saved: Record<string, unknown>,
+	) {
+		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
+		section.createEl("h3", { text: "Statistics", cls: "df-section-title" });
 
 		createShortTripleFields(
-			statsSection,
-			this.inputs,
-			"Difficulty",
-			"difficulty",
-			"Major",
-			"thresholdMajor",
-			"Severe",
-			"thresholdSevere",
-			undefined,
-			undefined,
-			saved,
+			section, this.inputs,
+			"Difficulty", "difficulty",
+			"Major", "thresholdMajor",
+			"Severe", "thresholdSevere",
+			undefined, undefined, saved,
 		);
 
 		createShortTripleFields(
-			statsSection,
-			this.inputs,
-			"HP",
-			"hp",
-			"Stress (optional)",
-			"stress",
-			"ATK Mod",
-			"atk",
-			undefined,
-			undefined,
-			saved,
+			section, this.inputs,
+			"HP", "hp",
+			"Stress (optional)", "stress",
+			"ATK Mod", "atk",
+			undefined, undefined, saved,
 		);
+	}
 
-		// ===== WEAPON SECTION =====
-		const weaponSection = contentEl.createDiv({ cls: "df-adv-form-section" });
-		weaponSection.createEl("h3", { text: "Weapon", cls: "df-section-title" });
+	private buildWeaponSection(
+		contentEl: HTMLElement,
+		saved: Record<string, unknown>,
+	) {
+		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
+		section.createEl("h3", { text: "Weapon", cls: "df-section-title" });
 
 		createShortTripleFields(
-			weaponSection,
-			this.inputs,
-			"Name",
-			"weaponName",
-			"Range",
-			"weaponRange",
-			"Damage",
-			"weaponDamage",
-			"weaponRange",
-			["Melee", "Very Close", "Close", "Far", "Very Far"],
+			section, this.inputs,
+			"Name", "weaponName",
+			"Range", "weaponRange",
+			"Damage", "weaponDamage",
+			"weaponRange", ["Melee", "Very Close", "Close", "Far", "Very Far"],
 			saved,
 		);
 
-		createField(
-			weaponSection,
-			this.inputs,
-			"Experience (optional)",
-			"xp",
-			"input",
-			"df-adv-field-xp",
-			saved,
-		);
+		createField(section, this.inputs, "Experience (optional)", "xp", "input", "df-adv-field-xp", saved);
 
-		// ===== COUNT FIELD =====
-		const countRow = weaponSection.createDiv({ cls: "df-adv-form-row-weapon" });
+		const countRow = section.createDiv({ cls: "df-adv-form-row-weapon" });
 		createInlineField(countRow, this.inputs, {
 			label: "Count",
 			key: "count",
@@ -254,148 +222,152 @@ export class TextInputModal extends Modal {
 		if (!saved["count"]) {
 			this.inputs["count"].value = "1";
 		}
+	}
 
-		// ===== FEATURES SECTION =====
-		const featuresSection = contentEl.createDiv({ cls: "df-adv-form-section" });
-		featuresSection.createEl("h3", { text: "Features", cls: "df-section-title" });
+	private buildFeaturesSection(
+		contentEl: HTMLElement,
+		saved: Record<string, unknown>,
+	) {
+		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
+		section.createEl("h3", { text: "Features", cls: "df-section-title" });
 
-		this.featureContainer = featuresSection.createDiv({ cls: "df-adv-feature-container" });
+		this.featureContainer = section.createDiv({ cls: "df-adv-feature-container" });
 		this.features = [];
-		this.featureContainer.empty();
 
-		if (Array.isArray(saved.features) && saved.features.length > 0) {
-			saved.features.forEach((data: Record<string, string>) => {
+		const setValueIfSaved = (
+			key: string,
+			el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
+		) => {
+			if (saved[key] !== undefined) el.value = String(saved[key]);
+		};
+
+		const savedFeatures = saved.features as Array<Record<string, string>> | undefined;
+
+		if (Array.isArray(savedFeatures) && savedFeatures.length > 0) {
+			savedFeatures.forEach((data) => {
 				addFeature(this.featureContainer, this.features, (key, el) => {
-					if (data[key] !== undefined) el.value = data[key];
+					const dataKey = key === "featureName" ? "name"
+						: key === "featureType" ? "type"
+						: key === "featureCost" ? "cost"
+						: key === "featureDesc" ? "desc"
+						: key;
+					if (data[dataKey] !== undefined) el.value = String(data[dataKey]);
 				});
 			});
 		} else {
 			addFeature(this.featureContainer, this.features, setValueIfSaved);
 		}
 
-		this.addFeatureBtn = featuresSection.createEl("button", {
+		const addBtn = section.createEl("button", {
 			text: "+ Add feature",
 			cls: "df-adv-btn-add-feature",
 		});
-		this.addFeatureBtn.onclick = () =>
+		addBtn.onclick = () =>
 			addFeature(this.featureContainer, this.features, setValueIfSaved);
+	}
 
-		// ===== ACTION BUTTONS =====
-		const buttonContainer = contentEl.createDiv({ cls: "df-adv-form-buttons" });
+	private buildActionButtons(contentEl: HTMLElement) {
+		const container = contentEl.createDiv({ cls: "df-adv-form-buttons" });
 
-		this.insertBtn = buttonContainer.createEl("button", {
-			text: this.cardElement ? "Update card" : "Insert card",
+		const btn = container.createEl("button", {
+			text: this.isEditMode ? "Update card" : "Insert card",
 			cls: "df-adv-btn-insert",
 		});
 
-		this.insertBtn.onclick = async () => {
-			const values = Object.fromEntries(
-				Object.entries(this.inputs).map(([key, el]) => [
-					key,
-					(el as HTMLInputElement | HTMLTextAreaElement).value.trim(),
-				]),
-			);
-
-			const features = getFeatureValues(this.features);
-			const newHTML = buildCardHTML(values, features);
-
-			if (this.onEditUpdate) {
-				const newData: AdvData = {
-					id: values.id || "",
-					name: values.name || "",
-					tier: values.tier || "",
-					type: values.type || "",
-					desc: values.desc || "",
-					motives: values.motives || "",
-					difficulty: values.difficulty || "",
-					thresholdMajor: values.thresholdMajor || "",
-					thresholdSevere: values.thresholdSevere || "",
-					hp: values.hp || "",
-					stress: values.stress || "",
-					atk: values.atk || "",
-					weaponName: values.weaponName || "",
-					weaponRange: values.weaponRange || "",
-					weaponDamage: values.weaponDamage || "",
-					xp: values.xp || "",
-					source: "custom",
-					features: features.map((f) => ({
-						name: f.name || "",
-						type: f.type || "",
-						cost: f.cost || "",
-						desc: f.desc || "",
-					})),
-				};
-				this.onEditUpdate(newHTML, newData);
-				this.close();
-				return;
-			}
-
-			await buildCustomAdversary(this.plugin, values, features);
-
-			const isCanvas = isCanvasActive(this.app);
-			const isMarkdown = isMarkdownActive(this.app);
-			
-			if (isCanvas) {
-				const position = getAvailableCanvasPosition(this.plugin.app);
-				createCanvasCard(this.plugin.app, newHTML, {
-					x: position.x,
-					y: position.y,
-					width: 400,
-					height: 600
-				});
-			} else if (isMarkdown && this.editor) {
-				this.editor.replaceSelection(newHTML + "\n");
-			}
-
-			for (const el of Object.values(this.inputs)) {
-				if (
-					el instanceof HTMLInputElement ||
-					el instanceof HTMLTextAreaElement
-				) {
-					el.value = "";
-				} else if (el instanceof HTMLSelectElement) {
-					el.selectedIndex = 0;
-				}
-			}
-
-			this.features.forEach(({ nameEl, typeEl, costEl, descEl }) => {
-				nameEl.value = "";
-				typeEl.selectedIndex = 0;
-				costEl.selectedIndex = 0;
-				descEl.value = "";
-			});
-
-			this.plugin.savedInputStateAdv = {};
-			this.features = [];
-			this.featureContainer.empty();
-
-			const advView = this.plugin.app.workspace
-				.getLeavesOfType("adversary-view")
-				.map((l) => l.view)
-				.find((v) => typeof (v as any).refresh === "function") as any;
-
-			if (advView) {
-				await advView.refresh();
-			}
-
-			this.close();
-		};
+		btn.onclick = () => this.handleSubmit();
 	}
 
-	onClose() {
-		if (this.isEditMode) {
-			this.savedInputStateAdv = {};
-			this.features = [];
+	// Submit Logic
+	// Split into three paths so the main handler stays short:
+	//   1. Edit mode  -> delegate to onEditUpdate, then close.
+	//   2. Canvas     -> persist + insert canvas card.
+	//   3. Markdown   -> persist + insert into editor.
+
+	private async handleSubmit() {
+		const values = this.readFormValues();
+		const features = getFeatureValues(this.features);
+		const newHTML = buildCardHTML(values, features);
+		const newData = assembleAdvData(values, features);
+
+		if (this.onEditUpdate) {
+			await this.onEditUpdate(newHTML, newData);
+			this.close();
 			return;
 		}
+
+		await persistAdversary(this.plugin, newData);
+		this.insertCard(newHTML);
+		this.resetForm();
+		this.refreshBrowserView();
+		this.close();
+	}
+
+	private readFormValues(): Record<string, string> {
+		return Object.fromEntries(
+			Object.entries(this.inputs).map(([key, el]) => [
+				key,
+				(el as HTMLInputElement | HTMLTextAreaElement).value.trim(),
+			]),
+		);
+	}
+
+	private insertCard(html: string) {
+		if (isCanvasActive(this.app)) {
+			const pos = getAvailableCanvasPosition(this.plugin.app);
+			createCanvasCard(this.plugin.app, html, {
+				x: pos.x, y: pos.y, width: 400, height: 600,
+			});
+		} else if (isMarkdownActive(this.app) && this.editor) {
+			this.editor.replaceSelection(html + "\n");
+		}
+	}
+
+	private resetForm() {
+		for (const el of Object.values(this.inputs)) {
+			if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+				el.value = "";
+			} else if (el instanceof HTMLSelectElement) {
+				el.selectedIndex = 0;
+			}
+		}
+
+		this.features.forEach(({ nameEl, typeEl, costEl, descEl }) => {
+			nameEl.value = "";
+			typeEl.selectedIndex = 0;
+			costEl.selectedIndex = 0;
+			descEl.value = "";
+		});
+
+		this.features = [];
+		this.featureContainer.empty();
+		this.plugin.savedInputStateAdv = {};
+	}
+
+	private refreshBrowserView() {
+		const view = this.plugin.app.workspace
+			.getLeavesOfType("adversary-view")
+			.map((l) => l.view)
+			.find((v) => typeof (v as { refresh?: unknown }).refresh === "function") as
+			| { refresh: () => void | Promise<void> }
+			| undefined;
+
+		if (view) view.refresh();
+	}
+
+	// Close
+	// Edit sessions are ephemeral — nothing is persisted on close.
+	// Create sessions snapshot the current form so the user can reopen and
+	// continue where they left off.
+
+	onClose() {
+		if (this.isEditMode) return;
 
 		this.plugin.savedInputStateAdv = {};
 
 		for (const [key, el] of Object.entries(this.inputs)) {
-			const value = (
+			this.plugin.savedInputStateAdv[key] = (
 				el as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 			).value;
-			this.plugin.savedInputStateAdv[key] = value;
 		}
 
 		this.plugin.savedInputStateAdv.features = this.features.map(

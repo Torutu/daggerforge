@@ -7,11 +7,11 @@ export interface SearchControlsConfig {
 	placeholderText?: string;
 	showTypeFilter?: boolean;
 	onSearchChange?: (query: string) => void;
-	onTierChange?: (tier: number | null) => void;
+	onTierChange?: (tier: string | null) => void;
 	onSourceChange?: (source: string | null) => void;
 	onTypeChange?: (type: string | null) => void;
 	onClear?: () => void;
-	availableTiers?: number[];
+	availableTiers?: string[];
 	availableSources?: string[];
 	availableTypes?: string[];
 }
@@ -103,7 +103,7 @@ export class SearchControlsUI {
 		select.appendChild(allOption);
 
 		if (this.config.availableTiers) {
-			this.config.availableTiers.forEach((tier: number) => {
+			this.config.availableTiers.forEach((tier: string) => {
 				const option = document.createElement("option");
 				option.value = String(tier);
 				option.textContent = `Tier ${tier}`;
@@ -113,7 +113,7 @@ export class SearchControlsUI {
 
 		if (this.config.onTierChange) {
 			select.addEventListener("change", () => {
-				const value = select.value ? parseInt(select.value, 10) : null;
+				const value = select.value || null;
 				this.config.onTierChange?.(value);
 			});
 		}
@@ -234,25 +234,25 @@ export class SearchControlsUI {
 	/**
 	 * Restore filter UI values from current filters
 	 */
-	public restoreFiltersUI(filters: any): void {
-		const selects = this.container?.querySelectorAll("select");
-		if (!selects) return;
+	// public restoreFiltersUI(filters: any): void {
+	// 	const selects = this.container?.querySelectorAll("select");
+	// 	if (!selects) return;
 
-		selects.forEach((select: HTMLSelectElement) => {
-			if (select.classList.contains("df-tier-filter")) {
-				select.value = filters.tier ? String(filters.tier) : "";
-			} else if (select.classList.contains("df-source-filter")) {
-				select.value = filters.source || "";
-			} else if (select.classList.contains("df-type-filter")) {
-				select.value = filters.type || "";
-			}
-		});
+	// 	selects.forEach((select: HTMLSelectElement) => {
+	// 		if (select.classList.contains("df-tier-filter")) {
+	// 			select.value = filters.tier ? String(filters.tier) : "";
+	// 		} else if (select.classList.contains("df-source-filter")) {
+	// 			select.value = filters.source || "";
+	// 		} else if (select.classList.contains("df-type-filter")) {
+	// 			select.value = filters.type || "";
+	// 		}
+	// 	});
 
-		const searchInput = this.container?.querySelector(".df-search-input") as HTMLInputElement;
-		if (searchInput) {
-			searchInput.value = filters.query || "";
-		}
-	}
+	// 	const searchInput = this.container?.querySelector(".df-search-input") as HTMLInputElement;
+	// 	if (searchInput) {
+	// 		searchInput.value = filters.query || "";
+	// 	}
+	// }
 
 	/**
 	 * Update available options for filters
@@ -262,7 +262,7 @@ export class SearchControlsUI {
 		options: (string | number)[]
 	): void {
 		if (filterName === "tiers") {
-			this.config.availableTiers = options as number[];
+			this.config.availableTiers = options as string[];
 		} else if (filterName === "sources") {
 			this.config.availableSources = options as string[];
 		} else if (filterName === "types") {

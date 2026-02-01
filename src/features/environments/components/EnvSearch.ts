@@ -57,7 +57,7 @@ export class EnvironmentView extends ItemView {
 		this.searchControlsUI = new SearchControlsUI({
 			placeholderText: "Search by name, type, or description...",
 			showTypeFilter: true,
-			availableTiers: [1, 2, 3, 4],
+			availableTiers: ["1", "2", "3", "4"],
 			availableSources: ["core","sablewood", "void", "custom"],
 			availableTypes: ["Social", "Exploration", "Event", "Traversal"],
 			onSearchChange: (query) => this.handleSearchChange(query),
@@ -162,7 +162,7 @@ export class EnvironmentView extends ItemView {
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTierChange(tier: number | null) {
+	private handleTierChange(tier: string | null) {
 		this.searchEngine.setFilters({ tier });
 		this.renderResults(this.searchEngine.search());
 	}

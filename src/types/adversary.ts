@@ -1,5 +1,3 @@
-import type { Feature } from './index';
-
 export type AdvData = {
 	id: string;
 	name: string;
@@ -34,4 +32,11 @@ export type SavedFeatureState = {
 	featureType: string;
 	featureCost: string;
 	featureDesc: string;
+};
+
+export type Feature = {
+	name: string;
+	type: string;
+	cost: string;
+	desc: string;
 };
