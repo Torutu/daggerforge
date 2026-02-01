@@ -8,7 +8,7 @@ import {
 	TextInputModal as AdversaryModal,
 	EnvironmentModal,
 } from "../features/index";
-import { DeleteConfirmModal } from "../ui/index";
+import { DeleteConfirmModal } from "../features/data-management/index";
 
 /**
  * Opens the adversary or environment creator modal

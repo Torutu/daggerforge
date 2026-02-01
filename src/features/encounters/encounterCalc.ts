@@ -23,7 +23,6 @@ export function openEncounterCalculator() {
         cleanupListeners.forEach(cleanup => cleanup());
         cleanupListeners = [];
     }
-
     const container = document.createElement("div");
     encounterWindowContainer = container;
     container.classList.add("df-bg-floating-window");

@@ -1,8 +1,8 @@
-import { App, Editor, MarkdownView, Notice } from "obsidian";
-import type DaggerForgePlugin from "../main";
-import { EnvironmentModal, extractEnvironmentData } from "./environments/index";
-import { extractCardData, TextInputModal } from "./adversaries/index";
-import type { AdvData } from "../types/index";
+import { App, MarkdownView, Notice } from "obsidian";
+import type DaggerForgePlugin from "../../main";
+import { EnvironmentModal, extractEnvironmentData } from "../environments/index";
+import { extractCardData, TextInputModal } from "../adversaries/index";
+import type { AdvData } from "../../types/index";
 
 // Refreshable View
 // Browser panels (adversary-view, environment-view) expose a refresh() method.

@@ -1,6 +1,6 @@
 import { Notice, Modal, App, Setting } from "obsidian";
-import type DaggerForgePlugin from "../main";
-import { refreshBrowsers } from "../utils/pluginOperations";
+import type DaggerForgePlugin from "../../main";
+import { refreshBrowsers } from "../../utils/index";
 
 export class ImportDataModal extends Modal {
 	private plugin: DaggerForgePlugin;

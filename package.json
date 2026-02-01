@@ -22,20 +22,24 @@
 	"author": "Waleed Alnaimi",
 	"license": "MIT",
 	"devDependencies": {
+		"@eslint/js": "^9.39.2",
+		"@types/jest": "^29.5.12",
 		"@types/node": "^16.11.6",
-		"@typescript-eslint/eslint-plugin": "^5.29.0",
-		"@typescript-eslint/parser": "^5.29.0",
+		"@typescript-eslint/eslint-plugin": "^5.62.0",
+		"@typescript-eslint/parser": "^5.62.0",
 		"builtin-modules": "3.3.0",
 		"esbuild": "^0.25.6",
 		"eslint": "^8.57.1",
-		"eslint-plugin-obsidianmd": "^0.1.4",
+		"eslint-plugin-obsidianmd": "^0.1.9",
+		"globals": "^17.3.0",
+		"jest": "^29.7.0",
+		"jiti": "^2.6.1",
 		"obsidian": "latest",
 		"prettier": "^3.6.2",
+		"ts-jest": "^29.1.2",
 		"tslib": "2.4.0",
 		"typescript": "^5.8.3",
-		"jest": "^29.7.0",
-		"ts-jest": "^29.1.2",
-		"@types/jest": "^29.5.12"
+		"typescript-eslint": "^8.54.0"
 	},
 	"dependencies": {
 		"html2canvas": "^1.4.1"

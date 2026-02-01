@@ -1,5 +1,5 @@
 import { Modal, App, Notice } from "obsidian";
-import type DaggerForgePlugin from "../main";
+import type DaggerForgePlugin from "../../main";
 
 /**
  * Modal for confirming data file deletion

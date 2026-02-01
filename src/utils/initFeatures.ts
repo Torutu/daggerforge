@@ -1,7 +1,7 @@
 import { Menu, Plugin } from "obsidian";
 import DaggerForgePlugin from "../main";
-import { adversariesSidebar, openEnvironmentSidebar, ImportDataModal } from "../ui/index";
-import { openDiceRoller, openEncounterCalculator } from "../features/index";
+import { adversariesSidebar, openEnvironmentSidebar } from "../ui/index";
+import { openDiceRoller, openEncounterCalculator, ImportDataModal } from "../features/index";
 import { openCreator, confirmDeleteDataFile } from "./pluginOperations";
 
 export function createView(plugin: Plugin, viewType: string, view: any) {
