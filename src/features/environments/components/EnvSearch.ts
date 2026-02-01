@@ -57,7 +57,7 @@ export class EnvironmentView extends ItemView {
 		this.searchControlsUI = new SearchControlsUI({
 			placeholderText: "Search by name, type, or description...",
 			showTypeFilter: true,
-			availableTiers: [1, 2, 3, 4],
+			availableTiers: ["1", "2", "3", "4"],
 			availableSources: ["core","sablewood", "void", "custom"],
 			availableTypes: ["Social", "Exploration", "Event", "Traversal"],
 			onSearchChange: (query) => this.handleSearchChange(query),
@@ -162,7 +162,7 @@ export class EnvironmentView extends ItemView {
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTierChange(tier: number | null) {
+	private handleTierChange(tier: string | null) {
 		this.searchEngine.setFilters({ tier });
 		this.renderResults(this.searchEngine.search());
 	}
@@ -258,6 +258,7 @@ export class EnvironmentView extends ItemView {
 		desc.textContent = env.desc || "No description available.";
 		card.appendChild(desc);
 
+		const hiddenID = crypto.randomUUID();
 		card.addEventListener("click", () => {
 			const featuresHTML = (env.features || [])
 				.map((f: any) => {
@@ -292,8 +293,8 @@ export class EnvironmentView extends ItemView {
 
 			const envHTML = `<section class="df-env-card-outer">
 <div class="df-env-card-inner">
-<button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
-<div class="df-env-name">${env.name}</div>
+<button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit" id="${hiddenID}">📝</button>
+<div class="df-env-name" id="${hiddenID}">${env.name}</div>
 <div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type} <span class="df-source-badge-${(env.source || "core").toLowerCase()}">${(env.source || "core").toLowerCase()}</span></div>
 <p class="df-env-desc">${env.desc}</p>
 <p><strong>Impulse:</strong> ${env.impulse || ""}</p>
@@ -320,7 +321,7 @@ ${featuresHTML}
 					height: 650
 				});
 				if (success) {
-					new Notice(`Inserted environment ${env.name}.`);
+					new Notice(`Inserted ${env.name}.`);
 				} else {
 					new Notice("Failed to insert environment into canvas.");
 				}

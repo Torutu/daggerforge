@@ -1,69 +1,23 @@
 import { EnvironmentData } from "../../../types/index";
 
-function markdownToHTML(markdown: string): string {
-	if (!markdown) return "";
-
-	let html = markdown;
-
-	// Handle line breaks first
-	html = html.replace(/\n/g, "<br>");
-
-	// Handle bold (**text**)
-	html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-	// Handle italic (*text*)
-	html = html.replace(/\*(.*?)\*/g, "<em>$1</em>");
-
-	// Handle bullet lists (- item)
-	// Find all consecutive lines starting with "- "
-	const lines = html.split("<br>");
-	let inBulletList = false;
-	const processedLines = lines.map((line, index) => {
-		const bulletMatch = line.match(/^- (.*)/);
-		if (bulletMatch) {
-			if (!inBulletList) {
-				inBulletList = true;
-				return `<ul><li>${bulletMatch[1]}</li>`;
-			} else {
-				return `<li>${bulletMatch[1]}</li>`;
-			}
-		} else {
-			if (inBulletList) {
-				inBulletList = false;
-				return `</ul>${line}`;
-			}
-			return line;
-		}
-	});
-	
-	if (inBulletList) {
-		processedLines.push("</ul>");
-	}
-	
-	html = processedLines.join("<br>");
-
-	html = html.replace(/<br><br>/g, "<br>");
-
-	return html;
-}
+const hiddenID = crypto.randomUUID();
 
 export function environmentToHTML(env: EnvironmentData): string {
 	const featuresHTML = (env.features || [])
 		.map((f) => {
 			const costHTML = f.cost ? `<span>${f.cost}</span>` : "";
 
-			// Use <ul> with class for bullets
 			const bulletsHTML = f.bullets && f.bullets.length
 				? `<ul class="df-env-bullet">${f.bullets
 						.map((b) => `<li class="df-env-bullet-item">${b}</li>`)
 						.join("")}</ul>`
 				: "";
 
-			const textHTML = markdownToHTML(f.text);
+			const textHTML = f.text;
 
-			const textAfterHTML = f.textAfter ? markdownToHTML(f.textAfter) : "";
+			const textAfterHTML = f.textAfter;
 			const questionsHTML = f.questions?.length
-				? `<div class="df-env-questions">${f.questions.map((q) => `<div class="df-env-question">${markdownToHTML(q)}</div>`).join("")}</div>`
+				? `<div class="df-env-questions">${f.questions.map((q) => `<div class="df-env-question">${q}</div>`).join("")}</div>`
 				: "";
 
 			return `
@@ -79,8 +33,8 @@ ${bulletsHTML}${textAfterHTML ? `<div id="textafter" class="df-env-feat-text">${
 	return `
 <section class="df-env-card-outer">
 <div class="df-env-card-inner">
-<button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit">📝</button>
-<div class="df-env-name">${env.name}</div>
+<button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit" id="${hiddenID}">📝</button>
+<div class="df-env-name" id="${hiddenID}">${env.name}</div>
 <div class="df-env-feat-tier-type">Tier ${env.tier.toString()} ${env.type} <span class="df-source-badge-${(env.source || "core").toLowerCase()}">${(env.source || "core").toLowerCase()}</span></div>
 <p class="df-env-desc">${env.desc}</p>
 <p><strong>Impulse:</strong> ${env.impulse || ""}</p>

@@ -11,19 +11,13 @@ export function getActiveViewType(app: App): string | null {
 
 	const leaf = app.workspace.getMostRecentLeaf();
 	const view = leaf?.view;
-
 	if (!view) return null;
-
-	const type = view.getViewType?.();
-	if (type === "canvas" || view.constructor?.name === "CanvasView") {
-		return "canvas";
-	}
 
 	const file = (view as any).file;
 	if (file?.extension === "canvas") return "canvas";
 	if (file?.extension === "md") return "markdown";
 
-	return type ?? null;
+	return null;
 }
 
 export function isCanvasActive(app: App): boolean {
@@ -128,7 +122,6 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 		// Get the camera position (center of what user is looking at)
 		const centerX = canvas.tx ?? 0;
 		const centerY = canvas.ty ?? 0;
-		const zoom = canvas.zoom ?? 1;
 
 		let x = centerX - 200;
 		let y = centerY - 300;

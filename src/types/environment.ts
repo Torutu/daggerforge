@@ -21,7 +21,7 @@ export type EnvSavedFeatureState = {
 export type EnvironmentData = {
 	id: string;
 	name: string;
-	tier: number;
+	tier: string;
 	type: string;
 	desc: string;
 	impulse: string;

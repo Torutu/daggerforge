@@ -14,14 +14,14 @@
 
 export interface SearchFilters {
 	query: string;
-	tier: number | null;
+	tier: string | null;
 	source: string | null;
 	type: string | null;
 }
 
 export interface SearchableItem {
 	name: string;
-	tier?: number;
+	tier?: string | number;
 	type?: string;
 	source?: string;
 	desc?: string;
@@ -66,14 +66,6 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		return this.items.filter((item: T) => this.matchesAllFilters(item));
 	}
 
-	public searchWith(filters: Partial<SearchFilters>): T[] {
-		const oldFilters = this.filters;
-		this.filters = { ...this.filters, ...filters };
-		const results = this.search();
-		this.filters = oldFilters;
-		return results;
-	}
-
 	private matchesAllFilters(item: T): boolean {
 		return (
 			this.matchesQuery(item) &&
@@ -100,7 +92,8 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 
 	private matchesTier(item: T): boolean {
 		if (this.filters.tier === null) return true;
-		return item.tier === this.filters.tier;
+		// Convert both to strings for comparison - tier can be string or number
+		return String(item.tier) === String(this.filters.tier);
 	}
 
 
@@ -140,13 +133,5 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		return Array.from(options)
 			.filter((opt: string) => opt !== "")
 			.sort();
-	}
-
-	public getResultCount(): number {
-		return this.search().length;
-	}
-
-	public getCountWith(filters: Partial<SearchFilters>): number {
-		return this.searchWith(filters).length;
 	}
 }

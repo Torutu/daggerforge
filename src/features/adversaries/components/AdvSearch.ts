@@ -10,64 +10,20 @@ import {
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	SearchEngine,
-	SearchControlsUI,
-	generateAdvUniqueId
+	SearchControlsUI
 	} from "../../../utils/index";
 import { buildCardHTML } from "../index";
+import type { AdvData } from "../../../types/index";
 
 export const ADVERSARY_VIEW_TYPE = "adversary-view";
 
-interface AdversaryFeature {
-	name: string;
-	type: string;
-	cost?: string;
-	desc: string;
+// AdvData keys are all strings (including tier). The browser needs tier as a
+// number for sorting/filtering, and displayType to preserve the full type
+// string (e.g. "Leader (Umbra-Touched)") while filtering on the base type.
+interface Adversary extends AdvData {
+	displayType?: string;
+	isCustom?: boolean;
 }
-
-export interface Adversary {
-		id?: string;
-		name: string;
-		type: string;
-		displayType?: string;
-		tier: number;
-		desc: string;
-		motives: string;
-		difficulty: string;
-		thresholdMajor: string;
-		thresholdSevere: string;
-		hp: string;
-		stress?: string;
-		atk: string;
-		weaponName: string;
-		weaponRange: string;
-		weaponDamage: string;
-		xp: string;
-		features: AdversaryFeature[];
-		source?: string;
-		isCustom?: boolean;
-}
-
-// Type for raw adversary data from JSON that may have either naming convention
-type RawAdversaryData = {
-	[K in keyof Adversary]: Adversary[K];
-} | {
-	Name: string;
-	Type: string;
-	Tier: string | number;
-	Desc: string;
-	Motives: string;
-	Difficulty: string;
-	Thresholds: string;
-	HP: string;
-	Stress?: string;
-	ATK: string;
-	WeaponName: string;
-	WeaponRange: string;
-	WeaponDamage: string;
-	XP: string;
-	Features: AdversaryFeature[];
-	Source?: string;
-};
 
 export class AdversaryView extends ItemView {
 	private adversaries: Adversary[] = [];
@@ -152,7 +108,7 @@ export class AdversaryView extends ItemView {
 		this.searchControlsUI = new SearchControlsUI({
 			placeholderText: "Search by name, type, or description...",
 			showTypeFilter: true,
-			availableTiers: [1, 2, 3, 4],
+			availableTiers: ['1', '2', '3', '4'],
 			availableSources: ["core", "sablewood", "umbra", "void", "custom"],
 			availableTypes: ["Bruiser", "Horde",
 				"Leader", "Minion", "Ranged", "Skulk", "Social", "Solo", "Standard", "Support",
@@ -182,42 +138,6 @@ export class AdversaryView extends ItemView {
 		);
 	}
 
-	private normalizeAdversary(a: RawAdversaryData): Adversary {
-		const raw = a as any;
-		const fullType = raw.type || raw.Type || "";
-		const baseType = this.extractBaseType(fullType);
-		
-		return {
-			id: raw.id || generateAdvUniqueId(),
-			name: raw.name || raw.Name || "",
-			type: baseType,
-			displayType: fullType !== baseType ? fullType : undefined,
-			tier: typeof (raw.tier || raw.Tier) === "string" 
-				? parseInt(raw.tier || raw.Tier, 10) 
-				: (raw.tier || raw.Tier || 1),
-			desc: raw.desc || raw.Desc || "",
-			motives: raw.motives || raw.Motives || "",
-			difficulty: raw.difficulty || raw.Difficulty || "",
-			thresholdMajor: raw.thresholdMajor || (raw.Thresholds ? raw.Thresholds.split('/')[0] : "") || "",
-			thresholdSevere: raw.thresholdSevere || (raw.Thresholds ? raw.Thresholds.split('/')[1] : "") || "",
-			hp: raw.hp || raw.HP || "",
-			stress: raw.stress || raw.Stress,
-			atk: raw.atk || raw.ATK || "",
-			weaponName: raw.weaponName || raw.WeaponName || "",
-			weaponRange: raw.weaponRange || raw.WeaponRange || "",
-			weaponDamage: raw.weaponDamage || raw.WeaponDamage || "",
-			xp: raw.xp || raw.XP || "",
-			features: raw.features || raw.Features || [],
-			source: raw.source || raw.Source || "core",
-			isCustom: raw.isCustom || false,
-		};
-	}
-
-	private extractBaseType(fullType: string): string {
-		const match = fullType.match(/^([^(]+)/);
-		return match ? match[1].trim() : fullType;
-	}
-
 	private loadCustomAdversaries(): Adversary[] {
 		try {
 			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
@@ -226,40 +146,24 @@ export class AdversaryView extends ItemView {
 				return [];
 			}
 
-			const customAdvs = plugin.dataManager.getAdversaries();
-			return customAdvs.map((adv: any) => {
-				const fullType = adv.type || "";
-				const baseType = this.extractBaseType(fullType);
-				
-				return {
-					...adv,
-					id: adv.id || generateAdvUniqueId(),  // Generate ID if missing
-					type: baseType,
-					displayType: fullType !== baseType ? fullType : undefined,
-					tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier,
-					isCustom: true,
-					source: adv.source || "custom",
-				};
-			});
+			const customAdvs: AdvData[] = plugin.dataManager.getAdversaries();
+			return customAdvs.map((adv) => ({
+				...adv as unknown as Adversary,
+				isCustom: true,
+				source: adv.source || "custom",
+			}));
 		} catch (error) {
 			console.error("Error loading custom adversaries from DataManager:", error);
 			return [];
 		}
 	}
 
+	// TS doesn't allow direct cast from one type to another incompatible types without going through unknown
 	private loadAdversaryData() {
 		try {
-			const builtInAdversaries = ADVERSARIES.map((a: any) =>
-				this.normalizeAdversary(a)
-			);
-
+			const builtIn = ADVERSARIES as unknown as Adversary[];
 			const custom = this.loadCustomAdversaries();
-			this.adversaries = [...builtInAdversaries, ...custom];
-			
-			this.adversaries = this.adversaries.map(adv => ({
-				...adv,
-				tier: typeof adv.tier === "string" ? parseInt(adv.tier, 10) : adv.tier
-			}));
+			this.adversaries = [...builtIn, ...custom];
 
 			this.searchEngine.setItems(this.adversaries);
 
@@ -287,7 +191,7 @@ export class AdversaryView extends ItemView {
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTierChange(tier: number | null) {
+	private handleTierChange(tier: string | null) {
 		this.searchEngine.setFilters({ tier });
 		this.renderResults(this.searchEngine.search());
 	}
@@ -486,20 +390,20 @@ export class AdversaryView extends ItemView {
 		return buildCardHTML(
 			{
 				name: adversary.name,
-				tier: String(adversary.tier),
+				tier: adversary.tier,
 				type: adversary.displayType || adversary.type,
 				desc: adversary.desc,
 				motives: adversary.motives,
 				difficulty: adversary.difficulty,
 				thresholdMajor: adversary.thresholdMajor,
 				thresholdSevere: adversary.thresholdSevere,
-				hp: String(adversary.hp),
-				stress: String(adversary.stress ?? 0),
+				hp: adversary.hp,
+				stress: adversary.stress ?? 0,
 				atk: adversary.atk,
 				weaponName: adversary.weaponName,
 				weaponRange: adversary.weaponRange,
 				weaponDamage: adversary.weaponDamage,
-				xp: String(adversary.xp),
+				xp: adversary.xp,
 				count: String(currentCount),
 				source: adversary.source || "core",
 			},

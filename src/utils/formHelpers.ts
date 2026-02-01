@@ -7,7 +7,7 @@ export const createField = (
 	key: string,
 	type: "input" | "textarea" = "input",
 	customClass?: string,
-	savedValues?: Record<string, string>,
+	savedValues?: Record<string, unknown>,
 ) => {
 	const wrapper = parent.createDiv({ cls: "df-field-row" });
 	wrapper.createEl("label", {
@@ -31,7 +31,7 @@ export const createField = (
 	inputs[key] = field;
 
 	if (savedValues?.[key] !== undefined) {
-		field.value = savedValues[key];
+		field.value = String(savedValues[key]);
 	}
 
 	return field;
@@ -48,7 +48,7 @@ export const createShortTripleFields = (
 	key3: string,
 	dropdownFieldKey?: string,
 	dropdownOptions?: string[],
-	savedValues?: Record<string, string>,
+	savedValues?: Record<string, unknown>,
 ) => {
 	const row = parent.createDiv({ cls: "df-triple-fields-row" });
 
@@ -67,7 +67,7 @@ export const createShortTripleFields = (
 			});
 			inputs[key] = select;
 			if (savedValues?.[key] !== undefined)
-				select.value = savedValues[key];
+				select.value = String(savedValues[key]);
 		} else {
 			const input = wrapper.createEl("input", {
 				cls: "df-field-input",
@@ -75,7 +75,7 @@ export const createShortTripleFields = (
 			});
 			inputs[key] = input;
 			if (savedValues?.[key] !== undefined)
-				input.value = savedValues[key];
+				input.value = String(savedValues[key]);
 		}
 	};
 
@@ -92,7 +92,7 @@ export const createInlineField = (
 		key: string;
 		type?: "input" | "select";
 		options?: string[];
-		savedValues?: Record<string, string>;
+		savedValues?: Record<string, unknown>;
 		customClass?: string;
 	},
 ) => {
@@ -117,7 +117,7 @@ export const createInlineField = (
 		inputs[config.key] = select;
 
 		if (config.savedValues?.[config.key] !== undefined) {
-			select.value = config.savedValues[config.key];
+			select.value = String(config.savedValues[config.key]);
 		} else {
 			select.selectedIndex = 0;
 		}
@@ -132,7 +132,7 @@ export const createInlineField = (
 		inputs[config.key] = input;
 
 		if (config.savedValues?.[config.key] !== undefined) {
-			input.value = config.savedValues[config.key];
+			input.value = String(config.savedValues[config.key]);
 		}
 
 		return input;
