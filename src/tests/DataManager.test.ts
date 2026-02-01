@@ -174,4 +174,3 @@ describe('Import data', () => {
         expect(dm.getAdversaries()).toHaveLength(1);
     });
 });
-
