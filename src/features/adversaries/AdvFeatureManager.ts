@@ -1,6 +1,6 @@
-import { FeatureElements, SavedFeatureState } from "../../../types/index";
+import { FeatureElements, SavedFeatureState } from "../../types/index";
 
-export const addFeature = (
+export const addAdvFeature = (
 	featureContainer: HTMLElement,
 	features: FeatureElements[],
 	setValueIfSaved: (
@@ -60,7 +60,7 @@ export const addFeature = (
 	features.push({ nameEl, typeEl, costEl, descEl });
 };
 
-export const getFeatureValues = (features: FeatureElements[]) => {
+export const getAdvFeatureValues = (features: FeatureElements[]) => {
 	return features
 		.map(({ nameEl, typeEl, costEl, descEl }) => ({
 			name: nameEl.value.trim(),

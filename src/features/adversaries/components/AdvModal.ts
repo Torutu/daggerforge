@@ -1,5 +1,5 @@
 import { Notice, Editor, Modal } from "obsidian";
-import { addFeature, getFeatureValues, buildCardHTML } from "../index";
+import { addAdvFeature, getAdvFeatureValues, buildCardHTML } from "../index";
 import type DaggerForgePlugin from "../../../main";
 import { AdvData, FeatureElements, FormInputs } from "../../../types/index";
 import {
@@ -19,7 +19,7 @@ import {
 
 function assembleAdvData(
 	values: Record<string, string>,
-	features: ReturnType<typeof getFeatureValues>,
+	features: ReturnType<typeof getAdvFeatureValues>,
 ): AdvData {
 	return {
 		id: values.id || "",
@@ -245,7 +245,7 @@ export class TextInputModal extends Modal {
 
 		if (Array.isArray(savedFeatures) && savedFeatures.length > 0) {
 			savedFeatures.forEach((data) => {
-				addFeature(this.featureContainer, this.features, (key, el) => {
+				addAdvFeature(this.featureContainer, this.features, (key, el) => {
 					const dataKey = key === "featureName" ? "name"
 						: key === "featureType" ? "type"
 						: key === "featureCost" ? "cost"
@@ -255,7 +255,7 @@ export class TextInputModal extends Modal {
 				});
 			});
 		} else {
-			addFeature(this.featureContainer, this.features, setValueIfSaved);
+			addAdvFeature(this.featureContainer, this.features, setValueIfSaved);
 		}
 
 		const addBtn = section.createEl("button", {
@@ -263,7 +263,7 @@ export class TextInputModal extends Modal {
 			cls: "df-adv-btn-add-feature",
 		});
 		addBtn.onclick = () =>
-			addFeature(this.featureContainer, this.features, setValueIfSaved);
+			addAdvFeature(this.featureContainer, this.features, setValueIfSaved);
 	}
 
 	private buildActionButtons(contentEl: HTMLElement) {
@@ -285,7 +285,7 @@ export class TextInputModal extends Modal {
 
 	private async handleSubmit() {
 		const values = this.readFormValues();
-		const features = getFeatureValues(this.features);
+		const features = getAdvFeatureValues(this.features);
 		const newHTML = buildCardHTML(values, features);
 		const newData = assembleAdvData(values, features);
 

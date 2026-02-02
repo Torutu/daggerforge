@@ -1,8 +1,7 @@
-import { EnvironmentData } from "../../../types/index";
+import { EnvironmentData } from "../../types/index";	
 
-const hiddenID = crypto.randomUUID();
-
-export function environmentToHTML(env: EnvironmentData): string {
+export function envToHtml(env: EnvironmentData): string {
+	const hiddenID = crypto.randomUUID();
 	const featuresHTML = (env.features || [])
 		.map((f) => {
 			const costHTML = f.cost ? `<span>${f.cost}</span>` : "";
