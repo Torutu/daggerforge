@@ -1534,3 +1534,13 @@ select.df-input-field {
 	resize: none;
 	padding: 6px;
 }
+
+.df-calc-btn:hover{
+	background-color: var(--background-modifier-hover);
+	cursor: pointer;
+}
+
+.df-calc-btn:active{
+	transform: translateY(1px);
+	transform: scale(0.99);
+}
