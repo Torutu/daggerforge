@@ -4,30 +4,12 @@ import { EnvironmentModal, extractEnvironmentData } from "../environments/index"
 import { extractCardData, TextInputModal } from "../adversaries/index";
 import type { AdvData } from "../../types/index";
 
-// Refreshable View
-// Browser panels (adversary-view, environment-view) expose a refresh() method.
-// This interface + guard let us call it without `as any`.
-
-interface RefreshableView {
-	refresh(): void | Promise<void>;
-}
-
-function isRefreshableView(view: unknown): view is RefreshableView {
-	return (
-		typeof view === "object" &&
-		view !== null &&
-		"refresh" in view &&
-		typeof (view as RefreshableView).refresh === "function"
-	);
-}
-
 function refreshBrowserView(plugin: DaggerForgePlugin, viewType: string): void {
-	const view = plugin.app.workspace
-		.getLeavesOfType(viewType)
-		.map((leaf) => leaf.view)
-		.find(isRefreshableView) as RefreshableView | undefined;
-
-	if (view) view.refresh();
+	const leaf = plugin.app.workspace.getLeavesOfType(viewType)[0];
+	if (!leaf) return;
+	
+	const view = leaf.view as { refresh?: () => void };
+	view.refresh?.();
 }
 
 // Markdown Section Boundary Detection
@@ -266,7 +248,7 @@ async function editEnvironmentInMarkdown(
 			return;
 		}
 
-refreshBrowserView(plugin, "environment-view");
+	refreshBrowserView(plugin, "environment-view");
 	};
 
 	modal.open();
