@@ -12,6 +12,7 @@ help:
 	@echo make watch      - Watch mode for development (auto-rebuild)
 	@echo make test       - Run tests
 	@echo make deploy     - Deploy to Obsidian vault
+	@echo make count      - Count lines of code
 	@echo _____________________________________________________________
 
 # Install dependencies
@@ -32,4 +33,9 @@ test:
 
 # Deploy to Obsidian vault (PowerShell script)
 deploy:
-	powershell -ExecutionPolicy Bypass -File ./deploy.ps1
+	@powershell -ExecutionPolicy Bypass -File ./deploy.ps1
+
+# Count lines of code
+count:
+	@powershell -ExecutionPolicy Bypass -File ./count-lines.ps1
+

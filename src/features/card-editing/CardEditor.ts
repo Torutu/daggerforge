@@ -1,7 +1,7 @@
 import { App, MarkdownView, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
-import { EnvironmentModal, extractEnvironmentData } from "../environments/index";
-import { extractCardData, TextInputModal } from "../adversaries/index";
+import { EnvironmentModal, extractEnvironmentData, Env_View_Type } from "../environments/index";
+import { extractCardData, TextInputModal, Adv_View_Type } from "../adversaries/index";
 import type { AdvData } from "../../types/index";
 
 function refreshBrowserView(plugin: DaggerForgePlugin, viewType: string): void {
@@ -214,7 +214,7 @@ async function editAdversaryInMarkdown(
 			new Notice("Error saving adversary. Check console for details.");
 		}
 
-		refreshBrowserView(plugin, "adversary-view");
+		refreshBrowserView(plugin, Adv_View_Type);
 	};
 
 	modal.open();
@@ -241,14 +241,15 @@ async function editEnvironmentInMarkdown(
 	const envData = extractEnvironmentData(cardElement, cardName);
 	const modal = new EnvironmentModal(plugin, view.editor, envData);
 
-	modal.onEditUpdate = async (newHTML: string) => {
+	modal.onEditUpdate = async (newHTML: string, newData) => {
 		const replaced = await replaceCardInMarkdown(plugin, cardId, "env", newHTML);
 		if (!replaced) {
 			new Notice("Could not find environment card in markdown for update.");
 			return;
 		}
 
-	refreshBrowserView(plugin, "environment-view");
+		await plugin.dataManager.addEnvironment(newData);
+		refreshBrowserView(plugin, Env_View_Type);
 	};
 
 	modal.open();
@@ -274,7 +275,7 @@ function editAdversaryInCanvas(
 			new Notice("Error updating adversary. Check console for details.");
 		}
 
-		refreshBrowserView(plugin, "adversary-view");
+		refreshBrowserView(plugin, Adv_View_Type);
 	};
 
 	modal.open();
@@ -289,15 +290,16 @@ function editEnvironmentInCanvas(
 	// EnvironmentModal now accepts Editor | null — no cast needed.
 	const modal = new EnvironmentModal(plugin, null, envData);
 
-	modal.onEditUpdate = async (newHTML: string) => {
+	modal.onEditUpdate = async (newHTML: string, newData) => {
 		try {
 			replaceCardInCanvas(cardElement, newHTML, ".df-env-card-inner");
+			await plugin.dataManager.addEnvironment(newData);
 		} catch (error) {
 			console.error("Error updating environment:", error);
 			new Notice("Error updating environment. Check console for details.");
 		}
 
-		refreshBrowserView(plugin, "environment-view");
+		refreshBrowserView(plugin, Env_View_Type);
 	};
 
 	modal.open();

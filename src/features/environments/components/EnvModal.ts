@@ -1,5 +1,5 @@
 import { Modal, Editor, Notice } from "obsidian";
-import { addEnvFeature, getEnvFeatureValues, envToHtml } from "../index";
+import { addEnvFeature, getEnvFeatureValues, envToHtml, Env_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
 import { EnvFeatureElements, EnvironmentData, FormInputs } from "../../../types/index";
 import {
@@ -315,10 +315,12 @@ export class EnvironmentModal extends Modal {
 	}
 
 	private refreshBrowserView() {
-		const leaves = this.plugin.app.workspace.getLeavesOfType("environment-view");
+		const leaves = this.plugin.app.workspace.getLeavesOfType(Env_View_Type);
 		for (const leaf of leaves) {
 			const v = leaf.view as { refresh?: () => void | Promise<void> };
-			if (typeof v?.refresh === "function") v.refresh();
+			if (typeof v?.refresh === "function") {
+				v.refresh();
+			}
 		}
 	}
 

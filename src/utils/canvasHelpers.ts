@@ -32,28 +32,30 @@ export function isMarkdownActive(app: App): boolean {
  * Get the canvas view - checks active leaf first, then any canvas in workspace
  */
 export function getActiveCanvas(app: App): any | null {
+	// First check if the active leaf is a canvas
 	const activeLeaf = app.workspace.activeLeaf;
 	
 	if (activeLeaf?.view) {
 		const view = activeLeaf.view;
-		const canvas = (view as any).canvas;
-		
-		if (canvas) {
-return canvas;
+		// Check if this view has a canvas property
+		if ((view as any).canvas) {
+			return (view as any).canvas;
 		}
 	}
 	
+	// If active leaf is not a canvas, look for any open canvas in the workspace
 	const canvasLeaves = app.workspace.getLeavesOfType("canvas");
 	
 	if (canvasLeaves.length > 0) {
-		const canvasLeaf = canvasLeaves[0];
-		const canvas = (canvasLeaf.view as any).canvas;
-		
-		if (canvas) {
-return canvas;
+		for (const leaf of canvasLeaves) {
+			const view = leaf.view;
+			if ((view as any).canvas) {
+				return (view as any).canvas;
+			}
 		}
 	}
-return null;
+	
+	return null;
 }
 
 /**
@@ -114,7 +116,7 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 	const canvas = getActiveCanvas(app);
 	
 	if (!canvas) {
-		console.warn("No canvas found, returning default position");
+		new Notice("No canvas found. Please open or focus a canvas file first.");
 		return { x: 0, y: 0 };
 	}
 
@@ -154,7 +156,8 @@ export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
 		return { x, y };
 		
 	} catch (error) {
-		console.error("Error calculating position:", error);
+		console.error("Error calculating canvas position:", error);
+		new Notice("Error calculating canvas position. Using default.");
 		return { x: 0, y: 0 };
 	}
 }

@@ -1,10 +1,12 @@
+// https://lucide.dev/ for icons
+
 import { Menu, Plugin } from "obsidian";
 import DaggerForgePlugin from "../main";
 import { adversariesSidebar, openEnvironmentSidebar } from "../ui/index";
 import { openDiceRoller, openEncounterCalculator, ImportDataModal } from "../features/index";
 import { openCreator, confirmDeleteDataFile } from "./pluginOperations";
 
-export function createView(plugin: Plugin, viewType: string, view: any) {
+export function registerSideBarView(plugin: Plugin, viewType: string, view: any) {
     plugin.registerView(viewType, (leaf) => new view(leaf));
 }
 
@@ -56,12 +58,13 @@ export function setupCommands(plugin: DaggerForgePlugin): void {
             name: "Adversary creator",
             callback: () => openCreator(plugin, "adversary"),
         });
+
         plugin.addCommand({
             id: "environment-creator",
             name: "Environment creator",
             callback: () => openCreator(plugin, "environment"),
         });
-            
+
         plugin.addCommand({
             id: "open-floating-window",
             name: "Open dice roller",

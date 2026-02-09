@@ -2,7 +2,7 @@ import { Plugin } from 'obsidian';
 import { AdvData ,EnvironmentData} from '../types/index';
 import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
 
-export interface StoredData {
+export interface StoredCustomData {
 	version: string;
 	adversaries: AdvData[];
 	environments: EnvironmentData[];
@@ -16,7 +16,7 @@ export interface StoredData {
  */
 export class DataManager {
 	private plugin: Plugin;
-	private data: StoredData = {
+	private data: StoredCustomData = {
 		version: '2.0',
 		adversaries: [],
 		environments: [],
@@ -58,8 +58,8 @@ export class DataManager {
 	// ==================== ADVERSARIES ====================
 
 	async addAdversary(adversary: AdvData): Promise<void> {
-		if (!(adversary as any).id) {
-			(adversary as any).id = generateAdvUniqueId();
+		if (!(adversary).id) {
+			(adversary).id = generateAdvUniqueId();
 		}
 		this.data.adversaries.push(adversary);
 		await this.save();
@@ -74,7 +74,7 @@ export class DataManager {
 	 * @param id The unique ID of the adversary to delete
 	 */
 	async deleteAdversaryById(id: string): Promise<void> {
-		const index = this.data.adversaries.findIndex(a => (a as any).id === id);
+		const index = this.data.adversaries.findIndex(a => (a).id === id);
 		if (index === -1) {
 			throw new Error(`Adversary with ID ${id} not found`);
 		}
@@ -113,7 +113,6 @@ export class DataManager {
 
 	/**
 	 * Ensure all adversaries have unique IDs
-	 * (for migration from old data without IDs)
 	 */
 	private ensureAdversariesHaveIds(): void {
 		this.data.adversaries = this.data.adversaries.map(adv => ({
@@ -124,7 +123,6 @@ export class DataManager {
 
 	/**
 	 * Ensure all environments have unique IDs
-	 * (for migration from old data without IDs)
 	 */
 	private ensureEnvironmentsHaveIds(): void {
 		this.data.environments = this.data.environments.map(env => ({

@@ -3,13 +3,13 @@
 import { Plugin } from "obsidian";
 import {
 	AdversaryView,
-	ADVERSARY_VIEW_TYPE,
+	Adv_View_Type,
 	EnvironmentView,
-	ENVIRONMENT_VIEW_TYPE,
+	Env_View_Type,
 	handleCardEditClick,
 } from "./features/index";
 import { DataManager } from "./data/index";
-import { createView, setupRibbonIcon, setupCommands } from "./utils/index";
+import { registerSideBarView, setupRibbonIcon, setupCommands } from "./utils/index";
 
 export default class DaggerForgePlugin extends Plugin {
 	dataManager: DataManager;
@@ -23,7 +23,7 @@ export default class DaggerForgePlugin extends Plugin {
 		this.registerDomEvent(document, "click", (evt) => handleCardEditClick(evt, this.app, this));
 		setupRibbonIcon(this);
 		setupCommands(this);
-		createView(this, ADVERSARY_VIEW_TYPE, AdversaryView);
-		createView(this, ENVIRONMENT_VIEW_TYPE, EnvironmentView);
+		registerSideBarView(this, Adv_View_Type, AdversaryView);
+		registerSideBarView(this, Env_View_Type, EnvironmentView);
 	}
 }

@@ -15,7 +15,7 @@ import {
 import { buildCardHTML } from "../index";
 import type { AdvData } from "../../../types/index";
 
-export const ADVERSARY_VIEW_TYPE = "adversary-view";
+export const Adv_View_Type = "daggerforge:adversary-view";
 
 // AdvData keys are all strings (including tier). The browser needs tier as a
 // number for sorting/filtering, and displayType to preserve the full type
@@ -37,7 +37,7 @@ export class AdversaryView extends ItemView {
 	}
 
 	getViewType(): string {
-		return ADVERSARY_VIEW_TYPE;
+		return Adv_View_Type;
 	}
 
 	getDisplayText(): string {

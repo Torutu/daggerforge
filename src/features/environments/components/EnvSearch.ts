@@ -11,7 +11,7 @@ import {
 	generateEnvUniqueId
 	} from "../../../utils/index";
 
-export const ENVIRONMENT_VIEW_TYPE = "environment-view";
+export const Env_View_Type = "daggerforge:environment-view";
 
 export class EnvironmentView extends ItemView {
 	private environments: any[] = [];
@@ -25,7 +25,7 @@ export class EnvironmentView extends ItemView {
 	}
 
 	getViewType(): string {
-		return ENVIRONMENT_VIEW_TYPE;
+		return Env_View_Type;
 	}
 
 	getDisplayText(): string {
@@ -86,7 +86,7 @@ export class EnvironmentView extends ItemView {
 				return;
 			}
 
-			const envId = (env as any).id;
+			const envId = env.id;
 			
 			if (!envId) {
 				new Notice("Cannot delete environment: missing ID.");

@@ -1,5 +1,5 @@
 import { Notice, Editor, Modal } from "obsidian";
-import { addAdvFeature, getAdvFeatureValues, buildCardHTML } from "../index";
+import { addAdvFeature, getAdvFeatureValues, buildCardHTML, Adv_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
 import { AdvData, FeatureElements, FormInputs } from "../../../types/index";
 import {
@@ -344,14 +344,13 @@ export class TextInputModal extends Modal {
 	}
 
 	private refreshBrowserView() {
-		const view = this.plugin.app.workspace
-			.getLeavesOfType("adversary-view")
-			.map((l) => l.view)
-			.find((v) => typeof (v as { refresh?: unknown }).refresh === "function") as
-			| { refresh: () => void | Promise<void> }
-			| undefined;
-
-		if (view) view.refresh();
+		const leaves = this.plugin.app.workspace.getLeavesOfType(Adv_View_Type);
+		for (const leaf of leaves) {
+			const v = leaf.view as { refresh?: () => void | Promise<void> };
+			if (typeof v?.refresh === "function") {
+				v.refresh();
+			}
+		}
 	}
 
 	// Close

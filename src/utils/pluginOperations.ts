@@ -2,9 +2,9 @@ import { ItemView, MarkdownView, Notice } from "obsidian";
 import DaggerForgePlugin from "../main";
 import {
 	AdversaryView,
-	ADVERSARY_VIEW_TYPE,
+	Adv_View_Type,
 	EnvironmentView,
-	ENVIRONMENT_VIEW_TYPE,
+	Env_View_Type,
 	TextInputModal as AdversaryModal,
 	EnvironmentModal,
 } from "../features/index";
@@ -87,7 +87,7 @@ export function confirmDeleteDataFile(plugin: DaggerForgePlugin): void {
  * Used after data changes to keep UI in sync
  */
 export function refreshBrowsers(plugin: DaggerForgePlugin): void {
-	const adversaryLeaves = plugin.app.workspace.getLeavesOfType(ADVERSARY_VIEW_TYPE);
+	const adversaryLeaves = plugin.app.workspace.getLeavesOfType(Adv_View_Type);
 	adversaryLeaves.forEach((leaf) => {
 		const view = leaf.view as AdversaryView;
 		if (view && typeof view.refresh === 'function') {
@@ -95,7 +95,7 @@ export function refreshBrowsers(plugin: DaggerForgePlugin): void {
 		}
 	});
 
-	const environmentLeaves = plugin.app.workspace.getLeavesOfType(ENVIRONMENT_VIEW_TYPE);
+	const environmentLeaves = plugin.app.workspace.getLeavesOfType(Env_View_Type);
 	environmentLeaves.forEach((leaf) => {
 		const view = leaf.view as EnvironmentView;
 		if (view && typeof view.refresh === 'function') {
