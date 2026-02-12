@@ -11,7 +11,7 @@ import {
 	getAvailableCanvasPosition,
 	SearchEngine,
 	SearchControlsUI
-	} from "../../../utils/index";
+} from "../../../utils/index";
 import { buildCardHTML } from "../index";
 import type { AdvData } from "../../../types/index";
 
@@ -21,7 +21,7 @@ export const Adv_View_Type = "daggerforge:adversary-view";
 // number for sorting/filtering, and displayType to preserve the full type
 // string (e.g. "Leader (Umbra-Touched)") while filtering on the base type.
 interface Adversary extends AdvData {
-	displayType?: string;
+	// displayType?: string; // displaytype
 	isCustom?: boolean;
 }
 
@@ -61,7 +61,7 @@ export class AdversaryView extends ItemView {
 			}
 
 			const adversaryId = adversary.id;
-			
+
 			if (!adversaryId) {
 				new Notice("Cannot delete adversary: missing ID.");
 				return;
@@ -301,14 +301,14 @@ export class AdversaryView extends ItemView {
 
 		const tier = document.createElement("p");
 		tier.classList.add("df-tier-text");
-		const typeDisplay = adversary.displayType || adversary.type;
-		
+		const typeDisplay = adversary.type; // displaytype
+
 		const sourceBadge = document.createElement("span");
 		sourceBadge.classList.add(
 			`df-source-badge-${source.toLowerCase()}`,
 		);
 		sourceBadge.textContent = `${source.toLowerCase()}`;
-		
+
 		tier.textContent = `Tier ${adversary.tier} ${typeDisplay} `;
 		tier.appendChild(sourceBadge);
 
@@ -346,7 +346,7 @@ export class AdversaryView extends ItemView {
 		if (isCanvas) {
 			const adversaryText = this.generateAdversaryMarkdown(adversary);
 			const position = getAvailableCanvasPosition(this.app);
-			
+
 			createCanvasCard(this.app, adversaryText, {
 				x: position.x,
 				y: position.y,
@@ -391,7 +391,7 @@ export class AdversaryView extends ItemView {
 			{
 				name: adversary.name,
 				tier: adversary.tier,
-				type: adversary.displayType || adversary.type,
+				type: adversary.type, //displaytype
 				desc: adversary.desc,
 				motives: adversary.motives,
 				difficulty: adversary.difficulty,

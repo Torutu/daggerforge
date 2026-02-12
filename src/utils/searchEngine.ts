@@ -28,6 +28,8 @@ export interface SearchableItem {
 	[key: string]: any;
 }
 
+// Just like C++ templates, T is a TypeScript generic
+// this allows one class to be used with different types
 export class SearchEngine<T extends SearchableItem = SearchableItem> {
 	private items: T[] = [];
 	private filters: SearchFilters = {
@@ -108,7 +110,7 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		const filterType = this.filters.type.toLowerCase();
 		const itemType = (item.type || "").toLowerCase();
 		const itemDisplayType = (item.displayType || "").toLowerCase();
-		
+
 		return itemType === filterType || itemDisplayType === filterType;
 	}
 

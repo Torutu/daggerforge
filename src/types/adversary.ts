@@ -27,13 +27,6 @@ export type FeatureElements = {
 	descEl: HTMLTextAreaElement;
 };
 
-export type SavedFeatureState = {
-	featureName: string;
-	featureType: string;
-	featureCost: string;
-	featureDesc: string;
-};
-
 export type Feature = {
 	name: string;
 	type: string;

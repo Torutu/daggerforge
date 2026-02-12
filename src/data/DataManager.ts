@@ -1,5 +1,5 @@
-import { Plugin } from 'obsidian';
-import { AdvData ,EnvironmentData} from '../types/index';
+import { Notice, Plugin } from 'obsidian';
+import { AdvData, EnvironmentData } from '../types/index';
 import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
 
 export interface StoredCustomData {
@@ -33,15 +33,18 @@ export class DataManager {
 	async load(): Promise<void> {
 		try {
 			const saved = await this.plugin.loadData();
-			if (!saved) return;
-			
+			if (!saved) {
+				new Notice('No data.json found');
+				return;
+			}
+
 			this.data = {
 				version: saved.version || '2.0',
 				adversaries: saved.adversaries || [],
 				environments: saved.environments || [],
 				lastUpdated: saved.lastUpdated || Date.now()
 			};
-			
+
 			this.ensureAdversariesHaveIds();
 			this.ensureEnvironmentsHaveIds();
 			await this.save();
@@ -162,7 +165,7 @@ export class DataManager {
 				environments: [],
 				lastUpdated: Date.now()
 			};
-			
+
 			await this.plugin.saveData(null);
 		} catch (err) {
 			console.error('DataManager: Error deleting data.json file', err);

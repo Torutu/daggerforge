@@ -1,13 +1,9 @@
-import { FeatureElements, SavedFeatureState } from "../../types/index";
+import { FeatureElements, Feature } from "../../types/index";
 
 export const addAdvFeature = (
 	featureContainer: HTMLElement,
 	features: FeatureElements[],
-	setValueIfSaved: (
-		key: string,
-		el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
-	) => void,
-	savedFeature?: SavedFeatureState,
+	savedFeature?: Feature,
 ) => {
 	const wrapper = featureContainer.createDiv({ cls: "df-feature-block" });
 	const row = wrapper.createDiv({ cls: "df-feature-row" });
@@ -16,7 +12,7 @@ export const addAdvFeature = (
 		cls: "df-input-feature-name",
 		placeholder: "Feature Name",
 	});
-	setValueIfSaved("featureName", nameEl);
+	nameEl.value = savedFeature?.name || "";
 
 	const typeEl = row.createEl("select", { cls: "df-field-feature-type" });
 	["Action", "Reaction", "Passive"].forEach((type) => {
@@ -26,7 +22,7 @@ export const addAdvFeature = (
 			cls: "df-tier-option",
 		});
 	});
-	setValueIfSaved("featureType", typeEl);
+	typeEl.value = savedFeature?.type || "Action";
 
 	const costEl = row.createEl("select", { cls: "df-input-feature-cost" });
 	["", "Mark a Stress", "Spend a Fear"].forEach((opt) => {
@@ -36,13 +32,13 @@ export const addAdvFeature = (
 			cls: "df-tier-option",
 		});
 	});
-	setValueIfSaved("featureCost", costEl);
+	costEl.value = savedFeature?.cost || "";
 
 	const descEl = wrapper.createEl("textarea", {
 		cls: "df-feature-desc-input",
 		placeholder: "Feature Description",
 	});
-	setValueIfSaved("featureDesc", descEl);
+	descEl.value = savedFeature?.desc || "";
 
 	const removeBtn = wrapper.createEl("button", {
 		text: "Remove",

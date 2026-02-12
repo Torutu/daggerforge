@@ -20,8 +20,5 @@ data.json
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
 
-# deployment files
-deploy.ps1
-
 # dist
 dist

@@ -12,12 +12,12 @@ import { DataManager } from "./data/index";
 import { registerSideBarView, setupRibbonIcon, setupCommands } from "./utils/index";
 
 export default class DaggerForgePlugin extends Plugin {
-	dataManager: DataManager;
+	dataManager: DataManager; //declare
 	savedInputStateAdv: Record<string, unknown> = {};
 	savedInputStateEnv: Record<string, unknown> = {};
 
 	async onload() {
-		this.dataManager = new DataManager(this);
+		this.dataManager = new DataManager(this); //initiate
 		await this.dataManager.load();
 		this.addStatusBarItem().setText("DaggerForge Active");
 		this.registerDomEvent(document, "click", (evt) => handleCardEditClick(evt, this.app, this));

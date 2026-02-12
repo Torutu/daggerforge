@@ -234,36 +234,26 @@ export class TextInputModal extends Modal {
 		this.featureContainer = section.createDiv({ cls: "df-adv-feature-container" });
 		this.features = [];
 
-		const setValueIfSaved = (
-			key: string,
-			el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
-		) => {
-			if (saved[key] !== undefined) el.value = String(saved[key]);
-		};
-
 		const savedFeatures = saved.features as Array<Record<string, string>> | undefined;
 
 		if (Array.isArray(savedFeatures) && savedFeatures.length > 0) {
 			savedFeatures.forEach((data) => {
-				addAdvFeature(this.featureContainer, this.features, (key, el) => {
-					const dataKey = key === "featureName" ? "name"
-						: key === "featureType" ? "type"
-						: key === "featureCost" ? "cost"
-						: key === "featureDesc" ? "desc"
-						: key;
-					if (data[dataKey] !== undefined) el.value = String(data[dataKey]);
+				addAdvFeature(this.featureContainer, this.features, {
+					name: String(data.name || ""),
+					type: String(data.type || "Action"),
+					cost: String(data.cost || ""),
+					desc: String(data.desc || ""),
 				});
 			});
 		} else {
-			addAdvFeature(this.featureContainer, this.features, setValueIfSaved);
+			addAdvFeature(this.featureContainer, this.features);
 		}
 
 		const addBtn = section.createEl("button", {
 			text: "+ Add feature",
 			cls: "df-adv-btn-add-feature",
 		});
-		addBtn.onclick = () =>
-			addAdvFeature(this.featureContainer, this.features, setValueIfSaved);
+		addBtn.onclick = () => addAdvFeature(this.featureContainer, this.features);
 	}
 
 	private buildActionButtons(contentEl: HTMLElement) {
@@ -369,13 +359,6 @@ export class TextInputModal extends Modal {
 			).value;
 		}
 
-		this.plugin.savedInputStateAdv.features = this.features.map(
-			({ nameEl, typeEl, costEl, descEl }) => ({
-				featureName: nameEl.value,
-				featureType: typeEl.value,
-				featureCost: costEl.value,
-				featureDesc: descEl.value,
-			}),
-		);
+		this.plugin.savedInputStateAdv.features = getAdvFeatureValues(this.features);
 	}
 }
