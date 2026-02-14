@@ -10,9 +10,10 @@ help:
 	@echo make install    - Install dependencies (npm install)
 	@echo make build      - Build for production
 	@echo make watch      - Watch mode for development (auto-rebuild)
-	@echo make test       - Run tests
+	@echo make test       - Run tests (on test branch)
 	@echo make deploy     - Deploy to Obsidian vault
 	@echo make count      - Count lines of code
+	@echo make branch   - List all branches
 	@echo _____________________________________________________________
 
 # Install dependencies
@@ -39,3 +40,5 @@ deploy:
 count:
 	@powershell -ExecutionPolicy Bypass -File ./count-lines.ps1
 
+branch:
+	@git branch --format="%(refname:short)"
