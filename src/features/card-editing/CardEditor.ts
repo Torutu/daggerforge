@@ -7,7 +7,7 @@ import type { AdvData } from "../../types/index";
 function refreshBrowserView(plugin: DaggerForgePlugin, viewType: string): void {
 	const leaf = plugin.app.workspace.getLeavesOfType(viewType)[0];
 	if (!leaf) return;
-	
+
 	const view = leaf.view as { refresh?: () => void };
 	view.refresh?.();
 }

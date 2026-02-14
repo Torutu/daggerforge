@@ -1,3 +1,3 @@
-export * from './adversaries';
-export * from './environments';
+export * from './Adversaries';
+export * from './Environments';
 export * from './DataManager';

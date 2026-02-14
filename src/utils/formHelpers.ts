@@ -18,15 +18,15 @@ export const createField = (
 	const field =
 		type === "input"
 			? wrapper.createEl("input", {
-					cls: ["df-field-input", customClass].filter(
-						Boolean,
-					) as string[],
-				})
+				cls: ["df-field-input", customClass].filter(
+					Boolean,
+				) as string[],
+			})
 			: wrapper.createEl("textarea", {
-					cls: ["df-field-textarea", customClass].filter(
-						Boolean,
-					) as string[],
-				});
+				cls: ["df-field-textarea", customClass].filter(
+					Boolean,
+				) as string[],
+			});
 
 	inputs[key] = field;
 

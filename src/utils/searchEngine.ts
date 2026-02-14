@@ -98,7 +98,6 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		return String(item.tier) === String(this.filters.tier);
 	}
 
-
 	private matchesSource(item: T): boolean {
 		if (!this.filters.source) return true;
 		const itemSource = (item.source || "core").toLowerCase();
