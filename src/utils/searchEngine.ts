@@ -110,6 +110,11 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		const itemType = (item.type || "").toLowerCase();
 		const itemDisplayType = (item.displayType || "").toLowerCase();
 
+		// Special case: "horde" filter matches both "horde" and "horde (hp/x)"
+		if (filterType === "horde") {
+			return itemType === "horde" || itemType.startsWith("horde (");
+		}
+
 		return itemType === filterType || itemDisplayType === filterType;
 	}
 
