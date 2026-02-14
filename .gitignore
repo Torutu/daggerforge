@@ -24,4 +24,4 @@ data.json
 dist
 
 # test
-src/tests
+# src/tests
