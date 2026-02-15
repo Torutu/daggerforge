@@ -1,7 +1,7 @@
 import { Notice, Editor, Modal } from "obsidian";
 import { addAdvFeature, getAdvFeatureValues, buildCardHTML, Adv_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
-import { AdvData, FeatureElements, FormInputs } from "../../../types/index";
+import { AdvData, FeatureElements, FormStateElements } from "../../../types/index";
 import {
 	createField,
 	createShortTripleFields,
@@ -75,7 +75,7 @@ async function persistAdversary(
 export class TextInputModal extends Modal {
 	private plugin: DaggerForgePlugin;
 	private editor: Editor | null;
-	private inputs: FormInputs = {};
+	private inputs: FormStateElements = {};
 	private features: FeatureElements[] = [];
 	private featureContainer!: HTMLElement;
 
@@ -211,6 +211,7 @@ export class TextInputModal extends Modal {
 		createField(section, this.inputs, "Experience (optional)", "xp", "input", "df-adv-field-xp", saved);
 
 		const countRow = section.createDiv({ cls: "df-adv-form-row-weapon" });
+
 		createInlineField(countRow, this.inputs, {
 			label: "Count",
 			key: "count",

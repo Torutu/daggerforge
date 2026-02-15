@@ -1,8 +1,8 @@
-import { FormInputs } from "../types/shared";
+import { FormStateElements } from "../types/shared";
 
 export const createField = (
 	parent: HTMLElement,
-	inputs: FormInputs,
+	inputs: FormStateElements,
 	label: string,
 	key: string,
 	type: "input" | "textarea" = "input",
@@ -39,7 +39,7 @@ export const createField = (
 
 export const createShortTripleFields = (
 	parent: HTMLElement,
-	inputs: FormInputs,
+	inputs: FormStateElements,
 	label1: string,
 	key1: string,
 	label2: string,
@@ -86,7 +86,7 @@ export const createShortTripleFields = (
 
 export const createInlineField = (
 	parent: HTMLElement,
-	inputs: FormInputs,
+	inputs: FormStateElements,
 	config: {
 		label: string;
 		key: string;

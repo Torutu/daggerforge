@@ -1,7 +1,7 @@
 import { Modal, Editor, Notice } from "obsidian";
 import { addEnvFeature, getEnvFeatureValues, envToHtml, Env_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
-import { EnvFeatureElements, EnvironmentData, FormInputs } from "../../../types/index";
+import { EnvFeatureElements, EnvironmentData, FormStateElements } from "../../../types/index";
 import {
 	isMarkdownActive,
 	isCanvasActive,
@@ -59,7 +59,7 @@ async function persistEnvironment(
 export class EnvironmentModal extends Modal {
 	private plugin: DaggerForgePlugin;
 	private editor: Editor | null;
-	private inputs: FormInputs = {};
+	private inputs: FormStateElements = {};
 	private features: EnvFeatureElements[] = [];
 	private featureContainer!: HTMLElement;
 
