@@ -40,6 +40,5 @@ deploy:
 count:
 	@powershell -ExecutionPolicy Bypass -File ./count-lines.ps1
 
-# List all branches
 branch:
 	@git branch --format="%(refname:short)"
