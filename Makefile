@@ -13,7 +13,7 @@ help:
 	@echo make test       - Run tests (on test branch)
 	@echo make deploy     - Deploy to Obsidian vault
 	@echo make count      - Count lines of code
-	@echo make branch   - List all branches
+	@echo make branch     - List all branches
 	@echo _____________________________________________________________
 
 # Install dependencies
