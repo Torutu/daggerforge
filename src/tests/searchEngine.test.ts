@@ -1,26 +1,48 @@
 /**
  * searchEngine.test.ts
  * 
- * Simple tests for the search filter.
- * Each test shows one way to search or filter items.
+ * Tests for search and filter functionality
  */
 
-import { SearchEngine } from '../utils/searchEngine';
+import { SearchEngine } from '../utils/index';
 
-// Test items to search through
 const ITEMS = [
     { name: 'Fire Drake', tier: '1', type: 'Solo', source: 'core', desc: 'A dragon' },
     { name: 'Ice Golem', tier: '2', type: 'Bruiser', source: 'void', desc: 'A giant' },
     { name: 'Goblin', tier: '1', type: 'Minion', source: 'core', desc: 'Small creature' },
 ];
 
+const testResults: string[] = [];
+
+function logResult(testName: string, expected: any, actual: any, passed: boolean) {
+    testResults.push(`Test: ${testName}`);
+    testResults.push(`  Expected: ${expected}`);
+    testResults.push(`  Actual:   ${actual}`);
+    testResults.push(`  Result:   ${passed ? 'PASS' : 'FAIL'}`);
+    testResults.push('');
+}
+
+afterAll(() => {
+    console.log(`
+========================================
+SEARCH ENGINE TEST RESULTS
+========================================
+
+${testResults.join('\n')}`);
+});
+
 describe('Search by name', () => {
     it('finds items by name', () => {
         const engine = new SearchEngine();
         engine.setItems(ITEMS);
         engine.setFilters({ query: 'fire' });
-        
+
         const results = engine.search();
+        const expected = 1;
+        const actual = results.length;
+
+        logResult('Find items by name (query="fire")', `${expected} item`, `${actual} item`, actual === expected);
+
         expect(results).toHaveLength(1);
         expect(results[0].name).toBe('Fire Drake');
     });
@@ -29,8 +51,13 @@ describe('Search by name', () => {
         const engine = new SearchEngine();
         engine.setItems(ITEMS);
         engine.setFilters({ query: 'creature' });
-        
+
         const results = engine.search();
+        const expected = 1;
+        const actual = results.length;
+
+        logResult('Find by description (query="creature")', `${expected} item (Goblin)`, `${actual} item`, actual === expected);
+
         expect(results).toHaveLength(1);
         expect(results[0].name).toBe('Goblin');
     });
@@ -41,18 +68,28 @@ describe('Filter by tier', () => {
         const engine = new SearchEngine();
         engine.setItems(ITEMS);
         engine.setFilters({ tier: '1' });
-        
+
         const results = engine.search();
-        expect(results).toHaveLength(2);  // Fire Drake and Goblin
+        const expected = 2;
+        const actual = results.length;
+
+        logResult('Filter by tier 1', `${expected} items (Fire Drake, Goblin)`, `${actual} items`, actual === expected);
+
+        expect(results).toHaveLength(2);
     });
 
     it('filters to tier 2 only', () => {
         const engine = new SearchEngine();
         engine.setItems(ITEMS);
         engine.setFilters({ tier: '2' });
-        
+
         const results = engine.search();
-        expect(results).toHaveLength(1);  // Ice Golem
+        const expected = 1;
+        const actual = results.length;
+
+        logResult('Filter by tier 2', `${expected} item (Ice Golem)`, `${actual} item`, actual === expected);
+
+        expect(results).toHaveLength(1);
     });
 });
 
@@ -61,9 +98,14 @@ describe('Filter by source', () => {
         const engine = new SearchEngine();
         engine.setItems(ITEMS);
         engine.setFilters({ source: 'core' });
-        
+
         const results = engine.search();
-        expect(results).toHaveLength(2);  // Fire Drake and Goblin
+        const expected = 2;
+        const actual = results.length;
+
+        logResult('Filter by source (core)', `${expected} items (Fire Drake, Goblin)`, `${actual} items`, actual === expected);
+
+        expect(results).toHaveLength(2);
     });
 });
 
@@ -72,8 +114,13 @@ describe('Filter by type', () => {
         const engine = new SearchEngine();
         engine.setItems(ITEMS);
         engine.setFilters({ type: 'Solo' });
-        
+
         const results = engine.search();
+        const expected = 1;
+        const actual = results.length;
+
+        logResult('Filter by type (Solo)', `${expected} item (Fire Drake)`, `${actual} item`, actual === expected);
+
         expect(results).toHaveLength(1);
         expect(results[0].name).toBe('Fire Drake');
     });
@@ -84,9 +131,14 @@ describe('Multiple filters at once', () => {
         const engine = new SearchEngine();
         engine.setItems(ITEMS);
         engine.setFilters({ tier: '1', source: 'core' });
-        
+
         const results = engine.search();
-        expect(results).toHaveLength(2);  // Fire Drake and Goblin
+        const expected = 2;
+        const actual = results.length;
+
+        logResult('Multiple filters (tier=1, source=core)', `${expected} items (Fire Drake, Goblin)`, `${actual} items`, actual === expected);
+
+        expect(results).toHaveLength(2);
     });
 });
 
@@ -95,10 +147,14 @@ describe('Clear filters', () => {
         const engine = new SearchEngine();
         engine.setItems(ITEMS);
         engine.setFilters({ tier: '1' });
-        
         engine.clearFilters();
-        
+
         const results = engine.search();
-        expect(results).toHaveLength(3);  // All items
+        const expected = 3;
+        const actual = results.length;
+
+        logResult('Clear filters', `${expected} items (all items)`, `${actual} items`, actual === expected);
+
+        expect(results).toHaveLength(3);
     });
 });
