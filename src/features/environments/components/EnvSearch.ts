@@ -1,22 +1,25 @@
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice, setIcon } from "obsidian";
 import { ENVIRONMENTS } from "../../../data/index";
 import { EnvironmentData } from "../../../types/index";
-import { 
-	isMarkdownActive, 
-	isCanvasActive, 
-	createCanvasCard, 
-	getAvailableCanvasPosition, 
-	SearchEngine, 
-	SearchControlsUI, 
+import {
+	isMarkdownActive,
+	isCanvasActive,
+	createCanvasCard,
+	getAvailableCanvasPosition,
+	SearchEngine,
+	SearchControlsUI,
 	generateEnvUniqueId
-	} from "../../../utils/index";
+} from "../../../utils/index";
 
 export const Env_View_Type = "daggerforge:environment-view";
 
+interface Environment extends EnvironmentData {
+}
+
 export class EnvironmentView extends ItemView {
-	private environments: any[] = [];
+	private environments: Environment[] = [];
 	private lastActiveMarkdown: MarkdownView | null = null;
-	private searchEngine: SearchEngine = new SearchEngine();
+	private searchEngine: SearchEngine<Environment> = new SearchEngine<Environment>();
 	private searchControlsUI: SearchControlsUI | null = null;
 	private resultsDiv: HTMLElement | null = null;
 
@@ -37,12 +40,37 @@ export class EnvironmentView extends ItemView {
 	}
 
 	public refresh() {
-		// Preserve current filters before refresh
 		const currentFilters = this.searchEngine.getFilters();
 		this.loadEnvironmentData();
-		// Restore filters and re-render results
-		this.searchEngine.setFilters(currentFilters);
+		
+		const validatedFilters = this.clearInvalidFilters(currentFilters);
+		this.searchEngine.setFilters(validatedFilters);
+		this.updateUIDropdowns(validatedFilters);
 		this.renderResults(this.searchEngine.search());
+	}
+
+	private clearInvalidFilters(filters: any) {
+		const availableSources = this.searchEngine.getAvailableOptions("source");
+		const availableTiers = this.searchEngine.getAvailableOptions("tier");
+		const availableTypes = this.searchEngine.getAvailableOptions("type");
+		
+		if (filters.source && !availableSources.includes(filters.source)) {
+			filters.source = null;
+		}
+		if (filters.tier && !availableTiers.includes(filters.tier)) {
+			filters.tier = null;
+		}
+		if (filters.type && !availableTypes.includes(filters.type)) {
+			filters.type = null;
+		}
+		
+		return filters;
+	}
+
+	private updateUIDropdowns(filters: any) {
+		if (this.searchControlsUI) {
+			this.searchControlsUI.setFilterValues(filters);
+		}
 	}
 
 	private initializeView() {
@@ -54,20 +82,8 @@ export class EnvironmentView extends ItemView {
 			cls: "df-env-title",
 		});
 
-		this.searchControlsUI = new SearchControlsUI({
-			placeholderText: "Search by name, type, or description...",
-			showTypeFilter: true,
-			availableTiers: ["1", "2", "3", "4"],
-			availableSources: ["core","sablewood", "void", "custom"],
-			availableTypes: ["Social", "Exploration", "Event", "Traversal"],
-			onSearchChange: (query) => this.handleSearchChange(query),
-			onTierChange: (tier) => this.handleTierChange(tier),
-			onSourceChange: (source) => this.handleSourceChange(source),
-			onTypeChange: (type) => this.handleTypeChange(type),
-			onClear: () => this.handleClearFilters(),
-		});
-
-		this.searchControlsUI.create(container);
+		// Create search controls placeholder - will be rebuilt after data loads
+		container.createDiv({ cls: "df-search-controls-container" });
 
 		this.resultsDiv = container.createEl("div", {
 			cls: "df-environment-results",
@@ -87,7 +103,7 @@ export class EnvironmentView extends ItemView {
 			}
 
 			const envId = env.id;
-			
+
 			if (!envId) {
 				new Notice("Cannot delete environment: missing ID.");
 				return;
@@ -102,7 +118,7 @@ export class EnvironmentView extends ItemView {
 		}
 	}
 
-	private loadCustomEnvironments(): EnvironmentData[] {
+	private loadCustomEnvironments(): Environment[] {
 		try {
 			const plugin = (this.app as any).plugins.plugins['daggerforge'];
 			if (!plugin || !plugin.dataManager) {
@@ -114,9 +130,8 @@ export class EnvironmentView extends ItemView {
 
 			return customEnvs.map((env: any) => ({
 				...env,
-				id: env.id || generateEnvUniqueId(),  
+				id: env.id || generateEnvUniqueId(),
 				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
-				isCustom: true,
 				source: env.source || "custom",
 			}));
 		} catch (error) {
@@ -130,7 +145,6 @@ export class EnvironmentView extends ItemView {
 			const builtIn = ENVIRONMENTS.map((e: any) => ({
 				...e,
 				id: e.id || generateEnvUniqueId(),
-				isCustom: false,
 				source: e.source ?? "core",
 				type: e.type,
 			}));
@@ -138,13 +152,24 @@ export class EnvironmentView extends ItemView {
 			const custom = this.loadCustomEnvironments();
 			this.environments = [...builtIn, ...custom];
 
-			this.searchEngine.setItems(this.environments);
+			this.searchEngine.setCards(this.environments);
 
-			if (this.searchControlsUI) {
-				const sources = this.searchEngine.getAvailableOptions("source");
-				const types = this.searchEngine.getAvailableOptions("type");
-				this.searchControlsUI.updateAvailableOptions("sources", sources);
-				this.searchControlsUI.updateAvailableOptions("types", types);
+			// Rebuild search controls with actual data
+			const searchContainer = this.containerEl.querySelector(".df-search-controls-container") as HTMLElement;
+			if (searchContainer) {
+				searchContainer.empty();
+				this.searchControlsUI = new SearchControlsUI({
+					placeholderText: "Search by name, type, or description...",
+					availableTiers: this.searchEngine.getAvailableOptions("tier"),
+					availableSources: this.searchEngine.getAvailableOptions("source"),
+					availableTypes: this.searchEngine.getAvailableOptions("type"),
+					onSearchChange: (query) => this.handleSearchChange(query),
+					onTierChange: (tier) => this.handleTierChange(tier),
+					onSourceChange: (source) => this.handleSourceChange(source),
+					onTypeChange: (type) => this.handleTypeChange(type),
+					onClear: () => this.handleClearFilters(),
+				});
+				this.searchControlsUI.create(searchContainer);
 			}
 
 			this.renderResults(this.environments);
@@ -182,7 +207,7 @@ export class EnvironmentView extends ItemView {
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private renderResults(filtered: any[]) {
+	private renderResults(filtered: Environment[]) {
 		if (!this.resultsDiv) return;
 		this.resultsDiv.empty();
 		if (filtered.length === 0) {
@@ -208,7 +233,7 @@ export class EnvironmentView extends ItemView {
 		this.loadEnvironmentData();
 	}
 
-	createEnvironmentCard(env: any): HTMLElement {
+	createEnvironmentCard(env: Environment): HTMLElement {
 		const card = document.createElement("div");
 		card.classList.add("df-env-card");
 
@@ -267,11 +292,11 @@ export class EnvironmentView extends ItemView {
 					const bulletsHTML =
 						Array.isArray(f.bullets) && f.bullets.length
 							? `<ul class="df-env-bullet">${f.bullets
-									.map(
-										(b: string) =>
-											`<li class="df-env-bullet-item">${b}</li>`,
-									)
-									.join("")}</ul>`
+								.map(
+									(b: string) =>
+										`<li class="df-env-bullet-item">${b}</li>`,
+								)
+								.join("")}</ul>`
 							: "";
 
 					const questionsHTML =

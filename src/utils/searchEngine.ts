@@ -1,15 +1,6 @@
 /**
- * Advanced Search Engine for DaggerForge Browsers
- * Handles filtering, sorting, and searching for items
- *
- * Type System:
- * - Adversaries: Solo, Minion, Horde, Boss, etc.
- * - Environments: Social, Traversal, Combat, Discovery, etc.
- *
- * Source System (versions/tags on cards):
- * - core: Base DaggerForge content
- * - void: Additional content (expansions)
- * - custom: User-created content
+ * Search Engine for DaggerForge Browsers
+ * Handles filtering, sorting, and searching for cards
  */
 
 export interface SearchFilters {
@@ -19,7 +10,7 @@ export interface SearchFilters {
 	type: string | null;
 }
 
-export interface SearchableItem {
+export interface SearchableCard {
 	name: string;
 	tier?: string | number;
 	type?: string;
@@ -28,10 +19,8 @@ export interface SearchableItem {
 	[key: string]: any;
 }
 
-// Just like C++ templates, T is a TypeScript generic
-// this allows one class to be used with different types
-export class SearchEngine<T extends SearchableItem = SearchableItem> {
-	private items: T[] = [];
+export class SearchEngine<T extends SearchableCard> {
+	private cards: T[];
 	private filters: SearchFilters = {
 		query: "",
 		tier: null,
@@ -39,12 +28,12 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		type: null,
 	};
 
-	constructor(items: T[] = []) {
-		this.items = items;
+	constructor(cards: T[] = []) {
+		this.cards = cards;
 	}
 
-	public setItems(items: T[]): void {
-		this.items = items;
+	public setCards(cards: T[]): void {
+		this.cards = cards;
 	}
 
 	public setFilters(filters: Partial<SearchFilters>): void {
@@ -65,26 +54,26 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 	}
 
 	public search(): T[] {
-		return this.items.filter((item: T) => this.matchesAllFilters(item));
+		return this.cards.filter(card => this.matchesAllFilters(card));
 	}
 
-	private matchesAllFilters(item: T): boolean {
+	private matchesAllFilters(card: T): boolean {
 		return (
-			this.matchesQuery(item) &&
-			this.matchesTier(item) &&
-			this.matchesSource(item) &&
-			this.matchesType(item)
+			this.matchesQuery(card) &&
+			this.matchesTier(card) &&
+			this.matchesSource(card) &&
+			this.matchesType(card)
 		);
 	}
 
-	private matchesQuery(item: T): boolean {
+	private matchesQuery(card: T): boolean {
 		if (!this.filters.query.trim()) return true;
 
 		const query = this.filters.query.toLowerCase();
 		const searchFields = [
-			item.name,
-			item.type,
-			item.desc,
+			card.name,
+			card.type,
+			card.desc,
 		].filter(Boolean);
 
 		return searchFields.some((field: string) =>
@@ -92,46 +81,46 @@ export class SearchEngine<T extends SearchableItem = SearchableItem> {
 		);
 	}
 
-	private matchesTier(item: T): boolean {
+	private matchesTier(card: T): boolean {
 		if (this.filters.tier === null) return true;
 		// Convert both to strings for comparison - tier can be string or number
-		return String(item.tier) === String(this.filters.tier);
+		return String(card.tier) === String(this.filters.tier);
 	}
 
-	private matchesSource(item: T): boolean {
+	private matchesSource(card: T): boolean {
 		if (!this.filters.source) return true;
-		const itemSource = (item.source || "core").toLowerCase();
-		return itemSource === this.filters.source.toLowerCase();
+		const cardSource = (card.source || "core").toLowerCase();
+		return cardSource === this.filters.source.toLowerCase();
 	}
 
-	private matchesType(item: T): boolean {
+	private matchesType(card: T): boolean {
 		if (!this.filters.type) return true;
 		const filterType = this.filters.type.toLowerCase();
-		const itemType = (item.type || "").toLowerCase();
-		const itemDisplayType = (item.displayType || "").toLowerCase();
+		const cardType = (card.type || "").toLowerCase();
+		const cardDisplayType = (card.displayType || "").toLowerCase();
 
 		// Special case: "horde" filter matches both "horde" and "horde (hp/x)"
 		if (filterType === "horde") {
-			return itemType === "horde" || itemType.startsWith("horde (");
+			return cardType === "horde" || cardType.startsWith("horde (");
 		}
 
-		return itemType === filterType || itemDisplayType === filterType;
+		return cardType === filterType || cardDisplayType === filterType;
 	}
 
 	public getAvailableOptions(filterName: keyof SearchFilters): string[] {
 		const options = new Set<string>();
 
-		this.items.forEach((item: T) => {
-			if (filterName === "tier" && item.tier !== undefined) {
-				options.add(String(item.tier));
+		this.cards.forEach((card: T) => {
+			if (filterName === "tier" && card.tier !== undefined) {
+				options.add(String(card.tier));
 			} else if (filterName === "source") {
-				options.add(item.source || "core");
+				options.add(card.source || "core");
 			} else if (filterName === "type") {
-				if (item.type) {
-					options.add(item.type);
+				if (card.type) {
+					options.add(card.type);
 				}
-				if ((item as any).displayType) {
-					options.add((item as any).displayType);
+				if ((card as any).displayType) {
+					options.add((card as any).displayType);
 				}
 			}
 		});

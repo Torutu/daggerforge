@@ -72,7 +72,7 @@ async function persistAdversary(
 //   • onClose does not write back to the plugin's saved state — edit sessions
 //     are ephemeral.
 
-export class TextInputModal extends Modal {
+export class AdversaryModal extends Modal {
 	private plugin: DaggerForgePlugin;
 	private editor: Editor | null;
 	private inputs: FormStateElements = {};

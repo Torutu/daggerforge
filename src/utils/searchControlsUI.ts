@@ -5,7 +5,6 @@
 
 export interface SearchControlsConfig {
 	placeholderText?: string;
-	showTypeFilter?: boolean;
 	onSearchChange?: (query: string) => void;
 	onTierChange?: (tier: string | null) => void;
 	onSourceChange?: (source: string | null) => void;
@@ -23,7 +22,6 @@ export class SearchControlsUI {
 	constructor(config: SearchControlsConfig = {}) {
 		this.config = {
 			placeholderText: "Search by name...",
-			showTypeFilter: false,
 			availableTiers: [],
 			availableSources: [],
 			availableTypes: [],
@@ -51,10 +49,7 @@ export class SearchControlsUI {
 
 		this.createTierFilter(filterRow);
 		this.createSourceFilter(filterRow);
-		if (this.config.showTypeFilter) {
-			this.createTypeFilter(filterRow);
-		}
-
+		this.createTypeFilter(filterRow);
 		this.createClearButton(filterRow);
 
 		return this.container;
@@ -244,6 +239,50 @@ export class SearchControlsUI {
 			this.config.availableSources = options as string[];
 		} else if (filterName === "types") {
 			this.config.availableTypes = options as string[];
+		}
+	}
+
+	/**
+	 * Set current filter values in the UI dropdowns
+	 */
+	public setFilterValues(filters: {
+		query?: string;
+		tier?: string | null;
+		source?: string | null;
+		type?: string | null;
+	}): void {
+		if (!this.container) return;
+
+		// Set search input
+		if (filters.query !== undefined) {
+			const searchInput = this.container.querySelector(".df-search-input") as HTMLInputElement;
+			if (searchInput) {
+				searchInput.value = filters.query;
+			}
+		}
+
+		// Set tier dropdown
+		if (filters.tier !== undefined) {
+			const tierSelect = this.container.querySelector(".df-tier-filter") as HTMLSelectElement;
+			if (tierSelect) {
+				tierSelect.value = filters.tier || "";
+			}
+		}
+
+		// Set source dropdown
+		if (filters.source !== undefined) {
+			const sourceSelect = this.container.querySelector(".df-source-filter") as HTMLSelectElement;
+			if (sourceSelect) {
+				sourceSelect.value = filters.source || "";
+			}
+		}
+
+		// Set type dropdown
+		if (filters.type !== undefined) {
+			const typeSelect = this.container.querySelector(".df-type-filter") as HTMLSelectElement;
+			if (typeSelect) {
+				typeSelect.value = filters.type || "";
+			}
 		}
 	}
 }

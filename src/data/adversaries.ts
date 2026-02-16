@@ -9,5 +9,3 @@ export const ADVERSARIES = [
 	...advUmbra,
 	...advSablewood,
 ];
-
-export type AdversaryData = (typeof advCore)[0];

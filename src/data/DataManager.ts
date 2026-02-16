@@ -3,7 +3,6 @@ import { AdvData, EnvironmentData } from '../types/index';
 import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
 
 export interface StoredCustomData {
-	version: string;
 	adversaries: AdvData[];
 	environments: EnvironmentData[];
 	lastUpdated: number;
@@ -17,7 +16,6 @@ export interface StoredCustomData {
 export class DataManager {
 	private plugin: Plugin;
 	private data: StoredCustomData = {
-		version: '2.0',
 		adversaries: [],
 		environments: [],
 		lastUpdated: Date.now()
@@ -39,7 +37,6 @@ export class DataManager {
 			}
 
 			this.data = {
-				version: saved.version || '2.0',
 				adversaries: saved.adversaries || [],
 				environments: saved.environments || [],
 				lastUpdated: saved.lastUpdated || Date.now()
@@ -160,7 +157,6 @@ export class DataManager {
 	async deleteDataFile(): Promise<void> {
 		try {
 			this.data = {
-				version: '2.0',
 				adversaries: [],
 				environments: [],
 				lastUpdated: Date.now()

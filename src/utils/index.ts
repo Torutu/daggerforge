@@ -6,3 +6,4 @@ export * from './searchControlsUI';
 export * from './idGenerator';
 export * from './initFeatures';
 export * from './pluginOperations';
+export * from './Sidebar';

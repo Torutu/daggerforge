@@ -1,12 +1,13 @@
-import { ItemView, MarkdownView, Notice } from "obsidian";
+import { App, ItemView, MarkdownView, Notice } from "obsidian";
 import DaggerForgePlugin from "../main";
 import {
 	AdversaryView,
 	Adv_View_Type,
 	EnvironmentView,
 	Env_View_Type,
-	TextInputModal as AdversaryModal,
+	AdversaryModal,
 	EnvironmentModal,
+	handleCardEditClick,
 } from "../features/index";
 import { DeleteConfirmModal } from "../features/data-management/index";
 
@@ -102,4 +103,19 @@ export function refreshBrowsers(plugin: DaggerForgePlugin): void {
 			view.refresh();
 		}
 	});
+}
+
+/**
+ * Handles edit button clicks on adversary and environment cards
+ * Only processes clicks on edit buttons, exits early for other clicks
+ */
+export function listenForEditClicks(evt: MouseEvent, app: App, plugin: DaggerForgePlugin): void {
+	const target = evt.target as HTMLElement;
+
+	if (!target.classList.contains("df-adv-edit-button") &&
+		!target.classList.contains("df-env-edit-button")) {
+		return;
+	}
+
+	handleCardEditClick(evt, app, plugin, target);
 }

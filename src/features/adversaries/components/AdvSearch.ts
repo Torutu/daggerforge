@@ -17,21 +17,16 @@ import type { AdvData } from "../../../types/index";
 
 export const Adv_View_Type = "daggerforge:adversary-view";
 
-// AdvData keys are all strings (including tier). The browser needs tier as a
-// number for sorting/filtering, and displayType to preserve the full type
-// string (e.g. "Leader (Umbra-Touched)") while filtering on the base type.
-interface Adversary extends AdvData {
-	// displayType?: string; // displaytype
-	isCustom?: boolean;
-}
+interface Adversary extends AdvData { }
 
 export class AdversaryView extends ItemView {
-	private adversaries: Adversary[] = [];
+	private adversaries: Adversary[];
 	private lastActiveMarkdown: MarkdownView | null = null;
 	private searchEngine: SearchEngine<Adversary> = new SearchEngine<Adversary>();
 	private searchControlsUI: SearchControlsUI | null = null;
 	private resultsDiv: HTMLElement | null = null;
 
+	// super initialize the parent class before setting up the class
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
 	}
@@ -86,8 +81,32 @@ export class AdversaryView extends ItemView {
 		// Preserve current filters before refresh
 		const currentFilters = this.searchEngine.getFilters();
 		this.loadAdversaryData();
+
+		// Validate filters against available options
+		const availableSources = this.searchEngine.getAvailableOptions("source");
+		const availableTiers = this.searchEngine.getAvailableOptions("tier");
+		const availableTypes = this.searchEngine.getAvailableOptions("type");
+
+		// Clear invalid filters
+		if (currentFilters.source && !availableSources.includes(currentFilters.source)) {
+			currentFilters.source = null;
+		}
+		if (currentFilters.tier && !availableTiers.includes(currentFilters.tier)) {
+			currentFilters.tier = null;
+		}
+		if (currentFilters.type && !availableTypes.includes(currentFilters.type)) {
+			currentFilters.type = null;
+		}
+
 		// Restore filters and re-render results
 		this.searchEngine.setFilters(currentFilters);
+
+		// Update UI dropdowns to match validated filters
+		if (this.searchControlsUI) {
+			this.searchControlsUI.setFilterValues(currentFilters);
+		}
+
+		// Render results with validated filters
 		this.renderResults(this.searchEngine.search());
 	}
 
@@ -105,28 +124,14 @@ export class AdversaryView extends ItemView {
 		});
 		this.createCounterControls(counterContainer);
 
-		this.searchControlsUI = new SearchControlsUI({
-			placeholderText: "Search by name, type, or description...",
-			showTypeFilter: true,
-			availableTiers: ['1', '2', '3', '4'],
-			availableSources: ["core", "sablewood", "umbra", "void", "custom"],
-			availableTypes: ["Bruiser", "Horde",
-				"Leader", "Minion", "Ranged", "Skulk", "Social", "Solo", "Standard", "Support",
-				"Leader (Umbra-Touched)", "Minion (Umbra-Touched)", "Solo (Umbra-Touched)"],
-			onSearchChange: (query) => this.handleSearchChange(query),
-			onTierChange: (tier) => this.handleTierChange(tier),
-			onSourceChange: (source) => this.handleSourceChange(source),
-			onTypeChange: (type) => this.handleTypeChange(type),
-			onClear: () => this.handleClearFilters(),
-		});
-
-		this.searchControlsUI.create(container);
+		container.createDiv({ cls: "df-search-controls-container" });
 
 		this.resultsDiv = container.createEl("div", {
 			cls: "df-adversary-results",
 		});
 	}
 
+	//register event listeners that need cleanup when the view closes
 	private registerEventListeners() {
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", (leaf) => {
@@ -136,6 +141,43 @@ export class AdversaryView extends ItemView {
 				}
 			}),
 		);
+	}
+
+	private loadAdversaryData() {
+		try {
+			const builtIn = ADVERSARIES;
+			const custom = this.loadCustomAdversaries();
+			this.adversaries = [...builtIn, ...custom];
+
+			this.searchEngine.setCards(this.adversaries);
+
+			const searchContainer = this.containerEl.querySelector(".df-search-controls-container") as HTMLElement;
+			if (searchContainer) {
+				searchContainer.empty();
+				this.searchControlsUI = new SearchControlsUI({
+					placeholderText: "Search by name, type, or description...",
+					availableTiers: this.searchEngine.getAvailableOptions("tier"),
+					availableSources: this.searchEngine.getAvailableOptions("source"),
+					availableTypes: ["Bruiser", "Horde", // TODO: Remove this and use this.searchEngine.getAvailableOptions("type") after working on Horde
+						"Leader", "Minion", "Ranged", "Skulk", "Social", "Solo", "Standard", "Support",
+						"Leader (Umbra-Touched)", "Minion (Umbra-Touched)", "Solo (Umbra-Touched)"],
+					onSearchChange: (query) => this.handleSearchChange(query),
+					onTierChange: (tier) => this.handleTierChange(tier),
+					onSourceChange: (source) => this.handleSourceChange(source),
+					onTypeChange: (type) => this.handleTypeChange(type),
+					onClear: () => this.handleClearFilters(),
+				});
+				this.searchControlsUI.create(searchContainer);
+			}
+
+			this.renderResults(this.adversaries);
+		} catch (e) {
+			console.error("Error loading adversary data:", e);
+			new Notice("Failed to load adversary data.");
+			if (this.resultsDiv) {
+				this.resultsDiv.setText("Error loading adversary data.");
+			}
+		}
 	}
 
 	private loadCustomAdversaries(): Adversary[] {
@@ -148,41 +190,12 @@ export class AdversaryView extends ItemView {
 
 			const customAdvs: AdvData[] = plugin.dataManager.getAdversaries();
 			return customAdvs.map((adv) => ({
-				...adv as unknown as Adversary,
-				isCustom: true,
+				...adv as Adversary,
 				source: adv.source || "custom",
 			}));
 		} catch (error) {
 			console.error("Error loading custom adversaries from DataManager:", error);
 			return [];
-		}
-	}
-
-	// TS doesn't allow direct cast from one type to another incompatible types without going through unknown
-	private loadAdversaryData() {
-		try {
-			const builtIn = ADVERSARIES as unknown as Adversary[];
-			const custom = this.loadCustomAdversaries();
-			this.adversaries = [...builtIn, ...custom];
-
-			this.searchEngine.setItems(this.adversaries);
-
-			if (this.searchControlsUI) {
-				const sources = this.searchEngine.getAvailableOptions("source");
-				const types = this.searchEngine.getAvailableOptions("type");
-				const tiers = this.searchEngine.getAvailableOptions("tier").map(t => parseInt(t, 10)).sort((a, b) => a - b);
-				this.searchControlsUI.updateAvailableOptions("sources", sources);
-				this.searchControlsUI.updateAvailableOptions("types", types);
-				this.searchControlsUI.updateAvailableOptions("tiers", tiers);
-			}
-
-			this.renderResults(this.adversaries);
-		} catch (e) {
-			console.error("Error loading adversary data:", e);
-			new Notice("Failed to load adversary data.");
-			if (this.resultsDiv) {
-				this.resultsDiv.setText("Error loading adversary data.");
-			}
 		}
 	}
 
@@ -207,7 +220,6 @@ export class AdversaryView extends ItemView {
 	}
 
 	private handleClearFilters() {
-		// Reset counter to 1 when clear button is clicked
 		resetAdversaryCount();
 		// Update the counter display
 		const counterInputs = this.containerEl.querySelectorAll(".count-input");
@@ -353,7 +365,7 @@ export class AdversaryView extends ItemView {
 				width: 400,
 				height: 600
 			});
-			new Notice(`Inserted adversary ${adversary.name}.`);
+			new Notice(`Inserted adversary ${adversary.name} in canvas.`);
 			return;
 		}
 
@@ -381,7 +393,7 @@ export class AdversaryView extends ItemView {
 
 		const adversaryText = this.generateAdversaryMarkdown(adversary);
 		editor.replaceSelection(adversaryText);
-		new Notice(`Inserted ${adversary.name}.`);
+		new Notice(`Inserted ${adversary.name} in note.`);
 	}
 
 	private generateAdversaryMarkdown(adversary: Adversary): string {

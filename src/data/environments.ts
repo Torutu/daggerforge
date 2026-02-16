@@ -7,5 +7,3 @@ export const ENVIRONMENTS = [
 	...envVoid,
 	...envSablewood,
 ];
-
-export type EnvironmentData = (typeof envCore)[0];

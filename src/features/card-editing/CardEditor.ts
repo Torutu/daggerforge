@@ -1,7 +1,7 @@
-import { App, MarkdownView, Notice } from "obsidian";
+import { App, ItemView, MarkdownView, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { EnvironmentModal, extractEnvironmentData, Env_View_Type } from "../environments/index";
-import { extractCardData, TextInputModal, Adv_View_Type } from "../adversaries/index";
+import { extractCardData, AdversaryModal, Adv_View_Type } from "../adversaries/index";
 import type { AdvData } from "../../types/index";
 
 function refreshBrowserView(plugin: DaggerForgePlugin, viewType: string): void {
@@ -22,9 +22,7 @@ function findIdAttribute(content: string, id: string): number {
 
 /**
  * Walk backward from searchFrom to find a <section> whose class contains
- * df-card-outer. Adversary edit buttons sit several nesting levels deep —
- * intermediate sections (stats, features) would be found first if we just
- * took the nearest one.
+ * df-card-outer.
  */
 function findOuterCardSection(content: string, searchFrom: number): number {
 	let pos = searchFrom;
@@ -197,7 +195,7 @@ async function editAdversaryInMarkdown(
 	}
 
 	const cardData = extractCardData(cardElement);
-	const modal = new TextInputModal(plugin, view.editor, cardElement, cardData);
+	const modal = new AdversaryModal(plugin, view.editor, cardElement, cardData);
 
 	modal.onEditUpdate = async (newHTML: string, newData: AdvData) => {
 		const replaced = await replaceCardInMarkdown(plugin, cardId, "adv", newHTML);
@@ -263,7 +261,7 @@ function editAdversaryInCanvas(
 	plugin: DaggerForgePlugin,
 ): void {
 	const cardData = extractCardData(cardElement);
-	const modal = new TextInputModal(plugin, null, cardElement, cardData);
+	const modal = new AdversaryModal(plugin, null, cardElement, cardData);
 
 	modal.onEditUpdate = async (newHTML: string, newData: AdvData) => {
 		try {
@@ -348,10 +346,9 @@ export const onEditClick = (
 export async function handleCardEditClick(
 	evt: MouseEvent,
 	app: App,
-	plugin?: DaggerForgePlugin,
+	plugin: DaggerForgePlugin,
+	target: HTMLElement,
 ): Promise<void> {
-	const target = evt.target as HTMLElement;
-	if (!target) return;
 
 	const cardType = resolveCardType(target);
 	if (!cardType) return;
@@ -361,8 +358,8 @@ export async function handleCardEditClick(
 		return;
 	}
 
-	const activeLeaf = app.workspace.activeLeaf;
-	const isCanvas = activeLeaf?.view?.getViewType?.() === "canvas";
+	const activeLeaf = app.workspace.getActiveViewOfType(ItemView)
+	const isCanvas = activeLeaf?.getViewType() === "canvas";
 
 	if (isCanvas) {
 		evt.stopPropagation();
@@ -408,8 +405,7 @@ async function handleMarkdownEdit(
 	const view = app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) return;
 
-	// Switch to source mode if in preview — the editor API isn't available
-	// in preview mode.
+	// Switch to source mode
 	if (view.getMode() !== "source") {
 		const state = view.leaf.view.getState();
 		state.mode = "source";
