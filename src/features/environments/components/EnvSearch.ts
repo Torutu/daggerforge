@@ -39,38 +39,20 @@ export class EnvironmentView extends ItemView {
 		return "mountain";
 	}
 
-	public refresh() {
-		const currentFilters = this.searchEngine.getFilters();
+	async onOpen() {
+		this.registerEventListeners();
+		this.initializeView();
 		this.loadEnvironmentData();
-		
-		const validatedFilters = this.clearInvalidFilters(currentFilters);
-		this.searchEngine.setFilters(validatedFilters);
-		this.updateUIDropdowns(validatedFilters);
-		this.renderResults(this.searchEngine.search());
 	}
 
-	private clearInvalidFilters(filters: any) {
-		const availableSources = this.searchEngine.getAvailableOptions("source");
-		const availableTiers = this.searchEngine.getAvailableOptions("tier");
-		const availableTypes = this.searchEngine.getAvailableOptions("type");
-		
-		if (filters.source && !availableSources.includes(filters.source)) {
-			filters.source = null;
-		}
-		if (filters.tier && !availableTiers.includes(filters.tier)) {
-			filters.tier = null;
-		}
-		if (filters.type && !availableTypes.includes(filters.type)) {
-			filters.type = null;
-		}
-		
-		return filters;
-	}
-
-	private updateUIDropdowns(filters: any) {
-		if (this.searchControlsUI) {
-			this.searchControlsUI.setFilterValues(filters);
-		}
+	private registerEventListeners() {
+		this.registerEvent(
+			this.app.workspace.on("active-leaf-change", (leaf) => {
+				const view = leaf?.view;
+				if (view instanceof MarkdownView)
+					this.lastActiveMarkdown = view;
+			})
+		);
 	}
 
 	private initializeView() {
@@ -87,6 +69,98 @@ export class EnvironmentView extends ItemView {
 
 		this.resultsDiv = container.createEl("div", {
 			cls: "df-environment-results",
+		});
+
+		this.createScrollToTopButton(container);
+	}
+
+	private loadEnvironmentData() {
+		try {
+			const builtIn = ENVIRONMENTS.map((e: any) => ({
+				...e,
+				id: e.id || generateEnvUniqueId(),
+				source: e.source ?? "core",
+				type: e.type,
+			}));
+
+			const custom = this.loadCustomEnvironments();
+			this.environments = [...builtIn, ...custom];
+
+			this.searchEngine.setCards(this.environments);
+
+			// Rebuild search controls with actual data
+			const searchContainer = this.containerEl.querySelector(".df-search-controls-container") as HTMLElement;
+			if (searchContainer) {
+				searchContainer.empty();
+				this.searchControlsUI = new SearchControlsUI({
+					placeholderText: "Search by name, type, or description...",
+					availableTiers: this.searchEngine.getAvailableOptions("tier"),
+					availableSources: this.searchEngine.getAvailableOptions("source"),
+					availableTypes: this.searchEngine.getAvailableOptions("type"),
+					onSearchChange: (query) => this.handleSearchChange(query),
+					onTierChange: (tier) => this.handleTierChange(tier),
+					onSourceChange: (source) => this.handleSourceChange(source),
+					onTypeChange: (type) => this.handleTypeChange(type),
+					onClear: () => this.handleClearFilters(),
+				});
+				this.searchControlsUI.create(searchContainer);
+			}
+
+			this.renderResults(this.environments);
+		} catch (e) {
+			console.error("Error loading environment data:", e);
+			new Notice("Failed to load environment data.");
+			if (this.resultsDiv) {
+				this.resultsDiv.setText("Error loading environment data.");
+			}
+		}
+	}
+
+	public refresh() {
+		const currentFilters = this.searchEngine.getFilters();
+		this.loadEnvironmentData();
+
+		const validatedFilters = this.clearInvalidFilters(currentFilters);
+		this.searchEngine.setFilters(validatedFilters);
+		this.updateUIDropdowns(validatedFilters);
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private clearInvalidFilters(filters: any) {
+		const availableSources = this.searchEngine.getAvailableOptions("source");
+		const availableTiers = this.searchEngine.getAvailableOptions("tier");
+		const availableTypes = this.searchEngine.getAvailableOptions("type");
+
+		if (filters.source && !availableSources.includes(filters.source)) {
+			filters.source = null;
+		}
+		if (filters.tier && !availableTiers.includes(filters.tier)) {
+			filters.tier = null;
+		}
+		if (filters.type && !availableTypes.includes(filters.type)) {
+			filters.type = null;
+		}
+
+		return filters;
+	}
+
+	private updateUIDropdowns(filters: any) {
+		if (this.searchControlsUI) {
+			this.searchControlsUI.setFilterValues(filters);
+		}
+	}
+
+	private createScrollToTopButton(container: HTMLElement) {
+		const button = container.createEl("button", {
+			text: "↑",
+			cls: "df-scroll-to-top",
+			attr: {
+				"aria-label": "Scroll to top"
+			}
+		});
+
+		button.addEventListener("click", () => {
+			container.scrollTo({ top: 0, behavior: "smooth" });
 		});
 	}
 
@@ -140,48 +214,6 @@ export class EnvironmentView extends ItemView {
 		}
 	}
 
-	private loadEnvironmentData() {
-		try {
-			const builtIn = ENVIRONMENTS.map((e: any) => ({
-				...e,
-				id: e.id || generateEnvUniqueId(),
-				source: e.source ?? "core",
-				type: e.type,
-			}));
-
-			const custom = this.loadCustomEnvironments();
-			this.environments = [...builtIn, ...custom];
-
-			this.searchEngine.setCards(this.environments);
-
-			// Rebuild search controls with actual data
-			const searchContainer = this.containerEl.querySelector(".df-search-controls-container") as HTMLElement;
-			if (searchContainer) {
-				searchContainer.empty();
-				this.searchControlsUI = new SearchControlsUI({
-					placeholderText: "Search by name, type, or description...",
-					availableTiers: this.searchEngine.getAvailableOptions("tier"),
-					availableSources: this.searchEngine.getAvailableOptions("source"),
-					availableTypes: this.searchEngine.getAvailableOptions("type"),
-					onSearchChange: (query) => this.handleSearchChange(query),
-					onTierChange: (tier) => this.handleTierChange(tier),
-					onSourceChange: (source) => this.handleSourceChange(source),
-					onTypeChange: (type) => this.handleTypeChange(type),
-					onClear: () => this.handleClearFilters(),
-				});
-				this.searchControlsUI.create(searchContainer);
-			}
-
-			this.renderResults(this.environments);
-		} catch (e) {
-			console.error("Error loading environment data:", e);
-			new Notice("Failed to load environment data.");
-			if (this.resultsDiv) {
-				this.resultsDiv.setText("Error loading environment data.");
-			}
-		}
-	}
-
 	private handleSearchChange(query: string) {
 		this.searchEngine.setFilters({ query });
 		this.renderResults(this.searchEngine.search());
@@ -218,19 +250,6 @@ export class EnvironmentView extends ItemView {
 			const card = this.createEnvironmentCard(env);
 			this.resultsDiv!.appendChild(card);
 		});
-	}
-
-	async onOpen() {
-		this.registerEvent(
-			this.app.workspace.on("active-leaf-change", (leaf) => {
-				const view = leaf?.view;
-				if (view instanceof MarkdownView)
-					this.lastActiveMarkdown = view;
-			})
-		);
-
-		this.initializeView();
-		this.loadEnvironmentData();
 	}
 
 	createEnvironmentCard(env: Environment): HTMLElement {

@@ -43,71 +43,22 @@ export class AdversaryView extends ItemView {
 		return "venetian-mask";
 	}
 
-	/**
-	 * Delete a custom adversary by its unique ID
-	 * @param adversary The adversary to get deleted
-	 */
-	private async deleteCustomAdversary(adversary: Adversary): Promise<void> {
-		try {
-			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
-			if (!plugin || !plugin.dataManager) {
-				new Notice("DaggerForge plugin not found.");
-				return;
-			}
-
-			const adversaryId = adversary.id;
-
-			if (!adversaryId) {
-				new Notice("Cannot delete adversary: missing ID.");
-				return;
-			}
-
-			await plugin.dataManager.deleteAdversaryById(adversaryId);
-			new Notice(`Deleted adversary: ${adversary.name}`);
-			this.refresh();
-		} catch (error) {
-			console.error("Error deleting custom adversary:", error);
-			new Notice("Failed to delete adversary.");
-		}
-	}
-
 	async onOpen() {
-		this.initializeView();
 		this.registerEventListeners();
+		this.initializeView();
 		this.loadAdversaryData();
 	}
 
-	public async refresh() {
-		// Preserve current filters before refresh
-		const currentFilters = this.searchEngine.getFilters();
-		this.loadAdversaryData();
-
-		// Validate filters against available options
-		const availableSources = this.searchEngine.getAvailableOptions("source");
-		const availableTiers = this.searchEngine.getAvailableOptions("tier");
-		const availableTypes = this.searchEngine.getAvailableOptions("type");
-
-		// Clear invalid filters
-		if (currentFilters.source && !availableSources.includes(currentFilters.source)) {
-			currentFilters.source = null;
-		}
-		if (currentFilters.tier && !availableTiers.includes(currentFilters.tier)) {
-			currentFilters.tier = null;
-		}
-		if (currentFilters.type && !availableTypes.includes(currentFilters.type)) {
-			currentFilters.type = null;
-		}
-
-		// Restore filters and re-render results
-		this.searchEngine.setFilters(currentFilters);
-
-		// Update UI dropdowns to match validated filters
-		if (this.searchControlsUI) {
-			this.searchControlsUI.setFilterValues(currentFilters);
-		}
-
-		// Render results with validated filters
-		this.renderResults(this.searchEngine.search());
+	//register event listeners that need cleanup when the view closes
+	private registerEventListeners() {
+		this.registerEvent(
+			this.app.workspace.on("active-leaf-change", (leaf) => {
+				const view = leaf?.view;
+				if (view instanceof MarkdownView) {
+					this.lastActiveMarkdown = view;
+				}
+			}),
+		);
 	}
 
 	private initializeView() {
@@ -129,18 +80,8 @@ export class AdversaryView extends ItemView {
 		this.resultsDiv = container.createEl("div", {
 			cls: "df-adversary-results",
 		});
-	}
 
-	//register event listeners that need cleanup when the view closes
-	private registerEventListeners() {
-		this.registerEvent(
-			this.app.workspace.on("active-leaf-change", (leaf) => {
-				const view = leaf?.view;
-				if (view instanceof MarkdownView) {
-					this.lastActiveMarkdown = view;
-				}
-			}),
-		);
+		this.createScrollToTopButton(container);
 	}
 
 	private loadAdversaryData() {
@@ -227,6 +168,81 @@ export class AdversaryView extends ItemView {
 			if (input instanceof HTMLInputElement) {
 				input.value = "1";
 			}
+		});
+	}
+
+	/**
+ * Delete a custom adversary by its unique ID
+ * @param adversary The adversary to get deleted
+ */
+	private async deleteCustomAdversary(adversary: Adversary): Promise<void> {
+		try {
+			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
+			if (!plugin || !plugin.dataManager) {
+				new Notice("DaggerForge plugin not found.");
+				return;
+			}
+
+			const adversaryId = adversary.id;
+
+			if (!adversaryId) {
+				new Notice("Cannot delete adversary: missing ID.");
+				return;
+			}
+
+			await plugin.dataManager.deleteAdversaryById(adversaryId);
+			new Notice(`Deleted adversary: ${adversary.name}`);
+			this.refresh();
+		} catch (error) {
+			console.error("Error deleting custom adversary:", error);
+			new Notice("Failed to delete adversary.");
+		}
+	}
+
+	public async refresh() {
+		// Preserve current filters before refresh
+		const currentFilters = this.searchEngine.getFilters();
+		this.loadAdversaryData();
+
+		// Validate filters against available options
+		const availableSources = this.searchEngine.getAvailableOptions("source");
+		const availableTiers = this.searchEngine.getAvailableOptions("tier");
+		const availableTypes = this.searchEngine.getAvailableOptions("type");
+
+		// Clear invalid filters
+		if (currentFilters.source && !availableSources.includes(currentFilters.source)) {
+			currentFilters.source = null;
+		}
+		if (currentFilters.tier && !availableTiers.includes(currentFilters.tier)) {
+			currentFilters.tier = null;
+		}
+		if (currentFilters.type && !availableTypes.includes(currentFilters.type)) {
+			currentFilters.type = null;
+		}
+
+		// Restore filters and re-render results
+		this.searchEngine.setFilters(currentFilters);
+
+		// Update UI dropdowns to match validated filters
+		if (this.searchControlsUI) {
+			this.searchControlsUI.setFilterValues(currentFilters);
+		}
+
+		// Render results with validated filters
+		this.renderResults(this.searchEngine.search());
+	}
+
+	private createScrollToTopButton(container: HTMLElement) {
+		const button = container.createEl("button", {
+			text: "↑",
+			cls: "df-scroll-to-top",
+			attr: {
+				"aria-label": "Scroll to top"
+			}
+		});
+
+		button.addEventListener("click", () => {
+			container.scrollTo({ top: 0, behavior: "smooth" });
 		});
 	}
 
