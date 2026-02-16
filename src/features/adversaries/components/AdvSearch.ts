@@ -45,7 +45,7 @@ export class AdversaryView extends ItemView {
 
 	/**
 	 * Delete a custom adversary by its unique ID
-	 * @param adversary The adversary object to delete
+	 * @param adversary The adversary to get deleted
 	 */
 	private async deleteCustomAdversary(adversary: Adversary): Promise<void> {
 		try {

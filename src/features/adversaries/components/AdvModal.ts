@@ -63,14 +63,6 @@ async function persistAdversary(
 
 // Modal
 // Single modal for both create and edit flows.
-//
-// Edit mode is activated by passing a cardElement + cardData to the
-// constructor. When present:
-//   • The form pre-fills from cardData instead of the plugin's saved state.
-//   • The submit button calls onEditUpdate (wired by cardEditor.ts) instead of
-//     persisting + inserting a new card.
-//   • onClose does not write back to the plugin's saved state — edit sessions
-//     are ephemeral.
 
 export class AdversaryModal extends Modal {
 	private plugin: DaggerForgePlugin;
@@ -93,7 +85,7 @@ export class AdversaryModal extends Modal {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.editor = editor;
-		this.isEditMode = !!cardElement; // convert any value to boolean
+		this.isEditMode = !!cardElement; // (!!)convert any value to boolean
 
 		if (cardElement && cardData) {
 			this.editData = cardData;
