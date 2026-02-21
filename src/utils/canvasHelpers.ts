@@ -1,31 +1,40 @@
 import { App, Notice, MarkdownView } from "obsidian";
 
 /**
- * Check if there's a canvas open in the workspace
- * This works even when the active leaf is something else (like a sidebar)
+ * Check if there is a canvas open anywhere in the workspace.
+ *
+ * Why not use getMostRecentLeaf()?
+ * When the user clicks a card inside a sidebar ItemView (the browser),
+ * the sidebar itself becomes the most recent leaf. getMostRecentLeaf()
+ * then returns the sidebar — whose view has no .file — so the old code
+ * incorrectly returned null and treated the session as "no canvas open".
+ *
+ * We instead check the active leaf first, then fall back to scanning all
+ * canvas-type leaves. This mirrors what getActiveCanvas() already does,
+ * keeping both functions consistent.
  */
+export function isCanvasActive(app: App): boolean {
+	// 1. Active leaf is a canvas
+	const activeView = app.workspace.activeLeaf?.view;
+	if (activeView && (activeView as any).canvas) return true;
 
-export function getActiveViewType(app: App): string | null {
-	const mdView = app.workspace.getActiveViewOfType(MarkdownView);
-	if (mdView) return "markdown";
+	// 2. Any canvas leaf is open in the workspace (e.g. active leaf is the sidebar)
+	return app.workspace.getLeavesOfType("canvas").some(
+		(leaf) => !!(leaf.view as any).canvas
+	);
+}
+
+/**
+ * Returns true only when the most-recently-focused main-area leaf is a
+ * markdown note. The MarkdownView check is authoritative; if that returns
+ * nothing we inspect the most-recent leaf's file extension as a fallback.
+ */
+export function isMarkdownActive(app: App): boolean {
+	if (app.workspace.getActiveViewOfType(MarkdownView)) return true;
 
 	const leaf = app.workspace.getMostRecentLeaf();
-	const view = leaf?.view;
-	if (!view) return null;
-
-	const file = (view as any).file;
-	if (file?.extension === "canvas") return "canvas";
-	if (file?.extension === "md") return "markdown";
-
-	return null;
-}
-
-export function isCanvasActive(app: App): boolean {
-	return getActiveViewType(app) === "canvas";
-}
-
-export function isMarkdownActive(app: App): boolean {
-	return getActiveViewType(app) === "markdown";
+	const file = (leaf?.view as any)?.file;
+	return file?.extension === "md";
 }
 
 /**
