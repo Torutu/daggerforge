@@ -1,6 +1,6 @@
 import { EnvironmentData } from "../../types/index";	
 
-export function envToHtml(env: EnvironmentData): string {
+export function envToHtml(env: EnvironmentData, wide = false): string {
 	const hiddenID = crypto.randomUUID();
 	const featuresHTML = (env.features || [])
 		.map((f) => {
@@ -30,7 +30,7 @@ ${bulletsHTML}${textAfterHTML ? `<div id="textafter" class="df-env-feat-text">${
 		})
 		.join("");
 	return `
-<section class="df-env-card-outer">
+<section class="df-env-card-outer${wide ? ' df-card--wide' : ''}">
 <div class="df-env-card-inner">
 <button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit" id="${hiddenID}">📝</button>
 <div class="df-env-name" id="${hiddenID}">${env.name}</div>

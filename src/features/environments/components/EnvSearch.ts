@@ -2,14 +2,14 @@ import { ItemView, WorkspaceLeaf, MarkdownView, Notice, setIcon } from "obsidian
 import { ENVIRONMENTS } from "../../../data/index";
 import { EnvironmentData } from "../../../types/index";
 import {
-	isMarkdownActive,
-	isCanvasActive,
+	resolveInsertDestination,
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	SearchEngine,
 	SearchControlsUI,
 	generateEnvUniqueId
 } from "../../../utils/index";
+import { envToHtml } from "../EnvToHtml";
 
 export const Env_View_Type = "daggerforge:environment-view";
 
@@ -18,6 +18,8 @@ interface Environment extends EnvironmentData {
 
 export class EnvironmentView extends ItemView {
 	private environments: Environment[] = [];
+	/** Last main-area leaf the user focused — canvas or markdown. */
+	private lastMainLeaf: { view: any } | null = null;
 	private lastActiveMarkdown: MarkdownView | null = null;
 	private searchEngine: SearchEngine<Environment> = new SearchEngine<Environment>();
 	private searchControlsUI: SearchControlsUI | null = null;
@@ -42,35 +44,22 @@ export class EnvironmentView extends ItemView {
 	public refresh() {
 		const currentFilters = this.searchEngine.getFilters();
 		this.loadEnvironmentData();
-		
-		const validatedFilters = this.clearInvalidFilters(currentFilters);
-		this.searchEngine.setFilters(validatedFilters);
-		this.updateUIDropdowns(validatedFilters);
-		this.renderResults(this.searchEngine.search());
-	}
 
-	private clearInvalidFilters(filters: any) {
-		const availableSources = this.searchEngine.getAvailableOptions("source");
-		const availableTiers = this.searchEngine.getAvailableOptions("tier");
-		const availableTypes = this.searchEngine.getAvailableOptions("type");
-		
-		if (filters.source && !availableSources.includes(filters.source)) {
-			filters.source = null;
-		}
-		if (filters.tier && !availableTiers.includes(filters.tier)) {
-			filters.tier = null;
-		}
-		if (filters.type && !availableTypes.includes(filters.type)) {
-			filters.type = null;
-		}
-		
-		return filters;
-	}
+		const availableSources = this.searchEngine.getAvailableOptions("sources");
+		const availableTiers = this.searchEngine.getAvailableOptions("tiers");
+		const availableTypes = this.searchEngine.getAvailableOptions("types");
 
-	private updateUIDropdowns(filters: any) {
+		currentFilters.tiers = currentFilters.tiers.filter(t => availableTiers.includes(t));
+		currentFilters.sources = currentFilters.sources.filter(s => availableSources.includes(s));
+		currentFilters.types = currentFilters.types.filter(tp => availableTypes.includes(tp));
+
+		this.searchEngine.setFilters(currentFilters);
+
 		if (this.searchControlsUI) {
-			this.searchControlsUI.setFilterValues(filters);
+			this.searchControlsUI.setFilterValues(currentFilters);
 		}
+
+		this.renderResults(this.searchEngine.search());
 	}
 
 	private initializeView() {
@@ -160,13 +149,13 @@ export class EnvironmentView extends ItemView {
 				searchContainer.empty();
 				this.searchControlsUI = new SearchControlsUI({
 					placeholderText: "Search by name, type, or description...",
-					availableTiers: this.searchEngine.getAvailableOptions("tier"),
-					availableSources: this.searchEngine.getAvailableOptions("source"),
-					availableTypes: this.searchEngine.getAvailableOptions("type"),
+					availableTiers: this.searchEngine.getAvailableOptions("tiers"),
+					availableSources: this.searchEngine.getAvailableOptions("sources"),
+					availableTypes: this.searchEngine.getAvailableOptions("types"),
 					onSearchChange: (query) => this.handleSearchChange(query),
-					onTierChange: (tier) => this.handleTierChange(tier),
-					onSourceChange: (source) => this.handleSourceChange(source),
-					onTypeChange: (type) => this.handleTypeChange(type),
+					onTierChange: (tiers) => this.handleTierChange(tiers),
+					onSourceChange: (sources) => this.handleSourceChange(sources),
+					onTypeChange: (types) => this.handleTypeChange(types),
 					onClear: () => this.handleClearFilters(),
 				});
 				this.searchControlsUI.create(searchContainer);
@@ -187,18 +176,18 @@ export class EnvironmentView extends ItemView {
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTierChange(tier: string | null) {
-		this.searchEngine.setFilters({ tier });
+	private handleTierChange(tiers: string[]) {
+		this.searchEngine.setFilters({ tiers });
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleSourceChange(source: string | null) {
-		this.searchEngine.setFilters({ source });
+	private handleSourceChange(sources: string[]) {
+		this.searchEngine.setFilters({ sources });
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTypeChange(type: string | null) {
-		this.searchEngine.setFilters({ type });
+	private handleTypeChange(types: string[]) {
+		this.searchEngine.setFilters({ types });
 		this.renderResults(this.searchEngine.search());
 	}
 
@@ -223,9 +212,17 @@ export class EnvironmentView extends ItemView {
 	async onOpen() {
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", (leaf) => {
-				const view = leaf?.view;
-				if (view instanceof MarkdownView)
+				if (!leaf) return;
+				const view = leaf.view;
+				// Ignore the browser sidebar itself
+				if ((view as any).getViewType?.() === "daggerforge:environment-view") return;
+				// Track any main-area leaf: canvas or markdown
+				if ((view as any).canvas || view instanceof MarkdownView) {
+					this.lastMainLeaf = leaf;
+				}
+				if (view instanceof MarkdownView) {
 					this.lastActiveMarkdown = view;
+				}
 			})
 		);
 
@@ -283,61 +280,12 @@ export class EnvironmentView extends ItemView {
 		desc.textContent = env.desc || "No description available.";
 		card.appendChild(desc);
 
-		const hiddenID = crypto.randomUUID();
 		card.addEventListener("click", () => {
-			const featuresHTML = (env.features || [])
-				.map((f: any) => {
-					const costHTML = f.cost ? `<span>${f.cost}</span>` : "";
+			const wide = this.searchControlsUI?.getWideCard() ?? false;
+			const envHTML = envToHtml(env, wide);
+			const destination = resolveInsertDestination(this.app, this.lastMainLeaf);
 
-					const bulletsHTML =
-						Array.isArray(f.bullets) && f.bullets.length
-							? `<ul class="df-env-bullet">${f.bullets
-								.map(
-									(b: string) =>
-										`<li class="df-env-bullet-item">${b}</li>`,
-								)
-								.join("")}</ul>`
-							: "";
-
-					const questionsHTML =
-						f.questions && f.questions.length
-							? `<div class="df-env-questions">${f.questions.map((q: string) => `<div class="df-env-question">${q}</div>`).join("")}</div>`
-							: "";
-
-					const afterTextHTML = f.textAfter
-						? `<div id="textafter" class="df-env-feat-text">${f.textAfter}</div>`
-						: "";
-
-					return `<div class="df-feature" data-feature-name="${f.name}" data-feature-type="${f.type}" data-feature-cost="${f.cost || ''}">
-<div class="df-env-feat-name-type">
-<span class="df-env-feat-name">${f.name}</span> - <span class="df-env-feat-type">${f.type}:</span> ${costHTML}
-<div class="df-env-feat-text">${f.text}</div>
-</div>${bulletsHTML}${afterTextHTML}${questionsHTML}</div>`;
-				})
-				.join("");
-
-			const envHTML = `<section class="df-env-card-outer">
-<div class="df-env-card-inner">
-<button class="df-env-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit" id="${hiddenID}">📝</button>
-<div class="df-env-name" id="${hiddenID}">${env.name}</div>
-<div class="df-env-feat-tier-type">Tier ${env.tier} ${env.type} <span class="df-source-badge-${(env.source || "core").toLowerCase()}">${(env.source || "core").toLowerCase()}</span></div>
-<p class="df-env-desc">${env.desc}</p>
-<p><strong>Impulse:</strong> ${env.impulse || ""}</p>
-<div class="df-env-card-diff-pot">
-<p><span class="df-bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
-<p><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
-</div>
-<div class="df-features-section">
-<h3>Features</h3>
-${featuresHTML}
-</div>
-</div>
-</section>`.trim();
-
-			const isCanvas = isCanvasActive(this.app);
-			const isMarkdown = isMarkdownActive(this.app);
-
-			if (isCanvas) {
+			if (destination === "canvas") {
 				const position = getAvailableCanvasPosition(this.app);
 				const success = createCanvasCard(this.app, envHTML, {
 					x: position.x,
@@ -351,7 +299,9 @@ ${featuresHTML}
 					new Notice("Failed to insert environment into canvas.");
 				}
 				return;
-			} else if (isMarkdown) {
+			}
+
+			if (destination === "markdown") {
 				const view =
 					this.app.workspace.getActiveViewOfType(MarkdownView) ||
 					this.lastActiveMarkdown;
@@ -366,9 +316,10 @@ ${featuresHTML}
 				}
 				editor.replaceSelection(envHTML);
 				new Notice(`Inserted environment ${env.name}.`);
-			} else {
-				new Notice("No active editor or canvas");
+				return;
 			}
+
+			new Notice("No active editor or canvas. Click on a note or canvas first.");
 		});
 
 		return card;

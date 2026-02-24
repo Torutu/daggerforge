@@ -6,8 +6,7 @@ import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-	isMarkdownActive,
-	isCanvasActive,
+	resolveInsertDestination,
 	createCanvasCard,
 	getAvailableCanvasPosition,
 } from "../../../utils/index";
@@ -74,6 +73,12 @@ export class AdversaryModal extends Modal {
 	// Edit-mode fields
 	private isEditMode: boolean;
 	private editData: Record<string, unknown> = {};
+	private wideCard = false;
+	/**
+	 * Resolved before the modal opens so that opening the modal (which shifts
+	 * focus away from the note/canvas) does not change the answer.
+	 */
+	private insertDestination: "canvas" | "markdown" | "none";
 	onEditUpdate?: (newHTML: string, newData: AdvData) => void | Promise<void>;
 
 	constructor(
@@ -85,7 +90,9 @@ export class AdversaryModal extends Modal {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.editor = editor;
-		this.isEditMode = !!cardElement; // (!!)convert any value to boolean
+		this.isEditMode = !!cardElement;
+		// Capture destination now, before the modal steals activeLeaf focus.
+		this.insertDestination = resolveInsertDestination(plugin.app, null);
 
 		if (cardElement && cardData) {
 			this.editData = cardData;
@@ -252,6 +259,21 @@ export class AdversaryModal extends Modal {
 	private buildActionButtons(contentEl: HTMLElement) {
 		const container = contentEl.createDiv({ cls: "df-adv-form-buttons" });
 
+		// Wide card toggle lives left of the insert button
+		const wideWrapper = container.createDiv({ cls: "df-wide-card-wrapper" });
+		const wideCheckbox = wideWrapper.createEl("input", {
+			attr: { type: "checkbox", id: "df-modal-wide-adv" },
+			cls: "df-wide-card-checkbox",
+		}) as HTMLInputElement;
+		wideWrapper.createEl("label", {
+			text: "Wide",
+			attr: { for: "df-modal-wide-adv" },
+			cls: "df-wide-card-label",
+		});
+		wideCheckbox.addEventListener("change", () => {
+			this.wideCard = wideCheckbox.checked;
+		});
+
 		const btn = container.createEl("button", {
 			text: this.isEditMode ? "Update card" : "Insert card",
 			cls: "df-adv-btn-insert",
@@ -269,7 +291,7 @@ export class AdversaryModal extends Modal {
 	private async handleSubmit() {
 		const values = this.readFormValues();
 		const features = getAdvFeatureValues(this.features);
-		const newHTML = buildCardHTML(values, features);
+		const newHTML = buildCardHTML(values, features, this.wideCard);
 		const newData = assembleAdvData(values, features);
 
 		if (this.onEditUpdate) {
@@ -295,12 +317,12 @@ export class AdversaryModal extends Modal {
 	}
 
 	private insertCard(html: string) {
-		if (isCanvasActive(this.app)) {
+		if (this.insertDestination === "canvas") {
 			const pos = getAvailableCanvasPosition(this.plugin.app);
 			createCanvasCard(this.plugin.app, html, {
 				x: pos.x, y: pos.y, width: 400, height: 600,
 			});
-		} else if (isMarkdownActive(this.app) && this.editor) {
+		} else if (this.insertDestination === "markdown" && this.editor) {
 			this.editor.replaceSelection(html + "\n");
 		}
 	}

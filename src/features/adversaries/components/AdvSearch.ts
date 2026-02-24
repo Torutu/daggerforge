@@ -6,7 +6,7 @@ import {
 	decrementAdversaryCount,
 	setAdversaryCount,
 	resetAdversaryCount,
-	isCanvasActive,
+	resolveInsertDestination,
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	SearchEngine,
@@ -21,6 +21,8 @@ interface Adversary extends AdvData { }
 
 export class AdversaryView extends ItemView {
 	private adversaries: Adversary[];
+	/** Last main-area leaf the user focused — canvas or markdown. */
+	private lastMainLeaf: { view: any } | null = null;
 	private lastActiveMarkdown: MarkdownView | null = null;
 	private searchEngine: SearchEngine<Adversary> = new SearchEngine<Adversary>();
 	private searchControlsUI: SearchControlsUI | null = null;
@@ -78,35 +80,24 @@ export class AdversaryView extends ItemView {
 	}
 
 	public async refresh() {
-		// Preserve current filters before refresh
 		const currentFilters = this.searchEngine.getFilters();
 		this.loadAdversaryData();
 
-		// Validate filters against available options
-		const availableSources = this.searchEngine.getAvailableOptions("source");
-		const availableTiers = this.searchEngine.getAvailableOptions("tier");
-		const availableTypes = this.searchEngine.getAvailableOptions("type");
+		// Remove any selected values that no longer exist in the data
+		const availableSources = this.searchEngine.getAvailableOptions("sources");
+		const availableTiers = this.searchEngine.getAvailableOptions("tiers");
+		const availableTypes = this.searchEngine.getAvailableOptions("types");
 
-		// Clear invalid filters
-		if (currentFilters.source && !availableSources.includes(currentFilters.source)) {
-			currentFilters.source = null;
-		}
-		if (currentFilters.tier && !availableTiers.includes(currentFilters.tier)) {
-			currentFilters.tier = null;
-		}
-		if (currentFilters.type && !availableTypes.includes(currentFilters.type)) {
-			currentFilters.type = null;
-		}
+		currentFilters.tiers = currentFilters.tiers.filter(t => availableTiers.includes(t));
+		currentFilters.sources = currentFilters.sources.filter(s => availableSources.includes(s));
+		currentFilters.types = currentFilters.types.filter(tp => availableTypes.includes(tp));
 
-		// Restore filters and re-render results
 		this.searchEngine.setFilters(currentFilters);
 
-		// Update UI dropdowns to match validated filters
 		if (this.searchControlsUI) {
 			this.searchControlsUI.setFilterValues(currentFilters);
 		}
 
-		// Render results with validated filters
 		this.renderResults(this.searchEngine.search());
 	}
 
@@ -135,7 +126,14 @@ export class AdversaryView extends ItemView {
 	private registerEventListeners() {
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", (leaf) => {
-				const view = leaf?.view;
+				if (!leaf) return;
+				const view = leaf.view;
+				// Ignore the browser sidebar itself
+				if ((view as any).getViewType?.() === "daggerforge:adversary-view") return;
+				// Track any main-area leaf: canvas or markdown
+				if ((view as any).canvas || view instanceof MarkdownView) {
+					this.lastMainLeaf = leaf;
+				}
 				if (view instanceof MarkdownView) {
 					this.lastActiveMarkdown = view;
 				}
@@ -156,15 +154,15 @@ export class AdversaryView extends ItemView {
 				searchContainer.empty();
 				this.searchControlsUI = new SearchControlsUI({
 					placeholderText: "Search by name, type, or description...",
-					availableTiers: this.searchEngine.getAvailableOptions("tier"),
-					availableSources: this.searchEngine.getAvailableOptions("source"),
+					availableTiers: this.searchEngine.getAvailableOptions("tiers"),
+					availableSources: this.searchEngine.getAvailableOptions("sources"),
 					availableTypes: ["Bruiser", "Horde", // TODO: Remove this and use this.searchEngine.getAvailableOptions("type") after working on Horde
 						"Leader", "Minion", "Ranged", "Skulk", "Social", "Solo", "Standard", "Support",
 						"Leader (Umbra-Touched)", "Minion (Umbra-Touched)", "Solo (Umbra-Touched)"],
 					onSearchChange: (query) => this.handleSearchChange(query),
-					onTierChange: (tier) => this.handleTierChange(tier),
-					onSourceChange: (source) => this.handleSourceChange(source),
-					onTypeChange: (type) => this.handleTypeChange(type),
+					onTierChange: (tiers) => this.handleTierChange(tiers),
+					onSourceChange: (sources) => this.handleSourceChange(sources),
+					onTypeChange: (types) => this.handleTypeChange(types),
 					onClear: () => this.handleClearFilters(),
 				});
 				this.searchControlsUI.create(searchContainer);
@@ -204,18 +202,18 @@ export class AdversaryView extends ItemView {
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTierChange(tier: string | null) {
-		this.searchEngine.setFilters({ tier });
+	private handleTierChange(tiers: string[]) {
+		this.searchEngine.setFilters({ tiers });
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleSourceChange(source: string | null) {
-		this.searchEngine.setFilters({ source });
+	private handleSourceChange(sources: string[]) {
+		this.searchEngine.setFilters({ sources });
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTypeChange(type: string | null) {
-		this.searchEngine.setFilters({ type });
+	private handleTypeChange(types: string[]) {
+		this.searchEngine.setFilters({ types });
 		this.renderResults(this.searchEngine.search());
 	}
 
@@ -354,11 +352,11 @@ export class AdversaryView extends ItemView {
 	}
 
 	private insertAdversaryIntoNote(adversary: Adversary) {
-		const isCanvas = isCanvasActive(this.app);
-		if (isCanvas) {
+		const destination = resolveInsertDestination(this.app, this.lastMainLeaf);
+
+		if (destination === "canvas") {
 			const adversaryText = this.generateAdversaryMarkdown(adversary);
 			const position = getAvailableCanvasPosition(this.app);
-
 			createCanvasCard(this.app, adversaryText, {
 				x: position.x,
 				y: position.y,
@@ -379,9 +377,7 @@ export class AdversaryView extends ItemView {
 		}
 
 		if (view.getMode() !== "source") {
-			new Notice(
-				"You must be in edit mode to insert the adversary card.",
-			);
+			new Notice("You must be in edit mode to insert the adversary card.");
 			return;
 		}
 
@@ -398,6 +394,7 @@ export class AdversaryView extends ItemView {
 
 	private generateAdversaryMarkdown(adversary: Adversary): string {
 		const currentCount = getAdversaryCount();
+		const wide = this.searchControlsUI?.getWideCard() ?? false;
 
 		return buildCardHTML(
 			{
@@ -420,6 +417,7 @@ export class AdversaryView extends ItemView {
 				source: adversary.source || "core",
 			},
 			adversary.features.map(f => ({ ...f, cost: f.cost || "" })),
+			wide,
 		);
 	}
 }

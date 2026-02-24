@@ -1,73 +1,106 @@
 :root {
-  --df-corner: 10px;
-  --df-font: "Myriad Pro";
-  --df-color-primary: #000;
-  --df-color-bg-outer: #bfa980;
-  --df-color-bg-inner: #f5f0e9;
-  --df-color-border: #bfa980;
-  --df-color-void: #784d99;
-  --df-color-umbra: #464ca5;
-  --df-color-sablewood: #14805f;
-  --df-color-Incredible: #3c00c7;
+	--df-corner: 10px;
+	--df-font: "Myriad Pro";
+	--df-color-primary: #000;
+	--df-color-bg-outer: #bfa980;
+	--df-color-bg-inner: #f5f0e9;
+	--df-color-border: #bfa980;
+	--df-color-void: #784d99;
+	--df-color-umbra: #464ca5;
+	--df-color-sablewood: #14805f;
+	--df-color-Incredible: #3c00c7;
 }
 
 .df-pseudo-cut-corners {
-  position: relative;
-  clip-path: none;
-  --df-corner: 4px;
+	position: relative;
+	clip-path: none;
+	--df-corner: 4px;
 }
 
 .df-pseudo-cut-corners::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  clip-path: polygon(
-    var(--df-corner) 0%,
-    calc(100% - var(--df-corner)) 0%,
-    100% var(--df-corner),
-    100% calc(100% - var(--df-corner)),
-    calc(100% - var(--df-corner)) 100%,
-    var(--df-corner) 100%,
-    0% calc(100% - var(--df-corner)),
-    0% var(--df-corner)
-  );
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	clip-path: polygon(var(--df-corner) 0%,
+			calc(100% - var(--df-corner)) 0%,
+			100% var(--df-corner),
+			100% calc(100% - var(--df-corner)),
+			calc(100% - var(--df-corner)) 100%,
+			var(--df-corner) 100%,
+			0% calc(100% - var(--df-corner)),
+			0% var(--df-corner));
 }
 
 .df-pseudo-cut-corners.outer {
-  filter: drop-shadow(0.2em 0.2em 0.4em rgba(0, 0, 0, 0.5));
-  padding: 1.4px;
-  max-width: 400px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0 auto;
+	filter: drop-shadow(0.2em 0.2em 0.4em rgba(0, 0, 0, 0.5));
+	padding: 1.4px;
+	max-width: 400px;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0 auto;
 }
 
 .df-pseudo-cut-corners.outer::before {
-  background-color: var(--df-color-bg-outer);
+	background-color: var(--df-color-bg-outer);
 }
 
 .df-pseudo-cut-corners.inner {
-  padding: 5px;
-  box-sizing: border-box;
+	padding: 5px;
+	box-sizing: border-box;
 }
 
 .df-pseudo-cut-corners.inner::before {
-  background-color: var(--df-color-bg-inner);
+	background-color: var(--df-color-bg-inner);
+}
+
+/********************** WIDE ***********************/
+
+/* Wide card mode — overrides the default 400px cap on both card types */
+.df-card--wide.df-pseudo-cut-corners.outer,
+.df-card--wide.df-env-card-outer {
+	max-width: 100%;
+}
+
+/* Wide card toggle — sits in the filter row alongside the dropdown buttons */
+.df-wide-card-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	margin-left: auto;
+	/* pushes it to the right end of the filter row */
+	padding: 4px 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-secondary);
+	white-space: nowrap;
+}
+
+.df-wide-card-checkbox {
+	cursor: pointer;
+	accent-color: var(--interactive-accent);
+	margin: 0;
+}
+
+.df-wide-card-label {
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	color: var(--text-normal);
+	user-select: none;
 }
 
 .df-card-inner {
-  font-family: var(--df-font-text);
-  color: var(--df-color-primary);
-  font-weight: 1000;
+	font-family: var(--df-font-text);
+	color: var(--df-color-primary);
+	font-weight: 1000;
 }
 
 .df-card-inner * {
-  font-family: inherit;
-  color: inherit;
+	font-family: inherit;
+	color: inherit;
 }
 
 .df-hp-tickboxes {
@@ -105,7 +138,8 @@
 	background-color: transparent !important;
 }
 
-.df-env-edit-button, .df-adv-edit-button{
+.df-env-edit-button,
+.df-adv-edit-button {
 	position: absolute;
 	top: 8px;
 	right: 8px;
@@ -123,13 +157,17 @@
 	transition: background-color 0.2s ease;
 	z-index: 10;
 }
-.df-env-edit-button:hover, .df-adv-edit-button:hover {
+
+.df-env-edit-button:hover,
+.df-adv-edit-button:hover {
 	background-color: #3f83f8;
 	color: white;
 	cursor: pointer;
-	content:attr(data-tooltip);
+	content: attr(data-tooltip);
 }
-.df-env-edit-button:active, .df-adv-edit-button:active {
+
+.df-env-edit-button:active,
+.df-adv-edit-button:active {
 	transform: scale(0.95);
 }
 
@@ -152,6 +190,7 @@
 	font-weight: 700;
 	margin: 0;
 }
+
 .df-card-inner .df-subtitle,
 .df-card-inner .df-section,
 .df-card-inner .df-feature-title {
@@ -247,7 +286,7 @@ select.df-input-field {
 	width: 10%;
 }
 
-.df-inline-field-wrapper{
+.df-inline-field-wrapper {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -259,7 +298,8 @@ select.df-input-field {
 	margin-bottom: 4px;
 }
 
-.df-field-input, .df-adv-field-name{
+.df-field-input,
+.df-adv-field-name {
 	width: 100%;
 }
 
@@ -332,7 +372,7 @@ select.df-input-field {
 
 /* ===== ADVERSARY FORM STYLES ===== */
 
-.df-feature-desc-input{
+.df-feature-desc-input {
 	width: 100%;
 	min-height: 60px;
 	padding: 6px 8px;
@@ -345,28 +385,31 @@ select.df-input-field {
 	overflow: auto;
 }
 
-.df-feature-row{
+.df-feature-row {
 	display: flex;
 	gap: 8px;
 	margin-bottom: 6px;
 }
 
-.df-input-feature-name{
+.df-input-feature-name {
 	width: 100%;
 }
 
 .df-triple-fields-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* 3 equal columns */
-    gap: 10px;
-    align-items: flex-start;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	/* 3 equal columns */
+	gap: 10px;
+	align-items: flex-start;
 }
 
 .df-triple-field-item {
-    display: flex;
-    flex-direction: column;
-    flex: 1;  /* Shares space equally */
-    min-width: 0;  /* Allows proper grid constraint */
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	/* Shares space equally */
+	min-width: 0;
+	/* Allows proper grid constraint */
 }
 
 .df-adv-form-section-content {
@@ -376,8 +419,9 @@ select.df-input-field {
 
 .df-triple-field-item input,
 .df-triple-field-item select {
-    width: 100%;  /* Full width of grid cell */
-    /* ... styling ... */
+	width: 100%;
+	/* Full width of grid cell */
+	/* ... styling ... */
 }
 
 /* Adversary form fields */
@@ -431,7 +475,7 @@ select.df-input-field {
 	border: 1px solid var(--background-modifier-border);
 }
 
-.df-feature-block{
+.df-feature-block {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -442,7 +486,7 @@ select.df-input-field {
 	margin-bottom: 0;
 }
 
-.df-adv-feature-container > div:first-child {
+.df-adv-feature-container>div:first-child {
 	border-top: none;
 }
 
@@ -518,11 +562,11 @@ select.df-input-field {
 }
 
 .df-env-row-basic-info {
-    display: grid;
-    grid-template-columns: 70% 10% 15%;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
+	display: grid;
+	grid-template-columns: 70% 10% 15%;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .df-env-row-difficulty {
@@ -582,7 +626,7 @@ select.df-input-field {
 }
 
 
-.df-env-field-desc-textarea{
+.df-env-field-desc-textarea {
 	width: 100%;
 	max-width: 100%;
 	padding: 6px 8px;
@@ -760,8 +804,9 @@ select.df-input-field {
 	margin-top: 3px;
 }
 
-.df-type-filter, .df-tier-filter,
-.df-source-filter{
+.df-type-filter,
+.df-tier-filter,
+.df-source-filter {
 	background-color: #333333;
 }
 
@@ -808,7 +853,7 @@ select.df-input-field {
 	text-transform: capitalize;
 }
 
-.df-source-badge-custom{
+.df-source-badge-custom {
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -836,11 +881,11 @@ select.df-input-field {
 	border-color: var(--df-color-sablewood);
 }
 
-.df-source-incredible{
+.df-source-incredible {
 	border-color: var(--df-color-Incredible);
 }
 
-.df-source-void{
+.df-source-void {
 	border-color: var(--df-color-void);
 }
 
@@ -881,11 +926,11 @@ select.df-input-field {
 	width: 100%;
 }
 
-.df-search-controls{
+.df-search-controls {
 	margin-bottom: 10px;
 }
 
-.df-search-row{
+.df-search-row {
 	margin-bottom: 10px;
 }
 
@@ -893,7 +938,7 @@ select.df-input-field {
 	display: flex;
 	overflow-x: auto;
 	flex-wrap: nowrap;
-    scroll-behavior: smooth;
+	scroll-behavior: smooth;
 	flex-grow: 1;
 	min-width: 0;
 	max-width: 100%;
@@ -908,21 +953,21 @@ select.df-input-field {
 	font-size: 0.9em;
 	text-align: center;
 	transition: all 0.2s ease-in-out;
-	justify-content:space-between;
+	justify-content: space-between;
 }
 
 /* goes down when clicked*/
-.df-clear-filters-btn:active{
+.df-clear-filters-btn:active {
 	transform: translateY(1px);
 	transform: scale(0.99);
 }
 
-.df-clear-filters-btn:hover{
+.df-clear-filters-btn:hover {
 	background-color: var(--background-modifier-hover);
 	cursor: pointer;
 }
 
-.df-search-input{
+.df-search-input {
 	width: 100%;
 }
 
@@ -938,7 +983,7 @@ select.df-input-field {
 	padding: 10px;
 }
 
-.df-adversary-counter-btn:hover{
+.df-adversary-counter-btn:hover {
 	background-color: var(--background-modifier-hover);
 	cursor: pointer;
 }
@@ -975,7 +1020,7 @@ select.df-input-field {
 	margin-top: auto;
 }
 
-.df-env-card-inner > div:first-of-type {
+.df-env-card-inner>div:first-of-type {
 	font-weight: 900;
 	font-size: 1.4rem;
 	margin-bottom: -7px;
@@ -1152,7 +1197,7 @@ select.df-input-field {
 	font-weight: bold;
 }
 
-.df-source-badge-incredible{
+.df-source-badge-incredible {
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -1163,7 +1208,7 @@ select.df-input-field {
 	text-transform: capitalize;
 }
 
-.df-source-badge-void{
+.df-source-badge-void {
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -1174,7 +1219,7 @@ select.df-input-field {
 	text-transform: capitalize;
 }
 
-.df-source-badge-umbra{
+.df-source-badge-umbra {
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -1185,7 +1230,7 @@ select.df-input-field {
 	text-transform: capitalize;
 }
 
-.df-source-badge-sablewood{
+.df-source-badge-sablewood {
 	margin-left: 8px;
 	padding: 2px 8px;
 	border-radius: 4px;
@@ -1201,19 +1246,20 @@ select.df-input-field {
 /*****************************************/
 
 .df-floating-window {
-    background-color: var(--background-primary);
+	background-color: var(--background-primary);
 	left: 100px;
-    top: 100px;
-    color: var(--text-normal);
-    border: 1px solid var(--background-modifier-border);
-    border-radius: 0.25rem;
-    padding: 0.5rem;
+	top: 100px;
+	color: var(--text-normal);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 0.25rem;
+	padding: 0.5rem;
 	z-index: 9999;
-    position: absolute; /* default */
+	position: absolute;
+	/* default */
 }
 
 .df-close-btn {
-    float: right;
+	float: right;
 	position: absolute;
 	top: 6px;
 	right: 6px;
@@ -1241,34 +1287,35 @@ select.df-input-field {
 }
 
 .df-dice-roll-body {
-    padding: 10px;
+	padding: 10px;
 }
 
-.df-dice-buttons{
+.df-dice-buttons {
 	display: flex;
 }
-.df-roll-btn{
+
+.df-roll-btn {
 	margin-left: 3px;
 }
 
 .df-log-container {
-    height: 120px;
-    overflow: auto;
+	height: 120px;
+	overflow: auto;
 	width: 333px;
-    background: #222;
-    padding: 5px;
-    border-radius: 4px;
-    margin-bottom: 10px;
+	background: #222;
+	padding: 5px;
+	border-radius: 4px;
+	margin-bottom: 10px;
 }
 
 .df-label {
-    margin-bottom: 4px;
+	margin-bottom: 4px;
 	margin-top: 1px;
 }
 
 .df-roll-count {
-    width: 50px;
-    margin-bottom: 8px;
+	width: 50px;
+	margin-bottom: 8px;
 }
 
 .df-dice-btn {
@@ -1286,13 +1333,13 @@ select.df-input-field {
 }
 
 .df-dice-queue {
-    margin-bottom: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 333px;
-    justify-content: center;
-    flex-direction: row;
-    align-content: center;
+	margin-bottom: 8px;
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 333px;
+	justify-content: center;
+	flex-direction: row;
+	align-content: center;
 }
 
 .df-dice-queue-item {
@@ -1328,7 +1375,7 @@ select.df-input-field {
 }
 
 .df-clear-log-btn {
-    margin-left: 5px;
+	margin-left: 5px;
 }
 
 
@@ -1338,17 +1385,17 @@ select.df-input-field {
 
 /* During drag movement */
 .df-dragging {
-	  user-select: none;
+	user-select: none;
 }
 
 /* Default grab cursor */
 .df-grab-cursor {
-  cursor: grab;
+	cursor: grab;
 }
 
 /* Reset grab cursor state */
 .df-grab-reset {
-  cursor: grab;
+	cursor: grab;
 }
 
 
@@ -1357,68 +1404,69 @@ select.df-input-field {
 /****************************************/
 
 .df-bg-floating-window {
-    background-color: var(--background-primary);
+	background-color: var(--background-primary);
 	max-width: fit-content;
 	left: var(--df-left, 100px);
-    top: var(--df-top, 100px);
-    color: var(--text-normal);
-    border: 1px solid var(--background-modifier-border);
-    border-radius: 0.25rem;
-    padding: 0.5rem;
+	top: var(--df-top, 100px);
+	color: var(--text-normal);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 0.25rem;
+	padding: 0.5rem;
 	z-index: 9999;
-    position: absolute; /* default */
+	position: absolute;
+	/* default */
 }
 
 .df-battle-guide {
-    background-color: #222;
-    color: #eee;
-    padding: 8px;
-    border-radius: 4px;
-    max-height: 200px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    font-size: 13px;
-    line-height: 1.4;
+	background-color: #222;
+	color: #eee;
+	padding: 8px;
+	border-radius: 4px;
+	max-height: 200px;
+	overflow-y: auto;
+	margin-bottom: 10px;
+	font-size: 13px;
+	line-height: 1.4;
 }
 
-.df-calc-btn{
+.df-calc-btn {
 	margin-left: 5px;
 }
 
 .df-battle-guide h4 {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 .df-battle-guide ul {
-    padding-left: 20px;
-    margin-top: 4px;
-    margin-bottom: 6px;
+	padding-left: 20px;
+	margin-top: 4px;
+	margin-bottom: 6px;
 }
 
 .df-encounter-body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 
 .df-encounter-columns {
-    display: flex;
-    gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 
-.df-bg-h5{
+.df-bg-h5 {
 	margin: 0;
 	margin-bottom: 6px;
 }
 
 .df-bg-button {
-    /* optional styling for buttons themselves */
-    padding: 6px 10px;
-    border-radius: 4px;
-    border: 1px solid #888;
-    background-color: #444;
-    color: white;
-    cursor: pointer;
+	/* optional styling for buttons themselves */
+	padding: 6px 10px;
+	border-radius: 4px;
+	border: 1px solid #888;
+	background-color: #444;
+	color: white;
+	cursor: pointer;
 }
 
 .df-encounter-buttons {
@@ -1426,36 +1474,41 @@ select.df-input-field {
 }
 
 .df-bg-button-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    grid-template-rows: repeat(2, auto);  /* 2 rows */
-    gap: 5px; /* spacing between buttons */
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	/* 3 columns */
+	grid-template-rows: repeat(2, auto);
+	/* 2 rows */
+	gap: 5px;
+	/* spacing between buttons */
 }
 
-.df-adjustments-column, .df-spending-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    max-height: 300px; /* adjust as needed d*/
-    border: 1px solid #444;
-    padding: 5px;
-    background: #1b1b1b;
+.df-adjustments-column,
+.df-spending-column {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	max-height: 300px;
+	/* adjust as needed d*/
+	border: 1px solid #444;
+	padding: 5px;
+	background: #1b1b1b;
 }
 
 .df-sticky-header {
-    position: sticky;
-    top: 0;
-    background: #1b1b1b;
-    font-weight: bold;
-    padding: 5px 0;
-    border-bottom: 1px solid #555;
-    z-index: 10;
+	position: sticky;
+	top: 0;
+	background: #1b1b1b;
+	font-weight: bold;
+	padding: 5px 0;
+	border-bottom: 1px solid #555;
+	z-index: 10;
 }
 
 .df-scrollable-list {
-    overflow-y: auto;
-    flex: 1;
-    padding: 5px 0;
+	overflow-y: auto;
+	flex: 1;
+	padding: 5px 0;
 }
 
 /*********************************************/
@@ -1520,7 +1573,7 @@ select.df-input-field {
 
 /*Bullet Points*/
 
-.df-env-feature-input-bullet{
+.df-env-feature-input-bullet {
 	width: 100%;
 	height: 2rem;
 	margin-bottom: 3px;
@@ -1535,12 +1588,123 @@ select.df-input-field {
 	padding: 6px;
 }
 
-.df-calc-btn:hover{
+.df-calc-btn:hover {
 	background-color: var(--background-modifier-hover);
 	cursor: pointer;
 }
 
-.df-calc-btn:active{
+.df-calc-btn:active {
 	transform: translateY(1px);
 	transform: scale(0.99);
+}
+
+/* ============================================================
+   Multi-select filter controls
+   ============================================================ */
+
+.df-filter-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+	margin-top: 6px;
+}
+
+/* Wrapper is just a layout anchor for the toggle button */
+.df-multiselect-wrapper {
+	position: relative;
+}
+
+/* Toggle button */
+.df-multiselect-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-secondary);
+	color: var(--text-normal);
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	white-space: nowrap;
+}
+
+.df-multiselect-toggle:hover {
+	background: var(--background-modifier-hover);
+}
+
+/* Count badge */
+.df-multiselect-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 4px;
+	border-radius: 9px;
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	font-size: 11px;
+	font-weight: 600;
+}
+
+.df-multiselect-badge--hidden {
+	display: none;
+}
+
+/*
+ * Panel is appended to document.body and positioned with `fixed`.
+ * This escapes Obsidian's overflow:hidden sidebar containers entirely.
+ * z-index must be high enough to appear above all Obsidian UI layers.
+ */
+.df-multiselect-panel {
+	position: fixed;
+	/* set by JS via openPanelAt() */
+	z-index: 9999;
+	min-width: 160px;
+	max-height: 240px;
+	overflow-y: auto;
+	padding: 6px 0;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.df-multiselect-panel--hidden {
+	display: none;
+}
+
+/* Each row in the panel */
+.df-multiselect-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 12px;
+	cursor: pointer;
+}
+
+.df-multiselect-item:hover {
+	background: var(--background-modifier-hover);
+}
+
+.df-multiselect-checkbox {
+	cursor: pointer;
+	accent-color: var(--interactive-accent);
+	flex-shrink: 0;
+}
+
+.df-multiselect-item-label {
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	color: var(--text-normal);
+	user-select: none;
+}
+
+.df-multiselect-empty {
+	display: block;
+	padding: 6px 12px;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
 }

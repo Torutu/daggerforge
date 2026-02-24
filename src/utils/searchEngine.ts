@@ -1,13 +1,17 @@
 /**
  * Search Engine for DaggerForge Browsers
- * Handles fuzzy text search, dropdown filtering, and relevance-ranked results.
+ * Handles fuzzy text search, multi-select dropdown filtering, and relevance-ranked results.
+ *
+ * Filters for tier, source, and type are now string arrays.
+ * An empty array means "no filter" (show all). A non-empty array means
+ * "show cards that match ANY of the selected values" (OR logic).
  */
 
 export interface SearchFilters {
 	query: string;
-	tier: string | null;
-	source: string | null;
-	type: string | null;
+	tiers: string[];   // empty = all
+	sources: string[]; // empty = all
+	types: string[];   // empty = all
 }
 
 export interface SearchableCard {
@@ -25,12 +29,6 @@ export interface SearchableCard {
 
 /**
  * Score how well `query` matches `text` using character-sequence matching.
- *
- * Every character of the query must appear in the text in order for the
- * function to return a positive score. The score is higher when:
- *   - matched characters are consecutive (rewards "blksm" → "Blacksmith")
- *   - the first match starts near the beginning of the text
- *
  * Returns 0 when the query is not a subsequence of the text (no match).
  */
 function fuzzyScore(text: string, query: string): number {
@@ -45,10 +43,8 @@ function fuzzyScore(text: string, query: string): number {
 
 	while (textIndex < t.length && queryIndex < q.length) {
 		if (t[textIndex] === q[queryIndex]) {
-			// First character matched — record position for start-of-word bonus
 			if (firstMatchIndex === -1) firstMatchIndex = textIndex;
 
-			// Consecutive characters in the text score progressively higher
 			consecutiveBonus = queryIndex > 0 && t[textIndex - 1] === q[queryIndex - 1]
 				? consecutiveBonus + 1
 				: 0;
@@ -59,10 +55,8 @@ function fuzzyScore(text: string, query: string): number {
 		textIndex++;
 	}
 
-	// All query characters must have matched
 	if (queryIndex < q.length) return 0;
 
-	// Penalise matches that start far into the string
 	const startPenalty = firstMatchIndex === -1 ? 0 : firstMatchIndex * 0.1;
 	return Math.max(0, score - startPenalty);
 }
@@ -86,9 +80,9 @@ export class SearchEngine<T extends SearchableCard> {
 	private cards: T[] = [];
 	private filters: SearchFilters = {
 		query: "",
-		tier: null,
-		source: null,
-		type: null,
+		tiers: [],
+		sources: [],
+		types: [],
 	};
 
 	constructor(cards: T[] = []) {
@@ -108,17 +102,16 @@ export class SearchEngine<T extends SearchableCard> {
 	}
 
 	public clearFilters(): void {
-		this.filters = { query: "", tier: null, source: null, type: null };
+		this.filters = { query: "", tiers: [], sources: [], types: [] };
 	}
 
 	/**
-	 * Return cards that pass all dropdown filters, ordered by fuzzy relevance
+	 * Return cards that pass all filters, ordered by fuzzy relevance
 	 * when a text query is active, or in original order otherwise.
 	 */
 	public search(): T[] {
 		const query = this.filters.query.trim();
 
-		// Apply dropdown filters first (exact-match, cheap)
 		const filtered = this.cards.filter(card =>
 			this.matchesTier(card) &&
 			this.matchesSource(card) &&
@@ -127,50 +120,54 @@ export class SearchEngine<T extends SearchableCard> {
 
 		if (!query) return filtered;
 
-		// Score each card; discard those with no fuzzy match
 		const scored = filtered
 			.map(card => ({ card, score: bestFieldScore(card, query) }))
 			.filter(entry => entry.score > 0);
 
-		// Sort descending by score so the best match is at the top
 		scored.sort((a, b) => b.score - a.score);
 
 		return scored.map(entry => entry.card);
 	}
 
+	/** Empty array = match all. Non-empty = match any selected tier. */
 	private matchesTier(card: T): boolean {
-		if (this.filters.tier === null) return true;
-		return String(card.tier) === String(this.filters.tier);
+		if (this.filters.tiers.length === 0) return true;
+		return this.filters.tiers.includes(String(card.tier));
 	}
 
+	/** Empty array = match all. Non-empty = match any selected source. */
 	private matchesSource(card: T): boolean {
-		if (!this.filters.source) return true;
-		return (card.source || "core").toLowerCase() === this.filters.source.toLowerCase();
+		if (this.filters.sources.length === 0) return true;
+		const cardSource = (card.source || "core").toLowerCase();
+		return this.filters.sources.some(s => s.toLowerCase() === cardSource);
 	}
 
+	/** Empty array = match all. Non-empty = match any selected type. */
 	private matchesType(card: T): boolean {
-		if (!this.filters.type) return true;
-		const filterType = this.filters.type.toLowerCase();
+		if (this.filters.types.length === 0) return true;
+
 		const cardType = (String(card.type ?? "")).toLowerCase();
 		const cardDisplayType = (String((card as Record<string, unknown>).displayType ?? "")).toLowerCase();
 
-		// "horde" filter must also match "horde (hp/x)" variants
-		if (filterType === "horde") {
-			return cardType === "horde" || cardType.startsWith("horde (");
-		}
-
-		return cardType === filterType || cardDisplayType === filterType;
+		return this.filters.types.some(filterType => {
+			const ft = filterType.toLowerCase();
+			// "horde" also matches "horde (hp/x)" variants
+			if (ft === "horde") {
+				return cardType === "horde" || cardType.startsWith("horde (");
+			}
+			return cardType === ft || cardDisplayType === ft;
+		});
 	}
 
 	public getAvailableOptions(filterName: keyof SearchFilters): string[] {
 		const options = new Set<string>();
 
 		for (const card of this.cards) {
-			if (filterName === "tier" && card.tier !== undefined) {
+			if (filterName === "tiers" && card.tier !== undefined) {
 				options.add(String(card.tier));
-			} else if (filterName === "source") {
+			} else if (filterName === "sources") {
 				options.add(card.source || "core");
-			} else if (filterName === "type") {
+			} else if (filterName === "types") {
 				if (card.type) options.add(String(card.type));
 				const dt = (card as Record<string, unknown>).displayType;
 				if (dt) options.add(String(dt));

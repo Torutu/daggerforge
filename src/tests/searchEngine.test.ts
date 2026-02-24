@@ -2,6 +2,7 @@
  * searchEngine.test.ts
  * 
  * Tests for search and filter functionality
+ * Filters now use arrays: tiers, sources, types (OR logic within each group)
  */
 
 import { SearchEngine } from '../utils/searchEngine';
@@ -38,42 +39,36 @@ describe('Search by name', () => {
         engine.setFilters({ query: 'fire' });
         
         const results = engine.search();
-        const expected = 1;
         const actual = results.length;
-        
-        logResult('Find cards by name (query="fire")', `${expected} card`, `${actual} card`, actual === expected);
+        logResult('Find cards by name (query="fire")', '1 card', `${actual} card`, actual === 1);
         
         expect(results).toHaveLength(1);
         expect(results[0].name).toBe('Fire Drake');
     });
 
-    it('finds multiple cards', () => {
+    it('finds by description', () => {
         const engine = new SearchEngine();
         engine.setCards(CARDS);
         engine.setFilters({ query: 'creature' });
         
         const results = engine.search();
-        const expected = 1;
         const actual = results.length;
-        
-        logResult('Find by description (query="creature")', `${expected} card (Goblin)`, `${actual} card`, actual === expected);
+        logResult('Find by description (query="creature")', '1 card (Goblin)', `${actual} card`, actual === 1);
         
         expect(results).toHaveLength(1);
         expect(results[0].name).toBe('Goblin');
     });
 });
 
-describe('Filter by tier', () => {
+describe('Filter by tier (single)', () => {
     it('filters to tier 1 only', () => {
         const engine = new SearchEngine();
         engine.setCards(CARDS);
-        engine.setFilters({ tier: '1' });
+        engine.setFilters({ tiers: ['1'] });
         
         const results = engine.search();
-        const expected = 2;
         const actual = results.length;
-        
-        logResult('Filter by tier 1', `${expected} cards (Fire Drake, Goblin)`, `${actual} cards`, actual === expected);
+        logResult('Filter by tier 1', '2 cards (Fire Drake, Goblin)', `${actual} cards`, actual === 2);
         
         expect(results).toHaveLength(2);
     });
@@ -81,62 +76,109 @@ describe('Filter by tier', () => {
     it('filters to tier 2 only', () => {
         const engine = new SearchEngine();
         engine.setCards(CARDS);
-        engine.setFilters({ tier: '2' });
+        engine.setFilters({ tiers: ['2'] });
         
         const results = engine.search();
-        const expected = 1;
         const actual = results.length;
-        
-        logResult('Filter by tier 2', `${expected} card (Ice Golem)`, `${actual} card`, actual === expected);
+        logResult('Filter by tier 2', '1 card (Ice Golem)', `${actual} card`, actual === 1);
         
         expect(results).toHaveLength(1);
     });
 });
 
-describe('Filter by source', () => {
+describe('Multi-select tier filter', () => {
+    it('returns cards matching any selected tier', () => {
+        const engine = new SearchEngine();
+        engine.setCards(CARDS);
+        engine.setFilters({ tiers: ['1', '2'] });
+        
+        const results = engine.search();
+        const actual = results.length;
+        logResult('Tier 1 OR 2', '3 cards (all)', `${actual} cards`, actual === 3);
+        
+        expect(results).toHaveLength(3);
+    });
+});
+
+describe('Filter by source (single)', () => {
     it('filters to core source only', () => {
         const engine = new SearchEngine();
         engine.setCards(CARDS);
-        engine.setFilters({ source: 'core' });
+        engine.setFilters({ sources: ['core'] });
         
         const results = engine.search();
-        const expected = 2;
         const actual = results.length;
-        
-        logResult('Filter by source (core)', `${expected} cards (Fire Drake, Goblin)`, `${actual} cards`, actual === expected);
+        logResult('Filter by source (core)', '2 cards (Fire Drake, Goblin)', `${actual} cards`, actual === 2);
         
         expect(results).toHaveLength(2);
     });
 });
 
-describe('Filter by type', () => {
+describe('Multi-select source filter', () => {
+    it('returns cards matching any selected source', () => {
+        const engine = new SearchEngine();
+        engine.setCards(CARDS);
+        engine.setFilters({ sources: ['core', 'void'] });
+        
+        const results = engine.search();
+        const actual = results.length;
+        logResult('Source core OR void', '3 cards (all)', `${actual} cards`, actual === 3);
+        
+        expect(results).toHaveLength(3);
+    });
+});
+
+describe('Filter by type (single)', () => {
     it('filters to Solo type only', () => {
         const engine = new SearchEngine();
         engine.setCards(CARDS);
-        engine.setFilters({ type: 'Solo' });
+        engine.setFilters({ types: ['Solo'] });
         
         const results = engine.search();
-        const expected = 1;
         const actual = results.length;
-        
-        logResult('Filter by type (Solo)', `${expected} card (Fire Drake)`, `${actual} card`, actual === expected);
+        logResult('Filter by type (Solo)', '1 card (Fire Drake)', `${actual} card`, actual === 1);
         
         expect(results).toHaveLength(1);
         expect(results[0].name).toBe('Fire Drake');
     });
 });
 
-describe('Multiple filters at once', () => {
-    it('can combine tier and source filters', () => {
+describe('Multi-select type filter', () => {
+    it('returns cards matching any selected type', () => {
         const engine = new SearchEngine();
         engine.setCards(CARDS);
-        engine.setFilters({ tier: '1', source: 'core' });
+        engine.setFilters({ types: ['Solo', 'Minion'] });
         
         const results = engine.search();
-        const expected = 2;
         const actual = results.length;
+        logResult('Type Solo OR Minion', '2 cards (Fire Drake, Goblin)', `${actual} cards`, actual === 2);
         
-        logResult('Multiple filters (tier=1, source=core)', `${expected} cards (Fire Drake, Goblin)`, `${actual} cards`, actual === expected);
+        expect(results).toHaveLength(2);
+    });
+});
+
+describe('Multiple filter groups combined', () => {
+    it('applies AND logic across groups (tier AND source)', () => {
+        const engine = new SearchEngine();
+        engine.setCards(CARDS);
+        engine.setFilters({ tiers: ['1'], sources: ['core'] });
+        
+        const results = engine.search();
+        const actual = results.length;
+        logResult('tiers=[1] AND sources=[core]', '2 cards (Fire Drake, Goblin)', `${actual} cards`, actual === 2);
+        
+        expect(results).toHaveLength(2);
+    });
+
+    it('narrows with multi-select across groups', () => {
+        const engine = new SearchEngine();
+        engine.setCards(CARDS);
+        // tier 1 AND (Solo OR Minion) → Fire Drake + Goblin
+        engine.setFilters({ tiers: ['1'], types: ['Solo', 'Minion'] });
+        
+        const results = engine.search();
+        const actual = results.length;
+        logResult('tiers=[1] AND types=[Solo,Minion]', '2 cards', `${actual} cards`, actual === 2);
         
         expect(results).toHaveLength(2);
     });
@@ -146,14 +188,12 @@ describe('Clear filters', () => {
     it('shows all cards when filters are cleared', () => {
         const engine = new SearchEngine();
         engine.setCards(CARDS);
-        engine.setFilters({ tier: '1' });
+        engine.setFilters({ tiers: ['1'] });
         engine.clearFilters();
         
         const results = engine.search();
-        const expected = 3;
         const actual = results.length;
-        
-        logResult('Clear filters', `${expected} cards (all cards)`, `${actual} cards`, actual === expected);
+        logResult('Clear filters', '3 cards (all)', `${actual} cards`, actual === 3);
         
         expect(results).toHaveLength(3);
     });

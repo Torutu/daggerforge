@@ -3,8 +3,7 @@ import { addEnvFeature, getEnvFeatureValues, envToHtml, Env_View_Type } from "..
 import type DaggerForgePlugin from "../../../main";
 import { EnvFeatureElements, EnvironmentData, FormStateElements } from "../../../types/index";
 import {
-	isMarkdownActive,
-	isCanvasActive,
+	resolveInsertDestination,
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	createInlineField,
@@ -66,6 +65,12 @@ export class EnvironmentModal extends Modal {
 	// Edit-mode fields
 	private isEditMode: boolean;
 	private editData: Record<string, unknown> = {};
+	private wideCard = false;
+	/**
+	 * Resolved before the modal opens so that opening the modal (which shifts
+	 * focus away from the note/canvas) does not change the answer.
+	 */
+	private insertDestination: "canvas" | "markdown" | "none";
 	onEditUpdate?: (
 		newHTML: string,
 		newData: EnvironmentData,
@@ -80,6 +85,8 @@ export class EnvironmentModal extends Modal {
 		this.plugin = plugin;
 		this.editor = editor;
 		this.isEditMode = !!cardData;
+		// Capture destination now, before the modal steals activeLeaf focus.
+		this.insertDestination = resolveInsertDestination(plugin.app, null);
 
 		if (cardData) {
 			this.editData = cardData;
@@ -242,6 +249,21 @@ export class EnvironmentModal extends Modal {
 	private buildActionButtons(contentEl: HTMLElement) {
 		const container = contentEl.createDiv({ cls: "df-env-form-buttons" });
 
+		// Wide card toggle lives left of the insert button
+		const wideWrapper = container.createDiv({ cls: "df-wide-card-wrapper" });
+		const wideCheckbox = wideWrapper.createEl("input", {
+			attr: { type: "checkbox", id: "df-modal-wide-env" },
+			cls: "df-wide-card-checkbox",
+		}) as HTMLInputElement;
+		wideWrapper.createEl("label", {
+			text: "Wide",
+			attr: { for: "df-modal-wide-env" },
+			cls: "df-wide-card-label",
+		});
+		wideCheckbox.addEventListener("change", () => {
+			this.wideCard = wideCheckbox.checked;
+		});
+
 		const btn = container.createEl("button", {
 			text: this.isEditMode ? "Update card" : "Insert card",
 			cls: "df-env-btn-insert",
@@ -259,8 +281,8 @@ export class EnvironmentModal extends Modal {
 	private async handleSubmit() {
 		const values = this.readFormValues();
 		const features = getEnvFeatureValues(this.features);
-		const newHTML = envToHtml(assembleEnvironmentData(values, features));
 		const newData = assembleEnvironmentData(values, features);
+		const newHTML = envToHtml(newData, this.wideCard);
 
 		if (this.onEditUpdate) {
 			await this.onEditUpdate(newHTML, newData);
@@ -286,8 +308,7 @@ export class EnvironmentModal extends Modal {
 
 	private insertCard(html: string) {
 		const wrapped = `<div class="environment-block">\n${html}\n</div>\n`;
-
-		if (isCanvasActive(this.app)) {
+		if (this.insertDestination === "canvas") {
 			const pos = getAvailableCanvasPosition(this.plugin.app);
 			createCanvasCard(this.plugin.app, wrapped, {
 				x: pos.x,
@@ -295,7 +316,7 @@ export class EnvironmentModal extends Modal {
 				width: 400,
 				height: 650,
 			});
-		} else if (isMarkdownActive(this.app) && this.editor) {
+		} else if (this.insertDestination === "markdown" && this.editor) {
 			this.editor.replaceSelection(wrapped);
 		}
 	}
