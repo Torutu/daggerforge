@@ -85,8 +85,9 @@ export class EnvironmentModal extends Modal {
 		this.plugin = plugin;
 		this.editor = editor;
 		this.isEditMode = !!cardData;
-		// Capture destination now, before the modal steals activeLeaf focus.
-		this.insertDestination = resolveInsertDestination(plugin.app, null);
+		// Capture destination now using the plugin's tracked last main leaf,
+		// before the modal opens and steals activeLeaf focus.
+		this.insertDestination = resolveInsertDestination(plugin.app, plugin.lastMainLeaf);
 
 		if (cardData) {
 			this.editData = cardData;
@@ -309,8 +310,9 @@ export class EnvironmentModal extends Modal {
 	private insertCard(html: string) {
 		const wrapped = `<div class="environment-block">\n${html}\n</div>\n`;
 		if (this.insertDestination === "canvas") {
-			const pos = getAvailableCanvasPosition(this.plugin.app);
-			createCanvasCard(this.plugin.app, wrapped, {
+			const { canvas } = resolveInsertDestination(this.plugin.app, this.plugin.lastMainLeaf);
+			const pos = getAvailableCanvasPosition(canvas);
+			createCanvasCard(this.plugin.app, wrapped, canvas, {
 				x: pos.x,
 				y: pos.y,
 				width: 400,

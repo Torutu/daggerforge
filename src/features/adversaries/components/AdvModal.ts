@@ -91,8 +91,9 @@ export class AdversaryModal extends Modal {
 		this.plugin = plugin;
 		this.editor = editor;
 		this.isEditMode = !!cardElement;
-		// Capture destination now, before the modal steals activeLeaf focus.
-		this.insertDestination = resolveInsertDestination(plugin.app, null);
+		// Capture destination now using the plugin's tracked last main leaf,
+		// before the modal opens and steals activeLeaf focus.
+		this.insertDestination = resolveInsertDestination(plugin.app, plugin.lastMainLeaf);
 
 		if (cardElement && cardData) {
 			this.editData = cardData;
@@ -318,8 +319,9 @@ export class AdversaryModal extends Modal {
 
 	private insertCard(html: string) {
 		if (this.insertDestination === "canvas") {
-			const pos = getAvailableCanvasPosition(this.plugin.app);
-			createCanvasCard(this.plugin.app, html, {
+			const { canvas } = resolveInsertDestination(this.plugin.app, this.plugin.lastMainLeaf);
+			const pos = getAvailableCanvasPosition(canvas);
+			createCanvasCard(this.plugin.app, html, canvas, {
 				x: pos.x, y: pos.y, width: 400, height: 600,
 			});
 		} else if (this.insertDestination === "markdown" && this.editor) {

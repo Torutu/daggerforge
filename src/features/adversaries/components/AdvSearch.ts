@@ -21,8 +21,6 @@ interface Adversary extends AdvData { }
 
 export class AdversaryView extends ItemView {
 	private adversaries: Adversary[];
-	/** Last main-area leaf the user focused — canvas or markdown. */
-	private lastMainLeaf: { view: any } | null = null;
 	private lastActiveMarkdown: MarkdownView | null = null;
 	private searchEngine: SearchEngine<Adversary> = new SearchEngine<Adversary>();
 	private searchControlsUI: SearchControlsUI | null = null;
@@ -128,12 +126,6 @@ export class AdversaryView extends ItemView {
 			this.app.workspace.on("active-leaf-change", (leaf) => {
 				if (!leaf) return;
 				const view = leaf.view;
-				// Ignore the browser sidebar itself
-				if ((view as any).getViewType?.() === "daggerforge:adversary-view") return;
-				// Track any main-area leaf: canvas or markdown
-				if ((view as any).canvas || view instanceof MarkdownView) {
-					this.lastMainLeaf = leaf;
-				}
 				if (view instanceof MarkdownView) {
 					this.lastActiveMarkdown = view;
 				}
@@ -352,12 +344,13 @@ export class AdversaryView extends ItemView {
 	}
 
 	private insertAdversaryIntoNote(adversary: Adversary) {
-		const destination = resolveInsertDestination(this.app, this.lastMainLeaf);
+		const plugin = (this.app as any).plugins?.plugins?.['daggerforge'];
+		const { kind, canvas } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
 
-		if (destination === "canvas") {
+		if (kind === "canvas") {
 			const adversaryText = this.generateAdversaryMarkdown(adversary);
-			const position = getAvailableCanvasPosition(this.app);
-			createCanvasCard(this.app, adversaryText, {
+			const position = getAvailableCanvasPosition(canvas);
+			createCanvasCard(this.app, adversaryText, canvas, {
 				x: position.x,
 				y: position.y,
 				width: 400,

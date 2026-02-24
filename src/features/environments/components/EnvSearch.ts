@@ -18,8 +18,6 @@ interface Environment extends EnvironmentData {
 
 export class EnvironmentView extends ItemView {
 	private environments: Environment[] = [];
-	/** Last main-area leaf the user focused — canvas or markdown. */
-	private lastMainLeaf: { view: any } | null = null;
 	private lastActiveMarkdown: MarkdownView | null = null;
 	private searchEngine: SearchEngine<Environment> = new SearchEngine<Environment>();
 	private searchControlsUI: SearchControlsUI | null = null;
@@ -214,12 +212,6 @@ export class EnvironmentView extends ItemView {
 			this.app.workspace.on("active-leaf-change", (leaf) => {
 				if (!leaf) return;
 				const view = leaf.view;
-				// Ignore the browser sidebar itself
-				if ((view as any).getViewType?.() === "daggerforge:environment-view") return;
-				// Track any main-area leaf: canvas or markdown
-				if ((view as any).canvas || view instanceof MarkdownView) {
-					this.lastMainLeaf = leaf;
-				}
 				if (view instanceof MarkdownView) {
 					this.lastActiveMarkdown = view;
 				}
@@ -283,11 +275,12 @@ export class EnvironmentView extends ItemView {
 		card.addEventListener("click", () => {
 			const wide = this.searchControlsUI?.getWideCard() ?? false;
 			const envHTML = envToHtml(env, wide);
-			const destination = resolveInsertDestination(this.app, this.lastMainLeaf);
+			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'];
+			const { kind, canvas } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
 
-			if (destination === "canvas") {
-				const position = getAvailableCanvasPosition(this.app);
-				const success = createCanvasCard(this.app, envHTML, {
+			if (kind === "canvas") {
+				const position = getAvailableCanvasPosition(canvas);
+				const success = createCanvasCard(this.app, envHTML, canvas, {
 					x: position.x,
 					y: position.y,
 					width: 400,
@@ -301,7 +294,7 @@ export class EnvironmentView extends ItemView {
 				return;
 			}
 
-			if (destination === "markdown") {
+			if (kind === "markdown") {
 				const view =
 					this.app.workspace.getActiveViewOfType(MarkdownView) ||
 					this.lastActiveMarkdown;

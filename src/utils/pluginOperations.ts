@@ -1,4 +1,4 @@
-import { App, ItemView, MarkdownView, Notice } from "obsidian";
+import { App, MarkdownView, Notice } from "obsidian";
 import DaggerForgePlugin from "../main";
 import {
 	AdversaryView,
@@ -12,59 +12,47 @@ import {
 import { DeleteConfirmModal } from "../features/data-management/index";
 
 /**
- * Opens the adversary or environment creator modal
- * Handles both Canvas and Markdown view contexts
+ * Opens the adversary or environment creator modal.
+ *
+ * Uses plugin.lastMainLeaf (set by the global active-leaf-change listener in
+ * main.ts) so the correct destination is known even when the ribbon menu or a
+ * command palette entry triggered this call — at that point activeLeaf is the
+ * menu/palette overlay, not the canvas or note the user was working in.
  */
 export function openCreator(plugin: DaggerForgePlugin, type: "adversary" | "environment"): void {
-	if (handleCanvasView(plugin, type)) {
+	const leaf = plugin.lastMainLeaf;
+	const view = leaf?.view;
+
+	if (!view) {
+		new Notice("No note or canvas is open. Click on one first.");
 		return;
 	}
 
-	const isActiveMarkdownView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
-	if (!isActiveMarkdownView) {
-		new Notice("No note or canvas is open. Click on a note to activate it.");
-		return;
-	}
-
-	handleMarkdownView(plugin, type, isActiveMarkdownView);
-}
-
-/**
- * Handles creator modal opening when Canvas view is active
- * Returns true if Canvas view was handled, false otherwise
- */
-function handleCanvasView(plugin: DaggerForgePlugin, type: "adversary" | "environment"): boolean {
-	const isActiveCanvasView = plugin.app.workspace.getActiveViewOfType(ItemView);
-	if (isActiveCanvasView?.getViewType() === "canvas") {
+	// Canvas destination
+	if ((view as any).canvas) {
 		if (type === "adversary") {
 			new AdversaryModal(plugin, null).open();
 		} else {
 			new EnvironmentModal(plugin, null).open();
 		}
-		return true;
-	}
-	return false;
-}
-
-/**
- * Handles creator modal opening when Markdown view is active
- * Requires the view to be in source (edit) mode
- */
-function handleMarkdownView(
-	plugin: DaggerForgePlugin,
-	type: "adversary" | "environment",
-	view: MarkdownView
-): void {
-	if (view.getMode() !== "source") {
-		new Notice("Please switch to Edit mode.");
 		return;
 	}
 
-	if (type === "adversary") {
-		new AdversaryModal(plugin, view.editor).open();
-	} else {
-		new EnvironmentModal(plugin, view.editor).open();
+	// Markdown destination
+	if (view instanceof MarkdownView) {
+		if (view.getMode() !== "source") {
+			new Notice("Please switch to Edit mode.");
+			return;
+		}
+		if (type === "adversary") {
+			new AdversaryModal(plugin, view.editor).open();
+		} else {
+			new EnvironmentModal(plugin, view.editor).open();
+		}
+		return;
 	}
+
+	new Notice("No note or canvas is open. Click on one first.");
 }
 
 /**
