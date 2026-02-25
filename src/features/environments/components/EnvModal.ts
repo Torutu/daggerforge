@@ -4,6 +4,7 @@ import type DaggerForgePlugin from "../../../main";
 import { EnvFeatureElements, EnvironmentData, FormStateElements } from "../../../types/index";
 import {
 	resolveInsertDestination,
+	type ResolvedDestination,
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	createInlineField,
@@ -70,7 +71,7 @@ export class EnvironmentModal extends Modal {
 	 * Resolved before the modal opens so that opening the modal (which shifts
 	 * focus away from the note/canvas) does not change the answer.
 	 */
-	private insertDestination: "canvas" | "markdown" | "none";
+	private insertDestination!: ResolvedDestination;
 	onEditUpdate?: (
 		newHTML: string,
 		newData: EnvironmentData,
@@ -309,8 +310,8 @@ export class EnvironmentModal extends Modal {
 
 	private insertCard(html: string) {
 		const wrapped = `<div class="environment-block">\n${html}\n</div>\n`;
-		if (this.insertDestination === "canvas") {
-			const { canvas } = resolveInsertDestination(this.plugin.app, this.plugin.lastMainLeaf);
+		if (this.insertDestination.kind === "canvas") {
+			const { canvas } = this.insertDestination;
 			const pos = getAvailableCanvasPosition(canvas);
 			createCanvasCard(this.plugin.app, wrapped, canvas, {
 				x: pos.x,
@@ -318,7 +319,7 @@ export class EnvironmentModal extends Modal {
 				width: 400,
 				height: 650,
 			});
-		} else if (this.insertDestination === "markdown" && this.editor) {
+		} else if (this.insertDestination.kind === "markdown" && this.editor) {
 			this.editor.replaceSelection(wrapped);
 		}
 	}

@@ -7,6 +7,7 @@ import {
 	createShortTripleFields,
 	createInlineField,
 	resolveInsertDestination,
+	type ResolvedDestination,
 	createCanvasCard,
 	getAvailableCanvasPosition,
 } from "../../../utils/index";
@@ -78,7 +79,7 @@ export class AdversaryModal extends Modal {
 	 * Resolved before the modal opens so that opening the modal (which shifts
 	 * focus away from the note/canvas) does not change the answer.
 	 */
-	private insertDestination: "canvas" | "markdown" | "none";
+	private insertDestination!: ResolvedDestination;
 	onEditUpdate?: (newHTML: string, newData: AdvData) => void | Promise<void>;
 
 	constructor(
@@ -318,13 +319,13 @@ export class AdversaryModal extends Modal {
 	}
 
 	private insertCard(html: string) {
-		if (this.insertDestination === "canvas") {
-			const { canvas } = resolveInsertDestination(this.plugin.app, this.plugin.lastMainLeaf);
+		if (this.insertDestination.kind === "canvas") {
+			const { canvas } = this.insertDestination;
 			const pos = getAvailableCanvasPosition(canvas);
 			createCanvasCard(this.plugin.app, html, canvas, {
 				x: pos.x, y: pos.y, width: 400, height: 600,
 			});
-		} else if (this.insertDestination === "markdown" && this.editor) {
+		} else if (this.insertDestination.kind === "markdown" && this.editor) {
 			this.editor.replaceSelection(html + "\n");
 		}
 	}
