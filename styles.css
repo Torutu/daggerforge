@@ -1143,6 +1143,34 @@ select.df-input-field {
 }
 
 /* Environment Browser */
+
+/* Scroll to top button - floating button that's always visible */
+.df-scroll-to-top {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	z-index: 1000;
+	transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.df-scroll-to-top:hover {
+	transform: scale(1.1);
+	opacity: 0.9;
+}
+
+.df-scroll-to-top:active {
+	transform: scale(0.95);
+}
+
 .df-search-filter-container {
 	display: flex;
 	gap: 10px;
