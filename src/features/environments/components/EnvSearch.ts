@@ -22,6 +22,7 @@ export class EnvironmentView extends ItemView {
 	private searchEngine: SearchEngine<Environment> = new SearchEngine<Environment>();
 	private searchControlsUI: SearchControlsUI | null = null;
 	private resultsDiv: HTMLElement | null = null;
+	private scrollToTopBtn: HTMLButtonElement | null = null;
 
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
@@ -220,6 +221,34 @@ export class EnvironmentView extends ItemView {
 
 		this.initializeView();
 		this.loadEnvironmentData();
+		this.attachScrollToTop();
+	}
+
+	async onClose() {
+		this.scrollToTopBtn?.remove();
+		this.scrollToTopBtn = null;
+	}
+
+	/** Shows a scroll-to-top button when the sidebar is scrolled down 200px */
+	private attachScrollToTop() {
+		const container = this.containerEl.children[1] as HTMLElement;
+
+		this.scrollToTopBtn = container.createEl('button', {
+			cls: 'df-scroll-to-top',
+			text: '↑',
+			attr: { 'aria-label': 'Scroll to top' },
+		});
+		this.scrollToTopBtn.style.display = 'none';
+
+		container.addEventListener('scroll', () => {
+			if (this.scrollToTopBtn) {
+				this.scrollToTopBtn.style.display = container.scrollTop > 200 ? 'flex' : 'none';
+			}
+		});
+
+		this.scrollToTopBtn.addEventListener('click', () => {
+			container.scrollTo({ top: 0, behavior: 'smooth' });
+		});
 	}
 
 	createEnvironmentCard(env: Environment): HTMLElement {
