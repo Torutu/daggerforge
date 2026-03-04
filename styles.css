@@ -57,6 +57,41 @@
 	background-color: var(--df-color-bg-inner);
 }
 
+/********************** WIDE ***********************/
+
+/* Wide card mode — overrides the default 400px cap on both card types */
+.df-card--wide.df-pseudo-cut-corners.outer,
+.df-card--wide.df-env-card-outer {
+	max-width: 100%;
+}
+
+/* Wide card toggle — sits in the filter row alongside the dropdown buttons */
+.df-wide-card-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	margin-left: auto;
+	/* pushes it to the right end of the filter row */
+	padding: 4px 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-secondary);
+	white-space: nowrap;
+}
+
+.df-wide-card-checkbox {
+	cursor: pointer;
+	accent-color: var(--interactive-accent);
+	margin: 0;
+}
+
+.df-wide-card-label {
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	color: var(--text-normal);
+	user-select: none;
+}
+
 .df-card-inner {
 	font-family: var(--df-font-text);
 	color: var(--df-color-primary);
@@ -1589,4 +1624,115 @@ select.df-input-field {
 .df-calc-btn:active {
 	transform: translateY(1px);
 	transform: scale(0.99);
+}
+
+/* ============================================================
+   Multi-select filter controls
+   ============================================================ */
+
+.df-filter-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+	margin-top: 6px;
+}
+
+/* Wrapper is just a layout anchor for the toggle button */
+.df-multiselect-wrapper {
+	position: relative;
+}
+
+/* Toggle button */
+.df-multiselect-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-secondary);
+	color: var(--text-normal);
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	white-space: nowrap;
+}
+
+.df-multiselect-toggle:hover {
+	background: var(--background-modifier-hover);
+}
+
+/* Count badge */
+.df-multiselect-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 4px;
+	border-radius: 9px;
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	font-size: 11px;
+	font-weight: 600;
+}
+
+.df-multiselect-badge--hidden {
+	display: none;
+}
+
+/*
+ * Panel is appended to document.body and positioned with `fixed`.
+ * This escapes Obsidian's overflow:hidden sidebar containers entirely.
+ * z-index must be high enough to appear above all Obsidian UI layers.
+ */
+.df-multiselect-panel {
+	position: fixed;
+	/* set by JS via openPanelAt() */
+	z-index: 9999;
+	min-width: 160px;
+	max-height: 240px;
+	overflow-y: auto;
+	padding: 6px 0;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.df-multiselect-panel--hidden {
+	display: none;
+}
+
+/* Each row in the panel */
+.df-multiselect-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 12px;
+	cursor: pointer;
+}
+
+.df-multiselect-item:hover {
+	background: var(--background-modifier-hover);
+}
+
+.df-multiselect-checkbox {
+	cursor: pointer;
+	accent-color: var(--interactive-accent);
+	flex-shrink: 0;
+}
+
+.df-multiselect-item-label {
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	color: var(--text-normal);
+	user-select: none;
+}
+
+.df-multiselect-empty {
+	display: block;
+	padding: 6px 12px;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
 }

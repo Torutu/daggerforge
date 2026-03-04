@@ -6,7 +6,7 @@ import {
 	decrementAdversaryCount,
 	setAdversaryCount,
 	resetAdversaryCount,
-	isCanvasActive,
+	resolveInsertDestination,
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	SearchEngine,
@@ -43,22 +43,60 @@ export class AdversaryView extends ItemView {
 		return "venetian-mask";
 	}
 
+	/**
+	 * Delete a custom adversary by its unique ID
+	 * @param adversary The adversary to get deleted
+	 */
+	private async deleteCustomAdversary(adversary: Adversary): Promise<void> {
+		try {
+			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
+			if (!plugin || !plugin.dataManager) {
+				new Notice("DaggerForge plugin not found.");
+				return;
+			}
+
+			const adversaryId = adversary.id;
+
+			if (!adversaryId) {
+				new Notice("Cannot delete adversary: missing ID.");
+				return;
+			}
+
+			await plugin.dataManager.deleteAdversaryById(adversaryId);
+			new Notice(`Deleted adversary: ${adversary.name}`);
+			this.refresh();
+		} catch (error) {
+			console.error("Error deleting custom adversary:", error);
+			new Notice("Failed to delete adversary.");
+		}
+	}
+
 	async onOpen() {
-		this.registerEventListeners();
 		this.initializeView();
+		this.registerEventListeners();
 		this.loadAdversaryData();
 	}
 
-	//register event listeners that need cleanup when the view closes
-	private registerEventListeners() {
-		this.registerEvent(
-			this.app.workspace.on("active-leaf-change", (leaf) => {
-				const view = leaf?.view;
-				if (view instanceof MarkdownView) {
-					this.lastActiveMarkdown = view;
-				}
-			}),
-		);
+	public async refresh() {
+		const currentFilters = this.searchEngine.getFilters();
+		this.loadAdversaryData();
+
+		// Remove any selected values that no longer exist in the data
+		const availableSources = this.searchEngine.getAvailableOptions("sources");
+		const availableTiers = this.searchEngine.getAvailableOptions("tiers");
+		const availableTypes = this.searchEngine.getAvailableOptions("types");
+
+		currentFilters.tiers = currentFilters.tiers.filter(t => availableTiers.includes(t));
+		currentFilters.sources = currentFilters.sources.filter(s => availableSources.includes(s));
+		currentFilters.types = currentFilters.types.filter(tp => availableTypes.includes(tp));
+
+		this.searchEngine.setFilters(currentFilters);
+
+		if (this.searchControlsUI) {
+			this.searchControlsUI.setFilterValues(currentFilters);
+		}
+
+		this.renderResults(this.searchEngine.search());
 	}
 
 	private initializeView() {
@@ -80,8 +118,19 @@ export class AdversaryView extends ItemView {
 		this.resultsDiv = container.createEl("div", {
 			cls: "df-adversary-results",
 		});
+	}
 
-		this.createScrollToTopButton(container);
+	//register event listeners that need cleanup when the view closes
+	private registerEventListeners() {
+		this.registerEvent(
+			this.app.workspace.on("active-leaf-change", (leaf) => {
+				if (!leaf) return;
+				const view = leaf.view;
+				if (view instanceof MarkdownView) {
+					this.lastActiveMarkdown = view;
+				}
+			}),
+		);
 	}
 
 	private loadAdversaryData() {
@@ -97,15 +146,15 @@ export class AdversaryView extends ItemView {
 				searchContainer.empty();
 				this.searchControlsUI = new SearchControlsUI({
 					placeholderText: "Search by name, type, or description...",
-					availableTiers: this.searchEngine.getAvailableOptions("tier"),
-					availableSources: this.searchEngine.getAvailableOptions("source"),
+					availableTiers: this.searchEngine.getAvailableOptions("tiers"),
+					availableSources: this.searchEngine.getAvailableOptions("sources"),
 					availableTypes: ["Bruiser", "Horde", // TODO: Remove this and use this.searchEngine.getAvailableOptions("type") after working on Horde
 						"Leader", "Minion", "Ranged", "Skulk", "Social", "Solo", "Standard", "Support",
 						"Leader (Umbra-Touched)", "Minion (Umbra-Touched)", "Solo (Umbra-Touched)"],
 					onSearchChange: (query) => this.handleSearchChange(query),
-					onTierChange: (tier) => this.handleTierChange(tier),
-					onSourceChange: (source) => this.handleSourceChange(source),
-					onTypeChange: (type) => this.handleTypeChange(type),
+					onTierChange: (tiers) => this.handleTierChange(tiers),
+					onSourceChange: (sources) => this.handleSourceChange(sources),
+					onTypeChange: (types) => this.handleTypeChange(types),
 					onClear: () => this.handleClearFilters(),
 				});
 				this.searchControlsUI.create(searchContainer);
@@ -145,18 +194,18 @@ export class AdversaryView extends ItemView {
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTierChange(tier: string | null) {
-		this.searchEngine.setFilters({ tier });
+	private handleTierChange(tiers: string[]) {
+		this.searchEngine.setFilters({ tiers });
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleSourceChange(source: string | null) {
-		this.searchEngine.setFilters({ source });
+	private handleSourceChange(sources: string[]) {
+		this.searchEngine.setFilters({ sources });
 		this.renderResults(this.searchEngine.search());
 	}
 
-	private handleTypeChange(type: string | null) {
-		this.searchEngine.setFilters({ type });
+	private handleTypeChange(types: string[]) {
+		this.searchEngine.setFilters({ types });
 		this.renderResults(this.searchEngine.search());
 	}
 
@@ -168,81 +217,6 @@ export class AdversaryView extends ItemView {
 			if (input instanceof HTMLInputElement) {
 				input.value = "1";
 			}
-		});
-	}
-
-	/**
- * Delete a custom adversary by its unique ID
- * @param adversary The adversary to get deleted
- */
-	private async deleteCustomAdversary(adversary: Adversary): Promise<void> {
-		try {
-			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
-			if (!plugin || !plugin.dataManager) {
-				new Notice("DaggerForge plugin not found.");
-				return;
-			}
-
-			const adversaryId = adversary.id;
-
-			if (!adversaryId) {
-				new Notice("Cannot delete adversary: missing ID.");
-				return;
-			}
-
-			await plugin.dataManager.deleteAdversaryById(adversaryId);
-			new Notice(`Deleted adversary: ${adversary.name}`);
-			this.refresh();
-		} catch (error) {
-			console.error("Error deleting custom adversary:", error);
-			new Notice("Failed to delete adversary.");
-		}
-	}
-
-	public async refresh() {
-		// Preserve current filters before refresh
-		const currentFilters = this.searchEngine.getFilters();
-		this.loadAdversaryData();
-
-		// Validate filters against available options
-		const availableSources = this.searchEngine.getAvailableOptions("source");
-		const availableTiers = this.searchEngine.getAvailableOptions("tier");
-		const availableTypes = this.searchEngine.getAvailableOptions("type");
-
-		// Clear invalid filters
-		if (currentFilters.source && !availableSources.includes(currentFilters.source)) {
-			currentFilters.source = null;
-		}
-		if (currentFilters.tier && !availableTiers.includes(currentFilters.tier)) {
-			currentFilters.tier = null;
-		}
-		if (currentFilters.type && !availableTypes.includes(currentFilters.type)) {
-			currentFilters.type = null;
-		}
-
-		// Restore filters and re-render results
-		this.searchEngine.setFilters(currentFilters);
-
-		// Update UI dropdowns to match validated filters
-		if (this.searchControlsUI) {
-			this.searchControlsUI.setFilterValues(currentFilters);
-		}
-
-		// Render results with validated filters
-		this.renderResults(this.searchEngine.search());
-	}
-
-	private createScrollToTopButton(container: HTMLElement) {
-		const button = container.createEl("button", {
-			text: "↑",
-			cls: "df-scroll-to-top",
-			attr: {
-				"aria-label": "Scroll to top"
-			}
-		});
-
-		button.addEventListener("click", () => {
-			container.scrollTo({ top: 0, behavior: "smooth" });
 		});
 	}
 
@@ -370,12 +344,13 @@ export class AdversaryView extends ItemView {
 	}
 
 	private insertAdversaryIntoNote(adversary: Adversary) {
-		const isCanvas = isCanvasActive(this.app);
-		if (isCanvas) {
-			const adversaryText = this.generateAdversaryMarkdown(adversary);
-			const position = getAvailableCanvasPosition(this.app);
+		const plugin = (this.app as any).plugins?.plugins?.['daggerforge'];
+		const { kind, canvas } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
 
-			createCanvasCard(this.app, adversaryText, {
+		if (kind === "canvas") {
+			const adversaryText = this.generateAdversaryMarkdown(adversary);
+			const position = getAvailableCanvasPosition(canvas);
+			createCanvasCard(this.app, adversaryText, canvas, {
 				x: position.x,
 				y: position.y,
 				width: 400,
@@ -395,9 +370,7 @@ export class AdversaryView extends ItemView {
 		}
 
 		if (view.getMode() !== "source") {
-			new Notice(
-				"You must be in edit mode to insert the adversary card.",
-			);
+			new Notice("You must be in edit mode to insert the adversary card.");
 			return;
 		}
 
@@ -414,6 +387,7 @@ export class AdversaryView extends ItemView {
 
 	private generateAdversaryMarkdown(adversary: Adversary): string {
 		const currentCount = getAdversaryCount();
+		const wide = this.searchControlsUI?.getWideCard() ?? false;
 
 		return buildCardHTML(
 			{
@@ -436,6 +410,7 @@ export class AdversaryView extends ItemView {
 				source: adversary.source || "core",
 			},
 			adversary.features.map(f => ({ ...f, cost: f.cost || "" })),
+			wide,
 		);
 	}
 }

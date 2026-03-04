@@ -1,107 +1,115 @@
 import { App, Notice, MarkdownView } from "obsidian";
 
 /**
- * Check if there's a canvas open in the workspace
- * This works even when the active leaf is something else (like a sidebar)
+ * Determines where the next card should be inserted by looking at the last
+ * leaf the user explicitly focused in the main editor area.
+ *
+ * WHY WE NEED lastMainLeaf:
+ * When the user clicks a card in the sidebar browser, Obsidian sets the
+ * sidebar as the active leaf. From that point, activeLeaf is the sidebar —
+ * not the canvas or note the user was working in before.
+ *
+ * The old approach scanned for ANY open canvas leaf and returned true if
+ * one existed. This meant: open a canvas → insert a card → switch to a note
+ * → insert again → still went to canvas, because the canvas tab was still
+ * open somewhere.
+ *
+ * The correct signal is the LAST MAIN-AREA LEAF the user focused before
+ * clicking the browser. The views track this as lastActiveMarkdown / a canvas
+ * ref. This helper resolves the destination from that leaf.
  */
+export type InsertDestination = "canvas" | "markdown" | "none";
 
-export function getActiveViewType(app: App): string | null {
-	const mdView = app.workspace.getActiveViewOfType(MarkdownView);
-	if (mdView) return "markdown";
-
-	const leaf = app.workspace.getMostRecentLeaf();
-	const view = leaf?.view;
-	if (!view) return null;
-
-	const file = (view as any).file;
-	if (file?.extension === "canvas") return "canvas";
-	if (file?.extension === "md") return "markdown";
-
-	return null;
+export interface ResolvedDestination {
+	kind: InsertDestination;
+	/** The specific canvas object to insert into. Only set when kind === "canvas". */
+	canvas: any | null;
 }
 
+/**
+ * Resolves where to insert the next card AND which specific canvas to use.
+ *
+ * WHY THIS RETURNS THE CANVAS OBJECT:
+ * getActiveCanvas() falls back to scanning all open canvas leaves and returns
+ * the first one found. With two canvases open, it always returns canvas 1
+ * regardless of which one the user last focused. By extracting the canvas
+ * directly from lastMainLeaf here, we guarantee the correct target.
+ */
+export function resolveInsertDestination(
+	app: App,
+	lastMainLeaf: { view: any } | null
+): ResolvedDestination {
+	// Check the currently active leaf first (fastest path, e.g. user just
+	// clicked directly on a canvas without going through the sidebar).
+	const activeView = app.workspace.activeLeaf?.view;
+	if (activeView && (activeView as any).canvas) {
+		return { kind: "canvas", canvas: (activeView as any).canvas };
+	}
+
+	// Fall back to the last main-area leaf the plugin tracked.
+	if (!lastMainLeaf) return { kind: "none", canvas: null };
+
+	const view = lastMainLeaf.view;
+	if ((view as any).canvas) {
+		return { kind: "canvas", canvas: (view as any).canvas };
+	}
+	if (view instanceof MarkdownView) {
+		return { kind: "markdown", canvas: null };
+	}
+
+	// Fallback: inspect the file extension
+	const file = (view as any)?.file;
+	if (file?.extension === "canvas") {
+		// canvas object may not be available on an unfocused leaf but try anyway
+		return { kind: "canvas", canvas: (view as any).canvas ?? null };
+	}
+	if (file?.extension === "md") return { kind: "markdown", canvas: null };
+
+	return { kind: "none", canvas: null };
+}
+
+/**
+ * @deprecated Use resolveInsertDestination() instead.
+ * Left here so existing call sites compile while being migrated.
+ */
 export function isCanvasActive(app: App): boolean {
-	return getActiveViewType(app) === "canvas";
+	const activeView = app.workspace.activeLeaf?.view;
+	if (activeView && (activeView as any).canvas) return true;
+	return app.workspace.getLeavesOfType("canvas").some(
+		(leaf) => !!(leaf.view as any).canvas
+	);
 }
 
+/** @deprecated Use resolveInsertDestination() instead. */
 export function isMarkdownActive(app: App): boolean {
-	return getActiveViewType(app) === "markdown";
+	if (app.workspace.getActiveViewOfType(MarkdownView)) return true;
+	const leaf = app.workspace.getMostRecentLeaf();
+	const file = (leaf?.view as any)?.file;
+	return file?.extension === "md";
 }
 
 /**
- * Get the canvas view - checks active leaf first, then any canvas in workspace
- */
-export function getActiveCanvas(app: App): any | null {
-	// First check if the active leaf is a canvas
-	const activeLeaf = app.workspace.activeLeaf;
-	
-	if (activeLeaf?.view) {
-		const view = activeLeaf.view;
-		// Check if this view has a canvas property
-		if ((view as any).canvas) {
-			return (view as any).canvas;
-		}
-	}
-	
-	// If active leaf is not a canvas, look for any open canvas in the workspace
-	const canvasLeaves = app.workspace.getLeavesOfType("canvas");
-	
-	if (canvasLeaves.length > 0) {
-		for (const leaf of canvasLeaves) {
-			const view = leaf.view;
-			if ((view as any).canvas) {
-				return (view as any).canvas;
-			}
-		}
-	}
-	
-	return null;
-}
-
-/**
- * Create a card on the canvas with the given HTML content
+ * Create a card on a specific canvas object.
+ * Callers must pass the canvas from resolveInsertDestination() — never use
+ * getActiveCanvas() which scans all leaves and picks the wrong one.
  */
 export function createCanvasCard(
-	app: App,
+	_app: App,
 	htmlContent: string,
-	options?: {
-		width?: number;
-		height?: number;
-		x?: number;
-		y?: number;
-	}
+	canvas: any,
+	options?: { width?: number; height?: number; x?: number; y?: number }
 ): boolean {
-	const canvas = getActiveCanvas(app);
-	
-	if (!canvas) {
-		return false;
-	}
+	if (!canvas) return false;
 
 	try {
-		
-		const viewport = canvas.viewport;
-		const defaultX = options?.x ?? (viewport.x + viewport.width / 2 - 200);
-		const defaultY = options?.y ?? (viewport.y + viewport.height / 2 - 150);
-
-		const node = canvas.createTextNode({
-			pos: { 
-				x: defaultX, 
-				y: defaultY 
-			},
+		const pos = getAvailableCanvasPosition(canvas);
+		canvas.createTextNode({
+			pos: { x: options?.x ?? pos.x, y: options?.y ?? pos.y },
 			text: htmlContent,
-			size: { 
-				width: options?.width ?? 400, 
-				height: options?.height ?? 600 
-			}
+			size: { width: options?.width ?? 400, height: options?.height ?? 600 },
 		});
-
-		if (canvas.requestSave) {
-			canvas.requestSave();
-		} else {
-			console.warn("⚠ requestSave not available on canvas");
-		}
+		canvas.requestSave?.();
 		return true;
-		
 	} catch (error) {
 		console.error("Error creating canvas card:", error);
 		new Notice(`Error creating canvas card: ${error.message}`);
@@ -110,54 +118,28 @@ export function createCanvasCard(
 }
 
 /**
- * Get a position for a new canvas card that doesn't overlap with existing cards
+ * Get a non-overlapping position on a specific canvas object.
  */
-export function getAvailableCanvasPosition(app: App): { x: number; y: number } {
-	const canvas = getActiveCanvas(app);
-	
-	if (!canvas) {
-		new Notice("No canvas found. Please open or focus a canvas file first.");
-		return { x: 0, y: 0 };
-	}
-
+export function getAvailableCanvasPosition(canvas: any): { x: number; y: number } {
 	try {
-		// Get the camera position (center of what user is looking at)
-		const centerX = canvas.tx ?? 0;
-		const centerY = canvas.ty ?? 0;
-
-		let x = centerX - 200;
-		let y = centerY - 300;
+		let x = (canvas.tx ?? 0) - 200;
+		let y = (canvas.ty ?? 0) - 300;
 
 		const nodes = canvas.nodes ? Array.from(canvas.nodes.values()) : [];
-		
-		const overlaps = (testX: number, testY: number): boolean => {
-			return nodes.some((node: any) => {
-				const nodeX = node.x;
-				const nodeY = node.y;
-				const nodeWidth = node.width;
-				const nodeHeight = node.height;
-				
-				return (
-					testX < nodeX + nodeWidth &&
-					testX + 400 > nodeX &&
-					testY < nodeY + nodeHeight &&
-					testY + 600 > nodeY
-				);
-			});
-		};
+
+		const overlaps = (tx: number, ty: number): boolean =>
+			nodes.some((node: any) =>
+				tx < node.x + node.width &&
+				tx + 400 > node.x &&
+				ty < node.y + node.height &&
+				ty + 600 > node.y
+			);
 
 		let attempts = 0;
-		while (overlaps(x, y) && attempts < 20) {
-			x += 50;
-			y += 50;
-			attempts++;
-		}
+		while (overlaps(x, y) && attempts < 20) { x += 50; y += 50; attempts++; }
 
 		return { x, y };
-		
-	} catch (error) {
-		console.error("Error calculating canvas position:", error);
-		new Notice("Error calculating canvas position. Using default.");
+	} catch {
 		return { x: 0, y: 0 };
 	}
 }
