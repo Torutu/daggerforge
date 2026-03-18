@@ -7,7 +7,7 @@ import {
 	getAvailableCanvasPosition,
 	SearchEngine,
 	SearchControlsUI,
-	generateEnvUniqueId
+	generateEnvUniqueId,
 } from "../../../utils/index";
 import { envToHtml } from "../EnvToHtml";
 

@@ -10,7 +10,7 @@ import {
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	SearchEngine,
-	SearchControlsUI
+	SearchControlsUI,
 } from "../../../utils/index";
 import { buildCardHTML } from "../index";
 import type { AdvData } from "../../../types/index";

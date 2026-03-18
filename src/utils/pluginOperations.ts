@@ -20,7 +20,9 @@ import { DeleteConfirmModal } from "../features/data-management/index";
  * menu/palette overlay, not the canvas or note the user was working in.
  */
 export function openCreator(plugin: DaggerForgePlugin, type: "adversary" | "environment"): void {
-	const leaf = plugin.lastMainLeaf;
+	// lastMainLeaf is null on first load before any interaction — fall back to
+	// whatever leaf the workspace considers active right now.
+	const leaf = plugin.lastMainLeaf ?? plugin.app.workspace.getMostRecentLeaf();
 	const view = leaf?.view;
 
 	if (!view) {
