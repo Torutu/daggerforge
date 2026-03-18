@@ -8,6 +8,7 @@ import {
 	SearchEngine,
 	SearchControlsUI,
 	generateEnvUniqueId,
+	injectDiceBadgesIntoHtml,
 } from "../../../utils/index";
 import { envToHtml } from "../EnvToHtml";
 
@@ -336,7 +337,7 @@ export class EnvironmentView extends ItemView {
 					new Notice("Cannot find editor in markdown view.");
 					return;
 				}
-				editor.replaceSelection(envHTML);
+				editor.replaceSelection(injectDiceBadgesIntoHtml(envHTML));
 				new Notice(`Inserted environment ${env.name}.`);
 				return;
 			}

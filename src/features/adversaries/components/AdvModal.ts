@@ -10,6 +10,7 @@ import {
 	type ResolvedDestination,
 	createCanvasCard,
 	getAvailableCanvasPosition,
+	injectDiceBadgesIntoHtml,
 } from "../../../utils/index";
 
 // Data Assembly
@@ -326,7 +327,7 @@ export class AdversaryModal extends Modal {
 				x: pos.x, y: pos.y, width: 400, height: 600,
 			});
 		} else if (this.insertDestination.kind === "markdown" && this.editor) {
-			this.editor.replaceSelection(html + "\n");
+			this.editor.replaceSelection(injectDiceBadgesIntoHtml(html) + "\n");
 		}
 	}
 

@@ -108,6 +108,23 @@ export function attachDiceBadges(section: HTMLElement): void {
 }
 
 /**
+ * Converts a card HTML string so that all dice expressions are already
+ * <button data-dice="1d6"> tags before the string is written to the note.
+ *
+ * The buttons work because handleDiceBtnClick (registered on document in
+ * main.ts) reads data-dice on every click — no addEventListener needed,
+ * so nothing is lost when the HTML is serialized into the source file.
+ */
+export function injectDiceBadgesIntoHtml(html: string): string {
+	const wrapper = document.createElement("div");
+	wrapper.innerHTML = html;
+	wrapper
+		.querySelectorAll<HTMLElement>(".df-card-outer, .df-env-card-outer")
+		.forEach((section) => attachDiceBadges(section));
+	return wrapper.innerHTML;
+}
+
+/**
  * The delegated click handler for all dice buttons.
  * Register this once on document in main.ts via registerDomEvent so it
  * survives plugin unload cleanup automatically.

@@ -11,6 +11,7 @@ import {
 	getAvailableCanvasPosition,
 	SearchEngine,
 	SearchControlsUI,
+	injectDiceBadgesIntoHtml,
 } from "../../../utils/index";
 import { buildCardHTML } from "../index";
 import type { AdvData } from "../../../types/index";
@@ -410,7 +411,7 @@ export class AdversaryView extends ItemView {
 			return;
 		}
 
-		const adversaryText = this.generateAdversaryMarkdown(adversary);
+		const adversaryText = injectDiceBadgesIntoHtml(this.generateAdversaryMarkdown(adversary));
 		editor.replaceSelection(adversaryText);
 		new Notice(`Inserted ${adversary.name} in note.`);
 	}
