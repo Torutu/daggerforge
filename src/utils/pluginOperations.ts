@@ -1,5 +1,16 @@
 import { App, MarkdownView, Notice } from "obsidian";
 import DaggerForgePlugin from "../main";
+
+/**
+ * Retrieves the DaggerForge plugin instance from Obsidian's plugin registry.
+ * Centralises the one unavoidable `as unknown` cast — Obsidian does not
+ * publicly type the plugins map, so there is no fully type-safe alternative.
+ */
+export function getDaggerForgePlugin(app: App): DaggerForgePlugin | null {
+	const plugins = (app as unknown as { plugins: { plugins: Record<string, unknown> } }).plugins;
+	return (plugins?.plugins?.['daggerforge'] as DaggerForgePlugin) ?? null;
+}
+
 import {
 	AdversaryView,
 	Adv_View_Type,
@@ -20,7 +31,9 @@ import { DeleteConfirmModal } from "../features/data-management/index";
  * menu/palette overlay, not the canvas or note the user was working in.
  */
 export function openCreator(plugin: DaggerForgePlugin, type: "adversary" | "environment"): void {
-	const leaf = plugin.lastMainLeaf;
+	// lastMainLeaf is null on first load before any interaction — fall back to
+	// whatever leaf the workspace considers active right now.
+	const leaf = plugin.lastMainLeaf ?? plugin.app.workspace.getMostRecentLeaf();
 	const view = leaf?.view;
 
 	if (!view) {
@@ -104,6 +117,11 @@ export function listenForEditClicks(evt: MouseEvent, app: App, plugin: DaggerFor
 		!target.classList.contains("df-env-edit-button")) {
 		return;
 	}
+
+	// Remove any open dice result tooltips before scraping the card DOM.
+	// Tooltips are children of their button, so .textContent would include
+	// the result text (e.g. "11 [9, 2]") alongside the dice expression.
+	document.querySelectorAll(".df-inline-dice-result").forEach(el => el.remove());
 
 	handleCardEditClick(evt, app, plugin, target);
 }

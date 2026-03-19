@@ -7,7 +7,9 @@ import {
 	getAvailableCanvasPosition,
 	SearchEngine,
 	SearchControlsUI,
-	generateEnvUniqueId
+	generateEnvUniqueId,
+	injectDiceBadgesIntoHtml,
+	getDaggerForgePlugin,
 } from "../../../utils/index";
 import { envToHtml } from "../EnvToHtml";
 
@@ -84,7 +86,7 @@ export class EnvironmentView extends ItemView {
 	 */
 	private async deleteCustomEnvironment(env: EnvironmentData): Promise<void> {
 		try {
-			const plugin = (this.app as any).plugins.plugins['daggerforge'] as any;
+			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin || !plugin.dataManager) {
 				new Notice("DaggerForge plugin not found.");
 				return;
@@ -108,7 +110,7 @@ export class EnvironmentView extends ItemView {
 
 	private loadCustomEnvironments(): Environment[] {
 		try {
-			const plugin = (this.app as any).plugins.plugins['daggerforge'];
+			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin || !plugin.dataManager) {
 				console.warn("DaggerForge plugin or dataManager not found");
 				return [];
@@ -225,6 +227,8 @@ export class EnvironmentView extends ItemView {
 	}
 
 	async onClose() {
+		this.searchControlsUI?.destroy();
+		this.searchControlsUI = null;
 		this.scrollToTopBtn?.remove();
 		this.scrollToTopBtn = null;
 	}
@@ -304,7 +308,7 @@ export class EnvironmentView extends ItemView {
 		card.addEventListener("click", () => {
 			const wide = this.searchControlsUI?.getWideCard() ?? false;
 			const envHTML = envToHtml(env, wide);
-			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'];
+			const plugin = getDaggerForgePlugin(this.app);
 			const { kind, canvas } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
 
 			if (kind === "canvas") {
@@ -336,7 +340,7 @@ export class EnvironmentView extends ItemView {
 					new Notice("Cannot find editor in markdown view.");
 					return;
 				}
-				editor.replaceSelection(envHTML);
+				editor.replaceSelection(injectDiceBadgesIntoHtml(envHTML));
 				new Notice(`Inserted environment ${env.name}.`);
 				return;
 			}

@@ -39,9 +39,10 @@ export function resolveInsertDestination(
 	app: App,
 	lastMainLeaf: { view: any } | null
 ): ResolvedDestination {
-	// Check the currently active leaf first (fastest path, e.g. user just
+	// Check the most recently focused leaf first (fastest path, e.g. user just
 	// clicked directly on a canvas without going through the sidebar).
-	const activeView = app.workspace.activeLeaf?.view;
+	// getMostRecentLeaf() is the non-deprecated replacement for activeLeaf.
+	const activeView = app.workspace.getMostRecentLeaf()?.view;
 	if (activeView && (activeView as any).canvas) {
 		return { kind: "canvas", canvas: (activeView as any).canvas };
 	}
@@ -73,7 +74,7 @@ export function resolveInsertDestination(
  * Left here so existing call sites compile while being migrated.
  */
 export function isCanvasActive(app: App): boolean {
-	const activeView = app.workspace.activeLeaf?.view;
+	const activeView = app.workspace.getMostRecentLeaf()?.view;
 	if (activeView && (activeView as any).canvas) return true;
 	return app.workspace.getLeavesOfType("canvas").some(
 		(leaf) => !!(leaf.view as any).canvas

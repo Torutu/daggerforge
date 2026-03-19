@@ -55,10 +55,8 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
     let offsetX = 0;
     let offsetY = 0;
 
-    const dragStyle = document.createElement("style");
-    document.head.appendChild(dragStyle);
 
-    header.addEventListener("mousedown", (e: MouseEvent) => {
+    plugin.registerDomEvent(header, "mousedown", (e: MouseEvent) => {
         isDragging = true;
         container.classList.add("df-dragging");
         header.classList.add("df-grab-cursor-active");
@@ -68,7 +66,7 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
         offsetY = e.clientY - rect.top;
     });
 
-    window.addEventListener("mousemove", (e: MouseEvent) => {
+    plugin.registerDomEvent(window, "mousemove", (e: MouseEvent) => {
         if (!isDragging) return;
 
         const newLeft = e.clientX - offsetX;
@@ -80,7 +78,7 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
         container.style.setProperty('--df-top', `${newTop}px`);
     });
 
-    window.addEventListener("mouseup", () => {
+    plugin.registerDomEvent(window, "mouseup", () => {
         if (!isDragging) return;
         isDragging = false;
         container.classList.remove("df-dragging");

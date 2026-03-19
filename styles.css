@@ -509,7 +509,7 @@ select.df-input-field {
 .df-remove-feature-btn {
 	align-self: flex-end;
 	padding: 4px 8px;
-	background-color: var(--background-modifier-error);
+	background-color: #391818 !important;
 	color: white;
 	border: none;
 	border-radius: 4px;
@@ -746,7 +746,7 @@ select.df-input-field {
 .df-env-btn-remove-feature {
 	align-self: flex-end;
 	padding: 4px 8px;
-	background-color: var(--background-modifier-error);
+	background-color: #391818 !important;
 	color: white;
 	border: none;
 	border-radius: 4px;
@@ -1735,4 +1735,46 @@ select.df-input-field {
 	padding: 6px 12px;
 	color: var(--text-muted);
 	font-size: var(--font-ui-small);
+}
+
+/* ── Inline dice buttons inside card sections ──────────────────────────── */
+.df-inline-dice-btn {
+	display: inline-flex;
+	align-items: center;
+	position: relative;
+	/* ← anchors the tooltip */
+	padding: 1px 6px;
+	margin: 0 1px;
+	border: 1px solid var(--interactive-accent);
+	border-radius: 4px;
+	background: var(--background-secondary);
+	color: var(--text-accent);
+	font-size: 0.85em;
+	font-family: var(--font-monospace);
+	cursor: pointer;
+	line-height: 1.4;
+	vertical-align: baseline;
+	transition: background 0.12s, color 0.12s;
+}
+
+.df-inline-dice-btn:hover {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+/* Tooltip that appears above the button after rolling */
+.df-inline-dice-result {
+	position: absolute;
+	bottom: calc(100% + 4px);
+	left: 50%;
+	transform: translateX(-50%);
+	white-space: nowrap;
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: var(--background-secondary);
+	color: var(--text-normal);
+	font-size: 1.5em;
+	pointer-events: none;
+	z-index: 100;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }

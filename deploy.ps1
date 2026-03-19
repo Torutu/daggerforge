@@ -1,4 +1,4 @@
-$dest = "F:\TTRPG RemFlash\.obsidian\plugins\daggerforge"
+$dest = "C:\Users\waleed\Documents\test\test\.obsidian\plugins\daggerforge"
 
 # Create folder if it doesn't exist
 New-Item -ItemType Directory -Path $dest -Force

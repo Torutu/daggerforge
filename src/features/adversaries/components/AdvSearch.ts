@@ -10,7 +10,9 @@ import {
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	SearchEngine,
-	SearchControlsUI
+	SearchControlsUI,
+	injectDiceBadgesIntoHtml,
+	getDaggerForgePlugin,
 } from "../../../utils/index";
 import { buildCardHTML } from "../index";
 import type { AdvData } from "../../../types/index";
@@ -25,10 +27,8 @@ export class AdversaryView extends ItemView {
 	private searchEngine: SearchEngine<Adversary> = new SearchEngine<Adversary>();
 	private searchControlsUI: SearchControlsUI | null = null;
 	private resultsDiv: HTMLElement | null = null;
-
 	private scrollToTopBtn: HTMLButtonElement | null = null;
 
-	// super initialize the parent class before setting up the class
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
 	}
@@ -51,7 +51,7 @@ export class AdversaryView extends ItemView {
 	 */
 	private async deleteCustomAdversary(adversary: Adversary): Promise<void> {
 		try {
-			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
+			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin || !plugin.dataManager) {
 				new Notice("DaggerForge plugin not found.");
 				return;
@@ -81,6 +81,8 @@ export class AdversaryView extends ItemView {
 	}
 
 	async onClose() {
+		this.searchControlsUI?.destroy();
+		this.searchControlsUI = null;
 		this.scrollToTopBtn?.remove();
 		this.scrollToTopBtn = null;
 	}
@@ -108,26 +110,26 @@ export class AdversaryView extends ItemView {
 	}
 
 	/** Shows a scroll-to-top button when the sidebar is scrolled down 200px */
-	private attachScrollToTop() {
-		const container = this.containerEl.children[1] as HTMLElement;
+	// private attachScrollToTop() {
+	// 	const container = this.containerEl.children[1] as HTMLElement;
 
-		this.scrollToTopBtn = container.createEl('button', {
-			cls: 'df-scroll-to-top',
-			text: '↑',
-			attr: { 'aria-label': 'Scroll to top' },
-		});
-		this.scrollToTopBtn.style.display = 'none';
+	// 	this.scrollToTopBtn = container.createEl('button', {
+	// 		cls: 'df-scroll-to-top',
+	// 		text: '↑',
+	// 		attr: { 'aria-label': 'Scroll to top' },
+	// 	});
+	// 	this.scrollToTopBtn.style.display = 'none';
 
-		container.addEventListener('scroll', () => {
-			if (this.scrollToTopBtn) {
-				this.scrollToTopBtn.style.display = container.scrollTop > 200 ? 'flex' : 'none';
-			}
-		});
+	// 	container.addEventListener('scroll', () => {
+	// 		if (this.scrollToTopBtn) {
+	// 			this.scrollToTopBtn.style.display = container.scrollTop > 200 ? 'flex' : 'none';
+	// 		}
+	// 	});
 
-		this.scrollToTopBtn.addEventListener('click', () => {
-			container.scrollTo({ top: 0, behavior: 'smooth' });
-		});
-	}
+	// 	this.scrollToTopBtn.addEventListener('click', () => {
+	// 		container.scrollTo({ top: 0, behavior: 'smooth' });
+	// 	});
+	// }
 
 	private initializeView() {
 		const container = this.containerEl.children[1] as HTMLElement;
@@ -202,7 +204,7 @@ export class AdversaryView extends ItemView {
 
 	private loadCustomAdversaries(): Adversary[] {
 		try {
-			const plugin = (this.app as any).plugins?.plugins?.['daggerforge'] as any;
+			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin || !plugin.dataManager) {
 				console.warn("DaggerForge plugin or dataManager not found");
 				return [];
@@ -374,7 +376,7 @@ export class AdversaryView extends ItemView {
 	}
 
 	private insertAdversaryIntoNote(adversary: Adversary) {
-		const plugin = (this.app as any).plugins?.plugins?.['daggerforge'];
+		const plugin = getDaggerForgePlugin(this.app);
 		const { kind, canvas } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
 
 		if (kind === "canvas") {
@@ -410,7 +412,7 @@ export class AdversaryView extends ItemView {
 			return;
 		}
 
-		const adversaryText = this.generateAdversaryMarkdown(adversary);
+		const adversaryText = injectDiceBadgesIntoHtml(this.generateAdversaryMarkdown(adversary));
 		editor.replaceSelection(adversaryText);
 		new Notice(`Inserted ${adversary.name} in note.`);
 	}

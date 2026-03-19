@@ -8,6 +8,7 @@ import {
 	createCanvasCard,
 	getAvailableCanvasPosition,
 	createInlineField,
+	injectDiceBadgesIntoHtml,
 } from "../../../utils/index";
 
 // Data Assembly
@@ -309,7 +310,7 @@ export class EnvironmentModal extends Modal {
 	}
 
 	private insertCard(html: string) {
-		const wrapped = `<div class="environment-block">\n${html}\n</div>\n`;
+		const wrapped = `<div class="environment-block">\n${injectDiceBadgesIntoHtml(html)}\n</div>\n`;
 		if (this.insertDestination.kind === "canvas") {
 			const { canvas } = this.insertDestination;
 			const pos = getAvailableCanvasPosition(canvas);

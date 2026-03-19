@@ -3,6 +3,7 @@ import type DaggerForgePlugin from "../../main";
 import { EnvironmentModal, extractEnvironmentData, Env_View_Type } from "../environments/index";
 import { extractCardData, AdversaryModal, Adv_View_Type } from "../adversaries/index";
 import type { AdvData } from "../../types/index";
+import { injectDiceBadgesIntoHtml, attachDiceBadges } from "../../utils/index";
 
 function refreshBrowserView(plugin: DaggerForgePlugin, viewType: string): void {
 	const leaf = plugin.app.workspace.getLeavesOfType(viewType)[0];
@@ -134,7 +135,8 @@ async function replaceCardInMarkdown(
 	const { startIndex, endIndex } = findCardSectionBounds(content, cardId, cardType);
 	if (startIndex === -1 || endIndex === -1) return false;
 
-	const updated = content.substring(0, startIndex) + newHTML + content.substring(endIndex);
+	const enrichedHTML = injectDiceBadgesIntoHtml(newHTML);
+	const updated = content.substring(0, startIndex) + enrichedHTML + content.substring(endIndex);
 	view.editor.setValue(updated);
 
 	if (view.file) {
@@ -165,6 +167,9 @@ function replaceCardInCanvas(
 		cardElement.innerHTML = "";
 		parsed.body.childNodes.forEach((node) => cardElement.appendChild(node.cloneNode(true)));
 	}
+
+	// Attach dice buttons to the freshly swapped DOM nodes.
+	attachDiceBadges(cardElement);
 
 	// Force Obsidian's canvas renderer to repaint this node.
 	cardElement.classList.add("df-canvas-force-rerender");
@@ -358,8 +363,11 @@ export async function handleCardEditClick(
 		return;
 	}
 
-	const activeLeaf = app.workspace.getActiveViewOfType(ItemView)
-	const isCanvas = activeLeaf?.getViewType() === "canvas";
+	// Check the active view type. getActiveViewOfType(ItemView) returns the
+	// most recently focused ItemView — checking its type string is the correct
+	// way to detect canvas without accessing deprecated or untyped APIs.
+	const activeView = app.workspace.getActiveViewOfType(ItemView);
+	const isCanvas = activeView?.getViewType() === "canvas";
 
 	if (isCanvas) {
 		evt.stopPropagation();
@@ -405,11 +413,9 @@ async function handleMarkdownEdit(
 	const view = app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) return;
 
-	// Switch to source mode
+	// Switch to source mode so the editor is writable before scraping
 	if (view.getMode() !== "source") {
-		const state = view.leaf.view.getState();
-		state.mode = "source";
-		await view.leaf.setViewState({ type: "markdown", state });
+		await view.setState({ mode: "source" }, { history: false });
 	}
 
 	onEditClick(evt, cardType, plugin);
