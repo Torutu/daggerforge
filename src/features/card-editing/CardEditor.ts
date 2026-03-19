@@ -3,6 +3,7 @@ import type DaggerForgePlugin from "../../main";
 import { EnvironmentModal, extractEnvironmentData, Env_View_Type } from "../environments/index";
 import { extractCardData, AdversaryModal, Adv_View_Type } from "../adversaries/index";
 import type { AdvData } from "../../types/index";
+import { injectDiceBadgesIntoHtml, attachDiceBadges } from "../../utils/index";
 
 function refreshBrowserView(plugin: DaggerForgePlugin, viewType: string): void {
 	const leaf = plugin.app.workspace.getLeavesOfType(viewType)[0];
@@ -134,7 +135,8 @@ async function replaceCardInMarkdown(
 	const { startIndex, endIndex } = findCardSectionBounds(content, cardId, cardType);
 	if (startIndex === -1 || endIndex === -1) return false;
 
-	const updated = content.substring(0, startIndex) + newHTML + content.substring(endIndex);
+	const enrichedHTML = injectDiceBadgesIntoHtml(newHTML);
+	const updated = content.substring(0, startIndex) + enrichedHTML + content.substring(endIndex);
 	view.editor.setValue(updated);
 
 	if (view.file) {
@@ -165,6 +167,9 @@ function replaceCardInCanvas(
 		cardElement.innerHTML = "";
 		parsed.body.childNodes.forEach((node) => cardElement.appendChild(node.cloneNode(true)));
 	}
+
+	// Attach dice buttons to the freshly swapped DOM nodes.
+	attachDiceBadges(cardElement);
 
 	// Force Obsidian's canvas renderer to repaint this node.
 	cardElement.classList.add("df-canvas-force-rerender");

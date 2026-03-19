@@ -107,5 +107,10 @@ export function listenForEditClicks(evt: MouseEvent, app: App, plugin: DaggerFor
 		return;
 	}
 
+	// Remove any open dice result tooltips before scraping the card DOM.
+	// Tooltips are children of their button, so .textContent would include
+	// the result text (e.g. "11 [9, 2]") alongside the dice expression.
+	document.querySelectorAll(".df-inline-dice-result").forEach(el => el.remove());
+
 	handleCardEditClick(evt, app, plugin, target);
 }
