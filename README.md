@@ -9,6 +9,20 @@ An Obsidian plugin designed for **Daggerheart**, a TTRPG, that helps Game Master
 - Built in dice roller
 - Battle Calculator follow the rulebook's Battle Guide
 
+## Latest Update 2.1.10 : Dice Buttons
+
+<img width="501" height="373" alt="image" src="https://github.com/user-attachments/assets/e8de04d1-e9c3-4b8b-852d-77f3f3cb9f6d" />
+
+
+Cards now display clickable dice buttons inline. Any dice expression in a card (e.g. 1d12+2, 2d6)
+is automatically converted into a button when the card is inserted.
+Clicking it rolls the dice and shows the result in a small tooltip above the button.
+
+Old cards: If a card you inserted before this update shows plain text instead of buttons.
+just delete it and reinsert it from the browser or creator it will come in with the new style automatically.
+
+
+
 ## how to use
 
 once you activate the plugin, you can find it here on the left ribbon.
