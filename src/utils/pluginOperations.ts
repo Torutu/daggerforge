@@ -1,5 +1,16 @@
 import { App, MarkdownView, Notice } from "obsidian";
 import DaggerForgePlugin from "../main";
+
+/**
+ * Retrieves the DaggerForge plugin instance from Obsidian's plugin registry.
+ * Centralises the one unavoidable `as unknown` cast — Obsidian does not
+ * publicly type the plugins map, so there is no fully type-safe alternative.
+ */
+export function getDaggerForgePlugin(app: App): DaggerForgePlugin | null {
+	const plugins = (app as unknown as { plugins: { plugins: Record<string, unknown> } }).plugins;
+	return (plugins?.plugins?.['daggerforge'] as DaggerForgePlugin) ?? null;
+}
+
 import {
 	AdversaryView,
 	Adv_View_Type,

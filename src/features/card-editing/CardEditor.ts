@@ -363,8 +363,11 @@ export async function handleCardEditClick(
 		return;
 	}
 
-	const activeLeaf = app.workspace.getActiveViewOfType(ItemView)
-	const isCanvas = activeLeaf?.getViewType() === "canvas";
+	// Check the active view type. getActiveViewOfType(ItemView) returns the
+	// most recently focused ItemView — checking its type string is the correct
+	// way to detect canvas without accessing deprecated or untyped APIs.
+	const activeView = app.workspace.getActiveViewOfType(ItemView);
+	const isCanvas = activeView?.getViewType() === "canvas";
 
 	if (isCanvas) {
 		evt.stopPropagation();
@@ -410,11 +413,9 @@ async function handleMarkdownEdit(
 	const view = app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) return;
 
-	// Switch to source mode
+	// Switch to source mode so the editor is writable before scraping
 	if (view.getMode() !== "source") {
-		const state = view.leaf.view.getState();
-		state.mode = "source";
-		await view.leaf.setViewState({ type: "markdown", state });
+		await view.setState({ mode: "source" }, { history: false });
 	}
 
 	onEditClick(evt, cardType, plugin);
