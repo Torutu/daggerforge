@@ -8,7 +8,7 @@
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
-		"watch": "esbuild src/main.ts --bundle --outfile=main.js --external:obsidian --platform=node --format=cjs --minify-syntax --minify-whitespace --watch",
+		"watch": "esbuild src/main.ts --bundle --outfile=main.js --external:obsidian --platform=node --format=cjs --minify-syntax --minify-whitespace --watch=forever",
 		"test": "jest"
 	},
 	"keywords": [
