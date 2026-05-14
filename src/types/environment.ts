@@ -2,9 +2,7 @@ export type EnvFeatureElements = {
 	nameEl: HTMLInputElement;
 	typeEl: HTMLSelectElement;
 	costEl?: HTMLSelectElement;
-	textEl: HTMLTextAreaElement;
-	bulletEls: HTMLInputElement[];
-	afterTextEl: HTMLTextAreaElement;
+	richEditor: { getHTML(): string; destroy(): void };
 	questionEls: HTMLTextAreaElement[];
 };
 
@@ -12,9 +10,7 @@ export type EnvSavedFeatureState = {
 	name: string;
 	type: string;
 	cost?: string;
-	text: string;
-	bullets: string[] | null;
-	textAfter?: string;
+	richContent: string;
 	questions: string[];
 };
 
@@ -34,9 +30,7 @@ export type EnvironmentData = {
 type EnvironmentFeature = {
 	name: string;
 	type: string;
-	text: string;
 	cost?: string;
-	bullets: string[] | null;
-	textAfter?: string;
+	richContent: string;
 	questions: string[];
 };

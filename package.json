@@ -42,6 +42,8 @@
 		"typescript-eslint": "^8.36.0"
 	},
 	"dependencies": {
+		"@tiptap/core": "^3.23.4",
+		"@tiptap/starter-kit": "^3.23.4",
 		"html2canvas": "^1.4.1"
 	}
 }

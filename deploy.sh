@@ -9,7 +9,7 @@ if [ -z "${OBSIDIAN_VAULT:-}" ]; then
   exit 1
 fi
 
-DEST="$OBSIDIAN_VAULT/.obsidian/plugins/daggerforge"
+DEST="$OBSIDIAN_VAULT"
 mkdir -p "$DEST"
 cp main.js manifest.json styles.css "$DEST"
 echo "Deployed to $DEST"

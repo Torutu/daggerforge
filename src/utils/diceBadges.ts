@@ -1,4 +1,10 @@
 import { rollDice } from "../features/dice/dice";
+import { attachKeywordColors } from "./keywordBadges";
+import { saveCollapseState, restoreCollapseState, restoreTickState, handleTickChange } from "./collapseState";
+export { handleTickChange };
+
+let _tooltipMs = 2500;
+export function setDiceTooltipDuration(ms: number): void { _tooltipMs = ms; }
 
 // ─── Dice token scanning (no regex) ────────────────────────────────────────
 //
@@ -105,6 +111,9 @@ function findDiceSpans(text: string): Span[] {
 export function attachDiceBadges(section: HTMLElement): void {
 	const textNodes = collectDiceTextNodes(section);
 	textNodes.forEach(splitNodeIntoBadges);
+	attachKeywordColors(section);
+	restoreCollapseState(section);
+	restoreTickState(section);
 }
 
 /**
@@ -132,6 +141,15 @@ export function injectDiceBadgesIntoHtml(html: string): string {
  * Usage in main.ts:
  *   this.registerDomEvent(document, "click", handleDiceBtnClick);
  */
+export function handleCollapseClick(evt: MouseEvent): void {
+	const btn = (evt.target as HTMLElement).closest<HTMLButtonElement>(".df-adv-collapse-btn");
+	if (!btn) return;
+	const card = btn.closest<HTMLElement>(".df-card-outer");
+	if (!card) return;
+	card.classList.toggle("df-expanded");
+	saveCollapseState(card);
+}
+
 export function handleDiceBtnClick(evt: MouseEvent): void {
 	const target = evt.target as HTMLElement;
 	const btn = target.closest<HTMLButtonElement>(".df-inline-dice-btn");
@@ -219,12 +237,19 @@ function buildDiceButton(expression: string): HTMLButtonElement {
 function showRollResult(anchor: HTMLButtonElement, expression: string): void {
 	anchor.querySelector(".df-inline-dice-result")?.remove();
 
-	const { total, details } = rollDice(expression);
+	const { total, parts } = rollDice(expression);
+
+	const partsHtml = parts.map((p) => {
+		if (!p.isModifier) return String(p.value);
+		const cls = p.value >= 0 ? "df-dice-part-pos" : "df-dice-part-neg";
+		const label = p.value > 0 ? `+${p.value}` : String(p.value);
+		return `<span class="${cls}">${label}</span>`;
+	}).join(", ");
 
 	const tooltip = document.createElement("span");
 	tooltip.className = "df-inline-dice-result";
-	tooltip.textContent = `${total} ${details}`;
+	tooltip.innerHTML = `${total} [${partsHtml}]`;
 	anchor.appendChild(tooltip);
 
-	window.setTimeout(() => tooltip.remove(), 2500);
+	window.setTimeout(() => tooltip.remove(), _tooltipMs);
 }

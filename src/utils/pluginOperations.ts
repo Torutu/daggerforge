@@ -113,8 +113,8 @@ export function refreshBrowsers(plugin: DaggerForgePlugin): void {
 export function listenForEditClicks(evt: MouseEvent, app: App, plugin: DaggerForgePlugin): void {
 	const target = evt.target as HTMLElement;
 
-	if (!target.classList.contains("df-adv-edit-button") &&
-		!target.classList.contains("df-env-edit-button")) {
+	if (!target.closest(".df-adv-edit-button") &&
+		!target.closest(".df-env-edit-button")) {
 		return;
 	}
 

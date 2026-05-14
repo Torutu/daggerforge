@@ -128,14 +128,18 @@ interface ParsedFeature {
 	name: string;
 	type: string;
 	cost: string;
-	desc: string;
+	richContent: string;
 }
 
 function parseFeature(feat: Element): ParsedFeature {
 	const titleText = feat.querySelector(".df-feature-title")?.textContent ?? "";
 	const { name, type, cost } = parseFeatureTitle(titleText);
-	const desc = feat.querySelector(".df-feature-desc")?.textContent?.trim() ?? "";
-	return { name, type, cost, desc };
+	const descEl = feat.querySelector(".df-feature-desc");
+	// New format stores richContent as innerHTML; old format was plain textContent.
+	const richContent = descEl
+		? (descEl.innerHTML.trim() || `<p>${descEl.textContent?.trim() ?? ""}</p>`)
+		: "";
+	return { name, type, cost, richContent };
 }
 
 function parseFeatureTitle(titleText: string): { name: string; type: string; cost: string } {

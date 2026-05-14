@@ -44,7 +44,7 @@ function assembleAdvData(
 			name: f.name || "",
 			type: f.type || "",
 			cost: f.cost || "",
-			desc: f.desc || "",
+			richContent: f.richContent || "",
 		})),
 	};
 }
@@ -241,11 +241,17 @@ export class AdversaryModal extends Modal {
 
 		if (Array.isArray(savedFeatures) && savedFeatures.length > 0) {
 			savedFeatures.forEach((data) => {
+				// Migrate old saved state that used `desc` instead of `richContent`
+				const richContent = data.richContent
+					? String(data.richContent)
+					: data.desc
+						? `<p>${data.desc}</p>`
+						: "";
 				addAdvFeature(this.featureContainer, this.features, {
 					name: String(data.name || ""),
 					type: String(data.type || "Action"),
 					cost: String(data.cost || ""),
-					desc: String(data.desc || ""),
+					richContent,
 				});
 			});
 		} else {
@@ -340,11 +346,8 @@ export class AdversaryModal extends Modal {
 			}
 		}
 
-		this.features.forEach(({ nameEl, typeEl, costEl, descEl }) => {
-			nameEl.value = "";
-			typeEl.selectedIndex = 0;
-			costEl.selectedIndex = 0;
-			descEl.value = "";
+		this.features.forEach(({ richEditor }) => {
+			richEditor.destroy();
 		});
 
 		this.features = [];

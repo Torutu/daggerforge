@@ -132,7 +132,8 @@ export function openDiceRoller(plugin: DaggerForgePlugin) {
         if (diceQueue.length === 0) return;
         const expression = diceQueue.join(" + ");
         const result = rollDice(expression);
-        diceLog.push(`${expression} -> ${result.details} = ${result.total}`);
+        const details = `[${result.parts.map(p => p.value).join(", ")}]`;
+        diceLog.push(`${expression} -> ${details} = ${result.total}`);
         updateLog();
         diceQueue.length = 0;
         updateQueue();

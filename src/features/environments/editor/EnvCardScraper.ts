@@ -1,17 +1,11 @@
 import { Notice } from "obsidian";
 import type { EnvironmentData, EnvSavedFeatureState } from "../../../types/index";
 
-// Subtitle Parsing
-// Renders as "Tier <n> <Type>", e.g. "Tier 2 Exploration".
-
 function extractTierAndType(innerCard: Element | null): { tier: string; type: string } {
 	const text = innerCard?.querySelector(".df-env-feat-tier-type")?.textContent?.trim() ?? "";
 	const words = text.split(" ").filter(Boolean);
 	return { tier: words[1] ?? "1", type: words[2] ?? "Exploration" };
 }
-
-// Impulse
-// No dedicated class — find it by scanning <p> elements for "Impulse:" prefix.
 
 function extractImpulse(innerCard: Element | null): string {
 	const el = Array.from(innerCard?.querySelectorAll("p") ?? []).find((p) =>
@@ -19,9 +13,6 @@ function extractImpulse(innerCard: Element | null): string {
 	);
 	return el?.textContent?.replace("Impulse:", "").trim() ?? "";
 }
-
-// Difficulty & Potential Adversaries
-// Both are <p> elements inside .df-env-card-diff-pot.
 
 function extractDifficultyAndAdversaries(innerCard: Element | null): {
 	difficulty: string;
@@ -41,22 +32,40 @@ function extractDifficultyAndAdversaries(innerCard: Element | null): {
 	};
 }
 
-// Feature Parsing
-// Name, type, cost live as data attributes. Body content (text, bullets,
-// continuation text, questions) is read from child elements by selector.
-
 function extractSingleFeature(feat: Element): EnvSavedFeatureState {
 	const rawCost = feat.getAttribute("data-feature-cost") ?? "";
+
+	// New format: single richContent div
+	const richEl = feat.querySelector(".df-env-feat-richcontent");
+	let richContent: string;
+
+	if (richEl) {
+		richContent = richEl.innerHTML;
+	} else {
+		// Backward compat: old cards had separate text / bullets / textAfter fields.
+		// Reassemble them into a single HTML string so the rich editor pre-fills correctly.
+		const parts: string[] = [];
+		const textNodes = Array.from(feat.querySelectorAll(".df-env-feat-text"));
+		const beforeText = textNodes[0]?.innerHTML?.trim();
+		if (beforeText) parts.push(`<p>${beforeText}</p>`);
+
+		const bullets = Array.from(feat.querySelectorAll(".df-env-bullet-item"));
+		if (bullets.length) {
+			const lis = bullets.map((b) => `<li>${b.innerHTML.trim()}</li>`).join("");
+			parts.push(`<ul>${lis}</ul>`);
+		}
+
+		const afterText = feat.querySelector("#textafter")?.innerHTML?.trim();
+		if (afterText) parts.push(`<p>${afterText}</p>`);
+
+		richContent = parts.join("");
+	}
 
 	return {
 		name: feat.getAttribute("data-feature-name") ?? "",
 		type: feat.getAttribute("data-feature-type") ?? "Passive",
 		cost: rawCost !== "" ? rawCost : undefined,
-		text: feat.querySelector(".df-env-feat-text")?.textContent?.trim() ?? "",
-		bullets: Array.from(feat.querySelectorAll(".df-env-bullet-item"))
-			.map((b) => b.textContent?.trim() ?? "")
-			.filter(Boolean),
-		textAfter: feat.querySelector("#textafter")?.textContent?.trim() || undefined,
+		richContent,
 		questions: Array.from(
 			feat.querySelector(".df-env-questions")?.querySelectorAll(".df-env-question") ?? [],
 		)
@@ -64,9 +73,6 @@ function extractSingleFeature(feat: Element): EnvSavedFeatureState {
 			.filter(Boolean),
 	};
 }
-
-// Main Extraction
-// Scrapes a rendered environment card DOM back into an EnvironmentData object.
 
 export function extractEnvironmentData(cardElement: HTMLElement, cardName: string): EnvironmentData {
 	const inner = cardElement.querySelector(".df-env-card-inner");

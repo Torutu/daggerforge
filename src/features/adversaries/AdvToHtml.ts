@@ -70,15 +70,16 @@ export const buildCardHTML = (
             <span class="df-feature-title">
                 ${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ":"}
             </span>
-            <span class="df-feature-desc">${f.desc}</span>
+            <div class="df-feature-desc">${f.richContent}</div>
         </div>`,
 		)
 		.join("");
 	return `
 <section id="custom" class="df-card-outer df-pseudo-cut-corners outer${wide ? ' df-card--wide' : ''}" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
-		<button class="df-adv-edit-button" data-edit-mode-only="true" data-tooltip="duplicate & edit" aria-label="duplicate & edit" id="${hiddenID}">📝</button>
-        ${hpStressRepeat}
+		<button class="df-adv-collapse-btn" aria-label="Toggle HP and Stress"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg></button>
+		<button class="df-adv-edit-button" data-edit-mode-only="true" aria-label="Edit" id="${hiddenID}"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button>
+        <div class="df-hp-stress-section">${hpStressRepeat}</div>
         <h2 id="${hiddenID}">${name}</h2>
         <div class="df-subtitle">Tier ${tier} ${type} ${sourceBadge}</div>
         <div class="df-desc">${desc}</div>

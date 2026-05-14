@@ -224,15 +224,22 @@ export class EnvironmentModal extends Modal {
 
 		if (Array.isArray(savedFeatures) && savedFeatures.length > 0) {
 			savedFeatures.forEach((data) => {
+				// Migrate old format (text/bullets/textAfter) to richContent if needed
+				let richContent = data.richContent ? String(data.richContent) : "";
+				if (!richContent) {
+					const parts: string[] = [];
+					if (data.text) parts.push(`<p>${String(data.text)}</p>`);
+					if (Array.isArray(data.bullets) && data.bullets.length) {
+						parts.push(`<ul>${data.bullets.map((b) => `<li>${String(b)}</li>`).join("")}</ul>`);
+					}
+					if (data.textAfter) parts.push(`<p>${String(data.textAfter)}</p>`);
+					richContent = parts.join("");
+				}
 				addEnvFeature(this.featureContainer, this.features, {
 					name: String(data.name || ""),
 					type: String(data.type || "Passive"),
 					cost: data.cost ? String(data.cost) : undefined,
-					text: String(data.text || ""),
-					bullets: Array.isArray(data.bullets)
-						? data.bullets.map((b) => String(b))
-						: null,
-					textAfter: data.textAfter ? String(data.textAfter) : undefined,
+					richContent,
 					questions: Array.isArray(data.questions)
 						? data.questions.map((q) => String(q))
 						: [],

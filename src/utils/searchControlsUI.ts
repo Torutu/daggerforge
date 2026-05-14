@@ -17,6 +17,10 @@
  *   - filled array → show cards matching ANY of the chosen values (OR logic)
  */
 
+const SEARCH_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`;
+const CHEVRON_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`;
+const CLEAR_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
 export interface SearchControlsConfig {
 	placeholderText?: string;
 	onSearchChange?: (query: string) => void;
@@ -41,16 +45,8 @@ export class SearchControlsUI {
 	private container: HTMLElement | null = null;
 	private config: SearchControlsConfig;
 
-	/**
-	 * The currently open panel element (appended to document.body).
-	 * Kept so we can close it when the user clicks elsewhere or opens another.
-	 */
 	private openPanel: HTMLElement | null = null;
-
-	/** The toggle button that owns the currently open panel. */
 	private openButton: HTMLButtonElement | null = null;
-
-	/** Whether the next inserted card should use the wide layout. */
 	private wideCard: boolean = false;
 
 	private state: MultiSelectState = {
@@ -59,10 +55,6 @@ export class SearchControlsUI {
 		types: new Set(),
 	};
 
-	/**
-	 * All panels created by this instance, keyed by stateKey.
-	 * Stored so destroy() can remove them from document.body on cleanup.
-	 */
 	private panels: Map<keyof MultiSelectState, HTMLElement> = new Map();
 
 	constructor(config: SearchControlsConfig = {}) {
@@ -114,30 +106,18 @@ export class SearchControlsUI {
 		this.createClearButton(filterRow);
 		this.createWideCardToggle(filterRow);
 
-		// Close the open panel on any click outside it
 		document.addEventListener("click", this.handleOutsideClick);
-
-		// Close the panel on any scroll anywhere in the page (capture phase
-		// catches scroll events on all elements, not just window).
-		// Closing on scroll feels more natural than trying to chase the button.
 		window.addEventListener("scroll", this.handleScrollClose, true);
-
-		// Reposition on resize only (window size change shifts button position)
 		window.addEventListener("resize", this.handleScrollOrResize);
 
 		return this.container;
 	}
 
-	/**
-	 * Sync UI checkboxes to match provided filter values.
-	 * Accepts either the old string | null shape or the new string[] shape.
-	 */
 	public setFilterValues(filters: {
 		query?: string;
 		tiers?: string[];
 		sources?: string[];
 		types?: string[];
-		// Legacy single-value shape — still accepted, converted internally
 		tier?: string | null;
 		source?: string | null;
 		type?: string | null;
@@ -158,7 +138,6 @@ export class SearchControlsUI {
 		this.syncCheckboxState("types", typesToSet);
 	}
 
-	/** Returns whether the wide card mode is currently active. */
 	public getWideCard(): boolean {
 		return this.wideCard;
 	}
@@ -172,16 +151,11 @@ export class SearchControlsUI {
 		else if (filterName === "types") this.config.availableTypes = options;
 	}
 
-	/**
-	 * Remove all event listeners and detach body-level panels from the DOM.
-	 * Call this in the view's onClose() to prevent memory/listener leaks.
-	 */
 	public destroy(): void {
 		document.removeEventListener("click", this.handleOutsideClick);
 		window.removeEventListener("scroll", this.handleScrollClose, true);
 		window.removeEventListener("resize", this.handleScrollOrResize);
 
-		// Remove every panel we appended to document.body
 		this.panels.forEach((panel) => {
 			if (panel.parentElement) panel.parentElement.removeChild(panel);
 		});
@@ -195,7 +169,12 @@ export class SearchControlsUI {
 	// ---------------------------------------------------------------------------
 
 	private createSearchInput(container: HTMLElement): void {
-		const input = container.createEl("input", {
+		const wrap = container.createDiv({ cls: "df-search-input-wrap" });
+
+		const iconEl = wrap.createDiv({ cls: "df-search-input-icon" });
+		iconEl.innerHTML = SEARCH_ICON;
+
+		const input = wrap.createEl("input", {
 			attr: { type: "text", placeholder: this.config.placeholderText ?? "" },
 			cls: "df-search-input",
 		}) as HTMLInputElement;
@@ -205,13 +184,6 @@ export class SearchControlsUI {
 		});
 	}
 
-	/**
-	 * Build one multi-select filter group.
-	 *
-	 * The toggle button lives in the normal DOM flow (inside the filter row).
-	 * The checkbox panel is appended to document.body so it is never clipped
-	 * by Obsidian's overflow:hidden sidebar containers.
-	 */
 	private createMultiSelectFilter(
 		container: HTMLElement,
 		opts: {
@@ -222,7 +194,6 @@ export class SearchControlsUI {
 			onChange: (values: string[]) => void;
 		}
 	): void {
-		// Wrapper stays in the filter row — only used for layout of the button
 		const wrapper = container.createDiv({ cls: "df-multiselect-wrapper" });
 		wrapper.dataset.filterKey = opts.stateKey;
 
@@ -233,8 +204,9 @@ export class SearchControlsUI {
 
 		button.createSpan({ cls: "df-multiselect-label", text: opts.label });
 		const badge = button.createSpan({ cls: "df-multiselect-badge df-multiselect-badge--hidden" });
+		const chevron = button.createSpan({ cls: "df-multiselect-chevron" });
+		chevron.innerHTML = CHEVRON_ICON;
 
-		// Panel is created outside the normal DOM tree (body-level portal)
 		const panel = document.createElement("div");
 		panel.className = "df-multiselect-panel df-multiselect-panel--hidden";
 		panel.dataset.filterKey = opts.stateKey;
@@ -269,19 +241,17 @@ export class SearchControlsUI {
 				} else {
 					this.state[opts.stateKey].delete(value);
 				}
-				this.updateBadge(badge, this.state[opts.stateKey].size);
+				this.updateBadge(badge, button, this.state[opts.stateKey].size);
 				opts.onChange(Array.from(this.state[opts.stateKey]));
 			});
 
-			// Clicking the item row (not just the checkbox) should toggle it
 			item.addEventListener("click", (e) => {
-				if (e.target === checkbox) return; // checkbox handles its own click
+				if (e.target === checkbox) return;
 				checkbox.checked = !checkbox.checked;
 				checkbox.dispatchEvent(new Event("change"));
 			});
 		});
 
-		// Append the panel to body so it escapes all overflow clipping
 		document.body.appendChild(panel);
 		this.panels.set(opts.stateKey, panel);
 
@@ -290,7 +260,6 @@ export class SearchControlsUI {
 
 			const isOpen = !panel.classList.contains("df-multiselect-panel--hidden");
 
-			// Close any other open panel first
 			if (this.openPanel && this.openPanel !== panel) {
 				this.closePanel(this.openPanel, this.openButton);
 			}
@@ -302,14 +271,9 @@ export class SearchControlsUI {
 			}
 		});
 
-		// Stop clicks inside the panel from bubbling to the outside-click handler
 		panel.addEventListener("click", (e) => e.stopPropagation());
 	}
 
-	/**
-	 * Position and show a panel directly below its toggle button.
-	 * Uses viewport coordinates so overflow:hidden ancestors don't matter.
-	 */
 	private openPanelAt(panel: HTMLElement, button: HTMLButtonElement): void {
 		const rect = button.getBoundingClientRect();
 
@@ -335,11 +299,6 @@ export class SearchControlsUI {
 		}
 	}
 
-	/**
-	 * A small checkbox labeled "Wide card" that sits in the filter row.
-	 * When checked, the next inserted card gets the df-card--wide class,
-	 * which removes the max-width cap on the outer section.
-	 */
 	private createWideCardToggle(container: HTMLElement): void {
 		const wrapper = container.createDiv({ cls: "df-wide-card-wrapper" });
 
@@ -356,21 +315,23 @@ export class SearchControlsUI {
 
 		checkbox.addEventListener("change", () => {
 			this.wideCard = checkbox.checked;
+			wrapper.classList.toggle("df-wide-card-wrapper--active", this.wideCard);
 			this.config.onWideCardChange?.(this.wideCard);
 		});
 	}
 
 	private createClearButton(container: HTMLElement): void {
 		const button = container.createEl("button", {
-			text: "Clear",
 			cls: "df-clear-filters-btn",
+			attr: { "aria-label": "Clear filters", title: "Clear filters" },
 		}) as HTMLButtonElement;
+
+		button.innerHTML = CLEAR_ICON;
 
 		button.addEventListener("click", () => {
 			const searchInput = this.container?.querySelector(".df-search-input") as HTMLInputElement | null;
 			if (searchInput) searchInput.value = "";
 
-			// Uncheck all checkboxes in all body-level panels
 			this.panels.forEach((panel) => {
 				panel.querySelectorAll(".df-multiselect-checkbox").forEach((el) => {
 					if (el instanceof HTMLInputElement) el.checked = false;
@@ -382,7 +343,10 @@ export class SearchControlsUI {
 			this.state.types.clear();
 
 			this.container?.querySelectorAll(".df-multiselect-badge").forEach((el) => {
-				if (el instanceof HTMLElement) this.updateBadge(el, 0);
+				if (el instanceof HTMLElement) {
+					const btn = el.closest<HTMLButtonElement>(".df-multiselect-toggle");
+					this.updateBadge(el, btn, 0);
+				}
 			});
 
 			this.config.onSearchChange?.("");
@@ -393,13 +357,15 @@ export class SearchControlsUI {
 		});
 	}
 
-	private updateBadge(badge: HTMLElement, count: number): void {
+	private updateBadge(badge: HTMLElement, button: HTMLButtonElement | null, count: number): void {
 		if (count === 0) {
 			badge.textContent = "";
 			badge.classList.add("df-multiselect-badge--hidden");
+			button?.classList.remove("df-multiselect-toggle--active");
 		} else {
 			badge.textContent = String(count);
 			badge.classList.remove("df-multiselect-badge--hidden");
+			button?.classList.add("df-multiselect-toggle--active");
 		}
 	}
 
@@ -407,7 +373,6 @@ export class SearchControlsUI {
 		this.state[stateKey].clear();
 		values.forEach(v => this.state[stateKey].add(v));
 
-		// The panel is body-level, so look it up by the stateKey data attribute
 		const panel = this.panels.get(stateKey);
 		if (!panel) return;
 
@@ -417,11 +382,11 @@ export class SearchControlsUI {
 			}
 		});
 
-		// Update the badge in the inline toggle button
 		const wrapperEl = this.container?.querySelector(`[data-filter-key="${stateKey}"]`);
-		const badge = wrapperEl?.querySelector(".df-multiselect-badge");
-		if (badge instanceof HTMLElement) {
-			this.updateBadge(badge, this.state[stateKey].size);
+		const badge = wrapperEl?.querySelector<HTMLElement>(".df-multiselect-badge");
+		const btn = wrapperEl?.querySelector<HTMLButtonElement>(".df-multiselect-toggle");
+		if (badge) {
+			this.updateBadge(badge, btn ?? null, this.state[stateKey].size);
 		}
 	}
 
@@ -429,25 +394,18 @@ export class SearchControlsUI {
 		return s.charAt(0).toUpperCase() + s.slice(1);
 	}
 
-	/** Close the open panel when clicking anywhere outside it. */
 	private handleOutsideClick = (): void => {
 		if (this.openPanel) {
 			this.closePanel(this.openPanel, this.openButton);
 		}
 	};
 
-	/**
-	 * Close the open panel when the user scrolls the sidebar browser,
-	 * but NOT when they scroll inside the panel itself to reach more options.
-	 */
 	private handleScrollClose = (e: Event): void => {
 		if (!this.openPanel) return;
-		// If the scroll happened inside the open panel, let it scroll normally
 		if (this.openPanel.contains(e.target as Node)) return;
 		this.closePanel(this.openPanel, this.openButton);
 	};
 
-	/** Reposition on window resize only (layout shift, not user scroll). */
 	private handleScrollOrResize = (): void => {
 		if (this.openPanel && this.openButton) {
 			const rect = this.openButton.getBoundingClientRect();
