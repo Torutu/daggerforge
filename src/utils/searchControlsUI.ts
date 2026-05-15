@@ -277,7 +277,6 @@ export class SearchControlsUI {
 	private openPanelAt(panel: HTMLElement, button: HTMLButtonElement): void {
 		const rect = button.getBoundingClientRect();
 
-		panel.style.position = "fixed";
 		panel.style.top = `${rect.bottom + 4}px`;
 		panel.style.left = `${rect.left}px`;
 		panel.style.minWidth = `${Math.max(rect.width, 160)}px`;

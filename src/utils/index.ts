@@ -12,3 +12,4 @@ export * from './keywordBadges';
 export * from './themeManager';
 export * from './modalInfoIcon';
 export * from './collapseState';
+export * from './makeDraggable';

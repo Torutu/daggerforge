@@ -1,151 +1,134 @@
+import { App, Modal } from "obsidian";
 import { rollDice } from "../index";
-import type DaggerForgePlugin from "../../main";
+import { makeDraggable } from "../../utils/makeDraggable";
 
-let floatingWindowContainer: HTMLDivElement | null = null;
+// ── Icons ─────────────────────────────────────────────────────────────────────
+const PLAY    = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+const DICE    = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M16 8h.01"/><path d="M8 8h.01"/><path d="M12 12h.01"/><path d="M16 16h.01"/><path d="M8 16h.01"/></svg>`;
+const HISTORY = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>`;
+const TRASH   = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`;
+const X_SM    = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+const DICE_SIDES = ["4", "6", "8", "10", "12", "20", "100"];
+
 const diceLog: string[] = [];
 
-export function openDiceRoller(plugin: DaggerForgePlugin) {
-    // Cleanup previous instance
-    if (floatingWindowContainer) {
-        floatingWindowContainer.remove();
-        floatingWindowContainer = null;
-    }
+export class DiceRollerModal extends Modal {
+	constructor(app: App) {
+		super(app);
+		this.titleEl.setText("Dice Roller");
+	}
 
-    const container = document.createElement("div");
-    floatingWindowContainer = container;
-    container.classList.add("df-bg-floating-window");
-    
-    const header = container.createEl("div", { cls: "df-floating-header" });
-    header.createEl("span", { text: "Dice roller" });
-    const closeBtn = header.createEl("button", { text: "✖", cls: "df-close-btn" });
+	onOpen(): void {
+		makeDraggable(this.modalEl, this.titleEl);
+		this.modalEl.addClass("df-dr-modal");
 
-    const body = container.createEl("div", { cls: "df-dice-roll-body" });
-    const logContainer = body.createEl("div", { cls: "df-log-container" });
+		const { contentEl } = this;
+		contentEl.addClass("df-dr-content");
 
-    body.createEl("p", { text: "Roll count:", cls: "df-label" });
-    const countInput = body.createEl("input", { cls: "df-roll-count" }) as HTMLInputElement;
-    countInput.type = "number";
-    countInput.min = "1";
-    countInput.value = "1";
+		// ── Controls row ──────────────────────────────────────────────────
+		const controls = contentEl.createEl("div", { cls: "df-dr-controls" });
 
-    body.createEl("p", { text: "Add dice to queue:", cls: "df-label" });
-    
-    const diceButtonsDiv = body.createEl("div", { cls: "df-dice-buttons" });
-    const diceSides = ["4", "6", "8", "10", "12", "20", "100"];
-    diceSides.forEach(sides => {
-        const btn = diceButtonsDiv.createEl("button", {
-            text: `d${sides}`,
-            cls: "df-dice-btn"
-        });
-        btn.setAttribute("data-sides", sides);
-    });
+		const countGroup = controls.createEl("div", { cls: "df-dr-count-group" });
+		countGroup.createEl("label", { cls: "df-dr-label", text: "Count" });
+		const countInput = countGroup.createEl("input", { cls: "df-dr-count-input" }) as HTMLInputElement;
+		countInput.type = "number";
+		countInput.min = "1";
+		countInput.max = "99";
+		countInput.value = "1";
 
-    const queueContainer = body.createEl("div", { cls: "df-dice-queue" });
-    const rollBtn = body.createEl("button", { text: "Roll All", cls: "df-roll-btn" });
-    const clearLogBtn = body.createEl("button", { text: "Clear Log", cls: "df-clear-log-btn" });
+		const rollBtn = controls.createEl("button", { cls: "df-dr-roll-btn" });
+		rollBtn.innerHTML = `${PLAY}<span>Roll All</span>`;
 
-    document.body.appendChild(container);
+		// ── Dice grid ─────────────────────────────────────────────────────
+		const diceSection = contentEl.createEl("div", { cls: "df-dr-section" });
+		const diceSectionLabel = diceSection.createEl("div", { cls: "df-dr-section-label" });
+		diceSectionLabel.innerHTML = `${DICE}<span>Select dice</span>`;
 
-    const diceQueue: string[] = [];
+		const diceGrid = diceSection.createEl("div", { cls: "df-dr-dice-grid" });
+		DICE_SIDES.forEach(sides => {
+			const btn = diceGrid.createEl("button", { cls: "df-dr-die-btn" });
+			btn.setAttribute("data-sides", sides);
+			btn.createEl("span", { cls: "df-dr-die-label", text: `d${sides}` });
+		});
 
-    /**************/
-    /* Drag logic */
-    /**************/
-    let isDragging = false;
-    let offsetX = 0;
-    let offsetY = 0;
+		// ── Queue ─────────────────────────────────────────────────────────
+		const queueSection = contentEl.createEl("div", { cls: "df-dr-queue-section" });
+		const queueHeader = queueSection.createEl("div", { cls: "df-dr-queue-header" });
+		queueHeader.createEl("span", { cls: "df-dr-section-label-text", text: "Queue" });
+		const queueContainer = queueSection.createEl("div", { cls: "df-dr-queue" });
 
+		// ── Log ───────────────────────────────────────────────────────────
+		const logSection = contentEl.createEl("div", { cls: "df-dr-log-section" });
+		const logHeader = logSection.createEl("div", { cls: "df-dr-log-header" });
+		const logTitle = logHeader.createEl("div", { cls: "df-dr-section-label" });
+		logTitle.innerHTML = `${HISTORY}<span>Roll History</span>`;
+		const clearBtn = logHeader.createEl("button", { cls: "df-dr-clear-btn" });
+		clearBtn.innerHTML = TRASH;
+		clearBtn.setAttribute("title", "Clear history");
 
-    plugin.registerDomEvent(header, "mousedown", (e: MouseEvent) => {
-        isDragging = true;
-        container.classList.add("df-dragging");
-        header.classList.add("df-grab-cursor-active");
+		const logContainer = logSection.createEl("div", { cls: "df-dr-log" });
 
-        const rect = container.getBoundingClientRect();
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
-    });
+		// ── Logic ─────────────────────────────────────────────────────────
+		const diceQueue: string[] = [];
 
-    plugin.registerDomEvent(window, "mousemove", (e: MouseEvent) => {
-        if (!isDragging) return;
+		const updateLog = () => {
+			logContainer.empty();
+			[...diceLog].reverse().forEach(line => {
+				const row = logContainer.createEl("div", { cls: "df-dr-log-row" });
+				const [expr, rest] = line.split(" -> ");
+				row.createEl("span", { cls: "df-dr-log-expr", text: expr });
+				if (rest) row.createEl("span", { cls: "df-dr-log-result", text: `→ ${rest}` });
+			});
+		};
 
-        const newLeft = e.clientX - offsetX;
-        const newTop = e.clientY - offsetY;
+		const updateQueue = () => {
+			queueContainer.empty();
+			if (diceQueue.length === 0) {
+				queueContainer.createEl("span", { cls: "df-dr-queue-empty", text: "No dice added yet" });
+				return;
+			}
+			diceQueue.forEach((expr, idx) => {
+				const chip = queueContainer.createEl("div", { cls: "df-dr-queue-chip" });
+				chip.createEl("span", { text: expr });
+				const rm = chip.createEl("button", { cls: "df-dr-chip-remove" });
+				rm.innerHTML = X_SM;
+				rm.addEventListener("click", () => { diceQueue.splice(idx, 1); updateQueue(); });
+			});
+		};
 
-        container.classList.add("df-bg-floating-window");
+		diceGrid.querySelectorAll(".df-dr-die-btn").forEach(btn => {
+			btn.addEventListener("click", () => {
+				const sides = Number((btn as HTMLElement).dataset.sides);
+				const count = Number(countInput.value) || 1;
+				diceQueue.push(`${count}d${sides}`);
+				updateQueue();
+			});
+		});
 
-        container.style.setProperty('--df-left', `${newLeft}px`);
-        container.style.setProperty('--df-top', `${newTop}px`);
-    });
+		rollBtn.addEventListener("click", () => {
+			if (diceQueue.length === 0) return;
+			const expression = diceQueue.join(" + ");
+			const result = rollDice(expression);
+			const details = `[${result.parts.map(p => p.value).join(", ")}]`;
+			diceLog.push(`${expression} -> ${details} = ${result.total}`);
+			updateLog();
+			diceQueue.length = 0;
+			updateQueue();
+		});
 
-    plugin.registerDomEvent(window, "mouseup", () => {
-        if (!isDragging) return;
-        isDragging = false;
-        container.classList.remove("df-dragging");
-        header.classList.remove("df-grab-cursor-active");
-    });
+		clearBtn.addEventListener("click", () => { diceLog.length = 0; updateLog(); });
 
-    const onClose = () => {
-        container.remove();
-        floatingWindowContainer = null;
-    };
+		updateLog();
+		updateQueue();
+	}
 
-    closeBtn.addEventListener("click", onClose);
+	onClose(): void {
+		this.contentEl.empty();
+	}
+}
 
-    // --- Update log ---
-    function updateLog() {
-        logContainer.empty();
-        diceLog.forEach(line => {
-            logContainer.createEl("p", { text: line });
-        });
-        logContainer.scrollTop = logContainer.scrollHeight;
-    }
-
-    // --- Update queue display ---
-    function updateQueue() {
-        queueContainer.empty();
-        diceQueue.forEach((expr, idx) => {
-            const div = queueContainer.createEl("div", { cls: "df-dice-queue-item" });
-            div.createEl("span", { text: expr + " " });
-            const removeBtn = div.createEl("button", { text: "x" });
-            removeBtn.addEventListener("click", () => {
-                diceQueue.splice(idx, 1);
-                updateQueue();
-            });
-        });
-    }
-
-    // --- Dice buttons ---
-    container.querySelectorAll(".df-dice-btn").forEach(btn => {
-        const onClick = () => {
-            const sides = Number((btn as HTMLElement).dataset.sides);
-            const count = Number(countInput.value) || 1;
-            const diceExpr = `${count}d${sides}`;
-            diceQueue.push(diceExpr);
-            updateQueue();
-        };
-        btn.addEventListener("click", onClick);
-    });
-
-    // --- Roll button ---
-    const onRoll = () => {
-        if (diceQueue.length === 0) return;
-        const expression = diceQueue.join(" + ");
-        const result = rollDice(expression);
-        const details = `[${result.parts.map(p => p.value).join(", ")}]`;
-        diceLog.push(`${expression} -> ${details} = ${result.total}`);
-        updateLog();
-        diceQueue.length = 0;
-        updateQueue();
-    };
-    rollBtn.addEventListener("click", onRoll);
-
-    // --- Clear log button ---
-    const onClearLog = () => {
-        diceLog.length = 0;
-        updateLog();
-    };
-    clearLogBtn.addEventListener("click", onClearLog);
-
-    updateLog();
+/** @deprecated use DiceRollerModal */
+export function openDiceRoller(app: App): void {
+	new DiceRollerModal(app).open();
 }

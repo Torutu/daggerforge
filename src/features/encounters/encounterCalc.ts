@@ -1,255 +1,215 @@
-let encounterWindowContainer: HTMLDivElement | null = null;
-let cleanupListeners: (() => void)[] = [];
+import { App, Modal } from "obsidian";
+import { makeDraggable } from "../../utils/makeDraggable";
 
+// ── Icons ─────────────────────────────────────────────────────────────────────
+const ZAP    = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+const SLIDERS= `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>`;
+const SWORDS = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>`;
+const TRASH  = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`;
+const X_SM   = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+// ── Data ──────────────────────────────────────────────────────────────────────
 interface EncounterState {
-    baseBP: number;
-    adjustments: { value: number; reason: string }[];
-    spentItems: { cost: number; label: string }[];
-    pcCount: number;
+	baseBP: number;
+	adjustments: { value: number; reason: string }[];
+	spentItems: { cost: number; label: string }[];
+	pcCount: number;
 }
 
-let encounterState: EncounterState = {
-    baseBP: 0,
-    adjustments: [],
-    spentItems: [],
-    pcCount: 3
-};
+const ADJUSTMENTS = [
+	{ value: -1, label: "Less difficult / shorter" },
+	{ value: -2, label: "2+ Solo adversaries" },
+	{ value: -2, label: "+1d4 or +2 damage" },
+	{ value:  1, label: "Lower tier adversary" },
+	{ value:  1, label: "No Bruisers / Hordes / Leaders / Solos" },
+	{ value:  2, label: "More dangerous / longer" },
+];
 
-export function openEncounterCalculator() {
+const SPEND_OPTIONS = [
+	{ cost: 1, label: "Minions (party size)" },
+	{ cost: 1, label: "Social / Support" },
+	{ cost: 2, label: "Horde / Ranged / Skulk / Standard" },
+	{ cost: 3, label: "Leader" },
+	{ cost: 4, label: "Bruiser" },
+	{ cost: 5, label: "Solo" },
+];
 
-    if (encounterWindowContainer) {
-        encounterWindowContainer.remove();
-        encounterWindowContainer = null;
-        cleanupListeners.forEach(cleanup => cleanup());
-        cleanupListeners = [];
-    }
-    const container = document.createElement("div");
-    encounterWindowContainer = container;
-    container.classList.add("df-bg-floating-window");
+// ── Modal ─────────────────────────────────────────────────────────────────────
+export class EncounterCalcModal extends Modal {
+	private state: EncounterState = { baseBP: 0, adjustments: [], spentItems: [], pcCount: 3 };
 
-    const header = container.createEl("div", { cls: "df-floating-header" });
-    header.createEl("span", { text: "Battle guide" });
-    const closeBtn = header.createEl("button", { text: "✖", cls: "df-close-btn" });
-    const body = container.createEl("div", { cls: "df-floating-body df-encounter-body" });
+	constructor(app: App) {
+		super(app);
+		this.titleEl.setText("Battle Calculator");
+	}
 
-    /************************/
-    /* Player input section */
-    /************************/
-    const inputsDiv = body.createEl("div", { cls: "df-encounter-inputs" });
-    inputsDiv.createEl("label", { text: "Number of PCs:" });
-    const pcInput = inputsDiv.createEl("input") as HTMLInputElement;
-    pcInput.type = "number";
-    pcInput.min = "1";
-    pcInput.value = encounterState.pcCount.toString();
-    const calcBtn = inputsDiv.createEl("button", { text: "Calculate base BP", cls: "df-calc-btn" });
-    const columnsDiv = body.createEl("div", { cls: "df-encounter-columns" });
+	onOpen(): void {
+		makeDraggable(this.modalEl, this.titleEl);
+		this.modalEl.addClass("df-enc-modal");
 
-    /**************************/
-    /* Left side: Adjustments */
-    /**************************/
-    const adjColumn = columnsDiv.createEl("div", { cls: "df-adjustments-column" });
-    adjColumn.createEl("div", { text: "Adjusting Battle Points", cls: "df-sticky-header" });
-    const adjustmentsList = adjColumn.createEl("div", { cls: "df-scrollable-list" });
-    const adjTotal = adjColumn.createEl("p");
-    adjTotal.createEl("span", { text: "Total Adjustments: " });
-    adjTotal.createEl("span", { text: "0" });
+		const { contentEl } = this;
+		contentEl.addClass("df-enc-content");
 
-    /************************/
-    /* Right side: Spending */
-    /************************/
-    const spendColumn = columnsDiv.createEl("div", { cls: "df-spending-column" });
-    spendColumn.createEl("div", { text: "Spending Battle Points", cls: "df-sticky-header" });
-    const spendingList = spendColumn.createEl("div", { cls: "df-scrollable-list" });
-    const remainingBP = spendColumn.createEl("p");
-    remainingBP.createEl("span", { text: "Remaining BP: " });
-    remainingBP.createEl("span", { text: "0" });
+		// ── Header row ────────────────────────────────────────────────────
+		const headerRow = contentEl.createEl("div", { cls: "df-enc-header-row" });
 
-    /********************/
-    /*Adjustment buttons*/
-    /********************/
-    const adjButtonsDiv = body.createEl("div", { cls: "df-encounter-buttons" });
-    adjButtonsDiv.createEl("h5", { text: "Adjust BP:", cls: "df-bg-h5" });
-    const adjBtnContainer = adjButtonsDiv.createEl("div", { cls: "df-bg-button-container" });
-    
-    const adjustments = [
-        { value: -1, label: "Less difficult/shorter (-1)" },
-        { value: -2, label: "2+ Solo adversaries (-2)" },
-        { value: -2, label: "+1d4 or +2 damage (-2)" },
-        { value: 1, label: "Lower tier adversary (+1)" },
-        { value: 1, label: "No Bruisers/Hordes/Leaders/Solos (+1)" },
-        { value: 2, label: "More dangerous/longer (+2)" },
-    ];
-    
-    adjustments.forEach(adj => {
-        const btn = adjBtnContainer.createEl("button", { text: adj.label, cls: "df-bg-button" });
-        btn.setAttribute("data-adjust", adj.value.toString());
-    });
+		const pcGroup = headerRow.createEl("div", { cls: "df-enc-pc-group" });
+		pcGroup.createEl("label", { cls: "df-enc-label", text: "Number of PCs" });
+		const pcInput = pcGroup.createEl("input", { cls: "df-enc-pc-input" }) as HTMLInputElement;
+		pcInput.type = "number";
+		pcInput.min = "1";
+		pcInput.max = "10";
+		pcInput.value = this.state.pcCount.toString();
 
-    /********************/
-    /* Spending buttons */
-    /********************/
-    const spendButtonsDiv = body.createEl("div", { cls: "df-encounter-buttons" });
-    spendButtonsDiv.createEl("h5", { text: "Spend BP:", cls: "df-bg-h5" });
-    const spendBtnContainer = spendButtonsDiv.createEl("div", { cls: "df-bg-button-container" });
-    
-    const spendOptions = [
-        { cost: 1, label: "Minions (Party size) [-1]" },
-        { cost: 1, label: "Social / Support [-1]" },
-        { cost: 2, label: "Horde / Ranged / Skulk / Standard [-2]" },
-        { cost: 3, label: "Leader [-3]" },
-        { cost: 4, label: "Bruiser [-4]" },
-        { cost: 5, label: "Solo [-5]" },
-    ];
-    
-    spendOptions.forEach(opt => {
-        const btn = spendBtnContainer.createEl("button", { text: opt.label, cls: "df-bg-button" });
-        btn.setAttribute("data-cost", opt.cost.toString());
-    });
+		const calcBtn = headerRow.createEl("button", { cls: "df-enc-calc-btn" });
+		calcBtn.innerHTML = `${ZAP}<span>Calculate</span>`;
 
-    /********************/
-    /* Clear log button */
-    /********************/
-    const clearDiv = body.createEl("div", { cls: "df-encounter-buttons" });
-    const clearLogBtn = clearDiv.createEl("button", { text: "Clear Log", cls: "df-clear-log-btn" });
+		// ── Stats bar ─────────────────────────────────────────────────────
+		const statsBar = contentEl.createEl("div", { cls: "df-enc-stats" });
+		const makeStatEl = (label: string, cls = "") => {
+			const chip = statsBar.createEl("div", { cls: `df-enc-stat ${cls}` });
+			chip.createEl("span", { cls: "df-enc-stat-label", text: label });
+			const val = chip.createEl("span", { cls: "df-enc-stat-value", text: "0" });
+			return val;
+		};
+		const svBase      = makeStatEl("Base BP");
+		const svAdj       = makeStatEl("Adjustments");
+		const svSpent     = makeStatEl("Spent");
+		const svRemaining = makeStatEl("Remaining", "df-enc-stat--highlight");
 
-    document.body.appendChild(container);
+		// ── Log columns ───────────────────────────────────────────────────
+		const columnsDiv = contentEl.createEl("div", { cls: "df-enc-columns" });
 
-    /*****************/
-    /* Close handler */
-    /*****************/
-    const onClose = () => {
-        container.remove();
-        encounterWindowContainer = null;
-        cleanupListeners.forEach(cleanup => cleanup());
-        cleanupListeners = [];
-    };
-    closeBtn.addEventListener("click", onClose);
-    cleanupListeners.push(() => closeBtn.removeEventListener("click", onClose));
+		const adjCol = columnsDiv.createEl("div", { cls: "df-enc-column" });
+		const adjColHead = adjCol.createEl("div", { cls: "df-enc-col-header" });
+		adjColHead.innerHTML = `${SLIDERS}<span>Adjustments</span>`;
+		const adjustmentsList = adjCol.createEl("div", { cls: "df-enc-log" });
 
-    /**************/
-    /* Drag logic */
-    /**************/
-    let isDragging = false;
-    let offsetX = 0;
-    let offsetY = 0;
+		const spendCol = columnsDiv.createEl("div", { cls: "df-enc-column" });
+		const spendColHead = spendCol.createEl("div", { cls: "df-enc-col-header" });
+		spendColHead.innerHTML = `${SWORDS}<span>Spending</span>`;
+		const spendingList = spendCol.createEl("div", { cls: "df-enc-log" });
 
-    // Create a <style> tag to hold dynamic positions
-    const dragStyle = document.createElement("style");
-    document.head.appendChild(dragStyle);
+		// ── Adjustment buttons ────────────────────────────────────────────
+		const adjSection = contentEl.createEl("div", { cls: "df-enc-section" });
+		const adjHead = adjSection.createEl("div", { cls: "df-enc-section-label" });
+		adjHead.innerHTML = `${SLIDERS}<span>Adjust Battle Points</span>`;
+		const adjGrid = adjSection.createEl("div", { cls: "df-enc-btn-grid" });
+		ADJUSTMENTS.forEach(adj => {
+			const btn = adjGrid.createEl("button", { cls: "df-enc-action-btn" });
+			btn.setAttribute("data-adjust", adj.value.toString());
+			btn.createEl("span", { cls: "df-enc-btn-label", text: adj.label });
+			btn.createEl("span", {
+				cls: `df-enc-badge ${adj.value > 0 ? "df-enc-badge--pos" : "df-enc-badge--neg"}`,
+				text: adj.value > 0 ? `+${adj.value}` : `${adj.value}`,
+			});
+		});
 
-    header.addEventListener("mousedown", (e: MouseEvent) => {
-        isDragging = true;
-        container.classList.add("df-dragging");
-        header.classList.add("df-grab-cursor-active");
+		// ── Spend buttons ─────────────────────────────────────────────────
+		const spendSection = contentEl.createEl("div", { cls: "df-enc-section" });
+		const spendHead = spendSection.createEl("div", { cls: "df-enc-section-label" });
+		spendHead.innerHTML = `${SWORDS}<span>Spend Battle Points</span>`;
+		const spendGrid = spendSection.createEl("div", { cls: "df-enc-btn-grid" });
+		SPEND_OPTIONS.forEach(opt => {
+			const btn = spendGrid.createEl("button", { cls: "df-enc-action-btn" });
+			btn.setAttribute("data-cost", opt.cost.toString());
+			btn.createEl("span", { cls: "df-enc-btn-label", text: opt.label });
+			btn.createEl("span", { cls: "df-enc-badge df-enc-badge--cost", text: `-${opt.cost}` });
+		});
 
-        const rect = container.getBoundingClientRect();
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
-    });
+		// ── Footer ────────────────────────────────────────────────────────
+		const footer = contentEl.createEl("div", { cls: "df-enc-footer" });
+		const clearBtn = footer.createEl("button", { cls: "df-enc-clear-btn" });
+		clearBtn.innerHTML = `${TRASH}<span>Clear all</span>`;
 
-    window.addEventListener("mousemove", (e: MouseEvent) => {
-        if (!isDragging) return;
+		// ── Logic ─────────────────────────────────────────────────────────
+		const totals = () => {
+			const adj   = this.state.adjustments.reduce((s, a) => s + a.value, 0);
+			const spent = this.state.spentItems.reduce((s, i) => s + i.cost, 0);
+			return { adj, spent, remaining: this.state.baseBP + adj - spent };
+		};
 
-        const newLeft = e.clientX - offsetX;
-        const newTop = e.clientY - offsetY;
+		const updateDisplay = () => {
+			// Adjustment log
+			adjustmentsList.empty();
+			this.state.adjustments.forEach((a, i) => {
+				const row = adjustmentsList.createEl("div", { cls: "df-enc-log-row" });
+				row.createEl("span", { cls: "df-enc-log-text", text: a.reason });
+				row.createEl("span", {
+					cls: `df-enc-log-val ${a.value >= 0 ? "df-enc-pos" : "df-enc-neg"}`,
+					text: a.value >= 0 ? `+${a.value}` : `${a.value}`,
+				});
+				const rm = row.createEl("button", { cls: "df-enc-remove-btn" });
+				rm.innerHTML = X_SM;
+				rm.addEventListener("click", () => { this.state.adjustments.splice(i, 1); updateDisplay(); });
+			});
 
-        container.classList.add("df-bg-floating-window");
+			// Spending log
+			spendingList.empty();
+			this.state.spentItems.forEach((item, i) => {
+				const row = spendingList.createEl("div", { cls: "df-enc-log-row" });
+				row.createEl("span", { cls: "df-enc-log-text", text: item.label });
+				row.createEl("span", { cls: "df-enc-log-val df-enc-neg", text: `-${item.cost}` });
+				const rm = row.createEl("button", { cls: "df-enc-remove-btn" });
+				rm.innerHTML = X_SM;
+				rm.addEventListener("click", () => { this.state.spentItems.splice(i, 1); updateDisplay(); });
+			});
 
-        container.style.setProperty('--df-left', `${newLeft}px`);
-        container.style.setProperty('--df-top', `${newTop}px`);
-    });
+			// Stats
+			const { adj, spent, remaining } = totals();
+			svBase.textContent      = this.state.baseBP.toString();
+			svAdj.textContent       = adj >= 0 ? `+${adj}` : `${adj}`;
+			svSpent.textContent     = spent.toString();
+			svRemaining.textContent = remaining.toString();
+			svRemaining.className = `df-enc-stat-value df-enc-stat-big ${remaining < 0 ? "df-enc-neg" : remaining > 0 ? "df-enc-pos" : ""}`;
 
-    window.addEventListener("mouseup", () => {
-        if (!isDragging) return;
-        isDragging = false;
-        container.classList.remove("df-dragging");
-        header.classList.remove("df-grab-cursor-active");
-    });
+			adjustmentsList.scrollTop = adjustmentsList.scrollHeight;
+			spendingList.scrollTop    = spendingList.scrollHeight;
+		};
 
+		// Events
+		calcBtn.addEventListener("click", () => {
+			this.state.pcCount     = Number(pcInput.value);
+			this.state.baseBP      = 3 * this.state.pcCount + 2;
+			this.state.adjustments = [];
+			this.state.spentItems  = [];
+			updateDisplay();
+		});
 
-    /********************/
-    /* Helper functions */
-    /********************/
-    function calculateTotals() {
-        const totalAdj = encounterState.adjustments.reduce((sum, a) => sum + a.value, 0);
-        const totalSpent = encounterState.spentItems.reduce((sum, item) => sum + item.cost, 0);
-        return { totalAdj, totalSpent, remaining: encounterState.baseBP + totalAdj - totalSpent };
-    }
+		contentEl.querySelectorAll("[data-adjust]").forEach(btn => {
+			btn.addEventListener("click", () => {
+				const val    = parseInt((btn as HTMLElement).dataset.adjust!);
+				const reason = (btn as HTMLElement).querySelector(".df-enc-btn-label")?.textContent ?? "";
+				this.state.adjustments.push({ value: val, reason });
+				updateDisplay();
+			});
+		});
 
-    function updateDisplay() {
-        adjustmentsList.empty();
-        encounterState.adjustments.forEach(adj => {
-            adjustmentsList.createEl("div", { text: `${adj.reason} → ${adj.value > 0 ? "+" : ""}${adj.value}` });
-        });
+		contentEl.querySelectorAll("[data-cost]").forEach(btn => {
+			btn.addEventListener("click", () => {
+				const cost  = parseInt((btn as HTMLElement).dataset.cost!);
+				const label = (btn as HTMLElement).querySelector(".df-enc-btn-label")?.textContent ?? "";
+				this.state.spentItems.push({ cost, label });
+				updateDisplay();
+			});
+		});
 
-        spendingList.empty();
-        encounterState.spentItems.forEach(item => {
-            spendingList.createEl("div", { text: `${item.label} → ${item.cost} BP` });
-        });
+		clearBtn.addEventListener("click", () => {
+			this.state = { baseBP: 0, adjustments: [], spentItems: [], pcCount: Number(pcInput.value) };
+			updateDisplay();
+		});
 
-        const { totalAdj, remaining } = calculateTotals();
-        const adjTotalSpan = adjTotal.querySelector("span:last-child");
-        if (adjTotalSpan) adjTotalSpan.textContent = totalAdj.toString();
-        
-        const remainingSpan = remainingBP.querySelector("span:last-child");
-        if (remainingSpan) remainingSpan.textContent = remaining.toString();
+		pcInput.addEventListener("change", () => { this.state.pcCount = Number(pcInput.value); });
 
-        adjustmentsList.scrollTop = adjustmentsList.scrollHeight;
-        spendingList.scrollTop = spendingList.scrollHeight;
-    }
+		updateDisplay();
+	}
 
-    const onCalcBase = () => {
-        encounterState.pcCount = Number(pcInput.value);
-        encounterState.baseBP = 3 * encounterState.pcCount + 2;
-        encounterState.adjustments = [];
-        encounterState.spentItems = [];
-        updateDisplay();
-    };
-    calcBtn.addEventListener("click", onCalcBase);
+	onClose(): void {
+		this.contentEl.empty();
+	}
+}
 
-    /**********************/
-    /* Adjustment buttons */
-    /**********************/
-    container.querySelectorAll("[data-adjust]").forEach(btn => {
-        const onClick = () => {
-            const val = parseInt((btn as HTMLElement).dataset.adjust!);
-            const reason = (btn as HTMLElement).textContent!;
-            encounterState.adjustments.push({ value: val, reason });
-            updateDisplay();
-        };
-        btn.addEventListener("click", onClick);
-    });
-
-    /********************/
-    /* Spending buttons */
-    /********************/
-    container.querySelectorAll("[data-cost]").forEach(btn => {
-        const onClick = () => {
-            const cost = parseInt((btn as HTMLElement).dataset.cost!);
-            const label = (btn as HTMLElement).textContent!;
-
-            const { remaining } = calculateTotals();
-            encounterState.spentItems.push({ cost, label });
-            updateDisplay();
-        };
-        btn.addEventListener("click", onClick);
-    });
-
-    const onClearLog = () => {
-        encounterState = {
-            baseBP: 0,
-            adjustments: [],
-            spentItems: [],
-            pcCount: Number(pcInput.value)
-        };
-        updateDisplay();
-    };
-    clearLogBtn.addEventListener("click", onClearLog);
-
-    const onPcChange = () => {
-        encounterState.pcCount = Number(pcInput.value);
-    };
-    pcInput.addEventListener("change", onPcChange);
-
-    updateDisplay();
+/** @deprecated use EncounterCalcModal */
+export function openEncounterCalculator(app: App): void {
+	new EncounterCalcModal(app).open();
 }

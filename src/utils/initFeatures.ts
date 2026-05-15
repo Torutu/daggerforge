@@ -3,7 +3,7 @@
 import { Menu } from "obsidian";
 import DaggerForgePlugin from "../main";
 import { openAdversarySidebar, openEnvironmentSidebar } from "../utils/index";
-import { openDiceRoller, openEncounterCalculator, ImportDataModal } from "../features/index";
+import { DiceRollerModal, EncounterCalcModal, ImportDataModal } from "../features/index";
 import { openCreator, confirmDeleteDataFile } from "./pluginOperations";
 
 export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
@@ -23,9 +23,8 @@ export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
 
             menu.addSeparator();
 
-            menu.addItem(item => item.setTitle("Dice roller").setIcon("dice").onClick(() => openDiceRoller(plugin)));
-            menu.addItem(item => item.setTitle("Battle calculator").setIcon("flame").onClick(() => openEncounterCalculator()));
-            //TODO: ADD PLAYERS
+            menu.addItem(item => item.setTitle("Dice roller").setIcon("dice").onClick(() => new DiceRollerModal(plugin.app).open()));
+            menu.addItem(item => item.setTitle("Battle calculator").setIcon("flame").onClick(() => new EncounterCalcModal(plugin.app).open()));
 
             menu.addSeparator();
 
@@ -65,21 +64,19 @@ export function setupCommands(plugin: DaggerForgePlugin): void {
     plugin.addCommand({
         id: "open-floating-window",
         name: "Open dice roller",
-        callback: () => openDiceRoller(plugin),
+        callback: () => new DiceRollerModal(plugin.app).open(),
     });
 
     plugin.addCommand({
         id: "open-encounter-calculator",
         name: "Open battle calculator",
-        callback: () => openEncounterCalculator(),
+        callback: () => new EncounterCalcModal(plugin.app).open(),
     });
 
     plugin.addCommand({
         id: "import-data",
         name: "Import data from JSON file",
-        callback: () => {
-            new ImportDataModal(plugin.app, plugin).open();
-        },
+        callback: () => new ImportDataModal(plugin.app, plugin).open(),
     });
 
     plugin.addCommand({
