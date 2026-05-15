@@ -9,6 +9,9 @@ export function makeDraggable(modalEl: HTMLElement, handle: HTMLElement): void {
 
 	handle.addClass("df-draggable-handle");
 
+	const isInteractive = (t: EventTarget | null) =>
+		(t as HTMLElement)?.closest("button, input, select, textarea, a, label") !== null;
+
 	const apply = (dx: number, dy: number) => {
 		modalEl.style.transform = `translate(${ax + dx}px, ${ay + dy}px)`;
 	};
@@ -24,7 +27,7 @@ export function makeDraggable(modalEl: HTMLElement, handle: HTMLElement): void {
 	};
 
 	handle.addEventListener("mousedown", (e: MouseEvent) => {
-		if (e.button !== 0) return;
+		if (e.button !== 0 || isInteractive(e.target)) return;
 		sx = e.clientX;
 		sy = e.clientY;
 		handle.addClass("df-dragging-handle");
@@ -48,6 +51,7 @@ export function makeDraggable(modalEl: HTMLElement, handle: HTMLElement): void {
 	};
 
 	handle.addEventListener("touchstart", (e: TouchEvent) => {
+		if (isInteractive(e.target)) return;
 		const t = e.touches[0];
 		sx = t.clientX;
 		sy = t.clientY;

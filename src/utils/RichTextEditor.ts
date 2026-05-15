@@ -1,5 +1,6 @@
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
+import { toCustomHtml, toStandardHtml } from "./richContentTransform";
 
 const INFO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`;
 
@@ -32,7 +33,7 @@ export class RichTextEditor {
 		this.editor = new Editor({
 			element: editorMount,
 			extensions: [StarterKit],
-			content: initialContent || "<p></p>",
+			content: toStandardHtml(initialContent) || "<p></p>",
 			editorProps: {
 				attributes: { class: "df-rich-editor-content" },
 			},
@@ -46,7 +47,7 @@ export class RichTextEditor {
 
 	getHTML(): string {
 		const html = this.editor.getHTML();
-		return html === "<p></p>" ? "" : html;
+		return html === "<p></p>" ? "" : toCustomHtml(html);
 	}
 
 	destroy(): void {

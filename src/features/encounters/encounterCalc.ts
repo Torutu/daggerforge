@@ -44,7 +44,7 @@ export class EncounterCalcModal extends Modal {
 	}
 
 	onOpen(): void {
-		makeDraggable(this.modalEl, this.titleEl);
+		makeDraggable(this.modalEl, this.modalEl);
 		this.modalEl.addClass("df-enc-modal");
 
 		const { contentEl } = this;

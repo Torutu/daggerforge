@@ -1,4 +1,5 @@
 import { Feature } from "../../types/index";
+import { toCustomHtml } from "../../utils/richContentTransform";
 
 export const buildCardHTML = (
 	values: Record<string, string>,
@@ -70,7 +71,7 @@ export const buildCardHTML = (
             <span class="df-feature-title">
                 ${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ":"}
             </span>
-            <div class="df-feature-desc">${f.richContent}</div>
+            <div class="df-feature-desc">${toCustomHtml(f.richContent)}</div>
         </div>`,
 		)
 		.join("");

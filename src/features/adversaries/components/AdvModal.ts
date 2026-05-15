@@ -151,6 +151,17 @@ export class AdversaryModal extends Modal {
 			customClass: "df-adv-field-tier",
 		});
 
+		// If editing a Horde card, normalise the saved type so the select shows "Horde"
+		// and capture the member count so we can pre-fill the horde input.
+		let hordeMembers = "";
+		if (typeof saved.type === "string") {
+			const hordeMatch = (saved.type as string).match(/^Horde \((\d+)\/HP\)$/);
+			if (hordeMatch) {
+				saved = { ...saved, type: "Horde" };
+				hordeMembers = hordeMatch[1];
+			}
+		}
+
 		createInlineField(row, this.inputs, {
 			label: "Type",
 			key: "type",
@@ -163,6 +174,22 @@ export class AdversaryModal extends Modal {
 			savedValues: saved,
 			customClass: "df-adv-field-type",
 		});
+
+		// Horde-only: members per HP input — slides in when type = Horde
+		const hordeSection = section.createDiv({ cls: "df-horde-section" });
+		const hordeMembersInput = hordeSection.createEl("input", {
+			cls: "df-field-input df-horde-members-input",
+			attr: { type: "number", min: "1", placeholder: "Members per HP (e.g. 5)" },
+		}) as HTMLInputElement;
+		hordeMembersInput.value = hordeMembers;
+		this.inputs["hordeMembers"] = hordeMembersInput;
+
+		const typeSelect = this.inputs["type"] as HTMLSelectElement;
+		const syncHordeSection = () => {
+			hordeSection.classList.toggle("df-horde-section--visible", typeSelect.value === "Horde");
+		};
+		syncHordeSection();
+		typeSelect.addEventListener("change", syncHordeSection);
 
 		const details = section.createDiv({ cls: "df-adv-form-section-content" });
 
@@ -299,6 +326,13 @@ export class AdversaryModal extends Modal {
 
 	private async handleSubmit() {
 		const values = this.readFormValues();
+
+		// Compose the full Horde type before building HTML or assembling data
+		const hordeMembers = Number(values.hordeMembers);
+		if (values.type === "Horde" && hordeMembers > 0) {
+			values.type = `Horde (${hordeMembers}/HP)`;
+		}
+
 		const features = getAdvFeatureValues(this.features);
 		const newHTML = buildCardHTML(values, features, this.wideCard);
 		const newData = assembleAdvData(values, features);

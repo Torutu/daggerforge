@@ -1,4 +1,5 @@
 import { EnvironmentData } from "../../types/index";
+import { toCustomHtml } from "../../utils/richContentTransform";
 
 export function envToHtml(env: EnvironmentData, wide = false): string {
 	const hiddenID = crypto.randomUUID();
@@ -15,7 +16,7 @@ export function envToHtml(env: EnvironmentData, wide = false): string {
 <div class="df-env-feat-name-type">
 <span class="df-env-feat-name">${f.name}</span> - <span class="df-env-feat-type">${f.type}:</span> ${costHTML}
 </div>
-<div class="df-env-feat-richcontent">${f.richContent}</div>
+<div class="df-env-feat-richcontent">${toCustomHtml(f.richContent)}</div>
 ${questionsHTML}
 </div>`;
 		})

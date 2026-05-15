@@ -115,7 +115,12 @@ function parseTier(subtitleText: string): string {
 }
 
 function parseType(subtitleText: string, dataAttr: string): string {
-	// data-type is set explicitly at creation — prefer it over positional parsing.
+	// data-type strips parenthetical suffixes (e.g. "Horde" not "Horde (5/HP)").
+	// When the base type is Horde, recover the full string from the subtitle text.
+	if (dataAttr === "Horde") {
+		const m = subtitleText.match(/Horde \(\d+\/HP\)/);
+		if (m) return m[0];
+	}
 	if (dataAttr) return dataAttr;
 	const words = subtitleText.trim().split(" ").filter(Boolean);
 	return words[2] ?? "Standard";
