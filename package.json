@@ -44,6 +44,10 @@
 	"dependencies": {
 		"@tiptap/core": "^3.23.4",
 		"@tiptap/starter-kit": "^3.23.4",
-		"html2canvas": "^1.4.1"
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"html2canvas": "^1.4.1",
+		"react": "^19.2.6",
+		"react-dom": "^19.2.6"
 	}
 }

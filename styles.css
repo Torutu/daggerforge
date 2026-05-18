@@ -2539,6 +2539,19 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	border-bottom-color: var(--interactive-accent);
 }
 
+.df-tab-icon {
+	display: flex;
+	align-items: center;
+	width: 15px;
+	height: 15px;
+	flex-shrink: 0;
+}
+
+.df-tab-icon svg {
+	width: 15px;
+	height: 15px;
+}
+
 .df-browser-pane { display: none; }
 .df-browser-pane--active { display: block; }
 
