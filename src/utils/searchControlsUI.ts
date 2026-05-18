@@ -32,6 +32,7 @@ export interface SearchControlsConfig {
 	availableSources?: string[];
 	availableTypes?: string[];
 	onWideCardChange?: (wide: boolean) => void;
+	showWideToggle?: boolean;
 }
 
 /** Tracks currently selected values for each filter group. */
@@ -104,7 +105,7 @@ export class SearchControlsUI {
 		});
 
 		this.createClearButton(filterRow);
-		this.createWideCardToggle(filterRow);
+		if (this.config.showWideToggle !== false) this.createWideCardToggle(filterRow);
 
 		document.addEventListener("click", this.handleOutsideClick);
 		window.addEventListener("scroll", this.handleScrollClose, true);

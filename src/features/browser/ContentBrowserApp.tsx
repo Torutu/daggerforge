@@ -73,7 +73,7 @@ function CounterControls() {
 
 // ── Small helpers ─────────────────────────────────────────────────────────────
 
-function LucideBtn({ icon, title, onClick, cls }: { icon: string; title: string; onClick: () => void; cls?: string }) {
+function LucideBtn({ icon, title, onClick, cls }: { icon: string; title: string; onClick: (e: React.MouseEvent) => void; cls?: string }) {
 	const ref = useRef<HTMLButtonElement>(null);
 	useEffect(() => { if (ref.current) setIcon(ref.current, icon); }, [icon]);
 	return <button ref={ref} title={title} className={cls} onClick={onClick} />;
@@ -134,14 +134,14 @@ function AdversaryPane({ app }: { app: App }) {
 		const eng = engineRef.current;
 		const rerender = () => setCards([...eng.search()]);
 		return {
-			availableTiers: eng.getAvailableOptions("tiers"),
+			availableTiers:   eng.getAvailableOptions("tiers"),
 			availableSources: eng.getAvailableOptions("sources"),
-			availableTypes: ADV_TYPES,
-			onSearchChange: (q) => { eng.setFilters({ query: q }); rerender(); },
-			onTierChange: (t) => { eng.setFilters({ tiers: t }); rerender(); },
-			onSourceChange: (s) => { eng.setFilters({ sources: s }); rerender(); },
-			onTypeChange: (t) => { eng.setFilters({ types: t }); rerender(); },
-			onClear: () => { resetAdversaryCount(); eng.clearFilters(); rerender(); },
+			availableTypes:   ADV_TYPES,
+			onSearchChange:   (q) => { eng.setFilters({ query: q }); rerender(); },
+			onTierChange:     (t) => { eng.setFilters({ tiers: t }); rerender(); },
+			onSourceChange:   (s) => { eng.setFilters({ sources: s }); rerender(); },
+			onTypeChange:     (t) => { eng.setFilters({ types: t }); rerender(); },
+			onClear:          () => { resetAdversaryCount(); eng.clearFilters(); rerender(); },
 		};
 	}, []);
 
@@ -151,15 +151,13 @@ function AdversaryPane({ app }: { app: App }) {
 		const count = getAdversaryCount();
 		const wide = uiRef.current?.getWideCard() ?? false;
 		const html = buildCardHTML(
-			{
-				name: adversary.name, tier: adversary.tier, type: adversary.type, desc: adversary.desc,
-				motives: adversary.motives, difficulty: adversary.difficulty,
-				thresholdMajor: adversary.thresholdMajor, thresholdSevere: adversary.thresholdSevere,
-				hp: adversary.hp, stress: adversary.stress ?? 0, atk: adversary.atk,
-				weaponName: adversary.weaponName, weaponRange: adversary.weaponRange,
-				weaponDamage: adversary.weaponDamage, xp: adversary.xp,
-				count: String(count), source: adversary.source || "core"
-			},
+			{ name: adversary.name, tier: adversary.tier, type: adversary.type, desc: adversary.desc,
+			  motives: adversary.motives, difficulty: adversary.difficulty,
+			  thresholdMajor: adversary.thresholdMajor, thresholdSevere: adversary.thresholdSevere,
+			  hp: adversary.hp, stress: adversary.stress ?? 0, atk: adversary.atk,
+			  weaponName: adversary.weaponName, weaponRange: adversary.weaponRange,
+			  weaponDamage: adversary.weaponDamage, xp: adversary.xp,
+			  count: String(count), source: adversary.source || "core" },
 			adversary.features.map(f => ({ ...f, cost: f.cost || "" })), wide,
 		);
 		if (kind === "canvas") {
@@ -220,7 +218,7 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 			</p>
 			{isCustom && (
 				<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
-					onClick={() => onDelete(adversary)} />
+					onClick={(e: any) => { e.stopPropagation(); onDelete(adversary); }} />
 			)}
 			<h3 className="df-title-small-padding">{adversary.name || "Unnamed"}</h3>
 			<p className="df-desc-small-padding">{adversary.desc || ""}</p>
@@ -253,14 +251,14 @@ function EnvironmentPane({ app }: { app: App }) {
 		const eng = engineRef.current;
 		const rerender = () => setCards([...eng.search()]);
 		return {
-			availableTiers: eng.getAvailableOptions("tiers"),
+			availableTiers:   eng.getAvailableOptions("tiers"),
 			availableSources: eng.getAvailableOptions("sources"),
-			availableTypes: eng.getAvailableOptions("types"),
-			onSearchChange: (q) => { eng.setFilters({ query: q }); rerender(); },
-			onTierChange: (t) => { eng.setFilters({ tiers: t }); rerender(); },
-			onSourceChange: (s) => { eng.setFilters({ sources: s }); rerender(); },
-			onTypeChange: (t) => { eng.setFilters({ types: t }); rerender(); },
-			onClear: () => { eng.clearFilters(); rerender(); },
+			availableTypes:   eng.getAvailableOptions("types"),
+			onSearchChange:   (q) => { eng.setFilters({ query: q }); rerender(); },
+			onTierChange:     (t) => { eng.setFilters({ tiers: t }); rerender(); },
+			onSourceChange:   (s) => { eng.setFilters({ sources: s }); rerender(); },
+			onTypeChange:     (t) => { eng.setFilters({ types: t }); rerender(); },
+			onClear:          () => { eng.clearFilters(); rerender(); },
 		};
 	}, []);
 
@@ -329,7 +327,7 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 			</p>
 			{isCustom && (
 				<LucideBtn icon="trash" title="Delete" cls="df-env-delete-btn"
-					onClick={() => onDelete(env)} />
+					onClick={(e: any) => { e.stopPropagation(); onDelete(env); }} />
 			)}
 			<h3 className="df-title-small-padding">{env.name || "Unnamed"}</h3>
 			<p className="df-desc-small-padding">{env.desc || ""}</p>
@@ -340,12 +338,12 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 // ── Root App ──────────────────────────────────────────────────────────────────
 
 const TAB_ICONS: Record<BrowserTab, string> = {
-	adversary: "venetian-mask",
+	adversary:   "sword",
 	environment: "mountain",
 };
 
 const TAB_LABELS: Record<BrowserTab, string> = {
-	adversary: "Adversaries",
+	adversary:   "Adversaries",
 	environment: "Environments",
 };
 

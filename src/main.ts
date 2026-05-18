@@ -13,6 +13,7 @@ import {
 	attachDiceBadges,
 	handleDiceBtnClick,
 	handleCollapseClick,
+	handleWideToggleClick,
 	handleTickChange,
 	applyKeywordColors,
 	setDiceTooltipDuration,
@@ -42,6 +43,7 @@ export default class DaggerForgePlugin extends Plugin {
 		this.registerDomEvent(document, "click", (evt) => listenForEditClicks(evt, this.app, this));
 		this.registerDomEvent(document, "click", handleDiceBtnClick);
 		this.registerDomEvent(document, "click", handleCollapseClick);
+		this.registerDomEvent(document, "click", handleWideToggleClick);
 		this.registerDomEvent(document, "change", handleTickChange);
 
 		this.registerEvent(

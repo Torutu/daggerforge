@@ -190,6 +190,69 @@
 	pointer-events: none;
 }
 
+.df-wide-toggle-btn {
+	position: absolute;
+	top: 6px;
+	right: 32px;
+	border: none;
+	border-radius: 4px;
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	color: currentColor;
+	opacity: 0.3;
+	transition: background-color 0.15s ease, opacity 0.15s ease, color 0.15s ease;
+	z-index: 10;
+}
+
+.df-wide-toggle-btn:hover {
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+	opacity: 1;
+}
+
+.df-wide-toggle-btn:active {
+	transform: scale(0.92);
+}
+
+.df-wide-toggle-btn svg {
+	pointer-events: none;
+}
+
+.df-card--wide .df-wide-toggle-btn {
+	opacity: 0.6;
+}
+
+/* Hide Obsidian's native "Edit this block" button for our card HTML blocks
+   in BOTH live-preview (cm-html-embed) and reading view. */
+:has(> .df-card-outer) .edit-block-button,
+:has(> .df-env-card-outer) .edit-block-button,
+.cm-html-embed:has(.df-card-outer) .edit-block-button,
+.cm-html-embed:has(.df-env-card-outer) .edit-block-button,
+.markdown-reading-view :has(.df-card-outer) .edit-block-button,
+.markdown-reading-view :has(.df-env-card-outer) .edit-block-button {
+	display: none !important;
+}
+
+/* Ensure our card buttons always sit above any Obsidian overlays */
+.df-wide-toggle-btn,
+.df-adv-edit-button,
+.df-env-edit-button,
+.df-adv-collapse-btn {
+	z-index: 100;
+}
+
+/* Hide the card edit button in reading view — it's only useful when the
+   editor is active. The wide toggle remains visible in both modes. */
+.markdown-reading-view [data-edit-mode-only="true"] {
+	display: none !important;
+}
+
 .df-adv-collapse-btn {
 	display: flex;
 	align-items: center;
@@ -396,8 +459,6 @@ select.df-input-field {
 	height: 28px;
 	padding: 0;
 	cursor: pointer;
-	font-size: 18px;
-	font-weight: bold;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -424,8 +485,6 @@ select.df-input-field {
 	height: 28px;
 	padding: 0;
 	cursor: pointer;
-	font-size: 18px;
-	font-weight: bold;
 	display: flex;
 	align-items: center;
 	justify-content: center;

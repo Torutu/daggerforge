@@ -1,8 +1,9 @@
 const COLLAPSE_PREFIX = "df-adv-collapse:";
 const TICK_PREFIX     = "df-adv-ticks:";
+const WIDE_PREFIX     = "df-card-wide:";
 
 function getCardId(card: HTMLElement): string | null {
-	return card.querySelector<HTMLElement>("h2")?.id ?? null;
+	return (card.querySelector<HTMLElement>("h2") ?? card.querySelector<HTMLElement>(".df-env-name"))?.id ?? null;
 }
 
 function getTickboxes(card: HTMLElement): HTMLInputElement[] {
@@ -64,4 +65,33 @@ export function handleTickChange(evt: Event): void {
 	const card = cb.closest<HTMLElement>(".df-card-outer");
 	if (!card) return;
 	saveTickState(card);
+}
+
+// ── Wide state ────────────────────────────────────────────────────────────────
+
+export function saveWideState(card: HTMLElement): void {
+	const id = getCardId(card);
+	if (!id) return;
+	if (card.classList.contains("df-card--wide")) {
+		sessionStorage.setItem(WIDE_PREFIX + id, "1");
+	} else {
+		sessionStorage.removeItem(WIDE_PREFIX + id);
+	}
+}
+
+export function restoreWideState(card: HTMLElement): void {
+	const id = getCardId(card);
+	if (!id) return;
+	if (sessionStorage.getItem(WIDE_PREFIX + id) === "1") {
+		card.classList.add("df-card--wide");
+	}
+}
+
+export function handleWideToggleClick(evt: MouseEvent): void {
+	const btn = (evt.target as HTMLElement).closest<HTMLButtonElement>(".df-wide-toggle-btn");
+	if (!btn) return;
+	const card = btn.closest<HTMLElement>(".df-card-outer, .df-env-card-outer");
+	if (!card) return;
+	card.classList.toggle("df-card--wide");
+	saveWideState(card);
 }

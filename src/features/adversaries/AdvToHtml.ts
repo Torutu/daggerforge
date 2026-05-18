@@ -79,6 +79,7 @@ export const buildCardHTML = (
 <section id="custom" class="df-card-outer df-pseudo-cut-corners outer${wide ? ' df-card--wide' : ''}" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
 		<button class="df-adv-collapse-btn" aria-label="Toggle HP and Stress"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg></button>
+		<button class="df-wide-toggle-btn" data-edit-mode-only="true" aria-label="Toggle wide card"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg></button>
 		<button class="df-adv-edit-button" data-edit-mode-only="true" aria-label="Edit" id="${hiddenID}"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button>
         <div class="df-hp-stress-section">${hpStressRepeat}</div>
         <h2 id="${hiddenID}">${name}</h2>
