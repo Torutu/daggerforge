@@ -28,6 +28,7 @@ interface Props {
 	app: App;
 	scrollContainer: HTMLElement;
 	onTabSetter: (fn: (tab: BrowserTab) => void) => void;
+	refreshToken?: number;
 }
 
 // ── Counter ───────────────────────────────────────────────────────────────────
@@ -113,7 +114,7 @@ const ADV_TYPES = [
 	"Leader (Umbra-Touched)", "Minion (Umbra-Touched)", "Solo (Umbra-Touched)",
 ];
 
-function AdversaryPane({ app }: { app: App }) {
+function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 	const [cards, setCards] = useState<AdvData[]>([]);
 	const [ready, setReady] = useState(false);
 	const engineRef = useRef(new SearchEngine<AdvData>());
@@ -124,9 +125,9 @@ function AdversaryPane({ app }: { app: App }) {
 		const custom = plugin?.dataManager?.getAdversaries()?.map(a => ({ ...a, source: a.source || "custom" })) ?? [];
 		const all = [...ADVERSARIES, ...custom];
 		engineRef.current.setCards(all);
-		setCards(all);
+		setCards([...engineRef.current.search()]);
 		setReady(true);
-	}, [app]);
+	}, [app, refreshToken]);
 
 	useEffect(() => { load(); }, [load]);
 
@@ -228,7 +229,7 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 
 // ── Environment Pane ──────────────────────────────────────────────────────────
 
-function EnvironmentPane({ app }: { app: App }) {
+function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 	const [cards, setCards] = useState<EnvironmentData[]>([]);
 	const [ready, setReady] = useState(false);
 	const engineRef = useRef(new SearchEngine<EnvironmentData>());
@@ -241,9 +242,9 @@ function EnvironmentPane({ app }: { app: App }) {
 		const builtIn = ENVIRONMENTS.map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source ?? "core" }));
 		const all = [...builtIn, ...custom];
 		engineRef.current.setCards(all);
-		setCards(all);
+		setCards([...engineRef.current.search()]);
 		setReady(true);
-	}, [app]);
+	}, [app, refreshToken]);
 
 	useEffect(() => { load(); }, [load]);
 
@@ -347,7 +348,7 @@ const TAB_LABELS: Record<BrowserTab, string> = {
 	environment: "Environments",
 };
 
-export function ContentBrowserApp({ app, scrollContainer, onTabSetter }: Props) {
+export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshToken }: Props) {
 	const [activeTab, setActiveTab] = useState<BrowserTab>("adversary");
 	const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -380,10 +381,10 @@ export function ContentBrowserApp({ app, scrollContainer, onTabSetter }: Props) 
 
 			{/* Panes */}
 			<div className={`df-browser-pane${activeTab === "adversary" ? " df-browser-pane--active" : ""}`} data-pane="adversary">
-				<AdversaryPane app={app} />
+				<AdversaryPane app={app} refreshToken={refreshToken} />
 			</div>
 			<div className={`df-browser-pane${activeTab === "environment" ? " df-browser-pane--active" : ""}`} data-pane="environment">
-				<EnvironmentPane app={app} />
+				<EnvironmentPane app={app} refreshToken={refreshToken} />
 			</div>
 
 			{/* Scroll-to-top */}

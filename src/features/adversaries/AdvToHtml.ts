@@ -31,7 +31,7 @@ export const buildCardHTML = (
 	let countNum = Number(count);
 	countNum = Number.isInteger(countNum) && countNum >= 1 ? countNum : 1;
 	const hiddenID = crypto.randomUUID();
-	
+
 	const hpStressRepeat = Array.from({ length: countNum }, (_, index) => {
 		const hpTickboxes = Array.from(
 			{ length: hptick },

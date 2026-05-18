@@ -9,6 +9,7 @@ export type { BrowserTab };
 export class ContentBrowserView extends ItemView {
 	private root: Root | null = null;
 	private setTab: ((tab: BrowserTab) => void) | null = null;
+	private refreshToken = 0;
 
 	constructor(leaf: WorkspaceLeaf) { super(leaf); }
 
@@ -16,19 +17,23 @@ export class ContentBrowserView extends ItemView {
 	getDisplayText() { return "Content Browser"; }
 	getIcon()        { return "layout-grid"; }
 
-	async onOpen() {
-		const container = this.containerEl.children[1] as HTMLElement;
-		container.empty();
-		container.addClass("df-content-browser");
-
-		this.root = createRoot(container);
-		this.root.render(
+	private renderApp(container: HTMLElement) {
+		this.root!.render(
 			createElement(ContentBrowserApp, {
 				app: this.app,
 				scrollContainer: container,
 				onTabSetter: (fn) => { this.setTab = fn; },
+				refreshToken: this.refreshToken,
 			}),
 		);
+	}
+
+	async onOpen() {
+		const container = this.containerEl.children[1] as HTMLElement;
+		container.empty();
+		container.addClass("df-content-browser");
+		this.root = createRoot(container);
+		this.renderApp(container);
 	}
 
 	async onClose() {
@@ -38,17 +43,9 @@ export class ContentBrowserView extends ItemView {
 	}
 
 	public refresh() {
-		// Re-render by remounting (simplest approach — React reconciles efficiently)
-		if (this.root) {
-			const container = this.containerEl.children[1] as HTMLElement;
-			this.root.render(
-				createElement(ContentBrowserApp, {
-					app: this.app,
-					scrollContainer: container,
-					onTabSetter: (fn) => { this.setTab = fn; },
-				}),
-			);
-		}
+		if (!this.root) return;
+		this.refreshToken++;
+		this.renderApp(this.containerEl.children[1] as HTMLElement);
 	}
 
 	public switchTab(tab: BrowserTab) {

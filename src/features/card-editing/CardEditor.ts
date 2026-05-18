@@ -1,17 +1,9 @@
 import { App, ItemView, MarkdownView, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
-import { EnvironmentModal, extractEnvironmentData, Env_View_Type } from "../environments/index";
-import { extractCardData, AdversaryModal, Adv_View_Type } from "../adversaries/index";
+import { EnvironmentModal, extractEnvironmentData } from "../environments/index";
+import { extractCardData, AdversaryModal } from "../adversaries/index";
 import type { AdvData } from "../../types/index";
-import { injectDiceBadgesIntoHtml, attachDiceBadges } from "../../utils/index";
-
-function refreshBrowserView(plugin: DaggerForgePlugin, viewType: string): void {
-	const leaf = plugin.app.workspace.getLeavesOfType(viewType)[0];
-	if (!leaf) return;
-
-	const view = leaf.view as { refresh?: () => void };
-	view.refresh?.();
-}
+import { injectDiceBadgesIntoHtml, attachDiceBadges, refreshBrowsers } from "../../utils/index";
 
 // Markdown Section Boundary Detection
 // Cards live inside <section> blocks in the raw markdown source. To replace
@@ -217,7 +209,7 @@ async function editAdversaryInMarkdown(
 			new Notice("Error saving adversary. Check console for details.");
 		}
 
-		refreshBrowserView(plugin, Adv_View_Type);
+		refreshBrowsers(plugin);
 	};
 
 	modal.open();
@@ -252,7 +244,7 @@ async function editEnvironmentInMarkdown(
 		}
 
 		await plugin.dataManager.addEnvironment(newData);
-		refreshBrowserView(plugin, Env_View_Type);
+		refreshBrowsers(plugin);
 	};
 
 	modal.open();
@@ -278,7 +270,7 @@ function editAdversaryInCanvas(
 			new Notice("Error updating adversary. Check console for details.");
 		}
 
-		refreshBrowserView(plugin, Adv_View_Type);
+		refreshBrowsers(plugin);
 	};
 
 	modal.open();
@@ -302,7 +294,7 @@ function editEnvironmentInCanvas(
 			new Notice("Error updating environment. Check console for details.");
 		}
 
-		refreshBrowserView(plugin, Env_View_Type);
+		refreshBrowsers(plugin);
 	};
 
 	modal.open();
