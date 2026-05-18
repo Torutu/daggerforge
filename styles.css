@@ -2508,6 +2508,91 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	clip-path: none;
 }
 
+/* ── Content Browser — tabbed sidebar ───────────────────────────────────── */
+
+.df-browser-tabs {
+	display: flex;
+	border-bottom: 1px solid var(--background-modifier-border);
+	margin-bottom: 8px;
+	gap: 2px;
+}
+
+.df-browser-tab {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 7px 14px;
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	font-weight: 500;
+	color: var(--text-muted);
+	border-bottom: 2px solid transparent;
+	margin-bottom: -1px;
+	transition: color 0.1s, border-color 0.1s;
+	user-select: none;
+}
+
+.df-browser-tab:hover { color: var(--text-normal); }
+
+.df-browser-tab--active {
+	color: var(--text-normal);
+	border-bottom-color: var(--interactive-accent);
+}
+
+.df-browser-pane { display: none; }
+.df-browser-pane--active { display: block; }
+
+/* ── Content Creator chooser modal ──────────────────────────────────────── */
+
+.df-creator-chooser-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	padding: 8px 0;
+}
+
+.df-creator-option {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	padding: 20px 16px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	cursor: pointer;
+	text-align: center;
+	transition: background 0.1s, border-color 0.1s;
+}
+
+.df-creator-option:hover {
+	background: var(--background-modifier-hover);
+	border-color: var(--interactive-accent);
+}
+
+.df-creator-option-icon {
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--interactive-accent);
+}
+
+.df-creator-option-icon svg { width: 28px; height: 28px; }
+
+.df-creator-option-label {
+	margin: 0;
+	font-size: 1em;
+	font-weight: 600;
+}
+
+.df-creator-option-desc {
+	margin: 0;
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+	line-height: 1.4;
+}
+
 /* ── Settings tab ────────────────────────────────────────────────────────── */
 
 .df-settings-section {

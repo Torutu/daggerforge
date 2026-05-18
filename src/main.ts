@@ -1,8 +1,8 @@
 // https://lucide.dev/ for icons
 
 import { Plugin, WorkspaceLeaf, MarkdownView } from "obsidian";
-import { AdversaryView, Adv_View_Type, EnvironmentView, Env_View_Type } from "./features/index";
 import { DaggerForgeSettingsTab } from "./features/settings/SettingsTab";
+import { ContentBrowserView, Content_Browser_View_Type } from "./features/browser/ContentBrowserView";
 import { DataManager } from "./data/index";
 import { PluginSettings } from "./types/index";
 import {
@@ -20,7 +20,7 @@ import {
 } from "./utils/index";
 
 /** View types that belong to DaggerForge sidebars — never treated as insert targets. */
-const SIDEBAR_VIEW_TYPES = new Set([Adv_View_Type, Env_View_Type]);
+const SIDEBAR_VIEW_TYPES = new Set([Content_Browser_View_Type]);
 
 export default class DaggerForgePlugin extends Plugin {
 	dataManager: DataManager;
@@ -57,8 +57,7 @@ export default class DaggerForgePlugin extends Plugin {
 
 		setupRibbonIcon(this);
 		setupCommands(this);
-		registerSideBarView(this, Adv_View_Type, AdversaryView);
-		registerSideBarView(this, Env_View_Type, EnvironmentView);
+		registerSideBarView(this, Content_Browser_View_Type, ContentBrowserView);
 
 		this.registerMarkdownPostProcessor((element) => {
 			processDiceBadgesInElement(element);
@@ -98,5 +97,4 @@ export default class DaggerForgePlugin extends Plugin {
 		applyKeywordColors(this.settings.keywordHighlighting);
 		setDiceTooltipDuration(this.settings.diceBadgeTooltipMs);
 	}
-
 }
