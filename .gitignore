@@ -23,6 +23,9 @@ data.json
 # dist
 dist
 
+# local config
+deploy.config
+
 # test
 # src/tests
 
