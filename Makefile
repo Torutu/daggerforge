@@ -7,13 +7,13 @@
 help:
 	@echo _____________________________________________________________
 	@echo DaggerForge Plugin
-	@echo make install    - Install dependencies (npm install)
-	@echo make build      - Build for production
-	@echo make watch      - Watch mode for development (auto-rebuild)
-	@echo make test       - Run tests (on test branch)
-	@echo make deploy     - Deploy to Obsidian vault
-	@echo make count      - Count lines of code
-	@echo make branch     - List all branches
+	@echo "make install    - Install dependencies (npm install)"
+	@echo "make build      - Build for production"
+	@echo "make watch      - Watch mode for development (auto-rebuild)"
+	@echo "make test       - Run tests (on test branch)"
+	@echo "make deploy     - Deploy to Obsidian vault (Windows + Android)"
+	@echo "make count      - Count lines of code"
+	@echo "make branch     - List all branches"
 	@echo _____________________________________________________________
 
 # Install dependencies
@@ -32,9 +32,10 @@ watch:
 test:
 	npm test
 
-# Deploy to Obsidian vault (PowerShell script)
+# Deploy to Obsidian vault (Windows + Android)
 deploy:
-	@powershell -ExecutionPolicy Bypass -File ./deploy.ps1
+	@powershell.exe -ExecutionPolicy Bypass -File ./deploy.ps1
+	@bash deploy-android.sh
 
 # Count lines of code
 count:

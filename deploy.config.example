@@ -1,0 +1,8 @@
+# Local deployment configuration — copy to deploy.config and set your paths.
+# deploy.config is git-ignored; this file is safe to commit.
+
+# WSL2 format (Linux path to the Windows vault):
+OBSIDIAN_VAULT=/mnt/c/Users/<your-username>/Documents/<your-vault>/.obsidian/plugins/daggerforge
+
+# Windows format (only needed if running deploy.ps1 directly outside WSL):
+# OBSIDIAN_VAULT=C:\Users\<your-username>\Documents\<your-vault>\.obsidian\plugins\daggerforge
