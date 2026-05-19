@@ -2,9 +2,10 @@
 
 import { Menu } from "obsidian";
 import DaggerForgePlugin from "../main";
-import { openAdversarySidebar, openEnvironmentSidebar } from "../utils/index";
-import { openDiceRoller, openEncounterCalculator, ImportDataModal } from "../features/index";
+import { openContentBrowser } from "../utils/Sidebar";
+import { DiceRollerModal, EncounterCalcModal, ImportDataModal } from "../features/index";
 import { openCreator, confirmDeleteDataFile } from "./pluginOperations";
+import { ContentCreatorModal } from "../features/creator/ContentCreatorModal";
 
 export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
     plugin.addRibbonIcon(
@@ -13,19 +14,13 @@ export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
         (evt: MouseEvent) => {
             const menu = new Menu();
 
-            menu.addItem(item => item.setTitle("Adversary browser").setIcon("venetian-mask").onClick(() => openAdversarySidebar(plugin)));
-            menu.addItem(item => item.setTitle("Environment browser").setIcon("mountain").onClick(() => openEnvironmentSidebar(plugin)));
+            menu.addItem(item => item.setTitle("Content Browser").setIcon("layout-grid").onClick(() => openContentBrowser(plugin)));
+            menu.addItem(item => item.setTitle("Content Creator").setIcon("pencil-ruler").onClick(() => new ContentCreatorModal(plugin.app, plugin).open()));
 
             menu.addSeparator();
 
-            menu.addItem(item => item.setTitle("Adversary creator").setIcon("swords").onClick(() => openCreator(plugin, "adversary")));
-            menu.addItem(item => item.setTitle("Environment creator").setIcon("landmark").onClick(() => openCreator(plugin, "environment")));
-
-            menu.addSeparator();
-
-            menu.addItem(item => item.setTitle("Dice roller").setIcon("dice").onClick(() => openDiceRoller(plugin)));
-            menu.addItem(item => item.setTitle("Battle calculator").setIcon("flame").onClick(() => openEncounterCalculator()));
-            //TODO: ADD PLAYERS
+            menu.addItem(item => item.setTitle("Dice roller").setIcon("dice").onClick(() => new DiceRollerModal(plugin.app).open()));
+            menu.addItem(item => item.setTitle("Battle calculator").setIcon("flame").onClick(() => new EncounterCalcModal(plugin.app).open()));
 
             menu.addSeparator();
 
@@ -39,15 +34,27 @@ export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
 
 export function setupCommands(plugin: DaggerForgePlugin): void {
     plugin.addCommand({
+        id: "open-content-browser",
+        name: "Open content browser",
+        callback: () => openContentBrowser(plugin),
+    });
+
+    plugin.addCommand({
         id: "open-adversary-browser",
         name: "Open adversary browser",
-        callback: () => openAdversarySidebar(plugin),
+        callback: () => openContentBrowser(plugin, "adversary"),
     });
 
     plugin.addCommand({
         id: "open-environment-browser",
         name: "Open environment browser",
-        callback: () => openEnvironmentSidebar(plugin),
+        callback: () => openContentBrowser(plugin, "environment"),
+    });
+
+    plugin.addCommand({
+        id: "open-content-creator",
+        name: "Open content creator",
+        callback: () => new ContentCreatorModal(plugin.app, plugin).open(),
     });
 
     plugin.addCommand({
@@ -65,21 +72,19 @@ export function setupCommands(plugin: DaggerForgePlugin): void {
     plugin.addCommand({
         id: "open-floating-window",
         name: "Open dice roller",
-        callback: () => openDiceRoller(plugin),
+        callback: () => new DiceRollerModal(plugin.app).open(),
     });
 
     plugin.addCommand({
         id: "open-encounter-calculator",
         name: "Open battle calculator",
-        callback: () => openEncounterCalculator(),
+        callback: () => new EncounterCalcModal(plugin.app).open(),
     });
 
     plugin.addCommand({
         id: "import-data",
         name: "Import data from JSON file",
-        callback: () => {
-            new ImportDataModal(plugin.app, plugin).open();
-        },
+        callback: () => new ImportDataModal(plugin.app, plugin).open(),
     });
 
     plugin.addCommand({

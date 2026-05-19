@@ -24,12 +24,12 @@ export type FeatureElements = {
 	nameEl: HTMLInputElement;
 	typeEl: HTMLSelectElement;
 	costEl: HTMLSelectElement;
-	descEl: HTMLTextAreaElement;
+	richEditor: { getHTML(): string; destroy(): void };
 };
 
 export type Feature = {
 	name: string;
 	type: string;
 	cost: string;
-	desc: string;
+	richContent: string;
 };

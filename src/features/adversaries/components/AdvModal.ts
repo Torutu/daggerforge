@@ -44,7 +44,7 @@ function assembleAdvData(
 			name: f.name || "",
 			type: f.type || "",
 			cost: f.cost || "",
-			desc: f.desc || "",
+			richContent: f.richContent || "",
 		})),
 	};
 }
@@ -75,7 +75,6 @@ export class AdversaryModal extends Modal {
 	// Edit-mode fields
 	private isEditMode: boolean;
 	private editData: Record<string, unknown> = {};
-	private wideCard = false;
 	/**
 	 * Resolved before the modal opens so that opening the modal (which shifts
 	 * focus away from the note/canvas) does not change the answer.
@@ -151,6 +150,17 @@ export class AdversaryModal extends Modal {
 			customClass: "df-adv-field-tier",
 		});
 
+		// If editing a Horde card, normalise the saved type so the select shows "Horde"
+		// and capture the member count so we can pre-fill the horde input.
+		let hordeMembers = "";
+		if (typeof saved.type === "string") {
+			const hordeMatch = (saved.type as string).match(/^Horde \((\d+)\/HP\)$/);
+			if (hordeMatch) {
+				saved = { ...saved, type: "Horde" };
+				hordeMembers = hordeMatch[1];
+			}
+		}
+
 		createInlineField(row, this.inputs, {
 			label: "Type",
 			key: "type",
@@ -163,6 +173,22 @@ export class AdversaryModal extends Modal {
 			savedValues: saved,
 			customClass: "df-adv-field-type",
 		});
+
+		// Horde-only: members per HP input — slides in when type = Horde
+		const hordeSection = section.createDiv({ cls: "df-horde-section" });
+		const hordeMembersInput = hordeSection.createEl("input", {
+			cls: "df-field-input df-horde-members-input",
+			attr: { type: "number", min: "1", placeholder: "Members per HP (e.g. 5)" },
+		}) as HTMLInputElement;
+		hordeMembersInput.value = hordeMembers;
+		this.inputs["hordeMembers"] = hordeMembersInput;
+
+		const typeSelect = this.inputs["type"] as HTMLSelectElement;
+		const syncHordeSection = () => {
+			hordeSection.classList.toggle("df-horde-section--visible", typeSelect.value === "Horde");
+		};
+		syncHordeSection();
+		typeSelect.addEventListener("change", syncHordeSection);
 
 		const details = section.createDiv({ cls: "df-adv-form-section-content" });
 
@@ -241,11 +267,17 @@ export class AdversaryModal extends Modal {
 
 		if (Array.isArray(savedFeatures) && savedFeatures.length > 0) {
 			savedFeatures.forEach((data) => {
+				// Migrate old saved state that used `desc` instead of `richContent`
+				const richContent = data.richContent
+					? String(data.richContent)
+					: data.desc
+						? `<p>${data.desc}</p>`
+						: "";
 				addAdvFeature(this.featureContainer, this.features, {
 					name: String(data.name || ""),
 					type: String(data.type || "Action"),
 					cost: String(data.cost || ""),
-					desc: String(data.desc || ""),
+					richContent,
 				});
 			});
 		} else {
@@ -260,28 +292,10 @@ export class AdversaryModal extends Modal {
 	}
 
 	private buildActionButtons(contentEl: HTMLElement) {
-		const container = contentEl.createDiv({ cls: "df-adv-form-buttons" });
-
-		// Wide card toggle lives left of the insert button
-		const wideWrapper = container.createDiv({ cls: "df-wide-card-wrapper" });
-		const wideCheckbox = wideWrapper.createEl("input", {
-			attr: { type: "checkbox", id: "df-modal-wide-adv" },
-			cls: "df-wide-card-checkbox",
-		}) as HTMLInputElement;
-		wideWrapper.createEl("label", {
-			text: "Wide",
-			attr: { for: "df-modal-wide-adv" },
-			cls: "df-wide-card-label",
-		});
-		wideCheckbox.addEventListener("change", () => {
-			this.wideCard = wideCheckbox.checked;
-		});
-
-		const btn = container.createEl("button", {
+		const btn = contentEl.createEl("button", {
 			text: this.isEditMode ? "Update card" : "Insert card",
-			cls: "df-adv-btn-insert",
+			cls: "df-modal-submit-btn",
 		});
-
 		btn.onclick = () => this.handleSubmit();
 	}
 
@@ -293,8 +307,15 @@ export class AdversaryModal extends Modal {
 
 	private async handleSubmit() {
 		const values = this.readFormValues();
+
+		// Compose the full Horde type before building HTML or assembling data
+		const hordeMembers = Number(values.hordeMembers);
+		if (values.type === "Horde" && hordeMembers > 0) {
+			values.type = `Horde (${hordeMembers}/HP)`;
+		}
+
 		const features = getAdvFeatureValues(this.features);
-		const newHTML = buildCardHTML(values, features, this.wideCard);
+		const newHTML = buildCardHTML(values, features, false);
 		const newData = assembleAdvData(values, features);
 
 		if (this.onEditUpdate) {
@@ -340,11 +361,8 @@ export class AdversaryModal extends Modal {
 			}
 		}
 
-		this.features.forEach(({ nameEl, typeEl, costEl, descEl }) => {
-			nameEl.value = "";
-			typeEl.selectedIndex = 0;
-			costEl.selectedIndex = 0;
-			descEl.value = "";
+		this.features.forEach(({ richEditor }) => {
+			richEditor.destroy();
 		});
 
 		this.features = [];

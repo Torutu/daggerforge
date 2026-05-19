@@ -14,7 +14,7 @@ if (-not $vault) {
     exit 1
 }
 
-$dest = "$vault\.obsidian\plugins\daggerforge"
+$dest = "$vault"
 New-Item -ItemType Directory -Path $dest -Force | Out-Null
 Copy-Item "main.js", "manifest.json", "styles.css" $dest -Force
 Write-Host "Deployed to $dest"

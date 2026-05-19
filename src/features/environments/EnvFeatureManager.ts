@@ -1,9 +1,5 @@
 import { EnvFeatureElements, EnvSavedFeatureState } from "../../types/index";
-
-// Add Feature
-// Creates a complete feature block with name, type, cost, description,
-// bullet points, continuation text, and GM prompt questions.
-// Mirrors the adversary addFeature pattern but adapted for environment-specific fields.
+import { RichTextEditor } from "../../utils/RichTextEditor";
 
 export const addEnvFeature = (
 	featureContainer: HTMLElement,
@@ -34,26 +30,8 @@ export const addEnvFeature = (
 	);
 
 	wrapper.createDiv({ cls: "df-env-feature-desc-label", text: "Description:" });
-	const textEl = wrapper.createEl("textarea", {
-		cls: "df-env-feature-input-desc",
-		attr: { placeholder: "Feature description...", rows: "3" },
-	});
-	textEl.value = savedFeature?.text || "";
-
-	const bulletEls = createBulletSection(wrapper, savedFeature?.bullets);
-
-	wrapper.createDiv({
-		cls: "df-env-feature-after-desc-header",
-		text: "Continue description (after bullets):",
-	});
-	const afterTextEl = wrapper.createEl("textarea", {
-		cls: "df-env-feature-input-after-desc",
-		attr: {
-			placeholder: "Additional description text (appears after bullet points)...",
-			rows: "3",
-		},
-	});
-	afterTextEl.value = savedFeature?.textAfter || "";
+	const editorContainer = wrapper.createDiv({ cls: "df-env-feature-editor-container" });
+	const richEditor = new RichTextEditor(editorContainer, savedFeature?.richContent);
 
 	const questionEls = createQuestionSection(wrapper, savedFeature?.questions);
 
@@ -64,17 +42,14 @@ export const addEnvFeature = (
 	removeBtn.onclick = () => {
 		const idx = features.findIndex((f) => f.nameEl === nameEl);
 		if (idx !== -1) {
+			features[idx].richEditor.destroy();
 			features.splice(idx, 1);
 			wrapper.remove();
 		}
 	};
 
-	features.push({ nameEl, typeEl, costEl, textEl, bulletEls, afterTextEl, questionEls });
+	features.push({ nameEl, typeEl, costEl, richEditor, questionEls });
 };
-
-// Get Feature Values
-// Extracts all feature data from the DOM elements, filtering out empty entries.
-// Parallel to adversary getFeatureValues but returns environment-specific structure.
 
 export const getEnvFeatureValues = (
 	features: EnvFeatureElements[],
@@ -84,16 +59,11 @@ export const getEnvFeatureValues = (
 			name: f.nameEl.value.trim(),
 			type: f.typeEl.value.trim(),
 			cost: f.costEl?.value.trim() || undefined,
-			text: f.textEl.value.trim(),
-			bullets: f.bulletEls.map((b) => b.value.trim()).filter(Boolean) || null,
-			textAfter: f.afterTextEl.value.trim() || undefined,
+			richContent: f.richEditor.getHTML(),
 			questions: f.questionEls.map((q) => q.value.trim()).filter(Boolean),
 		}))
 		.filter((f) => f.name);
 };
-
-// Helper: Create Feature Input
-// Creates an input element with saved value restoration.
 
 function createFeatureInput(
 	container: HTMLElement,
@@ -105,9 +75,6 @@ function createFeatureInput(
 	el.value = value || "";
 	return el;
 }
-
-// Helper: Create Feature Select
-// Creates a select dropdown with options and optional "none" label for empty value.
 
 function createFeatureSelect(
 	container: HTMLElement,
@@ -127,44 +94,6 @@ function createFeatureSelect(
 	el.value = value;
 	return el;
 }
-
-// Helper: Create Bullet Section
-// Creates the bullet points container with dynamic add/remove functionality.
-
-function createBulletSection(
-	wrapper: HTMLElement,
-	saved?: string[] | null,
-): HTMLInputElement[] {
-	wrapper.createDiv({ cls: "df-env-feature-bullets-header", text: "Bullet Points:" });
-	const container = wrapper.createDiv({ cls: "df-env-feature-bullets-container" });
-
-	const bulletEls: HTMLInputElement[] = [];
-	const addBtn = document.createElement("button");
-	addBtn.textContent = "+ Add bullet point";
-	addBtn.className = "df-env-btn-add-bullet";
-	container.appendChild(addBtn);
-
-	const createBullet = (text?: string) => {
-		const el = document.createElement("input");
-		el.className = "df-env-feature-input-bullet";
-		el.placeholder = "Bullet point...";
-		el.value = text || "";
-		container.insertBefore(el, addBtn);
-		bulletEls.push(el);
-	};
-
-	if (saved && saved.length > 0) {
-		saved.forEach((b) => createBullet(b));
-	} else {
-		createBullet();
-	}
-
-	addBtn.onclick = () => createBullet();
-	return bulletEls;
-}
-
-// Helper: Create Question Section
-// Creates the GM prompt questions container with dynamic add functionality.
 
 function createQuestionSection(
 	wrapper: HTMLElement,

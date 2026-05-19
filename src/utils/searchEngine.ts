@@ -159,6 +159,41 @@ export class SearchEngine<T extends SearchableCard> {
 		});
 	}
 
+	/**
+	 * Count how many cards match each value of `exclude`, while applying all
+	 * OTHER active filters (and the text query). This is cross-filter / facet
+	 * counting: picking "Solo" type shows how many Solos exist per source.
+	 */
+	public getFacetCounts(exclude: "tiers" | "sources" | "types"): Record<string, number> {
+		const counts: Record<string, number> = {};
+		const query = this.filters.query.trim();
+
+		for (const card of this.cards) {
+			const pass =
+				(exclude === "tiers"   || this.matchesTier(card)) &&
+				(exclude === "sources" || this.matchesSource(card)) &&
+				(exclude === "types"   || this.matchesType(card)) &&
+				(!query || bestFieldScore(card, query) > 0);
+
+			if (!pass) continue;
+
+			let value: string;
+			if (exclude === "tiers") {
+				value = String(card.tier ?? "");
+			} else if (exclude === "sources") {
+				value = (card.source || "core").toLowerCase();
+			} else {
+				const raw = String(card.type ?? "");
+				// Normalise "Horde (5/HP)" → "Horde" so it maps to the option key
+				value = raw.toLowerCase().startsWith("horde (") ? "Horde" : raw;
+			}
+
+			if (value) counts[value] = (counts[value] || 0) + 1;
+		}
+
+		return counts;
+	}
+
 	public getAvailableOptions(filterName: keyof SearchFilters): string[] {
 		const options = new Set<string>();
 
