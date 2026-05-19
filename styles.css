@@ -2508,6 +2508,12 @@ select.df-input-field {
 	color: var(--text-on-accent);
 }
 
+.is-mobile .df-inline-dice-btn {
+	font-size: 0.62em;
+	padding: 0 4px;
+	line-height: 1;
+}
+
 .df-dice-part-pos {
 	color: #4ade80;
 	font-weight: 600;
