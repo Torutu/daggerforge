@@ -1,46 +1,51 @@
 # DaggerForge Obsidian Plugin - Makefile
-# Simple wrapper around npm commands for easier development
+.PHONY: help build watch test deploy docker-build clean branch count
 
-.PHONY: help install dev build watch test deploy
+IMAGE  = daggerforge-builder
+# Mount project into container; shadow node_modules with the container's copy
+RUN    = docker run --rm -v $(PWD):/app -v /app/node_modules $(IMAGE)
 
-# Default target - show help
+# Rebuild image when Dockerfile or deps change
+.docker-image: Dockerfile package-lock.json
+	docker build -t $(IMAGE) .
+	@touch .docker-image
+
 help:
-	@echo _____________________________________________________________
-	@echo DaggerForge Plugin
-	@echo "make install    - Install dependencies (npm install)"
-	@echo "make build      - Build for production"
-	@echo "make watch      - Watch mode for development (auto-rebuild)"
-	@echo "make test       - Run tests (on test branch)"
-	@echo "make deploy     - Deploy to Obsidian vault (Windows + Android)"
-	@echo "make count      - Count lines of code"
-	@echo "make branch     - List all branches"
-	@echo _____________________________________________________________
+	@echo "_____________________________________________________________"
+	@echo "DaggerForge Plugin"
+	@echo "make build        - Build for production (Docker)"
+	@echo "make watch        - Watch mode / dev build (Docker)"
+	@echo "make test         - Run tests (Docker)"
+	@echo "make deploy       - Deploy built files to Obsidian vault"
+	@echo "make docker-build - Force-rebuild the Docker image"
+	@echo "make clean        - Remove build output and Docker image"
+	@echo "make count        - Count lines of code"
+	@echo "make branch       - List all branches"
+	@echo "_____________________________________________________________"
 
-# Install dependencies
-install:
-	npm install
+docker-build:
+	docker build -t $(IMAGE) .
+	@touch .docker-image
 
-# Production build
-build:
-	npm run build
+build: .docker-image
+	$(RUN) npm run build
 
-# Watch mode for development
-watch:
-	npm run watch
+watch: .docker-image
+	docker run --rm -v $(PWD):/app -v /app/node_modules $(IMAGE) npm run watch
 
-# Run tests
-test:
-	npm test
+test: .docker-image
+	$(RUN) npm test
 
-# Deploy to Obsidian vault (Windows + Android)
+clean:
+	@rm -f main.js .docker-image
+	docker rmi $(IMAGE) 2>/dev/null || true
+	@echo "Cleaned."
+
 deploy:
-	@powershell.exe -ExecutionPolicy Bypass -File ./deploy.ps1
-	@bash deploy-android.sh
+	@bash deploy.sh
 
-# Count lines of code
 count:
 	@powershell -ExecutionPolicy Bypass -File ./count-lines.ps1
 
-# List all branches
 branch:
 	@git branch --format="%(refname:short)"

@@ -242,11 +242,9 @@ export class EnvironmentView extends ItemView {
 			text: '↑',
 			attr: { 'aria-label': 'Scroll to top' },
 		});
-		this.scrollToTopBtn.style.display = 'none';
-
 		container.addEventListener('scroll', () => {
 			if (this.scrollToTopBtn) {
-				this.scrollToTopBtn.style.display = container.scrollTop > 200 ? 'flex' : 'none';
+				this.scrollToTopBtn.classList.toggle('df-scroll-to-top--visible', container.scrollTop > 200);
 			}
 		});
 

@@ -12,14 +12,11 @@ export function getDaggerForgePlugin(app: App): DaggerForgePlugin | null {
 }
 
 import {
-	AdversaryView,
-	Adv_View_Type,
-	EnvironmentView,
-	Env_View_Type,
 	AdversaryModal,
 	EnvironmentModal,
 	handleCardEditClick,
 } from "../features/index";
+import { Content_Browser_View_Type, ContentBrowserView } from "../features/browser/ContentBrowserView";
 import { DeleteConfirmModal } from "../features/data-management/index";
 
 /**
@@ -89,20 +86,9 @@ export function confirmDeleteDataFile(plugin: DaggerForgePlugin): void {
  * Used after data changes to keep UI in sync
  */
 export function refreshBrowsers(plugin: DaggerForgePlugin): void {
-	const adversaryLeaves = plugin.app.workspace.getLeavesOfType(Adv_View_Type);
-	adversaryLeaves.forEach((leaf) => {
-		const view = leaf.view as AdversaryView;
-		if (view && typeof view.refresh === 'function') {
-			view.refresh();
-		}
-	});
-
-	const environmentLeaves = plugin.app.workspace.getLeavesOfType(Env_View_Type);
-	environmentLeaves.forEach((leaf) => {
-		const view = leaf.view as EnvironmentView;
-		if (view && typeof view.refresh === 'function') {
-			view.refresh();
-		}
+	plugin.app.workspace.getLeavesOfType(Content_Browser_View_Type).forEach((leaf) => {
+		const view = leaf.view as ContentBrowserView;
+		if (view && typeof view.refresh === "function") view.refresh();
 	});
 }
 
@@ -113,8 +99,8 @@ export function refreshBrowsers(plugin: DaggerForgePlugin): void {
 export function listenForEditClicks(evt: MouseEvent, app: App, plugin: DaggerForgePlugin): void {
 	const target = evt.target as HTMLElement;
 
-	if (!target.classList.contains("df-adv-edit-button") &&
-		!target.classList.contains("df-env-edit-button")) {
+	if (!target.closest(".df-adv-edit-button") &&
+		!target.closest(".df-env-edit-button")) {
 		return;
 	}
 

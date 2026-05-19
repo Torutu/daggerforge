@@ -1,3 +1,4 @@
+const MAX = 99;
 let adversaryCount = 1;
 
 export function getAdversaryCount(): number {
@@ -5,19 +6,15 @@ export function getAdversaryCount(): number {
 }
 
 export function incrementAdversaryCount(difference: number): void {
-	adversaryCount += difference;
+	adversaryCount = Math.min(adversaryCount + difference, MAX);
 }
 
 export function decrementAdversaryCount(): void {
-	if (adversaryCount > 1) {
-		adversaryCount--;
-	}
+	if (adversaryCount > 1) adversaryCount--;
 }
 
 export function setAdversaryCount(count: number): void {
-	if (count > 0) {
-		adversaryCount = count;
-	}
+	if (count > 0) adversaryCount = Math.min(count, MAX);
 }
 
 export function resetAdversaryCount(): void {

@@ -1,9 +1,20 @@
-$dest = "C:\Users\waleed\Documents\test\test\.obsidian\plugins\daggerforge"
+$vault = $env:OBSIDIAN_VAULT
 
-# Create folder if it doesn't exist
-New-Item -ItemType Directory -Path $dest -Force
+if (-not $vault) {
+    $envFile = Join-Path $PSScriptRoot ".env.local"
+    if (Test-Path $envFile) {
+        Get-Content $envFile | ForEach-Object {
+            if ($_ -match "^OBSIDIAN_VAULT=(.+)$") { $vault = $matches[1].Trim() }
+        }
+    }
+}
 
-# Copy files
+if (-not $vault) {
+    Write-Error "OBSIDIAN_VAULT is not set. Copy .env.local.example to .env.local and set your vault path."
+    exit 1
+}
+
+$dest = "$vault"
+New-Item -ItemType Directory -Path $dest -Force | Out-Null
 Copy-Item "main.js", "manifest.json", "styles.css" $dest -Force
-
 Write-Host "Deployed to $dest"

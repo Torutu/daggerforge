@@ -145,7 +145,7 @@
         "name": "Knife Thrower",
         "type": "Action",
         "cost": "Mark a Stress",
-        "desc": "to make a standard attack against a target within Far range. If the Butcher makes this attack while Hidden, they have advantage on the attack roll. DOPPELHÜND Tier 2 Skulk A vicious magical six-legged hellhound with glowing red eyes and two long, toothy squid arms. They confuse enemies by conjuring an illusory duplicate of themself. Motives \u0026 Tactics: Ambush prey, kill for sport, play with food, trick and deceive Difficulty: 14 | Thresholds: 9/17 | HP: 4 | Stress: 5 ATK: +3 | Toothy Arms: Very Close | 2d8+2 phy Experience: Shadows +3 FEATURES"
+        "desc": "to make a standard attack against a target within Far range. If the Butcher makes this attack while Hidden, they have advantage on the attack roll. DOPPELHÜND Tier 2 Skulk A vicious magical six-legged hellhound with glowing red eyes and two long, toothy squid arms. They confuse enemies by conjuring an illusory duplicate of themself. Motives & Tactics: Ambush prey, kill for sport, play with food, trick and deceive Difficulty: 14 | Thresholds: 9/17 | HP: 4 | Stress: 5 ATK: +3 | Toothy Arms: Very Close | 2d8+2 phy Experience: Shadows +3 FEATURES"
       },
       {
         "name": "Blink Beast",
@@ -538,8 +538,29 @@
         "name": "Visions of a Violent End",
         "type": "Reaction",
         "cost": "",
-        "desc": "When the Owl Witch is targeted by an attack, you can spend a Fear to force the attacker to make a Presence Reaction Roll. On a failure, they mark 1d4 Stress as their mind is fl ooded with visions of their own violent death. XERO, CASTLE KILLER Tier 4 Solo A castle-sized, bipedal reptile. Motives \u0026 Tactics: Leave a wake of destruction, level buildings, stomp through settlements Difficulty: 20 | Thresholds: 35/70 | HP: 12 | Stress: 10 ATK: +8 | Tail Swipe: Close | 4d12+6 phy Experience: Destruction +5 FEATURES"
-      },
+        "desc": "When the Owl Witch is targeted by an attack, you can spend a Fear to force the attacker to make a Presence Reaction Roll. On a failure, they mark 1d4 Stress as their mind is fl ooded with visions of their own violent death."
+      }
+    ]
+  },
+  {
+    "id": "VA014",
+    "name": "XERO, CASTLE KILLER",
+    "tier": "4",
+    "type": "Solo",
+    "desc": "A castle-sized, bipedal reptile.",
+    "motives": "Leave a wake of destruction, level buildings, stomp through settlements",
+    "difficulty": "20",
+    "thresholdMajor": "35",
+    "thresholdSevere": "70",
+    "hp": "12",
+    "stress": "10",
+    "atk": "+8",
+    "weaponName": "Tail Swipe",
+    "weaponRange": "Close",
+    "weaponDamage": "4d12+6 phy",
+    "xp": "Destruction +5",
+    "source": "void",
+    "features": [
       {
         "name": "Relentless (X)",
         "type": "Passive",
@@ -579,7 +600,7 @@
     ]
   },
   {
-    "id": "VA014",
+    "id": "VA015",
     "name": "CEPHILITH PRIEST",
     "tier": "4",
     "type": "Leader",

@@ -254,14 +254,16 @@ export class AdversaryView extends ItemView {
 
 	private createCounterControls(container: HTMLElement): void {
 		const minusBtn = container.createEl("button", {
-			text: "-",
 			cls: "df-adversary-counter-btn",
+			attr: { "aria-label": "Decrease count", title: "Decrease" },
 		});
+		setIcon(minusBtn, "minus");
 
 		const counterInput = container.createEl("input", {
 			attr: {
 				type: "number",
 				min: "1",
+				max: "99",
 				value: getAdversaryCount().toString(),
 				placeholder: "Count",
 			},
@@ -269,9 +271,10 @@ export class AdversaryView extends ItemView {
 		});
 
 		const plusBtn = container.createEl("button", {
-			text: "+",
 			cls: "df-adversary-counter-btn",
+			attr: { "aria-label": "Increase count", title: "Increase" },
 		});
+		setIcon(plusBtn, "plus");
 
 		minusBtn.onclick = () => {
 			decrementAdversaryCount();
@@ -294,8 +297,10 @@ export class AdversaryView extends ItemView {
 				return;
 			}
 			let value = parseInt(counterInput.value, 10);
-			if (isNaN(value) || value < 1) {
-				value = 1;
+			if (isNaN(value) || value < 1) value = 1;
+			if (value > 99) {
+				value = 99;
+				counterInput.value = "99";
 			}
 			setAdversaryCount(value);
 		});
@@ -426,11 +431,9 @@ export class AdversaryView extends ItemView {
 			text: '↑',
 			attr: { 'aria-label': 'Scroll to top' },
 		});
-		this.scrollToTopBtn.style.display = 'none';
-
 		container.addEventListener('scroll', () => {
 			if (this.scrollToTopBtn) {
-				this.scrollToTopBtn.style.display = container.scrollTop > 200 ? 'flex' : 'none';
+				this.scrollToTopBtn.classList.toggle('df-scroll-to-top--visible', container.scrollTop > 200);
 			}
 		});
 

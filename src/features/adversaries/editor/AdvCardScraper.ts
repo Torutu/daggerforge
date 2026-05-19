@@ -115,7 +115,12 @@ function parseTier(subtitleText: string): string {
 }
 
 function parseType(subtitleText: string, dataAttr: string): string {
-	// data-type is set explicitly at creation — prefer it over positional parsing.
+	// data-type strips parenthetical suffixes (e.g. "Horde" not "Horde (5/HP)").
+	// When the base type is Horde, recover the full string from the subtitle text.
+	if (dataAttr === "Horde") {
+		const m = subtitleText.match(/Horde \(\d+\/HP\)/);
+		if (m) return m[0];
+	}
 	if (dataAttr) return dataAttr;
 	const words = subtitleText.trim().split(" ").filter(Boolean);
 	return words[2] ?? "Standard";
@@ -128,14 +133,18 @@ interface ParsedFeature {
 	name: string;
 	type: string;
 	cost: string;
-	desc: string;
+	richContent: string;
 }
 
 function parseFeature(feat: Element): ParsedFeature {
 	const titleText = feat.querySelector(".df-feature-title")?.textContent ?? "";
 	const { name, type, cost } = parseFeatureTitle(titleText);
-	const desc = feat.querySelector(".df-feature-desc")?.textContent?.trim() ?? "";
-	return { name, type, cost, desc };
+	const descEl = feat.querySelector(".df-feature-desc");
+	// New format stores richContent as innerHTML; old format was plain textContent.
+	const richContent = descEl
+		? (descEl.innerHTML.trim() || `<p>${descEl.textContent?.trim() ?? ""}</p>`)
+		: "";
+	return { name, type, cost, richContent };
 }
 
 function parseFeatureTitle(titleText: string): { name: string; type: string; cost: string } {
