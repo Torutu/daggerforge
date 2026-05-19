@@ -75,7 +75,6 @@ export class AdversaryModal extends Modal {
 	// Edit-mode fields
 	private isEditMode: boolean;
 	private editData: Record<string, unknown> = {};
-	private wideCard = false;
 	/**
 	 * Resolved before the modal opens so that opening the modal (which shifts
 	 * focus away from the note/canvas) does not change the answer.
@@ -293,28 +292,10 @@ export class AdversaryModal extends Modal {
 	}
 
 	private buildActionButtons(contentEl: HTMLElement) {
-		const container = contentEl.createDiv({ cls: "df-adv-form-buttons" });
-
-		// Wide card toggle lives left of the insert button
-		const wideWrapper = container.createDiv({ cls: "df-wide-card-wrapper" });
-		const wideCheckbox = wideWrapper.createEl("input", {
-			attr: { type: "checkbox", id: "df-modal-wide-adv" },
-			cls: "df-wide-card-checkbox",
-		}) as HTMLInputElement;
-		wideWrapper.createEl("label", {
-			text: "Wide",
-			attr: { for: "df-modal-wide-adv" },
-			cls: "df-wide-card-label",
-		});
-		wideCheckbox.addEventListener("change", () => {
-			this.wideCard = wideCheckbox.checked;
-		});
-
-		const btn = container.createEl("button", {
+		const btn = contentEl.createEl("button", {
 			text: this.isEditMode ? "Update card" : "Insert card",
-			cls: "df-adv-btn-insert",
+			cls: "df-modal-submit-btn",
 		});
-
 		btn.onclick = () => this.handleSubmit();
 	}
 
@@ -334,7 +315,7 @@ export class AdversaryModal extends Modal {
 		}
 
 		const features = getAdvFeatureValues(this.features);
-		const newHTML = buildCardHTML(values, features, this.wideCard);
+		const newHTML = buildCardHTML(values, features, false);
 		const newData = assembleAdvData(values, features);
 
 		if (this.onEditUpdate) {

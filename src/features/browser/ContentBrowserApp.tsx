@@ -127,16 +127,26 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		engineRef.current.setCards(all);
 		setCards([...engineRef.current.search()]);
 		setReady(true);
+		uiRef.current?.updateFacetCounts({
+			tiers:   engineRef.current.getFacetCounts("tiers"),
+			sources: engineRef.current.getFacetCounts("sources"),
+			types:   engineRef.current.getFacetCounts("types"),
+		});
 	}, [app, refreshToken]);
 
 	useEffect(() => { load(); }, [load]);
 
 	const buildConfig = useCallback((): SearchControlsConfig => {
 		const eng = engineRef.current;
-		const rerender = () => setCards([...eng.search()]);
+		const pushCounts = () => uiRef.current?.updateFacetCounts({
+			tiers:   eng.getFacetCounts("tiers"),
+			sources: eng.getFacetCounts("sources"),
+			types:   eng.getFacetCounts("types"),
+		});
+		const rerender = () => { setCards([...eng.search()]); pushCounts(); };
 		return {
-			availableTiers:   eng.getAvailableOptions("tiers"),
-			availableSources: eng.getAvailableOptions("sources"),
+			availableTiers:   ["1", "2", "3", "4"],
+			availableSources: Array.from(new Set(["core", "custom", ...eng.getAvailableOptions("sources")])),
 			availableTypes:   ADV_TYPES,
 			onSearchChange:   (q) => { eng.setFilters({ query: q }); rerender(); },
 			onTierChange:     (t) => { eng.setFilters({ tiers: t }); rerender(); },
@@ -189,7 +199,15 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			{ready && (
 				<SearchPane
 					configFactory={buildConfig}
-					onUiReady={(ui) => { uiRef.current = ui; }}
+					onUiReady={(ui) => {
+						uiRef.current = ui;
+						const eng = engineRef.current;
+						ui.updateFacetCounts({
+							tiers:   eng.getFacetCounts("tiers"),
+							sources: eng.getFacetCounts("sources"),
+							types:   eng.getFacetCounts("types"),
+						});
+					}}
 				/>
 			)}
 			<div className="df-adversary-results">
@@ -244,16 +262,26 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 		engineRef.current.setCards(all);
 		setCards([...engineRef.current.search()]);
 		setReady(true);
+		uiRef.current?.updateFacetCounts({
+			tiers:   engineRef.current.getFacetCounts("tiers"),
+			sources: engineRef.current.getFacetCounts("sources"),
+			types:   engineRef.current.getFacetCounts("types"),
+		});
 	}, [app, refreshToken]);
 
 	useEffect(() => { load(); }, [load]);
 
 	const buildConfig = useCallback((): SearchControlsConfig => {
 		const eng = engineRef.current;
-		const rerender = () => setCards([...eng.search()]);
+		const pushCounts = () => uiRef.current?.updateFacetCounts({
+			tiers:   eng.getFacetCounts("tiers"),
+			sources: eng.getFacetCounts("sources"),
+			types:   eng.getFacetCounts("types"),
+		});
+		const rerender = () => { setCards([...eng.search()]); pushCounts(); };
 		return {
-			availableTiers:   eng.getAvailableOptions("tiers"),
-			availableSources: eng.getAvailableOptions("sources"),
+			availableTiers:   ["1", "2", "3", "4"],
+			availableSources: Array.from(new Set(["core", "custom", "sablewood", "umbra", "void", ...eng.getAvailableOptions("sources")])),
 			availableTypes:   eng.getAvailableOptions("types"),
 			onSearchChange:   (q) => { eng.setFilters({ query: q }); rerender(); },
 			onTierChange:     (t) => { eng.setFilters({ tiers: t }); rerender(); },
@@ -297,7 +325,15 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 			{ready && (
 				<SearchPane
 					configFactory={buildConfig}
-					onUiReady={(ui) => { uiRef.current = ui; }}
+					onUiReady={(ui) => {
+						uiRef.current = ui;
+						const eng = engineRef.current;
+						ui.updateFacetCounts({
+							tiers:   eng.getFacetCounts("tiers"),
+							sources: eng.getFacetCounts("sources"),
+							types:   eng.getFacetCounts("types"),
+						});
+					}}
 				/>
 			)}
 			<div className="df-environment-results">

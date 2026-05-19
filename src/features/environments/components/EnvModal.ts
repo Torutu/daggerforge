@@ -67,7 +67,6 @@ export class EnvironmentModal extends Modal {
 	// Edit-mode fields
 	private isEditMode: boolean;
 	private editData: Record<string, unknown> = {};
-	private wideCard = false;
 	/**
 	 * Resolved before the modal opens so that opening the modal (which shifts
 	 * focus away from the note/canvas) does not change the answer.
@@ -257,28 +256,10 @@ export class EnvironmentModal extends Modal {
 	}
 
 	private buildActionButtons(contentEl: HTMLElement) {
-		const container = contentEl.createDiv({ cls: "df-env-form-buttons" });
-
-		// Wide card toggle lives left of the insert button
-		const wideWrapper = container.createDiv({ cls: "df-wide-card-wrapper" });
-		const wideCheckbox = wideWrapper.createEl("input", {
-			attr: { type: "checkbox", id: "df-modal-wide-env" },
-			cls: "df-wide-card-checkbox",
-		}) as HTMLInputElement;
-		wideWrapper.createEl("label", {
-			text: "Wide",
-			attr: { for: "df-modal-wide-env" },
-			cls: "df-wide-card-label",
-		});
-		wideCheckbox.addEventListener("change", () => {
-			this.wideCard = wideCheckbox.checked;
-		});
-
-		const btn = container.createEl("button", {
+		const btn = contentEl.createEl("button", {
 			text: this.isEditMode ? "Update card" : "Insert card",
-			cls: "df-env-btn-insert",
+			cls: "df-modal-submit-btn",
 		});
-
 		btn.onclick = () => this.handleSubmit();
 	}
 
@@ -292,7 +273,7 @@ export class EnvironmentModal extends Modal {
 		const values = this.readFormValues();
 		const features = getEnvFeatureValues(this.features);
 		const newData = assembleEnvironmentData(values, features);
-		const newHTML = envToHtml(newData, this.wideCard);
+		const newHTML = envToHtml(newData, false);
 
 		if (this.onEditUpdate) {
 			await this.onEditUpdate(newHTML, newData);

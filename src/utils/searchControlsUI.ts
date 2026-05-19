@@ -57,6 +57,7 @@ export class SearchControlsUI {
 	};
 
 	private panels: Map<keyof MultiSelectState, HTMLElement> = new Map();
+	private countEls: Map<string, Map<string, HTMLElement>> = new Map();
 
 	constructor(config: SearchControlsConfig = {}) {
 		this.config = {
@@ -152,6 +153,19 @@ export class SearchControlsUI {
 		else if (filterName === "types") this.config.availableTypes = options;
 	}
 
+	/** Update the count badge next to each option in every filter dimension. */
+	public updateFacetCounts(allCounts: Record<string, Record<string, number>>): void {
+		for (const [dimension, counts] of Object.entries(allCounts)) {
+			const dimEls = this.countEls.get(dimension);
+			if (!dimEls) continue;
+			for (const [value, el] of dimEls.entries()) {
+				const n = counts[value] ?? 0;
+				el.textContent = String(n);
+				el.classList.toggle("df-facet-count--zero", n === 0);
+			}
+		}
+	}
+
 	public destroy(): void {
 		document.removeEventListener("click", this.handleOutsideClick);
 		window.removeEventListener("scroll", this.handleScrollClose, true);
@@ -161,6 +175,7 @@ export class SearchControlsUI {
 			if (panel.parentElement) panel.parentElement.removeChild(panel);
 		});
 		this.panels.clear();
+		this.countEls.clear();
 		this.openPanel = null;
 		this.openButton = null;
 	}
@@ -232,8 +247,15 @@ export class SearchControlsUI {
 			label.textContent = opts.formatOption(value);
 			label.className = "df-multiselect-item-label";
 
+			const countEl = document.createElement("span");
+			countEl.className = "df-facet-count";
+
+			if (!this.countEls.has(opts.stateKey)) this.countEls.set(opts.stateKey, new Map());
+			this.countEls.get(opts.stateKey)!.set(value, countEl);
+
 			item.appendChild(checkbox);
 			item.appendChild(label);
+			item.appendChild(countEl);
 			panel.appendChild(item);
 
 			checkbox.addEventListener("change", () => {
