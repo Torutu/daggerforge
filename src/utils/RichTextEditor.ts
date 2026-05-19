@@ -149,10 +149,10 @@ export class RichTextEditor {
 		const icon = wrap.createDiv({ cls: "df-rich-editor-info-icon" });
 		icon.innerHTML = INFO_SVG;
 		const tooltip = wrap.createDiv({ cls: "df-rich-editor-info-tooltip" });
-		tooltip.appendText("Dice — type 1d6, 2d8+3 etc. They become clickable roll buttons when the card is inserted.");
+		tooltip.appendText("Dice: typing '1d6', '2d8+3', etc. become clickable roll buttons when the card is inserted.");
 		tooltip.createEl("br");
 		tooltip.createEl("br");
-		tooltip.appendText("Keywords — hope, fear, hp, stress (any casing) are auto-colored when keyword highlighting is enabled in Settings.");
+		tooltip.appendText("Keywords: typing 'hope', 'fear', 'hp', 'stress' (any casing) are auto-colored when keyword highlighting is enabled in Settings.");
 	}
 
 	private syncToolbar(): void {
