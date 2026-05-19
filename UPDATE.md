@@ -14,6 +14,10 @@
 - **Rich text feature editor**  description fields replaced with a Tiptap rich text editor (bold, italic, headings, lists).
 - **Dice & Battle Calculator**  now proper Obsidian modals (work on mobile), draggable, fully restyled with Lucide icons.
 - **Browser filters**  unified filter bar with pill buttons, counter controls, clear button.
+- **Faceted filter counts**  each filter option shows how many cards match. Counts are cross-filtered: selecting a type updates the source counts to reflect only matching cards, and vice versa. Counts update when cards are created, edited, or deleted.
+- **Always-visible filter options**  all tiers, sources, and types are always listed even when no cards match. Zero-count options are dimmed rather than hidden.
+- **Wide card toggle**  each rendered card has a toggle button (edit mode only) to switch between compact and full-width layout. State persists across reading and edit mode switches.
+- **Sticky submit button**  the Insert/Update button in the creator and editor stays fixed at the bottom of the form while scrolling.
 
 ## Fixed
 
@@ -24,9 +28,16 @@
 - `Owl Witch` and `Xero, Castle Killer` were merged into one entry  split into separate cards (VA013/VA014).
 - Keyword colors consistent between edit and read mode.
 - Modal drag now works across the entire modal surface, not just the title bar.
+- Browser panel no longer requires reopening after creating or editing a card. Filter state and search text are preserved on refresh.
+- Edit button on cards is now hidden in reading view where it has no effect.
+- Obsidian native "Edit this block" button no longer overlaps card controls.
+- Wide card option removed from the creator and filter bar (toggle is on the card itself now).
+- Clicking the delete button on a browser card no longer also triggered card insertion.
 
 ## Infra
 
 - Docker-based build (works on any machine via `make build`).
 - WSL2 deploy support (`make deploy` via `deploy.sh`).
 - `sessionStorage` for card state persistence; `toCustomHtml`/`toStandardHtml` for consistent list rendering.
+- Jest config updated to handle `.tsx` files so all test suites run correctly.
+- Browser refresh test suite added (6 cases) covering the unified view type and regression guards.
