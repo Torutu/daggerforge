@@ -1,11 +1,11 @@
 # Daggerheart Plugin
 
-An Obsidian plugin designed for **Daggerheart**, a TTRPG, that helps Game Masters easily add adversaries and environments to their notes and create custom content all within Obsidian.
+This plugin designed for **Daggerheart**, a TTRPG, that helps Game Masters easily add adversaries and environments to their notes and create custom content all within Obsidian.
 
 ## Features
 
 - Quickly search, filter and add adversaries and environments to your Obsidian notes
-- Build and customize your own monsters
+- Build and customize your own Adversaries and Environments
 - Built in dice roller
 - Battle Calculator follow the rulebook's Battle Guide
 
@@ -30,6 +30,11 @@ An Obsidian plugin designed for **Daggerheart**, a TTRPG, that helps Game Master
 **Settings page** New settings tab under Obsidian Settings → DaggerForge for keyword highlighting and dice tooltip duration.
 
 **Dice and Battle Calculator** Both tools now open as proper Obsidian modals and should work on mobile.
+
+### HOTFIX
+**fixed an issue where having react framework made it impossible for the plugin to work in mobile**
+
+**should look pretty on mobile just like on pc**
 
 ## how to use
 
