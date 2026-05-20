@@ -9,8 +9,10 @@ If you want to view the source, please visit the GitHub repository of this plugi
 
 const prod = process.argv[2] === "production";
 
+const processPolyfill = `var process=typeof process!=="undefined"?process:{env:{NODE_ENV:${prod ? '"production"' : '"development"'}}};`;
+
 const context = await esbuild.context({
-	banner: { js: banner },
+	banner: { js: `${banner}\n${processPolyfill}` },
 	entryPoints: ["src/main.ts"],
 	bundle: true,
 	external: [
