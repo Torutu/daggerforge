@@ -1,3 +1,14 @@
+# DaggerForge 2.2.3
+
+## Fixed
+
+- Mobile: creator and editor forms now lay out correctly on small screens. Fields stack to a single column, inputs are tap-friendly, and the submit button spans full width.
+- Mobile: select dropdowns and text inputs in the adversary and environment forms no longer had a dark background override that broke the desktop light theme.
+- Mobile: environment textarea fields were capped at 400px wide on desktop. They now expand to fill the available width.
+- HP and Stress collapse animation now uses the CSS grid row trick instead of `max-height`, giving a smooth fade-in at natural height without an arbitrary magic number.
+
+---
+
 # DaggerForge 2.2.0
 
 ## New
