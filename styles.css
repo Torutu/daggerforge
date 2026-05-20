@@ -284,13 +284,22 @@
 }
 
 .df-hp-stress-section {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition:
+		grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+		opacity            0.35s cubic-bezier(0.4, 0, 0.2, 1);
+	opacity: 0;
+}
+
+.df-hp-stress-section > .df-hp-stress-inner {
 	overflow: hidden;
-	max-height: 0;
-	transition: max-height 0.2s ease;
+	min-height: 0;
 }
 
 .df-card-outer.df-expanded .df-hp-stress-section {
-	max-height: fit-content;
+	grid-template-rows: 1fr;
+	opacity: 1;
 }
 
 .df-hp-stress {

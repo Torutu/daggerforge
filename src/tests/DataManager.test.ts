@@ -1,35 +1,15 @@
 /**
  * DataManager.test.ts
- * 
- * Tests for DataManager - saving, loading, and managing data
+ *
+ * Tests for DataManager — saving, loading, and managing adversary and environment data.
  */
 
 import { DataManager } from '../data/index';
-import type { AdvData } from '../types/index';
-import type { EnvironmentData } from '../types/index';
+import type { AdvData, EnvironmentData } from '../types/index';
 
-const testResults: string[] = [];
-
-function logResult(testName: string, expected: any, actual: any, passed: boolean) {
-    testResults.push(`Test: ${testName}`);
-    testResults.push(`  Expected: ${expected}`);
-    testResults.push(`  Actual:   ${actual}`);
-    testResults.push(`  Result:   ${passed ? 'PASS' : 'FAIL'}`);
-    testResults.push('');
-}
-
-afterAll(() => {
-    console.log(`
-========================================
-DATA MANAGER TEST RESULTS
-========================================
-
-${testResults.join('\n')}`);
-});
-
-function createMockPlugin() {
+function mockPlugin() {
     const plugin = {
-        _store: null,
+        _store: null as any,
         async loadData() { return plugin._store; },
         async saveData(data: any) { plugin._store = data; },
     };
@@ -37,8 +17,7 @@ function createMockPlugin() {
 }
 
 async function createManager() {
-    const plugin = createMockPlugin();
-    const dm = new DataManager(plugin as any);
+    const dm = new DataManager(mockPlugin() as any);
     await dm.load();
     return dm;
 }
@@ -81,143 +60,72 @@ function sampleEnvironment(): EnvironmentData {
     };
 }
 
-describe('Adding adversaries', () => {
-    it('can add an adversary', async () => {
+// ── Adversaries ───────────────────────────────────────────────────────────────
+
+describe('Adversaries', () => {
+    test('addAdversary stores the record', async () => {
         const dm = await createManager();
         await dm.addAdversary(sampleAdversary());
-
-        const all = dm.getAdversaries();
-        const expected = 1;
-        const actual = all.length;
-
-        logResult('Add adversary', `${expected} adversary`, `${actual} adversary`, actual === expected);
-
-        expect(all).toHaveLength(1);
+        expect(dm.getAdversaries()).toHaveLength(1);
     });
 
-    it('gives new adversaries an ID', async () => {
+    test('new adversary gets a CUA_ prefixed id', async () => {
         const dm = await createManager();
         await dm.addAdversary(sampleAdversary());
-
-        const saved = dm.getAdversaries()[0];
-        const expected = 'CUA_';
-        const actual = saved.id.substring(0, 4);
-
-        logResult('Adversary ID generation', `ID starts with "${expected}"`, `ID: ${saved.id}`, actual === expected);
-
-        expect(saved.id).toMatch(/^CUA_/);
+        expect(dm.getAdversaries()[0].id).toMatch(/^CUA_/);
     });
-});
 
-describe('Getting adversaries', () => {
-    it('can get all adversaries', async () => {
+    test('getAdversaries returns the stored name', async () => {
         const dm = await createManager();
         await dm.addAdversary(sampleAdversary());
-
-        const all = dm.getAdversaries();
-        const expected = 'Test Goblin';
-        const actual = all[0].name;
-
-        logResult('Get adversary by name', `"${expected}"`, `"${actual}"`, actual === expected);
-
-        expect(all[0].name).toBe('Test Goblin');
+        expect(dm.getAdversaries()[0].name).toBe('Test Goblin');
     });
-});
 
-describe('Deleting adversaries', () => {
-    it('can delete an adversary', async () => {
+    test('deleteAdversaryById removes the record', async () => {
         const dm = await createManager();
-        const adv = sampleAdversary();
-        adv.id = 'TEST_ID';
+        const adv = { ...sampleAdversary(), id: 'TEST_ID' };
         await dm.addAdversary(adv);
-
         await dm.deleteAdversaryById('TEST_ID');
-
-        const expected = 0;
-        const actual = dm.getAdversaries().length;
-
-        logResult('Delete adversary', `${expected} adversaries remaining`, `${actual} adversaries remaining`, actual === expected);
-
         expect(dm.getAdversaries()).toHaveLength(0);
     });
 });
 
-describe('Adding environments', () => {
-    it('can add an environment', async () => {
+// ── Environments ──────────────────────────────────────────────────────────────
+
+describe('Environments', () => {
+    test('addEnvironment stores the record', async () => {
         const dm = await createManager();
         await dm.addEnvironment(sampleEnvironment());
-
-        const all = dm.getEnvironments();
-        const expected = 1;
-        const actual = all.length;
-
-        logResult('Add environment', `${expected} environment`, `${actual} environment`, actual === expected);
-
-        expect(all).toHaveLength(1);
+        expect(dm.getEnvironments()).toHaveLength(1);
     });
 
-    it('gives new environments an ID', async () => {
+    test('new environment gets a CUE_ prefixed id', async () => {
         const dm = await createManager();
         await dm.addEnvironment(sampleEnvironment());
-
-        const saved = dm.getEnvironments()[0];
-        const expected = 'CUE_';
-        const actual = saved.id.substring(0, 4);
-
-        logResult('Environment ID generation', `ID starts with "${expected}"`, `ID: ${saved.id}`, actual === expected);
-
-        expect(saved.id).toMatch(/^CUE_/);
+        expect(dm.getEnvironments()[0].id).toMatch(/^CUE_/);
     });
-});
 
-describe('Getting environments', () => {
-    it('can get all environments', async () => {
+    test('getEnvironments returns the stored name', async () => {
         const dm = await createManager();
         await dm.addEnvironment(sampleEnvironment());
-
-        const all = dm.getEnvironments();
-        const expected = 'Test Swamp';
-        const actual = all[0].name;
-
-        logResult('Get environment by name', `"${expected}"`, `"${actual}"`, actual === expected);
-
-        expect(all[0].name).toBe('Test Swamp');
+        expect(dm.getEnvironments()[0].name).toBe('Test Swamp');
     });
-});
 
-describe('Deleting environments', () => {
-    it('can delete an environment', async () => {
+    test('deleteEnvironmentById removes the record', async () => {
         const dm = await createManager();
-        const env = sampleEnvironment();
-        env.id = 'TEST_ENV_ID';
+        const env = { ...sampleEnvironment(), id: 'TEST_ENV_ID' };
         await dm.addEnvironment(env);
-
         await dm.deleteEnvironmentById('TEST_ENV_ID');
-
-        const expected = 0;
-        const actual = dm.getEnvironments().length;
-
-        logResult('Delete environment', `${expected} environments remaining`, `${actual} environments remaining`, actual === expected);
-
         expect(dm.getEnvironments()).toHaveLength(0);
     });
 });
 
-describe('Import data', () => {
-    it('can import data from JSON', async () => {
+// ── Import ────────────────────────────────────────────────────────────────────
+
+describe('importData', () => {
+    test('imports adversaries from JSON string', async () => {
         const dm = await createManager();
-        const data = {
-            adversaries: [sampleAdversary()],
-            environments: []
-        };
-
-        await dm.importData(JSON.stringify(data));
-
-        const expected = 1;
-        const actual = dm.getAdversaries().length;
-
-        logResult('Import JSON data', `${expected} adversary imported`, `${actual} adversary imported`, actual === expected);
-
+        await dm.importData(JSON.stringify({ adversaries: [sampleAdversary()], environments: [] }));
         expect(dm.getAdversaries()).toHaveLength(1);
     });
 });
