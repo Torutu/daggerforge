@@ -307,7 +307,7 @@
 	border-bottom: 1px solid var(--df--color-border);
 }
 
-.df-card-inner h2 {
+.df-card-inner .df-card-name {
 	font-size: 1.3em;
 	font-weight: 700;
 	margin: 0;
@@ -368,12 +368,12 @@
 	margin-bottom: 10px;
 }
 
-input.df-input-help {
+.df-input-help {
 	width: 100%;
 	max-width: 360px;
 }
 
-select.df-input-field {
+.df-input-field {
 	width: 120px;
 }
 
@@ -625,6 +625,8 @@ select.df-input-field {
 	line-height: 1.5;
 }
 
+/* Tiptap (contenteditable) generates p/ul/ol/li directly — cannot add df- classes.
+   These are the only allowed bare-element selectors besides .is-mobile. */
 .df-rich-editor-content p {
 	margin: 0 0 0.25em 0;
 }
@@ -686,8 +688,8 @@ select.df-input-field {
 	margin-top: 5px;
 }
 
-.df-triple-field-item input,
-.df-triple-field-item select {
+.df-triple-field-item .df-field-input,
+.df-triple-field-item .df-field-select {
 	width: 100%;
 }
 
@@ -710,23 +712,23 @@ select.df-input-field {
 	background-color: #333333;
 }
 
-.df-adv-field-name input,
-.df-adv-field-tier select,
-.df-adv-field-type select {
+.df-adv-field-name,
+.df-adv-field-tier,
+.df-adv-field-type {
 	min-width: 100px;
 	padding: 6px 8px;
 }
 
-.df-adv-field-desc textarea,
-.df-adv-field-motives input,
-.df-adv-field-xp input {
+.df-adv-field-desc,
+.df-adv-field-motives,
+.df-adv-field-xp {
 	width: 100%;
 	max-width: 100%;
 	padding: 6px 8px;
 	min-height: 50px;
 }
 
-.df-adv-field-count input {
+.df-adv-field-count {
 	width: 80px;
 	padding: 6px 8px;
 }
@@ -792,27 +794,29 @@ select.df-input-field {
 	display: block;
 	margin: 24px auto 0;
 	/* padding: 10px 32px; */
-	background: var(--interactive-accent);
-	color: var(--text-on-accent);
+	background: #2d7dd2;
+	color: #ffffff;
 	border: none;
 	border-radius: 8px;
 	cursor: pointer;
 	font-weight: 600;
 	font-size: var(--font-ui-small);
 	letter-spacing: 0.02em;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-	transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+	box-shadow: 0 4px 16px rgba(45, 125, 210, 0.35);
+	transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 	z-index: 20;
 }
 
 .df-modal-submit-btn:hover {
-	opacity: 0.9;
-	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+	background: #2470c0;
+	box-shadow: 0 6px 20px rgba(45, 125, 210, 0.45);
 }
 
 .df-modal-submit-btn:active {
-	transform: scale(0.97);
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	background: #ffffff;
+	color: #2d7dd2;
+	box-shadow: 0 0 0 2px #2d7dd2;
+	transition: background 0s, color 0s, box-shadow 0s;
 }
 
 /* ===== ENVIRONMENT FORM STYLES ===== */
@@ -867,17 +871,17 @@ select.df-input-field {
 	/* flex-direction: column; */
 }
 
-.df-env-field-name input,
-.df-env-field-tier select,
-.df-env-field-type select {
+.df-env-field-name,
+.df-env-field-tier,
+.df-env-field-type {
 	min-width: 100px;
 	padding: 6px 8px;
 }
 
-.df-env-field-desc input,
-.df-env-field-impulse input,
-.df-env-field-difficulty input,
-.df-env-field-adversaries input {
+.df-env-field-desc,
+.df-env-field-impulse,
+.df-env-field-difficulty,
+.df-env-field-adversaries {
 	width: 100%;
 	max-width: 400px;
 	padding: 6px 8px;
@@ -1245,7 +1249,7 @@ select.df-input-field {
 }
 
 /* count input matches button height */
-.count-input {
+.df-count-input {
 	width: 48px !important;
 	height: 28px !important;
 	text-align: center;
@@ -1273,7 +1277,7 @@ select.df-input-field {
 }
 
 
-.df-env-card-inner h2 {
+.df-env-card-inner .df-env-name {
 	font-weight: 900;
 	font-size: 1.8rem;
 	margin-bottom: auto;
@@ -1292,7 +1296,10 @@ select.df-input-field {
 	font-style: italic;
 }
 
-.df-env-card-inner p {
+.df-env-impulse-line,
+.df-env-diff-line,
+.df-env-adv-line,
+.df-env-desc {
 	margin: 0.1em 0;
 	font-size: 0.9rem;
 	line-height: 1.25;
@@ -1313,7 +1320,7 @@ select.df-input-field {
 	font-size: 0.9rem;
 }
 
-.df-env-card-inner p strong {
+.df-env-impulse-label {
 	font-weight: 700;
 }
 
@@ -1328,7 +1335,7 @@ select.df-input-field {
 	font-size: 1rem;
 }
 
-.df-features-section h3 {
+.df-features-section .df-features-heading {
 	font-weight: 700;
 	font-size: 1.1rem;
 	margin-bottom: 3px;
@@ -1336,7 +1343,7 @@ select.df-input-field {
 	margin-top: 3px;
 }
 
-.df-feature h4 {
+.df-feature .df-h4 {
 	font-weight: 700;
 	font-size: 1.1rem;
 	margin-bottom: 0.3em;
@@ -1359,8 +1366,8 @@ select.df-input-field {
 	color: #221e20;
 }
 
-.df-env-feat-richcontent p,
-.df-card-inner .df-feature-desc p {
+.df-env-feat-richcontent .df-p,
+.df-card-inner .df-feature-desc .df-p {
 	margin: 0 0 0.15rem 0;
 }
 
@@ -1502,7 +1509,7 @@ select.df-input-field {
 	min-width: 120px;
 }
 
-.df-tier-dropdown select.df-tier-filter-select {
+.df-tier-dropdown .df-tier-filter-select {
 	padding: 8px 12px;
 	border-radius: 4px;
 	border: 1px solid var(--background-modifier-border);
@@ -2509,9 +2516,16 @@ select.df-input-field {
 }
 
 .is-mobile .df-inline-dice-btn {
-	font-size: 0.62em;
-	padding: 0 4px;
-	line-height: 1;
+	-webkit-appearance: none;
+	appearance: none;
+	display: inline;
+	font-size: 0.7em;
+	padding: 1px 5px;
+	line-height: inherit;
+	border-radius: 8px;
+	min-height: unset;
+	height: auto;
+	vertical-align: baseline;
 }
 
 .df-dice-part-pos {
@@ -2691,12 +2705,243 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	color: var(--text-muted);
 }
 
+/* ── Mobile modal overrides ─────────────────────────────────────────────── */
+
+.is-mobile .modal:has(.df-modal-title) {
+	width: 96vw !important;
+	max-width: 96vw !important;
+	max-height: 88vh !important;
+	padding: 16px 12px !important;
+	border-radius: 12px !important;
+}
+
+.is-mobile .modal:has(.df-modal-title) .modal-content {
+	padding: 0 !important;
+}
+
+.is-mobile .df-modal-title {
+	font-size: 1.1em;
+	margin-bottom: 12px;
+	text-align: center;
+}
+
+/* Stack 3-col grids to single column */
+.is-mobile .df-adv-form-row,
+.is-mobile .df-env-row-basic-info {
+	grid-template-columns: 1fr;
+	gap: 6px;
+}
+
+/* Full-width inputs and selects */
+.is-mobile .df-adv-field-name,
+.is-mobile .df-adv-field-tier,
+.is-mobile .df-adv-field-type,
+.is-mobile .df-env-field-name,
+.is-mobile .df-env-field-tier,
+.is-mobile .df-env-field-type {
+	min-width: unset;
+	width: 100%;
+	padding: 10px 8px;
+	font-size: 1em;
+	border-radius: 9px;
+
+}
+
+.is-mobile .df-adv-field-desc,
+.is-mobile .df-adv-field-motives,
+.is-mobile .df-adv-field-xp,
+.is-mobile .df-env-field-desc,
+.is-mobile .df-env-field-impulse,
+.is-mobile .df-env-field-difficulty,
+.is-mobile .df-env-field-adversaries,
+.is-mobile .df-env-field-desc-textarea {
+	width: 100%;
+	max-width: 100%;
+	padding: 10px 8px;
+	font-size: 1em;
+	border-radius: 2px;
+}
+
+.is-mobile .df-field-input,
+.is-mobile .df-adv-field-name {
+	width: 100%;
+	border-radius: 9px;
+}
+
+.is-mobile .df-field-feature-type,
+.is-mobile .df-input-feature-cost{
+	border-radius: 9px;
+}
+
+.is-mobile .df-adv-field-count {
+	width: 100%;
+	padding: 10px 8px;
+	font-size: 1em;
+}
+
+/* Section titles — more breathing room */
+.is-mobile .df-section-title {
+	font-size: 0.95em;
+	padding-bottom: 8px;
+	margin-bottom: 8px;
+}
+
+/* Feature blocks — more tap-friendly */
+.is-mobile .df-adv-feature-container,
+.is-mobile .df-env-feature-container {
+	gap: 12px;
+	padding: 10px 8px;
+}
+
+.is-mobile .df-feature-block,
+.is-mobile .df-env-feature-block {
+	gap: 10px;
+	padding: 12px 10px;
+	border-radius: 1px;
+}
+
+/* Adversary feature row: name line 1, type+cost line 2 */
+.is-mobile .df-feature-row {
+	flex-wrap: wrap;
+}
+
+.is-mobile .df-input-feature-name {
+	width: 100%;
+	flex: unset;
+}
+
+.is-mobile .df-triple-fields-row {
+	grid-template-columns: 1fr 1fr;
+	width: 100%;
+}
+
+/* Environment feature row: name line 1, type+cost line 2 */
+.is-mobile .df-env-feature-row {
+	flex-wrap: wrap;
+}
+
+.is-mobile .df-env-feature-input-name {
+	width: 100%;
+	flex: unset;
+	min-width: unset;
+}
+
+.is-mobile .df-env-feature-input-type,
+.is-mobile .df-env-feature-input-cost {
+	flex: 1;
+	min-width: unset;
+}
+
+.is-mobile .df-remove-feature-btn,
+.is-mobile .df-adv-btn-add-feature,
+.is-mobile .df-env-btn-add-feature {
+	width: 100%;
+	padding: 10px;
+	font-size: 0.95em;
+	text-align: center;
+}
+
+/* Submit button — full width, large tap target */
+.is-mobile .df-modal-submit-btn {
+	width: 100%;
+	padding: 14px;
+	font-size: 1em;
+	border-radius: 10px;
+	margin-top: 20px;
+	bottom: 0;
+	background-color: #5b9fdf;
+}
+
+/* Creator chooser — stack vertically on mobile */
+.is-mobile .df-creator-chooser-grid {
+	grid-template-columns: 1fr;
+	gap: 10px;
+}
+
+.is-mobile .df-creator-option {
+	padding: 16px;
+	flex-direction: row;
+	justify-content: flex-start;
+	gap: 12px;
+	text-align: left;
+}
+
+.is-mobile .df-inline-input.count-input{
+	border-radius: 9px;
+}
+
+.is-mobile .df-dr-count-input{
+	border-radius: 9px;
+}
+
+
+/* ── Mobile: battle calculator action button grid ───────────────────────── */
+
+.is-mobile .df-enc-pc-input{
+ border-radius: 9px;
+}
+
+.is-mobile .df-enc-btn-grid {
+	grid-template-columns: 1fr;
+	gap: 8px;
+}
+
+.is-mobile .df-enc-action-btn {
+	padding: 12px 14px;
+	border-radius: 8px;
+	font-size: 0.95em;
+	gap: 10px;
+}
+
+.is-mobile .df-enc-action-btn:active {
+	transform: none;
+	background: var(--background-modifier-hover);
+}
+
+.is-mobile .df-enc-btn-label {
+	white-space: normal;
+	overflow: visible;
+	text-overflow: unset;
+	font-size: 0.95em;
+	line-height: 1.3;
+}
+
+.is-mobile .df-enc-badge {
+	min-width: 36px;
+	height: 26px;
+	font-size: 0.85em;
+	border-radius: 6px;
+	padding: 0 8px;
+}
+
+.is-mobile .df-enc-badge--pos {
+	background: rgba(34, 197, 94, 0.15);
+	color: #16a34a;
+}
+
+.is-mobile .df-enc-badge--neg {
+	background: rgba(239, 68, 68, 0.15);
+	color: #dc2626;
+}
+
+.is-mobile .df-enc-badge--cost {
+	background: rgba(239, 68, 68, 0.15);
+	color: #dc2626;
+}
+
+.is-mobile .df-enc-section {
+	gap: 10px;
+}
+
+.is-mobile .df-enc-section-label {
+	font-size: 0.8em;
+	letter-spacing: 0.06em;
+}
+
 /* Tooltip that appears above the button after rolling */
 .df-inline-dice-result {
 	position: absolute;
 	bottom: calc(100% + 4px);
-	left: 50%;
-	transform: translateX(-50%);
 	white-space: nowrap;
 	padding: 3px 8px;
 	border-radius: 4px;

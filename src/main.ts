@@ -73,6 +73,21 @@ export default class DaggerForgePlugin extends Plugin {
 
 		this.app.workspace.onLayoutReady(() => {
 			processAllVisibleCards();
+
+			// Eagerly seed lastMainLeaf so the first insert never fails with
+			// "no note open" on mobile, where active-leaf-change hasn't fired yet.
+			if (!this.lastMainLeaf) {
+				const seed =
+					this.app.workspace.getMostRecentLeaf() ??
+					this.app.workspace.getLeavesOfType("markdown")[0] ??
+					this.app.workspace.getLeavesOfType("canvas")[0];
+				if (seed) {
+					const v = seed.view;
+					if ((v as any).canvas || v instanceof MarkdownView) {
+						this.lastMainLeaf = seed;
+					}
+				}
+			}
 		});
 
 		function processAllVisibleCards() {

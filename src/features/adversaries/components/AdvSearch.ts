@@ -244,7 +244,7 @@ export class AdversaryView extends ItemView {
 	private handleClearFilters() {
 		resetAdversaryCount();
 		// Update the counter display
-		const counterInputs = this.containerEl.querySelectorAll(".count-input");
+		const counterInputs = this.containerEl.querySelectorAll(".df-count-input");
 		counterInputs.forEach((input) => {
 			if (input instanceof HTMLInputElement) {
 				input.value = "1";
@@ -267,7 +267,7 @@ export class AdversaryView extends ItemView {
 				value: getAdversaryCount().toString(),
 				placeholder: "Count",
 			},
-			cls: "df-inline-input count-input",
+			cls: "df-inline-input df-count-input",
 		});
 
 		const plusBtn = container.createEl("button", {
@@ -382,7 +382,7 @@ export class AdversaryView extends ItemView {
 
 	private insertAdversaryIntoNote(adversary: Adversary) {
 		const plugin = getDaggerForgePlugin(this.app);
-		const { kind, canvas } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
+		const { kind, canvas, leaf } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
 
 		if (kind === "canvas") {
 			const adversaryText = this.generateAdversaryMarkdown(adversary);
@@ -397,28 +397,19 @@ export class AdversaryView extends ItemView {
 			return;
 		}
 
-		const view =
-			this.app.workspace.getActiveViewOfType(MarkdownView) ||
-			this.lastActiveMarkdown;
-
-		if (!view) {
-			new Notice("No note or canvas is open. Click on a note to activate it.");
+		if (kind !== "markdown" || !leaf) {
+			new Notice("No note is open in Edit mode.");
 			return;
 		}
 
-		if (view.getMode() !== "source") {
-			new Notice("You must be in edit mode to insert the adversary card.");
-			return;
-		}
-
-		const editor = view.editor;
-		if (!editor) {
-			new Notice("Cannot find editor in markdown view.");
+		const view = leaf.view as MarkdownView;
+		if (view.getMode() === "preview") {
+			new Notice("Please switch to Edit mode.");
 			return;
 		}
 
 		const adversaryText = injectDiceBadgesIntoHtml(this.generateAdversaryMarkdown(adversary));
-		editor.replaceSelection(adversaryText);
+		view.editor.replaceSelection(adversaryText);
 		new Notice(`Inserted ${adversary.name} in note.`);
 	}
 

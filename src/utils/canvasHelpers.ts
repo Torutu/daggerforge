@@ -1,4 +1,4 @@
-import { App, Notice, MarkdownView } from "obsidian";
+import { App, Notice, MarkdownView, WorkspaceLeaf } from "obsidian";
 
 /**
  * Determines where the next card should be inserted by looking at the last
@@ -24,6 +24,8 @@ export interface ResolvedDestination {
 	kind: InsertDestination;
 	/** The specific canvas object to insert into. Only set when kind === "canvas". */
 	canvas: any | null;
+	/** The target leaf. Use this to get the editor for markdown inserts. */
+	leaf: WorkspaceLeaf | null;
 }
 
 /**
@@ -41,32 +43,40 @@ export function resolveInsertDestination(
 ): ResolvedDestination {
 	// Check the most recently focused leaf first (fastest path, e.g. user just
 	// clicked directly on a canvas without going through the sidebar).
-	// getMostRecentLeaf() is the non-deprecated replacement for activeLeaf.
-	const activeView = app.workspace.getMostRecentLeaf()?.view;
+	const activeMostRecent = app.workspace.getMostRecentLeaf();
+	const activeView = activeMostRecent?.view;
 	if (activeView && (activeView as any).canvas) {
-		return { kind: "canvas", canvas: (activeView as any).canvas };
+		return { kind: "canvas", canvas: (activeView as any).canvas, leaf: activeMostRecent ?? null };
 	}
 
 	// Fall back to the last main-area leaf the plugin tracked.
-	if (!lastMainLeaf) return { kind: "none", canvas: null };
-
-	const view = lastMainLeaf.view;
-	if ((view as any).canvas) {
-		return { kind: "canvas", canvas: (view as any).canvas };
+	if (lastMainLeaf) {
+		const view = lastMainLeaf.view;
+		if ((view as any).canvas) {
+			return { kind: "canvas", canvas: (view as any).canvas, leaf: lastMainLeaf as WorkspaceLeaf };
+		}
+		if (view instanceof MarkdownView) {
+			return { kind: "markdown", canvas: null, leaf: lastMainLeaf as WorkspaceLeaf };
+		}
+		const file = (view as any)?.file;
+		if (file?.extension === "canvas") {
+			return { kind: "canvas", canvas: (view as any).canvas ?? null, leaf: lastMainLeaf as WorkspaceLeaf };
+		}
+		if (file?.extension === "md") {
+			return { kind: "markdown", canvas: null, leaf: lastMainLeaf as WorkspaceLeaf };
+		}
 	}
-	if (view instanceof MarkdownView) {
-		return { kind: "markdown", canvas: null };
+
+	// Auto-scan: find any open markdown note in edit mode so the user doesn't
+	// need to click the note first before inserting.
+	const fallbackLeaf = app.workspace.getLeavesOfType("markdown").find(
+		(l) => (l.view as MarkdownView).getMode?.() !== "preview"
+	);
+	if (fallbackLeaf) {
+		return { kind: "markdown", canvas: null, leaf: fallbackLeaf };
 	}
 
-	// Fallback: inspect the file extension
-	const file = (view as any)?.file;
-	if (file?.extension === "canvas") {
-		// canvas object may not be available on an unfocused leaf but try anyway
-		return { kind: "canvas", canvas: (view as any).canvas ?? null };
-	}
-	if (file?.extension === "md") return { kind: "markdown", canvas: null };
-
-	return { kind: "none", canvas: null };
+	return { kind: "none", canvas: null, leaf: null };
 }
 
 /**

@@ -10,7 +10,7 @@ export function makeDraggable(modalEl: HTMLElement, handle: HTMLElement): void {
 	handle.addClass("df-draggable-handle");
 
 	const isInteractive = (t: EventTarget | null) =>
-		(t as HTMLElement)?.closest("button, input, select, textarea, a, label") !== null;
+		(t as HTMLElement)?.closest("button, input, select, textarea, a, label, .modal-close-button") !== null;
 
 	const apply = (dx: number, dy: number) => {
 		modalEl.style.transform = `translate(${ax + dx}px, ${ay + dy}px)`;

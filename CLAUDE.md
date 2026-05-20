@@ -5,6 +5,13 @@ Before debugging any issue, check [`error_log.md`](error_log.md) for known probl
 
 ---
 
+# CSS Naming Rules
+- **Never** use bare HTML element selectors (`p`, `ul`, `input`, `select`, `textarea`, `button`, etc.) in `styles.css`.
+- **Always** use `df-` prefixed classes. If one doesn't exist for the element you're styling, create it.
+- The only exception is `.is-mobile` — this is an Obsidian-injected body class and cannot be renamed.
+
+---
+
 # Versioning
 Version format: `milestone.big-features.hotfixes` (e.g. `2.1.10`)
 - **milestone** — major redesigns or platform shifts
