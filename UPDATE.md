@@ -1,3 +1,11 @@
+# DaggerForge 2.2.4
+
+## Fixed
+
+- HP and Stress tick marks now persist across reading/edit mode switches and across Obsidian restarts. Previously they reset whenever you switched modes or reopened Obsidian.
+
+---
+
 # DaggerForge 2.2.3
 
 ## Fixed
