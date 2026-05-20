@@ -13,3 +13,5 @@ DEST="$OBSIDIAN_VAULT"
 mkdir -p "$DEST"
 cp main.js manifest.json styles.css "$DEST"
 echo "Deployed to $DEST"
+
+bash "$(dirname "$0")/deploy-android.sh"

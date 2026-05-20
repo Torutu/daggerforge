@@ -1,5 +1,28 @@
 # CLAUDE.md
 
+# Error Log
+Before debugging any issue, check [`error_log.md`](error_log.md) for known problems and their fixes.
+
+---
+
+# CSS Naming Rules
+- **Never** use bare HTML element selectors (`p`, `ul`, `input`, `select`, `textarea`, `button`, etc.) in `styles.css`.
+- **Always** use `df-` prefixed classes. If one doesn't exist for the element you're styling, create it.
+- The only exception is `.is-mobile` — this is an Obsidian-injected body class and cannot be renamed.
+
+---
+
+# Versioning
+Version format: `milestone.big-features.hotfixes` (e.g. `2.1.10`)
+- **milestone** — major redesigns or platform shifts
+- **big-features** — new user-facing features
+- **hotfixes** — bug fixes and small tweaks
+
+After any change, ask the user whether the version should be bumped and which segment.
+Version is set in `manifest.json` and `versions.json`.
+
+---
+
 # Obsidian Plugin Development Rules
 
 This project follows the architecture, philosophy, and development patterns commonly used in the Obsidian ecosystem.

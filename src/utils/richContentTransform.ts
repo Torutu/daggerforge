@@ -28,6 +28,20 @@ export function toCustomHtml(html: string): string {
 		el.replaceWith(d);
 	});
 
+	root.querySelectorAll("h4").forEach(el => {
+		const d = document.createElement("div");
+		d.className = "df-h4";
+		d.innerHTML = el.innerHTML;
+		el.replaceWith(d);
+	});
+
+	root.querySelectorAll("p").forEach(el => {
+		const d = document.createElement("div");
+		d.className = "df-p";
+		d.innerHTML = el.innerHTML;
+		el.replaceWith(d);
+	});
+
 	return root.innerHTML;
 }
 
@@ -55,6 +69,18 @@ export function toStandardHtml(html: string): string {
 		const li = document.createElement("li");
 		li.innerHTML = el.innerHTML;
 		el.replaceWith(li);
+	});
+
+	root.querySelectorAll(".df-h4").forEach(el => {
+		const h4 = document.createElement("h4");
+		h4.innerHTML = el.innerHTML;
+		el.replaceWith(h4);
+	});
+
+	root.querySelectorAll(".df-p").forEach(el => {
+		const p = document.createElement("p");
+		p.innerHTML = el.innerHTML;
+		el.replaceWith(p);
 	});
 
 	return root.innerHTML;

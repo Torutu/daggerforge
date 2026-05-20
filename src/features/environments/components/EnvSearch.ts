@@ -307,7 +307,7 @@ export class EnvironmentView extends ItemView {
 			const wide = this.searchControlsUI?.getWideCard() ?? false;
 			const envHTML = envToHtml(env, wide);
 			const plugin = getDaggerForgePlugin(this.app);
-			const { kind, canvas } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
+			const { kind, canvas, leaf } = resolveInsertDestination(this.app, plugin?.lastMainLeaf ?? null);
 
 			if (kind === "canvas") {
 				const position = getAvailableCanvasPosition(canvas);
@@ -326,19 +326,16 @@ export class EnvironmentView extends ItemView {
 			}
 
 			if (kind === "markdown") {
-				const view =
-					this.app.workspace.getActiveViewOfType(MarkdownView) ||
-					this.lastActiveMarkdown;
-				if (!view) {
-					new Notice("No markdown file or canvas is open.");
+				if (!leaf) {
+					new Notice("No note is open in Edit mode.");
 					return;
 				}
-				const editor = view.editor;
-				if (!editor) {
-					new Notice("Cannot find editor in markdown view.");
+				const view = leaf.view as MarkdownView;
+				if (view.getMode() === "preview") {
+					new Notice("Please switch to Edit mode.");
 					return;
 				}
-				editor.replaceSelection(injectDiceBadgesIntoHtml(envHTML));
+				view.editor.replaceSelection(injectDiceBadgesIntoHtml(envHTML));
 				new Notice(`Inserted environment ${env.name}.`);
 				return;
 			}

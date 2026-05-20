@@ -252,5 +252,16 @@ function showRollResult(anchor: HTMLButtonElement, expression: string): void {
 	tooltip.innerHTML = `${total} [${partsHtml}]`;
 	anchor.appendChild(tooltip);
 
+	const btnRect = anchor.getBoundingClientRect();
+	const btnCenter = btnRect.left + btnRect.width / 2;
+	if (btnCenter < window.innerWidth / 2) {
+		tooltip.style.left = "0";
+		tooltip.style.transform = "none";
+	} else {
+		tooltip.style.left = "auto";
+		tooltip.style.right = "0";
+		tooltip.style.transform = "none";
+	}
+
 	window.setTimeout(() => tooltip.remove(), _tooltipMs);
 }

@@ -1,5 +1,6 @@
 module.exports = {
 	testEnvironment: 'node',
+	verbose: true,
 	testMatch: ['**/src/tests/**/*.test.ts'],
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
 	transform: {

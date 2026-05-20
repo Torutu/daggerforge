@@ -5,7 +5,7 @@ export function envToHtml(env: EnvironmentData, wide = false): string {
 	const hiddenID = crypto.randomUUID();
 	const featuresHTML = (env.features || [])
 		.map((f) => {
-			const costHTML = f.cost ? `<span>${f.cost}</span>` : "";
+			const costHTML = f.cost ? `<span class="df-env-feat-cost">${f.cost}</span>` : "";
 
 			const questionsHTML = f.questions?.length
 				? `<div class="df-env-questions">${f.questions.map((q) => `<div class="df-env-question">${q}</div>`).join("")}</div>`
@@ -29,13 +29,13 @@ ${questionsHTML}
 <div class="df-env-name" id="${hiddenID}">${env.name}</div>
 <div class="df-env-feat-tier-type">Tier ${env.tier.toString()} ${env.type} <span class="df-source-badge-${(env.source || "core").toLowerCase()}">${(env.source || "core").toLowerCase()}</span></div>
 <p class="df-env-desc">${env.desc}</p>
-<p><strong>Impulse:</strong> ${env.impulse || ""}</p>
+<p class="df-env-impulse-line"><span class="df-env-impulse-label">Impulse:</span> ${env.impulse || ""}</p>
 <div class="df-env-card-diff-pot">
-<p><span class="df-bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
-<p><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
+<p class="df-env-diff-line"><span class="df-bold-title">Difficulty</span>: ${env.difficulty || ""}</p>
+<p class="df-env-adv-line"><span class="df-bold-title">Potential Adversaries</span>: ${env.potentialAdversaries || ""}</p>
 </div>
 <div class="df-features-section">
-<h3>Features</h3>${featuresHTML}
+<h3 class="df-features-heading">Features</h3>${featuresHTML}
 </div>
 </div>
 </section>

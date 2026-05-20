@@ -1,4 +1,5 @@
 import { App, MarkdownView, Notice } from "obsidian";
+import { resolveInsertDestination } from "./canvasHelpers";
 import DaggerForgePlugin from "../main";
 
 /**
@@ -28,41 +29,26 @@ import { DeleteConfirmModal } from "../features/data-management/index";
  * menu/palette overlay, not the canvas or note the user was working in.
  */
 export function openCreator(plugin: DaggerForgePlugin, type: "adversary" | "environment"): void {
-	// lastMainLeaf is null on first load before any interaction — fall back to
-	// whatever leaf the workspace considers active right now.
-	const leaf = plugin.lastMainLeaf ?? plugin.app.workspace.getMostRecentLeaf();
-	const view = leaf?.view;
+	const { kind, leaf } = resolveInsertDestination(plugin.app, plugin.lastMainLeaf);
 
-	if (!view) {
-		new Notice("No note or canvas is open. Click on one first.");
+	if (kind === "canvas") {
+		if (type === "adversary") new AdversaryModal(plugin, null).open();
+		else new EnvironmentModal(plugin, null).open();
 		return;
 	}
 
-	// Canvas destination
-	if ((view as any).canvas) {
-		if (type === "adversary") {
-			new AdversaryModal(plugin, null).open();
-		} else {
-			new EnvironmentModal(plugin, null).open();
-		}
-		return;
-	}
-
-	// Markdown destination
-	if (view instanceof MarkdownView) {
-		if (view.getMode() !== "source") {
+	if (kind === "markdown" && leaf) {
+		const view = leaf.view as MarkdownView;
+		if (view.getMode() === "preview") {
 			new Notice("Please switch to Edit mode.");
 			return;
 		}
-		if (type === "adversary") {
-			new AdversaryModal(plugin, view.editor).open();
-		} else {
-			new EnvironmentModal(plugin, view.editor).open();
-		}
+		if (type === "adversary") new AdversaryModal(plugin, view.editor).open();
+		else new EnvironmentModal(plugin, view.editor).open();
 		return;
 	}
 
-	new Notice("No note or canvas is open. Click on one first.");
+	new Notice("No note or canvas is open. Open one in Edit mode first.");
 }
 
 /**

@@ -9,9 +9,9 @@
 
 export interface SearchFilters {
 	query: string;
-	tiers: string[];   // empty = all
-	sources: string[]; // empty = all
-	types: string[];   // empty = all
+	tiers: string[];
+	sources: string[];
+	types: string[];
 }
 
 export interface SearchableCard {
@@ -170,9 +170,9 @@ export class SearchEngine<T extends SearchableCard> {
 
 		for (const card of this.cards) {
 			const pass =
-				(exclude === "tiers"   || this.matchesTier(card)) &&
+				(exclude === "tiers" || this.matchesTier(card)) &&
 				(exclude === "sources" || this.matchesSource(card)) &&
-				(exclude === "types"   || this.matchesType(card)) &&
+				(exclude === "types" || this.matchesType(card)) &&
 				(!query || bestFieldScore(card, query) > 0);
 
 			if (!pass) continue;
