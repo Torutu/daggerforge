@@ -288,11 +288,11 @@
 	grid-template-rows: 0fr;
 	transition:
 		grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-		opacity            0.35s cubic-bezier(0.4, 0, 0.2, 1);
+		opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 	opacity: 0;
 }
 
-.df-hp-stress-section > .df-hp-stress-inner {
+.df-hp-stress-section>.df-hp-stress-inner {
 	overflow: hidden;
 	min-height: 0;
 }
@@ -876,7 +876,7 @@
 .df-env-field-name,
 .df-env-field-tier,
 .df-env-field-type {
-	min-width: 100px;
+	max-width: 100%;
 	padding: 6px 8px;
 }
 
@@ -887,7 +887,6 @@
 	width: 100%;
 	max-width: 100%;
 	padding: 6px 8px;
-	min-height: 40px;
 }
 
 /* Make potential adversaries span full width and stack vertically */
@@ -1330,6 +1329,143 @@
 	font-weight: 700;
 	font-size: 1.3rem;
 	margin-bottom: 0.5em;
+}
+
+/* ── Countdown section ─────────────────────────────────────────────────────── */
+
+.df-env-countdown-section {
+	margin: 4px 0 6px;
+	border: 1px solid #c2af89;
+	border-radius: 6px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.df-env-countdown-header {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 8px;
+	background: #f5f0e9;
+	cursor: pointer;
+	user-select: none;
+}
+
+.df-env-countdown-toggle-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: var(--df-color-bg-outer, #bfa980);
+	cursor: pointer;
+	flex-shrink: 0;
+	transition: transform 0.2s ease;
+}
+
+.df-env-countdown-toggle-btn svg {
+	pointer-events: none;
+}
+
+.df-env-countdown--collapsed .df-env-countdown-toggle-btn {
+	transform: rotate(180deg);
+}
+
+.df-env-countdown-name {
+	font-weight: 700;
+	font-size: 0.85em;
+	flex: 1;
+}
+
+.df-env-countdown-badge {
+	font-size: 0.8em;
+	font-weight: 600;
+	color: #555;
+	background: #e8e0d0;
+	padding: 1px 7px;
+	border-radius: 10px;
+	flex-shrink: 0;
+}
+
+/* Collapsible body — uses CSS grid trick for smooth animation */
+.df-env-countdown-body {
+	display: grid;
+	grid-template-rows: 1fr;
+	transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.df-env-countdown--collapsed .df-env-countdown-body {
+	grid-template-rows: 0fr;
+}
+
+.df-env-countdown-body-inner {
+	overflow: hidden;
+	min-height: 0;
+}
+
+.df-env-countdown-controls {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 8px;
+}
+
+.df-env-countdown-minus,
+.df-env-countdown-plus {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	flex-shrink: 0;
+	border: none;
+	border-radius: 5px;
+	background: #f5f0e9;
+	color: #5a4a35;
+	cursor: pointer;
+	transition: background 0.12s ease;
+}
+
+.df-env-countdown-minus:hover,
+.df-env-countdown-plus:hover {
+	background: #bfa980;
+	color: #fff;
+}
+
+.df-env-countdown-minus:active,
+.df-env-countdown-plus:active {
+	transform: scale(0.92);
+}
+
+.df-env-countdown-minus svg,
+.df-env-countdown-plus svg {
+	pointer-events: none;
+}
+
+.df-env-countdown-ticks {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 3px;
+	flex: 1;
+}
+
+.df-env-countdown-tick {
+	width: 20px;
+	height: 14px;
+	cursor: pointer;
+	border-radius: 3px;
+	border: 1px solid #c2af89;
+	background-color: #f5f0e9;
+	appearance: none;
+	transition: background 0.1s ease, border-color 0.1s ease;
+}
+
+.df-env-countdown-tick:checked {
+	background-color: #8b6914;
+	border-color: #8b6914;
 }
 
 .df-env-feat-tier-type {

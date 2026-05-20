@@ -98,3 +98,95 @@ export function handleWideToggleClick(evt: MouseEvent): void {
 	card.classList.toggle("df-card--wide");
 	saveWideState(card);
 }
+
+// ── Countdown state ───────────────────────────────────────────────────────────
+
+const COUNTDOWN_PREFIX      = "df-env-countdown:";
+const COUNTDOWN_OPEN_PREFIX = "df-env-countdown-open:";
+
+function getEnvCardId(section: HTMLElement): string | null {
+	return section.closest<HTMLElement>(".df-env-card-outer")
+		?.querySelector<HTMLElement>(".df-env-name")?.id ?? null;
+}
+
+function updateCountdownDisplay(section: HTMLElement): void {
+	const ticks = Array.from(section.querySelectorAll<HTMLInputElement>(".df-env-countdown-tick"));
+	const count = ticks.filter(t => t.checked).length;
+	const el = section.querySelector<HTMLElement>(".df-env-countdown-current");
+	if (el) el.textContent = String(count);
+}
+
+export function saveCountdownState(section: HTMLElement): void {
+	const id = getEnvCardId(section);
+	if (!id) return;
+	const ticks = Array.from(section.querySelectorAll<HTMLInputElement>(".df-env-countdown-tick"));
+	const state = ticks.map(t => t.checked ? "1" : "0").join("");
+	store.setItem(COUNTDOWN_PREFIX + id, state);
+}
+
+export function restoreCountdownState(card: HTMLElement): void {
+	const id = getCardId(card);
+	if (!id) return;
+	const section = card.querySelector<HTMLElement>(".df-env-countdown-section");
+	if (!section) return;
+
+	// Restore collapse state (default: expanded — no key means open)
+	const isCollapsed = store.getItem(COUNTDOWN_OPEN_PREFIX + id) === "0";
+	section.classList.toggle("df-env-countdown--collapsed", isCollapsed);
+
+	// Restore tick state
+	const stored = store.getItem(COUNTDOWN_PREFIX + id);
+	if (stored) {
+		const ticks = Array.from(section.querySelectorAll<HTMLInputElement>(".df-env-countdown-tick"));
+		for (let i = 0; i < ticks.length && i < stored.length; i++) {
+			ticks[i].checked = stored[i] === "1";
+		}
+	}
+	updateCountdownDisplay(section);
+}
+
+export function handleCountdownClick(evt: MouseEvent): void {
+	const target = evt.target as HTMLElement;
+
+	// Toggle collapse
+	const toggleBtn = target.closest<HTMLButtonElement>(".df-env-countdown-toggle-btn");
+	if (toggleBtn) {
+		const section = toggleBtn.closest<HTMLElement>(".df-env-countdown-section");
+		if (!section) return;
+		section.classList.toggle("df-env-countdown--collapsed");
+		const id = getEnvCardId(section);
+		if (id) store.setItem(COUNTDOWN_OPEN_PREFIX + id, section.classList.contains("df-env-countdown--collapsed") ? "0" : "1");
+		return;
+	}
+
+	// Plus — check next unchecked tick
+	const plusBtn = target.closest<HTMLButtonElement>(".df-env-countdown-plus");
+	if (plusBtn) {
+		const section = plusBtn.closest<HTMLElement>(".df-env-countdown-section");
+		if (!section) return;
+		const ticks = Array.from(section.querySelectorAll<HTMLInputElement>(".df-env-countdown-tick"));
+		const next = ticks.find(t => !t.checked);
+		if (next) { next.checked = true; updateCountdownDisplay(section); saveCountdownState(section); }
+		return;
+	}
+
+	// Minus — uncheck last checked tick
+	const minusBtn = target.closest<HTMLButtonElement>(".df-env-countdown-minus");
+	if (minusBtn) {
+		const section = minusBtn.closest<HTMLElement>(".df-env-countdown-section");
+		if (!section) return;
+		const ticks = Array.from(section.querySelectorAll<HTMLInputElement>(".df-env-countdown-tick")).reverse();
+		const last = ticks.find(t => t.checked);
+		if (last) { last.checked = false; updateCountdownDisplay(section); saveCountdownState(section); }
+		return;
+	}
+}
+
+export function handleCountdownTickChange(evt: Event): void {
+	const cb = evt.target as HTMLInputElement;
+	if (!cb.classList.contains("df-env-countdown-tick")) return;
+	const section = cb.closest<HTMLElement>(".df-env-countdown-section");
+	if (!section) return;
+	updateCountdownDisplay(section);
+	saveCountdownState(section);
+}

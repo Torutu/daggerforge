@@ -15,6 +15,8 @@ import {
 	handleCollapseClick,
 	handleWideToggleClick,
 	handleTickChange,
+	handleCountdownClick,
+	handleCountdownTickChange,
 	applyKeywordColors,
 	setDiceTooltipDuration,
 	applyTheme,
@@ -44,7 +46,9 @@ export default class DaggerForgePlugin extends Plugin {
 		this.registerDomEvent(document, "click", handleDiceBtnClick);
 		this.registerDomEvent(document, "click", handleCollapseClick);
 		this.registerDomEvent(document, "click", handleWideToggleClick);
+		this.registerDomEvent(document, "click", handleCountdownClick);
 		this.registerDomEvent(document, "change", handleTickChange);
+		this.registerDomEvent(document, "change", handleCountdownTickChange);
 
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", (leaf: WorkspaceLeaf | null) => {

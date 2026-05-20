@@ -1,6 +1,6 @@
 import { rollDice } from "../features/dice/dice";
 import { attachKeywordColors } from "./keywordBadges";
-import { saveCollapseState, restoreCollapseState, restoreTickState, restoreWideState, handleTickChange } from "./collapseState";
+import { saveCollapseState, restoreCollapseState, restoreTickState, restoreWideState, restoreCountdownState, handleTickChange } from "./collapseState";
 export { handleTickChange };
 
 let _tooltipMs = 2500;
@@ -115,6 +115,7 @@ export function attachDiceBadges(section: HTMLElement): void {
 	restoreCollapseState(section);
 	restoreTickState(section);
 	restoreWideState(section);
+	restoreCountdownState(section);
 }
 
 /**
