@@ -96,6 +96,24 @@ export default class DaggerForgePlugin extends Plugin {
 				.forEach((section) => attachDiceBadges(section));
 		}
 
+		// Restore card state the moment a card enters the DOM.
+		// layout-change fires before CM6 finishes rendering live-preview widgets,
+		// so processAllVisibleCards misses cards that appear asynchronously.
+		const cardObserver = new MutationObserver((mutations) => {
+			for (const mutation of mutations) {
+				for (const node of Array.from(mutation.addedNodes)) {
+					if (!(node instanceof HTMLElement)) continue;
+					if (node.classList.contains("df-card-outer") || node.classList.contains("df-env-card-outer")) {
+						attachDiceBadges(node);
+					}
+					node.querySelectorAll<HTMLElement>(".df-card-outer, .df-env-card-outer")
+						.forEach(card => attachDiceBadges(card));
+				}
+			}
+		});
+		cardObserver.observe(document.body, { childList: true, subtree: true });
+		this.register(() => cardObserver.disconnect());
+
 		function processDiceBadgesInElement(element: HTMLElement) {
 			if (
 				element.classList.contains("df-card-outer") ||
