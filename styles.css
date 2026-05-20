@@ -706,16 +706,10 @@
 	width: 100%;
 }
 
-.df-adv-field-tier,
-.df-adv-field-type,
-.df-field-select {
-	background-color: #333333;
-}
 
 .df-adv-field-name,
 .df-adv-field-tier,
 .df-adv-field-type {
-	min-width: 100px;
 	padding: 6px 8px;
 }
 
@@ -725,7 +719,6 @@
 	width: 100%;
 	max-width: 100%;
 	padding: 6px 8px;
-	min-height: 50px;
 }
 
 .df-adv-field-count {
@@ -883,7 +876,7 @@
 .df-env-field-difficulty,
 .df-env-field-adversaries {
 	width: 100%;
-	max-width: 400px;
+	max-width: 100%;
 	padding: 6px 8px;
 	min-height: 40px;
 }
@@ -2769,7 +2762,7 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 }
 
 .is-mobile .df-field-feature-type,
-.is-mobile .df-input-feature-cost{
+.is-mobile .df-input-feature-cost {
 	border-radius: 9px;
 }
 
@@ -2866,19 +2859,19 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	text-align: left;
 }
 
-.is-mobile .df-inline-input.count-input{
+.is-mobile .df-inline-input.count-input {
 	border-radius: 9px;
 }
 
-.is-mobile .df-dr-count-input{
+.is-mobile .df-dr-count-input {
 	border-radius: 9px;
 }
 
 
 /* ── Mobile: battle calculator action button grid ───────────────────────── */
 
-.is-mobile .df-enc-pc-input{
- border-radius: 9px;
+.is-mobile .df-enc-pc-input {
+	border-radius: 9px;
 }
 
 .is-mobile .df-enc-btn-grid {
