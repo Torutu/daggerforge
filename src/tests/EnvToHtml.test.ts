@@ -183,3 +183,132 @@ describe('envToHtml — features', () => {
         expect((envToHtml(baseEnv()).match(/class="df-feature"/g) ?? []).length).toBe(0);
     });
 });
+
+// ── Countdowns — explicit ─────────────────────────────────────────────────────
+
+describe('envToHtml — explicit countdowns', () => {
+    test('renders countdown section when countdowns are present', () => {
+        const env = { ...baseEnv(), countdowns: [{ name: 'Storm', max: 6 }] };
+        const html = envToHtml(env);
+        expect(html).toContain('df-env-countdown');
+        expect(html).toContain('df-env-countdown-collapse-btn');
+    });
+
+    test('no countdown section when countdowns is empty', () => {
+        expect(envToHtml(baseEnv())).not.toContain('df-env-countdown-collapse-btn');
+    });
+
+    test('renders correct data attributes on clock div', () => {
+        const env = { ...baseEnv(), countdowns: [{ name: 'Storm', max: 6 }] };
+        const html = envToHtml(env);
+        expect(html).toContain('data-countdown-name="Storm"');
+        expect(html).toContain('data-max="6"');
+        expect(html).toContain('data-countdown-idx="0"');
+    });
+
+    test('generates correct number of tick inputs', () => {
+        const env = { ...baseEnv(), countdowns: [{ name: 'Flood', max: 4 }] };
+        const html = envToHtml(env);
+        expect((html.match(/class="df-env-countdown-tick"/g) ?? []).length).toBe(4);
+    });
+
+    test('renders minus and plus buttons inside the header', () => {
+        const env = { ...baseEnv(), countdowns: [{ name: 'Flood', max: 4 }] };
+        const html = envToHtml(env);
+        expect(html).toContain('df-env-countdown-minus');
+        expect(html).toContain('df-env-countdown-plus');
+        expect(html).toContain('df-env-countdown-header');
+    });
+
+    test('tickboxes div is separate from the header', () => {
+        const env = { ...baseEnv(), countdowns: [{ name: 'Flood', max: 4 }] };
+        const html = envToHtml(env);
+        expect(html).toContain('df-env-countdown-tickboxes');
+        expect(html).not.toContain('df-env-countdown-controls');
+    });
+
+    test('badge shows 0/max', () => {
+        const env = { ...baseEnv(), countdowns: [{ name: 'Tide', max: 8 }] };
+        const html = envToHtml(env);
+        expect(html).toContain('df-env-countdown-current">0<');
+        expect(html).toContain('/8');
+    });
+
+    test('renders multiple clocks with incrementing idx', () => {
+        const env = {
+            ...baseEnv(),
+            countdowns: [
+                { name: 'Storm', max: 4 },
+                { name: 'Flood', max: 6 },
+            ],
+        };
+        const html = envToHtml(env);
+        expect(html).toContain('data-countdown-idx="0"');
+        expect(html).toContain('data-countdown-idx="1"');
+    });
+});
+
+// ── Countdowns — parsed from features ────────────────────────────────────────
+
+describe('envToHtml — countdown parsing from features', () => {
+    test('feature with "Countdown (12)" auto-generates a clock', () => {
+        const env = {
+            ...baseEnv(),
+            features: [{
+                name: 'Rising Tide',
+                type: 'Passive',
+                cost: undefined,
+                richContent: '<p>Countdown (12) until disaster.</p>',
+                questions: [],
+            }],
+        };
+        const html = envToHtml(env);
+        expect(html).toContain('data-countdown-name="Rising Tide"');
+        expect(html).toContain('data-max="12"');
+    });
+
+    test('extracts number from "countdown (loop 4)"', () => {
+        const env = {
+            ...baseEnv(),
+            features: [{
+                name: 'Patrol',
+                type: 'Passive',
+                cost: undefined,
+                richContent: '<p>countdown (loop 4) before alarm.</p>',
+                questions: [],
+            }],
+        };
+        const html = envToHtml(env);
+        expect(html).toContain('data-max="4"');
+    });
+
+    test('explicit countdowns are not duplicated by feature parsing', () => {
+        const env = {
+            ...baseEnv(),
+            countdowns: [{ name: 'Storm', max: 6 }],
+            features: [{
+                name: 'Storm',
+                type: 'Passive',
+                cost: undefined,
+                richContent: '<p>Countdown (6)</p>',
+                questions: [],
+            }],
+        };
+        const html = envToHtml(env);
+        expect((html.match(/data-countdown-name="Storm"/g) ?? []).length).toBe(1);
+    });
+
+    test('feature without countdown pattern generates no clock', () => {
+        const env = {
+            ...baseEnv(),
+            features: [{
+                name: 'Fog',
+                type: 'Passive',
+                cost: undefined,
+                richContent: '<p>Reduces visibility.</p>',
+                questions: [],
+            }],
+        };
+        expect(envToHtml(env)).not.toContain('df-env-countdown-collapse-btn');
+    });
+});

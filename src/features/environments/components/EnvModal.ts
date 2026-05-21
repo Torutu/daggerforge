@@ -1,7 +1,7 @@
 import { Modal, Editor, Notice } from "obsidian";
 import { addEnvFeature, getEnvFeatureValues, envToHtml, Env_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
-import { EnvFeatureElements, EnvironmentData, FormStateElements } from "../../../types/index";
+import { CountdownClock, EnvFeatureElements, EnvironmentData, FormStateElements } from "../../../types/index";
 import {
 	resolveInsertDestination,
 	type ResolvedDestination,
@@ -19,6 +19,7 @@ import {
 function assembleEnvironmentData(
 	values: Record<string, string>,
 	features: ReturnType<typeof getEnvFeatureValues>,
+	countdowns: CountdownClock[],
 ): EnvironmentData {
 	return {
 		id: values.id || "",
@@ -30,7 +31,8 @@ function assembleEnvironmentData(
 		difficulty: values.difficulty || "",
 		potentialAdversaries: values.potentialAdversaries || "",
 		source: "custom",
-		features: features,
+		features,
+		countdowns: countdowns.length > 0 ? countdowns : undefined,
 	};
 }
 
@@ -63,6 +65,8 @@ export class EnvironmentModal extends Modal {
 	private inputs: FormStateElements = {};
 	private features: EnvFeatureElements[] = [];
 	private featureContainer!: HTMLElement;
+	private countdownRows: { nameEl: HTMLInputElement; maxEl: HTMLInputElement }[] = [];
+	private countdownContainer!: HTMLElement;
 
 	// Edit-mode fields
 	private isEditMode: boolean;
@@ -115,6 +119,7 @@ export class EnvironmentModal extends Modal {
 		this.buildBasicInfoSection(contentEl, saved);
 		this.buildGameplaySection(contentEl, saved);
 		this.buildDifficultySection(contentEl, saved);
+		this.buildCountdownSection(contentEl, saved);
 		this.buildFeaturesSection(contentEl, saved);
 		this.buildActionButtons(contentEl);
 	}
@@ -209,6 +214,56 @@ export class EnvironmentModal extends Modal {
 		});
 	}
 
+	private buildCountdownSection(
+		contentEl: HTMLElement,
+		saved: Record<string, unknown>,
+	) {
+		const section = contentEl.createDiv({ cls: "df-env-form-section" });
+		section.createEl("h3", { text: "Countdown Clocks", cls: "df-section-title" });
+
+		this.countdownRows = [];
+		this.countdownContainer = section.createDiv({ cls: "df-env-countdown-form-list" });
+
+		const savedClocks = (saved.countdowns as { name: string; max: number }[] | undefined) ?? [];
+		if (savedClocks.length > 0) {
+			savedClocks.forEach(c => this.addCountdownRow(c.name, c.max));
+		}
+
+		const addBtn = section.createEl("button", {
+			text: "+ Add countdown clock",
+			cls: "df-env-btn-add-countdown",
+		});
+		addBtn.onclick = () => this.addCountdownRow();
+	}
+
+	private addCountdownRow(name = "", max = 0) {
+		const row = this.countdownContainer.createDiv({ cls: "df-env-countdown-form-row" });
+
+		const nameEl = row.createEl("input", {
+			cls: "df-env-countdown-form-name",
+			attr: { type: "text", placeholder: "Clock name (e.g. Storm Arrival)" },
+		}) as HTMLInputElement;
+		nameEl.value = name;
+
+		const maxEl = row.createEl("input", {
+			cls: "df-env-countdown-form-max",
+			attr: { type: "number", min: "1", max: "20", placeholder: "Max" },
+		}) as HTMLInputElement;
+		if (max > 0) maxEl.value = String(max);
+
+		const removeBtn = row.createEl("button", {
+			text: "✕",
+			cls: "df-env-countdown-form-remove",
+		});
+		removeBtn.onclick = () => {
+			const idx = this.countdownRows.findIndex(r => r.nameEl === nameEl);
+			if (idx !== -1) this.countdownRows.splice(idx, 1);
+			row.remove();
+		};
+
+		this.countdownRows.push({ nameEl, maxEl });
+	}
+
 	private buildFeaturesSection(
 		contentEl: HTMLElement,
 		saved: Record<string, unknown>,
@@ -269,10 +324,17 @@ export class EnvironmentModal extends Modal {
 	//   2. Canvas     -> persist + insert canvas card.
 	//   3. Markdown   -> persist + insert into editor.
 
+	private readCountdowns(): CountdownClock[] {
+		return this.countdownRows
+			.map(r => ({ name: r.nameEl.value.trim(), max: parseInt(r.maxEl.value, 10) || 0 }))
+			.filter(c => c.name && c.max > 0);
+	}
+
 	private async handleSubmit() {
 		const values = this.readFormValues();
 		const features = getEnvFeatureValues(this.features);
-		const newData = assembleEnvironmentData(values, features);
+		const countdowns = this.readCountdowns();
+		const newData = assembleEnvironmentData(values, features, countdowns);
 		const newHTML = envToHtml(newData, false);
 
 		if (this.onEditUpdate) {
@@ -324,6 +386,8 @@ export class EnvironmentModal extends Modal {
 
 		this.features = [];
 		this.featureContainer.empty();
+		this.countdownRows = [];
+		this.countdownContainer.empty();
 		this.plugin.savedInputStateEnv = {};
 	}
 
@@ -354,5 +418,6 @@ export class EnvironmentModal extends Modal {
 		}
 
 		this.plugin.savedInputStateEnv.features = getEnvFeatureValues(this.features);
+		this.plugin.savedInputStateEnv.countdowns = this.readCountdowns();
 	}
 }

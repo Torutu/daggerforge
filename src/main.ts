@@ -1,6 +1,6 @@
 // https://lucide.dev/ for icons
 
-import { Plugin, WorkspaceLeaf, MarkdownView } from "obsidian";
+import { Plugin, WorkspaceLeaf, MarkdownView, Notice } from "obsidian";
 import { DaggerForgeSettingsTab } from "./features/settings/SettingsTab";
 import { ContentBrowserView, Content_Browser_View_Type } from "./features/browser/ContentBrowserView";
 import { DataManager } from "./data/index";
@@ -15,6 +15,10 @@ import {
 	handleCollapseClick,
 	handleWideToggleClick,
 	handleTickChange,
+	handleCountdownClick,
+	handleCountdownTickChange,
+	handleCountdownDiceRoll,
+	handleCountdownReset,
 	applyKeywordColors,
 	setDiceTooltipDuration,
 	applyTheme,
@@ -44,7 +48,15 @@ export default class DaggerForgePlugin extends Plugin {
 		this.registerDomEvent(document, "click", handleDiceBtnClick);
 		this.registerDomEvent(document, "click", handleCollapseClick);
 		this.registerDomEvent(document, "click", handleWideToggleClick);
+		this.registerDomEvent(document, "click", handleCountdownClick);
+		this.registerDomEvent(document, "click", (evt: MouseEvent) =>
+			handleCountdownDiceRoll(evt, (msg) => new Notice(msg))
+		);
+		this.registerDomEvent(document, "click", (evt: MouseEvent) =>
+			handleCountdownReset(evt, (msg) => new Notice(msg))
+		);
 		this.registerDomEvent(document, "change", handleTickChange);
+		this.registerDomEvent(document, "change", handleCountdownTickChange);
 
 		this.registerEvent(
 			this.app.workspace.on("active-leaf-change", (leaf: WorkspaceLeaf | null) => {

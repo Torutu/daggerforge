@@ -221,3 +221,81 @@ describe('buildCardHTML — data attributes', () => {
         expect(buildCardHTML(vals, NO_FEATURES)).toContain('data-count="3"');
     });
 });
+
+// ── Countdowns parsed from features ──────────────────────────────────────────
+
+describe('buildCardHTML — countdowns from features', () => {
+    test('feature with "Countdown (4)" generates a clock', () => {
+        const features: Feature[] = [
+            { name: 'On My Signal', type: 'Passive', cost: '', richContent: '<p>Countdown (4) before reinforcements.</p>' },
+        ];
+        const html = buildCardHTML(baseValues(), features);
+        expect(html).toContain('data-countdown-name="On My Signal"');
+        expect(html).toContain('data-max="4"');
+    });
+
+    test('extracts number from "countdown (loop 6)"', () => {
+        const features: Feature[] = [
+            { name: 'Patrol', type: 'Passive', cost: '', richContent: '<p>countdown (loop 6) before spotted.</p>' },
+        ];
+        const html = buildCardHTML(baseValues(), features);
+        expect(html).toContain('data-max="6"');
+    });
+
+    test('generates correct number of tick inputs per instance', () => {
+        const features: Feature[] = [
+            { name: 'Signal', type: 'Passive', cost: '', richContent: '<p>Countdown (3)</p>' },
+        ];
+        const html = buildCardHTML(baseValues(), features);
+        expect((html.match(/class="df-env-countdown-tick"/g) ?? []).length).toBe(3);
+    });
+
+    test('count=3 generates one clock per adversary instance', () => {
+        const features: Feature[] = [
+            { name: 'Signal', type: 'Passive', cost: '', richContent: '<p>Countdown (3)</p>' },
+        ];
+        const vals = { ...baseValues(), count: '3' };
+        const html = buildCardHTML(vals, features);
+        expect((html.match(/class="df-env-countdown"/g) ?? []).length).toBe(3);
+    });
+
+    test('clock indices use instanceIndex-clockIndex format', () => {
+        const features: Feature[] = [
+            { name: 'Signal', type: 'Passive', cost: '', richContent: '<p>Countdown (3)</p>' },
+        ];
+        const vals = { ...baseValues(), count: '2' };
+        const html = buildCardHTML(vals, features);
+        expect(html).toContain('data-countdown-idx="0-0"');
+        expect(html).toContain('data-countdown-idx="1-0"');
+    });
+
+    test('countdown appears before HP tickboxes in each instance', () => {
+        const features: Feature[] = [
+            { name: 'Signal', type: 'Passive', cost: '', richContent: '<p>Countdown (3)</p>' },
+        ];
+        const html = buildCardHTML(baseValues(), features);
+        const clockPos = html.indexOf('df-env-countdown');
+        const hpPos    = html.indexOf('df-hp-tickboxes');
+        expect(clockPos).toBeLessThan(hpPos);
+    });
+
+    test('no countdown elements when features have no countdown pattern', () => {
+        const features: Feature[] = [
+            { name: 'Pack Tactics', type: 'Passive', cost: '', richContent: '<p>Bonus to flanking.</p>' },
+        ];
+        const html = buildCardHTML(baseValues(), features);
+        expect(html).not.toContain('df-env-countdown');
+    });
+
+    test('multiple countdown features generate multiple clocks per instance', () => {
+        const features: Feature[] = [
+            { name: 'Signal', type: 'Passive', cost: '', richContent: '<p>Countdown (3)</p>' },
+            { name: 'Retreat', type: 'Passive', cost: '', richContent: '<p>Countdown (5)</p>' },
+        ];
+        const html = buildCardHTML(baseValues(), features);
+        // count=1, 2 clocks per instance → 2 total
+        expect((html.match(/class="df-env-countdown"/g) ?? []).length).toBe(2);
+        expect(html).toContain('data-countdown-idx="0-0"');
+        expect(html).toContain('data-countdown-idx="0-1"');
+    });
+});

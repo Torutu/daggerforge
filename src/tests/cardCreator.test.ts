@@ -149,10 +149,12 @@ function wireEnvModal(modal: EnvironmentModal, opts: {
     features?: any[];
     destination?: any;
 } = {}) {
-    (modal as any).inputs            = opts.inputs      ?? envInputs();
-    (modal as any).features          = opts.features    ?? [];
-    (modal as any).featureContainer  = document.createElement('div');
-    (modal as any).insertDestination = opts.destination ?? { kind: 'none', canvas: null, leaf: null };
+    (modal as any).inputs             = opts.inputs      ?? envInputs();
+    (modal as any).features           = opts.features    ?? [];
+    (modal as any).featureContainer   = document.createElement('div');
+    (modal as any).countdownRows      = [];
+    (modal as any).countdownContainer = document.createElement('div');
+    (modal as any).insertDestination  = opts.destination ?? { kind: 'none', canvas: null, leaf: null };
     modal.close = jest.fn();
 }
 
