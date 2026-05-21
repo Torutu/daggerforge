@@ -1,3 +1,21 @@
+# DaggerForge 2.3.0
+
+## New
+
+- **Loop countdown reset button** — countdown clocks whose name or content contains "loop" now show a reset (↩) button. Tapping it resets the clock to 0. For dice-based loop clocks, it also restores the roll button so you can re-roll the max.
+
+## Fixed
+
+- Mobile: dice roller and battle calculator close (×) button now registers on first tap. Previously `makeDraggable` was swallowing the touch event because Obsidian's close button is a `div`, not a `button`.
+- Mobile: battle calculator "Adjust" and "Spend" button grids now stack to a single column — no more horizontal scroll.
+- Mobile: inline dice buttons no longer spawn inside countdown badges or the roll button.
+- Inline dice buttons no longer appear inside `.df-env-countdown-badge` or `.df-env-countdown-dice-roll` elements.
+- Card insertion (browser + creator) now works on first tap after plugin load. Previously mobile required one failed attempt to seed the target leaf.
+- Card insertion now accepts Live Preview mode (getMode = "live") as a valid edit target, not just Source mode.
+- Submit button in creator/editor modals is now always blue, flashes white on press.
+
+---
+
 # DaggerForge 2.2.4
 
 ## Fixed

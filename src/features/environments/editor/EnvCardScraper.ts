@@ -1,5 +1,5 @@
 import { Notice } from "obsidian";
-import type { EnvironmentData, EnvSavedFeatureState } from "../../../types/index";
+import type { CountdownClock, EnvironmentData, EnvSavedFeatureState } from "../../../types/index";
 
 function extractTierAndType(innerCard: Element | null): { tier: string; type: string } {
 	const text = innerCard?.querySelector(".df-env-feat-tier-type")?.textContent?.trim() ?? "";
@@ -83,6 +83,13 @@ export function extractEnvironmentData(cardElement: HTMLElement, cardName: strin
 		inner?.querySelector(".df-features-section")?.querySelectorAll(".df-feature") ?? [],
 	).map(extractSingleFeature);
 
+	const countdowns: CountdownClock[] = Array.from(
+		inner?.querySelectorAll(".df-env-countdown") ?? [],
+	).map(el => ({
+		name: el.getAttribute("data-countdown-name") ?? "",
+		max: parseInt(el.getAttribute("data-max") ?? "0", 10),
+	})).filter(c => c.name && c.max > 0);
+
 	return {
 		id: "",
 		name: cardName,
@@ -94,5 +101,6 @@ export function extractEnvironmentData(cardElement: HTMLElement, cardName: strin
 		potentialAdversaries,
 		source: "custom",
 		features,
+		countdowns: countdowns.length > 0 ? countdowns : undefined,
 	};
 }

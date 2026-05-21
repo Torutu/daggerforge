@@ -693,7 +693,7 @@
       {
         "name": "Choking Ash",
         "type": "Reaction",
-        "text": "Countdown (Loop ). When the PCs enter the Burning Heart of the Woods, activate the countdown. When it triggers, all characters must make a Strength or Instinct Reaction Roll. Targets who fail take 4d6+5 direct physical damage. Targes who succeed take half damage. Protective masks or clothes give advantage on the reaction roll.",
+        "text": "Countdown (Loop 6). When the PCs enter the Burning Heart of the Woods, activate the countdown. When it triggers, all characters must make a Strength or Instinct Reaction Roll. Targets who fail take 4d6+5 direct physical damage. Targes who succeed take half damage. Protective masks or clothes give advantage on the reaction roll.",
         "bullets": null,
         "questions": [
           "What hallucinations does the ash induce?",

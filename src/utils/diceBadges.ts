@@ -1,7 +1,149 @@
 import { rollDice } from "../features/dice/dice";
 import { attachKeywordColors } from "./keywordBadges";
-import { saveCollapseState, restoreCollapseState, restoreTickState, restoreWideState, restoreCountdownState, handleTickChange } from "./collapseState";
+import { saveCollapseState, restoreCollapseState, restoreTickState, restoreWideState, restoreCountdownState, handleTickChange, getCardId, updateCountdownDisplay } from "./collapseState";
 export { handleTickChange };
+
+const COUNTDOWN_PREFIX = "df-env-countdown:";
+const MINUS_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg>`;
+const PLUS_SVG  = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>`;
+const RESET_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>`;
+
+function applyRolledClock(clock: HTMLElement, name: string, total: number, originalDice?: string): void {
+	clock.setAttribute("data-max", String(total));
+	clock.removeAttribute("data-dice-max");
+
+	if (originalDice) clock.setAttribute("data-original-dice", originalDice);
+
+	const isLoop = clock.dataset.loop === "true";
+	const resetBtn = isLoop
+		? `<button class="df-env-countdown-reset-btn" aria-label="Reset">${RESET_SVG}</button>`
+		: "";
+
+	const header = clock.querySelector(".df-env-countdown-header");
+	if (header) {
+		header.innerHTML =
+			`<button class="df-env-countdown-minus" aria-label="Decrease">${MINUS_SVG}</button>` +
+			`<span class="df-env-countdown-name-label">${name}</span>` +
+			`<span class="df-env-countdown-badge"><span class="df-env-countdown-current">0</span>/${total}</span>` +
+			`<button class="df-env-countdown-plus" aria-label="Increase">${PLUS_SVG}</button>` +
+			resetBtn;
+	}
+
+	clock.querySelector(".df-env-countdown-dice-roll")?.remove();
+
+	if (!clock.querySelector(".df-env-countdown-tickboxes")) {
+		const tickboxes = document.createElement("div");
+		tickboxes.className = "df-env-countdown-tickboxes";
+		for (let i = 0; i < total; i++) {
+			const tick = document.createElement("input");
+			tick.type = "checkbox";
+			tick.className = "df-env-countdown-tick";
+			tickboxes.appendChild(tick);
+		}
+		clock.appendChild(tickboxes);
+	}
+}
+
+export function handleCountdownDiceRoll(
+	evt: MouseEvent,
+	notify: (msg: string) => void,
+): void {
+	const btn = (evt.target as HTMLElement).closest<HTMLButtonElement>(".df-env-countdown-dice-roll");
+	if (!btn) return;
+	const clock = btn.closest<HTMLElement>(".df-env-countdown");
+	const card  = btn.closest<HTMLElement>(".df-env-card-outer, .df-card-outer");
+	if (!clock || !card) return;
+
+	const expr = btn.dataset.diceExpr ?? "1d6";
+	const { total, parts } = rollDice(expr);
+	const name = clock.getAttribute("data-countdown-name") ?? "Countdown";
+	const rolls = parts.filter(p => !p.isModifier).map(p => Math.abs(p.value));
+
+	notify(`${name}: rolled ${expr} → [${rolls.join(", ")}] = ${total}`);
+
+	applyRolledClock(clock, name, total, expr);
+
+	// Persist so we can restore after page reload
+	const id = getCardId(card) ?? "";
+	if (id) {
+		const idx = clock.getAttribute("data-countdown-idx") ?? "0";
+		localStorage.setItem(`${COUNTDOWN_PREFIX}${id}:${idx}`, "0".repeat(total));
+	}
+}
+
+export function handleCountdownReset(
+	evt: MouseEvent,
+	notify: (msg: string) => void,
+): void {
+	const btn = (evt.target as HTMLElement).closest<HTMLButtonElement>(".df-env-countdown-reset-btn");
+	if (!btn) return;
+	const clock = btn.closest<HTMLElement>(".df-env-countdown");
+	const card  = btn.closest<HTMLElement>(".df-env-card-outer, .df-card-outer");
+	if (!clock || !card) return;
+
+	const name = clock.getAttribute("data-countdown-name") ?? "Countdown";
+	const originalDice = clock.getAttribute("data-original-dice");
+	const id  = getCardId(card) ?? "";
+	const idx = clock.getAttribute("data-countdown-idx") ?? "0";
+
+	if (originalDice) {
+		// Loop + dice: restore pre-roll state
+		clock.removeAttribute("data-max");
+		clock.removeAttribute("data-original-dice");
+		clock.setAttribute("data-dice-max", originalDice);
+
+		const header = clock.querySelector(".df-env-countdown-header");
+		if (header) {
+			header.innerHTML =
+				`<span class="df-env-countdown-name-label">${name}</span>` +
+				`<span class="df-env-countdown-badge">${originalDice}</span>`;
+		}
+
+		clock.querySelector(".df-env-countdown-tickboxes")?.remove();
+
+		const rollBtn = document.createElement("button");
+		rollBtn.className = "df-env-countdown-dice-roll";
+		rollBtn.dataset.diceExpr = originalDice;
+		rollBtn.setAttribute("aria-label", `Roll ${originalDice}`);
+		rollBtn.textContent = `Roll ${originalDice}`;
+		clock.appendChild(rollBtn);
+
+		if (id) localStorage.removeItem(`${COUNTDOWN_PREFIX}${id}:${idx}`);
+	} else {
+		// Loop, no dice: just reset ticks to 0
+		clock.querySelectorAll<HTMLInputElement>(".df-env-countdown-tick")
+			.forEach(t => { t.checked = false; });
+		updateCountdownDisplay(clock);
+
+		const max = Number(clock.getAttribute("data-max") ?? "0");
+		if (id) localStorage.setItem(`${COUNTDOWN_PREFIX}${id}:${idx}`, "0".repeat(max));
+	}
+
+	notify(`${name}: reset`);
+}
+
+export function restoreRolledDiceCountdowns(section: HTMLElement): void {
+	const id = getCardId(section);
+	if (!id) return;
+
+	section.querySelectorAll<HTMLElement>(".df-env-countdown[data-dice-max]").forEach(clock => {
+		const idx   = clock.getAttribute("data-countdown-idx") ?? "0";
+		const stored = localStorage.getItem(`${COUNTDOWN_PREFIX}${id}:${idx}`);
+		if (!stored) return;
+
+		const name  = clock.getAttribute("data-countdown-name") ?? "Countdown";
+		const total = stored.length;
+		const originalDice = clock.getAttribute("data-dice-max") ?? undefined;
+
+		applyRolledClock(clock, name, total, originalDice);
+
+		const ticks = Array.from(clock.querySelectorAll<HTMLInputElement>(".df-env-countdown-tick"));
+		for (let i = 0; i < ticks.length && i < stored.length; i++) {
+			ticks[i].checked = stored[i] === "1";
+		}
+		updateCountdownDisplay(clock);
+	});
+}
 
 let _tooltipMs = 2500;
 export function setDiceTooltipDuration(ms: number): void { _tooltipMs = ms; }
@@ -116,6 +258,7 @@ export function attachDiceBadges(section: HTMLElement): void {
 	restoreTickState(section);
 	restoreWideState(section);
 	restoreCountdownState(section);
+	restoreRolledDiceCountdowns(section);
 }
 
 /**
@@ -172,8 +315,9 @@ function collectDiceTextNodes(root: HTMLElement): Text[] {
 
 	const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
 		acceptNode(node) {
-			// Skip nodes already inside one of our buttons
-			if ((node.parentElement as HTMLElement | null)?.closest(".df-inline-dice-btn")) {
+			const parent = node.parentElement as HTMLElement | null;
+			// Skip nodes already inside one of our buttons or countdown sections
+			if (parent?.closest(".df-inline-dice-btn, .df-env-countdown-badge, .df-env-countdown-dice-roll")) {
 				return NodeFilter.FILTER_REJECT;
 			}
 			const spans = findDiceSpans(node.nodeValue ?? "");

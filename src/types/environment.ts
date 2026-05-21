@@ -14,6 +14,13 @@ export type EnvSavedFeatureState = {
 	questions: string[];
 };
 
+export type CountdownClock = {
+	name: string;
+	max: number;
+	dice?: string;
+	loop?: boolean;
+};
+
 export type EnvironmentData = {
 	id: string;
 	name: string;
@@ -25,6 +32,7 @@ export type EnvironmentData = {
 	potentialAdversaries: string;
 	source?: string;
 	features: EnvironmentFeature[];
+	countdowns?: CountdownClock[];
 };
 
 type EnvironmentFeature = {
