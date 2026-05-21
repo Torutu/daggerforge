@@ -1,3 +1,5 @@
+import type { CountdownClock } from "./environment";
+
 export type AdvData = {
 	id: string;
 	name: string;
@@ -18,6 +20,7 @@ export type AdvData = {
 	count?: string;
 	source?: string;
 	features: Feature[];
+	countdowns?: CountdownClock[];
 };
 
 export type FeatureElements = {

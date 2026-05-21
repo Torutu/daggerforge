@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 # Error Log
-Before debugging any issue, check [`error_log.md`](error_log.md) for known problems and their fixes.
+Before debugging any issue, check [`error_log.md`](docs/error_log.md) for known problems and their fixes.
 
 ---
 

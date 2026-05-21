@@ -1,7 +1,7 @@
 $vault = $env:OBSIDIAN_VAULT
 
 if (-not $vault) {
-    $envFile = Join-Path $PSScriptRoot ".env.local"
+    $envFile = Join-Path $PSScriptRoot "../.env.local"
     if (Test-Path $envFile) {
         Get-Content $envFile | ForEach-Object {
             if ($_ -match "^OBSIDIAN_VAULT=(.+)$") { $vault = $matches[1].Trim() }

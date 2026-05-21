@@ -1,4 +1,5 @@
 import { Feature } from "../../types/index";
+import type { CountdownClock } from "../../types/environment";
 import { toCustomHtml } from "../../utils/richContentTransform";
 
 const MINUS = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg>`;
@@ -9,7 +10,7 @@ function parseClocksFromFeatures(features: Feature[]): { name: string; max: numb
 	const result: { name: string; max: number; dice?: string; loop?: boolean }[] = [];
 	for (const f of features) {
 		const text = (f.richContent ?? "").replace(/<[^>]+>/g, " ");
-		const parens = /countdown\s*\(([^)]*)\)/i.exec(text);
+		const parens = /(?:countdown|clock)\s*\(([^)]*)\)/i.exec(text);
 		if (!parens) continue;
 		const inner = parens[1].trim();
 		const isLoop = /\bloop\b/i.test(inner);
@@ -28,6 +29,7 @@ export const buildCardHTML = (
 	values: Record<string, string>,
 	features: Feature[],
 	wide = false,
+	explicitCountdowns?: CountdownClock[],
 ): string => {
 	const {
 		name,
@@ -55,7 +57,10 @@ export const buildCardHTML = (
 	countNum = Number.isInteger(countNum) && countNum >= 1 ? countNum : 1;
 	const hiddenID = crypto.randomUUID();
 
-	const clocks = parseClocksFromFeatures(features);
+	const explicit = (explicitCountdowns ?? []).filter(c => c.name && (c.max > 0 || c.dice));
+	const explicitNames = new Set(explicit.map(c => c.name.toLowerCase()));
+	const parsed = parseClocksFromFeatures(features).filter(c => !explicitNames.has(c.name.toLowerCase()));
+	const clocks = [...explicit, ...parsed];
 
 	const hpStressRepeat = Array.from({ length: countNum }, (_, index) => {
 		const hpTickboxes = Array.from(

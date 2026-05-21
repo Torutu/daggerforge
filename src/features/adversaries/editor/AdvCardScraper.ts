@@ -1,4 +1,5 @@
 import { AdvData } from "../../../types/index";
+import type { CountdownClock } from "../../../types/environment";
 
 // Stats Parsing
 // .df-stats collapses into a flat pipe-delimited string:
@@ -178,9 +179,21 @@ export function extractCardData(cardElement: HTMLElement): AdvData {
 
 	const features = Array.from(cardElement.querySelectorAll(".df-feature")).map(parseFeature);
 
+	const countdowns: CountdownClock[] = Array.from(
+		cardElement.querySelectorAll<HTMLElement>(".df-env-countdown")
+	).map(el => {
+		const name = el.getAttribute("data-countdown-name") ?? "";
+		const diceMax = el.getAttribute("data-dice-max") ?? el.getAttribute("data-original-dice");
+		const max = parseInt(el.getAttribute("data-max") ?? "0", 10);
+		const loop = el.dataset.loop === "true" || undefined;
+		if (diceMax) return { name, max: 0, dice: diceMax, loop };
+		return { name, max, loop };
+	}).filter(c => c.name);
+
 	return {
 		id: cardElement.getAttribute("data-id") ?? "",
-		name: cardElement.querySelector("h2")?.textContent?.trim() ?? "",
+		name: cardElement.querySelector(".df-card-name")?.textContent?.trim()
+			?? cardElement.querySelector("h2")?.textContent?.trim() ?? "",
 		tier: parseTier(subtitleText),
 		type: parseType(subtitleText, typeAttr),
 		desc: cardElement.querySelector(".df-desc")?.textContent?.trim() ?? "",
@@ -200,5 +213,6 @@ export function extractCardData(cardElement: HTMLElement): AdvData {
 			?.trim() ?? "",
 		count: count.toString(),
 		features,
+		countdowns: countdowns.length > 0 ? countdowns : undefined,
 	};
 }

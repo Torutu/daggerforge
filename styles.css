@@ -1514,11 +1514,12 @@
 }
 
 .df-env-countdown-form-name {
-	flex: 1;
+	flex: 0 0 40%;
+	min-width: max-content;
 }
 
 .df-env-countdown-form-max {
-	width: 60px;
+	flex: 1;
 }
 
 /* Dice-based countdown roll button */
@@ -1586,6 +1587,21 @@
 
 .df-env-countdown-form-remove:hover {
 	color: #ec3f3f;
+}
+
+.df-env-countdown-form-loop-label {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.df-env-countdown-form-loop {
+	cursor: pointer;
+	accent-color: var(--interactive-accent);
 }
 
 .df-env-btn-add-countdown {

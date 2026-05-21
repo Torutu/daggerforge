@@ -2,6 +2,7 @@ import { Notice, Editor, Modal } from "obsidian";
 import { addAdvFeature, getAdvFeatureValues, buildCardHTML, Adv_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
 import { AdvData, FeatureElements, FormStateElements } from "../../../types/index";
+import type { CountdownClock } from "../../../types/environment";
 import {
 	createField,
 	createShortTripleFields,
@@ -21,6 +22,7 @@ import {
 function assembleAdvData(
 	values: Record<string, string>,
 	features: ReturnType<typeof getAdvFeatureValues>,
+	countdowns: CountdownClock[] = [],
 ): AdvData {
 	return {
 		id: values.id || "",
@@ -46,6 +48,7 @@ function assembleAdvData(
 			cost: f.cost || "",
 			richContent: f.richContent || "",
 		})),
+		countdowns: countdowns.length > 0 ? countdowns : undefined,
 	};
 }
 
@@ -71,6 +74,8 @@ export class AdversaryModal extends Modal {
 	private inputs: FormStateElements = {};
 	private features: FeatureElements[] = [];
 	private featureContainer!: HTMLElement;
+	private countdownRows: { nameEl: HTMLInputElement; maxEl: HTMLInputElement; loopEl: HTMLInputElement }[] = [];
+	private countdownContainer!: HTMLElement;
 
 	// Edit-mode fields
 	private isEditMode: boolean;
@@ -120,6 +125,7 @@ export class AdversaryModal extends Modal {
 		this.buildBasicInfoSection(contentEl, saved);
 		this.buildStatsSection(contentEl, saved);
 		this.buildWeaponSection(contentEl, saved);
+		this.buildCountdownSection(contentEl, saved);
 		this.buildFeaturesSection(contentEl, saved);
 		this.buildActionButtons(contentEl);
 	}
@@ -299,6 +305,67 @@ export class AdversaryModal extends Modal {
 		btn.onclick = () => this.handleSubmit();
 	}
 
+	private buildCountdownSection(contentEl: HTMLElement, saved: Record<string, unknown>) {
+		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
+		section.createEl("h3", { text: "Countdown Clocks", cls: "df-section-title" });
+
+		this.countdownRows = [];
+		this.countdownContainer = section.createDiv({ cls: "df-env-countdown-form-list" });
+
+		const savedClocks = (saved.countdowns as CountdownClock[] | undefined) ?? [];
+		savedClocks.forEach(c => this.addCountdownRow(c.name, c.dice ?? (c.max > 0 ? String(c.max) : ""), c.loop));
+
+		const addBtn = section.createEl("button", {
+			text: "+ Add countdown clock",
+			cls: "df-env-btn-add-countdown",
+		});
+		addBtn.onclick = () => this.addCountdownRow();
+	}
+
+	private addCountdownRow(name = "", maxOrDice = "", loop = false) {
+		const row = this.countdownContainer.createDiv({ cls: "df-env-countdown-form-row" });
+
+		const nameEl = row.createEl("input", {
+			cls: "df-env-countdown-form-name",
+			attr: { type: "text", placeholder: "Clock name" },
+		}) as HTMLInputElement;
+		nameEl.value = name;
+
+		const maxEl = row.createEl("input", {
+			cls: "df-env-countdown-form-max",
+			attr: { type: "text", placeholder: "Max or dice (e.g. 4 or 1d4)" },
+		}) as HTMLInputElement;
+		maxEl.value = maxOrDice;
+
+		const loopLabel = row.createEl("label", { cls: "df-env-countdown-form-loop-label" });
+		const loopEl = loopLabel.createEl("input", {
+			attr: { type: "checkbox" },
+			cls: "df-env-countdown-form-loop",
+		}) as HTMLInputElement;
+		loopEl.checked = loop;
+		loopLabel.appendText(" Loop");
+
+		const removeBtn = row.createEl("button", { text: "✕", cls: "df-env-countdown-form-remove" });
+		removeBtn.onclick = () => {
+			const idx = this.countdownRows.findIndex(r => r.nameEl === nameEl);
+			if (idx !== -1) this.countdownRows.splice(idx, 1);
+			row.remove();
+		};
+
+		this.countdownRows.push({ nameEl, maxEl, loopEl });
+	}
+
+	private readCountdowns(): CountdownClock[] {
+		return this.countdownRows.map(r => {
+			const name = r.nameEl.value.trim();
+			const val  = r.maxEl.value.trim();
+			const loop = r.loopEl.checked || undefined;
+			if (/\d*d\d+/i.test(val)) return { name, max: 0, dice: val, loop };
+			const max = parseInt(val, 10) || 0;
+			return { name, max, loop };
+		}).filter(c => c.name && (c.max > 0 || c.dice));
+	}
+
 	// Submit Logic
 	// Split into three paths so the main handler stays short:
 	//   1. Edit mode  -> delegate to onEditUpdate, then close.
@@ -315,8 +382,9 @@ export class AdversaryModal extends Modal {
 		}
 
 		const features = getAdvFeatureValues(this.features);
-		const newHTML = buildCardHTML(values, features, false);
-		const newData = assembleAdvData(values, features);
+		const countdowns = this.readCountdowns();
+		const newHTML = buildCardHTML(values, features, false, countdowns);
+		const newData = assembleAdvData(values, features, countdowns);
 
 		if (this.onEditUpdate) {
 			await this.onEditUpdate(newHTML, newData);
@@ -367,6 +435,8 @@ export class AdversaryModal extends Modal {
 
 		this.features = [];
 		this.featureContainer.empty();
+		this.countdownRows = [];
+		this.countdownContainer.empty();
 		this.plugin.savedInputStateAdv = {};
 	}
 
@@ -397,5 +467,6 @@ export class AdversaryModal extends Modal {
 		}
 
 		this.plugin.savedInputStateAdv.features = getAdvFeatureValues(this.features);
+		this.plugin.savedInputStateAdv.countdowns = this.readCountdowns();
 	}
 }

@@ -42,10 +42,10 @@ clean:
 	@echo "Cleaned."
 
 deploy:
-	@bash deploy.sh
+	@bash scripts/deploy.sh
 
 count:
-	@powershell -ExecutionPolicy Bypass -File ./count-lines.ps1
+	@powershell -ExecutionPolicy Bypass -File ./scripts/count-lines.ps1
 
 branch:
 	@git branch --format="%(refname:short)"
