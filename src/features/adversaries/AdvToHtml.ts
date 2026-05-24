@@ -95,15 +95,13 @@ export const buildCardHTML = (
 <span class="df-env-countdown-name-label">${cd.name}</span>
 <span class="df-env-countdown-badge"><span class="df-env-countdown-current">0</span>/${cd.max}</span>
 <button class="df-env-countdown-plus" aria-label="Increase">${PLUS}</button>
-${resetBtn}
-</div>
+${resetBtn}</div>
 <div class="df-env-countdown-tickboxes">${ticks}</div>
 </div>`;
 		}).join("");
 
 		return `
-            ${countdownsHtml}
-            <div class="df-hp-tickboxes">
+            ${countdownsHtml}<div class="df-hp-tickboxes">
                 <span class="df-hp-stress">HP</span>${hpTickboxes}
                 <span class="df-adversary-count">${index + 1}</span>
             </div>
