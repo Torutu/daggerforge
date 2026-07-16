@@ -15,3 +15,15 @@ export function generateEnvUniqueId(): string {
     const random = Math.random().toString(36).substring(2, 10);
     return `CUE_${timestamp}_${random}`;
 }
+
+export function generateCharacterUniqueId(): string {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 10);
+    return `CHR_${timestamp}_${random}`;
+}
+
+export function generateItemUniqueId(): string {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 10);
+    return `CUI_${timestamp}_${random}`;
+}

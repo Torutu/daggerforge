@@ -19,6 +19,7 @@ import {
 } from "../features/index";
 import { Content_Browser_View_Type, ContentBrowserView } from "../features/browser/ContentBrowserView";
 import { DeleteConfirmModal } from "../features/data-management/index";
+import { editEmbeddedCard } from "../features/embeds/editEmbeddedCard";
 
 /**
  * Opens the adversary or environment creator modal.
@@ -87,6 +88,14 @@ export function listenForEditClicks(evt: MouseEvent, app: App, plugin: DaggerFor
 
 	if (!target.closest(".df-adv-edit-button") &&
 		!target.closest(".df-env-edit-button")) {
+		return;
+	}
+
+	// ID-based embeds edit their stored record directly — no DOM scraping,
+	// no HTML splicing. Legacy inline HTML cards fall through to the old path.
+	const embedSection = target.closest<HTMLElement>("[data-df-embed-kind]");
+	if (embedSection) {
+		editEmbeddedCard(plugin, embedSection);
 		return;
 	}
 

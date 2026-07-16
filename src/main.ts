@@ -3,6 +3,11 @@
 import { Plugin, WorkspaceLeaf, MarkdownView, Notice } from "obsidian";
 import { DaggerForgeSettingsTab } from "./features/settings/SettingsTab";
 import { ContentBrowserView, Content_Browser_View_Type } from "./features/browser/ContentBrowserView";
+import { CharacterSheetView, Character_Sheet_View_Type, registerCharacterSheetEmbed } from "./features/characters/index";
+import { registerAdversaryEmbed } from "./features/adversaries/AdversaryEmbed";
+import { registerEnvironmentEmbed } from "./features/environments/EnvironmentEmbed";
+import { registerItemEmbed } from "./features/items/ItemEmbed";
+import { refreshBrowsers } from "./utils/pluginOperations";
 import { DataManager } from "./data/index";
 import { PluginSettings } from "./types/index";
 import {
@@ -72,6 +77,16 @@ export default class DaggerForgePlugin extends Plugin {
 		setupRibbonIcon(this);
 		setupCommands(this);
 		registerSideBarView(this, Content_Browser_View_Type, ContentBrowserView);
+		registerSideBarView(this, Character_Sheet_View_Type, CharacterSheetView);
+		registerCharacterSheetEmbed(this);
+		registerAdversaryEmbed(this);
+		registerEnvironmentEmbed(this);
+		registerItemEmbed(this);
+
+		// Keep the content browser current when stored cards/characters change
+		for (const event of ["adversary-changed", "adversary-deleted", "environment-changed", "environment-deleted", "character-changed", "character-deleted", "characters-reloaded", "item-changed", "item-deleted", "data-reloaded"]) {
+			this.registerEvent(this.dataManager.events.on(event, () => refreshBrowsers(this)));
+		}
 
 		this.registerMarkdownPostProcessor((element) => {
 			processDiceBadgesInElement(element);

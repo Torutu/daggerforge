@@ -1,0 +1,9 @@
+{
+	"name": "daggerheart-character-codec",
+	"version": "1.0.0",
+	"description": "Encode/decode Daggerheart character sheets into shareable text codes. Zero dependencies, works in any TypeScript/JavaScript project.",
+	"type": "module",
+	"main": "index.ts",
+	"types": "index.ts",
+	"license": "MIT"
+}

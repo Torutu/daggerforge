@@ -1,11 +1,13 @@
 // https://lucide.dev/ for icons
 
-import { Menu } from "obsidian";
+import { Menu, Notice } from "obsidian";
 import DaggerForgePlugin from "../main";
 import { openContentBrowser } from "../utils/Sidebar";
 import { DiceRollerModal, EncounterCalcModal, ImportDataModal } from "../features/index";
 import { openCreator, confirmDeleteDataFile } from "./pluginOperations";
 import { ContentCreatorModal } from "../features/creator/ContentCreatorModal";
+import { openCharacterSheet, insertCharacterEmbed, CharacterPickerModal } from "../features/characters/index";
+import { ItemModal } from "../features/items/ItemModal";
 
 export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
     plugin.addRibbonIcon(
@@ -16,6 +18,7 @@ export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
 
             menu.addItem(item => item.setTitle("Content Browser").setIcon("layout-grid").onClick(() => openContentBrowser(plugin)));
             menu.addItem(item => item.setTitle("Content Creator").setIcon("pencil-ruler").onClick(() => new ContentCreatorModal(plugin.app, plugin).open()));
+            menu.addItem(item => item.setTitle("Character sheet").setIcon("user").onClick(() => openCharacterSheet(plugin)));
 
             menu.addSeparator();
 
@@ -52,9 +55,48 @@ export function setupCommands(plugin: DaggerForgePlugin): void {
     });
 
     plugin.addCommand({
+        id: "open-character-browser",
+        name: "Open character browser",
+        callback: () => openContentBrowser(plugin, "character"),
+    });
+
+    plugin.addCommand({
+        id: "open-item-browser",
+        name: "Open item browser",
+        callback: () => openContentBrowser(plugin, "item"),
+    });
+
+    plugin.addCommand({
+        id: "item-creator",
+        name: "Item creator",
+        callback: () => new ItemModal(plugin).open(),
+    });
+
+    plugin.addCommand({
         id: "open-content-creator",
         name: "Open content creator",
         callback: () => new ContentCreatorModal(plugin.app, plugin).open(),
+    });
+
+    plugin.addCommand({
+        id: "open-character-sheet",
+        name: "Open character sheet",
+        callback: () => openCharacterSheet(plugin),
+    });
+
+    plugin.addCommand({
+        id: "insert-character-sheet",
+        name: "Insert character sheet into note or canvas",
+        callback: () => {
+            const characters = plugin.dataManager.getCharacters();
+            if (characters.length === 0) {
+                new Notice("No saved characters yet. Open the character sheet to create one.");
+                return;
+            }
+            new CharacterPickerModal(plugin.app, characters, (character) =>
+                insertCharacterEmbed(plugin, character.id),
+            ).open();
+        },
     });
 
     plugin.addCommand({

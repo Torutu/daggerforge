@@ -6,12 +6,9 @@ import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-	resolveInsertDestination,
-	type ResolvedDestination,
-	createCanvasCard,
-	getAvailableCanvasPosition,
-	injectDiceBadgesIntoHtml,
 } from "../../../utils/index";
+import { buildAdversaryEmbedBlock } from "../AdversaryEmbed";
+import { insertAtFocusedTarget } from "../../embeds/insertDestination";
 
 // Data Assembly
 // Builds a complete AdvData object from raw form values and feature arrays.
@@ -75,11 +72,6 @@ export class AdversaryModal extends Modal {
 	// Edit-mode fields
 	private isEditMode: boolean;
 	private editData: Record<string, unknown> = {};
-	/**
-	 * Resolved before the modal opens so that opening the modal (which shifts
-	 * focus away from the note/canvas) does not change the answer.
-	 */
-	private insertDestination!: ResolvedDestination;
 	onEditUpdate?: (newHTML: string, newData: AdvData) => void | Promise<void>;
 
 	constructor(
@@ -92,9 +84,6 @@ export class AdversaryModal extends Modal {
 		this.plugin = plugin;
 		this.editor = editor;
 		this.isEditMode = !!cardElement;
-		// Capture destination now using the plugin's tracked last main leaf,
-		// before the modal opens and steals activeLeaf focus.
-		this.insertDestination = resolveInsertDestination(plugin.app, plugin.lastMainLeaf);
 
 		if (cardElement && cardData) {
 			this.editData = cardData;
@@ -325,7 +314,7 @@ export class AdversaryModal extends Modal {
 		}
 
 		await persistAdversary(this.plugin, newData);
-		this.insertCard(newHTML);
+		this.insertCard(newData.id);
 		this.resetForm();
 		this.refreshBrowserView();
 		this.close();
@@ -340,16 +329,10 @@ export class AdversaryModal extends Modal {
 		);
 	}
 
-	private insertCard(html: string) {
-		if (this.insertDestination.kind === "canvas") {
-			const { canvas } = this.insertDestination;
-			const pos = getAvailableCanvasPosition(canvas);
-			createCanvasCard(this.plugin.app, html, canvas, {
-				x: pos.x, y: pos.y, width: 400, height: 600,
-			});
-		} else if (this.insertDestination.kind === "markdown" && this.editor) {
-			this.editor.replaceSelection(injectDiceBadgesIntoHtml(html) + "\n");
-		}
+	/** Inserts a live id-based embed block into the last-focused note or canvas. */
+	private insertCard(id: string) {
+		if (!id) return;
+		insertAtFocusedTarget(this.plugin, buildAdversaryEmbedBlock(id), { width: 460, height: 620 });
 	}
 
 	private resetForm() {

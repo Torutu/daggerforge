@@ -5,6 +5,17 @@ Before debugging any issue, check [`error_log.md`](error_log.md) for known probl
 
 ---
 
+# No Node.js globals in plugin code
+
+Obsidian plugins run in a browser environment — **`process`, `Buffer`, `__dirname`, `__filename`, and other Node.js globals do not exist at runtime.**
+
+- Any library that references `process` (e.g. React, React DOM) will crash with `ReferenceError: process is not defined` unless esbuild replaces those references at build time.
+- `esbuild.config.mjs` must define `process`, `process.env`, and `process.env.NODE_ENV` in the `define` block so they are replaced statically at compile time — **not** polyfilled at runtime via a banner.
+- Never rely on a runtime banner/polyfill for Node.js globals — use `define` instead.
+- If adding a new dependency, check first whether it references Node.js globals (`process`, `global`, `Buffer`). If it does, add the appropriate `define` entries before shipping.
+
+---
+
 # CSS Naming Rules
 - **Never** use bare HTML element selectors (`p`, `ul`, `input`, `select`, `textarea`, `button`, etc.) in `styles.css`.
 - **Always** use `df-` prefixed classes. If one doesn't exist for the element you're styling, create it.

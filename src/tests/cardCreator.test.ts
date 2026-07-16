@@ -323,7 +323,7 @@ describe('AdversaryModal — create mode (markdown)', () => {
         expect(saved.source).toBe('custom');
     });
 
-    test('editor.replaceSelection is called with HTML containing the card name', async () => {
+    test('creation no longer pastes raw HTML into the editor (embeds go through the destination picker)', async () => {
         const plugin = mockPlugin();
         const { editor, destination } = makeMarkdownDestination();
         const modal = new AdversaryModal(plugin, editor as any);
@@ -331,9 +331,8 @@ describe('AdversaryModal — create mode (markdown)', () => {
 
         await (modal as any).handleSubmit();
 
-        expect(editor.replaceSelection).toHaveBeenCalledTimes(1);
-        const inserted = editor.replaceSelection.mock.calls[0][0];
-        expect(inserted).toContain('Goblin Scout');
+        expect(editor.replaceSelection).not.toHaveBeenCalled();
+        expect(plugin.dataManager.addAdversary).toHaveBeenCalledTimes(1);
     });
 
     test('does not call onEditUpdate when not set', async () => {
@@ -502,7 +501,7 @@ describe('EnvironmentModal — create mode (markdown)', () => {
         expect(saved.source).toBe('custom');
     });
 
-    test('editor.replaceSelection is called with HTML containing the env name', async () => {
+    test('creation no longer pastes raw HTML into the editor (embeds go through the destination picker)', async () => {
         const plugin = mockPlugin();
         const { editor, destination } = makeMarkdownDestination();
         const modal = new EnvironmentModal(plugin, editor as any);
@@ -510,8 +509,7 @@ describe('EnvironmentModal — create mode (markdown)', () => {
 
         await (modal as any).handleSubmit();
 
-        expect(editor.replaceSelection).toHaveBeenCalledTimes(1);
-        const inserted = editor.replaceSelection.mock.calls[0][0];
-        expect(inserted).toContain('Whispering Bog');
+        expect(editor.replaceSelection).not.toHaveBeenCalled();
+        expect(plugin.dataManager.addEnvironment).toHaveBeenCalledTimes(1);
     });
 });

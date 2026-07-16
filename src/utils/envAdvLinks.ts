@@ -145,7 +145,7 @@ export function handleAdvLinkClick(
 	const endIdx = findEnvSectionEnd(content, cardId);
 	if (endIdx === -1) return;
 
-	const html      = buildCardHTML(advDataToValues(adv), adv.features, false, adv.countdowns);
+	const html      = buildCardHTML(advDataToValues(adv), adv.features, false);
 	const injected  = injectDiceBadgesIntoHtml(html);
 	const inserted  = "\n" + injected;
 	const pos       = view.editor.offsetToPos(endIdx);
