@@ -36,6 +36,7 @@ function assembleAdvData(
 		weaponRange: values.weaponRange || "",
 		weaponDamage: values.weaponDamage || "",
 		xp: values.xp || "",
+		count: values.count || "",
 		source: "custom",
 		features: features.map((f) => ({
 			name: f.name || "",
@@ -314,7 +315,7 @@ export class AdversaryModal extends Modal {
 		}
 
 		await persistAdversary(this.plugin, newData);
-		this.insertCard(newData.id);
+		this.insertCard(newData.id, Number(newData.count) || undefined);
 		this.resetForm();
 		this.refreshBrowserView();
 		this.close();
@@ -330,9 +331,9 @@ export class AdversaryModal extends Modal {
 	}
 
 	/** Inserts a live id-based embed block into the last-focused note or canvas. */
-	private insertCard(id: string) {
+	private insertCard(id: string, count?: number) {
 		if (!id) return;
-		insertAtFocusedTarget(this.plugin, buildAdversaryEmbedBlock(id), { width: 460, height: 620 });
+		insertAtFocusedTarget(this.plugin, buildAdversaryEmbedBlock(id, count), { width: 460, height: 620 });
 	}
 
 	private resetForm() {

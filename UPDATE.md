@@ -20,6 +20,10 @@
   - Clicking a class/subclass/ancestry/community/domain card now opens a stable detail panel above the grid (full description + a Choose button) instead of awkwardly expanding the card in place — readable on both desktop and mobile.
 - Feature names inside card text (e.g. **Heart of a Poet:**) are now bolded automatically on sheet cards, wizard descriptions, and item cards.
 
+## Fixes
+
+- Custom adversaries now respect the **Count** field: the value is saved with the adversary and stamped on the inserted embed, so a Count of 5 renders five HP/stress rows — same as bundled adversaries inserted with the browser's battle counter. Editing a custom adversary's Count updates its existing embeds too.
+
 ---
 
 # DaggerForge 2.6.0
