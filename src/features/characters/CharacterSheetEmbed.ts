@@ -4,6 +4,7 @@ import { createElement } from "react";
 import type DaggerForgePlugin from "../../main";
 import { buildEmbedBlock, parseEmbedParams } from "../embeds/blockParams";
 import { pickDestinationAndInsert } from "../embeds/insertDestination";
+import { encodeCharacterCode } from "./characterCode";
 import { CharacterSheetEmbedApp } from "./CharacterSheetEmbedApp";
 
 /**
@@ -23,15 +24,15 @@ export function parseCharacterEmbedId(source: string): string | null {
 	return parseEmbedParams(source).id;
 }
 
-export function buildCharacterEmbedBlock(id: string): string {
-	return buildEmbedBlock(Character_Embed_Language, { id });
+export function buildCharacterEmbedBlock(id: string, code?: string): string {
+	return buildEmbedBlock(Character_Embed_Language, { id, code });
 }
 
 /**
  * Ties the React root to the markdown renderer's lifecycle: Obsidian calls
  * onunload whenever the widget is destroyed (mode switch, block edit, note
  * close, CM6 discarding off-screen widgets), and unmounting runs the embed
- * app's effect cleanups — which flush any pending debounced save.
+ * app's effect cleanups - which flush any pending debounced save.
  */
 class CharacterSheetEmbedChild extends MarkdownRenderChild {
 	private root: Root | null = null;
@@ -40,6 +41,7 @@ class CharacterSheetEmbedChild extends MarkdownRenderChild {
 		containerEl: HTMLElement,
 		private plugin: DaggerForgePlugin,
 		private characterId: string | null,
+		private code: string | null,
 	) {
 		super(containerEl);
 	}
@@ -51,6 +53,7 @@ class CharacterSheetEmbedChild extends MarkdownRenderChild {
 			createElement(CharacterSheetEmbedApp, {
 				plugin: this.plugin,
 				characterId: this.characterId,
+				code: this.code,
 			}),
 		);
 	}
@@ -63,13 +66,32 @@ class CharacterSheetEmbedChild extends MarkdownRenderChild {
 
 export function registerCharacterSheetEmbed(plugin: DaggerForgePlugin): void {
 	plugin.registerMarkdownCodeBlockProcessor(Character_Embed_Language, (source, el, ctx) => {
-		ctx.addChild(new CharacterSheetEmbedChild(el, plugin, parseCharacterEmbedId(source)));
+		const params = parseEmbedParams(source);
+		ctx.addChild(new CharacterSheetEmbedChild(el, plugin, params.id, params.code));
 	});
+}
+
+/** Serialized snapshot for the block's `code:` line, so the sheet still renders
+ *  in vaults whose plugin data doesn't have this character (e.g. after a sync
+ *  that skipped data.json). Undefined when the character isn't stored yet. */
+export async function characterEmbedCode(
+	plugin: DaggerForgePlugin,
+	id: string,
+): Promise<string | undefined> {
+	const character = plugin.dataManager.getCharacters().find((c) => c.id === id);
+	if (!character) return undefined;
+	try {
+		return await encodeCharacterCode(character);
+	} catch (error) {
+		console.error("DaggerForge: failed to encode character embed code", error);
+		return undefined;
+	}
 }
 
 /** Asks where to place the sheet (note/canvas picker), then inserts the embed block.
  *  960px wide renders the full two-column sheet; the container queries handle
  *  narrower canvas nodes if the user resizes. */
-export function insertCharacterEmbed(plugin: DaggerForgePlugin, id: string): void {
-	pickDestinationAndInsert(plugin, buildCharacterEmbedBlock(id), { width: 960, height: 1100 });
+export async function insertCharacterEmbed(plugin: DaggerForgePlugin, id: string): Promise<void> {
+	const code = await characterEmbedCode(plugin, id);
+	pickDestinationAndInsert(plugin, buildCharacterEmbedBlock(id, code), { width: 960, height: 1100 });
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CLASS_DOMAINS, DOMAIN_COLORS, SrdClass, SrdDomainCard, SrdHeritage, SrdSubclass } from "../../../types/srd";
+import { CLASS_COLORS, CLASS_DOMAINS, DOMAIN_COLORS, SrdClass, SrdDomainCard, SrdHeritage, SrdSubclass } from "../../../types/srd";
 import {
 	SRD_ANCESTRIES,
 	SRD_CLASSES,
@@ -9,7 +9,7 @@ import {
 import { CreationChoices } from "../creationTemplate";
 import { CardText } from "./CardText";
 import { DomainIcon, DomainSprite } from "./DomainArt";
-import { domainTint } from "./SheetSections";
+import { ZapIcon } from "./SheetFields";
 
 interface Props {
 	onComplete: (choices: CreationChoices) => void;
@@ -22,6 +22,11 @@ const STEPS = ["Class", "Subclass", "Ancestry", "Community", "Experiences", "Dom
  * Guided character creation following the SRD steps. Every step can be
  * skipped; the result lands in the sheet unsaved so the player can adjust
  * anything before saving.
+ *
+ * Selection steps use a master-detail layout: option names on the left, the
+ * full description on the right with the Choose button pinned to the panel
+ * footer (the body scrolls, so the button never sinks out of view). On
+ * narrow containers the panel moves above the list instead.
  */
 export function CreationWizard({ onComplete, onCancel }: Props) {
 	const [step, setStep] = useState(0);
@@ -51,19 +56,22 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 					✕
 				</button>
 			</div>
-			<div className="df-cs-wizard-steps">
+			<div className="df-cs-wiz-steps">
 				{STEPS.map((label, i) => (
 					<button
 						key={label}
 						type="button"
 						className={
-							"df-cs-wizard-step" +
+							"df-cs-wiz-step" +
 							(i === step ? " is-active" : "") +
 							(i < step ? " is-done" : "")
 						}
 						onClick={() => setStep(i)}
 					>
-						{i + 1}. {label}
+						<span className="df-cs-wiz-step-diamond">
+							<span>{i < step ? "✦" : i + 1}</span>
+						</span>
+						<span className="df-cs-wiz-step-label">{label}</span>
 					</button>
 				))}
 			</div>
@@ -87,6 +95,7 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 				{step === 3 && (
 					<HeritageStep
 						options={SRD_COMMUNITIES}
+						kind="community"
 						selected={choices.communityName}
 						onPick={(name) => pick({ communityName: name })}
 					/>
@@ -137,74 +146,105 @@ function stepIsAnswered(step: number, choices: CreationChoices): boolean {
 	}
 }
 
-// ── Option cards + detail panel ───────────────────────────────────────────────
-// Cards stay compact in the grid; clicking one opens its full description in a
-// stable panel above the grid (no mid-grid reflow jumps), with the Choose
-// button inside the panel. Works the same on desktop and mobile.
+// ── Master-detail building blocks ─────────────────────────────────────────────
 
-function WizardCard({
-	head,
+const accentStyle = (accent?: string) =>
+	accent ? ({ "--df-cs-row-accent": accent } as React.CSSProperties) : undefined;
+
+function WizardSplit({ list, detail }: { list: React.ReactNode; detail: React.ReactNode }) {
+	return (
+		<div className="df-cs-wiz-split">
+			<div className="df-cs-wiz-list">{list}</div>
+			{detail}
+		</div>
+	);
+}
+
+function WizardRow({
+	icons,
+	name,
 	meta,
-	preview,
+	tags,
 	selected,
 	active,
+	accent,
 	onClick,
 }: {
-	head: React.ReactNode;
+	icons?: React.ReactNode;
+	name: string;
 	meta?: React.ReactNode;
-	preview: React.ReactNode;
+	tags?: React.ReactNode;
 	selected: boolean;
 	active: boolean;
+	accent?: string;
 	onClick: () => void;
 }) {
 	return (
 		<button
 			type="button"
 			className={
-				"df-cs-wizard-card" +
-				(selected ? " is-selected" : "") +
-				(active ? " is-active" : "")
+				"df-cs-wiz-row" + (selected ? " is-selected" : "") + (active ? " is-active" : "")
 			}
+			style={accentStyle(accent)}
 			aria-expanded={active}
 			onClick={onClick}
 		>
-			<span className="df-cs-wizard-card-head">{head}</span>
-			{meta && <span className="df-cs-wizard-card-meta">{meta}</span>}
-			<span className="df-cs-wizard-card-text">{preview}</span>
+			{icons}
+			<span className="df-cs-wiz-row-name">{name}</span>
+			{tags}
+			{selected && <span className="df-cs-wiz-row-check">✦</span>}
+			{meta && <span className="df-cs-wiz-row-meta">{meta}</span>}
 		</button>
 	);
 }
 
-function WizardDetailPanel({
+function WizardDetail({
+	accent,
 	title,
 	meta,
-	children,
+	footNote,
 	chooseLabel,
 	chooseDisabled,
 	onChoose,
 	onClose,
+	children,
 }: {
+	accent?: string;
 	title: React.ReactNode;
 	meta?: React.ReactNode;
-	children: React.ReactNode;
+	footNote?: React.ReactNode;
 	chooseLabel: string;
 	chooseDisabled?: boolean;
 	onChoose: () => void;
 	onClose: () => void;
+	children: React.ReactNode;
 }) {
 	return (
-		<div className="df-cs-wizard-detail">
-			<div className="df-cs-wizard-detail-head">
-				<span className="df-cs-wizard-card-name">{title}</span>
-				{meta && <span className="df-cs-wizard-card-meta">{meta}</span>}
+		<div className="df-cs-wiz-detail" style={accentStyle(accent)}>
+			<div className="df-cs-wiz-detail-head">
+				<span className="df-cs-wiz-detail-title">{title}</span>
+				{meta && <span className="df-cs-wiz-detail-meta">{meta}</span>}
 				<button type="button" className="df-cs-card-remove" aria-label="Close details" onClick={onClose}>
 					✕
 				</button>
 			</div>
-			<div className="df-cs-wizard-detail-body">{children}</div>
-			<button type="button" className="mod-cta df-cs-wizard-choose" disabled={chooseDisabled} onClick={onChoose}>
-				{chooseLabel}
-			</button>
+			<div className="df-cs-wiz-detail-body">{children}</div>
+			<div className="df-cs-wiz-detail-foot">
+				{footNote && <span className="df-cs-wiz-foot-note">{footNote}</span>}
+				<button type="button" className="mod-cta df-cs-wiz-choose" disabled={chooseDisabled} onClick={onChoose}>
+					{chooseLabel}
+				</button>
+			</div>
+		</div>
+	);
+}
+
+/** Right-pane filler while nothing is open. Hidden on narrow containers. */
+function WizardPlaceholder({ text }: { text: string }) {
+	return (
+		<div className="df-cs-wiz-placeholder">
+			<span className="df-cs-wiz-placeholder-orn">✦ ✦ ✦</span>
+			{text}
 		</div>
 	);
 }
@@ -212,56 +252,53 @@ function WizardDetailPanel({
 // ── Steps ─────────────────────────────────────────────────────────────────────
 
 function ClassStep({ selected, onPick }: { selected?: string; onPick: (name: string) => void }) {
-	const [openName, setOpenName] = useState<string | null>(null);
+	const [openName, setOpenName] = useState<string | null>(selected ?? SRD_CLASSES[0]?.name ?? null);
 	const open = SRD_CLASSES.find((c) => c.name === openName);
 	return (
 		<>
 			<p className="df-cs-wizard-hint">
-				Click a class to read its full description, then choose it. Its evasion, suggested
-				traits, features, and starting equipment fill the sheet — everything stays editable
-				afterwards.
+				Every class fills the sheet with its evasion, suggested traits, features, and starting
+				equipment. Everything stays editable afterwards.
 			</p>
-			{open && (
-				<WizardDetailPanel
-					title={
-						<>
-							{(CLASS_DOMAINS[open.name] ?? []).map((d) => (
-								<DomainIcon key={d} domain={d} style={{ color: DOMAIN_COLORS[d] }} />
-							))}{" "}
-							{open.name}
-						</>
-					}
-					meta={`${open.stats.domains} · Evasion ${open.stats.evasion} · HP ${open.stats.hp}`}
-					chooseLabel={`Choose ${open.name}`}
-					onChoose={() => onPick(open.name)}
-					onClose={() => setOpenName(null)}
-				>
-					<ClassDetail srdClass={open} />
-				</WizardDetailPanel>
-			)}
-			<div className="df-cs-wizard-grid">
-				{SRD_CLASSES.map((c) => {
-					const domains = CLASS_DOMAINS[c.name] ?? [];
-					return (
-						<WizardCard
-							key={c.name}
-							selected={selected === c.name}
-							active={openName === c.name}
-							onClick={() => setOpenName(openName === c.name ? null : c.name)}
-							head={
+			<WizardSplit
+				list={SRD_CLASSES.map((c) => (
+					<WizardRow
+						key={c.name}
+						selected={selected === c.name}
+						active={openName === c.name}
+						accent={CLASS_COLORS[c.name]}
+						onClick={() => setOpenName(c.name)}
+						icons={(CLASS_DOMAINS[c.name] ?? []).map((d) => (
+							<DomainIcon key={d} domain={d} className="df-cs-domain-icon" style={{ color: DOMAIN_COLORS[d] }} />
+						))}
+						name={c.name}
+						meta={c.stats.domains}
+					/>
+				))}
+				detail={
+					open ? (
+						<WizardDetail
+							accent={CLASS_COLORS[open.name]}
+							title={
 								<>
-									{domains.map((d) => (
-										<DomainIcon key={d} domain={d} style={{ color: DOMAIN_COLORS[d] }} />
+									{(CLASS_DOMAINS[open.name] ?? []).map((d) => (
+										<DomainIcon key={d} domain={d} className="df-cs-domain-icon" style={{ color: DOMAIN_COLORS[d] }} />
 									))}
-									<span className="df-cs-wizard-card-name">{c.name}</span>
+									{open.name}
 								</>
 							}
-							meta={`${c.stats.domains} · Evasion ${c.stats.evasion} · HP ${c.stats.hp}`}
-							preview={c.description[0]}
-						/>
-					);
-				})}
-			</div>
+							meta={`Evasion ${open.stats.evasion} · HP ${open.stats.hp}`}
+							chooseLabel={`Choose ${open.name}`}
+							onChoose={() => onPick(open.name)}
+							onClose={() => setOpenName(null)}
+						>
+							<ClassDetail srdClass={open} />
+						</WizardDetail>
+					) : (
+						<WizardPlaceholder text="Select a class on the left to read its full description." />
+					)
+				}
+			/>
 		</>
 	);
 }
@@ -284,7 +321,7 @@ function ClassDetail({ srdClass }: { srdClass: SrdClass }) {
 				<strong>Suggested equipment:</strong> {suggested}
 			</p>
 			<p className="df-cs-cardtext-p">
-				<strong>Hope Feature — </strong>
+				<strong>Hope Feature: </strong>
 				{srdClass.hopeFeature}
 			</p>
 			{srdClass.classFeatures.map((f) => (
@@ -310,40 +347,48 @@ function SubclassStep({
 	selected?: string;
 	onPick: (name: string) => void;
 }) {
-	const [openName, setOpenName] = useState<string | null>(null);
+	const [openName, setOpenName] = useState<string | null>(
+		selected ?? (srdClass ? Object.values(srdClass.subclasses)[0]?.name : null) ?? null,
+	);
 	if (!srdClass) {
 		return <p className="df-cs-wizard-hint">Pick a class first (or skip this step).</p>;
 	}
+	const accent = CLASS_COLORS[srdClass.name];
 	const open = openName ? srdClass.subclasses[openName] : undefined;
 	return (
 		<>
 			<p className="df-cs-wizard-hint">
-				Click a {srdClass.name} subclass to read its foundation features, then choose it.
+				Each {srdClass.name} subclass grants its own foundation features.
 			</p>
-			{open && (
-				<WizardDetailPanel
-					title={open.name}
-					meta={open.spellcastTrait ? `Spellcast: ${open.spellcastTrait}` : undefined}
-					chooseLabel={`Choose ${open.name}`}
-					onChoose={() => onPick(open.name)}
-					onClose={() => setOpenName(null)}
-				>
-					<SubclassDetail subclass={open} />
-				</WizardDetailPanel>
-			)}
-			<div className="df-cs-wizard-grid">
-				{Object.values(srdClass.subclasses).map((sub) => (
-					<WizardCard
+			<WizardSplit
+				list={Object.values(srdClass.subclasses).map((sub) => (
+					<WizardRow
 						key={sub.name}
 						selected={selected === sub.name}
 						active={openName === sub.name}
-						onClick={() => setOpenName(openName === sub.name ? null : sub.name)}
-						head={<span className="df-cs-wizard-card-name">{sub.name}</span>}
+						accent={accent}
+						onClick={() => setOpenName(sub.name)}
+						name={sub.name}
 						meta={sub.spellcastTrait ? `Spellcast: ${sub.spellcastTrait}` : undefined}
-						preview={sub.foundation.map((f) => f.name).join(" · ")}
 					/>
 				))}
-			</div>
+				detail={
+					open ? (
+						<WizardDetail
+							accent={accent}
+							title={open.name}
+							meta={open.spellcastTrait ? `Spellcast: ${open.spellcastTrait}` : undefined}
+							chooseLabel={`Choose ${open.name}`}
+							onChoose={() => onPick(open.name)}
+							onClose={() => setOpenName(null)}
+						>
+							<SubclassDetail subclass={open} />
+						</WizardDetail>
+					) : (
+						<WizardPlaceholder text="Select a subclass on the left to read its foundation features." />
+					)
+				}
+			/>
 		</>
 	);
 }
@@ -374,40 +419,44 @@ function HeritageDetail({ heritage }: { heritage: SrdHeritage }) {
 
 function HeritageStep({
 	options,
+	kind,
 	selected,
 	onPick,
 }: {
 	options: SrdHeritage[];
+	kind: string;
 	selected?: string;
 	onPick: (name: string) => void;
 }) {
-	const [openName, setOpenName] = useState<string | null>(null);
+	const [openName, setOpenName] = useState<string | null>(selected ?? options[0]?.name ?? null);
 	const open = options.find((h) => h.name === openName);
 	return (
-		<>
-			{open && (
-				<WizardDetailPanel
-					title={open.name}
-					chooseLabel={`Choose ${open.name}`}
-					onChoose={() => onPick(open.name)}
-					onClose={() => setOpenName(null)}
-				>
-					<HeritageDetail heritage={open} />
-				</WizardDetailPanel>
-			)}
-			<div className="df-cs-wizard-grid">
-				{options.map((h) => (
-					<WizardCard
-						key={h.name}
-						selected={selected === h.name}
-						active={openName === h.name}
-						onClick={() => setOpenName(openName === h.name ? null : h.name)}
-						head={<span className="df-cs-wizard-card-name">{h.name}</span>}
-						preview={h.features.map((f) => f.split(":")[0]).join(" · ")}
-					/>
-				))}
-			</div>
-		</>
+		<WizardSplit
+			list={options.map((h) => (
+				<WizardRow
+					key={h.name}
+					selected={selected === h.name}
+					active={openName === h.name}
+					onClick={() => setOpenName(h.name)}
+					name={h.name}
+					meta={h.features.map((f) => f.split(":")[0]).join(" · ")}
+				/>
+			))}
+			detail={
+				open ? (
+					<WizardDetail
+						title={open.name}
+						chooseLabel={`Choose ${open.name}`}
+						onChoose={() => onPick(open.name)}
+						onClose={() => setOpenName(null)}
+					>
+						<HeritageDetail heritage={open} />
+					</WizardDetail>
+				) : (
+					<WizardPlaceholder text={`Select a ${kind} on the left to read its features.`} />
+				)
+			}
+		/>
 	);
 }
 
@@ -420,7 +469,9 @@ function AncestryStep({
 	selected2?: string;
 	onPick: (patch: Partial<CreationChoices>, advance?: boolean) => void;
 }) {
-	const [openName, setOpenName] = useState<string | null>(null);
+	const [openName, setOpenName] = useState<string | null>(
+		selected ?? SRD_ANCESTRIES[0]?.name ?? null,
+	);
 	const mixed = selected2 !== undefined;
 	const open = SRD_ANCESTRIES.find((h) => h.name === openName);
 
@@ -431,7 +482,6 @@ function AncestryStep({
 	};
 
 	const choose = (name: string) => {
-		setOpenName(null);
 		if (!mixed) {
 			onPick({ ancestryName: name });
 			return;
@@ -473,39 +523,43 @@ function AncestryStep({
 						: "Combine two ancestries: the first feature of one and the second feature of another."}
 				</span>
 			</div>
-			{open && (
-				<WizardDetailPanel
-					title={open.name}
-					chooseLabel={chooseLabel(open.name)}
-					chooseDisabled={mixed && open.name === selected}
-					onChoose={() => choose(open.name)}
-					onClose={() => setOpenName(null)}
-				>
-					<HeritageDetail heritage={open} />
-				</WizardDetailPanel>
-			)}
-			<div className="df-cs-wizard-grid">
-				{SRD_ANCESTRIES.map((h) => {
+			<WizardSplit
+				list={SRD_ANCESTRIES.map((h) => {
 					const isPrimary = selected === h.name;
 					const isSecondary = mixed && selected2 === h.name;
 					return (
-						<WizardCard
+						<WizardRow
 							key={h.name}
 							selected={isPrimary || isSecondary}
 							active={openName === h.name}
-							onClick={() => setOpenName(openName === h.name ? null : h.name)}
-							head={
+							onClick={() => setOpenName(h.name)}
+							name={h.name}
+							tags={
 								<>
-									<span className="df-cs-wizard-card-name">{h.name}</span>
 									{mixed && isPrimary && <span className="df-cs-wizard-tag">1st feature</span>}
 									{isSecondary && <span className="df-cs-wizard-tag">2nd feature</span>}
 								</>
 							}
-							preview={h.features.map((f) => f.split(":")[0]).join(" · ")}
+							meta={h.features.map((f) => f.split(":")[0]).join(" · ")}
 						/>
 					);
 				})}
-			</div>
+				detail={
+					open ? (
+						<WizardDetail
+							title={open.name}
+							chooseLabel={chooseLabel(open.name)}
+							chooseDisabled={mixed && open.name === selected}
+							onChoose={() => choose(open.name)}
+							onClose={() => setOpenName(null)}
+						>
+							<HeritageDetail heritage={open} />
+						</WizardDetail>
+					) : (
+						<WizardPlaceholder text="Select an ancestry on the left to read its features." />
+					)
+				}
+			/>
 		</>
 	);
 }
@@ -525,7 +579,7 @@ function ExperiencesStep({
 	return (
 		<>
 			<p className="df-cs-wizard-hint">
-				Write two Experiences — short phrases about your character's background that they can
+				Write two Experiences: short phrases about your character's background that they can
 				spend Hope on during play. Both start at +2. Examples: "Raised by wolves",
 				"Ex-royal guard", "Silver-tongued merchant", "Apprentice herbalist".
 			</p>
@@ -547,7 +601,7 @@ function ExperiencesStep({
 	);
 }
 
-function DomainCardsStep({
+export function DomainCardsStep({
 	classDomains,
 	selected,
 	onChange,
@@ -559,6 +613,10 @@ function DomainCardsStep({
 	const cards = SRD_DOMAIN_CARDS.filter(
 		(c) => c.level === 1 && (!classDomains || classDomains.includes(c.domain)),
 	);
+	const [openName, setOpenName] = useState<string | null>(selected[0] ?? cards[0]?.name ?? null);
+	const open = cards.find((c) => c.name === openName);
+
+	const domains = [...new Set(cards.map((c) => c.domain))];
 	const toggle = (card: SrdDomainCard) => {
 		if (selected.includes(card.name)) {
 			onChange(selected.filter((n) => n !== card.name));
@@ -566,37 +624,67 @@ function DomainCardsStep({
 			onChange([...selected, card.name]);
 		}
 	};
+
+	const openPicked = open ? selected.includes(open.name) : false;
 	return (
 		<>
 			<p className="df-cs-wizard-hint">
-				Choose two level-1 cards{classDomains ? ` from ${classDomains[0]} or ${classDomains[1]}` : ""} ({selected.length}/2 picked).
+				Choose two level-1 cards{classDomains ? ` from ${classDomains[0]} or ${classDomains[1]}` : ""}. Click a
+				card name to read it, then add it from the panel.
 			</p>
-			<div className="df-cs-wizard-list">
-				{cards.map((card) => {
-					const color = DOMAIN_COLORS[card.domain] ?? "var(--df-cs-mid)";
-					const isPicked = selected.includes(card.name);
+			<WizardSplit
+				list={domains.map((domain) => {
+					const color = DOMAIN_COLORS[domain] ?? "var(--df-cs-mid)";
 					return (
-						<button
-							key={card.name}
-							type="button"
-							className={"df-cs-wizard-dcard" + (isPicked ? " is-selected" : "")}
-							style={{ borderLeftColor: color, background: isPicked ? domainTint(card.domain, 0.14) : undefined }}
-							aria-pressed={isPicked}
-							onClick={() => toggle(card)}
-						>
-							<span className="df-cs-dcard-head">
-								<span className="df-cs-dcard-level" style={{ background: color }}>{card.level}</span>
-								<DomainIcon domain={card.domain} className="df-cs-dcard-icon" style={{ color }} />
-								<span className="df-cs-dcard-name">{card.name}</span>
-								<span className="df-cs-dcard-meta">{card.domain} · {card.type} · ⚡{card.recallCost}</span>
+						<React.Fragment key={domain}>
+							<span className="df-cs-wiz-sub" style={{ color }}>
+								<DomainIcon domain={domain} className="df-cs-domain-icon" style={{ color }} />
+								{domain}
 							</span>
-							<span className="df-cs-wizard-dcard-body">
-								<CardText text={card.text} />
-							</span>
-						</button>
+							{cards
+								.filter((c) => c.domain === domain)
+								.map((card) => (
+									<WizardRow
+										key={card.name}
+										selected={selected.includes(card.name)}
+										active={openName === card.name}
+										accent={color}
+										onClick={() => setOpenName(card.name)}
+										name={card.name}
+										meta={<>{card.type} · <ZapIcon />{card.recallCost}</>}
+									/>
+								))}
+						</React.Fragment>
 					);
 				})}
-			</div>
+				detail={
+					open ? (
+						<WizardDetail
+							accent={DOMAIN_COLORS[open.domain]}
+							title={
+								<>
+									<DomainIcon
+										domain={open.domain}
+										className="df-cs-domain-icon"
+										style={{ color: DOMAIN_COLORS[open.domain] }}
+									/>
+									{open.name}
+								</>
+							}
+							meta={`${open.domain} · ${open.type} · Recall ${open.recallCost}`}
+							footNote={`${selected.length}/2 picked`}
+							chooseLabel={openPicked ? "Remove card" : "Add card"}
+							chooseDisabled={!openPicked && selected.length >= 2}
+							onChoose={() => toggle(open)}
+							onClose={() => setOpenName(null)}
+						>
+							<CardText text={open.text} />
+						</WizardDetail>
+					) : (
+						<WizardPlaceholder text="Select a domain card on the left to read it." />
+					)
+				}
+			/>
 		</>
 	);
 }
@@ -607,12 +695,12 @@ function ReviewStep({ choices }: { choices: CreationChoices }) {
 		: choices.ancestryName;
 	const experiences = (choices.experiences ?? []).filter((e) => e.trim() !== "");
 	const rows: Array<[string, string]> = [
-		["Class", choices.className ?? "—"],
-		["Subclass", choices.subclassName ?? "—"],
-		["Ancestry", ancestry || "—"],
-		["Community", choices.communityName ?? "—"],
-		["Experiences", experiences.map((e) => `${e} (+2)`).join(", ") || "—"],
-		["Domain cards", (choices.domainCardNames ?? []).join(", ") || "—"],
+		["Class", choices.className ?? "-"],
+		["Subclass", choices.subclassName ?? "-"],
+		["Ancestry", ancestry || "-"],
+		["Community", choices.communityName ?? "-"],
+		["Experiences", experiences.map((e) => `${e} (+2)`).join(", ") || "-"],
+		["Domain cards", (choices.domainCardNames ?? []).join(", ") || "-"],
 	];
 	return (
 		<>

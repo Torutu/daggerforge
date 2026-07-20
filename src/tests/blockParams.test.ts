@@ -10,6 +10,7 @@ describe("embed block params", () => {
 			id: "VA013",
 			instance: "k3x9f2",
 			count: 3,
+			code: null,
 		});
 	});
 
@@ -18,7 +19,14 @@ describe("embed block params", () => {
 			id: "CUE_123_ab",
 			instance: null,
 			count: null,
+			code: null,
 		});
+	});
+
+	test("parses a code line", () => {
+		const params = parseEmbedParams("id: CUA_1_a\ncode: DFA1.abc-_123");
+		expect(params.id).toBe("CUA_1_a");
+		expect(params.code).toBe("DFA1.abc-_123");
 	});
 
 	test("accepts bare bundled and custom ids", () => {
@@ -32,6 +40,7 @@ describe("embed block params", () => {
 			id: "CE001",
 			instance: null,
 			count: null,
+			code: null,
 		});
 	});
 
@@ -40,7 +49,7 @@ describe("embed block params", () => {
 	});
 
 	test("returns nulls for empty source", () => {
-		expect(parseEmbedParams("")).toEqual({ id: null, instance: null, count: null });
+		expect(parseEmbedParams("")).toEqual({ id: null, instance: null, count: null, code: null });
 	});
 
 	test("build → parse round-trips", () => {
@@ -48,12 +57,18 @@ describe("embed block params", () => {
 			id: "VA013",
 			instance: "abc123",
 			count: 3,
+			code: "DFA1.payload",
 		});
 		const source = block.split("\n").slice(1, -2).join("\n");
-		expect(parseEmbedParams(source)).toEqual({ id: "VA013", instance: "abc123", count: 3 });
+		expect(parseEmbedParams(source)).toEqual({
+			id: "VA013",
+			instance: "abc123",
+			count: 3,
+			code: "DFA1.payload",
+		});
 	});
 
-	test("build omits count of 1 and missing instance", () => {
+	test("build omits count of 1, missing instance, and missing code", () => {
 		const block = buildEmbedBlock("daggerforge-environment", { id: "CE001", count: 1 });
 		expect(block).toBe("```daggerforge-environment\nid: CE001\n```\n");
 	});

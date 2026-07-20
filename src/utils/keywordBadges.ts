@@ -11,7 +11,7 @@ const KEYWORD_CLASS: Record<string, string> = {
 const SKIP_SELECTOR =
 	".df-inline-dice-btn, .df-kw-hope, .df-kw-fear, .df-kw-hp, .df-kw-stress";
 
-// Toggle coloring via a body class — no re-scan of existing cards needed.
+// Toggle coloring via a body class - no re-scan of existing cards needed.
 export function applyKeywordColors(enabled: boolean): void {
 	document.body.classList.toggle("df-kw-active", enabled);
 }
@@ -53,7 +53,7 @@ function colorKeywordsInNode(node: Text): void {
 	parent.replaceChild(fragment, node);
 }
 
-// Always inject spans — coloring is controlled purely by CSS (.df-kw-active on body).
+// Always inject spans - coloring is controlled purely by CSS (.df-kw-active on body).
 export function attachKeywordColors(section: HTMLElement): void {
 	const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT, {
 		acceptNode(node) {

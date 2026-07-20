@@ -17,8 +17,9 @@ import {
 } from "../../utils/index";
 import { buildAdversaryEmbedBlock } from "../adversaries/AdversaryEmbed";
 import { buildEnvironmentEmbedBlock } from "../environments/EnvironmentEmbed";
+import { encodeAdversaryCode, encodeEnvironmentCode, encodeGearCode } from "../embeds/embedCode";
 import { insertAtFocusedTarget } from "../embeds/insertDestination";
-import { buildCharacterEmbedBlock } from "../characters/CharacterSheetEmbed";
+import { buildCharacterEmbedBlock, characterEmbedCode } from "../characters/CharacterSheetEmbed";
 import { ConfirmModal } from "../characters/components/ConfirmModal";
 import type { CharacterData } from "../../types/character";
 import { CLASS_COLORS, GEAR_KIND_LABELS, GearData } from "../../types/srd";
@@ -78,6 +79,11 @@ function CounterControls() {
 
 // ── Small helpers ─────────────────────────────────────────────────────────────
 
+/** Custom records need a `code:` snapshot on insert - bundled ones ship with the plugin. */
+function isCustomRecord(record: { id?: string; source?: string }): boolean {
+	return (record.source ?? "custom").toLowerCase() === "custom" || /^CU[AEI]_/.test(record.id ?? "");
+}
+
 function LucideBtn({ icon, title, onClick, cls }: { icon: string; title: string; onClick: (e: React.MouseEvent) => void; cls?: string }) {
 	const ref = useRef<HTMLButtonElement>(null);
 	useEffect(() => { if (ref.current) setIcon(ref.current, icon); }, [icon]);
@@ -90,7 +96,7 @@ function LucideIcon({ icon, cls }: { icon: string; cls?: string }) {
 	return <span ref={ref} className={cls} />;
 }
 
-// ── SearchPane — mounts vanilla SearchControlsUI into a ref ───────────────────
+// ── SearchPane - mounts vanilla SearchControlsUI into a ref ───────────────────
 // configFactory is called once at mount time (after data is ready) so options
 // are populated when create() builds the DOM panels.
 
@@ -160,12 +166,15 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		};
 	}, []);
 
-	const insert = useCallback((adversary: AdvData) => {
+	const insert = useCallback(async (adversary: AdvData) => {
 		const plugin = getDaggerForgePlugin(app);
 		if (!plugin || !adversary.id) return;
 		// Live id-based embed: interactive card that follows the stored record.
 		// Each insert gets its own instance token, so copies track HP separately.
-		const block = buildAdversaryEmbedBlock(adversary.id, getAdversaryCount());
+		// Custom records also carry a `code:` snapshot so the card renders in
+		// vaults whose plugin data doesn't include them (sync).
+		const code = isCustomRecord(adversary) ? await encodeAdversaryCode(adversary) : undefined;
+		const block = buildAdversaryEmbedBlock(adversary.id, getAdversaryCount(), code);
 		insertAtFocusedTarget(plugin, block, { width: 460, height: 620 }, adversary.name);
 	}, [app]);
 
@@ -275,10 +284,11 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 		};
 	}, []);
 
-	const insert = useCallback((env: EnvironmentData) => {
+	const insert = useCallback(async (env: EnvironmentData) => {
 		const plugin = getDaggerForgePlugin(app);
 		if (!plugin || !env.id) return;
-		insertAtFocusedTarget(plugin, buildEnvironmentEmbedBlock(env.id), { width: 460, height: 760 }, env.name);
+		const code = isCustomRecord(env) ? await encodeEnvironmentCode(env) : undefined;
+		insertAtFocusedTarget(plugin, buildEnvironmentEmbedBlock(env.id, code), { width: 460, height: 760 }, env.name);
 	}, [app]);
 
 	const deleteEnv = useCallback(async (env: EnvironmentData) => {
@@ -370,12 +380,13 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		)
 		.sort((a, b) => (a.name || "Unnamed").localeCompare(b.name || "Unnamed"));
 
-	const insert = useCallback((character: CharacterData) => {
+	const insert = useCallback(async (character: CharacterData) => {
 		const plg = getDaggerForgePlugin(app);
 		if (!plg) return;
+		const code = await characterEmbedCode(plg, character.id);
 		insertAtFocusedTarget(
 			plg,
-			buildCharacterEmbedBlock(character.id),
+			buildCharacterEmbedBlock(character.id, code),
 			{ width: 960, height: 1100 },
 			character.name || "character",
 		);
@@ -429,7 +440,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 			onClick={() => onInsert(character)}
 		>
 			<p className="df-tier-text">
-				{character.level.trim() ? `Level ${character.level}` : "Level —"}{" "}
+				{character.level.trim() ? `Level ${character.level}` : "Level -"}{" "}
 				<span
 					className="df-class-badge"
 					style={{
@@ -466,10 +477,11 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 		return true;
 	});
 
-	const insert = useCallback((item: GearData) => {
+	const insert = useCallback(async (item: GearData) => {
 		const plg = getDaggerForgePlugin(app);
 		if (!plg) return;
-		insertAtFocusedTarget(plg, buildItemEmbedBlock(item.id), { width: 420, height: 260 }, item.name);
+		const code = item.source === "custom" ? await encodeGearCode(item) : undefined;
+		insertAtFocusedTarget(plg, buildItemEmbedBlock(item.id, code), { width: 420, height: 260 }, item.name);
 	}, [app]);
 
 	const deleteItem = useCallback(async (item: GearData) => {
@@ -509,7 +521,7 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 									onClick={(e: any) => { e.stopPropagation(); void deleteItem(g); }} />
 							)}
 							<h3 className="df-title-small-padding">{g.name}</h3>
-							<p className="df-desc-small-padding">{g.meta}{g.meta && g.text ? " — " : ""}{g.text}</p>
+							<p className="df-desc-small-padding">{g.meta}{g.meta && g.text ? " - " : ""}{g.text}</p>
 						</div>
 					))
 				}

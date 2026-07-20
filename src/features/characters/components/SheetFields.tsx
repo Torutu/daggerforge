@@ -5,7 +5,26 @@ import React from "react";
  * banners, labeled inputs, and toggleable slot buttons.
  */
 
-/** Section banner — pointed hexagon over a dark strip, as printed on the sheet. */
+/** Section banner - pointed hexagon over a dark strip, as printed on the sheet. */
+/** Lucide "zap", inlined like the sheet's other icons (no emoji, SSR-safe).
+ *  Marks domain card recall costs. */
+export function ZapIcon({ className }: { className?: string }) {
+	return (
+		<svg
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2.4"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={"df-cs-zap" + (className ? " " + className : "")}
+			aria-hidden="true"
+		>
+			<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+		</svg>
+	);
+}
+
 export function SectionBanner({ title }: { title: string }) {
 	return (
 		<div className="df-cs-banner">
@@ -126,7 +145,7 @@ export function SlotToggle({
 }
 
 /**
- * Tiny per-section settings toggle — a faint gear in the section's corner
+ * Tiny per-section settings toggle - a faint gear in the section's corner
  * that stays out of the printed-sheet look until hovered.
  */
 export function SectionCog({ open, onToggle }: { open: boolean; onToggle: () => void }) {

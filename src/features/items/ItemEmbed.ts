@@ -3,11 +3,12 @@ import type DaggerForgePlugin from "../../main";
 import { ALL_GEAR } from "../../data/srd";
 import { GearData } from "../../types/srd";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
+import { decodeGearCode } from "../embeds/embedCode";
 import { renderMissingEmbed } from "../embeds/embedShared";
 import { gearToHtml } from "./ItemToHtml";
 
 /**
- * Live gear embeds (weapons, armor, items, consumables — SRD and custom):
+ * Live gear embeds (weapons, armor, items, consumables - SRD and custom):
  *
  *   ```daggerforge-item
  *   id: IT007
@@ -25,12 +26,15 @@ export function findGearById(plugin: DaggerForgePlugin, id: string): GearData | 
 	);
 }
 
-export function buildItemEmbedBlock(id: string): string {
-	return buildEmbedBlock(Item_Embed_Language, { id, instance: generateInstanceToken() });
+export function buildItemEmbedBlock(id: string, code?: string): string {
+	return buildEmbedBlock(Item_Embed_Language, { id, instance: generateInstanceToken(), code });
 }
 
 class ItemEmbedChild extends MarkdownRenderChild {
 	private refs: EventRef[] = [];
+	// Decoded `code:` snapshot, used only when the id isn't in this vault
+	private snapshot: GearData | null = null;
+	private snapshotTried = false;
 
 	constructor(
 		containerEl: HTMLElement,
@@ -65,8 +69,17 @@ class ItemEmbedChild extends MarkdownRenderChild {
 	private render() {
 		const el = this.containerEl;
 		el.empty();
-		const gear = this.params.id ? findGearById(this.plugin, this.params.id) : null;
+		const stored = this.params.id ? findGearById(this.plugin, this.params.id) : null;
+		const gear = stored ?? this.snapshot;
 		if (!gear) {
+			if (this.params.code && !this.snapshotTried) {
+				this.snapshotTried = true;
+				void decodeGearCode(this.params.code).then((decoded) => {
+					this.snapshot = decoded;
+					this.render();
+				});
+				return;
+			}
 			renderMissingEmbed(el, "Item", this.params.id);
 			return;
 		}

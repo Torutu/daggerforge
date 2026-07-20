@@ -55,7 +55,7 @@ export const buildCardHTML = (
 	values: Record<string, string>,
 	features: Feature[],
 	wide = false,
-	/** Stable id for embeds — falls back to a random UUID for legacy inline cards. */
+	/** Stable id for embeds - falls back to a random UUID for legacy inline cards. */
 	cardId?: string,
 ): string => {
 	const {

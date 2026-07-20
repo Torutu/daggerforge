@@ -5,6 +5,7 @@ import { AdversaryModal } from "../adversaries/index";
 import { EnvironmentModal } from "../environments/index";
 import { Adversary_Embed_Language, findAdversaryById } from "../adversaries/AdversaryEmbed";
 import { Environment_Embed_Language, findEnvironmentById } from "../environments/EnvironmentEmbed";
+import { decodeAdversaryCode, decodeEnvironmentCode } from "./embedCode";
 import { repointEmbedBlock } from "./embedShared";
 
 /**
@@ -23,22 +24,29 @@ export function editEmbeddedCard(plugin: DaggerForgePlugin, section: HTMLElement
 	const sourcePath = section.getAttribute("data-df-embed-src") ?? "";
 	if (!kind || !id) return;
 
-	if (kind === "adversary") editEmbeddedAdversary(plugin, section, id, instance, sourcePath);
-	else editEmbeddedEnvironment(plugin, id, instance, sourcePath);
+	if (kind === "adversary") void editEmbeddedAdversary(plugin, section, id, instance, sourcePath);
+	else void editEmbeddedEnvironment(plugin, section, id, instance, sourcePath);
 }
 
 function isCustomId(id: string): boolean {
 	return id.startsWith("CUA_") || id.startsWith("CUE_");
 }
 
-function editEmbeddedAdversary(
+/** Snapshot from the block's `code:` line - set by the renderer only when the
+ *  record isn't in this vault (e.g. a synced device without data.json). */
+function sectionSnapshotCode(section: HTMLElement): string | null {
+	return section.getAttribute("data-df-embed-code");
+}
+
+async function editEmbeddedAdversary(
 	plugin: DaggerForgePlugin,
 	section: HTMLElement,
 	id: string,
 	instance: string | null,
 	sourcePath: string,
-): void {
-	const adv = findAdversaryById(plugin, id);
+): Promise<void> {
+	const code = sectionSnapshotCode(section);
+	const adv = findAdversaryById(plugin, id) ?? (code ? await decodeAdversaryCode(code) : null);
 	if (!adv) {
 		new Notice("This adversary no longer exists.");
 		return;
@@ -61,13 +69,15 @@ function editEmbeddedAdversary(
 	modal.open();
 }
 
-function editEmbeddedEnvironment(
+async function editEmbeddedEnvironment(
 	plugin: DaggerForgePlugin,
+	section: HTMLElement,
 	id: string,
 	instance: string | null,
 	sourcePath: string,
-): void {
-	const env = findEnvironmentById(plugin, id);
+): Promise<void> {
+	const code = sectionSnapshotCode(section);
+	const env = findEnvironmentById(plugin, id) ?? (code ? await decodeEnvironmentCode(code) : null);
 	if (!env) {
 		new Notice("This environment no longer exists.");
 		return;

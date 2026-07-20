@@ -5,7 +5,7 @@
  * Electron process.  This file provides empty stand-ins for every export
  * that gets pulled in transitively when tests import DataManager or
  * SearchEngine (the chain goes through utils/index → canvasHelpers →
- * obsidian).  Nothing here needs real behaviour — the tests never call
+ * obsidian).  Nothing here needs real behaviour - the tests never call
  * any Obsidian API directly.
  */
 
@@ -50,7 +50,7 @@ export class Notice {
     constructor(_message: string) {}
 }
 
-/** Behaviour-faithful Events stub — DataManager's character sync relies on it. */
+/** Behaviour-faithful Events stub - DataManager's character sync relies on it. */
 export class Events {
     private handlers: Record<string, Array<(...args: unknown[]) => void>> = {};
     on(name: string, callback: (...args: unknown[]) => void) {

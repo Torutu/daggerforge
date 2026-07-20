@@ -16,20 +16,26 @@ import {
 	SheetHeader,
 	StatsRow,
 } from "./SheetSections";
+import {
+	BackgroundSection,
+	BeastformSection,
+	CompanionSection,
+	LevelUpSection,
+} from "./SheetGuides";
 import { DomainSprite } from "./DomainArt";
 
 interface Props {
 	char: CharacterData;
 	update: (patch: Partial<CharacterData>) => void;
-	/** Omitted in embeds — the card picker only lives in the sheet view. */
+	/** Omitted in embeds - the card picker only lives in the sheet view. */
 	onAddCards?: (tab: PickerTab) => void;
 }
 
 const NEXT_LAYOUT = { auto: "wide", wide: "compact", compact: "auto" } as const;
 
 const LAYOUT_TITLES = {
-	auto: "Layout: Automatic — fits the pane. Click for full layout.",
-	wide: "Layout: Full — always two columns. Click for single column.",
+	auto: "Layout: Automatic - fits the pane. Click for full layout.",
+	wide: "Layout: Full - always two columns. Click for single column.",
 	compact: "Layout: Single column. Click for automatic.",
 } as const;
 
@@ -114,6 +120,10 @@ export function SheetBody({ char, update, onAddCards }: Props) {
 			</div>
 			<HeritageCardsSection char={char} update={update} onAddCards={onAddCards} />
 			<DomainCardsSection char={char} update={update} onAddCards={onAddCards} />
+			<BeastformSection char={char} update={update} />
+			<CompanionSection char={char} update={update} />
+			<BackgroundSection char={char} update={update} />
+			<LevelUpSection char={char} update={update} />
 			<NotesSection char={char} update={update} />
 			<p className="df-cs-credit">Daggerheart © Darrington Press 2025</p>
 		</div>

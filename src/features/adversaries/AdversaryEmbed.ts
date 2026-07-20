@@ -4,6 +4,7 @@ import { ADVERSARIES } from "../../data/adversaries";
 import { AdvData } from "../../types/index";
 import { attachDiceBadges } from "../../utils/diceBadges";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
+import { decodeAdversaryCode } from "../embeds/embedCode";
 import { embedStateKey, renderMissingEmbed } from "../embeds/embedShared";
 import { advToValues, buildCardHTML } from "./AdvToHtml";
 
@@ -17,7 +18,7 @@ import { advToValues, buildCardHTML } from "./AdvToHtml";
  *   ```
  *
  * The card renders from stored data (custom shadows bundled) and stays fully
- * interactive — the document-level tick/collapse/countdown handlers key their
+ * interactive - the document-level tick/collapse/countdown handlers key their
  * localStorage state off the instance token, so every placed embed tracks its
  * own HP/stress and survives re-renders and restarts. Edits to the record
  * re-render every embed of that id.
@@ -32,16 +33,20 @@ export function findAdversaryById(plugin: DaggerForgePlugin, id: string): AdvDat
 	);
 }
 
-export function buildAdversaryEmbedBlock(id: string, count?: number): string {
+export function buildAdversaryEmbedBlock(id: string, count?: number, code?: string): string {
 	return buildEmbedBlock(Adversary_Embed_Language, {
 		id,
 		instance: generateInstanceToken(),
 		count,
+		code,
 	});
 }
 
 class AdversaryEmbedChild extends MarkdownRenderChild {
 	private refs: EventRef[] = [];
+	// Decoded `code:` snapshot, used only when the id isn't in this vault
+	private snapshot: AdvData | null = null;
+	private snapshotTried = false;
 
 	constructor(
 		containerEl: HTMLElement,
@@ -78,8 +83,17 @@ class AdversaryEmbedChild extends MarkdownRenderChild {
 		const el = this.containerEl;
 		el.empty();
 
-		const adv = this.params.id ? findAdversaryById(this.plugin, this.params.id) : null;
+		const stored = this.params.id ? findAdversaryById(this.plugin, this.params.id) : null;
+		const adv = stored ?? this.snapshot;
 		if (!adv) {
+			if (this.params.code && !this.snapshotTried) {
+				this.snapshotTried = true;
+				void decodeAdversaryCode(this.params.code).then((decoded) => {
+					this.snapshot = decoded;
+					this.render();
+				});
+				return;
+			}
 			renderMissingEmbed(el, "Adversary", this.params.id);
 			return;
 		}
@@ -95,10 +109,12 @@ class AdversaryEmbedChild extends MarkdownRenderChild {
 
 		const section = el.querySelector<HTMLElement>("section");
 		if (section) {
-			section.setAttribute("data-df-embed-id", adv.id);
+			section.setAttribute("data-df-embed-id", adv.id || this.params.id || "");
 			section.setAttribute("data-df-embed-kind", "adversary");
 			if (this.params.instance) section.setAttribute("data-df-embed-instance", this.params.instance);
 			section.setAttribute("data-df-embed-src", this.sourcePath ?? "");
+			// Snapshot-rendered card: let the edit flow decode it and save it locally
+			if (!stored && this.params.code) section.setAttribute("data-df-embed-code", this.params.code);
 			// Idempotent: injects dice badges, keyword colors, and restores
 			// tick/collapse/wide/countdown state from localStorage.
 			attachDiceBadges(section);

@@ -8,6 +8,7 @@ import {
 	createInlineField,
 } from "../../../utils/index";
 import { buildAdversaryEmbedBlock } from "../AdversaryEmbed";
+import { encodeAdversaryCode } from "../../embeds/embedCode";
 import { insertAtFocusedTarget } from "../../embeds/insertDestination";
 
 // Data Assembly
@@ -164,7 +165,7 @@ export class AdversaryModal extends Modal {
 			customClass: "df-adv-field-type",
 		});
 
-		// Horde-only: members per HP input — slides in when type = Horde
+		// Horde-only: members per HP input - slides in when type = Horde
 		const hordeSection = section.createDiv({ cls: "df-horde-section" });
 		const hordeMembersInput = hordeSection.createEl("input", {
 			cls: "df-field-input df-horde-members-input",
@@ -315,7 +316,7 @@ export class AdversaryModal extends Modal {
 		}
 
 		await persistAdversary(this.plugin, newData);
-		this.insertCard(newData.id, Number(newData.count) || undefined);
+		await this.insertCard(newData);
 		this.resetForm();
 		this.refreshBrowserView();
 		this.close();
@@ -330,10 +331,13 @@ export class AdversaryModal extends Modal {
 		);
 	}
 
-	/** Inserts a live id-based embed block into the last-focused note or canvas. */
-	private insertCard(id: string, count?: number) {
-		if (!id) return;
-		insertAtFocusedTarget(this.plugin, buildAdversaryEmbedBlock(id, count), { width: 460, height: 620 });
+	/** Inserts a live id-based embed block (with a `code:` snapshot for sync)
+	 *  into the last-focused note or canvas. */
+	private async insertCard(data: AdvData) {
+		if (!data.id) return;
+		const code = await encodeAdversaryCode(data);
+		const block = buildAdversaryEmbedBlock(data.id, Number(data.count) || undefined, code);
+		insertAtFocusedTarget(this.plugin, block, { width: 460, height: 620 });
 	}
 
 	private resetForm() {
@@ -365,7 +369,7 @@ export class AdversaryModal extends Modal {
 	}
 
 	// Close
-	// Edit sessions are ephemeral — nothing is persisted on close.
+	// Edit sessions are ephemeral - nothing is persisted on close.
 	// Create sessions snapshot the current form so the user can reopen and
 	// continue where they left off.
 

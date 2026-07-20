@@ -29,7 +29,7 @@ import {
 	applyTheme,
 } from "./utils/index";
 
-/** View types that belong to DaggerForge sidebars — never treated as insert targets. */
+/** View types that belong to DaggerForge sidebars - never treated as insert targets. */
 const SIDEBAR_VIEW_TYPES = new Set([Content_Browser_View_Type]);
 
 export default class DaggerForgePlugin extends Plugin {

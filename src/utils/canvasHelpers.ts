@@ -6,7 +6,7 @@ import { App, Notice, MarkdownView, WorkspaceLeaf } from "obsidian";
  *
  * WHY WE NEED lastMainLeaf:
  * When the user clicks a card in the sidebar browser, Obsidian sets the
- * sidebar as the active leaf. From that point, activeLeaf is the sidebar —
+ * sidebar as the active leaf. From that point, activeLeaf is the sidebar -
  * not the canvas or note the user was working in before.
  *
  * The old approach scanned for ANY open canvas leaf and returned true if
@@ -101,7 +101,7 @@ export function isMarkdownActive(app: App): boolean {
 
 /**
  * Create a card on a specific canvas object.
- * Callers must pass the canvas from resolveInsertDestination() — never use
+ * Callers must pass the canvas from resolveInsertDestination() - never use
  * getActiveCanvas() which scans all leaves and picks the wrong one.
  */
 export function createCanvasCard(

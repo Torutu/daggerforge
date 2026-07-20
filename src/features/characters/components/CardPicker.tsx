@@ -13,6 +13,7 @@ import { ALL_GEAR, SRD_ANCESTRIES, SRD_COMMUNITIES, SRD_DOMAIN_CARDS, SRD_EQUIPM
 import { armorToPatch, composeMixedHeritage, toCharacterWeapon, toHeritageCard } from "../creationTemplate";
 import { CardText } from "./CardText";
 import { DomainIcon } from "./DomainArt";
+import { ZapIcon } from "./SheetFields";
 import { domainTint, PickerTab } from "./SheetSections";
 
 interface Props {
@@ -187,7 +188,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 						<span className="df-cs-picker-mixed-hint">
 							{mixedMode
 								? mixedPrimary
-									? `1st feature: ${mixedPrimary.name} — now add the ancestry for the 2nd feature.`
+									? `1st feature: ${mixedPrimary.name} - now add the ancestry for the 2nd feature.`
 									: "Add the ancestry whose FIRST feature you take."
 								: "Combine two ancestries: the first feature of one, the second of another."}
 						</span>
@@ -296,7 +297,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 								<span className="df-cs-pick-meta">
 									Tier {gear.tier} · {kind === "armor"
 										? `Thresholds ${(gear as typeof SRD_EQUIPMENT.armor[number]).minor}/${(gear as typeof SRD_EQUIPMENT.armor[number]).major} · Score ${(gear as typeof SRD_EQUIPMENT.armor[number]).score}`
-										: `${(gear as typeof SRD_EQUIPMENT.weapons[number]).trait} — ${(gear as typeof SRD_EQUIPMENT.weapons[number]).range} · ${(gear as typeof SRD_EQUIPMENT.weapons[number]).damage}`}
+										: `${(gear as typeof SRD_EQUIPMENT.weapons[number]).trait} - ${(gear as typeof SRD_EQUIPMENT.weapons[number]).range} · ${(gear as typeof SRD_EQUIPMENT.weapons[number]).damage}`}
 								</span>
 							</button>
 							{expanded === gear.id && gear.feature && (
@@ -408,7 +409,7 @@ function PickerDomainRow({
 				<DomainIcon domain={card.domain} className="df-cs-dcard-icon" style={{ color }} />
 				<span className="df-cs-pick-name">{card.name}</span>
 				<span className="df-cs-pick-meta">
-					{card.domain} · {card.type} · ⚡{card.recallCost}
+					{card.domain} · {card.type} · <ZapIcon />{card.recallCost}
 				</span>
 			</button>
 			{expanded && (

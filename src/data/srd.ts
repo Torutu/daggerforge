@@ -5,8 +5,10 @@ import domainsJson from "./srd/domains.json";
 import equipmentJson from "./srd/equipment.json";
 import itemsJson from "./srd/items.json";
 import consumablesJson from "./srd/consumables.json";
+import beastformsJson from "./srd/beastforms.json";
 import type {
 	GearData,
+	SrdBeastform,
 	SrdClass,
 	SrdConsumable,
 	SrdDomainCard,
@@ -29,9 +31,10 @@ export const SRD_DOMAIN_CARDS = domainsJson as SrdDomainCard[];
 export const SRD_EQUIPMENT = equipmentJson as SrdEquipment;
 export const SRD_ITEMS = itemsJson as SrdItem[];
 export const SRD_CONSUMABLES = consumablesJson as SrdConsumable[];
+export const BEASTFORMS = beastformsJson as SrdBeastform[];
 
 function weaponMeta(w: { trait: string; range: string; damage: string; damageType: string; burden: string }): string {
-	return `${w.trait} — ${w.range} · ${w.damage} ${w.damageType === "Magical" ? "mag" : "phy"} · ${w.burden}`;
+	return `${w.trait} - ${w.range} · ${w.damage} ${w.damageType === "Magical" ? "mag" : "phy"} · ${w.burden}`;
 }
 
 /** Everything browsable as gear, in one normalized list. */

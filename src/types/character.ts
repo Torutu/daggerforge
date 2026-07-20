@@ -1,7 +1,7 @@
 /**
  * Data model for the Daggerheart character sheet.
- * Mirrors the official fillable character sheet 1:1 — same sections,
- * slot counts, and field names — plus a free-form notes section.
+ * Mirrors the official fillable character sheet 1:1 - same sections,
+ * slot counts, and field names - plus a free-form notes section.
  */
 
 export const TRAIT_NAMES = [
@@ -35,7 +35,7 @@ export const ARMOR_SLOTS = 12;
 export const EXPERIENCE_ROWS = 5;
 export const GOLD_HANDFULS = 9;
 export const GOLD_BAGS = 9;
-/** Markable proficiency circles — the first printed circle is always filled. */
+/** Markable proficiency circles - the first printed circle is always filled. */
 export const PROFICIENCY_SLOTS = 5;
 export const INVENTORY_WEAPONS = 2;
 
@@ -79,12 +79,13 @@ export interface CustomCurrency {
 
 /**
  * Per-section sheet options (each section's cog wheel). All purely visual /
- * homebrew knobs — defaults reproduce the printed sheet exactly.
+ * homebrew knobs - defaults reproduce the printed sheet exactly.
  */
 export interface SheetSettings {
-	/** Adds a fourth "Massive Damage — Mark 4 HP" threshold block. */
+	/** Adds a fourth "Massive Damage - Mark 4 HP" threshold block. */
 	massiveDamage: boolean;
-	/** Slots up to this count render solid; the rest stay dashed. */
+	/** Slots up to this count render solid; the rest stay dashed. Values above
+	 *  12 wrap onto extra lines of 12 slots each (up to 24). */
 	maxHp: number;
 	maxStress: number;
 	/** Hope diamonds beyond this count are greyed out and locked. Values above
@@ -133,6 +134,65 @@ export interface CharacterDomainCard {
 	inVault: boolean;
 }
 
+/** Level Up Guide state. The advancement tables themselves are bundled data
+ *  (src/data/levelUpGuide.ts); the character only stores its marks. */
+export interface LevelUpState {
+	/** Advancements gained per level - the printed rules say 2, but editable. */
+	pointsPerLevel: number;
+	/** Unspent advancement points ("you have 2 points to spend"). */
+	pending: number;
+	/** Last sheet Level the pending counter was synced against. */
+	lastLevel: number;
+	/** Marked slots per advancement option, keyed like "t2.traits". */
+	marks: Record<string, number>;
+}
+
+export function defaultLevelUp(): LevelUpState {
+	return { pointsPerLevel: 2, pending: 0, lastLevel: 1, marks: {} };
+}
+
+/** Sync the pending-points counter when the sheet's Level changes: each level
+ *  gained adds pointsPerLevel; lowering the level just re-anchors. */
+export function applyLevelChange(state: LevelUpState, newLevel: number): LevelUpState {
+	if (!Number.isInteger(newLevel) || newLevel < 1 || newLevel === state.lastLevel) return state;
+	const gained = Math.max(0, newLevel - state.lastLevel);
+	return { ...state, lastLevel: newLevel, pending: state.pending + gained * state.pointsPerLevel };
+}
+
+export const COMPANION_STRESS_SLOTS = 6;
+export const COMPANION_EXPERIENCES = 5;
+
+/** Ranger Companion sheet, mirroring the printed page. The portrait is a
+ *  small data URL so it travels inside share codes and embed snapshots. */
+export interface CompanionData {
+	name: string;
+	art: string;
+	evasion: string;
+	stress: boolean[];
+	experiences: CharacterExperience[];
+	/** Standard attack description; damage starts at d6, range at Melee. */
+	attack: string;
+	range: string;
+	/** "d6" | "d8" | "d10" | "d12" - stepped up by Vicious training. */
+	damageDie: string;
+	/** Marks per training option, keyed like "vicious" (see levelUpGuide.ts). */
+	training: Record<string, number>;
+}
+
+export function defaultCompanion(): CompanionData {
+	return {
+		name: "",
+		art: "",
+		evasion: "",
+		stress: new Array(COMPANION_STRESS_SLOTS).fill(false),
+		experiences: Array.from({ length: COMPANION_EXPERIENCES }, () => ({ text: "", modifier: "" })),
+		attack: "",
+		range: "",
+		damageDie: "",
+		training: {},
+	};
+}
+
 export interface CharacterData {
 	id: string;
 	name: string;
@@ -164,11 +224,18 @@ export interface CharacterData {
 	activeArmor: CharacterArmor;
 	inventory: string;
 	inventoryWeapons: CharacterInventoryWeapon[];
-	/** Not on the printed sheet — extra space for session/campaign notes. */
+	/** Not on the printed sheet - extra space for session/campaign notes. */
 	notes: string;
 	ancestryCard: HeritageCardData | null;
 	communityCard: HeritageCardData | null;
 	domainCards: CharacterDomainCard[];
+	/** Answers to the class's background/connection questions, index-aligned. */
+	backgroundAnswers: string[];
+	connectionAnswers: string[];
+	/** Name of the Druid Beastform currently assumed ("" when not transformed). */
+	activeBeastform: string;
+	levelUp: LevelUpState;
+	companion: CompanionData;
 	sheetSettings: SheetSettings;
 	lastUpdated: number;
 }
@@ -227,6 +294,11 @@ export function createEmptyCharacter(id: string): CharacterData {
 		ancestryCard: null,
 		communityCard: null,
 		domainCards: [],
+		backgroundAnswers: [],
+		connectionAnswers: [],
+		activeBeastform: "",
+		levelUp: defaultLevelUp(),
+		companion: defaultCompanion(),
 		sheetSettings: defaultSheetSettings(),
 		lastUpdated: Date.now(),
 	};
@@ -272,10 +344,10 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 	base.armorSlots = asBooleanArray(data.armorSlots, ARMOR_SLOTS);
 	base.majorThreshold = asString(data.majorThreshold);
 	base.severeThreshold = asString(data.severeThreshold);
-	base.hp = asBooleanArray(data.hp, HP_SLOTS);
-	base.stress = asBooleanArray(data.stress, STRESS_SLOTS);
-	base.hopeFeature = asString(data.hopeFeature);
 	base.sheetSettings = normalizeSheetSettings(data.sheetSettings);
+	base.hp = asBooleanArray(data.hp, trackSlotCount(base.sheetSettings.maxHp, HP_SLOTS));
+	base.stress = asBooleanArray(data.stress, trackSlotCount(base.sheetSettings.maxStress, STRESS_SLOTS));
+	base.hopeFeature = asString(data.hopeFeature);
 	base.hope = asBooleanArray(data.hope, hopeSlotCount(base.sheetSettings.maxHope));
 
 	const experiences = Array.isArray(data.experiences) ? data.experiences : [];
@@ -328,8 +400,61 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 	base.domainCards = (Array.isArray(data.domainCards) ? data.domainCards : [])
 		.map(normalizeDomainCard)
 		.filter((c): c is CharacterDomainCard => c !== null);
+	base.backgroundAnswers = asStringArray(data.backgroundAnswers, 8);
+	base.connectionAnswers = asStringArray(data.connectionAnswers, 8);
+	base.activeBeastform = asString(data.activeBeastform);
+	base.levelUp = normalizeLevelUp(data.levelUp);
+	base.companion = normalizeCompanion(data.companion);
 	base.lastUpdated = typeof data.lastUpdated === "number" ? data.lastUpdated : Date.now();
 	return base;
+}
+
+function asStringArray(value: unknown, max: number): string[] {
+	return (Array.isArray(value) ? value : []).slice(0, max).map(asString);
+}
+
+/** Positive integer marks only; junk keys/values are dropped. */
+function asMarkRecord(raw: unknown): Record<string, number> {
+	const source = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+	const marks: Record<string, number> = {};
+	for (const [key, value] of Object.entries(source)) {
+		const n = Number(value);
+		if (Number.isInteger(n) && n > 0 && n <= 9) marks[key] = n;
+	}
+	return marks;
+}
+
+function normalizeLevelUp(raw: unknown): LevelUpState {
+	const defaults = defaultLevelUp();
+	const s = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+	return {
+		pointsPerLevel: clampInt(s.pointsPerLevel, 0, 9, defaults.pointsPerLevel),
+		pending: clampInt(s.pending, -99, 99, defaults.pending),
+		lastLevel: clampInt(s.lastLevel, 1, 10, defaults.lastLevel),
+		marks: asMarkRecord(s.marks),
+	};
+}
+
+function normalizeCompanion(raw: unknown): CompanionData {
+	const s = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+	const experiences = Array.isArray(s.experiences) ? s.experiences : [];
+	return {
+		name: asString(s.name),
+		art: typeof s.art === "string" && s.art.startsWith("data:image/") ? s.art : "",
+		evasion: asString(s.evasion),
+		stress: asBooleanArray(s.stress, COMPANION_STRESS_SLOTS),
+		experiences: Array.from({ length: COMPANION_EXPERIENCES }, (_, i) => {
+			const e = (experiences[i] && typeof experiences[i] === "object" ? experiences[i] : {}) as Record<
+				string,
+				unknown
+			>;
+			return { text: asString(e.text), modifier: asString(e.modifier) };
+		}),
+		attack: asString(s.attack),
+		range: asString(s.range),
+		damageDie: asString(s.damageDie),
+		training: asMarkRecord(s.training),
+	};
 }
 
 function normalizeHeritageCard(raw: unknown): HeritageCardData | null {
@@ -356,9 +481,15 @@ function normalizeDomainCard(raw: unknown): CharacterDomainCard | null {
 	};
 }
 
-/** Hope renders in full strips of 6 — the slot count rounds max hope up to one. */
+/** Tracks render in full lines (HP/Stress: 12, Hope: 6) - the slot count
+ *  rounds the configured max up to complete lines. */
+export function trackSlotCount(max: number, slotsPerLine: number): number {
+	return Math.max(slotsPerLine, Math.ceil(max / slotsPerLine) * slotsPerLine);
+}
+
+/** Hope renders in full strips of 6 - the slot count rounds max hope up to one. */
 export function hopeSlotCount(maxHope: number): number {
-	return Math.max(HOPE_SLOTS, Math.ceil(maxHope / HOPE_SLOTS) * HOPE_SLOTS);
+	return trackSlotCount(maxHope, HOPE_SLOTS);
 }
 
 function clampInt(value: unknown, min: number, max: number, fallback: number): number {
@@ -376,8 +507,8 @@ function normalizeSheetSettings(raw: unknown): SheetSettings {
 		.filter((c) => c.name !== "" || c.amount !== "");
 	return {
 		massiveDamage: s.massiveDamage === true,
-		maxHp: clampInt(s.maxHp, 1, HP_SLOTS, defaults.maxHp),
-		maxStress: clampInt(s.maxStress, 1, STRESS_SLOTS, defaults.maxStress),
+		maxHp: clampInt(s.maxHp, 1, 24, defaults.maxHp),
+		maxStress: clampInt(s.maxStress, 1, 24, defaults.maxStress),
 		maxHope: clampInt(s.maxHope, 1, 24, defaults.maxHope),
 		experienceRows: clampInt(s.experienceRows, EXPERIENCE_ROWS, 20, defaults.experienceRows),
 		goldMode: s.goldMode === "custom" ? "custom" : "standard",

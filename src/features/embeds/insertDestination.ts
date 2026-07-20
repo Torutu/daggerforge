@@ -5,39 +5,42 @@ import { createCanvasCard, resolveInsertDestination } from "../../utils/canvasHe
 /**
  * One-click insert into the last-focused note or canvas (no picker).
  * Works in any note mode: edit mode inserts at the cursor, reading mode
- * appends to the end of the note.
+ * appends to the end of the note. Returns whether a target was found.
  */
 export function insertAtFocusedTarget(
 	plugin: DaggerForgePlugin,
 	blockText: string,
 	canvasSize: CanvasNodeSize,
 	itemName?: string,
-): void {
+	quiet = false,
+): boolean {
 	const label = itemName ? `Inserted ${itemName}.` : "Inserted.";
 	const { kind, canvas, leaf } = resolveInsertDestination(plugin.app, plugin.lastMainLeaf);
 
 	if (kind === "canvas" && canvas) {
-		if (createCanvasCard(plugin.app, blockText, canvas, canvasSize)) new Notice(label);
-		return;
+		const ok = createCanvasCard(plugin.app, blockText, canvas, canvasSize);
+		if (ok && !quiet) new Notice(label);
+		return ok;
 	}
 	if (kind === "markdown" && leaf) {
 		const view = leaf.view as MarkdownView;
 		if (view.getMode() !== "preview") {
 			view.editor.replaceSelection("\n" + blockText);
-			new Notice(label);
-			return;
+			if (!quiet) new Notice(label);
+			return true;
 		}
 		if (view.file) {
 			void plugin.app.vault.process(view.file, (c) => c.replace(/\n*$/, "\n\n") + blockText);
-			new Notice(label);
-			return;
+			if (!quiet) new Notice(label);
+			return true;
 		}
 	}
 	new Notice("Open a note or canvas first.");
+	return false;
 }
 
 /**
- * "Insert into where, exactly?" — a fuzzy picker over every possible insert
+ * "Insert into where, exactly?" - a fuzzy picker over every possible insert
  * target: the last-focused note/canvas first (so Enter reproduces the old
  * one-click behavior), then other open tabs, then every note and canvas in
  * the vault (content is appended for targets without an active cursor).
@@ -149,7 +152,7 @@ export async function insertTextAtDestination(
 			new Notice(`Inserted at the cursor in "${name}".`);
 			return;
 		}
-		// Reading mode has no cursor — fall through to appending to the file
+		// Reading mode has no cursor - fall through to appending to the file
 	}
 
 	if (!dest.file) {
@@ -188,7 +191,7 @@ export function pickDestinationAndInsert(
 
 /**
  * Appends a text node to raw `.canvas` file JSON (JsonCanvas format),
- * positioned below the existing nodes. Pure — unit-tested.
+ * positioned below the existing nodes. Pure - unit-tested.
  */
 export function addTextNodeToCanvasJson(
 	content: string,

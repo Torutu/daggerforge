@@ -4,7 +4,7 @@ Known issues encountered during development, their root cause, and fix. Check he
 
 ---
 
-## [2026-05-19] `process is not defined` — Plugin fails to load on Android
+## [2026-05-19] `process is not defined` - Plugin fails to load on Android
 
 **Symptom:** Obsidian mobile shows "Failed to load plugin: daggerforge". Chrome DevTools console shows:
 ```
@@ -12,7 +12,7 @@ ReferenceError: process is not defined
   at node_modules/react-dom/client.js
 ```
 
-**Root cause:** React DOM references `process.env.NODE_ENV` at runtime. `process` is a Node.js/Electron global — it exists on desktop but not in Android's WebView.
+**Root cause:** React DOM references `process.env.NODE_ENV` at runtime. `process` is a Node.js/Electron global - it exists on desktop but not in Android's WebView.
 
 **Fix:** Add `define` to `esbuild.config.mjs` so esbuild inlines the value at build time:
 ```js
@@ -25,7 +25,7 @@ define: {
 
 ---
 
-## [2026-05-19] `make deploy` skips Android — `deploy-android.sh` never called
+## [2026-05-19] `make deploy` skips Android - `deploy-android.sh` never called
 
 **Symptom:** `make deploy` only deploys to Windows vault, Android device gets nothing.
 
@@ -40,7 +40,7 @@ bash "$(dirname "$0")/deploy-android.sh"
 
 ---
 
-## [2026-05-19] ADB device detection fails in WSL — `\r` in output
+## [2026-05-19] ADB device detection fails in WSL - `\r` in output
 
 **Symptom:** `deploy-android.sh` prints "No Android device connected" even when `adb.exe devices` shows a device.
 
@@ -55,7 +55,7 @@ adb.exe devices 2>/dev/null | tr -d '\r' | grep -q "device$"
 
 ---
 
-## [2026-05-19] `make` fails — `powershell: No such file or directory`
+## [2026-05-19] `make` fails - `powershell: No such file or directory`
 
 **Symptom:** `make deploy` exits with error 127.
 
@@ -67,7 +67,7 @@ adb.exe devices 2>/dev/null | tr -d '\r' | grep -q "device$"
 
 ---
 
-## [2026-05-19] `make help` crashes — `Syntax error: "(" unexpected`
+## [2026-05-19] `make help` crashes - `Syntax error: "(" unexpected`
 
 **Symptom:** Running `make` (default help target) exits with error 2.
 

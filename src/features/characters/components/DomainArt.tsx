@@ -1,6 +1,6 @@
 /**
  * Domain icon art, ported from the author's dhtools project
- * (public/domains/*.svg). Generated file — regenerate rather than hand-edit.
+ * (public/domains/*.svg). Generated file - regenerate rather than hand-edit.
  *
  * DomainSprite mounts the <symbol> definitions once (hidden); DomainIcon
  * references them with <use>, inheriting color from CSS `currentColor`.

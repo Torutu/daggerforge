@@ -14,7 +14,7 @@ import {
 	SRD_EQUIPMENT,
 } from "../../data/srd";
 
-/** Selections made in the guided creation wizard. Everything is optional —
+/** Selections made in the guided creation wizard. Everything is optional -
  *  skipped steps simply leave those parts of the sheet blank. */
 export interface CreationChoices {
 	className?: string;
@@ -60,7 +60,7 @@ const STARTING_INVENTORY =
  * Builds a level-1 character from wizard choices, following the SRD's
  * character creation steps: class stats, suggested traits and equipment,
  * heritage, 2 starting Hope, one handful of gold, and chosen domain cards.
- * Pure function — the wizard UI stays thin and this stays unit-testable.
+ * Pure function - the wizard UI stays thin and this stays unit-testable.
  */
 export function buildCharacterFromChoices(choices: CreationChoices, id: string): CharacterData {
 	const char = createEmptyCharacter(id);
@@ -102,7 +102,7 @@ export function buildCharacterFromChoices(choices: CreationChoices, id: string):
 function applyClass(char: CharacterData, srdClass: SrdClass, subclassName?: string): void {
 	const subclass = subclassName ? srdClass.subclasses[subclassName] : undefined;
 
-	char.classSubclass = subclass ? `${srdClass.name} — ${subclass.name}` : srdClass.name;
+	char.classSubclass = subclass ? `${srdClass.name} - ${subclass.name}` : srdClass.name;
 	char.evasion = String(srdClass.stats.evasion);
 	char.hopeFeature = srdClass.hopeFeature;
 	// Class HP becomes the sheet's solid-slot count (the cog can adjust it later)
@@ -159,7 +159,7 @@ export function toCharacterWeapon(weapon: {
 	const damageType = weapon.damageType === "Magical" ? "mag" : "phy";
 	return {
 		name: weapon.name,
-		traitRange: `${weapon.trait} — ${weapon.range}`,
+		traitRange: `${weapon.trait} - ${weapon.range}`,
 		damageDice: `${weapon.damage} ${damageType}`,
 		feature: weapon.feature ?? "",
 	};

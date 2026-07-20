@@ -54,6 +54,25 @@ export interface SrdHeritage {
 	features: string[];
 }
 
+/** Druid Beastform options (official Beastform list). */
+export interface SrdBeastform {
+	name: string;
+	tier: number;
+	/** e.g. "Fox, Mouse, Weasel" */
+	examples: string;
+	/** Trait that gains the bonus while transformed. */
+	trait: string;
+	traitMod: number;
+	evasionMod: number;
+	attackRange: string;
+	attackTrait: string;
+	attackDamage: string;
+	attackMod: number;
+	/** Roll types made with advantage, e.g. ["deceive", "locate", "sneak"] */
+	advantages: string[];
+	features: { name: string; text: string }[];
+}
+
 export interface SrdDomainCard {
 	name: string;
 	level: number;
@@ -128,14 +147,14 @@ export interface SrdConsumable {
 }
 
 /** Unified view over every piece of gear (SRD equipment/items/consumables and
- *  user-created items) — what the browser, embeds, and picker consume. */
+ *  user-created items) - what the browser, embeds, and picker consume. */
 export interface GearData {
 	id: string;
 	kind: "weapon" | "armor" | "wheelchair" | "item" | "consumable";
 	name: string;
 	tier: number | null;
 	rarity: string | null;
-	/** One-line stat summary, e.g. "Agility — Melee · d8 phy · One-Handed". */
+	/** One-line stat summary, e.g. "Agility - Melee · d8 phy · One-Handed". */
 	meta: string;
 	/** Effect / feature text. */
 	text: string;

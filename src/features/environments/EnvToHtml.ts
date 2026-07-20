@@ -32,7 +32,7 @@ function parseClocksFromFeatures(features: EnvironmentData["features"]): Countdo
 export function envToHtml(
 	env: EnvironmentData,
 	wide = false,
-	/** Stable id for embeds — falls back to a random UUID for legacy inline cards. */
+	/** Stable id for embeds - falls back to a random UUID for legacy inline cards. */
 	cardId?: string,
 ): string {
 	const hiddenID = cardId ?? crypto.randomUUID();

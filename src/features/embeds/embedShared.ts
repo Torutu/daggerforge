@@ -4,7 +4,7 @@ import { EmbedParams } from "./blockParams";
  * Bits shared by the adversary and environment card embeds.
  */
 
-/** Stable identity key for one placed embed — drives all localStorage card
+/** Stable identity key for one placed embed - drives all localStorage card
  *  state (ticks/collapse/wide/countdowns). Prefixed so it can never collide
  *  with the random UUIDs baked into legacy inline HTML cards. */
 export function embedStateKey(params: EmbedParams): string {
@@ -25,7 +25,7 @@ export function renderMissingEmbed(el: HTMLElement, kind: string, id: string | n
 /**
  * Rewrites the `id:` line of one specific embed block inside file content.
  * The block is located textually by its fence language, old id, and (when
- * present) instance token — precise enough to touch exactly one block.
+ * present) instance token - precise enough to touch exactly one block.
  * Returns the updated content, or null when the block wasn't found.
  */
 export function repointEmbedBlock(

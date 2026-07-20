@@ -10,6 +10,7 @@ import {
 	SheetSettings,
 	STRESS_SLOTS,
 	TRAIT_NAMES,
+	trackSlotCount,
 	TRAIT_VERBS,
 	TraitName,
 } from "../../../types/character";
@@ -40,6 +41,7 @@ import {
 	SectionBanner,
 	SectionCog,
 	SlotToggle,
+	ZapIcon,
 } from "./SheetFields";
 
 /** Every section edits the character through a single partial-update callback. */
@@ -189,6 +191,16 @@ export function DamageHealthSection({ char, update }: SectionProps) {
 	const [cogOpen, setCogOpen] = useState(false);
 	const settings = char.sheetSettings;
 
+	// Resizes the track to full lines of 12, keeping marks that still fit
+	const setMaxHp = (n: number) =>
+		patchSettings(char, update, { maxHp: n }, {
+			hp: Array.from({ length: trackSlotCount(n, HP_SLOTS) }, (_, i) => char.hp[i] ?? false),
+		});
+	const setMaxStress = (n: number) =>
+		patchSettings(char, update, { maxStress: n }, {
+			stress: Array.from({ length: trackSlotCount(n, STRESS_SLOTS) }, (_, i) => char.stress[i] ?? false),
+		});
+
 	return (
 		<section className="df-cs-box">
 			<SectionBanner title="Damage & Health" />
@@ -204,15 +216,15 @@ export function DamageHealthSection({ char, update }: SectionProps) {
 						label="Max HP"
 						value={settings.maxHp}
 						min={1}
-						max={HP_SLOTS}
-						onChange={(n) => patchSettings(char, update, { maxHp: n })}
+						max={24}
+						onChange={setMaxHp}
 					/>
 					<CogNumber
 						label="Max Stress"
 						value={settings.maxStress}
 						min={1}
-						max={STRESS_SLOTS}
-						onChange={(n) => patchSettings(char, update, { maxStress: n })}
+						max={24}
+						onChange={setMaxStress}
 					/>
 				</CogPanel>
 			)}
@@ -286,7 +298,7 @@ function ThresholdGap({
 	);
 }
 
-/** Massive Damage is always double the Severe threshold — computed, not typed. */
+/** Massive Damage is always double the Severe threshold - computed, not typed. */
 function MassiveThresholdGap({ severeThreshold }: { severeThreshold: string }) {
 	const severe = Number(severeThreshold);
 	const massive =
@@ -317,18 +329,31 @@ function TrackRow({
 	solidCount: number;
 	onToggle: (index: number) => void;
 }) {
+	// Like hope strips: more than 12 slots wrap onto extra lines of 12
+	const lines: boolean[][] = [];
+	for (let start = 0; start < slots.length; start += HP_SLOTS) {
+		lines.push(slots.slice(start, start + HP_SLOTS));
+	}
+
 	return (
 		<div className="df-cs-track">
 			<span className="df-cs-track-label">{label}</span>
-			<div className="df-cs-track-slots">
-				{slots.map((on, i) => (
-					<SlotToggle
-						key={i}
-						on={on}
-						onToggle={() => onToggle(i)}
-						label={`${label} ${i + 1}`}
-						className={"df-cs-track-slot" + (i >= solidCount ? " df-cs-track-slot--dashed" : "")}
-					/>
+			<div className="df-cs-track-lines">
+				{lines.map((line, lineIndex) => (
+					<div key={lineIndex} className="df-cs-track-slots">
+						{line.map((on, j) => {
+							const i = lineIndex * HP_SLOTS + j;
+							return (
+								<SlotToggle
+									key={i}
+									on={on}
+									onToggle={() => onToggle(i)}
+									label={`${label} ${i + 1}`}
+									className={"df-cs-track-slot" + (i >= solidCount ? " df-cs-track-slot--dashed" : "")}
+								/>
+							);
+						})}
+					</div>
 				))}
 			</div>
 		</div>
@@ -347,7 +372,7 @@ export function HopeSection({ char, update }: SectionProps) {
 			hope: Array.from({ length: hopeSlotCount(n) }, (_, i) => i < n && (char.hope[i] ?? false)),
 		});
 
-	// One strip per 6 diamonds — more than 6 Hope wraps onto extra lines
+	// One strip per 6 diamonds - more than 6 Hope wraps onto extra lines
 	const strips: boolean[][] = [];
 	for (let start = 0; start < char.hope.length; start += HOPE_SLOTS) {
 		strips.push(char.hope.slice(start, start + HOPE_SLOTS));
@@ -359,7 +384,7 @@ export function HopeSection({ char, update }: SectionProps) {
 			<SectionCog open={cogOpen} onToggle={() => setCogOpen(!cogOpen)} />
 			{cogOpen && (
 				<CogPanel>
-					<CogNumber label="Max Hope" value={maxHope} min={1} max={24} onChange={setMaxHope} />
+					<CogNumber label="Max Hope" value={maxHope} min={0} max={24} onChange={setMaxHope} />
 				</CogPanel>
 			)}
 			<p className="df-cs-hint">Spend a Hope to use an experience or help an ally.</p>
@@ -802,7 +827,7 @@ function DomainCardItem({
 				<DomainIcon domain={card.domain} className="df-cs-dcard-icon" style={{ color }} />
 				<span className="df-cs-dcard-name">{card.name}</span>
 				<span className="df-cs-dcard-meta">
-					{card.domain} · {card.type} · ⚡{card.recallCost}
+					{card.domain} · {card.type} · <ZapIcon />{card.recallCost}
 				</span>
 				<button type="button" className="df-cs-card-remove" aria-label={`Remove ${card.name}`} onClick={onRemove}>
 					✕

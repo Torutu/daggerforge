@@ -29,7 +29,7 @@ export class ContentCreatorModal extends Modal {
 		this.buildOption(grid, "environment", "mountain", "Environment",
 			"Create a new environment card with features and GM questions.");
 		this.buildOption(grid, "item", "backpack", "Item",
-			"Create a weapon, armor, item, or consumable — guided fields included.");
+			"Create a weapon, armor, item, or consumable - guided fields included.");
 	}
 
 	onClose() {

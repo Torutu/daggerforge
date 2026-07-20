@@ -4,6 +4,7 @@ import { ENVIRONMENTS } from "../../data/environments";
 import { EnvironmentData } from "../../types/index";
 import { attachDiceBadges } from "../../utils/diceBadges";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
+import { decodeEnvironmentCode } from "../embeds/embedCode";
 import { embedStateKey, renderMissingEmbed } from "../embeds/embedShared";
 import { envToHtml } from "./EnvToHtml";
 
@@ -29,15 +30,19 @@ export function findEnvironmentById(plugin: DaggerForgePlugin, id: string): Envi
 	);
 }
 
-export function buildEnvironmentEmbedBlock(id: string): string {
+export function buildEnvironmentEmbedBlock(id: string, code?: string): string {
 	return buildEmbedBlock(Environment_Embed_Language, {
 		id,
 		instance: generateInstanceToken(),
+		code,
 	});
 }
 
 class EnvironmentEmbedChild extends MarkdownRenderChild {
 	private refs: EventRef[] = [];
+	// Decoded `code:` snapshot, used only when the id isn't in this vault
+	private snapshot: EnvironmentData | null = null;
+	private snapshotTried = false;
 
 	constructor(
 		containerEl: HTMLElement,
@@ -74,8 +79,17 @@ class EnvironmentEmbedChild extends MarkdownRenderChild {
 		const el = this.containerEl;
 		el.empty();
 
-		const env = this.params.id ? findEnvironmentById(this.plugin, this.params.id) : null;
+		const stored = this.params.id ? findEnvironmentById(this.plugin, this.params.id) : null;
+		const env = stored ?? this.snapshot;
 		if (!env) {
+			if (this.params.code && !this.snapshotTried) {
+				this.snapshotTried = true;
+				void decodeEnvironmentCode(this.params.code).then((decoded) => {
+					this.snapshot = decoded;
+					this.render();
+				});
+				return;
+			}
 			renderMissingEmbed(el, "Environment", this.params.id);
 			return;
 		}
@@ -85,10 +99,12 @@ class EnvironmentEmbedChild extends MarkdownRenderChild {
 
 		const section = el.querySelector<HTMLElement>("section");
 		if (section) {
-			section.setAttribute("data-df-embed-id", env.id);
+			section.setAttribute("data-df-embed-id", env.id || this.params.id || "");
 			section.setAttribute("data-df-embed-kind", "environment");
 			if (this.params.instance) section.setAttribute("data-df-embed-instance", this.params.instance);
 			section.setAttribute("data-df-embed-src", this.sourcePath ?? "");
+			// Snapshot-rendered card: let the edit flow decode it and save it locally
+			if (!stored && this.params.code) section.setAttribute("data-df-embed-code", this.params.code);
 			attachDiceBadges(section);
 		}
 	}

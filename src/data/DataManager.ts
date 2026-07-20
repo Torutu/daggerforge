@@ -18,7 +18,7 @@ export class DataManager {
 	 *   "character-changed" (character, origin) / "character-deleted" (id)
 	 *   "adversary-changed" (adversary) / "adversary-deleted" (id)
 	 *   "environment-changed" (environment) / "environment-deleted" (id)
-	 *   "characters-reloaded" (), "data-reloaded" () — bulk import/reset.
+	 *   "characters-reloaded" (), "data-reloaded" () - bulk import/reset.
 	 * `origin` is an opaque token a character sheet passes with its own saves
 	 * so it can ignore its own echo.
 	 */

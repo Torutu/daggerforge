@@ -1,18 +1,18 @@
 import { CharacterData, normalizeCharacter } from "./types";
 
 /**
- * Character codes — a character serialized into a copy-paste friendly string.
+ * Character codes - a character serialized into a copy-paste friendly string.
  * A player copies the code from their sheet and sends it to their GM, who
  * imports it to get an identical character. The code carries the character's
  * id, so re-importing an updated code refreshes the same character instead of
  * duplicating it.
  *
  * Format: prefix + base64url payload.
- *   DHC1. — gzip-compressed JSON (normal case)
- *   DHC0. — plain JSON (fallback when CompressionStream is unavailable)
+ *   DHC1. - gzip-compressed JSON (normal case)
+ *   DHC0. - plain JSON (fallback when CompressionStream is unavailable)
  *
  * Uses only standard browser APIs (TextEncoder/Decoder, CompressionStream,
- * Blob/Response, btoa/atob) — no Obsidian or Node-specific dependency, so it
+ * Blob/Response, btoa/atob) - no Obsidian or Node-specific dependency, so it
  * runs as-is in any modern browser (React, plain HTML/TS, etc). Codes
  * produced by one runtime decode correctly in the other.
  */

@@ -166,7 +166,7 @@ export function restoreCountdownState(card: HTMLElement): void {
 export function handleCountdownClick(evt: MouseEvent): void {
 	const target = evt.target as HTMLElement;
 
-	// Collapse button — toggles all countdowns on the card
+	// Collapse button - toggles all countdowns on the card
 	const collapseBtn = target.closest<HTMLButtonElement>(".df-env-countdown-collapse-btn");
 	if (collapseBtn) {
 		const card = collapseBtn.closest<HTMLElement>(".df-env-card-outer");
@@ -177,7 +177,7 @@ export function handleCountdownClick(evt: MouseEvent): void {
 		return;
 	}
 
-	// Plus — advance to next unchecked tick
+	// Plus - advance to next unchecked tick
 	const plusBtn = target.closest<HTMLButtonElement>(".df-env-countdown-plus");
 	if (plusBtn) {
 		const clock = plusBtn.closest<HTMLElement>(".df-env-countdown");
@@ -189,7 +189,7 @@ export function handleCountdownClick(evt: MouseEvent): void {
 		return;
 	}
 
-	// Minus — uncheck the last filled tick
+	// Minus - uncheck the last filled tick
 	const minusBtn = target.closest<HTMLButtonElement>(".df-env-countdown-minus");
 	if (minusBtn) {
 		const clock = minusBtn.closest<HTMLElement>(".df-env-countdown");

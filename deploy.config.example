@@ -1,4 +1,4 @@
-# Local deployment configuration — copy to deploy.config and set your paths.
+# Local deployment configuration - copy to deploy.config and set your paths.
 # deploy.config is git-ignored; this file is safe to commit.
 
 # WSL2 format (Linux path to the Windows vault):

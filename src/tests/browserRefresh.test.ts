@@ -4,7 +4,7 @@
  * Verifies that the Content Browser panel refreshes after card edits.
  *
  * What broke: CardEditor.ts used to call a local refreshBrowserView() with
- * Adv_View_Type / Env_View_Type — view types that no longer exist after the
+ * Adv_View_Type / Env_View_Type - view types that no longer exist after the
  * unified Content Browser was introduced. The calls were silent no-ops.
  * Fix: all four call sites now call refreshBrowsers(plugin) which targets
  * Content_Browser_View_Type.
@@ -46,13 +46,13 @@ describe('refreshBrowsers', () => {
         expect(() => refreshBrowsers(makePlugin([]))).not.toThrow();
     });
 
-    test('ignores old Adv_View_Type — regression guard', () => {
+    test('ignores old Adv_View_Type - regression guard', () => {
         const view = makeView();
         refreshBrowsers(makePlugin([{ viewType: OLD_ADV_VIEW, view }]));
         expect(view.refresh).not.toHaveBeenCalled();
     });
 
-    test('ignores old Env_View_Type — regression guard', () => {
+    test('ignores old Env_View_Type - regression guard', () => {
         const view = makeView();
         refreshBrowsers(makePlugin([{ viewType: OLD_ENV_VIEW, view }]));
         expect(view.refresh).not.toHaveBeenCalled();

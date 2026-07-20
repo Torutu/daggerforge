@@ -31,6 +31,8 @@ export function CharacterSheetApp({ plugin }: Props) {
 	const [importOpen, setImportOpen] = useState(false);
 	const [importText, setImportText] = useState("");
 	const [wizardOpen, setWizardOpen] = useState(false);
+	// First-run prompt: with no saved characters, ask blank vs guided up front
+	const [introDismissed, setIntroDismissed] = useState(false);
 	// Identifies this view's own saves in DataManager events (embeds do the same)
 	const originToken = useRef({}).current;
 
@@ -43,7 +45,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 		[plugin, storeVersion],
 	);
 
-	// Follow edits made in note/canvas embeds — but never clobber a dirty draft
+	// Follow edits made in note/canvas embeds - but never clobber a dirty draft
 	useEffect(() => {
 		const events = plugin.dataManager.events;
 		const refs = [
@@ -80,7 +82,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 	const handleInsert = async () => {
 		// Save first: an embed can only resolve a character that exists in the store
 		const saved = await save();
-		insertCharacterEmbed(plugin, saved.id);
+		await insertCharacterEmbed(plugin, saved.id);
 	};
 
 	const handleCopyCode = async () => {
@@ -88,7 +90,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 			const saved = await save();
 			const code = await encodeCharacterCode(saved);
 			await navigator.clipboard.writeText(code);
-			new Notice("Character saved and code copied — send it to your GM.");
+			new Notice("Character saved and code copied - send it to your GM.");
 		} catch (error) {
 			console.error("DaggerForge: failed to copy character code", error);
 			new Notice("Could not copy the character code.");
@@ -199,6 +201,44 @@ export function CharacterSheetApp({ plugin }: Props) {
 		return (
 			<div className="df-cs-root">
 				<CreationWizard onComplete={handleWizardComplete} onCancel={() => setWizardOpen(false)} />
+			</div>
+		);
+	}
+
+	if (!introDismissed && characters.length === 0 && !dirty) {
+		return (
+			<div className="df-cs-root">
+				<div className="df-cs-intro">
+					<span className="df-cs-intro-orn">✦ ✦ ✦</span>
+					<h2 className="df-cs-intro-title">Forge your first hero</h2>
+					<p className="df-cs-intro-sub">No saved characters yet. How do you want to begin?</p>
+					<div className="df-cs-intro-options">
+						<button
+							type="button"
+							className="df-cs-intro-opt"
+							onClick={() => setIntroDismissed(true)}
+						>
+							<span className="df-cs-intro-opt-name">Blank sheet</span>
+							<span className="df-cs-intro-opt-desc">
+								Start from an empty character sheet and fill everything in yourself.
+							</span>
+						</button>
+						<button
+							type="button"
+							className="df-cs-intro-opt df-cs-intro-opt--accent"
+							onClick={() => {
+								setIntroDismissed(true);
+								setWizardOpen(true);
+							}}
+						>
+							<span className="df-cs-intro-opt-name">Guided creation</span>
+							<span className="df-cs-intro-opt-desc">
+								Pick a class, heritage, experiences, and domain cards step by step; the sheet
+								fills itself from your choices.
+							</span>
+						</button>
+					</div>
+				</div>
 			</div>
 		);
 	}

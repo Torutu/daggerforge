@@ -27,7 +27,7 @@ describe("buildCharacterFromChoices", () => {
 
 		expect(char.id).toBe("CHR_test");
 		expect(char.level).toBe("1");
-		expect(char.classSubclass).toBe("Bard — Troubadour");
+		expect(char.classSubclass).toBe("Bard - Troubadour");
 		expect(char.heritage).toBe("Faun Wildborne");
 		expect(char.evasion).toBe("10");
 
@@ -51,9 +51,9 @@ describe("buildCharacterFromChoices", () => {
 		expect(char.inventory).toContain("Torch");
 		expect(char.inventory).toContain("Class items:");
 
-		// Rapier: Presence — Melee, d8 phy, one-handed; Small Dagger secondary
+		// Rapier: Presence - Melee, d8 phy, one-handed; Small Dagger secondary
 		expect(char.primaryWeapon.name).toBe("Rapier");
-		expect(char.primaryWeapon.traitRange).toBe("Presence — Melee");
+		expect(char.primaryWeapon.traitRange).toBe("Presence - Melee");
 		expect(char.primaryWeapon.damageDice).toBe("d8 phy");
 		expect(char.weaponHandOne).toBe(true);
 		expect(char.secondaryWeapon.name).toBe("Small Dagger");

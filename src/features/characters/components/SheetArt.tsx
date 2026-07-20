@@ -46,7 +46,7 @@ export function EvasionShieldArt() {
 			{/* side wings */}
 			<path d="M25.7 15.7 L36.4 11.1 L47.1 21.9 L47.1 35.1 L25.7 35.1 Z" fill={INK} />
 			<path d="M1.6 22.1 L12.3 11.1 L23 15.5 L23 35.1 L1.6 35.1 Z" fill={INK} />
-			{/* banner diamond — its points peek out as the label's pointed ends */}
+			{/* banner diamond - its points peek out as the label's pointed ends */}
 			<path d="M18.3 54.7 L5.2 41.7 L24.3 22.6 L43.4 41.7 L30.4 54.7 Z" fill={STRONG} />
 			{/* dome body */}
 			<path
@@ -146,7 +146,7 @@ export function LevelBadgeArt() {
 	);
 }
 
-/** Gold: handful — a coin seen from above with stacked echoes. */
+/** Gold: handful - a coin seen from above with stacked echoes. */
 export function GoldHandfulArt() {
 	return (
 		<svg className="df-cs-gold-art" viewBox="2.5 2.6 10.5 8.4" aria-hidden="true">
@@ -229,7 +229,7 @@ export function HandArt() {
 	);
 }
 
-/** Hope slot — a rounded diamond that fills with ink when marked. */
+/** Hope slot - a rounded diamond that fills with ink when marked. */
 export function HopeDiamondArt() {
 	return (
 		<svg className="df-cs-hope-diamond-art" viewBox="0.4 1.4 14.7 15" aria-hidden="true">

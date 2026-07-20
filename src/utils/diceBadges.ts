@@ -175,7 +175,7 @@ function isLetter(ch: string): boolean {
 
 /**
  * Returns all dice expression spans found in `text`, in order.
- * Uses only character-by-character inspection — no regex.
+ * Uses only character-by-character inspection - no regex.
  */
 function findDiceSpans(text: string): Span[] {
 	const spans: Span[] = [];
@@ -245,10 +245,10 @@ function findDiceSpans(text: string): Span[] {
  * with a <button class="df-inline-dice-btn" data-dice="2d6+4">.
  *
  * The click handler lives on document (registered in main.ts via
- * registerDomEvent) and reads data-dice — so no addEventListener is needed
+ * registerDomEvent) and reads data-dice - so no addEventListener is needed
  * here and nothing is lost when the HTML is serialized and re-rendered.
  *
- * Safe to call multiple times — already-processed nodes are skipped.
+ * Safe to call multiple times - already-processed nodes are skipped.
  */
 export function attachDiceBadges(section: HTMLElement): void {
 	const textNodes = collectDiceTextNodes(section);
@@ -266,7 +266,7 @@ export function attachDiceBadges(section: HTMLElement): void {
  * <button data-dice="1d6"> tags before the string is written to the note.
  *
  * The buttons work because handleDiceBtnClick (registered on document in
- * main.ts) reads data-dice on every click — no addEventListener needed,
+ * main.ts) reads data-dice on every click - no addEventListener needed,
  * so nothing is lost when the HTML is serialized into the source file.
  */
 export function injectDiceBadgesIntoHtml(html: string): string {
@@ -366,7 +366,7 @@ function splitNodeIntoBadges(node: Text): void {
 
 /**
  * Builds a dice button that carries its expression in data-dice.
- * No addEventListener — the delegated handler on document does the work.
+ * No addEventListener - the delegated handler on document does the work.
  */
 function buildDiceButton(expression: string): HTMLButtonElement {
 	const btn = document.createElement("button");

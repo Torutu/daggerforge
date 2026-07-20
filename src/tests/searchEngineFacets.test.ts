@@ -1,7 +1,7 @@
 /**
  * searchEngineFacets.test.ts
  *
- * Tests for SearchEngine.getFacetCounts() — cross-filter counting.
+ * Tests for SearchEngine.getFacetCounts() - cross-filter counting.
  * Pure logic, no DOM. Runs in the default node environment.
  */
 
@@ -21,7 +21,7 @@ function engine(cards = CARDS) {
 
 // ── No active filters ─────────────────────────────────────────────────────────
 
-describe('getFacetCounts — no filters', () => {
+describe('getFacetCounts - no filters', () => {
     test('tier counts are correct', () => {
         const counts = engine().getFacetCounts('tiers');
         expect(counts['1']).toBe(2);
@@ -47,7 +47,7 @@ describe('getFacetCounts — no filters', () => {
 
 // ── With active filters (cross-filter) ───────────────────────────────────────
 
-describe('getFacetCounts — with active filters', () => {
+describe('getFacetCounts - with active filters', () => {
     test('type=Solo: tier counts reflect only Solo cards', () => {
         const eng = engine();
         eng.setFilters({ types: ['Solo'] });
@@ -95,7 +95,7 @@ describe('getFacetCounts — with active filters', () => {
 
 // ── Edge cases ────────────────────────────────────────────────────────────────
 
-describe('getFacetCounts — edge cases', () => {
+describe('getFacetCounts - edge cases', () => {
     test('empty dataset returns empty objects for all dimensions', () => {
         const eng = new SearchEngine([]);
         expect(eng.getFacetCounts('tiers')).toEqual({});

@@ -1,5 +1,12 @@
-import { App, Modal } from "obsidian";
+import { App, Modal, Notice } from "obsidian";
 import { makeDraggable } from "../../utils/makeDraggable";
+import { getDaggerForgePlugin } from "../../utils/index";
+import { ADVERSARIES } from "../../data/adversaries";
+import { AdvData } from "../../types/index";
+import { buildAdversaryEmbedBlock } from "../adversaries/AdversaryEmbed";
+import { ConfirmModal } from "../characters/components/ConfirmModal";
+import { encodeAdversaryCode } from "../embeds/embedCode";
+import { insertAtFocusedTarget } from "../embeds/insertDestination";
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 const ZAP    = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
@@ -7,13 +14,26 @@ const SLIDERS= `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" v
 const SWORDS = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>`;
 const TRASH  = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`;
 const X_SM   = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+const WAND   = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h.01"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/></svg>`;
 
 // ── Data ──────────────────────────────────────────────────────────────────────
+interface SpentItem {
+	cost: number;
+	label: string;
+	/** Spend-option key, used to pair the slot with adversary suggestions. */
+	category?: string;
+	/** The adversary chosen for this slot - nothing is written to a note until
+	 *  the Insert encounter button places the whole plan at once. */
+	adversary?: AdvData;
+}
+
 interface EncounterState {
 	baseBP: number;
 	adjustments: { value: number; reason: string }[];
-	spentItems: { cost: number; label: string }[];
+	spentItems: SpentItem[];
 	pcCount: number;
+	tier: string;   // "all" | "1".."4"
+	source: string; // "all" | lowercase source name
 }
 
 const ADJUSTMENTS = [
@@ -26,21 +46,37 @@ const ADJUSTMENTS = [
 ];
 
 const SPEND_OPTIONS = [
-	{ cost: 1, label: "Minions (party size)" },
-	{ cost: 1, label: "Social / Support" },
-	{ cost: 2, label: "Horde / Ranged / Skulk / Standard" },
-	{ cost: 3, label: "Leader" },
-	{ cost: 4, label: "Bruiser" },
-	{ cost: 5, label: "Solo" },
+	{ cost: 1, key: "minion",   label: "Minions (party size)",              match: /minion/i },
+	{ cost: 1, key: "social",   label: "Social / Support",                  match: /social|support/i },
+	{ cost: 2, key: "standard", label: "Horde / Ranged / Skulk / Standard", match: /horde|ranged|skulk|standard/i },
+	{ cost: 3, key: "leader",   label: "Leader",                            match: /leader/i },
+	{ cost: 4, key: "bruiser",  label: "Bruiser",                           match: /bruiser/i },
+	{ cost: 5, key: "solo",     label: "Solo",                              match: /solo/i },
 ];
+
+const capitalize = (text: string) => (text ? text[0].toUpperCase() + text.slice(1) : text);
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
 export class EncounterCalcModal extends Modal {
-	private state: EncounterState = { baseBP: 0, adjustments: [], spentItems: [], pcCount: 3 };
+	private state: EncounterState = {
+		baseBP: 0,
+		adjustments: [],
+		spentItems: [],
+		pcCount: 3,
+		tier: "all",
+		source: "all",
+	};
 
 	constructor(app: App) {
 		super(app);
 		this.titleEl.setText("Battle Calculator");
+	}
+
+	/** Custom adversaries first (they shadow bundled ids), then the bundled list. */
+	private allAdversaries(): AdvData[] {
+		const plugin = getDaggerForgePlugin(this.app);
+		const custom = plugin?.dataManager?.getAdversaries() ?? [];
+		return [...custom, ...ADVERSARIES];
 	}
 
 	onOpen(): void {
@@ -113,9 +149,32 @@ export class EncounterCalcModal extends Modal {
 		SPEND_OPTIONS.forEach(opt => {
 			const btn = spendGrid.createEl("button", { cls: "df-enc-action-btn" });
 			btn.setAttribute("data-cost", opt.cost.toString());
+			btn.setAttribute("data-key", opt.key);
 			btn.createEl("span", { cls: "df-enc-btn-label", text: opt.label });
 			btn.createEl("span", { cls: "df-enc-badge df-enc-badge--cost", text: `-${opt.cost}` });
 		});
+
+		// ── Suggestions ───────────────────────────────────────────────────
+		const sugSection = contentEl.createEl("div", { cls: "df-enc-section" });
+		const sugHead = sugSection.createEl("div", { cls: "df-enc-section-label" });
+		sugHead.innerHTML = `${WAND}<span>Suggested Adversaries</span>`;
+
+		const filterRow = sugSection.createEl("div", { cls: "df-enc-suggest-filters" });
+		const tierSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
+		tierSelect.createEl("option", { text: "Any tier", value: "all" });
+		["1", "2", "3", "4"].forEach(t => tierSelect.createEl("option", { text: `Tier ${t}`, value: t }));
+
+		const sourceSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
+		sourceSelect.createEl("option", { text: "Any source", value: "all" });
+		const sources = new Set<string>(ADVERSARIES.map(a => (a.source || "core").toLowerCase()));
+		sources.add("custom");
+		[...sources].sort().forEach(s => sourceSelect.createEl("option", { text: capitalize(s), value: s }));
+
+		const sugList = sugSection.createEl("div", { cls: "df-enc-suggest" });
+
+		const insertRow = sugSection.createEl("div", { cls: "df-enc-insert-row" });
+		const insertBtn = insertRow.createEl("button", { cls: "mod-cta df-enc-insert-btn", text: "Insert encounter" });
+		const insertNote = insertRow.createEl("span", { cls: "df-enc-insert-note" });
 
 		// ── Footer ────────────────────────────────────────────────────────
 		const footer = contentEl.createEl("div", { cls: "df-enc-footer" });
@@ -127,6 +186,175 @@ export class EncounterCalcModal extends Modal {
 			const adj   = this.state.adjustments.reduce((s, a) => s + a.value, 0);
 			const spent = this.state.spentItems.reduce((s, i) => s + i.cost, 0);
 			return { adj, spent, remaining: this.state.baseBP + adj - spent };
+		};
+
+		/** The choices made in the calculator, as a markdown callout - printed
+		 *  into the note/canvas once, before the first inserted adversary, so
+		 *  the encounter can be read back later. */
+		const buildSummaryMarkdown = (): string => {
+			const scope = [`${this.state.pcCount} PCs`];
+			if (this.state.tier !== "all") scope.push(`Tier ${this.state.tier}`);
+			if (this.state.source !== "all") scope.push(capitalize(this.state.source));
+			const lines = [`> [!note] Battle plan - ${scope.join(" · ")}`];
+			lines.push(`> - Base battle points: ${this.state.baseBP}`);
+			this.state.adjustments.forEach(a =>
+				lines.push(`> - ${a.reason} (${a.value >= 0 ? "+" : ""}${a.value})`),
+			);
+			this.state.spentItems.forEach(s =>
+				lines.push(`> - ${s.label}${s.adversary ? ` - ${s.adversary.name}` : ""} (−${s.cost})`),
+			);
+			lines.push(`> - Remaining battle points: ${totals().remaining}`);
+			return lines.join("\n") + "\n";
+		};
+
+		/** Assign a suggested adversary to the first open slot of its category -
+		 *  nothing is written until Insert encounter. Choosing beyond the plan
+		 *  spends the points for a new, already-filled slot. */
+		const chooseSuggestion = (adv: AdvData, opt: (typeof SPEND_OPTIONS)[number]) => {
+			const slot = this.state.spentItems.find(s => s.category === opt.key && !s.adversary);
+			if (slot) slot.adversary = adv;
+			else this.state.spentItems.push({ cost: opt.cost, label: opt.label, category: opt.key, adversary: adv });
+			updateDisplay();
+		};
+
+		/** Write the whole plan into the focused note/canvas: the summary
+		 *  callout first, then every chosen adversary. Finalizing clears the
+		 *  calculator for the next encounter. */
+		const insertEncounter = async () => {
+			const chosen = this.state.spentItems.filter(s => s.adversary);
+			if (chosen.length === 0) return;
+			const plugin = getDaggerForgePlugin(this.app);
+			if (!plugin) {
+				new Notice("Open a note or canvas first.");
+				return;
+			}
+			if (!insertAtFocusedTarget(plugin, buildSummaryMarkdown(), { width: 440, height: 280 }, undefined, true)) {
+				return; // no target - keep the plan so nothing is lost
+			}
+
+			// The same adversary picked for several slots prints as ONE card with
+			// that many HP/stress rows (like the browser's battle counter), not
+			// as duplicate cards. Minion slots contribute a party-sized group each.
+			const groups = new Map<string, { adv: AdvData; count: number }>();
+			for (const slot of chosen) {
+				const adv = slot.adversary!;
+				if (!adv.id) continue;
+				const perSlot = slot.category === "minion" ? Math.max(1, this.state.pcCount) : 1;
+				const group = groups.get(adv.id);
+				if (group) group.count += perSlot;
+				else groups.set(adv.id, { adv, count: perSlot });
+			}
+			for (const { adv, count } of groups.values()) {
+				const isCustom = (adv.source ?? "").toLowerCase() === "custom" || adv.id!.startsWith("CUA_");
+				const code = isCustom ? await encodeAdversaryCode(adv) : undefined;
+				insertAtFocusedTarget(
+					plugin,
+					buildAdversaryEmbedBlock(adv.id!, count > 1 ? count : undefined, code),
+					{ width: 460, height: 620 },
+					undefined,
+					true,
+				);
+			}
+			new Notice(`Inserted the battle plan and ${chosen.length} ${chosen.length === 1 ? "adversary" : "adversaries"} on ${groups.size} ${groups.size === 1 ? "card" : "cards"}.`);
+
+			// Finalized - reset for the next encounter (same party size)
+			this.state.baseBP      = 3 * this.state.pcCount + 2;
+			this.state.adjustments = [];
+			this.state.spentItems  = [];
+			updateDisplay();
+		};
+
+		const confirmAndInsert = () => {
+			const { remaining } = totals();
+			if (remaining <= 0) {
+				void insertEncounter();
+				return;
+			}
+			new ConfirmModal(this.app, {
+				title: "Insert with unspent battle points?",
+				message: `You still have ${remaining} unspent battle point${remaining === 1 ? "" : "s"}. Inserting finalizes this encounter and clears the calculator - you would have to rebuild the plan from scratch to spend them.`,
+				confirmLabel: "Insert anyway",
+				onConfirm: () => void insertEncounter(),
+			}).open();
+		};
+
+		const renderSuggestions = () => {
+			sugList.empty();
+
+			const planKeys: string[] = [];
+			this.state.spentItems.forEach(s => {
+				if (s.category && !planKeys.includes(s.category)) planKeys.push(s.category);
+			});
+
+			if (planKeys.length === 0) {
+				sugList.createEl("p", {
+					cls: "df-enc-suggest-hint",
+					text: "Spend battle points above and matching adversaries will be suggested here.",
+				});
+				return;
+			}
+
+			const pool = this.allAdversaries();
+			planKeys.forEach(key => {
+				const opt = SPEND_OPTIONS.find(o => o.key === key);
+				if (!opt) return;
+				const slots = this.state.spentItems.filter(s => s.category === key);
+				const done = slots.filter(s => s.adversary).length;
+
+				const matches = pool
+					.filter(a => opt.match.test(a.type || ""))
+					.filter(a => this.state.tier === "all" || String(a.tier) === this.state.tier)
+					.filter(a => this.state.source === "all" || (a.source || "core").toLowerCase() === this.state.source)
+					.sort((a, b) => a.name.localeCompare(b.name));
+
+				const group = sugList.createEl("div", { cls: "df-enc-suggest-group" });
+				const head = group.createEl("div", { cls: "df-enc-suggest-group-head" });
+				head.createEl("span", { text: opt.label });
+				head.createEl("span", {
+					cls: "df-enc-suggest-progress" + (done >= slots.length ? " is-done" : ""),
+					text: done >= slots.length ? `${done}/${slots.length} ✓` : `${done}/${slots.length} chosen`,
+				});
+
+				if (matches.length === 0) {
+					group.createEl("p", { cls: "df-enc-suggest-hint", text: "No adversaries match these filters." });
+					return;
+				}
+
+				const makeChips = (parent: HTMLElement, advs: AdvData[]) => {
+					const chips = parent.createEl("div", { cls: "df-enc-suggest-chips" });
+					advs.forEach(adv => {
+						const picks = slots.filter(s => s.adversary?.id === adv.id).length;
+						const chip = chips.createEl("button", {
+							cls: "df-enc-suggest-chip" + (picks > 0 ? " is-selected" : ""),
+						});
+						if (picks > 0) chip.createEl("span", { cls: "df-enc-chip-check", text: picks > 1 ? `✓×${picks}` : "✓" });
+						chip.createEl("span", { text: adv.name });
+						chip.createEl("span", { cls: "df-enc-chip-tier", text: `T${adv.tier}` });
+						chip.title = `${adv.type} · ${capitalize((adv.source || "core").toLowerCase())} - choose for this slot`;
+						chip.addEventListener("click", () => chooseSuggestion(adv, opt));
+					});
+				};
+
+				// Combined categories (Social/Support, Horde/Ranged/Skulk/Standard):
+				// split the chips per actual type behind thin labeled dividers, so a
+				// Ranged pick can't be mistaken for a Skulk.
+				const subTypes = new Map<string, AdvData[]>();
+				matches.forEach(adv => {
+					const base = capitalize(((adv.type || "").split("(")[0].trim() || "Other").toLowerCase());
+					if (!subTypes.has(base)) subTypes.set(base, []);
+					subTypes.get(base)!.push(adv);
+				});
+
+				if (subTypes.size <= 1) {
+					makeChips(group, matches);
+					return;
+				}
+				[...subTypes.keys()].sort().forEach(typeName => {
+					const sub = group.createEl("div", { cls: "df-enc-suggest-subhead" });
+					sub.createEl("span", { cls: "df-enc-suggest-subtype", text: typeName });
+					makeChips(group, subTypes.get(typeName)!);
+				});
+			});
 		};
 
 		const updateDisplay = () => {
@@ -147,12 +375,22 @@ export class EncounterCalcModal extends Modal {
 			// Spending log
 			spendingList.empty();
 			this.state.spentItems.forEach((item, i) => {
-				const row = spendingList.createEl("div", { cls: "df-enc-log-row" });
-				row.createEl("span", { cls: "df-enc-log-text", text: item.label });
+				const row = spendingList.createEl("div", { cls: "df-enc-log-row" + (item.adversary ? " df-enc-log-row--done" : "") });
+				if (item.adversary) row.createEl("span", { cls: "df-enc-log-tick", text: "✓" });
+				row.createEl("span", {
+					cls: "df-enc-log-text",
+					text: item.adversary ? `${item.label} - ${item.adversary.name}` : item.label,
+				});
 				row.createEl("span", { cls: "df-enc-log-val df-enc-neg", text: `-${item.cost}` });
 				const rm = row.createEl("button", { cls: "df-enc-remove-btn" });
 				rm.innerHTML = X_SM;
-				rm.addEventListener("click", () => { this.state.spentItems.splice(i, 1); updateDisplay(); });
+				rm.title = item.adversary ? "Clear the chosen adversary" : "Remove this slot";
+				// First click clears the pick, second removes the slot entirely
+				rm.addEventListener("click", () => {
+					if (item.adversary) item.adversary = undefined;
+					else this.state.spentItems.splice(i, 1);
+					updateDisplay();
+				});
 			});
 
 			// Stats
@@ -165,9 +403,23 @@ export class EncounterCalcModal extends Modal {
 
 			adjustmentsList.scrollTop = adjustmentsList.scrollHeight;
 			spendingList.scrollTop    = spendingList.scrollHeight;
+
+			// Insert button reflects the plan: enabled once anything is chosen
+			const chosenCount = this.state.spentItems.filter(s => s.adversary).length;
+			insertBtn.disabled = chosenCount === 0;
+			insertNote.textContent =
+				chosenCount === 0
+					? "Choose adversaries above, then insert them all at once."
+					: remaining > 0
+						? `${remaining} BP still unspent`
+						: `${chosenCount} chosen - ready to insert`;
+
+			renderSuggestions();
 		};
 
 		// Events
+		insertBtn.addEventListener("click", confirmAndInsert);
+
 		calcBtn.addEventListener("click", () => {
 			this.state.pcCount     = Number(pcInput.value);
 			this.state.baseBP      = 3 * this.state.pcCount + 2;
@@ -188,14 +440,24 @@ export class EncounterCalcModal extends Modal {
 		contentEl.querySelectorAll("[data-cost]").forEach(btn => {
 			btn.addEventListener("click", () => {
 				const cost  = parseInt((btn as HTMLElement).dataset.cost!);
+				const key   = (btn as HTMLElement).dataset.key;
 				const label = (btn as HTMLElement).querySelector(".df-enc-btn-label")?.textContent ?? "";
-				this.state.spentItems.push({ cost, label });
+				this.state.spentItems.push({ cost, label, category: key });
 				updateDisplay();
 			});
 		});
 
+		tierSelect.addEventListener("change", () => { this.state.tier = tierSelect.value; renderSuggestions(); });
+		sourceSelect.addEventListener("change", () => { this.state.source = sourceSelect.value; renderSuggestions(); });
+
 		clearBtn.addEventListener("click", () => {
-			this.state = { baseBP: 0, adjustments: [], spentItems: [], pcCount: Number(pcInput.value) };
+			this.state = {
+				...this.state,
+				baseBP: 0,
+				adjustments: [],
+				spentItems: [],
+				pcCount: Number(pcInput.value),
+			};
 			updateDisplay();
 		});
 

@@ -2,21 +2,25 @@ import React, { useEffect, useRef, useState } from "react";
 import { Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { CharacterData } from "../../types/character";
+import { generateCharacterUniqueId } from "../../utils/index";
+import { decodeCharacterCode } from "./characterCode";
 import { openCharacterSheet } from "./CharacterSheetView";
 import { SheetBody } from "./components/SheetBody";
 
 interface Props {
 	plugin: DaggerForgePlugin;
 	characterId: string | null;
+	/** Snapshot from the block's `code:` line - fallback when the id isn't stored here. */
+	code?: string | null;
 }
 
 /**
  * The character sheet as rendered inside a note or canvas embed.
  * Edits stay local until Save commits them to the stored character (which
- * refreshes every other mounted copy). Load pulls the latest saved version —
+ * refreshes every other mounted copy). Load pulls the latest saved version -
  * useful when the same character is embedded in several files.
  */
-export function CharacterSheetEmbedApp({ plugin, characterId }: Props) {
+export function CharacterSheetEmbedApp({ plugin, characterId, code }: Props) {
 	const [char, setChar] = useState<CharacterData | null>(() => findCharacter(plugin, characterId));
 	const [dirty, setDirty] = useState(false);
 
@@ -49,8 +53,26 @@ export function CharacterSheetEmbedApp({ plugin, characterId }: Props) {
 		new Notice("Loaded the latest saved version.");
 	};
 
+	// Snapshot fallback for synced vaults: the block's `code:` line carries the
+	// character, so the sheet renders even when data.json didn't travel. Save
+	// then adopts it into this vault's store.
+	useEffect(() => {
+		if (latest.current.char || !code) return;
+		let cancelled = false;
+		decodeCharacterCode(code, characterId ?? generateCharacterUniqueId()).then(
+			(decoded) => {
+				if (!cancelled && !latest.current.char) setChar(decoded);
+			},
+			(error) => console.error("DaggerForge: could not decode embedded character code", error),
+		);
+		return () => {
+			cancelled = true;
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	// Safety net: an embed can be torn down invisibly (scrolling, mode switch,
-	// closing the note) — save pending edits rather than lose them silently.
+	// closing the note) - save pending edits rather than lose them silently.
 	useEffect(() => {
 		return () => {
 			const { char: pending, dirty: wasDirty } = latest.current;
@@ -60,7 +82,7 @@ export function CharacterSheetEmbedApp({ plugin, characterId }: Props) {
 		};
 	}, [plugin, originToken]);
 
-	// Follow external changes (other embeds, the sheet view) while clean —
+	// Follow external changes (other embeds, the sheet view) while clean -
 	// a dirty draft is never clobbered; press Load to overwrite it explicitly.
 	useEffect(() => {
 		const events = plugin.dataManager.events;

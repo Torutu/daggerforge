@@ -1,6 +1,7 @@
 import { Modal, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { GearData } from "../../types/srd";
+import { encodeGearCode } from "../embeds/embedCode";
 import { insertAtFocusedTarget } from "../embeds/insertDestination";
 import { buildItemEmbedBlock } from "./ItemEmbed";
 
@@ -15,15 +16,15 @@ const KIND_GUIDE: Record<GearData["kind"], { hint: string; statsPlaceholder: str
 	},
 	weapon: {
 		hint: "Something the party fights with.",
-		statsPlaceholder: "Trait — Range · damage · burden, e.g. Agility — Melee · d8 phy · One-Handed",
+		statsPlaceholder: "Trait - Range · damage · burden, e.g. Agility - Melee · d8 phy · One-Handed",
 	},
 	armor: {
 		hint: "Worn protection.",
 		statsPlaceholder: "Thresholds and score, e.g. Thresholds 6/13 · Score 4",
 	},
 	wheelchair: {
-		hint: "A combat wheelchair — works like a weapon.",
-		statsPlaceholder: "Trait — Range · damage · burden, e.g. Agility — Melee · d8 phy · One-Handed",
+		hint: "A combat wheelchair - works like a weapon.",
+		statsPlaceholder: "Trait - Range · damage · burden, e.g. Agility - Melee · d8 phy · One-Handed",
 	},
 };
 
@@ -71,7 +72,7 @@ export class ItemModal extends Modal {
 		const rarityWrap = field("Rarity (optional)", "How hard it is to find.");
 		const raritySelect = rarityWrap.createEl("select", { cls: "dropdown" });
 		["", "Common", "Uncommon", "Rare", "Legendary"].forEach((r) =>
-			raritySelect.createEl("option", { text: r || "—", value: r }),
+			raritySelect.createEl("option", { text: r || "-", value: r }),
 		);
 
 		const statsWrap = field("Stats line", "One line of numbers shown under the name.");
@@ -113,7 +114,8 @@ export class ItemModal extends Modal {
 			};
 			await this.plugin.dataManager.upsertItem(item);
 			new Notice(`Created ${name}.`);
-			insertAtFocusedTarget(this.plugin, buildItemEmbedBlock(item.id), { width: 420, height: 260 }, name);
+			const code = await encodeGearCode(item);
+			insertAtFocusedTarget(this.plugin, buildItemEmbedBlock(item.id, code), { width: 420, height: 260 }, name);
 			this.close();
 		});
 		buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
