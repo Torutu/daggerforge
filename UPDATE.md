@@ -1,4 +1,4 @@
-# DaggerForge 2.7.0
+# DaggerForge 3.0.0
 
 ## New
 
