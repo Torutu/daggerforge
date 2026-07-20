@@ -51,7 +51,7 @@ const NO_FEATURES: Feature[] = [];
 
 // ── Core content ──────────────────────────────────────────────────────────────
 
-describe('buildCardHTML — content', () => {
+describe('buildCardHTML - content', () => {
     test('includes the name', () => {
         expect(buildCardHTML(baseValues(), NO_FEATURES)).toContain('Goblin Scout');
     });
@@ -93,7 +93,7 @@ describe('buildCardHTML — content', () => {
 
 // ── Stress block ──────────────────────────────────────────────────────────────
 
-describe('buildCardHTML — stress block', () => {
+describe('buildCardHTML - stress block', () => {
     test('includes Stress when stress is non-empty', () => {
         expect(buildCardHTML(baseValues(), NO_FEATURES)).toContain('Stress:');
     });
@@ -106,7 +106,7 @@ describe('buildCardHTML — stress block', () => {
 
 // ── Source badge ──────────────────────────────────────────────────────────────
 
-describe('buildCardHTML — source badge', () => {
+describe('buildCardHTML - source badge', () => {
     test('df-source-badge-core for source=core', () => {
         expect(buildCardHTML(baseValues(), NO_FEATURES)).toContain('class="df-source-badge-core"');
     });
@@ -124,7 +124,7 @@ describe('buildCardHTML — source badge', () => {
 
 // ── Wide mode ─────────────────────────────────────────────────────────────────
 
-describe('buildCardHTML — wide mode', () => {
+describe('buildCardHTML - wide mode', () => {
     test('adds df-card--wide when wide=true', () => {
         expect(buildCardHTML(baseValues(), NO_FEATURES, true)).toContain('df-card--wide');
     });
@@ -136,7 +136,7 @@ describe('buildCardHTML — wide mode', () => {
 
 // ── HP / Stress tick boxes ────────────────────────────────────────────────────
 
-describe('buildCardHTML — tickboxes', () => {
+describe('buildCardHTML - tickboxes', () => {
     test('generates hp=3 tickboxes for count=1', () => {
         const html = buildCardHTML(baseValues(), NO_FEATURES);
         expect((html.match(/class="df-hp-tickbox"/g) ?? []).length).toBe(3);
@@ -168,7 +168,7 @@ describe('buildCardHTML — tickboxes', () => {
 
 // ── Features ──────────────────────────────────────────────────────────────────
 
-describe('buildCardHTML — features', () => {
+describe('buildCardHTML - features', () => {
     test('renders feature name and type', () => {
         const features: Feature[] = [
             { name: 'Pack Tactics', type: 'Passive', cost: '', richContent: '' },
@@ -210,7 +210,7 @@ describe('buildCardHTML — features', () => {
 
 // ── data-attributes ───────────────────────────────────────────────────────────
 
-describe('buildCardHTML — data attributes', () => {
+describe('buildCardHTML - data attributes', () => {
     test('data-type strips the parenthetical from Horde (5/HP)', () => {
         const vals = { ...baseValues(), type: 'Horde (5/HP)' };
         expect(buildCardHTML(vals, NO_FEATURES)).toContain('data-type="Horde"');
@@ -224,7 +224,7 @@ describe('buildCardHTML — data attributes', () => {
 
 // ── Countdowns parsed from features ──────────────────────────────────────────
 
-describe('buildCardHTML — countdowns from features', () => {
+describe('buildCardHTML - countdowns from features', () => {
     test('feature with "Countdown (4)" generates a clock', () => {
         const features: Feature[] = [
             { name: 'On My Signal', type: 'Passive', cost: '', richContent: '<p>Countdown (4) before reinforcements.</p>' },

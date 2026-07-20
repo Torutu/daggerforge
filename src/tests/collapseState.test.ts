@@ -60,7 +60,7 @@ function makeEnvCard(id: string, opts: { wide?: boolean } = {}): HTMLElement {
     return card;
 }
 
-// HP ticks go inside .df-hp-tickboxes, stress inside .df-stress-tickboxes —
+// HP ticks go inside .df-hp-tickboxes, stress inside .df-stress-tickboxes -
 // required by handleTickChange which calls closest('.df-hp-tickboxes, .df-stress-tickboxes').
 function addTickboxes(card: HTMLElement, hp: number, stress: number): HTMLInputElement[] {
     const boxes: HTMLInputElement[] = [];
@@ -268,7 +268,7 @@ describe('saveTickState / restoreTickState', () => {
     });
 });
 
-// ── handleTickChange — fill-bar logic ─────────────────────────────────────────
+// ── handleTickChange - fill-bar logic ─────────────────────────────────────────
 
 describe('handleTickChange', () => {
     test('saves tick state on change', () => {
@@ -395,9 +395,9 @@ describe('handleCollapseClick', () => {
     });
 });
 
-// ── handleCountdownClick — + / - buttons ─────────────────────────────────────
+// ── handleCountdownClick - + / - buttons ─────────────────────────────────────
 
-describe('handleCountdownClick — plus/minus', () => {
+describe('handleCountdownClick - plus/minus', () => {
     test('plus checks the first unchecked tick', () => {
         const card = makeEnvCard('e60');
         const { ticks, plus } = makeClockInCard(card, { max: 4 });
@@ -450,7 +450,7 @@ describe('handleCountdownClick — plus/minus', () => {
     });
 });
 
-describe('handleCountdownClick — collapse button', () => {
+describe('handleCountdownClick - collapse button', () => {
     test('toggles df-countdown-collapsed on the env card', () => {
         const card = makeEnvCard('e70');
         const btn = document.createElement('button');
@@ -472,7 +472,7 @@ describe('handleCountdownClick — collapse button', () => {
     });
 });
 
-// ── handleCountdownTickChange — fill-bar logic ────────────────────────────────
+// ── handleCountdownTickChange - fill-bar logic ────────────────────────────────
 
 describe('handleCountdownTickChange', () => {
     test('clicking unchecked tick N fills 0..N', () => {

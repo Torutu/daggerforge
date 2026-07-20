@@ -1,6 +1,7 @@
 import { App, Modal, setIcon } from "obsidian";
 import DaggerForgePlugin from "../../main";
 import { openCreator } from "../../utils/pluginOperations";
+import { ItemModal } from "../items/ItemModal";
 
 /**
  * Chooser shown when the user clicks "Content Creator" from the ribbon.
@@ -27,13 +28,15 @@ export class ContentCreatorModal extends Modal {
 			"Create a new adversary card with stats, features, and abilities.");
 		this.buildOption(grid, "environment", "mountain", "Environment",
 			"Create a new environment card with features and GM questions.");
+		this.buildOption(grid, "item", "backpack", "Item",
+			"Create a weapon, armor, item, or consumable - guided fields included.");
 	}
 
 	onClose() {
 		this.contentEl.empty();
 	}
 
-	private buildOption(container: HTMLElement, type: "adversary" | "environment", icon: string, label: string, desc: string) {
+	private buildOption(container: HTMLElement, type: "adversary" | "environment" | "item", icon: string, label: string, desc: string) {
 		const card = container.createDiv({ cls: "df-creator-option" });
 		const iconEl = card.createDiv({ cls: "df-creator-option-icon" });
 		setIcon(iconEl, icon);
@@ -41,7 +44,8 @@ export class ContentCreatorModal extends Modal {
 		card.createEl("p", { cls: "df-creator-option-desc", text: desc });
 		card.addEventListener("click", () => {
 			this.close();
-			openCreator(this.plugin, type);
+			if (type === "item") new ItemModal(this.plugin).open();
+			else openCreator(this.plugin, type);
 		});
 	}
 }

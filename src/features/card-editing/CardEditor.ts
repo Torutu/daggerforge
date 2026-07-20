@@ -139,7 +139,7 @@ async function replaceCardInMarkdown(
 }
 
 // Canvas Card DOM Mutation
-// Canvas cards are live DOM nodes — there is no source text to splice. We
+// Canvas cards are live DOM nodes - there is no source text to splice. We
 // parse the new HTML, find the inner container, and swap its children in place.
 
 function replaceCardInCanvas(
@@ -282,7 +282,7 @@ function editEnvironmentInCanvas(
 	plugin: DaggerForgePlugin,
 ): void {
 	const envData = extractEnvironmentData(cardElement, cardName);
-	// EnvironmentModal now accepts Editor | null — no cast needed.
+	// EnvironmentModal now accepts Editor | null - no cast needed.
 	const modal = new EnvironmentModal(plugin, null, envData);
 
 	modal.onEditUpdate = async (newHTML: string, newData) => {
@@ -356,7 +356,7 @@ export async function handleCardEditClick(
 	}
 
 	// Check the active view type. getActiveViewOfType(ItemView) returns the
-	// most recently focused ItemView — checking its type string is the correct
+	// most recently focused ItemView - checking its type string is the correct
 	// way to detect canvas without accessing deprecated or untyped APIs.
 	const activeView = app.workspace.getActiveViewOfType(ItemView);
 	const isCanvas = activeView?.getViewType() === "canvas";

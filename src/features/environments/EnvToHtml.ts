@@ -29,8 +29,13 @@ function parseClocksFromFeatures(features: EnvironmentData["features"]): Countdo
 	return result;
 }
 
-export function envToHtml(env: EnvironmentData, wide = false): string {
-	const hiddenID = crypto.randomUUID();
+export function envToHtml(
+	env: EnvironmentData,
+	wide = false,
+	/** Stable id for embeds - falls back to a random UUID for legacy inline cards. */
+	cardId?: string,
+): string {
+	const hiddenID = cardId ?? crypto.randomUUID();
 
 	// ── Countdown section ──────────────────────────────────────────────────────
 	// Explicit clocks from the form take priority; feature-parsed clocks fill in

@@ -1,7 +1,7 @@
 /**
  * DataManager.test.ts
  *
- * Tests for DataManager — saving, loading, and managing adversary and environment data.
+ * Tests for DataManager - saving, loading, and managing adversary and environment data.
  */
 
 import { DataManager } from '../data/index';

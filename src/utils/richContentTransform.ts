@@ -46,7 +46,7 @@ export function toCustomHtml(html: string): string {
 }
 
 /**
- * Reverse of toCustomHtml — convert back to standard list elements so
+ * Reverse of toCustomHtml - convert back to standard list elements so
  * Tiptap can parse and render them correctly in the editor.
  */
 export function toStandardHtml(html: string): string {

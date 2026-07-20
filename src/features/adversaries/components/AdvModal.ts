@@ -6,12 +6,10 @@ import {
 	createField,
 	createShortTripleFields,
 	createInlineField,
-	resolveInsertDestination,
-	type ResolvedDestination,
-	createCanvasCard,
-	getAvailableCanvasPosition,
-	injectDiceBadgesIntoHtml,
 } from "../../../utils/index";
+import { buildAdversaryEmbedBlock } from "../AdversaryEmbed";
+import { encodeAdversaryCode } from "../../embeds/embedCode";
+import { insertAtFocusedTarget } from "../../embeds/insertDestination";
 
 // Data Assembly
 // Builds a complete AdvData object from raw form values and feature arrays.
@@ -39,6 +37,7 @@ function assembleAdvData(
 		weaponRange: values.weaponRange || "",
 		weaponDamage: values.weaponDamage || "",
 		xp: values.xp || "",
+		count: values.count || "",
 		source: "custom",
 		features: features.map((f) => ({
 			name: f.name || "",
@@ -75,11 +74,6 @@ export class AdversaryModal extends Modal {
 	// Edit-mode fields
 	private isEditMode: boolean;
 	private editData: Record<string, unknown> = {};
-	/**
-	 * Resolved before the modal opens so that opening the modal (which shifts
-	 * focus away from the note/canvas) does not change the answer.
-	 */
-	private insertDestination!: ResolvedDestination;
 	onEditUpdate?: (newHTML: string, newData: AdvData) => void | Promise<void>;
 
 	constructor(
@@ -92,9 +86,6 @@ export class AdversaryModal extends Modal {
 		this.plugin = plugin;
 		this.editor = editor;
 		this.isEditMode = !!cardElement;
-		// Capture destination now using the plugin's tracked last main leaf,
-		// before the modal opens and steals activeLeaf focus.
-		this.insertDestination = resolveInsertDestination(plugin.app, plugin.lastMainLeaf);
 
 		if (cardElement && cardData) {
 			this.editData = cardData;
@@ -174,7 +165,7 @@ export class AdversaryModal extends Modal {
 			customClass: "df-adv-field-type",
 		});
 
-		// Horde-only: members per HP input — slides in when type = Horde
+		// Horde-only: members per HP input - slides in when type = Horde
 		const hordeSection = section.createDiv({ cls: "df-horde-section" });
 		const hordeMembersInput = hordeSection.createEl("input", {
 			cls: "df-field-input df-horde-members-input",
@@ -325,7 +316,7 @@ export class AdversaryModal extends Modal {
 		}
 
 		await persistAdversary(this.plugin, newData);
-		this.insertCard(newHTML);
+		await this.insertCard(newData);
 		this.resetForm();
 		this.refreshBrowserView();
 		this.close();
@@ -340,16 +331,13 @@ export class AdversaryModal extends Modal {
 		);
 	}
 
-	private insertCard(html: string) {
-		if (this.insertDestination.kind === "canvas") {
-			const { canvas } = this.insertDestination;
-			const pos = getAvailableCanvasPosition(canvas);
-			createCanvasCard(this.plugin.app, html, canvas, {
-				x: pos.x, y: pos.y, width: 400, height: 600,
-			});
-		} else if (this.insertDestination.kind === "markdown" && this.editor) {
-			this.editor.replaceSelection(injectDiceBadgesIntoHtml(html) + "\n");
-		}
+	/** Inserts a live id-based embed block (with a `code:` snapshot for sync)
+	 *  into the last-focused note or canvas. */
+	private async insertCard(data: AdvData) {
+		if (!data.id) return;
+		const code = await encodeAdversaryCode(data);
+		const block = buildAdversaryEmbedBlock(data.id, Number(data.count) || undefined, code);
+		insertAtFocusedTarget(this.plugin, block, { width: 460, height: 620 });
 	}
 
 	private resetForm() {
@@ -381,7 +369,7 @@ export class AdversaryModal extends Modal {
 	}
 
 	// Close
-	// Edit sessions are ephemeral — nothing is persisted on close.
+	// Edit sessions are ephemeral - nothing is persisted on close.
 	// Create sessions snapshot the current form so the user can reopen and
 	// continue where they left off.
 

@@ -41,7 +41,7 @@ function baseEnv(): EnvironmentData {
 
 // ── Core content ──────────────────────────────────────────────────────────────
 
-describe('envToHtml — content', () => {
+describe('envToHtml - content', () => {
     test('includes the name', () => {
         expect(envToHtml(baseEnv())).toContain('Whispering Bog');
     });
@@ -79,7 +79,7 @@ describe('envToHtml — content', () => {
 
 // ── Source badge ──────────────────────────────────────────────────────────────
 
-describe('envToHtml — source badge', () => {
+describe('envToHtml - source badge', () => {
     test('df-source-badge-core for source=core', () => {
         expect(envToHtml(baseEnv())).toContain('class="df-source-badge-core"');
     });
@@ -97,7 +97,7 @@ describe('envToHtml — source badge', () => {
 
 // ── Wide mode ─────────────────────────────────────────────────────────────────
 
-describe('envToHtml — wide mode', () => {
+describe('envToHtml - wide mode', () => {
     test('adds df-card--wide when wide=true', () => {
         expect(envToHtml(baseEnv(), true)).toContain('df-card--wide');
     });
@@ -109,7 +109,7 @@ describe('envToHtml — wide mode', () => {
 
 // ── Features ──────────────────────────────────────────────────────────────────
 
-describe('envToHtml — features', () => {
+describe('envToHtml - features', () => {
     test('renders feature name and type', () => {
         const env = {
             ...baseEnv(),
@@ -184,9 +184,9 @@ describe('envToHtml — features', () => {
     });
 });
 
-// ── Countdowns — explicit ─────────────────────────────────────────────────────
+// ── Countdowns - explicit ─────────────────────────────────────────────────────
 
-describe('envToHtml — explicit countdowns', () => {
+describe('envToHtml - explicit countdowns', () => {
     test('renders countdown section when countdowns are present', () => {
         const env = { ...baseEnv(), countdowns: [{ name: 'Storm', max: 6 }] };
         const html = envToHtml(env);
@@ -248,9 +248,9 @@ describe('envToHtml — explicit countdowns', () => {
     });
 });
 
-// ── Countdowns — parsed from features ────────────────────────────────────────
+// ── Countdowns - parsed from features ────────────────────────────────────────
 
-describe('envToHtml — countdown parsing from features', () => {
+describe('envToHtml - countdown parsing from features', () => {
     test('feature with "Countdown (12)" auto-generates a clock', () => {
         const env = {
             ...baseEnv(),

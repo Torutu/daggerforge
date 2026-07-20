@@ -4,7 +4,7 @@ import DaggerForgePlugin from "../main";
 
 /**
  * Retrieves the DaggerForge plugin instance from Obsidian's plugin registry.
- * Centralises the one unavoidable `as unknown` cast — Obsidian does not
+ * Centralises the one unavoidable `as unknown` cast - Obsidian does not
  * publicly type the plugins map, so there is no fully type-safe alternative.
  */
 export function getDaggerForgePlugin(app: App): DaggerForgePlugin | null {
@@ -19,13 +19,14 @@ import {
 } from "../features/index";
 import { Content_Browser_View_Type, ContentBrowserView } from "../features/browser/ContentBrowserView";
 import { DeleteConfirmModal } from "../features/data-management/index";
+import { editEmbeddedCard } from "../features/embeds/editEmbeddedCard";
 
 /**
  * Opens the adversary or environment creator modal.
  *
  * Uses plugin.lastMainLeaf (set by the global active-leaf-change listener in
  * main.ts) so the correct destination is known even when the ribbon menu or a
- * command palette entry triggered this call — at that point activeLeaf is the
+ * command palette entry triggered this call - at that point activeLeaf is the
  * menu/palette overlay, not the canvas or note the user was working in.
  */
 export function openCreator(plugin: DaggerForgePlugin, type: "adversary" | "environment"): void {
@@ -87,6 +88,14 @@ export function listenForEditClicks(evt: MouseEvent, app: App, plugin: DaggerFor
 
 	if (!target.closest(".df-adv-edit-button") &&
 		!target.closest(".df-env-edit-button")) {
+		return;
+	}
+
+	// ID-based embeds edit their stored record directly - no DOM scraping,
+	// no HTML splicing. Legacy inline HTML cards fall through to the old path.
+	const embedSection = target.closest<HTMLElement>("[data-df-embed-kind]");
+	if (embedSection) {
+		editEmbeddedCard(plugin, embedSection);
 		return;
 	}
 

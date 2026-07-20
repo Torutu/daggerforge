@@ -2,14 +2,10 @@ import { Modal, Editor, Notice } from "obsidian";
 import { addEnvFeature, getEnvFeatureValues, envToHtml, Env_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
 import { CountdownClock, EnvFeatureElements, EnvironmentData, FormStateElements } from "../../../types/index";
-import {
-	resolveInsertDestination,
-	type ResolvedDestination,
-	createCanvasCard,
-	getAvailableCanvasPosition,
-	createInlineField,
-	injectDiceBadgesIntoHtml,
-} from "../../../utils/index";
+import { createInlineField } from "../../../utils/index";
+import { buildEnvironmentEmbedBlock } from "../EnvironmentEmbed";
+import { encodeEnvironmentCode } from "../../embeds/embedCode";
+import { insertAtFocusedTarget } from "../../embeds/insertDestination";
 
 // Data Assembly
 // Builds a complete EnvironmentData object from raw form values and feature arrays.
@@ -56,7 +52,7 @@ async function persistEnvironment(
 //   • The form pre-fills from cardData instead of the plugin's saved state.
 //   • The submit button calls onEditUpdate (wired by cardEditor.ts) instead of
 //     persisting + inserting a new card.
-//   • onClose does not write back to the plugin's saved state — edit sessions
+//   • onClose does not write back to the plugin's saved state - edit sessions
 //     are ephemeral.
 
 export class EnvironmentModal extends Modal {
@@ -75,7 +71,6 @@ export class EnvironmentModal extends Modal {
 	 * Resolved before the modal opens so that opening the modal (which shifts
 	 * focus away from the note/canvas) does not change the answer.
 	 */
-	private insertDestination!: ResolvedDestination;
 	onEditUpdate?: (
 		newHTML: string,
 		newData: EnvironmentData,
@@ -90,9 +85,6 @@ export class EnvironmentModal extends Modal {
 		this.plugin = plugin;
 		this.editor = editor;
 		this.isEditMode = !!cardData;
-		// Capture destination now using the plugin's tracked last main leaf,
-		// before the modal opens and steals activeLeaf focus.
-		this.insertDestination = resolveInsertDestination(plugin.app, plugin.lastMainLeaf);
 
 		if (cardData) {
 			this.editData = cardData;
@@ -344,7 +336,7 @@ export class EnvironmentModal extends Modal {
 		}
 
 		await persistEnvironment(this.plugin, newData);
-		this.insertCard(newHTML);
+		await this.insertCard(newData);
 		this.resetForm();
 		this.refreshBrowserView();
 		this.close();
@@ -359,20 +351,12 @@ export class EnvironmentModal extends Modal {
 		);
 	}
 
-	private insertCard(html: string) {
-		const wrapped = `<div class="environment-block">\n${injectDiceBadgesIntoHtml(html)}\n</div>\n`;
-		if (this.insertDestination.kind === "canvas") {
-			const { canvas } = this.insertDestination;
-			const pos = getAvailableCanvasPosition(canvas);
-			createCanvasCard(this.plugin.app, wrapped, canvas, {
-				x: pos.x,
-				y: pos.y,
-				width: 400,
-				height: 650,
-			});
-		} else if (this.insertDestination.kind === "markdown" && this.editor) {
-			this.editor.replaceSelection(wrapped);
-		}
+	/** Inserts a live id-based embed block (with a `code:` snapshot for sync)
+	 *  into the last-focused note or canvas. */
+	private async insertCard(data: EnvironmentData) {
+		if (!data.id) return;
+		const code = await encodeEnvironmentCode(data);
+		insertAtFocusedTarget(this.plugin, buildEnvironmentEmbedBlock(data.id, code), { width: 460, height: 760 });
 	}
 
 	private resetForm() {
@@ -402,7 +386,7 @@ export class EnvironmentModal extends Modal {
 	}
 
 	// Close
-	// Edit sessions are ephemeral — nothing is persisted on close.
+	// Edit sessions are ephemeral - nothing is persisted on close.
 	// Create sessions snapshot the current form so the user can reopen and
 	// continue where they left off.
 

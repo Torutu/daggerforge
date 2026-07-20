@@ -12,17 +12,22 @@ import {
 	decrementAdversaryCount,
 	setAdversaryCount,
 	resetAdversaryCount,
-	resolveInsertDestination,
-	createCanvasCard,
-	getAvailableCanvasPosition,
-	injectDiceBadgesIntoHtml,
 	getDaggerForgePlugin,
 	generateEnvUniqueId,
 } from "../../utils/index";
-import { buildCardHTML } from "../adversaries/index";
-import { envToHtml } from "../environments/EnvToHtml";
+import { buildAdversaryEmbedBlock } from "../adversaries/AdversaryEmbed";
+import { buildEnvironmentEmbedBlock } from "../environments/EnvironmentEmbed";
+import { encodeAdversaryCode, encodeEnvironmentCode, encodeGearCode } from "../embeds/embedCode";
+import { insertAtFocusedTarget } from "../embeds/insertDestination";
+import { buildCharacterEmbedBlock, characterEmbedCode } from "../characters/CharacterSheetEmbed";
+import { ConfirmModal } from "../characters/components/ConfirmModal";
+import type { CharacterData } from "../../types/character";
+import { CLASS_COLORS, GEAR_KIND_COLORS, GEAR_KIND_LABELS, GearData } from "../../types/srd";
+import { ALL_GEAR } from "../../data/srd";
+import { buildItemEmbedBlock } from "../items/ItemEmbed";
+import { hexTint } from "../characters/components/SheetSections";
 
-export type BrowserTab = "adversary" | "environment";
+export type BrowserTab = "adversary" | "environment" | "character" | "item";
 
 interface Props {
 	app: App;
@@ -74,6 +79,11 @@ function CounterControls() {
 
 // ── Small helpers ─────────────────────────────────────────────────────────────
 
+/** Custom records need a `code:` snapshot on insert - bundled ones ship with the plugin. */
+function isCustomRecord(record: { id?: string; source?: string }): boolean {
+	return (record.source ?? "custom").toLowerCase() === "custom" || /^CU[AEI]_/.test(record.id ?? "");
+}
+
 function LucideBtn({ icon, title, onClick, cls }: { icon: string; title: string; onClick: (e: React.MouseEvent) => void; cls?: string }) {
 	const ref = useRef<HTMLButtonElement>(null);
 	useEffect(() => { if (ref.current) setIcon(ref.current, icon); }, [icon]);
@@ -86,7 +96,7 @@ function LucideIcon({ icon, cls }: { icon: string; cls?: string }) {
 	return <span ref={ref} className={cls} />;
 }
 
-// ── SearchPane — mounts vanilla SearchControlsUI into a ref ───────────────────
+// ── SearchPane - mounts vanilla SearchControlsUI into a ref ───────────────────
 // configFactory is called once at mount time (after data is ready) so options
 // are populated when create() builds the DOM panels.
 
@@ -156,33 +166,16 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		};
 	}, []);
 
-	const insert = useCallback((adversary: AdvData) => {
+	const insert = useCallback(async (adversary: AdvData) => {
 		const plugin = getDaggerForgePlugin(app);
-		const { kind, canvas } = resolveInsertDestination(app, plugin?.lastMainLeaf ?? null);
-		const count = getAdversaryCount();
-		const wide = uiRef.current?.getWideCard() ?? false;
-		const html = buildCardHTML(
-			{ name: adversary.name, tier: adversary.tier, type: adversary.type, desc: adversary.desc,
-			  motives: adversary.motives, difficulty: adversary.difficulty,
-			  thresholdMajor: adversary.thresholdMajor, thresholdSevere: adversary.thresholdSevere,
-			  hp: adversary.hp, stress: adversary.stress ?? 0, atk: adversary.atk,
-			  weaponName: adversary.weaponName, weaponRange: adversary.weaponRange,
-			  weaponDamage: adversary.weaponDamage, xp: adversary.xp,
-			  count: String(count), source: adversary.source || "core" },
-			adversary.features.map(f => ({ ...f, cost: f.cost || "" })), wide,
-		);
-		if (kind === "canvas") {
-			const pos = getAvailableCanvasPosition(canvas);
-			createCanvasCard(app, html, canvas, { x: pos.x, y: pos.y, width: 400, height: 600 });
-			new Notice(`Inserted ${adversary.name} in canvas.`); return;
-		}
-		// Fall back to lastMainLeaf — the browser panel steals focus on click
-		const leaf = plugin?.lastMainLeaf;
-		const view = (leaf?.view instanceof MarkdownView ? leaf.view : null)
-			?? app.workspace.getActiveViewOfType(MarkdownView);
-		if (!view || view.getMode() !== "source") { new Notice("Open a note in edit mode first."); return; }
-		view.editor.replaceSelection(injectDiceBadgesIntoHtml(html));
-		new Notice(`Inserted ${adversary.name}.`);
+		if (!plugin || !adversary.id) return;
+		// Live id-based embed: interactive card that follows the stored record.
+		// Each insert gets its own instance token, so copies track HP separately.
+		// Custom records also carry a `code:` snapshot so the card renders in
+		// vaults whose plugin data doesn't include them (sync).
+		const code = isCustomRecord(adversary) ? await encodeAdversaryCode(adversary) : undefined;
+		const block = buildAdversaryEmbedBlock(adversary.id, getAdversaryCount(), code);
+		insertAtFocusedTarget(plugin, block, { width: 460, height: 620 }, adversary.name);
 	}, [app]);
 
 	const deleteAdv = useCallback(async (adversary: AdvData) => {
@@ -291,23 +284,11 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 		};
 	}, []);
 
-	const insert = useCallback((env: EnvironmentData) => {
+	const insert = useCallback(async (env: EnvironmentData) => {
 		const plugin = getDaggerForgePlugin(app);
-		const { kind, canvas } = resolveInsertDestination(app, plugin?.lastMainLeaf ?? null);
-		const wide = uiRef.current?.getWideCard() ?? false;
-		const html = injectDiceBadgesIntoHtml(envToHtml(env, wide));
-		if (kind === "canvas") {
-			const pos = getAvailableCanvasPosition(canvas);
-			createCanvasCard(app, html, canvas, { x: pos.x, y: pos.y, width: 400, height: 650 });
-			new Notice(`Inserted ${env.name}.`); return;
-		}
-		// Fall back to lastMainLeaf — the browser panel steals focus on click
-		const leaf = plugin?.lastMainLeaf;
-		const view = (leaf?.view instanceof MarkdownView ? leaf.view : null)
-			?? app.workspace.getActiveViewOfType(MarkdownView);
-		if (!view || view.getMode() !== "source") { new Notice("Open a note in edit mode first."); return; }
-		view.editor.replaceSelection(html);
-		new Notice(`Inserted ${env.name}.`);
+		if (!plugin || !env.id) return;
+		const code = isCustomRecord(env) ? await encodeEnvironmentCode(env) : undefined;
+		insertAtFocusedTarget(plugin, buildEnvironmentEmbedBlock(env.id, code), { width: 460, height: 760 }, env.name);
 	}, [app]);
 
 	const deleteEnv = useCallback(async (env: EnvironmentData) => {
@@ -372,16 +353,202 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 	);
 }
 
+// ── Character Pane ────────────────────────────────────────────────────────────
+
+/** Maps a sheet's free-text "Class & Subclass" to a known class and its color. */
+function characterClassInfo(classSubclass: string): { className: string | null; color: string | null } {
+	const text = classSubclass.toLowerCase();
+	const className =
+		Object.keys(CLASS_COLORS).find((name) => text.includes(name.toLowerCase())) ?? null;
+	return { className, color: className ? CLASS_COLORS[className] : null };
+}
+
+function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const [query, setQuery] = useState("");
+	// refreshToken re-renders the pane whenever stored data changes
+	void refreshToken;
+
+	const plugin = getDaggerForgePlugin(app);
+	const q = query.trim().toLowerCase();
+	const characters = [...(plugin?.dataManager?.getCharacters() ?? [])]
+		.filter(
+			(c) =>
+				!q ||
+				(c.name || "Unnamed character").toLowerCase().includes(q) ||
+				c.classSubclass.toLowerCase().includes(q) ||
+				c.heritage.toLowerCase().includes(q),
+		)
+		.sort((a, b) => (a.name || "Unnamed").localeCompare(b.name || "Unnamed"));
+
+	const insert = useCallback(async (character: CharacterData) => {
+		const plg = getDaggerForgePlugin(app);
+		if (!plg) return;
+		const code = await characterEmbedCode(plg, character.id);
+		insertAtFocusedTarget(
+			plg,
+			buildCharacterEmbedBlock(character.id, code),
+			{ width: 960, height: 1100 },
+			character.name || "character",
+		);
+	}, [app]);
+
+	const deleteCharacter = useCallback((character: CharacterData) => {
+		const plg = getDaggerForgePlugin(app);
+		if (!plg) return;
+		new ConfirmModal(plg.app, {
+			title: "Delete character?",
+			message: `"${character.name || "Unnamed character"}" will be removed from your saved characters.`,
+			confirmLabel: "Delete",
+			onConfirm: () => void plg.dataManager.deleteCharacterById(character.id),
+		}).open();
+	}, [app]);
+
+	return (
+		<>
+			<input
+				type="text"
+				className="df-char-search"
+				placeholder="Search characters…"
+				value={query}
+				onChange={(e) => setQuery(e.target.value)}
+			/>
+			<div className="df-adversary-results">
+				{characters.length === 0 ? (
+					<p>{q ? "No characters match." : "No saved characters yet. Open the character sheet to create one."}</p>
+				) : (
+					characters.map((c) => (
+						<CharacterCard key={c.id} character={c} onInsert={insert} onDelete={deleteCharacter} />
+					))
+				)}
+			</div>
+		</>
+	);
+}
+
+function CharacterCard({ character, onInsert, onDelete }: {
+	character: CharacterData;
+	onInsert: (c: CharacterData) => void;
+	onDelete: (c: CharacterData) => void;
+}) {
+	const { className, color } = characterClassInfo(character.classSubclass);
+	const tag = className ?? (character.classSubclass.trim() || "No class");
+	const badgeColor = color ?? "var(--text-faint)";
+	return (
+		<div
+			className="df-adversary-card df-character-card"
+			style={{ borderLeftColor: badgeColor }}
+			onClick={() => onInsert(character)}
+		>
+			<p className="df-tier-text">
+				{character.level.trim() ? `Level ${character.level}` : "Level -"}{" "}
+				<span
+					className="df-class-badge"
+					style={{
+						color: badgeColor,
+						borderColor: badgeColor,
+						background: color ? hexTint(color, 0.15) : "transparent",
+					}}
+				>
+					{tag}
+				</span>
+			</p>
+			<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
+				onClick={(e: any) => { e.stopPropagation(); onDelete(character); }} />
+			<h3 className="df-title-small-padding">{character.name || "Unnamed character"}</h3>
+			<p className="df-desc-small-padding">{character.heritage}</p>
+		</div>
+	);
+}
+
+// ── Items Pane ────────────────────────────────────────────────────────────────
+
+const GEAR_KINDS = ["all", "weapon", "armor", "wheelchair", "item", "consumable"] as const;
+
+function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const [query, setQuery] = useState("");
+	const [kind, setKind] = useState<(typeof GEAR_KINDS)[number]>("all");
+	void refreshToken;
+
+	const plugin = getDaggerForgePlugin(app);
+	const q = query.trim().toLowerCase();
+	const gear = [...(plugin?.dataManager?.getItems() ?? []), ...ALL_GEAR].filter((g) => {
+		if (kind !== "all" && g.kind !== kind) return false;
+		if (q && !(g.name.toLowerCase().includes(q) || g.text.toLowerCase().includes(q) || g.meta.toLowerCase().includes(q))) return false;
+		return true;
+	});
+
+	const insert = useCallback(async (item: GearData) => {
+		const plg = getDaggerForgePlugin(app);
+		if (!plg) return;
+		const code = item.source === "custom" ? await encodeGearCode(item) : undefined;
+		insertAtFocusedTarget(plg, buildItemEmbedBlock(item.id, code), { width: 420, height: 260 }, item.name);
+	}, [app]);
+
+	const deleteItem = useCallback(async (item: GearData) => {
+		const plg = getDaggerForgePlugin(app);
+		if (!plg) return;
+		await plg.dataManager.deleteItemById(item.id);
+		new Notice(`Deleted ${item.name}`);
+	}, [app]);
+
+	return (
+		<>
+			<input
+				type="text"
+				className="df-char-search"
+				placeholder="Search items…"
+				value={query}
+				onChange={(e) => setQuery(e.target.value)}
+			/>
+			<select className="dropdown df-item-kind-filter" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)} aria-label="Kind filter">
+				{GEAR_KINDS.map((k) => (
+					<option key={k} value={k}>{k === "all" ? "All kinds" : GEAR_KIND_LABELS[k]}</option>
+				))}
+			</select>
+			<div className="df-adversary-results">
+				{gear.length === 0
+					? <p>No items match.</p>
+					: gear.map((g) => (
+						<div
+							key={g.id}
+							className="df-adversary-card df-gear-card"
+							style={{ borderLeftColor: GEAR_KIND_COLORS[g.kind] }}
+							onClick={() => insert(g)}
+						>
+							<p className="df-tier-text">
+								{GEAR_KIND_LABELS[g.kind]}
+								{g.tier !== null ? ` · Tier ${g.tier}` : ""}
+								{g.rarity ? ` · ${g.rarity}` : ""}{" "}
+								{g.source === "custom" && <span className="df-source-badge-custom">custom</span>}
+							</p>
+							{g.source === "custom" && (
+								<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
+									onClick={(e: any) => { e.stopPropagation(); void deleteItem(g); }} />
+							)}
+							<h3 className="df-title-small-padding">{g.name}</h3>
+							<p className="df-desc-small-padding">{g.meta}{g.meta && g.text ? " - " : ""}{g.text}</p>
+						</div>
+					))
+				}
+			</div>
+		</>
+	);
+}
+
 // ── Root App ──────────────────────────────────────────────────────────────────
 
 const TAB_ICONS: Record<BrowserTab, string> = {
 	adversary:   "sword",
 	environment: "mountain",
+	character:   "user",
+	item:        "backpack",
 };
 
 const TAB_LABELS: Record<BrowserTab, string> = {
 	adversary:   "Adversaries",
 	environment: "Environments",
+	character:   "Characters",
+	item:        "Items",
 };
 
 export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshToken }: Props) {
@@ -402,7 +569,7 @@ export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshTo
 		<>
 			{/* Tab strip */}
 			<div className="df-browser-tabs">
-				{(["adversary", "environment"] as BrowserTab[]).map(tab => (
+				{(["adversary", "environment", "character", "item"] as BrowserTab[]).map(tab => (
 					<div
 						key={tab}
 						className={`df-browser-tab${activeTab === tab ? " df-browser-tab--active" : ""}`}
@@ -421,6 +588,12 @@ export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshTo
 			</div>
 			<div className={`df-browser-pane${activeTab === "environment" ? " df-browser-pane--active" : ""}`} data-pane="environment">
 				<EnvironmentPane app={app} refreshToken={refreshToken} />
+			</div>
+			<div className={`df-browser-pane${activeTab === "character" ? " df-browser-pane--active" : ""}`} data-pane="character">
+				<CharacterPane app={app} refreshToken={refreshToken} />
+			</div>
+			<div className={`df-browser-pane${activeTab === "item" ? " df-browser-pane--active" : ""}`} data-pane="item">
+				<ItemsPane app={app} refreshToken={refreshToken} />
 			</div>
 
 			{/* Scroll-to-top */}

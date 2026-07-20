@@ -24,10 +24,39 @@ function parseClocksFromFeatures(features: Feature[]): { name: string; max: numb
 	return result;
 }
 
+/**
+ * Flattens an AdvData record into the string map buildCardHTML consumes.
+ * Used by the browser insert and the daggerforge-adversary embed renderer.
+ */
+export const advToValues = (
+	adv: Record<string, unknown>,
+	count: number,
+): Record<string, string> => ({
+	name: String(adv.name ?? ""),
+	tier: String(adv.tier ?? ""),
+	type: String(adv.type ?? ""),
+	desc: String(adv.desc ?? ""),
+	motives: String(adv.motives ?? ""),
+	difficulty: String(adv.difficulty ?? ""),
+	thresholdMajor: String(adv.thresholdMajor ?? ""),
+	thresholdSevere: String(adv.thresholdSevere ?? ""),
+	hp: String(adv.hp ?? ""),
+	stress: String(adv.stress ?? 0),
+	atk: String(adv.atk ?? ""),
+	weaponName: String(adv.weaponName ?? ""),
+	weaponRange: String(adv.weaponRange ?? ""),
+	weaponDamage: String(adv.weaponDamage ?? ""),
+	xp: String(adv.xp ?? ""),
+	count: String(count),
+	source: String(adv.source || "core"),
+});
+
 export const buildCardHTML = (
 	values: Record<string, string>,
 	features: Feature[],
 	wide = false,
+	/** Stable id for embeds - falls back to a random UUID for legacy inline cards. */
+	cardId?: string,
 ): string => {
 	const {
 		name,
@@ -53,7 +82,7 @@ export const buildCardHTML = (
 	const stresstick = Number(stress) || 0;
 	let countNum = Number(count);
 	countNum = Number.isInteger(countNum) && countNum >= 1 ? countNum : 1;
-	const hiddenID = crypto.randomUUID();
+	const hiddenID = cardId ?? crypto.randomUUID();
 
 	const clocks = parseClocksFromFeatures(features);
 

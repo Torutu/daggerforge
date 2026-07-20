@@ -1,4 +1,4 @@
-# DaggerForge Card Styles — Reuse Guide
+# DaggerForge Card Styles - Reuse Guide
 
 How to embed adversary and environment cards on any website. Drop in the CSS,
 copy the HTML template, fill in your data.
@@ -10,7 +10,7 @@ copy the HTML template, fill in your data.
 1. Copy the contents of the `<style>` block below into your stylesheet (or a
    separate `daggerforge-cards.css` file).
 2. Use the HTML templates further down to render cards.
-3. The cards are self-contained — no JavaScript required for display.
+3. The cards are self-contained - no JavaScript required for display.
    Interactive features (HP/stress tick tracking, wide toggle) need a small
    script that is covered at the bottom.
 
@@ -65,7 +65,7 @@ only things you need to change if you want to retheme the cards.
   );
 }
 
-/* Outer shell — tan border + drop shadow */
+/* Outer shell - tan border + drop shadow */
 .df-pseudo-cut-corners.outer {
   filter: drop-shadow(0.2em 0.2em 0.4em rgba(0,0,0,0.5));
   padding: 1.4px;
@@ -76,14 +76,14 @@ only things you need to change if you want to retheme the cards.
 }
 .df-pseudo-cut-corners.outer::before { background-color: var(--df-color-bg-outer); }
 
-/* Inner shell — cream background */
+/* Inner shell - cream background */
 .df-pseudo-cut-corners.inner {
   padding: 5px;
   box-sizing: border-box;
 }
 .df-pseudo-cut-corners.inner::before { background-color: var(--df-color-bg-inner); }
 
-/* Wide mode — removes the 400 px cap so the card stretches full-width */
+/* Wide mode - removes the 400 px cap so the card stretches full-width */
 .df-card--wide.df-pseudo-cut-corners.outer,
 .df-card--wide.df-env-card-outer {
   max-width: 100%;

@@ -1,5 +1,6 @@
 export * from './adversaries/index';
 export * from './environments/index';
+export * from './characters/index';
 export * from './card-editing';
 export * from './data-management';
 export * from './dice/diceRoller';

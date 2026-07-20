@@ -59,7 +59,7 @@ function findEnvSectionEnd(content: string, cardId: string): number {
 /**
  * Scans the "Potential Adversaries" line of an env card and wraps any name
  * that exists in the adversary data with a clickable span.
- * Safe to call multiple times — bails if links are already attached.
+ * Safe to call multiple times - bails if links are already attached.
  */
 export function attachPotentialAdversaryLinks(
 	section: HTMLElement,
@@ -145,7 +145,7 @@ export function handleAdvLinkClick(
 	const endIdx = findEnvSectionEnd(content, cardId);
 	if (endIdx === -1) return;
 
-	const html      = buildCardHTML(advDataToValues(adv), adv.features, false, adv.countdowns);
+	const html      = buildCardHTML(advDataToValues(adv), adv.features, false);
 	const injected  = injectDiceBadgesIntoHtml(html);
 	const inserted  = "\n" + injected;
 	const pos       = view.editor.offsetToPos(endIdx);

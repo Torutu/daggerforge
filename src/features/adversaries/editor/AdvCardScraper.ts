@@ -31,7 +31,7 @@ function splitThresholds(segment: string): { major: string; severe: string } {
 	};
 }
 
-// "WeaponName: range" — name is before the colon, range is after.
+// "WeaponName: range" - name is before the colon, range is after.
 function splitWeaponSegment(segment: string): {
 	weaponName: string;
 	weaponRange: string;
@@ -69,7 +69,7 @@ function parseStatsText(statsText: string): ParsedStats {
 	const weaponIdx = atkIdx !== -1 ? atkIdx + 1 : 4;
 	const { weaponName } = splitWeaponSegment(segments[weaponIdx] ?? "");
 
-	// Damage is the last segment — strip any trailing "Experience:" that bleeds in.
+	// Damage is the last segment - strip any trailing "Experience:" that bleeds in.
 	const weaponDamage = stripTrailingExperience(segments[segments.length - 1] ?? "");
 
 	return { difficulty, thresholdMajor, thresholdSevere, hp, stress, atk, weaponName, weaponDamage };
@@ -87,14 +87,14 @@ function parseStressAndAtk(segments: string[]): { stress: string; atk: string } 
 	const atkPos = atkSegment.indexOf("ATK");
 
 	if (atkPos > 0) {
-		// e.g. "Stress: 3 ATK: +3" — stress is everything before "ATK".
+		// e.g. "Stress: 3 ATK: +3" - stress is everything before "ATK".
 		return {
 			stress: valueAfterLabel(atkSegment.substring(0, atkPos)),
 			atk: valueAfterLabel(atkSegment.substring(atkPos)),
 		};
 	}
 
-	// "ATK" is at the start — stress is absent or in an earlier segment.
+	// "ATK" is at the start - stress is absent or in an earlier segment.
 	return {
 		stress: atkIdx > 3 ? valueAfterLabel(segments[3] ?? "") : "",
 		atk: valueAfterLabel(atkSegment),

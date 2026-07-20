@@ -1,13 +1,97 @@
+# DaggerForge 3.0.0
+
+## New
+
+- **Per-section sheet settings** - each customizable section of the character sheet now has a tiny cog wheel in its corner (invisible until hovered, so the printed-sheet look is untouched). Settings travel inside character share codes.
+  - **Damage & Health**: optional fourth **Massive Damage** block ("Mark 4 HP") whose threshold is calculated automatically as double the Severe threshold; set **Max HP** and **Max Stress** (1–24) - slots up to the max render with solid borders, the rest stay dashed, and values above 12 wrap onto extra lines of 12 slots each, just like Hope strips.
+  - **Hope**: set **Max Hope** (1–24) - up to six per strip; going past six adds extra strips, and diamonds beyond the max on a partial strip are greyed out and locked.
+  - **Experience**: increase the number of rows beyond the printed five (up to 20).
+  - **Gold**: switch to **custom currencies** - rename the section (e.g. "Credits") and track any number of named currencies with numeric amounts, instead of the handfuls/bags/chest icons.
+- Guided creation now also sets Max HP from the chosen class's HP.
+- **Characters tab in the Content Browser** - browse saved characters next to adversaries and environments, with a search box; click a card to insert that character's live sheet into the focused note or canvas. Each card is color-coded by class (border + class badge).
+- **Layout toggle on embedded sheets** - a small icon button (next to Save/Load) cycles the embed between auto, full-width, and compact layouts, per copy. On desktop, embeds also keep the full sheet layout longer before collapsing to the stacked mobile arrangement.
+- **Equipment, items & consumables**
+  - The sheet's **Add cards** picker gains **Equipment** and **Items** tabs: browse all SRD weapons, armor, and combat wheelchairs (with tier filter and search) and set them as Primary/Secondary weapon or equip armor with full stats in one click; browse SRD items and consumables (plus your custom items) and add them straight to the character's inventory.
+  - **Items tab in the Content Browser** - search and filter all SRD gear and your custom items by kind; click one to insert it as a card into the focused note or canvas.
+  - **Item embeds** - inserted items are small live cards backed by an id block (` ```daggerforge-item` `), styled like adversary cards; editing the record updates every embed.
+  - **Item creator** - the Content Creator gains an **Item** option (also the "Item creator" command) with guidance for every field: per-kind hints and example stat lines (weapon/armor/wheelchair/item/consumable), tier and rarity pickers, then one click creates the item and inserts its card.
+- **Guided creation redesigned**
+  - New **Experiences** step: two suggestion inputs (with example placeholders) that land on the sheet as +2 Experiences.
+  - Selection steps now use a master-detail layout: option names in a list on the left (class colors, domain icons, and domain sub-headers included) and the full description on the right. The description scrolls inside its panel and the Choose button is pinned to the panel footer, so it can never sink below the fold. The first entry opens automatically.
+  - Domain cards get the same treatment: card names grouped per domain on the left, the full card text on the right with an Add/Remove button and a 0/2 counter.
+  - On narrow screens the description panel moves above the list instead, sized so the Choose button stays in reach; the step markers collapse to numbered diamonds with only the active step labeled.
+- **First-run prompt**: opening the character sheet with no saved characters now asks how to begin, with a Blank sheet option and a highlighted Guided creation option.
+- Game keywords in card text are now bolded automatically: Hope, Fear, Stress, Hit Points, Armor Slots, Evasion, Proficiency, advantage/disadvantage, dice like 2d12+4, and modifiers like +1.
+- **Level Up Guide on the sheet** - the official level-up tables as a new sheet section: all three tiers with markable advancement slots (double-cost options like Proficiency and Multiclass sit in a heavy frame and mark together), tier achievements, and the every-level reminders. When you raise the sheet's Level, a quiet pill appears: "You have 2 advancement points to spend"; marking slots counts them down. Nothing is enforced: the points per level and the current allowance are both editable in the section's cog, so house rules work fine. Your current tier's column is outlined.
+- **Background & Connections on the sheet** - a new section with your class's background questions and connection prompts (from the official guides), each with its own answer line. Without a recognized class it falls back to free-form background/connections boxes.
+- **Druid Beastform section** - Druids get the full official Beastform list (24 forms, tiers 1-4) right on the sheet, grouped by tier with each form's examples, stat changes, advantages, and features. One click takes a form (shown in an active-form banner with a Drop form button), and the class's Beastform rules are quoted above the list.
+- **Ranger Companion sheet** - Rangers get the official companion page, laid out like the printed one: name, a picture (any image file, automatically shrunk so it travels inside share codes and embeds), Evasion, five Companion Experience lines in the sheet's printed row style with the official examples, a Standard Attack and Range line with a markable d6/d8/d10/d12 damage die track, the Stress track (3 base slots, extras unlock as you mark Resilient training) with the printed rules text, and all eight training options with the printed slot counts. Marking **Light in the Dark** really does grant your character an extra Hope slot on the sheet (and unmarking takes it back).
+- Feature names inside card text (e.g. **Heart of a Poet:**) are now bolded automatically on sheet cards, wizard descriptions, and item cards.
+- **Battle calculator suggests real adversaries** - after spending battle points, a new "Suggested Adversaries" section lists matching adversaries for every category in your plan (Solo, Minions, Standard, …), filterable by tier and source (Core, Void, Umbra, Sablewood, or your customs). Combined categories (Social / Support, Horde / Ranged / Skulk / Standard) split their suggestions per actual type behind thin labeled dividers, so a Ranged pick can't be mistaken for a Skulk.
+  - Clicking a suggestion **chooses** it for the matching slot (✓ on the chip and in the Spending log, with the adversary's name) - nothing is written yet, and choices can be cleared from the log. Choosing more than planned simply spends the extra points.
+  - The **Insert encounter** button then writes everything into the focused note or canvas in one go: a "Battle plan" callout first (party size, base points, every adjustment and slot with its chosen adversary, remaining points - so the encounter's math can be read back later), followed by the chosen adversaries' live cards. Picking the same adversary for several slots prints one card with that many HP/stress rows (like the browser's battle counter) instead of duplicate cards; minion slots contribute a party-sized group each, and custom adversaries carry their sync snapshot.
+  - Inserting finalizes the encounter and resets the calculator - so if battle points are still unspent, a confirmation asks before inserting.
+- **Self-contained embeds for synced vaults** - inserting custom content (characters, adversaries, environments, items) now stamps a `code:` line into the embed block: the record serialized in the same compact format as character share codes (`DFA1.` / `DFE1.` / `DFG1.` / `DHC1.` prefixes). If the note is opened in a vault whose plugin data doesn't contain the record - the classic case being a synced device where `data.json` didn't travel - the card renders from that snapshot instead of showing "not found". The locally stored record always wins when it exists, so live editing behaves exactly as before. Editing a snapshot-rendered card (or pressing Save on a snapshot-rendered character sheet) saves the record into that vault, after which the Content Browser sees it too. Blocks inserted before this update don't carry a snapshot - re-insert them once to get one.
+
+## Fixes
+
+- Custom adversaries now respect the **Count** field: the value is saved with the adversary and stamped on the inserted embed, so a Count of 5 renders five HP/stress rows - same as bundled adversaries inserted with the browser's battle counter. Editing a custom adversary's Count updates its existing embeds too.
+
+---
+
+# DaggerForge 2.6.0
+
+## New
+
+- **Live adversary & environment embeds** - inserting from the browser or creator now places a small id-referencing code block (` ```daggerforge-adversary`` / ```daggerforge-environment` `) instead of a frozen HTML blob. The block renders the full interactive card (HP/stress ticks, collapse, wide toggle, countdowns, dice badges) in notes and canvas, and always reflects the stored record - editing the adversary updates every embed of it.
+  - Each inserted embed carries its own `instance:` token, so five copies of the same goblin each track their own HP. The battle counter becomes `count: N` on the block (N tick rows in one card).
+  - Editing inside an embed opens the normal editor prefilled from data - no more scraping HTML out of the note. Editing a bundled SRD card saves a custom copy and automatically repoints that embed (works in notes and canvas files).
+  - Old pasted HTML cards keep working exactly as before.
+- **"Insert into where?" picker for character sheets** - the sheet's Insert button and command open a fuzzy picker: the last-focused note/canvas first (Enter = old behavior), then other open tabs, then every note and canvas in the vault - including closed `.canvas` files, which gain a properly positioned new card node. Adversary/environment inserts from the browser and creator keep the one-click behavior (straight into the focused note or canvas), and now also work in reading mode by appending to the note.
+
+---
+
+# DaggerForge 2.5.0
+
+## New
+
+- **Character sheets in notes and canvas** - a new "Insert" button on the character sheet (and the "Insert character sheet into note or canvas" command) places a small code block that renders the full live sheet inside any note or canvas card. Edits made in an embed auto-save to the stored character, so the sheet view and every embed stay in sync. If the character is missing (e.g. its code hasn't been imported in this vault yet), the embed shows a placeholder and fills in automatically once it's imported.
+- **Card gallery** - a new "Add cards" panel in the character sheet lets players browse all SRD ancestries, communities, and domain cards (with each domain's signature color and icon), filter by domain/level/type, search, and add cards to their character.
+- **Heritage & Domain Cards sections** - the sheet now has card sections below Notes: ancestry/community cards, and domain cards organized into Loadout (max 5) and Vault with one-click swapping. Cards travel inside character share codes.
+- **Guided character creation** - the "New" button now offers Blank character or Guided creation: pick a class, subclass, ancestry, community, and two level-1 domain cards, and the sheet is filled from SRD data (evasion, suggested traits, class/subclass features, hope feature, suggested weapons and armor with full stats, damage thresholds, starting inventory, 2 Hope, 1 handful of gold). Every step is skippable and everything stays editable before saving.
+
+## Attribution
+
+- Contains material from the Daggerheart System Reference Document, © Critical Role LLC, used under the Darrington Press Community Gaming License. Domain icon art and SRD data sourced from the author's own dhtools project.
+
+---
+
+# DaggerForge 2.4.0
+
+## New
+
+- **Character Sheet** - full Daggerheart character sheet inside Obsidian, traced 1:1 from the official fillable PDF (same sections, slot counts, and art). Open it from the ribbon menu or the "Open character sheet" command.
+  - Fill in name/pronouns/heritage/class, the six traits, evasion/armor, HP/stress/hope tracks, experience, gold, active weapons, active armor, and inventory - plus a Notes section for campaign details not on the printed sheet.
+  - Save multiple characters and switch between them from the toolbar dropdown.
+  - **Copy code** saves the character and puts a compact shareable code on the clipboard; a GM pastes it with **Import code** to get an identical character. Re-importing an updated code refreshes the same character instead of duplicating it.
+  - Fully themed for light and dark mode using Obsidian's native CSS variables.
+
+## Infra
+
+- Character data model and code codec (`src/types/character.ts`, `src/features/characters/characterCode.ts`) are pure TypeScript with zero Obsidian dependency. Mirrored as a standalone `character-codec/` package (with its own README) so the same encode/decode logic can be dropped into an external website.
+
+---
+
 # DaggerForge 2.3.0
 
 ## New
 
-- **Loop countdown reset button** — countdown clocks whose name or content contains "loop" now show a reset (↩) button. Tapping it resets the clock to 0. For dice-based loop clocks, it also restores the roll button so you can re-roll the max.
+- **Loop countdown reset button** - countdown clocks whose name or content contains "loop" now show a reset (↩) button. Tapping it resets the clock to 0. For dice-based loop clocks, it also restores the roll button so you can re-roll the max.
 
 ## Fixed
 
 - Mobile: dice roller and battle calculator close (×) button now registers on first tap. Previously `makeDraggable` was swallowing the touch event because Obsidian's close button is a `div`, not a `button`.
-- Mobile: battle calculator "Adjust" and "Spend" button grids now stack to a single column — no more horizontal scroll.
+- Mobile: battle calculator "Adjust" and "Spend" button grids now stack to a single column - no more horizontal scroll.
 - Mobile: inline dice buttons no longer spawn inside countdown badges or the roll button.
 - Inline dice buttons no longer appear inside `.df-env-countdown-badge` or `.df-env-countdown-dice-roll` elements.
 - Card insertion (browser + creator) now works on first tap after plugin load. Previously mobile required one failed attempt to seed the target leaf.

@@ -11,7 +11,7 @@
  * elements directly via `(modal as any).inputs` so we never need to render
  * the full Obsidian form or run Tiptap.
  *
- * `handleSubmit()` is private — we call it via `(modal as any).handleSubmit()`.
+ * `handleSubmit()` is private - we call it via `(modal as any).handleSubmit()`.
  * `close()` is mocked on each instance to prevent `onClose()` side-effects.
  */
 
@@ -158,9 +158,9 @@ function wireEnvModal(modal: EnvironmentModal, opts: {
     modal.close = jest.fn();
 }
 
-// ── AdversaryModal — edit mode ──────────────────────────────────────────────
+// ── AdversaryModal - edit mode ──────────────────────────────────────────────
 
-describe('AdversaryModal — edit mode', () => {
+describe('AdversaryModal - edit mode', () => {
 
     test('onEditUpdate receives HTML that contains the card name', async () => {
         const modal = new AdversaryModal(mockPlugin(), null);
@@ -300,9 +300,9 @@ describe('AdversaryModal — edit mode', () => {
     });
 });
 
-// ── AdversaryModal — create mode ───────────────────────────────────────────
+// ── AdversaryModal - create mode ───────────────────────────────────────────
 
-describe('AdversaryModal — create mode (markdown)', () => {
+describe('AdversaryModal - create mode (markdown)', () => {
     function makeMarkdownDestination() {
         const editor = { replaceSelection: jest.fn() };
         const destination = { kind: 'markdown', canvas: null, leaf: { view: { editor } } };
@@ -323,7 +323,7 @@ describe('AdversaryModal — create mode (markdown)', () => {
         expect(saved.source).toBe('custom');
     });
 
-    test('editor.replaceSelection is called with HTML containing the card name', async () => {
+    test('creation no longer pastes raw HTML into the editor (embeds go through the destination picker)', async () => {
         const plugin = mockPlugin();
         const { editor, destination } = makeMarkdownDestination();
         const modal = new AdversaryModal(plugin, editor as any);
@@ -331,9 +331,8 @@ describe('AdversaryModal — create mode (markdown)', () => {
 
         await (modal as any).handleSubmit();
 
-        expect(editor.replaceSelection).toHaveBeenCalledTimes(1);
-        const inserted = editor.replaceSelection.mock.calls[0][0];
-        expect(inserted).toContain('Goblin Scout');
+        expect(editor.replaceSelection).not.toHaveBeenCalled();
+        expect(plugin.dataManager.addAdversary).toHaveBeenCalledTimes(1);
     });
 
     test('does not call onEditUpdate when not set', async () => {
@@ -342,15 +341,15 @@ describe('AdversaryModal — create mode (markdown)', () => {
         const modal = new AdversaryModal(plugin, editor as any);
         wireAdvModal(modal, { destination });
 
-        // onEditUpdate is not set — should NOT throw
+        // onEditUpdate is not set - should NOT throw
         await expect((modal as any).handleSubmit()).resolves.not.toThrow();
         expect(plugin.dataManager.addAdversary).toHaveBeenCalled();
     });
 });
 
-// ── EnvironmentModal — edit mode ────────────────────────────────────────────
+// ── EnvironmentModal - edit mode ────────────────────────────────────────────
 
-describe('EnvironmentModal — edit mode', () => {
+describe('EnvironmentModal - edit mode', () => {
 
     test('onEditUpdate receives HTML that contains the env name', async () => {
         const modal = new EnvironmentModal(mockPlugin(), null);
@@ -479,9 +478,9 @@ describe('EnvironmentModal — edit mode', () => {
     });
 });
 
-// ── EnvironmentModal — create mode ─────────────────────────────────────────
+// ── EnvironmentModal - create mode ─────────────────────────────────────────
 
-describe('EnvironmentModal — create mode (markdown)', () => {
+describe('EnvironmentModal - create mode (markdown)', () => {
     function makeMarkdownDestination() {
         const editor = { replaceSelection: jest.fn() };
         const destination = { kind: 'markdown', canvas: null, leaf: { view: { editor } } };
@@ -502,7 +501,7 @@ describe('EnvironmentModal — create mode (markdown)', () => {
         expect(saved.source).toBe('custom');
     });
 
-    test('editor.replaceSelection is called with HTML containing the env name', async () => {
+    test('creation no longer pastes raw HTML into the editor (embeds go through the destination picker)', async () => {
         const plugin = mockPlugin();
         const { editor, destination } = makeMarkdownDestination();
         const modal = new EnvironmentModal(plugin, editor as any);
@@ -510,8 +509,7 @@ describe('EnvironmentModal — create mode (markdown)', () => {
 
         await (modal as any).handleSubmit();
 
-        expect(editor.replaceSelection).toHaveBeenCalledTimes(1);
-        const inserted = editor.replaceSelection.mock.calls[0][0];
-        expect(inserted).toContain('Whispering Bog');
+        expect(editor.replaceSelection).not.toHaveBeenCalled();
+        expect(plugin.dataManager.addEnvironment).toHaveBeenCalledTimes(1);
     });
 });

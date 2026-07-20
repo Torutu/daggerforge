@@ -5,7 +5,7 @@
  * Electron process.  This file provides empty stand-ins for every export
  * that gets pulled in transitively when tests import DataManager or
  * SearchEngine (the chain goes through utils/index → canvasHelpers →
- * obsidian).  Nothing here needs real behaviour — the tests never call
+ * obsidian).  Nothing here needs real behaviour - the tests never call
  * any Obsidian API directly.
  */
 
@@ -48,6 +48,43 @@ export class MarkdownView {
 
 export class Notice {
     constructor(_message: string) {}
+}
+
+/** Behaviour-faithful Events stub - DataManager's character sync relies on it. */
+export class Events {
+    private handlers: Record<string, Array<(...args: unknown[]) => void>> = {};
+    on(name: string, callback: (...args: unknown[]) => void) {
+        (this.handlers[name] ??= []).push(callback);
+        return { name, callback };
+    }
+    offref(ref: { name: string; callback: (...args: unknown[]) => void }) {
+        const list = this.handlers[ref.name];
+        if (list) this.handlers[ref.name] = list.filter((cb) => cb !== ref.callback);
+    }
+    trigger(name: string, ...args: unknown[]) {
+        for (const cb of this.handlers[name] ?? []) cb(...args);
+    }
+}
+
+export class MarkdownRenderChild {
+    containerEl: any;
+    constructor(containerEl: any) { this.containerEl = containerEl; }
+    onload() {}
+    onunload() {}
+}
+
+export class Menu {
+    addItem() { return this; }
+    addSeparator() { return this; }
+    showAtMouseEvent() {}
+}
+
+export class FuzzySuggestModal {
+    app: any;
+    constructor(_app: any) {}
+    open() {}
+    close() {}
+    setPlaceholder() {}
 }
 
 export function setIcon() {}

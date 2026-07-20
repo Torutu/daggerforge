@@ -1,19 +1,35 @@
-import { Notice, Plugin } from 'obsidian';
-import { AdvData, EnvironmentData, PluginSettings, DEFAULT_SETTINGS } from '../types/index';
-import { generateEnvUniqueId, generateAdvUniqueId } from '../utils/index';
+import { Events, Notice, Plugin } from 'obsidian';
+import { AdvData, CharacterData, EnvironmentData, GearData, PluginSettings, DEFAULT_SETTINGS, normalizeCharacter } from '../types/index';
+import { generateEnvUniqueId, generateAdvUniqueId, generateCharacterUniqueId, generateItemUniqueId } from '../utils/index';
 
 export interface StoredCustomData {
 	adversaries: AdvData[];
 	environments: EnvironmentData[];
+	characters: CharacterData[];
+	items: GearData[];
 	settings: PluginSettings;
 	lastUpdated: number;
 }
 
 export class DataManager {
+	/**
+	 * Change notifications so every mounted embed (character sheets, adversary
+	 * and environment cards) stays in sync. Events:
+	 *   "character-changed" (character, origin) / "character-deleted" (id)
+	 *   "adversary-changed" (adversary) / "adversary-deleted" (id)
+	 *   "environment-changed" (environment) / "environment-deleted" (id)
+	 *   "characters-reloaded" (), "data-reloaded" () - bulk import/reset.
+	 * `origin` is an opaque token a character sheet passes with its own saves
+	 * so it can ignore its own echo.
+	 */
+	readonly events = new Events();
+
 	private plugin: Plugin;
 	private data: StoredCustomData = {
 		adversaries: [],
 		environments: [],
+		characters: [],
+		items: [],
 		settings: DEFAULT_SETTINGS,
 		lastUpdated: Date.now()
 	};
@@ -33,6 +49,8 @@ export class DataManager {
 			this.data = {
 				adversaries: this.migrateAdversaries(saved.adversaries || []),
 				environments: this.migrateEnvironments(saved.environments || []),
+				characters: this.migrateCharacters(saved.characters || []),
+				items: saved.items || [],
 				settings: this.mergeSettings(saved.settings),
 				lastUpdated: saved.lastUpdated || Date.now()
 			};
@@ -99,6 +117,18 @@ export class DataManager {
 			(adversary).id = generateAdvUniqueId();
 		}
 		this.data.adversaries.push(adversary);
+		this.events.trigger("adversary-changed", adversary);
+		await this.save();
+	}
+
+	/** Adds the adversary, or replaces the stored one with the same id. */
+	async upsertAdversary(adversary: AdvData): Promise<void> {
+		if (!adversary.id) adversary.id = generateAdvUniqueId();
+		const index = this.data.adversaries.findIndex(a => a.id === adversary.id);
+		if (index === -1) this.data.adversaries.push(adversary);
+		else this.data.adversaries[index] = adversary;
+		// Trigger before the disk write so mounted embeds update instantly
+		this.events.trigger("adversary-changed", adversary);
 		await this.save();
 	}
 
@@ -110,6 +140,7 @@ export class DataManager {
 		const index = this.data.adversaries.findIndex(a => (a).id === id);
 		if (index === -1) throw new Error(`Adversary with ID ${id} not found`);
 		this.data.adversaries.splice(index, 1);
+		this.events.trigger("adversary-deleted", id);
 		await this.save();
 	}
 
@@ -120,6 +151,17 @@ export class DataManager {
 			(env as any).id = generateEnvUniqueId();
 		}
 		this.data.environments.push(env);
+		this.events.trigger("environment-changed", env);
+		await this.save();
+	}
+
+	/** Adds the environment, or replaces the stored one with the same id. */
+	async upsertEnvironment(env: EnvironmentData): Promise<void> {
+		if (!env.id) env.id = generateEnvUniqueId();
+		const index = this.data.environments.findIndex(e => e.id === env.id);
+		if (index === -1) this.data.environments.push(env);
+		else this.data.environments[index] = env;
+		this.events.trigger("environment-changed", env);
 		await this.save();
 	}
 
@@ -131,6 +173,62 @@ export class DataManager {
 		const index = this.data.environments.findIndex(e => (e as any).id === id);
 		if (index === -1) throw new Error(`Environment with ID ${id} not found`);
 		this.data.environments.splice(index, 1);
+		this.events.trigger("environment-deleted", id);
+		await this.save();
+	}
+
+	// ==================== CUSTOM ITEMS ====================
+
+	getItems(): GearData[] {
+		return this.data.items;
+	}
+
+	/** Adds the item, or replaces the stored one with the same id. */
+	async upsertItem(item: GearData): Promise<void> {
+		if (!item.id) item.id = generateItemUniqueId();
+		item.source = "custom";
+		const index = this.data.items.findIndex(i => i.id === item.id);
+		if (index === -1) this.data.items.push(item);
+		else this.data.items[index] = item;
+		this.events.trigger("item-changed", item);
+		await this.save();
+	}
+
+	async deleteItemById(id: string): Promise<void> {
+		const index = this.data.items.findIndex(i => i.id === id);
+		if (index === -1) throw new Error(`Item with ID ${id} not found`);
+		this.data.items.splice(index, 1);
+		this.events.trigger("item-deleted", id);
+		await this.save();
+	}
+
+	// ==================== CHARACTERS ====================
+
+	// Coerce stored characters through the normalizer so older saves pick up
+	// any newly added sheet fields with safe defaults.
+	private migrateCharacters(characters: unknown[]): CharacterData[] {
+		return characters.map(c => normalizeCharacter(c, generateCharacterUniqueId()));
+	}
+
+	getCharacters(): CharacterData[] {
+		return this.data.characters;
+	}
+
+	/** Adds the character, or replaces the stored one with the same id. */
+	async upsertCharacter(character: CharacterData, origin?: unknown): Promise<void> {
+		const index = this.data.characters.findIndex(c => c.id === character.id);
+		if (index === -1) this.data.characters.push(character);
+		else this.data.characters[index] = character;
+		// Trigger before the disk write so other mounted sheets update instantly
+		this.events.trigger("character-changed", character, origin);
+		await this.save();
+	}
+
+	async deleteCharacterById(id: string): Promise<void> {
+		const index = this.data.characters.findIndex(c => c.id === id);
+		if (index === -1) throw new Error(`Character with ID ${id} not found`);
+		this.data.characters.splice(index, 1);
+		this.events.trigger("character-deleted", id);
 		await this.save();
 	}
 
@@ -154,14 +252,19 @@ export class DataManager {
 		const imported = JSON.parse(jsonString);
 		this.data.adversaries.push(...(imported.adversaries ?? []));
 		this.data.environments.push(...(imported.environments ?? []));
+		this.data.characters.push(...this.migrateCharacters(imported.characters ?? []));
 		this.ensureAdversariesHaveIds();
 		this.ensureEnvironmentsHaveIds();
+		this.events.trigger("characters-reloaded");
+		this.events.trigger("data-reloaded");
 		await this.save();
 	}
 
 	async deleteDataFile(): Promise<void> {
 		try {
-			this.data = { adversaries: [], environments: [], settings: DEFAULT_SETTINGS, lastUpdated: Date.now() };
+			this.data = { adversaries: [], environments: [], characters: [], items: [], settings: DEFAULT_SETTINGS, lastUpdated: Date.now() };
+			this.events.trigger("characters-reloaded");
+			this.events.trigger("data-reloaded");
 			await this.plugin.saveData(null);
 		} catch (err) {
 			console.error('DataManager: Error deleting data.json file', err);
