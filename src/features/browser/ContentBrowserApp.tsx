@@ -22,7 +22,7 @@ import { insertAtFocusedTarget } from "../embeds/insertDestination";
 import { buildCharacterEmbedBlock, characterEmbedCode } from "../characters/CharacterSheetEmbed";
 import { ConfirmModal } from "../characters/components/ConfirmModal";
 import type { CharacterData } from "../../types/character";
-import { CLASS_COLORS, GEAR_KIND_LABELS, GearData } from "../../types/srd";
+import { CLASS_COLORS, GEAR_KIND_COLORS, GEAR_KIND_LABELS, GearData } from "../../types/srd";
 import { ALL_GEAR } from "../../data/srd";
 import { buildItemEmbedBlock } from "../items/ItemEmbed";
 import { hexTint } from "../characters/components/SheetSections";
@@ -509,7 +509,12 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 				{gear.length === 0
 					? <p>No items match.</p>
 					: gear.map((g) => (
-						<div key={g.id} className="df-adversary-card df-gear-card" onClick={() => insert(g)}>
+						<div
+							key={g.id}
+							className="df-adversary-card df-gear-card"
+							style={{ borderLeftColor: GEAR_KIND_COLORS[g.kind] }}
+							onClick={() => insert(g)}
+						>
 							<p className="df-tier-text">
 								{GEAR_KIND_LABELS[g.kind]}
 								{g.tier !== null ? ` · Tier ${g.tier}` : ""}

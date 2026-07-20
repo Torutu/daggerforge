@@ -169,6 +169,15 @@ export const GEAR_KIND_LABELS: Record<GearData["kind"], string> = {
 	consumable: "Consumable",
 };
 
+/** Left-border accents for gear cards in the Content Browser, per kind. */
+export const GEAR_KIND_COLORS: Record<GearData["kind"], string> = {
+	weapon: "#b3542d",
+	armor: "#5a7d9a",
+	wheelchair: "#8a6bbe",
+	item: "#c9a227",
+	consumable: "#4e9a51",
+};
+
 export const DOMAIN_NAMES = [
 	"Arcana",
 	"Blade",
