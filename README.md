@@ -9,32 +9,15 @@ This plugin designed for **Daggerheart**, a TTRPG, that helps Game Masters easil
 - Built in dice roller
 - Battle Calculator follow the rulebook's Battle Guide
 
-## Latest Update 2.2.0
+## Latest Update 3.0.0
 
-**Unified Content Browser** Adversaries and Environments are now in a single tabbed side panel. One button opens both, and switching between them is instant.
+A complete Daggerheart character system including creation, sharing, embeds, items, GM tools, and guide pages.
 
-**Content Creator chooser** One entry point for creating content. Click the ribbon button and pick Adversary or Environment.
-
-**Wide card toggle** Each inserted card now has a toggle button (in edit mode) to switch between a compact and full-width layout on the fly.
-
-**HP & Stress collapse** The tick section on adversary cards can be hidden with a small toggle. Collapsed by default to keep cards compact. State is remembered when switching between edit and reading mode.
-
-**Horde type support** When creating a Horde adversary, a "Members per HP" field appears automatically and saves in the correct format.
-
-**Rich text feature descriptions** Feature description fields now support bold, italic, headings, and lists instead of plain text.
-
-**Keyword highlighting** The words hope, fear, hp, and stress are color-coded on cards. Toggle it on or off under Settings → DaggerForge.
-
-**Dice improvements** Dice expressions like `1d10-2` now subtract correctly. Modifiers are shown in green or red. Tooltip duration is adjustable in settings.
-
-**Settings page** New settings tab under Obsidian Settings → DaggerForge for keyword highlighting and dice tooltip duration.
-
-**Dice and Battle Calculator** Both tools now open as proper Obsidian modals and should work on mobile.
-
-### HOTFIX
-**fixed an issue where having react framework made it impossible for the plugin to work in mobile**
-
-**should look pretty on mobile just like on pc**
+- Interactive character sheet based on the official fillable PDF with themes, tracks, inventory, notes, and customizable sections.
+- Shareable character codes.
+- Guided character creation with class, ancestry, community, experiences, domain cards, review, and creators for custom items, adversaries, and environments.
+- GM tools including a content browser and battle planner with encounter budgeting, filtered suggestions, and battle plan generation.
+- Integrated guide pages for leveling, class background questions, Druid Beastforms, Ranger Companion management, and other official reference content.
 
 ## how to use
 
