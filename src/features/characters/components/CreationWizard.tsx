@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CLASS_COLORS, CLASS_DOMAINS, DOMAIN_COLORS, SrdClass, SrdDomainCard, SrdHeritage, SrdSubclass } from "../../../types/srd";
+import { CLASS_COLORS, DOMAIN_COLORS, SrdClass, SrdDomainCard, SrdDomainRef, SrdHeritage, SrdSubclass } from "../../../types/srd";
 import {
 	SRD_ANCESTRIES,
 	SRD_CLASSES,
@@ -43,8 +43,8 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 	const [step, setStep] = useState(0);
 	const [choices, setChoices] = useState<CreationChoices>({});
 
-	const srdClass = SRD_CLASSES.find((c) => c.name === choices.className);
-	const classDomains = choices.className ? CLASS_DOMAINS[choices.className] : undefined;
+	const srdClass = SRD_CLASSES.find((c) => c.id === choices.classId);
+	const classDomains = srdClass?.domains;
 
 	const pick = (patch: Partial<CreationChoices>, advance = true) => {
 		setChoices((c) => ({ ...c, ...patch }));
@@ -52,8 +52,8 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 	};
 
 	// Choosing a different class invalidates subclass/domain-card picks
-	const pickClass = (name: string) =>
-		pick({ className: name, subclassName: undefined, domainCardNames: [] });
+	const pickClass = (id: string) =>
+		pick({ classId: id, subclassId: undefined, domainCardIds: [] });
 
 	const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1));
 	const back = () => setStep((s) => Math.max(s - 1, 0));
@@ -88,18 +88,18 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 			</div>
 
 			<div className="df-cs-wizard-body">
-				{step === 0 && <ClassStep selected={choices.className} onPick={pickClass} />}
+				{step === 0 && <ClassStep selected={choices.classId} onPick={pickClass} />}
 				{step === 1 && (
 					<SubclassStep
 						srdClass={srdClass}
-						selected={choices.subclassName}
-						onPick={(name) => pick({ subclassName: name })}
+						selected={choices.subclassId}
+						onPick={(id) => pick({ subclassId: id })}
 					/>
 				)}
 				{step === 2 && (
 					<AncestryStep
-						selected={choices.ancestryName}
-						selected2={choices.ancestryName2}
+						selected={choices.ancestryId}
+						selected2={choices.ancestryId2}
 						onPick={pick}
 					/>
 				)}
@@ -107,8 +107,8 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 					<HeritageStep
 						options={SRD_COMMUNITIES}
 						kind="community"
-						selected={choices.communityName}
-						onPick={(name) => pick({ communityName: name })}
+						selected={choices.communityId}
+						onPick={(id) => pick({ communityId: id })}
 					/>
 				)}
 				{step === 4 && (
@@ -120,8 +120,8 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 				{step === 5 && (
 					<DomainCardsStep
 						classDomains={classDomains}
-						selected={choices.domainCardNames ?? []}
-						onChange={(names) => pick({ domainCardNames: names }, false)}
+						selected={choices.domainCardIds ?? []}
+						onChange={(ids) => pick({ domainCardIds: ids }, false)}
 					/>
 				)}
 				{step === 6 && <ReviewStep choices={choices} />}
@@ -147,12 +147,12 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 
 function stepIsAnswered(step: number, choices: CreationChoices): boolean {
 	switch (step) {
-		case 0: return Boolean(choices.className);
-		case 1: return Boolean(choices.subclassName);
-		case 2: return Boolean(choices.ancestryName);
-		case 3: return Boolean(choices.communityName);
+		case 0: return Boolean(choices.classId);
+		case 1: return Boolean(choices.subclassId);
+		case 2: return Boolean(choices.ancestryId);
+		case 3: return Boolean(choices.communityId);
 		case 4: return (choices.experiences ?? []).some((e) => e.trim() !== "");
-		case 5: return (choices.domainCardNames ?? []).length > 0;
+		case 5: return (choices.domainCardIds ?? []).length > 0;
 		default: return true;
 	}
 }
@@ -263,23 +263,23 @@ function WizardPlaceholder({ text }: { text: string }) {
 
 // ── Steps ─────────────────────────────────────────────────────────────────────
 
-function ClassStep({ selected, onPick }: { selected?: string; onPick: (name: string) => void }) {
+function ClassStep({ selected, onPick }: { selected?: string; onPick: (id: string) => void }) {
 	const t = useTranslation();
-	const [openName, setOpenName] = useState<string | null>(selected ?? SRD_CLASSES[0]?.name ?? null);
-	const open = SRD_CLASSES.find((c) => c.name === openName);
+	const [openId, setOpenId] = useState<string | null>(selected ?? SRD_CLASSES[0]?.id ?? null);
+	const open = SRD_CLASSES.find((c) => c.id === openId);
 	return (
 		<>
 			<p className="df-cs-wizard-hint">{t("wizard.class.hint")}</p>
 			<WizardSplit
 				list={SRD_CLASSES.map((c) => (
 					<WizardRow
-						key={c.name}
-						selected={selected === c.name}
-						active={openName === c.name}
+						key={c.id}
+						selected={selected === c.id}
+						active={openId === c.id}
 						accent={CLASS_COLORS[c.name]}
-						onClick={() => setOpenName(c.name)}
-						icons={(CLASS_DOMAINS[c.name] ?? []).map((d) => (
-							<DomainIcon key={d} domain={d} className="df-cs-domain-icon" style={{ color: DOMAIN_COLORS[d] }} />
+						onClick={() => setOpenId(c.id)}
+						icons={c.domains.map((domain) => (
+							<DomainIcon key={domain.id} domain={domain.name} className="df-cs-domain-icon" style={{ color: DOMAIN_COLORS[domain.name] }} />
 						))}
 						name={c.name}
 						meta={c.stats.domains}
@@ -291,16 +291,16 @@ function ClassStep({ selected, onPick }: { selected?: string; onPick: (name: str
 							accent={CLASS_COLORS[open.name]}
 							title={
 								<>
-									{(CLASS_DOMAINS[open.name] ?? []).map((d) => (
-										<DomainIcon key={d} domain={d} className="df-cs-domain-icon" style={{ color: DOMAIN_COLORS[d] }} />
+									{open.domains.map((domain) => (
+										<DomainIcon key={domain.id} domain={domain.name} className="df-cs-domain-icon" style={{ color: DOMAIN_COLORS[domain.name] }} />
 									))}
 									{open.name}
 								</>
 							}
 							meta={t("wizard.class.meta", { evasion: open.stats.evasion, hp: open.stats.hp })}
 							chooseLabel={t("wizard.choose", { name: open.name })}
-							onChoose={() => onPick(open.name)}
-							onClose={() => setOpenName(null)}
+							onChoose={() => onPick(open.id)}
+							onClose={() => setOpenId(null)}
 						>
 							<ClassDetail srdClass={open} />
 						</WizardDetail>
@@ -356,28 +356,28 @@ function SubclassStep({
 }: {
 	srdClass?: SrdClass;
 	selected?: string;
-	onPick: (name: string) => void;
+	onPick: (id: string) => void;
 }) {
 	const t = useTranslation();
-	const [openName, setOpenName] = useState<string | null>(
-		selected ?? (srdClass ? Object.values(srdClass.subclasses)[0]?.name : null) ?? null,
+	const [openId, setOpenId] = useState<string | null>(
+		selected ?? srdClass?.subclasses[0]?.id ?? null,
 	);
 	if (!srdClass) {
 		return <p className="df-cs-wizard-hint">{t("wizard.subclass.noClass")}</p>;
 	}
 	const accent = CLASS_COLORS[srdClass.name];
-	const open = openName ? srdClass.subclasses[openName] : undefined;
+	const open = srdClass.subclasses.find((subclass) => subclass.id === openId);
 	return (
 		<>
 			<p className="df-cs-wizard-hint">{t("wizard.subclass.hint", { className: srdClass.name })}</p>
 			<WizardSplit
-				list={Object.values(srdClass.subclasses).map((sub) => (
+				list={srdClass.subclasses.map((sub) => (
 					<WizardRow
-						key={sub.name}
-						selected={selected === sub.name}
-						active={openName === sub.name}
+						key={sub.id}
+						selected={selected === sub.id}
+						active={openId === sub.id}
 						accent={accent}
-						onClick={() => setOpenName(sub.name)}
+						onClick={() => setOpenId(sub.id)}
 						name={sub.name}
 						meta={sub.spellcastTrait ? t("wizard.subclass.spellcast", { trait: sub.spellcastTrait }) : undefined}
 					/>
@@ -389,8 +389,8 @@ function SubclassStep({
 							title={open.name}
 							meta={open.spellcastTrait ? t("wizard.subclass.spellcast", { trait: open.spellcastTrait }) : undefined}
 							chooseLabel={t("wizard.choose", { name: open.name })}
-							onChoose={() => onPick(open.name)}
-							onClose={() => setOpenName(null)}
+							onChoose={() => onPick(open.id)}
+							onClose={() => setOpenId(null)}
 						>
 							<SubclassDetail subclass={open} />
 						</WizardDetail>
@@ -437,19 +437,19 @@ function HeritageStep({
 	options: SrdHeritage[];
 	kind: string;
 	selected?: string;
-	onPick: (name: string) => void;
+	onPick: (id: string) => void;
 }) {
 	const t = useTranslation();
-	const [openName, setOpenName] = useState<string | null>(selected ?? options[0]?.name ?? null);
-	const open = options.find((h) => h.name === openName);
+	const [openId, setOpenId] = useState<string | null>(selected ?? options[0]?.id ?? null);
+	const open = options.find((h) => h.id === openId);
 	return (
 		<WizardSplit
 			list={options.map((h) => (
 				<WizardRow
-					key={h.name}
-					selected={selected === h.name}
-					active={openName === h.name}
-					onClick={() => setOpenName(h.name)}
+					key={h.id}
+					selected={selected === h.id}
+					active={openId === h.id}
+					onClick={() => setOpenId(h.id)}
 					name={h.name}
 					meta={h.features.map((f) => f.split(":")[0]).join(" · ")}
 				/>
@@ -458,9 +458,9 @@ function HeritageStep({
 				open ? (
 					<WizardDetail
 						title={open.name}
-					chooseLabel={t("wizard.choose", { name: open.name })}
-						onChoose={() => onPick(open.name)}
-						onClose={() => setOpenName(null)}
+						chooseLabel={t("wizard.choose", { name: open.name })}
+						onChoose={() => onPick(open.id)}
+						onClose={() => setOpenId(null)}
 					>
 						<HeritageDetail heritage={open} />
 					</WizardDetail>
@@ -484,35 +484,37 @@ function AncestryStep({
 	onPick: (patch: Partial<CreationChoices>, advance?: boolean) => void;
 }) {
 	const t = useTranslation();
-	const [openName, setOpenName] = useState<string | null>(
-		selected ?? SRD_ANCESTRIES[0]?.name ?? null,
+	const [openId, setOpenId] = useState<string | null>(
+		selected ?? SRD_ANCESTRIES[0]?.id ?? null,
 	);
 	const mixed = selected2 !== undefined;
-	const open = SRD_ANCESTRIES.find((h) => h.name === openName);
+	const open = SRD_ANCESTRIES.find((h) => h.id === openId);
+	const primary = SRD_ANCESTRIES.find((h) => h.id === selected);
+	const secondary = SRD_ANCESTRIES.find((h) => h.id === selected2);
 
 	const toggleMixed = () => {
 		// Entering mixed mode keeps the current pick as the primary ancestry;
 		// leaving it drops the secondary.
-		onPick({ ancestryName2: mixed ? undefined : "" }, false);
+		onPick({ ancestryId2: mixed ? undefined : "" }, false);
 	};
 
-	const choose = (name: string) => {
+	const choose = (id: string) => {
 		if (!mixed) {
-			onPick({ ancestryName: name });
+			onPick({ ancestryId: id });
 			return;
 		}
 		if (!selected) {
-			onPick({ ancestryName: name }, false);
+			onPick({ ancestryId: id }, false);
 			return;
 		}
-		if (name === selected) return;
-		onPick({ ancestryName2: name });
+		if (id === selected) return;
+		onPick({ ancestryId2: id });
 	};
 
-	const chooseLabel = (name: string) => {
+	const chooseLabel = (id: string, name: string) => {
 		if (!mixed) return t("wizard.choose", { name });
 		if (!selected) return t("wizard.ancestry.useFirst", { name });
-		if (name === selected) return t("wizard.ancestry.pickedFirst");
+		if (id === selected) return t("wizard.ancestry.pickedFirst");
 		return t("wizard.ancestry.useSecond", { name });
 	};
 
@@ -533,21 +535,24 @@ function AncestryStep({
 						? !selected
 							? t("wizard.ancestry.pickFirst")
 							: !selected2
-								? t("wizard.ancestry.pickSecond", { name: selected })
-								: t("wizard.ancestry.summary", { first: selected, second: selected2 })
+								? t("wizard.ancestry.pickSecond", { name: primary?.name ?? "" })
+								: t("wizard.ancestry.summary", {
+									first: primary?.name ?? "",
+									second: secondary?.name ?? "",
+								})
 						: t("wizard.ancestry.mixedPrompt")}
 				</span>
 			</div>
 			<WizardSplit
 				list={SRD_ANCESTRIES.map((h) => {
-					const isPrimary = selected === h.name;
-					const isSecondary = mixed && selected2 === h.name;
+					const isPrimary = selected === h.id;
+					const isSecondary = mixed && selected2 === h.id;
 					return (
 						<WizardRow
-							key={h.name}
+							key={h.id}
 							selected={isPrimary || isSecondary}
-							active={openName === h.name}
-							onClick={() => setOpenName(h.name)}
+							active={openId === h.id}
+							onClick={() => setOpenId(h.id)}
 							name={h.name}
 							tags={
 								<>
@@ -563,10 +568,10 @@ function AncestryStep({
 					open ? (
 						<WizardDetail
 							title={open.name}
-							chooseLabel={chooseLabel(open.name)}
-							chooseDisabled={mixed && open.name === selected}
-							onChoose={() => choose(open.name)}
-							onClose={() => setOpenName(null)}
+							chooseLabel={chooseLabel(open.id, open.name)}
+							chooseDisabled={mixed && open.id === selected}
+							onChoose={() => choose(open.id)}
+							onClose={() => setOpenId(null)}
 						>
 							<HeritageDetail heritage={open} />
 						</WizardDetail>
@@ -620,32 +625,32 @@ export function DomainCardsStep({
 	selected,
 	onChange,
 }: {
-	classDomains?: [string, string];
+	classDomains?: [SrdDomainRef, SrdDomainRef];
 	selected: string[];
-	onChange: (names: string[]) => void;
+	onChange: (ids: string[]) => void;
 }) {
 	const t = useTranslation();
 	const cards = SRD_DOMAIN_CARDS.filter(
-		(c) => c.level === 1 && (!classDomains || classDomains.includes(c.domain)),
+		(c) => c.level === 1 && (!classDomains || classDomains.some((domain) => domain.id === c.domainId)),
 	);
-	const [openName, setOpenName] = useState<string | null>(selected[0] ?? cards[0]?.name ?? null);
-	const open = cards.find((c) => c.name === openName);
+	const [openId, setOpenId] = useState<string | null>(selected[0] ?? cards[0]?.id ?? null);
+	const open = cards.find((c) => c.id === openId);
 
 	const domains = [...new Set(cards.map((c) => c.domain))];
 	const toggle = (card: SrdDomainCard) => {
-		if (selected.includes(card.name)) {
-			onChange(selected.filter((n) => n !== card.name));
+		if (selected.includes(card.id)) {
+			onChange(selected.filter((id) => id !== card.id));
 		} else if (selected.length < 2) {
-			onChange([...selected, card.name]);
+			onChange([...selected, card.id]);
 		}
 	};
 
-	const openPicked = open ? selected.includes(open.name) : false;
+	const openPicked = open ? selected.includes(open.id) : false;
 	return (
 		<>
 			<p className="df-cs-wizard-hint">
 				{classDomains
-					? t("wizard.domain.hintForClass", { first: classDomains[0], second: classDomains[1] })
+					? t("wizard.domain.hintForClass", { first: classDomains[0].name, second: classDomains[1].name })
 					: t("wizard.domain.hint")}
 			</p>
 			<WizardSplit
@@ -661,11 +666,11 @@ export function DomainCardsStep({
 								.filter((c) => c.domain === domain)
 								.map((card) => (
 									<WizardRow
-										key={card.name}
-										selected={selected.includes(card.name)}
-										active={openName === card.name}
+										key={card.id}
+										selected={selected.includes(card.id)}
+										active={openId === card.id}
 										accent={color}
-										onClick={() => setOpenName(card.name)}
+										onClick={() => setOpenId(card.id)}
 										name={card.name}
 										meta={<>{card.type} · <ZapIcon />{card.recallCost}</>}
 									/>
@@ -692,7 +697,7 @@ export function DomainCardsStep({
 							chooseLabel={openPicked ? t("wizard.domain.remove") : t("wizard.domain.add")}
 							chooseDisabled={!openPicked && selected.length >= 2}
 							onChoose={() => toggle(open)}
-							onClose={() => setOpenName(null)}
+							onClose={() => setOpenId(null)}
 						>
 							<CardText text={open.text} />
 						</WizardDetail>
@@ -707,17 +712,25 @@ export function DomainCardsStep({
 
 function ReviewStep({ choices }: { choices: CreationChoices }) {
 	const t = useTranslation();
-	const ancestry = choices.ancestryName2
-		? `${choices.ancestryName} / ${choices.ancestryName2} (${t("wizard.review.mixed")})`
-		: choices.ancestryName;
+	const srdClass = SRD_CLASSES.find((item) => item.id === choices.classId);
+	const subclass = srdClass?.subclasses.find((item) => item.id === choices.subclassId);
+	const primaryAncestry = SRD_ANCESTRIES.find((item) => item.id === choices.ancestryId);
+	const secondaryAncestry = SRD_ANCESTRIES.find((item) => item.id === choices.ancestryId2);
+	const community = SRD_COMMUNITIES.find((item) => item.id === choices.communityId);
+	const ancestry = secondaryAncestry
+		? `${primaryAncestry?.name ?? "-"} / ${secondaryAncestry.name} (${t("wizard.review.mixed")})`
+		: primaryAncestry?.name;
+	const domainCards = (choices.domainCardIds ?? [])
+		.map((id) => SRD_DOMAIN_CARDS.find((card) => card.id === id)?.name)
+		.filter((name): name is string => Boolean(name));
 	const experiences = (choices.experiences ?? []).filter((e) => e.trim() !== "");
 	const rows: Array<[string, string]> = [
-		[t("wizard.review.class"), choices.className ?? "-"],
-		[t("wizard.review.subclass"), choices.subclassName ?? "-"],
+		[t("wizard.review.class"), srdClass?.name ?? "-"],
+		[t("wizard.review.subclass"), subclass?.name ?? "-"],
 		[t("wizard.review.ancestry"), ancestry || "-"],
-		[t("wizard.review.community"), choices.communityName ?? "-"],
+		[t("wizard.review.community"), community?.name ?? "-"],
 		[t("wizard.review.experiences"), experiences.map((e) => `${e} (+2)`).join(", ") || "-"],
-		[t("wizard.review.domainCards"), (choices.domainCardNames ?? []).join(", ") || "-"],
+		[t("wizard.review.domainCards"), domainCards.join(", ") || "-"],
 	];
 	return (
 		<>

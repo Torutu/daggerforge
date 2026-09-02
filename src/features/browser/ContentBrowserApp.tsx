@@ -23,7 +23,7 @@ import { buildCharacterEmbedBlock, characterEmbedCode } from "../characters/Char
 import { ConfirmModal } from "../characters/components/ConfirmModal";
 import type { CharacterData } from "../../types/character";
 import { CLASS_COLORS, GEAR_KIND_COLORS, GEAR_KIND_LABELS, GearData } from "../../types/srd";
-import { ALL_GEAR } from "../../data/srd";
+import { ALL_GEAR, SRD_CLASSES } from "../../data/srd";
 import { buildItemEmbedBlock } from "../items/ItemEmbed";
 import { hexTint } from "../characters/components/SheetSections";
 
@@ -355,10 +355,13 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 
 // ── Character Pane ────────────────────────────────────────────────────────────
 
-/** Maps a sheet's free-text "Class & Subclass" to a known class and its color. */
-function characterClassInfo(classSubclass: string): { className: string | null; color: string | null } {
-	const text = classSubclass.toLowerCase();
-	const className =
+/** Resolves the stable class id first, then falls back to legacy free text. */
+function characterClassInfo(character: CharacterData): { className: string | null; color: string | null } {
+	const byId = character.classId
+		? SRD_CLASSES.find((candidate) => candidate.id === character.classId)
+		: undefined;
+	const text = character.classSubclass.toLowerCase();
+	const className = byId?.name ??
 		Object.keys(CLASS_COLORS).find((name) => text.includes(name.toLowerCase())) ?? null;
 	return { className, color: className ? CLASS_COLORS[className] : null };
 }
@@ -430,7 +433,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 	onInsert: (c: CharacterData) => void;
 	onDelete: (c: CharacterData) => void;
 }) {
-	const { className, color } = characterClassInfo(character.classSubclass);
+	const { className, color } = characterClassInfo(character);
 	const tag = className ?? (character.classSubclass.trim() || "No class");
 	const badgeColor = color ?? "var(--text-faint)";
 	return (

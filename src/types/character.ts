@@ -118,6 +118,8 @@ export function defaultSheetSettings(): SheetSettings {
 /** An ancestry or community card attached to the character.
  *  Stored as a full snapshot so share codes stay self-contained. */
 export interface HeritageCardData {
+	/** Stable SRD id; absent on legacy and user-authored cards. */
+	id?: string;
 	name: string;
 	description: string;
 	features: string;
@@ -125,6 +127,8 @@ export interface HeritageCardData {
 
 /** A domain ability card in the character's loadout or vault. */
 export interface CharacterDomainCard {
+	/** Stable SRD id; absent on legacy and user-authored cards. */
+	id?: string;
 	name: string;
 	domain: string;
 	level: number;
@@ -199,6 +203,9 @@ export interface CharacterData {
 	pronouns: string;
 	heritage: string;
 	classSubclass: string;
+	/** Stable SRD ids; empty for legacy or free-form class entries. */
+	classId: string;
+	subclassId: string;
 	level: string;
 	traits: Record<TraitName, CharacterTrait>;
 	evasion: string;
@@ -259,6 +266,8 @@ export function createEmptyCharacter(id: string): CharacterData {
 		pronouns: "",
 		heritage: "",
 		classSubclass: "",
+		classId: "",
+		subclassId: "",
 		level: "",
 		traits: {
 			agility: emptyTrait(),
@@ -338,6 +347,8 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 	base.pronouns = asString(data.pronouns);
 	base.heritage = asString(data.heritage);
 	base.classSubclass = asString(data.classSubclass);
+	base.classId = asString(data.classId);
+	base.subclassId = asString(data.subclassId);
 	base.level = asString(data.level);
 	base.evasion = asString(data.evasion);
 	base.armorScore = asString(data.armorScore);
@@ -462,7 +473,12 @@ function normalizeHeritageCard(raw: unknown): HeritageCardData | null {
 	const c = raw as Record<string, unknown>;
 	const name = asString(c.name);
 	if (!name) return null;
-	return { name, description: asString(c.description), features: asString(c.features) };
+	return {
+		id: asString(c.id) || undefined,
+		name,
+		description: asString(c.description),
+		features: asString(c.features),
+	};
 }
 
 function normalizeDomainCard(raw: unknown): CharacterDomainCard | null {
@@ -471,6 +487,7 @@ function normalizeDomainCard(raw: unknown): CharacterDomainCard | null {
 	const name = asString(c.name);
 	if (!name) return null;
 	return {
+		id: asString(c.id) || undefined,
 		name,
 		domain: asString(c.domain),
 		level: typeof c.level === "number" ? c.level : 1,

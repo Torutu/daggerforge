@@ -102,7 +102,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 		update({ domainCards: [...char.domainCards, { ...c, inVault: false }] });
 
 	const isDomainCardAdded = (c: SrdDomainCard) =>
-		char.domainCards.some((existing) => existing.name === c.name);
+		char.domainCards.some((existing) => existing.id === c.id || (!existing.id && existing.name === c.name));
 
 	// Equipment tab: weapons/wheelchairs slot into primary/secondary, armor equips
 	const equipment = useMemo(() => {

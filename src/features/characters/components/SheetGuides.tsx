@@ -39,6 +39,10 @@ interface SectionProps {
 
 /** Matches the sheet's free-text "Class & Subclass" field to a known class. */
 function sheetClass(char: CharacterData) {
+	if (char.classId) {
+		const byId = SRD_CLASSES.find((candidate) => candidate.id === char.classId);
+		if (byId) return byId;
+	}
 	const lead = char.classSubclass.trim().toLowerCase();
 	return SRD_CLASSES.find((c) => lead.startsWith(c.name.toLowerCase()));
 }

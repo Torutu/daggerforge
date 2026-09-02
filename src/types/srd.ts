@@ -14,6 +14,7 @@ export interface SrdClassFeature {
 }
 
 export interface SrdSubclass {
+	id: string;
 	name: string;
 	/** Missing on non-spellcasting subclasses. */
 	spellcastTrait?: string;
@@ -36,19 +37,22 @@ export interface SrdClassStats {
 }
 
 export interface SrdClass {
+	id: string;
 	name: string;
+	domains: [SrdDomainRef, SrdDomainRef];
 	description: string[];
 	stats: SrdClassStats;
 	items: string;
 	hopeFeature: string;
 	classFeatures: SrdClassFeature[];
-	subclasses: Record<string, SrdSubclass>;
+	subclasses: SrdSubclass[];
 	backgroundQuestions?: string[];
 	connectionQuestions?: string[];
 }
 
 /** Ancestries and communities share one shape; features are "Name: text" strings. */
 export interface SrdHeritage {
+	id: string;
 	name: string;
 	description: string[];
 	features: string[];
@@ -74,14 +78,21 @@ export interface SrdBeastform {
 }
 
 export interface SrdDomainCard {
+	id: string;
 	name: string;
 	level: number;
+	domainId: string;
 	domain: string;
 	/** "Ability" | "Spell" | "Grimoire" */
 	type: string;
 	recallCost: number;
 	/** Body text with light **bold** / _italic_ markdown. */
 	text: string;
+}
+
+export interface SrdDomainRef {
+	id: string;
+	name: string;
 }
 
 export interface SrdWeapon {

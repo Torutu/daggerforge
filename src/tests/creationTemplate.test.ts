@@ -1,5 +1,11 @@
 import { buildCharacterFromChoices } from "../features/characters/creationTemplate";
-import { ALL_GEAR } from "../data/srd";
+import {
+	ALL_GEAR,
+	SRD_ANCESTRIES,
+	SRD_CLASSES,
+	SRD_COMMUNITIES,
+	SRD_DOMAIN_CARDS,
+} from "../data/srd";
 
 describe("ALL_GEAR", () => {
 	test("every entry has a unique id and a name", () => {
@@ -11,16 +17,41 @@ describe("ALL_GEAR", () => {
 	});
 });
 
+describe("stable SRD ids", () => {
+	test("classes, subclasses, heritages, and domain cards have unique ids", () => {
+		const entities = [
+			...SRD_CLASSES,
+			...SRD_CLASSES.flatMap((item) => item.subclasses),
+			...SRD_ANCESTRIES,
+			...SRD_COMMUNITIES,
+			...SRD_DOMAIN_CARDS,
+		];
+		const ids = entities.map((item) => item.id);
+		expect(new Set(ids).size).toBe(ids.length);
+	});
+
+	test("known ids do not depend on display labels", () => {
+		expect(SRD_CLASSES.find((item) => item.name === "Bard")?.id).toBe("class-bard");
+		expect(SRD_ANCESTRIES.find((item) => item.name === "Faun")?.id).toBe("ancestry-faun");
+		expect(SRD_DOMAIN_CARDS.find((item) => item.name === "Rune Ward")?.id).toBe(
+			"domain-card-arcana-1-rune-ward",
+		);
+	});
+});
+
 describe("buildCharacterFromChoices", () => {
 	test("full Bard/Troubadour build autofills the sheet from SRD data", () => {
 		const char = buildCharacterFromChoices(
 			{
-				className: "Bard",
-				subclassName: "Troubadour",
-				ancestryName: "Faun",
-				communityName: "Wildborne",
+				classId: "class-bard",
+				subclassId: "subclass-bard-troubadour",
+				ancestryId: "ancestry-faun",
+				communityId: "community-wildborne",
 				experiences: ["Raised by wolves", "Herbalist's apprentice"],
-				domainCardNames: ["Rune Ward", "Gifted Tracker"],
+				domainCardIds: [
+					"domain-card-arcana-1-rune-ward",
+					"domain-card-sage-1-gifted-tracker",
+				],
 			},
 			"CHR_test",
 		);
@@ -28,6 +59,8 @@ describe("buildCharacterFromChoices", () => {
 		expect(char.id).toBe("CHR_test");
 		expect(char.level).toBe("1");
 		expect(char.classSubclass).toBe("Bard - Troubadour");
+		expect(char.classId).toBe("class-bard");
+		expect(char.subclassId).toBe("subclass-bard-troubadour");
 		expect(char.heritage).toBe("Faun Wildborne");
 		expect(char.evasion).toBe("10");
 
@@ -87,7 +120,7 @@ describe("buildCharacterFromChoices", () => {
 	});
 
 	test("class without subclass still applies class stats", () => {
-		const char = buildCharacterFromChoices({ className: "Warrior" }, "CHR_w");
+		const char = buildCharacterFromChoices({ classId: "class-warrior" }, "CHR_w");
 		expect(char.classSubclass).toBe("Warrior");
 		expect(char.evasion).not.toBe("");
 		expect(char.classFeature).not.toContain("foundation");
@@ -95,7 +128,7 @@ describe("buildCharacterFromChoices", () => {
 
 	test("mixed ancestry combines first feature of one with second feature of the other", () => {
 		const char = buildCharacterFromChoices(
-			{ ancestryName: "Clank", ancestryName2: "Faun", communityName: "Wildborne" },
+			{ ancestryId: "ancestry-clank", ancestryId2: "ancestry-faun", communityId: "community-wildborne" },
 			"CHR_mix",
 		);
 		expect(char.ancestryCard?.name).toBe("Clank / Faun");
@@ -107,17 +140,17 @@ describe("buildCharacterFromChoices", () => {
 		expect(char.heritage).toBe("Clank / Faun Wildborne");
 	});
 
-	test("empty second ancestry name falls back to single ancestry", () => {
+	test("empty second ancestry id falls back to single ancestry", () => {
 		const char = buildCharacterFromChoices(
-			{ ancestryName: "Faun", ancestryName2: "" },
+			{ ancestryId: "ancestry-faun", ancestryId2: "" },
 			"CHR_single",
 		);
 		expect(char.ancestryCard?.name).toBe("Faun");
 	});
 
-	test("unknown names are ignored gracefully", () => {
+	test("unknown ids are ignored gracefully", () => {
 		const char = buildCharacterFromChoices(
-			{ className: "Nonsense", ancestryName: "Nope", domainCardNames: ["Missing Card"] },
+			{ classId: "class-nonsense", ancestryId: "ancestry-nope", domainCardIds: ["domain-card-missing"] },
 			"CHR_x",
 		);
 		expect(char.classSubclass).toBe("");
