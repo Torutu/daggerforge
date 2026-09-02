@@ -10,13 +10,23 @@ import { CreationChoices } from "../creationTemplate";
 import { CardText } from "./CardText";
 import { DomainIcon, DomainSprite } from "./DomainArt";
 import { ZapIcon } from "./SheetFields";
+import { TranslationKey } from "../../../i18n";
+import { useTranslation } from "../../../i18n/react";
 
 interface Props {
 	onComplete: (choices: CreationChoices) => void;
 	onCancel: () => void;
 }
 
-const STEPS = ["Class", "Subclass", "Ancestry", "Community", "Experiences", "Domain Cards", "Review"] as const;
+const STEPS: Array<{ id: string; label: TranslationKey }> = [
+	{ id: "class", label: "wizard.step.class" },
+	{ id: "subclass", label: "wizard.step.subclass" },
+	{ id: "ancestry", label: "wizard.step.ancestry" },
+	{ id: "community", label: "wizard.step.community" },
+	{ id: "experiences", label: "wizard.step.experiences" },
+	{ id: "domain-cards", label: "wizard.step.domainCards" },
+	{ id: "review", label: "wizard.step.review" },
+];
 
 /**
  * Guided character creation following the SRD steps. Every step can be
@@ -29,6 +39,7 @@ const STEPS = ["Class", "Subclass", "Ancestry", "Community", "Experiences", "Dom
  * narrow containers the panel moves above the list instead.
  */
 export function CreationWizard({ onComplete, onCancel }: Props) {
+	const t = useTranslation();
 	const [step, setStep] = useState(0);
 	const [choices, setChoices] = useState<CreationChoices>({});
 
@@ -51,15 +62,15 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 		<div className="df-cs-wizard">
 			<DomainSprite />
 			<div className="df-cs-wizard-head">
-				<h2 className="df-cs-wizard-title">Guided character creation</h2>
-				<button type="button" className="df-cs-card-remove" aria-label="Cancel creation" onClick={onCancel}>
+				<h2 className="df-cs-wizard-title">{t("wizard.title")}</h2>
+				<button type="button" className="df-cs-card-remove" aria-label={t("wizard.cancel")} onClick={onCancel}>
 					✕
 				</button>
 			</div>
 			<div className="df-cs-wiz-steps">
-				{STEPS.map((label, i) => (
+				{STEPS.map((stepConfig, i) => (
 					<button
-						key={label}
+						key={stepConfig.id}
 						type="button"
 						className={
 							"df-cs-wiz-step" +
@@ -71,7 +82,7 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 						<span className="df-cs-wiz-step-diamond">
 							<span>{i < step ? "✦" : i + 1}</span>
 						</span>
-						<span className="df-cs-wiz-step-label">{label}</span>
+						<span className="df-cs-wiz-step-label">{t(stepConfig.label)}</span>
 					</button>
 				))}
 			</div>
@@ -118,15 +129,15 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 
 			<div className="df-cs-wizard-nav">
 				<button type="button" onClick={back} disabled={step === 0}>
-					Back
+					{t("wizard.back")}
 				</button>
 				{step < STEPS.length - 1 ? (
 					<button type="button" onClick={next}>
-						{stepIsAnswered(step, choices) ? "Next" : "Skip"}
+						{stepIsAnswered(step, choices) ? t("wizard.next") : t("wizard.skip")}
 					</button>
 				) : (
 					<button type="button" className="mod-cta" onClick={() => onComplete(choices)}>
-						Create character
+						{t("wizard.create")}
 					</button>
 				)}
 			</div>
@@ -219,12 +230,13 @@ function WizardDetail({
 	onClose: () => void;
 	children: React.ReactNode;
 }) {
+	const t = useTranslation();
 	return (
 		<div className="df-cs-wiz-detail" style={accentStyle(accent)}>
 			<div className="df-cs-wiz-detail-head">
 				<span className="df-cs-wiz-detail-title">{title}</span>
 				{meta && <span className="df-cs-wiz-detail-meta">{meta}</span>}
-				<button type="button" className="df-cs-card-remove" aria-label="Close details" onClick={onClose}>
+				<button type="button" className="df-cs-card-remove" aria-label={t("wizard.closeDetails")} onClick={onClose}>
 					✕
 				</button>
 			</div>
@@ -252,14 +264,12 @@ function WizardPlaceholder({ text }: { text: string }) {
 // ── Steps ─────────────────────────────────────────────────────────────────────
 
 function ClassStep({ selected, onPick }: { selected?: string; onPick: (name: string) => void }) {
+	const t = useTranslation();
 	const [openName, setOpenName] = useState<string | null>(selected ?? SRD_CLASSES[0]?.name ?? null);
 	const open = SRD_CLASSES.find((c) => c.name === openName);
 	return (
 		<>
-			<p className="df-cs-wizard-hint">
-				Every class fills the sheet with its evasion, suggested traits, features, and starting
-				equipment. Everything stays editable afterwards.
-			</p>
+			<p className="df-cs-wizard-hint">{t("wizard.class.hint")}</p>
 			<WizardSplit
 				list={SRD_CLASSES.map((c) => (
 					<WizardRow
@@ -287,15 +297,15 @@ function ClassStep({ selected, onPick }: { selected?: string; onPick: (name: str
 									{open.name}
 								</>
 							}
-							meta={`Evasion ${open.stats.evasion} · HP ${open.stats.hp}`}
-							chooseLabel={`Choose ${open.name}`}
+							meta={t("wizard.class.meta", { evasion: open.stats.evasion, hp: open.stats.hp })}
+							chooseLabel={t("wizard.choose", { name: open.name })}
 							onChoose={() => onPick(open.name)}
 							onClose={() => setOpenName(null)}
 						>
 							<ClassDetail srdClass={open} />
 						</WizardDetail>
 					) : (
-						<WizardPlaceholder text="Select a class on the left to read its full description." />
+						<WizardPlaceholder text={t("wizard.class.placeholder")} />
 					)
 				}
 			/>
@@ -304,6 +314,7 @@ function ClassStep({ selected, onPick }: { selected?: string; onPick: (name: str
 }
 
 function ClassDetail({ srdClass }: { srdClass: SrdClass }) {
+	const t = useTranslation();
 	const suggested = [
 		srdClass.stats.suggestedPrimary,
 		srdClass.stats.suggestedSecondary,
@@ -317,11 +328,11 @@ function ClassDetail({ srdClass }: { srdClass: SrdClass }) {
 				<p key={i} className="df-cs-cardtext-p">{para}</p>
 			))}
 			<p className="df-cs-cardtext-p">
-				<strong>Suggested traits:</strong> {srdClass.stats.suggestedTraits} ·{" "}
-				<strong>Suggested equipment:</strong> {suggested}
+				<strong>{t("wizard.class.suggestedTraits")}</strong> {srdClass.stats.suggestedTraits} ·{" "}
+				<strong>{t("wizard.class.suggestedEquipment")}</strong> {suggested}
 			</p>
 			<p className="df-cs-cardtext-p">
-				<strong>Hope Feature: </strong>
+				<strong>{t("wizard.class.hopeFeature")} </strong>
 				{srdClass.hopeFeature}
 			</p>
 			{srdClass.classFeatures.map((f) => (
@@ -331,7 +342,7 @@ function ClassDetail({ srdClass }: { srdClass: SrdClass }) {
 				</p>
 			))}
 			<p className="df-cs-cardtext-p">
-				<strong>Starting item: </strong>
+				<strong>{t("wizard.class.startingItem")} </strong>
 				{srdClass.items}
 			</p>
 		</>
@@ -347,19 +358,18 @@ function SubclassStep({
 	selected?: string;
 	onPick: (name: string) => void;
 }) {
+	const t = useTranslation();
 	const [openName, setOpenName] = useState<string | null>(
 		selected ?? (srdClass ? Object.values(srdClass.subclasses)[0]?.name : null) ?? null,
 	);
 	if (!srdClass) {
-		return <p className="df-cs-wizard-hint">Pick a class first (or skip this step).</p>;
+		return <p className="df-cs-wizard-hint">{t("wizard.subclass.noClass")}</p>;
 	}
 	const accent = CLASS_COLORS[srdClass.name];
 	const open = openName ? srdClass.subclasses[openName] : undefined;
 	return (
 		<>
-			<p className="df-cs-wizard-hint">
-				Each {srdClass.name} subclass grants its own foundation features.
-			</p>
+			<p className="df-cs-wizard-hint">{t("wizard.subclass.hint", { className: srdClass.name })}</p>
 			<WizardSplit
 				list={Object.values(srdClass.subclasses).map((sub) => (
 					<WizardRow
@@ -369,7 +379,7 @@ function SubclassStep({
 						accent={accent}
 						onClick={() => setOpenName(sub.name)}
 						name={sub.name}
-						meta={sub.spellcastTrait ? `Spellcast: ${sub.spellcastTrait}` : undefined}
+						meta={sub.spellcastTrait ? t("wizard.subclass.spellcast", { trait: sub.spellcastTrait }) : undefined}
 					/>
 				))}
 				detail={
@@ -377,15 +387,15 @@ function SubclassStep({
 						<WizardDetail
 							accent={accent}
 							title={open.name}
-							meta={open.spellcastTrait ? `Spellcast: ${open.spellcastTrait}` : undefined}
-							chooseLabel={`Choose ${open.name}`}
+							meta={open.spellcastTrait ? t("wizard.subclass.spellcast", { trait: open.spellcastTrait }) : undefined}
+							chooseLabel={t("wizard.choose", { name: open.name })}
 							onChoose={() => onPick(open.name)}
 							onClose={() => setOpenName(null)}
 						>
 							<SubclassDetail subclass={open} />
 						</WizardDetail>
 					) : (
-						<WizardPlaceholder text="Select a subclass on the left to read its foundation features." />
+						<WizardPlaceholder text={t("wizard.subclass.placeholder")} />
 					)
 				}
 			/>
@@ -394,12 +404,13 @@ function SubclassStep({
 }
 
 function SubclassDetail({ subclass }: { subclass: SrdSubclass }) {
+	const t = useTranslation();
 	return (
 		<>
 			{subclass.foundation.map((f) => (
 				<div key={f.name}>
 					<p className="df-cs-cardtext-p">
-						<strong>{f.name}</strong> (foundation)
+						<strong>{f.name}</strong> ({t("wizard.subclass.foundation")})
 					</p>
 					<CardText text={f.description} />
 				</div>
@@ -428,6 +439,7 @@ function HeritageStep({
 	selected?: string;
 	onPick: (name: string) => void;
 }) {
+	const t = useTranslation();
 	const [openName, setOpenName] = useState<string | null>(selected ?? options[0]?.name ?? null);
 	const open = options.find((h) => h.name === openName);
 	return (
@@ -446,14 +458,16 @@ function HeritageStep({
 				open ? (
 					<WizardDetail
 						title={open.name}
-						chooseLabel={`Choose ${open.name}`}
+					chooseLabel={t("wizard.choose", { name: open.name })}
 						onChoose={() => onPick(open.name)}
 						onClose={() => setOpenName(null)}
 					>
 						<HeritageDetail heritage={open} />
 					</WizardDetail>
 				) : (
-					<WizardPlaceholder text={`Select a ${kind} on the left to read its features.`} />
+					<WizardPlaceholder text={t("wizard.heritage.placeholder", {
+						kind: kind === "community" ? t("wizard.heritage.community") : kind,
+					})} />
 				)
 			}
 		/>
@@ -469,6 +483,7 @@ function AncestryStep({
 	selected2?: string;
 	onPick: (patch: Partial<CreationChoices>, advance?: boolean) => void;
 }) {
+	const t = useTranslation();
 	const [openName, setOpenName] = useState<string | null>(
 		selected ?? SRD_ANCESTRIES[0]?.name ?? null,
 	);
@@ -495,10 +510,10 @@ function AncestryStep({
 	};
 
 	const chooseLabel = (name: string) => {
-		if (!mixed) return `Choose ${name}`;
-		if (!selected) return `Use ${name}'s 1st feature`;
-		if (name === selected) return "Picked as 1st feature";
-		return `Use ${name}'s 2nd feature`;
+		if (!mixed) return t("wizard.choose", { name });
+		if (!selected) return t("wizard.ancestry.useFirst", { name });
+		if (name === selected) return t("wizard.ancestry.pickedFirst");
+		return t("wizard.ancestry.useSecond", { name });
 	};
 
 	return (
@@ -511,16 +526,16 @@ function AncestryStep({
 					onClick={toggleMixed}
 				>
 					<span className="df-cs-check-box" />
-					Mixed ancestry
+					{t("wizard.ancestry.mixed")}
 				</button>
 				<span className="df-cs-wizard-hint df-cs-wizard-hint--inline">
 					{mixed
 						? !selected
-							? "Pick the ancestry whose FIRST feature you take."
+							? t("wizard.ancestry.pickFirst")
 							: !selected2
-								? `First feature: ${selected}. Now pick the ancestry whose SECOND feature you take.`
-								: `${selected} (1st feature) + ${selected2} (2nd feature)`
-						: "Combine two ancestries: the first feature of one and the second feature of another."}
+								? t("wizard.ancestry.pickSecond", { name: selected })
+								: t("wizard.ancestry.summary", { first: selected, second: selected2 })
+						: t("wizard.ancestry.mixedPrompt")}
 				</span>
 			</div>
 			<WizardSplit
@@ -536,8 +551,8 @@ function AncestryStep({
 							name={h.name}
 							tags={
 								<>
-									{mixed && isPrimary && <span className="df-cs-wizard-tag">1st feature</span>}
-									{isSecondary && <span className="df-cs-wizard-tag">2nd feature</span>}
+									{mixed && isPrimary && <span className="df-cs-wizard-tag">{t("wizard.ancestry.firstTag")}</span>}
+									{isSecondary && <span className="df-cs-wizard-tag">{t("wizard.ancestry.secondTag")}</span>}
 								</>
 							}
 							meta={h.features.map((f) => f.split(":")[0]).join(" · ")}
@@ -556,7 +571,7 @@ function AncestryStep({
 							<HeritageDetail heritage={open} />
 						</WizardDetail>
 					) : (
-						<WizardPlaceholder text="Select an ancestry on the left to read its features." />
+						<WizardPlaceholder text={t("wizard.ancestry.placeholder")} />
 					)
 				}
 			/>
@@ -571,6 +586,7 @@ function ExperiencesStep({
 	experiences: string[];
 	onChange: (experiences: string[]) => void;
 }) {
+	const t = useTranslation();
 	const setAt = (index: number, value: string) => {
 		const next = [...experiences];
 		next[index] = value;
@@ -578,11 +594,7 @@ function ExperiencesStep({
 	};
 	return (
 		<>
-			<p className="df-cs-wizard-hint">
-				Write two Experiences: short phrases about your character's background that they can
-				spend Hope on during play. Both start at +2. Examples: "Raised by wolves",
-				"Ex-royal guard", "Silver-tongued merchant", "Apprentice herbalist".
-			</p>
+			<p className="df-cs-wizard-hint">{t("wizard.experiences.hint")}</p>
 			<div className="df-cs-wizard-experiences">
 				{[0, 1].map((i) => (
 					<label key={i} className="df-cs-wizard-exp-row">
@@ -590,7 +602,9 @@ function ExperiencesStep({
 						<input
 							type="text"
 							className="df-cs-wizard-exp-input"
-							placeholder={i === 0 ? "e.g. Raised by wolves" : "e.g. Ex-royal guard"}
+							placeholder={i === 0
+								? t("wizard.experiences.firstPlaceholder")
+								: t("wizard.experiences.secondPlaceholder")}
 							value={experiences[i] ?? ""}
 							onChange={(e) => setAt(i, e.target.value)}
 						/>
@@ -610,6 +624,7 @@ export function DomainCardsStep({
 	selected: string[];
 	onChange: (names: string[]) => void;
 }) {
+	const t = useTranslation();
 	const cards = SRD_DOMAIN_CARDS.filter(
 		(c) => c.level === 1 && (!classDomains || classDomains.includes(c.domain)),
 	);
@@ -629,8 +644,9 @@ export function DomainCardsStep({
 	return (
 		<>
 			<p className="df-cs-wizard-hint">
-				Choose two level-1 cards{classDomains ? ` from ${classDomains[0]} or ${classDomains[1]}` : ""}. Click a
-				card name to read it, then add it from the panel.
+				{classDomains
+					? t("wizard.domain.hintForClass", { first: classDomains[0], second: classDomains[1] })
+					: t("wizard.domain.hint")}
 			</p>
 			<WizardSplit
 				list={domains.map((domain) => {
@@ -671,9 +687,9 @@ export function DomainCardsStep({
 									{open.name}
 								</>
 							}
-							meta={`${open.domain} · ${open.type} · Recall ${open.recallCost}`}
-							footNote={`${selected.length}/2 picked`}
-							chooseLabel={openPicked ? "Remove card" : "Add card"}
+							meta={`${open.domain} · ${open.type} · ${t("wizard.domain.recall", { cost: open.recallCost })}`}
+							footNote={t("wizard.domain.picked", { count: selected.length })}
+							chooseLabel={openPicked ? t("wizard.domain.remove") : t("wizard.domain.add")}
 							chooseDisabled={!openPicked && selected.length >= 2}
 							onChoose={() => toggle(open)}
 							onClose={() => setOpenName(null)}
@@ -681,7 +697,7 @@ export function DomainCardsStep({
 							<CardText text={open.text} />
 						</WizardDetail>
 					) : (
-						<WizardPlaceholder text="Select a domain card on the left to read it." />
+						<WizardPlaceholder text={t("wizard.domain.placeholder")} />
 					)
 				}
 			/>
@@ -690,24 +706,22 @@ export function DomainCardsStep({
 }
 
 function ReviewStep({ choices }: { choices: CreationChoices }) {
+	const t = useTranslation();
 	const ancestry = choices.ancestryName2
-		? `${choices.ancestryName} / ${choices.ancestryName2} (mixed)`
+		? `${choices.ancestryName} / ${choices.ancestryName2} (${t("wizard.review.mixed")})`
 		: choices.ancestryName;
 	const experiences = (choices.experiences ?? []).filter((e) => e.trim() !== "");
 	const rows: Array<[string, string]> = [
-		["Class", choices.className ?? "-"],
-		["Subclass", choices.subclassName ?? "-"],
-		["Ancestry", ancestry || "-"],
-		["Community", choices.communityName ?? "-"],
-		["Experiences", experiences.map((e) => `${e} (+2)`).join(", ") || "-"],
-		["Domain cards", (choices.domainCardNames ?? []).join(", ") || "-"],
+		[t("wizard.review.class"), choices.className ?? "-"],
+		[t("wizard.review.subclass"), choices.subclassName ?? "-"],
+		[t("wizard.review.ancestry"), ancestry || "-"],
+		[t("wizard.review.community"), choices.communityName ?? "-"],
+		[t("wizard.review.experiences"), experiences.map((e) => `${e} (+2)`).join(", ") || "-"],
+		[t("wizard.review.domainCards"), (choices.domainCardNames ?? []).join(", ") || "-"],
 	];
 	return (
 		<>
-			<p className="df-cs-wizard-hint">
-				The sheet will be filled from these choices, plus level 1, two starting Hope, one handful
-				of gold, and the standard starting inventory. Nothing is saved until you press Save.
-			</p>
+			<p className="df-cs-wizard-hint">{t("wizard.review.hint")}</p>
 			<div className="df-cs-wizard-review">
 				{rows.map(([label, value]) => (
 					<div key={label} className="df-cs-wizard-review-row">

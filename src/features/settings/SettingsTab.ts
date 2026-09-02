@@ -1,6 +1,7 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { DEFAULT_SETTINGS } from "../../types/index";
+import { translate as t } from "../../i18n";
 
 export class DaggerForgeSettingsTab extends PluginSettingTab {
 	private plugin: DaggerForgePlugin;
@@ -17,8 +18,23 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 		containerEl.createEl("h2", { text: "DaggerForge" });
 
 		new Setting(containerEl)
-			.setName("Enable keyword highlighting")
-			.setDesc("Color game terms (Hope, Fear, HP, Stress) inside rendered cards.")
+			.setName(t("settings.language.name"))
+			.setDesc(t("settings.language.description"))
+			.addDropdown((dropdown) =>
+				dropdown
+					.addOption("en", "English")
+					.addOption("de", "Deutsch")
+					.setValue(this.plugin.settings.language)
+					.onChange(async (value) => {
+						this.plugin.settings.language = value === "de" ? "de" : "en";
+						await this.save();
+						this.display();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName(t("settings.keywordHighlighting.name"))
+			.setDesc(t("settings.keywordHighlighting.description"))
 			.addToggle((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.keywordHighlighting)
@@ -29,8 +45,8 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Roll result duration")
-			.setDesc("How long the roll result stays visible.")
+			.setName(t("settings.rollDuration.name"))
+			.setDesc(t("settings.rollDuration.description"))
 			.addSlider((slider) =>
 				slider
 					.setLimits(1, 10, 1)
@@ -53,11 +69,11 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Restore defaults")
-			.setDesc("Reset all settings to their default values.")
+			.setName(t("settings.restore.name"))
+			.setDesc(t("settings.restore.description"))
 			.addButton((btn) =>
 				btn
-					.setButtonText("Restore defaults")
+					.setButtonText(t("settings.restore.button"))
 					.setWarning()
 					.onClick(async () => {
 						this.plugin.settings = { ...DEFAULT_SETTINGS };

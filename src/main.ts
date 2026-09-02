@@ -10,6 +10,7 @@ import { registerItemEmbed } from "./features/items/ItemEmbed";
 import { refreshBrowsers } from "./utils/pluginOperations";
 import { DataManager } from "./data/index";
 import { PluginSettings } from "./types/index";
+import { setLanguage } from "./i18n";
 import {
 	registerSideBarView,
 	setupRibbonIcon,
@@ -155,6 +156,7 @@ export default class DaggerForgePlugin extends Plugin {
 	}
 
 	applySettings(): void {
+		setLanguage(this.settings.language);
 		applyTheme(this.settings.cardTheme);
 		applyKeywordColors(this.settings.keywordHighlighting);
 		setDiceTooltipDuration(this.settings.diceBadgeTooltipMs);
