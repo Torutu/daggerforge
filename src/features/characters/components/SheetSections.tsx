@@ -679,6 +679,13 @@ export function HeritageCardsSection({ char, update, onAddCards }: CardSectionPr
 					onRemove={() => update({ communityCard: null })}
 					onAdd={onAddCards ? () => onAddCards("community") : undefined}
 				/>
+				{char.transformationCard && (
+					<HeritageSlot
+						kind="Transformation"
+						card={char.transformationCard}
+						onRemove={() => update({ transformationCard: null })}
+					/>
+				)}
 			</div>
 		</section>
 	);
@@ -690,7 +697,7 @@ function HeritageSlot({
 	onRemove,
 	onAdd,
 }: {
-	kind: "Ancestry" | "Community";
+	kind: "Ancestry" | "Community" | "Transformation";
 	card: CharacterData["ancestryCard"];
 	onRemove: () => void;
 	onAdd?: () => void;

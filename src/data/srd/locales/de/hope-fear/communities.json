@@ -1,0 +1,62 @@
+[
+	{
+		"id": "community-duneborne",
+		"name": "Aus den Dünen",
+		"description": [
+			"Aus den Dünen zu stammen bedeutet, dass du zwischen dem wandernden Sand und im trockenen Klima der Wüste eine Heimat gefunden hast."
+		],
+		"features": [
+			"Oase: Während einer kurzen Rast darfst du oder ein verbündeter Charakter einen Würfel erneut werfen, der für eine Auszeit-Aktion verwendet wurde, und das höhere Ergebnis wählen."
+		]
+	},
+	{
+		"id": "community-freeborne",
+		"name": "In Freiheit geboren",
+		"description": [
+			"In Freiheit geboren zu sein bedeutet, dass du aus einer Gemeinschaft stammst, die einst unter tyrannischer Herrschaft lebte, sich inzwischen aber befreit hat."
+		],
+		"features": [
+			"Ungebunden: Wenn du bei einem Wurf ein Ergebnis mit Furcht erzielst, darfst du dieses Ergebnis einmal pro Spielsitzung stattdessen in ein Ergebnis mit Hoffnung ändern."
+		]
+	},
+	{
+		"id": "community-frostborne",
+		"name": "Aus dem Frost",
+		"description": [
+			"Aus dem Frost zu stammen bedeutet, dass du aus einem Land voller Schnee und Eis kommst."
+		],
+		"features": [
+			"Abgehärtet: Wenn du eine Rast einlegst, löschst du 1 TP."
+		]
+	},
+	{
+		"id": "community-hearthborne",
+		"name": "Vom Lande",
+		"description": [
+			"Vom Lande zu sein bedeutet, dass du aus einfachen Verhältnissen stammst und in einem bescheidenen Dorf oder einer idyllischen ländlichen Gegend gelebt hast."
+		],
+		"features": [
+			"Zusammenhalt: Einmal pro langer Rast darfst du eine beliebige Anzahl Hoffnung einsetzen, um einem verbündeten Charakter innerhalb weiter Distanz ebenso viel Hoffnung zu gewähren."
+		]
+	},
+	{
+		"id": "community-reborne",
+		"name": "Neu verwurzelt",
+		"description": [
+			"Du warst einst Teil einer anderen Gemeinschaft, der du heute nicht mehr angehörst."
+		],
+		"features": [
+			"Wahlfamilie: Einmal pro Rast darfst du 1 Hoffnung einsetzen, um die Erfahrung eines verbündeten Charakters wie deine eigene zu verwenden. Beschreibe dabei, wie dich deine gemeinsame Zeit mit diesem Charakter auf diesen Moment vorbereitet hat.\n\nWenn du dich einer neuen Gemeinschaft anschließt oder deine frühere Gemeinschaft wiederfindest, darfst du diese Karte dauerhaft gegen die entsprechende Gemeinschaftskarte austauschen."
+		]
+	},
+	{
+		"id": "community-warborne",
+		"name": "Vom Krieg geprägt",
+		"description": [
+			"Vom Krieg geprägt zu sein bedeutet, dass du aus einem Ort stammst, der vom Krieg verwüstet wird oder wurde."
+		],
+		"features": [
+			"Tapfere Miene: Wenn du gezwungen wärst, 1 Stress zu markieren, darfst du stattdessen einmal pro Spielsitzung 1 Hoffnung einsetzen."
+		]
+	}
+]

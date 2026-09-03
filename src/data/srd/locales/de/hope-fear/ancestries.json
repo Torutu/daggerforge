@@ -1,0 +1,68 @@
+[
+	{
+		"id": "ancestry-aetheris",
+		"name": "Ätheris",
+		"description": [
+			"Ätheris sind Humanoide, die vor allem an ihren Flügeln und heiligen Zeichen zu erkennen sind."
+		],
+		"features": [
+			"Geweihte Aura: Wenn ein verbündeter Charakter in kurzer Distanz bei einem Wurf ein Ergebnis mit Furcht erzielt, darfst du dieses Ergebnis einmal pro langer Rast stattdessen in ein Ergebnis mit Hoffnung ändern.",
+			"Himmlische Flügel: Du besitzt Flügel, mit denen du fliegen kannst. Einmal pro Szene darfst du während des Fliegens 1 Hoffnung einsetzen, anstatt 1 Rüstungsfeld zu markieren."
+		]
+	},
+	{
+		"id": "ancestry-earthkin",
+		"name": "Erdkind",
+		"description": [
+			"Erdkinder sind Humanoide, deren Körper aus Fleisch und Erde bestehen."
+		],
+		"features": [
+			"Steinhaut: Du erhältst bei der Charaktererschaffung einen permanenten Bonus von +1 auf deinen Rüstungswert und deine Schadensschwellen.",
+			"Unverrückbar: Solange du den Boden berührst, kannst du nicht gegen deinen Willen angehoben oder bewegt werden."
+		]
+	},
+	{
+		"id": "ancestry-emberkin",
+		"name": "Glutkind",
+		"description": [
+			"Glutkinder sind Humanoide, deren Körper aus Fleisch und Feuer bestehen."
+		],
+		"features": [
+			"Feuerfest: Du bist immun gegen Schaden durch magisches oder gewöhnliches Feuer.",
+			"Entzündung: Markiere 1 Stress, um deine Primärwaffe bis zum Ende der Szene in Flammen zu hüllen. Solange die Waffe brennt, spendet sie helles Licht und du erhältst bei Schadenswürfen mit dieser Waffe einen Bonus von 1W6."
+		]
+	},
+	{
+		"id": "ancestry-gnome",
+		"name": "Gnom",
+		"description": [
+			"Gnome sind üblicherweise kleine Humanoide mit kegelförmigen Köpfen, die sich über kurze Entfernungen teleportieren können."
+		],
+		"features": [
+			"Flinke Finger: Wenn du einen Finessewurf durchführst, darfst du 2 Hoffnung einsetzen, um deinen Hoffnungswürfel erneut zu werfen.",
+			"Flimmerschritt: Einmal pro Szene darfst du dich an einen anderen sichtbaren Punkt in weiter Distanz teleportieren."
+		]
+	},
+	{
+		"id": "ancestry-skykin",
+		"name": "Himmelskind",
+		"description": [
+			"Himmelskinder sind Humanoide, deren Körper aus Fleisch und Luft bestehen."
+		],
+		"features": [
+			"Sturmkraft: Markiere 1 Stress, um einen Windstoß zu beschwören, der dich oder einen verbündeten Charakter in sehr kurzer Distanz bis zu einer Position in sehr weiter Distanz trägt. Außerdem kannst du jederzeit kontrollieren, wie schnell du fällst.",
+			"Auge des Sturms: Setze 2 Hoffnung ein, um dir oder einem verbündeten Charakter in unmittelbarer Distanz einen Bonus von +1 auf den Ausweichen-Wert zu gewähren, bis du schweren Schaden erleidest oder dieses Merkmal erneut einsetzt."
+		]
+	},
+	{
+		"id": "ancestry-tidekin",
+		"name": "Gezeitenkind",
+		"description": [
+			"Gezeitenkinder sind Humanoide, deren Körper aus Fleisch und Wasser bestehen."
+		],
+		"features": [
+			"Amphibisch: Du kannst unter Wasser atmen und dich dort natürlich bewegen.",
+			"Lebensquelle: Wenn dir eine kleine Menge Wasser zur Verfügung steht, darfst du einmal pro Rast 1 Stress markieren, um bei dir oder einem verbündeten Charakter in sehr kurzer Distanz 1 TP zu löschen."
+		]
+	}
+]

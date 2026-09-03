@@ -6,6 +6,18 @@ import equipmentJson from "./srd/equipment.json";
 import itemsJson from "./srd/items.json";
 import consumablesJson from "./srd/consumables.json";
 import beastformsJson from "./srd/beastforms.json";
+import hopeFearClassesJson from "./srd/hope-fear/classes.json";
+import hopeFearAncestriesJson from "./srd/hope-fear/ancestries.json";
+import hopeFearCommunitiesJson from "./srd/hope-fear/communities.json";
+import hopeFearDomainsJson from "./srd/hope-fear/domains.json";
+import hopeFearTransformationsJson from "./srd/hope-fear/transformations.json";
+import deCoreDomainsJson from "./srd/locales/de/domains.json";
+import deHopeFearClassesJson from "./srd/locales/de/hope-fear/classes.json";
+import deHopeFearSubclassesJson from "./srd/locales/de/hope-fear/subclasses.json";
+import deHopeFearAncestriesJson from "./srd/locales/de/hope-fear/ancestries.json";
+import deHopeFearCommunitiesJson from "./srd/locales/de/hope-fear/communities.json";
+import deHopeFearDomainsJson from "./srd/locales/de/hope-fear/domains.json";
+import deHopeFearTransformationsJson from "./srd/locales/de/hope-fear/transformations.json";
 import type {
 	GearData,
 	SrdBeastform,
@@ -17,7 +29,9 @@ import type {
 	SrdHeritage,
 	SrdItem,
 	SrdSubclass,
+	SrdTransformation,
 } from "../types/srd";
+import type { Language } from "../i18n";
 
 /**
  * Bundled Daggerheart SRD reference data for the character sheet's card
@@ -30,6 +44,7 @@ type RawSrdClass = Omit<SrdClass, "id" | "domains" | "subclasses"> & {
 };
 type RawSrdHeritage = Omit<SrdHeritage, "id">;
 type RawSrdDomainCard = Omit<SrdDomainCard, "id" | "domainId">;
+type RawSrdTransformation = Omit<SrdTransformation, "id">;
 
 function slug(value: string): string {
 	return value
@@ -80,20 +95,82 @@ function normalizeDomainCard(raw: RawSrdDomainCard): SrdDomainCard {
 	};
 }
 
+function normalizeTransformation(raw: RawSrdTransformation): SrdTransformation {
+	return { ...raw, id: `transformation-${slug(raw.name)}` };
+}
+
 // JSON remains the canonical English SRD snapshot. Stable technical IDs are
 // attached here, so visible names can be localized without changing links.
-export const SRD_CLASSES = (classesJson as unknown as RawSrdClass[]).map(normalizeClass);
-export const SRD_ANCESTRIES = (ancestriesJson as RawSrdHeritage[]).map((item) =>
+export const SRD_CLASSES = ([...classesJson, ...hopeFearClassesJson] as unknown as RawSrdClass[]).map(normalizeClass);
+export const SRD_ANCESTRIES = ([...ancestriesJson, ...hopeFearAncestriesJson] as RawSrdHeritage[]).map((item) =>
 	normalizeHeritage("ancestry", item),
 );
-export const SRD_COMMUNITIES = (communitiesJson as RawSrdHeritage[]).map((item) =>
+export const SRD_COMMUNITIES = ([...communitiesJson, ...hopeFearCommunitiesJson] as RawSrdHeritage[]).map((item) =>
 	normalizeHeritage("community", item),
 );
-export const SRD_DOMAIN_CARDS = (domainsJson as RawSrdDomainCard[]).map(normalizeDomainCard);
+export const SRD_DOMAIN_CARDS = ([...domainsJson, ...hopeFearDomainsJson] as RawSrdDomainCard[]).map(normalizeDomainCard);
+export const SRD_TRANSFORMATIONS = (hopeFearTransformationsJson as RawSrdTransformation[]).map(normalizeTransformation);
 export const SRD_EQUIPMENT = equipmentJson as SrdEquipment;
 export const SRD_ITEMS = itemsJson as SrdItem[];
 export const SRD_CONSUMABLES = consumablesJson as SrdConsumable[];
 export const BEASTFORMS = beastformsJson as SrdBeastform[];
+
+type ClassTranslation = Partial<Omit<SrdClass, "id" | "domains" | "stats" | "subclasses">> & { id: string };
+
+function mergeById<T extends { id: string }>(items: T[], translations: Array<Partial<T> & { id: string }>): T[] {
+	const byId = new Map(translations.map((item) => [item.id, item]));
+	return items.map((item) => ({ ...item, ...byId.get(item.id) }));
+}
+
+function germanClasses(): SrdClass[] {
+	const classTranslations = new Map((deHopeFearClassesJson as ClassTranslation[]).map((item) => [item.id, item]));
+	const subclassTranslations = deHopeFearSubclassesJson as Record<string, Partial<SrdSubclass>>;
+	return SRD_CLASSES.map((item) => {
+		const translated = classTranslations.get(item.id);
+		return {
+			...item,
+			...translated,
+			id: item.id,
+			domains: item.domains,
+			stats: item.stats,
+			subclasses: item.subclasses.map((subclass) => ({
+				...subclass,
+				...(subclassTranslations[slug(subclass.name)] ?? {}),
+				id: subclass.id,
+			})),
+		};
+	});
+}
+
+export function getSrdClasses(language: Language): SrdClass[] {
+	return language === "de" ? germanClasses() : SRD_CLASSES;
+}
+
+export function getSrdAncestries(language: Language): SrdHeritage[] {
+	return language === "de"
+		? mergeById(SRD_ANCESTRIES, deHopeFearAncestriesJson as Array<Partial<SrdHeritage> & { id: string }>)
+		: SRD_ANCESTRIES;
+}
+
+export function getSrdCommunities(language: Language): SrdHeritage[] {
+	return language === "de"
+		? mergeById(SRD_COMMUNITIES, deHopeFearCommunitiesJson as Array<Partial<SrdHeritage> & { id: string }>)
+		: SRD_COMMUNITIES;
+}
+
+export function getSrdDomainCards(language: Language): SrdDomainCard[] {
+	if (language !== "de") return SRD_DOMAIN_CARDS;
+	return mergeById(SRD_DOMAIN_CARDS, [
+		...(deCoreDomainsJson as Array<Partial<SrdDomainCard> & { id: string }>),
+		...(deHopeFearDomainsJson as Array<Partial<SrdDomainCard> & { id: string }>),
+	]);
+}
+
+export function getSrdTransformations(language: Language): SrdTransformation[] {
+	return language === "de"
+		? mergeById(SRD_TRANSFORMATIONS, deHopeFearTransformationsJson as Array<Partial<SrdTransformation> & { id: string }>)
+		: SRD_TRANSFORMATIONS;
+}
 
 function weaponMeta(w: { trait: string; range: string; damage: string; damageType: string; burden: string }): string {
 	return `${w.trait} - ${w.range} · ${w.damage} ${w.damageType === "Magical" ? "mag" : "phy"} · ${w.burden}`;

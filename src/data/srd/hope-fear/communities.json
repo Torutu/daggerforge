@@ -1,0 +1,56 @@
+[
+	{
+		"name": "Duneborne",
+		"description": [
+			"Being part of a duneborne community means you've made a home among the shifting sands and arid climate of the desert."
+		],
+		"features": [
+			"Oasis: During a short rest, you or an ally can reroll a die used for a downtime move and take the higher result."
+		]
+	},
+	{
+		"name": "Freeborne",
+		"description": [
+			"Being part of a freeborne community means you're from a collective that once lived under tyrannical rule but is now liberated."
+		],
+		"features": [
+			"Unbound: Once per session when you roll with Fear, you can change it into a roll with Hope instead."
+		]
+	},
+	{
+		"name": "Frostborne",
+		"description": [
+			"Being part of a frostborne community means you come from a place of snow and ice."
+		],
+		"features": [
+			"Hardy: When you take a rest, you clear a Hit Point."
+		]
+	},
+	{
+		"name": "Hearthborne",
+		"description": [
+			"Being part of a hearthborne community means you come from humble origins, having lived in a modest village or quaint countryside."
+		],
+		"features": [
+			"Close-Knit: Once per long rest, you can **spend any number of Hope** to grant an ally within Far range an equal number of Hope."
+		]
+	},
+	{
+		"name": "Reborne",
+		"description": [
+			"You were once a member of a different community that you're no longer part of."
+		],
+		"features": [
+			"Found Family: Once per rest, you can **spend a Hope** to use an ally's Experience as if it were your own. When you do so, describe how your time with that ally prepared you for this moment.\n\nWhen you join a new community or rediscover your old one, you can permanently trade this card for that one instead."
+		]
+	},
+	{
+		"name": "Warborne",
+		"description": [
+			"Being part of a warborne community means you come from a place that is, or was, ravaged by war."
+		],
+		"features": [
+			"Brave Face: Once per session when you would be forced to mark a Stress, you can **spend a Hope** instead."
+		]
+	}
+]

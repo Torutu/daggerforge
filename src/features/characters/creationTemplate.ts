@@ -7,12 +7,14 @@ import {
 } from "../../types/character";
 import { SrdArmor, SrdClass, SrdHeritage, SrdWeapon } from "../../types/srd";
 import {
-	SRD_ANCESTRIES,
-	SRD_CLASSES,
-	SRD_COMMUNITIES,
-	SRD_DOMAIN_CARDS,
 	SRD_EQUIPMENT,
+	getSrdAncestries,
+	getSrdClasses,
+	getSrdCommunities,
+	getSrdDomainCards,
+	getSrdTransformations,
 } from "../../data/srd";
+import { getLanguage } from "../../i18n";
 
 /** Selections made in the guided creation wizard. Everything is optional -
  *  skipped steps simply leave those parts of the sheet blank. */
@@ -24,6 +26,7 @@ export interface CreationChoices {
 	 *  ancestry combined with the second feature of this one. */
 	ancestryId2?: string;
 	communityId?: string;
+	transformationId?: string;
 	/** Starting experiences (SRD: two, each at +2). */
 	experiences?: string[];
 	domainCardIds?: string[];
@@ -66,22 +69,37 @@ const STARTING_INVENTORY =
  */
 export function buildCharacterFromChoices(choices: CreationChoices, id: string): CharacterData {
 	const char = createEmptyCharacter(id);
+	const language = getLanguage();
+	const classes = getSrdClasses(language);
+	const ancestries = getSrdAncestries(language);
+	const communities = getSrdCommunities(language);
+	const domainCards = getSrdDomainCards(language);
+	const transformations = getSrdTransformations(language);
 
 	char.level = "1";
 	char.hope = char.hope.map((_, i) => i < 2);
 	char.goldHandfuls = char.goldHandfuls.map((_, i) => i < 1);
 	char.inventory = STARTING_INVENTORY;
 
-	const srdClass = SRD_CLASSES.find((c) => c.id === choices.classId);
+	const srdClass = classes.find((c) => c.id === choices.classId);
 	if (srdClass) applyClass(char, srdClass, choices.subclassId);
 
-	const ancestry = SRD_ANCESTRIES.find((a) => a.id === choices.ancestryId);
-	const ancestry2 = SRD_ANCESTRIES.find((a) => a.id === choices.ancestryId2);
+	const ancestry = ancestries.find((a) => a.id === choices.ancestryId);
+	const ancestry2 = ancestries.find((a) => a.id === choices.ancestryId2);
 	if (ancestry && ancestry2) char.ancestryCard = composeMixedHeritage(ancestry, ancestry2);
 	else if (ancestry) char.ancestryCard = toHeritageCard(ancestry);
 
-	const community = SRD_COMMUNITIES.find((c) => c.id === choices.communityId);
+	const community = communities.find((c) => c.id === choices.communityId);
 	if (community) char.communityCard = toHeritageCard(community);
+	const transformation = transformations.find((item) => item.id === choices.transformationId);
+	if (transformation) {
+		char.transformationCard = {
+			id: transformation.id,
+			name: transformation.name,
+			description: transformation.description.join("\n\n"),
+			features: transformation.features.map((feature) => `${feature.name}: ${feature.description}`).join("\n\n"),
+		};
+	}
 
 	char.heritage = [char.ancestryCard?.name, community?.name].filter(Boolean).join(" ");
 
@@ -94,7 +112,7 @@ export function buildCharacterFromChoices(choices: CreationChoices, id: string):
 		});
 
 	char.domainCards = (choices.domainCardIds ?? [])
-		.map((id) => SRD_DOMAIN_CARDS.find((c) => c.id === id))
+		.map((id) => domainCards.find((c) => c.id === id))
 		.filter((c): c is NonNullable<typeof c> => Boolean(c))
 		.map((c) => ({ ...c, inVault: false }));
 

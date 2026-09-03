@@ -1,0 +1,128 @@
+[
+	{
+		"id": "domain-card-dread-1-blighting-strike",
+		"name": "Verheerender Schlag",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel in weiter Distanz durch. Bei einem Erfolg:\n• Bei einem Ergebnis mit Hoffnung fügst du abhängig von deiner Übung W6+1 magischen Schaden zu. Bei einem Ergebnis mit Furcht fügst du abhängig von deiner Übung W10+1 magischen Schaden zu.\n• Der nächste erfolgreiche Angriff des Ziels verursacht nur halb so viel Schaden.\n\nBei einem Misserfolg musst du 1 Hoffnung einsetzen oder 1 Stress markieren."
+	},
+	{
+		"id": "domain-card-dread-1-umbral-veil",
+		"name": "Schattenschleier",
+		"type": "Zauber",
+		"text": "Einmal pro Rast darfst du 1 Stress markieren, um dich in schattenhafte Energie zu hüllen. Lege anschließend so viele Marker auf diese Karte, wie sich Furcht im Vorrat der SL befindet. Nachdem ein Angriffswurf gegen dich durchgeführt wurde, darfst du beliebig viele Marker ausgeben, um das Ergebnis für jeden ausgegebenen Marker um −1 zu verringern.\n\nEntferne am Ende der Szene alle nicht ausgegebenen Marker."
+	},
+	{
+		"id": "domain-card-dread-1-voice-of-dread",
+		"name": "Stimme des Grauens",
+		"type": "Zauber",
+		"text": "Du kannst auf magische Weise mit einer sichtbaren Kreatur sprechen und sie mit deinen Worten quälen. Führe einen Zauberwurf gegen sie durch. Bei einem Erfolg muss sie 1 Stress markieren und erstarrt vor Schrecken, wodurch sie vorübergehend Festgesetzt ist."
+	},
+	{
+		"id": "domain-card-dread-2-hideous-retribution",
+		"name": "Grauenhafte Vergeltung",
+		"type": "Zauber",
+		"text": "Wenn ein verbündeter Charakter in kurzer Distanz Schaden durch ein sichtbares Ziel erleidet, darfst du mit deinem Zauber-Attribut einen Reaktionswurf gegen dieses Ziel durchführen. Bei einem Erfolg darfst du 1 Stress markieren, um abhängig von deiner Übung W6 magischen Schaden zuzufügen."
+	},
+	{
+		"id": "domain-card-dread-2-siphon-essence",
+		"name": "Essenz Entziehen",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel in sehr kurzer Distanz durch. Bei einem Erfolg erleidet das Ziel einmal pro langer Rast abhängig von deiner Übung W12+4 magischen Schaden. Bei einem Erfolg mit Furcht erhältst du für diesen Angriff einen Bonus von +1 auf deine Übung.\n\nDu löschst ebenso viele TP, wie das Ziel durch diesen Angriff markieren musste."
+	},
+	{
+		"id": "domain-card-dread-3-shared-trauma",
+		"name": "Geteiltes Leid",
+		"type": "Zauber",
+		"text": "Du kannst das Leid einer Kreatur auf eine andere übertragen. Markiere einmal pro Rast beliebig viele TP bei einer bereitwilligen Kreatur in unmittelbarer Distanz, um ebenso viele TP bei einer anderen bereitwilligen Kreatur in unmittelbarer Distanz zu löschen."
+	},
+	{
+		"id": "domain-card-dread-3-terrify",
+		"name": "In Angst Versetzen",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel in kurzer Distanz durch. Bei einem Erfolg markiert das Ziel 1W4 Stress und du darfst es um eine Distanzstufe von dir fort fliehen lassen, beispielsweise von sehr kurzer zu kurzer oder von kurzer zu weiter Distanz. Bei einem Erfolg mit Furcht wird das Ziel außerdem vorübergehend Verwundbar."
+	},
+	{
+		"id": "domain-card-dread-4-chains-of-affliction",
+		"name": "Ketten des Leids",
+		"type": "Zauber",
+		"text": "Markiere 2 Stress, um ein Ziel in kurzer Distanz vorübergehend anzuketten. Wenn eine angekettete Kreatur Schaden zufügt, muss das Ziel ihres Angriffs 1 TP weniger markieren als üblich. Du kannst höchstens eine Kreatur gleichzeitig angekettet haben."
+	},
+	{
+		"id": "domain-card-dread-4-summon-horror",
+		"name": "Schrecken Beschwören",
+		"type": "Zauber",
+		"text": "Markiere einmal pro Szene 1 Stress, um eine jenseitige Kreatur zu beschwören. Sie greift mit deinem Zauber-Attribut ein Ziel in weiter Distanz an und fügt ihm W8+1 magischen Schaden zu. Muss das Ziel durch diesen Angriff mindestens 1 TP markieren, muss ihm ein Reaktionswurf (12) gelingen, um dem Schrecken standzuhalten. Andernfalls markiert es ebenso viel Stress.\n\nNach dem Angriff löst sich die Kreatur auf."
+	},
+	{
+		"id": "domain-card-dread-5-dire-strike",
+		"name": "Unheilvoller Schlag",
+		"type": "Zauber",
+		"text": "Wenn ein Ziel durch einen deiner Angriffe beliebig viele TP markiert, darfst du 1 Hoffnung einsetzen, um ihm Kraft zu entziehen. Die SL verliert 1 Furcht."
+	},
+	{
+		"id": "domain-card-dread-5-spectral-mist",
+		"name": "Geisternebel",
+		"type": "Zauber",
+		"text": "Setze 2 Hoffnung ein, um einen unheimlichen Nebel zu beschwören, der dich und verbündete Charaktere deiner Wahl in kurzer Distanz für einen Moment körperlos macht. Körperlose Kreaturen können sich durch feste Gegenstände bewegen und sind immun gegen physischen Schaden. Eine Kreatur wird wieder körperlich, nachdem sie einen festen Gegenstand durchquert oder einen Aktionswurf durchgeführt hat. Andernfalls hält der Effekt bis zum Ende der Szene an."
+	},
+	{
+		"id": "domain-card-dread-6-darkfire",
+		"name": "Dunkelfeuer",
+		"type": "Zauber",
+		"text": "Setze einmal pro Szene beliebig viel Hoffnung ein, um ebenso viele gegnerische Ziele in kurzer Distanz zu wählen. Jedes Ziel führt einen Reaktionswurf (15) durch. Ziele, denen der Wurf misslingt, werden von dunklem Feuer eingehüllt und erleiden mit deinem Zauber-Attribut W8+6 magischen Schaden. Ziele, denen der Wurf gelingt, erleiden halb so viel Schaden."
+	},
+	{
+		"id": "domain-card-dread-6-jump-scare",
+		"name": "Schreckmoment",
+		"type": "Zauber",
+		"text": "Wenn du einem Ziel magischen Schaden zufügst, darfst du 1 Stress markieren, um dich in unmittelbare Distanz zu ihm zu teleportieren. Anschließend ist es Verwundbar, bis es mindestens 1 TP markiert."
+	},
+	{
+		"id": "domain-card-dread-7-dread-touched",
+		"name": "Vom Grauen Berührt",
+		"type": "Fähigkeit",
+		"text": "Wenn mindestens 4 Domänenkarten in deiner Ausrüstung aus der Domäne Grauen stammen, erhältst du folgende Vorteile:\n• Bei einem Erfolg mit Furcht darfst du 2 Stress markieren, damit die SL keine Furcht erhält.\n• Einmal pro Rast darfst du bei einem Aktionswurf einen Bonus in Höhe der Furcht im Vorrat der SL auf den Wurf erhalten."
+	},
+	{
+		"id": "domain-card-dread-7-wall-of-hunger",
+		"name": "Mauer des Hungers",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (10) durch. Bei einem Erfolg darfst du 1 Hoffnung einsetzen, um zwischen zwei Punkten in weiter Distanz eine sichtbare Mauer aus sich windender nekrotischer Energie zu erschaffen. Die Mauer hält an, bis du 1 TP markierst oder diesen Zauber erneut wirkst. Eine Kreatur, die sich beim Erscheinen in der Mauer befindet oder sie durchquert, muss 2 Stress markieren."
+	},
+	{
+		"id": "domain-card-dread-8-dark-army",
+		"name": "Dunkle Armee",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (14) durch. Bei einem Erfolg darfst du einmal pro langer Rast Unholde beschwören, die dich umgeben und sich mit dir bewegen. Lege 8 Marker auf diese Karte. Wenn du einem Ziel in sehr kurzer Distanz Schaden zufügst, darfst du beliebig viele Marker ausgeben und für jeden ausgegebenen Marker 1W8 zu deinem Schadenswurf addieren. Wenn du Schaden erleidest, darfst du außerdem beliebig viele Marker ausgeben, um den Schaden für jeden ausgegebenen Marker um 1W8 zu reduzieren. Jedes Mal, wenn du einen Marker ausgibst, handelt ein Unhold in deinem Auftrag und verschwindet anschließend.\n\nEntferne bei einer Rast alle nicht ausgegebenen Marker."
+	},
+	{
+		"id": "domain-card-dread-8-eldritch-flesh",
+		"name": "Widernatürliches Fleisch",
+		"type": "Zauber",
+		"text": "Du erhältst für jeden von dir markierten Stress einen Bonus von +1 auf deine Schadensschwellen.\n\nWenn du ein Ergebnis mit Furcht würfelst, darfst du außerdem 2 Hoffnung einsetzen, um 1 Rüstungsfeld zu löschen."
+	},
+	{
+		"id": "domain-card-dread-9-damnation",
+		"name": "Verdammnis",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel in weiter Distanz durch. Bei einem Erfolg darfst du beliebig viel Stress markieren, um ebenso viele W20 zu werfen und magischen Schaden in Höhe der Summe zuzufügen. Wird das Ziel durch diesen Angriff besiegt, müssen alle gegnerischen Ziele in weiter Distanz zu ihm 1 Stress markieren."
+	},
+	{
+		"id": "domain-card-dread-9-savor-the-anguish",
+		"name": "Qualen Auskosten",
+		"type": "Fähigkeit",
+		"text": "Wenn ein gegnerisches Ziel in kurzer Distanz schweren Schaden erleidet, darfst du 1 Stress löschen."
+	},
+	{
+		"id": "domain-card-dread-10-avatar-of-terror",
+		"name": "Avatar des Schreckens",
+		"type": "Zauber",
+		"text": "Markiere 1 Stress, um dich in eine von Furcht genährte Kreatur zu verwandeln. In dieser Gestalt erhältst du für jede Furcht im Vorrat der SL einen Bonus von 1W6 auf deine Schadenswürfe. Außerdem erhältst du 1 Hoffnung, wenn die SL 1 Furcht einsetzt, um ein gegnerisches Ziel in sehr kurzer Distanz in den Fokus zu rücken.\n\nBevor du einen Aktionswurf durchführst, musst du 1 Hoffnung einsetzen. Kannst du dies nicht, verwandelst du dich in deine gewöhnliche Gestalt zurück."
+	},
+	{
+		"id": "domain-card-dread-10-invoke-torment",
+		"name": "Qualen Heraufbeschwören",
+		"type": "Fähigkeit",
+		"text": "Du fügst Zielen, die ihren gesamten Stress markiert haben, doppelten Schaden zu.\n\nWenn ein gegnerisches Ziel in kurzer Distanz besiegt wird, während sein gesamter Stress markiert ist, erhältst du außerdem 1 Hoffnung."
+	}
+]

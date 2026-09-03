@@ -5,7 +5,12 @@ import {
 	SRD_CLASSES,
 	SRD_COMMUNITIES,
 	SRD_DOMAIN_CARDS,
+	SRD_TRANSFORMATIONS,
+	getSrdClasses,
+	getSrdDomainCards,
+	getSrdTransformations,
 } from "../data/srd";
+import { setLanguage } from "../i18n";
 
 describe("ALL_GEAR", () => {
 	test("every entry has a unique id and a name", () => {
@@ -18,6 +23,14 @@ describe("ALL_GEAR", () => {
 });
 
 describe("stable SRD ids", () => {
+	test("bundles the complete SRD 2.0 player options", () => {
+		expect(SRD_CLASSES).toHaveLength(13);
+		expect(SRD_ANCESTRIES).toHaveLength(24);
+		expect(SRD_COMMUNITIES).toHaveLength(15);
+		expect(SRD_DOMAIN_CARDS).toHaveLength(210);
+		expect(SRD_TRANSFORMATIONS).toHaveLength(6);
+	});
+
 	test("classes, subclasses, heritages, and domain cards have unique ids", () => {
 		const entities = [
 			...SRD_CLASSES,
@@ -36,6 +49,29 @@ describe("stable SRD ids", () => {
 		expect(SRD_DOMAIN_CARDS.find((item) => item.name === "Rune Ward")?.id).toBe(
 			"domain-card-arcana-1-rune-ward",
 		);
+	});
+});
+
+describe("German SRD data", () => {
+	afterEach(() => setLanguage("en"));
+
+	test("localizes Hope & Fear classes, Dread cards, and transformations without changing ids", () => {
+		expect(getSrdClasses("de").find((item) => item.id === "class-warlock")?.name).toBe("Paktmagier");
+		expect(getSrdDomainCards("de").find((item) => item.id === "domain-card-dread-1-blighting-strike")?.name).toBe("Verheerender Schlag");
+		expect(getSrdTransformations("de").find((item) => item.id === "transformation-demigod")?.name).toBe("Halbgott");
+	});
+
+	test("creates a German Hope & Fear character with a transformation snapshot", () => {
+		setLanguage("de");
+		const char = buildCharacterFromChoices({
+			classId: "class-warlock",
+			subclassId: "subclass-warlock-pact-of-the-endless",
+			transformationId: "transformation-demigod",
+			domainCardIds: ["domain-card-dread-1-blighting-strike"],
+		}, "CHR_de");
+		expect(char.classSubclass).toContain("Paktmagier");
+		expect(char.transformationCard?.name).toBe("Halbgott");
+		expect(char.domainCards[0]?.name).toBe("Verheerender Schlag");
 	});
 });
 

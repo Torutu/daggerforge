@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { CLASS_COLORS, DOMAIN_COLORS, SrdClass, SrdDomainCard, SrdDomainRef, SrdHeritage, SrdSubclass } from "../../../types/srd";
+import { CLASS_COLORS, DOMAIN_COLORS, SrdClass, SrdDomainCard, SrdDomainRef, SrdHeritage, SrdSubclass, SrdTransformation } from "../../../types/srd";
 import {
-	SRD_ANCESTRIES,
-	SRD_CLASSES,
-	SRD_COMMUNITIES,
-	SRD_DOMAIN_CARDS,
+	getSrdAncestries,
+	getSrdClasses,
+	getSrdCommunities,
+	getSrdDomainCards,
+	getSrdTransformations,
 } from "../../../data/srd";
 import { CreationChoices } from "../creationTemplate";
 import { CardText } from "./CardText";
 import { DomainIcon, DomainSprite } from "./DomainArt";
 import { ZapIcon } from "./SheetFields";
 import { TranslationKey } from "../../../i18n";
-import { useTranslation } from "../../../i18n/react";
+import { useLanguage, useTranslation } from "../../../i18n/react";
 
 interface Props {
 	onComplete: (choices: CreationChoices) => void;
@@ -23,6 +24,7 @@ const STEPS: Array<{ id: string; label: TranslationKey }> = [
 	{ id: "subclass", label: "wizard.step.subclass" },
 	{ id: "ancestry", label: "wizard.step.ancestry" },
 	{ id: "community", label: "wizard.step.community" },
+	{ id: "transformation", label: "wizard.step.transformation" },
 	{ id: "experiences", label: "wizard.step.experiences" },
 	{ id: "domain-cards", label: "wizard.step.domainCards" },
 	{ id: "review", label: "wizard.step.review" },
@@ -40,10 +42,13 @@ const STEPS: Array<{ id: string; label: TranslationKey }> = [
  */
 export function CreationWizard({ onComplete, onCancel }: Props) {
 	const t = useTranslation();
+	const language = useLanguage();
+	const classes = getSrdClasses(language);
+	const communities = getSrdCommunities(language);
 	const [step, setStep] = useState(0);
 	const [choices, setChoices] = useState<CreationChoices>({});
 
-	const srdClass = SRD_CLASSES.find((c) => c.id === choices.classId);
+	const srdClass = classes.find((c) => c.id === choices.classId);
 	const classDomains = srdClass?.domains;
 
 	const pick = (patch: Partial<CreationChoices>, advance = true) => {
@@ -105,26 +110,32 @@ export function CreationWizard({ onComplete, onCancel }: Props) {
 				)}
 				{step === 3 && (
 					<HeritageStep
-						options={SRD_COMMUNITIES}
+						options={communities}
 						kind="community"
 						selected={choices.communityId}
 						onPick={(id) => pick({ communityId: id })}
 					/>
 				)}
 				{step === 4 && (
+					<TransformationStep
+						selected={choices.transformationId}
+						onPick={(id) => pick({ transformationId: id })}
+					/>
+				)}
+				{step === 5 && (
 					<ExperiencesStep
 						experiences={choices.experiences ?? ["", ""]}
 						onChange={(experiences) => pick({ experiences }, false)}
 					/>
 				)}
-				{step === 5 && (
+				{step === 6 && (
 					<DomainCardsStep
 						classDomains={classDomains}
 						selected={choices.domainCardIds ?? []}
 						onChange={(ids) => pick({ domainCardIds: ids }, false)}
 					/>
 				)}
-				{step === 6 && <ReviewStep choices={choices} />}
+				{step === 7 && <ReviewStep choices={choices} />}
 			</div>
 
 			<div className="df-cs-wizard-nav">
@@ -151,8 +162,9 @@ function stepIsAnswered(step: number, choices: CreationChoices): boolean {
 		case 1: return Boolean(choices.subclassId);
 		case 2: return Boolean(choices.ancestryId);
 		case 3: return Boolean(choices.communityId);
-		case 4: return (choices.experiences ?? []).some((e) => e.trim() !== "");
-		case 5: return (choices.domainCardIds ?? []).length > 0;
+		case 4: return Boolean(choices.transformationId);
+		case 5: return (choices.experiences ?? []).some((e) => e.trim() !== "");
+		case 6: return (choices.domainCardIds ?? []).length > 0;
 		default: return true;
 	}
 }
@@ -265,13 +277,14 @@ function WizardPlaceholder({ text }: { text: string }) {
 
 function ClassStep({ selected, onPick }: { selected?: string; onPick: (id: string) => void }) {
 	const t = useTranslation();
-	const [openId, setOpenId] = useState<string | null>(selected ?? SRD_CLASSES[0]?.id ?? null);
-	const open = SRD_CLASSES.find((c) => c.id === openId);
+	const classes = getSrdClasses(useLanguage());
+	const [openId, setOpenId] = useState<string | null>(selected ?? classes[0]?.id ?? null);
+	const open = classes.find((c) => c.id === openId);
 	return (
 		<>
 			<p className="df-cs-wizard-hint">{t("wizard.class.hint")}</p>
 			<WizardSplit
-				list={SRD_CLASSES.map((c) => (
+				list={classes.map((c) => (
 					<WizardRow
 						key={c.id}
 						selected={selected === c.id}
@@ -484,13 +497,14 @@ function AncestryStep({
 	onPick: (patch: Partial<CreationChoices>, advance?: boolean) => void;
 }) {
 	const t = useTranslation();
+	const ancestries = getSrdAncestries(useLanguage());
 	const [openId, setOpenId] = useState<string | null>(
-		selected ?? SRD_ANCESTRIES[0]?.id ?? null,
+		selected ?? ancestries[0]?.id ?? null,
 	);
 	const mixed = selected2 !== undefined;
-	const open = SRD_ANCESTRIES.find((h) => h.id === openId);
-	const primary = SRD_ANCESTRIES.find((h) => h.id === selected);
-	const secondary = SRD_ANCESTRIES.find((h) => h.id === selected2);
+	const open = ancestries.find((h) => h.id === openId);
+	const primary = ancestries.find((h) => h.id === selected);
+	const secondary = ancestries.find((h) => h.id === selected2);
 
 	const toggleMixed = () => {
 		// Entering mixed mode keeps the current pick as the primary ancestry;
@@ -544,7 +558,7 @@ function AncestryStep({
 				</span>
 			</div>
 			<WizardSplit
-				list={SRD_ANCESTRIES.map((h) => {
+				list={ancestries.map((h) => {
 					const isPrimary = selected === h.id;
 					const isSecondary = mixed && selected2 === h.id;
 					return (
@@ -580,6 +594,54 @@ function AncestryStep({
 					)
 				}
 			/>
+		</>
+	);
+}
+
+function TransformationStep({ selected, onPick }: { selected?: string; onPick: (id: string) => void }) {
+	const t = useTranslation();
+	const transformations = getSrdTransformations(useLanguage());
+	const [openId, setOpenId] = useState<string | null>(selected ?? transformations[0]?.id ?? null);
+	const open = transformations.find((item) => item.id === openId);
+	return (
+		<>
+			<p className="df-cs-wizard-hint">{t("wizard.transformation.hint")}</p>
+			<WizardSplit
+				list={transformations.map((item) => (
+					<WizardRow
+						key={item.id}
+						selected={selected === item.id}
+						active={openId === item.id}
+						onClick={() => setOpenId(item.id)}
+						name={item.name}
+						meta={item.features.map((feature) => feature.name).join(" · ")}
+					/>
+				))}
+				detail={open ? (
+					<WizardDetail
+						title={open.name}
+						chooseLabel={t("wizard.choose", { name: open.name })}
+						onChoose={() => onPick(open.id)}
+						onClose={() => setOpenId(null)}
+					>
+						<TransformationDetail transformation={open} />
+					</WizardDetail>
+				) : <WizardPlaceholder text={t("wizard.transformation.placeholder")} />}
+			/>
+		</>
+	);
+}
+
+function TransformationDetail({ transformation }: { transformation: SrdTransformation }) {
+	return (
+		<>
+			<CardText text={transformation.description.join("\n\n")} />
+			{transformation.features.map((feature) => (
+				<div key={feature.name}>
+					<p className="df-cs-cardtext-p"><strong>{feature.name}</strong></p>
+					<CardText text={feature.description} />
+				</div>
+			))}
 		</>
 	);
 }
@@ -630,7 +692,8 @@ export function DomainCardsStep({
 	onChange: (ids: string[]) => void;
 }) {
 	const t = useTranslation();
-	const cards = SRD_DOMAIN_CARDS.filter(
+	const allCards = getSrdDomainCards(useLanguage());
+	const cards = allCards.filter(
 		(c) => c.level === 1 && (!classDomains || classDomains.some((domain) => domain.id === c.domainId)),
 	);
 	const [openId, setOpenId] = useState<string | null>(selected[0] ?? cards[0]?.id ?? null);
@@ -712,16 +775,23 @@ export function DomainCardsStep({
 
 function ReviewStep({ choices }: { choices: CreationChoices }) {
 	const t = useTranslation();
-	const srdClass = SRD_CLASSES.find((item) => item.id === choices.classId);
+	const language = useLanguage();
+	const classes = getSrdClasses(language);
+	const ancestries = getSrdAncestries(language);
+	const communities = getSrdCommunities(language);
+	const cards = getSrdDomainCards(language);
+	const transformations = getSrdTransformations(language);
+	const srdClass = classes.find((item) => item.id === choices.classId);
 	const subclass = srdClass?.subclasses.find((item) => item.id === choices.subclassId);
-	const primaryAncestry = SRD_ANCESTRIES.find((item) => item.id === choices.ancestryId);
-	const secondaryAncestry = SRD_ANCESTRIES.find((item) => item.id === choices.ancestryId2);
-	const community = SRD_COMMUNITIES.find((item) => item.id === choices.communityId);
+	const primaryAncestry = ancestries.find((item) => item.id === choices.ancestryId);
+	const secondaryAncestry = ancestries.find((item) => item.id === choices.ancestryId2);
+	const community = communities.find((item) => item.id === choices.communityId);
+	const transformation = transformations.find((item) => item.id === choices.transformationId);
 	const ancestry = secondaryAncestry
 		? `${primaryAncestry?.name ?? "-"} / ${secondaryAncestry.name} (${t("wizard.review.mixed")})`
 		: primaryAncestry?.name;
 	const domainCards = (choices.domainCardIds ?? [])
-		.map((id) => SRD_DOMAIN_CARDS.find((card) => card.id === id)?.name)
+		.map((id) => cards.find((card) => card.id === id)?.name)
 		.filter((name): name is string => Boolean(name));
 	const experiences = (choices.experiences ?? []).filter((e) => e.trim() !== "");
 	const rows: Array<[string, string]> = [
@@ -729,6 +799,7 @@ function ReviewStep({ choices }: { choices: CreationChoices }) {
 		[t("wizard.review.subclass"), subclass?.name ?? "-"],
 		[t("wizard.review.ancestry"), ancestry || "-"],
 		[t("wizard.review.community"), community?.name ?? "-"],
+		[t("wizard.review.transformation"), transformation?.name ?? "-"],
 		[t("wizard.review.experiences"), experiences.map((e) => `${e} (+2)`).join(", ") || "-"],
 		[t("wizard.review.domainCards"), domainCards.join(", ") || "-"],
 	];

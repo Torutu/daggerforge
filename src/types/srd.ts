@@ -58,6 +58,15 @@ export interface SrdHeritage {
 	features: string[];
 }
 
+/** Optional Hope & Fear transformation card. */
+export interface SrdTransformation {
+	id: string;
+	name: string;
+	description: string[];
+	features: SrdClassFeature[];
+	questions?: string[];
+}
+
 /** Druid Beastform options (official Beastform list). */
 export interface SrdBeastform {
 	name: string;
@@ -199,6 +208,7 @@ export const DOMAIN_NAMES = [
 	"Sage",
 	"Splendor",
 	"Valor",
+	"Dread",
 ] as const;
 
 /** Signature color per domain (from the printed cards / dhtools). */
@@ -212,6 +222,7 @@ export const DOMAIN_COLORS: Record<string, string> = {
 	Sage: "#60d890",
 	Splendor: "#e8c547",
 	Valor: "#f0903a",
+	Dread: "#5f273f",
 };
 
 /** Signature color per class, used for character cards (border + class tag). */
@@ -225,6 +236,14 @@ export const CLASS_COLORS: Record<string, string> = {
 	Sorcerer: "#a05fd6",  // purple
 	Warrior: "#9aa5b1",   // steel grey
 	Wizard: "#4f8fe8",    // blue
+	Assassin: "#39414f",
+	Brawler: "#a95832",
+	Warlock: "#7f315f",
+	Witch: "#527c55",
+	Assassine: "#39414f",
+	Faustkämpfer: "#a95832",
+	Paktmagier: "#7f315f",
+	Hexe: "#527c55",
 };
 
 export const CLASS_DOMAINS: Record<string, [string, string]> = {
@@ -237,6 +256,10 @@ export const CLASS_DOMAINS: Record<string, [string, string]> = {
 	Sorcerer: ["Arcana", "Midnight"],
 	Warrior: ["Blade", "Bone"],
 	Wizard: ["Codex", "Splendor"],
+	Assassin: ["Blade", "Midnight"],
+	Brawler: ["Valor", "Bone"],
+	Warlock: ["Dread", "Grace"],
+	Witch: ["Sage", "Dread"],
 };
 
 export const DOMAIN_CARD_TYPES = ["Ability", "Spell", "Grimoire"] as const;

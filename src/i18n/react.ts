@@ -13,3 +13,7 @@ export function useTranslation(): TranslationFunction {
 		[language],
 	);
 }
+
+export function useLanguage() {
+	return useSyncExternalStore(subscribeLanguage, getLanguage, getLanguage);
+}

@@ -235,6 +235,8 @@ export interface CharacterData {
 	notes: string;
 	ancestryCard: HeritageCardData | null;
 	communityCard: HeritageCardData | null;
+	/** Optional Hope & Fear transformation card. */
+	transformationCard: HeritageCardData | null;
 	domainCards: CharacterDomainCard[];
 	/** Answers to the class's background/connection questions, index-aligned. */
 	backgroundAnswers: string[];
@@ -302,6 +304,7 @@ export function createEmptyCharacter(id: string): CharacterData {
 		notes: "",
 		ancestryCard: null,
 		communityCard: null,
+		transformationCard: null,
 		domainCards: [],
 		backgroundAnswers: [],
 		connectionAnswers: [],
@@ -408,6 +411,7 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 	base.notes = asString(data.notes);
 	base.ancestryCard = normalizeHeritageCard(data.ancestryCard);
 	base.communityCard = normalizeHeritageCard(data.communityCard);
+	base.transformationCard = normalizeHeritageCard(data.transformationCard);
 	base.domainCards = (Array.isArray(data.domainCards) ? data.domainCards : [])
 		.map(normalizeDomainCard)
 		.filter((c): c is CharacterDomainCard => c !== null);

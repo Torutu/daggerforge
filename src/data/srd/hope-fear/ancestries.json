@@ -1,0 +1,62 @@
+[
+	{
+		"name": "Aetheris",
+		"description": [
+			"Aetheris are humanoids most easily recognized by their wings and sacred markings."
+		],
+		"features": [
+			"Hallowed Aura: Once per long rest when an ally within Close range rolls with Fear, you can change it into a roll with Hope instead.",
+			"Celestial Wings: You have wings that allow you to fly. Once per scene while flying, you can **spend a Hope** instead of marking an Armor Slot."
+		]
+	},
+	{
+		"name": "Earthkin",
+		"description": [
+			"Earthkin are humanoids whose bodies are made of flesh and earth."
+		],
+		"features": [
+			"Stoneskin: Gain a permanent +1 bonus to your Armor Score and damage thresholds at character creation.",
+			"Immovable: While you're touching the ground, you can't be lifted or moved against your will."
+		]
+	},
+	{
+		"name": "Emberkin",
+		"description": [
+			"Emberkin are humanoids whose bodies are made of flesh and fire."
+		],
+		"features": [
+			"Fireproof: You are immune to damage from magical or mundane flame.",
+			"Ignition: **Mark a Stress** to wreathe your primary weapon in flame until the end of the scene. While the weapon is ablaze, it gives off a bright light, and you gain a **1d6** bonus to damage rolls with that weapon."
+		]
+	},
+	{
+		"name": "Gnome",
+		"description": [
+			"Gnomes are typically small humanoids with conical heads and the ability to teleport short distances."
+		],
+		"features": [
+			"Nimble Fingers: When you make a Finesse Roll, you can **spend 2 Hope** to reroll your Hope Die.",
+			"Flicker Step: Once per scene, you can teleport to another point you can see within Far range."
+		]
+	},
+	{
+		"name": "Skykin",
+		"description": [
+			"Skykin are humanoids whose bodies are made of flesh and air."
+		],
+		"features": [
+			"Gale Force: **Mark a Stress** to conjure a gust of wind that carries you or a Very Close ally up to Very Far range. Additionally, you can always control the speed at which you fall.",
+			"Eye of the Storm: **Spend 2 Hope** to grant you or an ally within Melee range a +1 bonus to Evasion until you take Severe damage or you use this feature again."
+		]
+	},
+	{
+		"name": "Tidekin",
+		"description": [
+			"Tidekin are humanoids whose bodies are made of flesh and water."
+		],
+		"features": [
+			"Amphibious: You can breathe and move naturally underwater.",
+			"Lifespring: Once per rest when you have access to a small amount of water, you can **mark a Stress** to clear a Hit Point on yourself or an ally within Very Close range."
+		]
+	}
+]
