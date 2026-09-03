@@ -1,6 +1,7 @@
 [
 	{
 		"name": "Bard",
+		"source": "core",
 		"description": [
 			"Bards are the most charismatic people in all the realms. Members of this class are masters of captivation and specialize in a variety of performance types, including singing, playing musical instruments, weaving tales, or telling jokes. Whether performing for an audience or speaking to an individual, bards thrive in social situations.",
 			"Members of this profession bond and train at schools or guilds, but a current of egotism runs through those of the bardic persuasion. While they may be the most likely class to bring people together, a bard of ill temper can just as easily tear a party apart."
@@ -85,6 +86,7 @@
 	},
 	{
 		"name": "Druid",
+		"source": "core",
 		"description": [
 			"Becoming a druid is more than an occupation; it's a calling for those who wish to learn from and protect the magic of the wilderness. While one might underestimate a gentle druid who practices the often-quiet work of cultivating flora, druids who channel the untamed forces of nature are terrifying to behold.",
 			"Druids cultivate their abilities in small groups, often connected by a specific ethos or locale, but some choose to work alone. Through years of study and dedication, druids can learn to transform into beasts and shape nature itself."
@@ -177,6 +179,7 @@
 	},
 	{
 		"name": "Guardian",
+		"source": "core",
 		"description": [
 			"The title of guardian represents an array of martial professions, speaking more to their moral compass and unshakeable fortitude than the means by which they fight. While many guardians join groups of militants for either a country or cause, they're more likely to follow those few they truly care for, majority be damned.",
 			"Guardians are known for fighting with remarkable ferocity even against overwhelming odds, defending their cohort above all else. Woe betide those who harm the ally of a guardian, as the guardian will answer this injury in kind."
@@ -271,6 +274,7 @@
 	},
 	{
 		"name": "Ranger",
+		"source": "core",
 		"description": [
 			"Rangers are highly skilled hunters who, despite their martial abilities, rarely lend their skills to an army. Through mastery of the body and a deep understanding of the wilderness, rangers become sly tacticians, pursuing their quarry with cunning and patience.",
 			"Many rangers track and fight alongside an animal companion with whom they've forged a powerful spiritual bond. By honing their skills in the wild, rangers become expert trackers, as likely to ensnare their foes in a trap as they are to assail them head-on."
@@ -363,6 +367,7 @@
 	},
 	{
 		"name": "Rogue",
+		"source": "core",
 		"description": [
 			"Rogues are scoundrels, often in both attitude and practice. Broadly known as liars and thieves, the best among this class move through the world anonymously. Utilizing their sharp wits and blades, rogues trick their foes through social manipulation as easily as breaking locks, climbing through windows, or dealing underhanded blows.",
 			"These masters of magical craft manipulate shadow and movement, adding an array of useful and deadly tools to their repertoire. Rogues frequently establish guilds to meet future accomplices, hire out jobs, and hone secret skills, proving that there's honor among thieves for those who know where to look."
@@ -455,6 +460,7 @@
 	},
 	{
 		"name": "Seraph",
+		"source": "core",
 		"description": [
 			"Seraphs are divine fighters and healers imbued with sacred purpose. A wide array of deities exist within the realms, and thus numerous kinds of seraphs are appointed by these gods. Their ethos traditionally aligns with the domain or goals of their god, such as defending the weak, exacting vengeance, protecting a land or artifact, or upholding a particular faith.",
 			"Some seraphs ally themselves with an army or locale, much to the satisfaction of their rulers, but other crusaders fight in opposition to the follies of the Mortal Realm. It is better to be a seraph's ally than their enemy, as they are terrifying foes to those who defy their purpose."
@@ -543,6 +549,7 @@
 	},
 	{
 		"name": "Sorcerer",
+		"source": "core",
 		"description": [
 			"Not all innate magic users choose to hone their craft, but those who do can become powerful sorcerers. The gifts of these wielders are passed down through families, even if the family is unaware of or reluctant to practice them. A sorcerer's abilities can range from the elemental to the illusionary and beyond, and many practitioners band together into collectives based on their talents.",
 			"The act of becoming a formidable sorcerer is not the practice of acquiring power, but learning to cultivate and control the power one already possesses. The magic of a misguided or undisciplined sorcerer is a dangerous force indeed."
@@ -631,6 +638,7 @@
 	},
 	{
 		"name": "Warrior",
+		"source": "core",
 		"description": [
 			"Becoming a warrior requires years, often a lifetime, of training and dedication to the mastery of weapons and violence. While many who seek to fight hone only their strength, warriors understand the importance of an agile body and mind, making them some of the most sought-after fighters across the realms.",
 			"Frequently, warriors find employment within an army, a band of mercenaries, or even a royal guard, but their potential is wasted in any position where they cannot continue to improve and expand their skills. Warriors are known to have a favored weapon; to come between them and their blade would be a grievous mistake."
@@ -717,6 +725,7 @@
 	},
 	{
 		"name": "Wizard",
+		"source": "core",
 		"description": [
 			"Whether through an institution or individual study, those known as wizards acquire and hone immense magical power over years of learning using a variety of tools, including books, stones, potions, and herbs. Some wizards dedicate their lives to mastering a particular school of magic, while others learn from a wide variety of disciplines.",
 			"Many wizards become wise and powerful figures in their communities, advising rulers, providing medicines and healing, and even leading war councils. While these mages all work toward the common goal of collecting magical knowledge, wizards often have the most conflict within their own ranks, as the acquisition, keeping, and sharing of powerful secrets is a topic of intense debate that has resulted in innumerable deaths."
@@ -826,6 +835,7 @@
 	,
 	{
 		"name": "Assassin",
+		"source": "hopefear",
 		"description": [
 			"Assassins are masters at inflicting deadly injuries with precise strikes. Unlike those who wield violence as only a means to an end, assassins approach death as a profession. Many members of this class believe theirs is a worthy, if not sacred, trade, and some join guilds to hone their craft, define their beliefs, and earn money.",
 			"People from all walks of life hire assassins for their skills: powerful rulers looking to avoid all-out war, business leaders seeking to eliminate the competition, and even average people hoping to settle a grudge. Often, an assassin is the last resort for killing those previously believed to be unkillable. While some of these deadly professionals will destroy anyone in their path for the right reasons or the right price, others hold strict moral codes or personal rules that dictate their targets. Those who end up the target of an assassin should count themselves among the dead."
@@ -930,6 +940,7 @@
 	},
 	{
 		"name": "Brawler",
+		"source": "hopefear",
 		"description": [
 			"Experts in unarmed combat, brawlers hone their bodies into lethal weapons. Whether they learned from formal training, studied with a mentor, or picked up their skills one fight at a time, the process is always rigorous as brawlers develop their body and mind to work as one. Brawlers are valued for their power and versatility and typically join a party or a cause when the need or desire arises.",
 			"Because a brawler’s body is their strongest weapon, they typically seek out new challenges or consistent sparring partners so they can maintain their skills and add new techniques to their repertoire. Though they might appear unassuming to those accustomed to foes who are armed to the teeth, brawlers often accomplish more with bare knuckles than an average soldier with a sword."
@@ -1032,6 +1043,7 @@
 	},
 	{
 		"name": "Warlock",
+		"source": "hopefear",
 		"description": [
 			"Those who’ve traded their lives—or perhaps even their souls—to an otherworldly patron in exchange for incredible power are known as warlocks. Often, these mortals have reached a point of desperation that leads them to make this sacrifice: they hope to protect themselves or a loved one, aid their community, seek vengeance, increase their status, or otherwise further their ambitions.",
 			"The powerful entities they entreat are as varied as the warlocks themselves: gods, spirits, demons, or other beings unknown to even the mortal who makes the pact. The entities each have their own sphere of influence that defines their otherworldly power, and those that collect souls are rarely known for their benevolence. Thus, a warlock’s power is defined by the relationship they maintain with their benefactor. Despite their terrifying magic, warlocks might find that someone or something else is pulling their strings."
@@ -1140,6 +1152,7 @@
 	},
 	{
 		"name": "Witch",
+		"source": "hopefear",
 		"description": [
 			"Witches are magical practitioners who commune with the forces of nature and entities from realms beyond. These spellcasters call forth power through craft, combining the tangible and ephemeral by casting spells, murmuring incantations, creating talismans, weaving illusions, and maintaining other personalized practices. They can protect their allies and harm their enemies by invoking powerful forces beyond themselves—supernatural beings such as ancestors, deities, or aspects of nature.",
 			"Often, their magical knowledge is passed down from these entities or through many generations of practitioners who gather in small groups known as covens. Witches are frequently feared and misunderstood, as their methods can appear mysterious, strange, and even macabre to the uninitiated. Whichever path they walk, a witch treads the boundary between light and shadow without fear."
