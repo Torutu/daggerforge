@@ -1,0 +1,429 @@
+[
+	{
+		"id": "HF-CN001",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Arcticite Shard",
+		"text": "Alle Ziele innerhalb von kurzer Distanz dieses Punktes müssen auf einem Reaktionswurf (16) erfolgreich sein oder 3W6 magischen Schaden nehmen und vorübergehend Festgesetzt durch Eis werden."
+	},
+	{
+		"id": "HF-CN002",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Berserkers Brew",
+		"text": "Wenn du diesen Flüssigkeitsdram trinken, erhalten Sie einen Bonus auf Deinen Stärke und eine Strafe auf Deinen Geschick und Wissen, die Deinem Instinkt (Mindestwert 1) entsprechen."
+	},
+	{
+		"id": "HF-CN003",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Bundle von Spiderlegs",
+		"text": "Du kannst diese Spinnenbeine essen, um bis zur nächsten Pause an den Wänden zu gehen."
+	},
+	{
+		"id": "HF-CN004",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Kakophones Gebräu",
+		"text": "Wenn du diesen Trank trinken, wird alles, was Sie in der nächsten Stunde sagen oder tun, für einen Zeugen unmöglich, zu erzählen. Jeder Versuch, den sie machen, um zu kommunizieren, was sie gesehen, gehört oder sonstwie gefühlt haben, kommt verstümmelt oder unsinnig heraus."
+	},
+	{
+		"id": "HF-CN005",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Chimäre Speichel",
+		"text": "Du kannst diesen Speichel auf eine Waffe anwenden, die physischen Schaden austeilt, um ihren Schadenstyp bis zur nächsten Pause in Magie zu ändern."
+	},
+	{
+		"id": "HF-CN006",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Ciscan Fog Flasche",
+		"text": "Du kannst dieses Glas brechen, um den Bereich innerhalb von kurzer Distanz mit magischem Nebel zu füllen. Eine Kreatur, die in den Nebel eintritt, löscht 1 Stress und wird Verborgen."
+	},
+	{
+		"id": "HF-CN007",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Hähnchenklauen-Tee",
+		"text": "Du kannst diesen Tee trinken, um Deine Eigenschaften zu erfrischen, als ob Sie eine lange Pause genommen hätten."
+	},
+	{
+		"id": "HF-CN008",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Gebräu",
+		"text": "Du kannst diesen Trank trinken, um den tiefsten Furcht der nächsten Person zu entdecken, mit der Sie Augenkontakt aufnehmen."
+	},
+	{
+		"id": "HF-CN009",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Bezoar des Cupbearers",
+		"text": "Du kannst diesen Bezoar schlucken, um bis zu Deiner nächsten langen Pause immun gegen Gifte zu werden."
+	},
+	{
+		"id": "HF-CN010",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Deathseer's Powder (Deutsche Ausgabe)",
+		"text": "Du kannst dieses Pulver über eine kürzlich verstorbene Leiche streuen, um eine spektrale Wiederholung ihrer letzten Minute des Lebens zu beschwören."
+	},
+	{
+		"id": "HF-CN011",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Demiurges Zug",
+		"text": "Du kannst diesen Zug trinken, um einen +1 Bonus auf Deine Proficiency für Deinen nächsten erfolgreichen Angriffswurf zu erhalten."
+	},
+	{
+		"id": "HF-CN012",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Displacement Token",
+		"text": "Dein könnt dieses Zeichen schlucken, um zwei Illusionen von euch selbst heraufzubeschwören, die ihr kontrollieren könnt. Jede Illusion dauert, bis sie Schaden nimmt oder bis zu eurer nächsten Ruhe."
+	},
+	{
+		"id": "HF-CN013",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Drakemandel",
+		"text": "Du kannst dieses verzauberte alte Drachenfell verwenden, um drakonische Eigenschaften zu erhalten, bis zum Ende der Szene, wenn das Fell in Trümmern wegfällt. Bis dahin kannst du fliegen und einen +5-Bonus auf deine Schadensschwellen und einen +1-Bonus auf deine Fähigkeiten erhalten."
+	},
+	{
+		"id": "HF-CN014",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Emberitschnitzel",
+		"text": "Alle Ziele innerhalb von weiter Distanz müssen auf einem Reaktionswurf (16) erfolgreich sein oder 3W6 magischen Schaden nehmen und vorübergehend in Flammen stehen. Während in Flammen stehen, muss eine Kreatur einen W4 rollen, wenn sie ein Aktionswurf erstellen. Bei einem Ergebnis von 1 markieren sie ein Trefferpunkt. Bei einem Ergebnis von 4 löschen sie den Zustand in Flamme."
+	},
+	{
+		"id": "HF-CN015",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Featherstep Potion",
+		"text": "Du kannst diesen Trank trinken, um kleine Flügel von Deinen Knöcheln zu sprießen, die dir bis zu Deiner nächsten Pause einen Bonus auf Deinen Ausweichen gleich Deinem Tier geben."
+	},
+	{
+		"id": "HF-CN016",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Formoidserum",
+		"text": "Du kannst diesen Trank trinken, um ein Schwarm von 16 Millionen Ameisen bis zum Ende der Szene zu werden. Sie behalten und haben Zugang zu allen Geräten, Beute und Merkmalen."
+	},
+	{
+		"id": "HF-CN017",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Fulgurit-Schnitt",
+		"text": "Alle Ziele innerhalb von kurzer Distanz dieses Punktes müssen auf einem Reaktionswurf (16) erfolgreich sein oder 3W6 magischen Schaden nehmen und 1W4 Stress markieren, wenn der Blitz durch das Gebiet knistert."
+	},
+	{
+		"id": "HF-CN018",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Gamblers Fallacy",
+		"text": "Wenn man das Glas an einem Punkt innerhalb von weiter Distanz wirft, explodiert es und gibt 1W20 magischen Schaden für jede Handvoll Gold, das für alle Kreaturen innerhalb von kurzer Distanz dieses Punktes ausgegeben wird. Alles Gold innerhalb des Glases wird zerstört."
+	},
+	{
+		"id": "HF-CN019",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Glowmoss-Pilz",
+		"text": "Du kannst diesen Pilz in Stücke brechen, wodurch er bis zu Deiner nächsten langen Pause hellblau leuchtet."
+	},
+	{
+		"id": "HF-CN020",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Godling's Pomelo",
+		"text": "Du kannst diese Zitrusfrüchte essen, um alle Trefferpunkte und Stress zu löschen."
+	},
+	{
+		"id": "HF-CN021",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Klatschblume",
+		"text": "Man kann diesen Samen in Erde pflanzen. Er wächst sofort zu einer kleinen Blume heran, die alles, was er hört, bis zu einer Woche aufzeichnet. Wenn er gerupft wird, rezitiert die Blume, was sie in Echtzeit aufzeichnet, und verwelkt dann."
+	},
+	{
+		"id": "HF-CN022",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Gravitationsbombe",
+		"text": "Du kannst diese mechanische Kugel in Pfirsichgröße an einem Punkt innerhalb von weiter Distanz werfen. Sie implodiert und zieht alle Kreaturen und Objekte innerhalb von kurzer Distanz dieses Punktes mit in unmittelbarer Distanz."
+	},
+	{
+		"id": "HF-CN023",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Grünes Oozöl",
+		"text": "Der nächste erfolgreiche Angriff, den du mit dieser Waffe machst, versetzt ein zusätzliches 1W8 magischen Schaden und korrodiert vorübergehend das Ziel."
+	},
+	{
+		"id": "HF-CN024",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Sofortiges Camp",
+		"text": "Du kannst diese kleine mechanische Box zu einem Zelt aufspannen, das groß genug ist, um sechs Personen sicher unterzubringen. Das Zelt bricht am Ende Deiner nächsten langen Pause zusammen."
+	},
+	{
+		"id": "HF-CN025",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Unsichtbarkeit Potion",
+		"text": "Du bist Verborgen, bis du einer anderen Kreatur Schaden zufügst oder bis zu deiner nächsten Ruhepause."
+	},
+	{
+		"id": "HF-CN026",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Iridischer Staub",
+		"text": "Dieses mehrfarbige Pulver klebt an allem und verhindert, dass Kreaturen, die darin enthalten sind, Verborgen werden."
+	},
+	{
+		"id": "HF-CN027",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Lionheart Tonic",
+		"text": "Du kannst dieses Tonikum trinken, um einen +1 Bonus auf Deine Proficiency zu erhalten, bis Sie mit Furcht rollen."
+	},
+	{
+		"id": "HF-CN028",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Lyrebird-Lozente",
+		"text": "Du kannst diese Lutschtablette in Deinem Mund auflösen, um jede Stimme, die Sie gehört haben, bis zum Ende der Szene perfekt nachzuahmen."
+	},
+	{
+		"id": "HF-CN029",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Malison des magischen Benutzers",
+		"text": "Wenn du die gefangene Seele dieses Zauberers loslassen, können Sie einen Zauberspruch von einer Karte in Deinem Gewölbe werfen, als ob es in Deinem Loadout wäre."
+	},
+	{
+		"id": "HF-CN030",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Maske des Echoed Self",
+		"text": "Du kannst diese Maske während deines nächsten Levels tragen, um die Werte deiner Eigenschaften zu tauschen."
+	},
+	{
+		"id": "HF-CN031",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Mesmer-Tonic",
+		"text": "Wenn du dieses Tonikum trinken, ist das einzige, was Sie bis zur nächsten Pause hören können, die Oberflächengedanken von Kreaturen in sehr kurzer Distanz."
+	},
+	{
+		"id": "HF-CN032",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Midas-Flasche",
+		"text": "Du kannst diese kleine Flasche alchemistischer Flüssigkeit über einen weltlichen Gegenstand gießen, um ihn sofort in eine Handvoll Gold umzuwandeln."
+	},
+	{
+		"id": "HF-CN033",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Mnemonische Posen",
+		"text": "Du kannst diesen Trank trinken, um ein Erlebnis zu nutzen, ohne 1 Hoffnung auszugeben."
+	},
+	{
+		"id": "HF-CN034",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Mondschein-Ortskörper",
+		"text": "Du kannst diese Kugel zerbrechen, um den Bereich innerhalb von sehr weiter Distanz so aussehen zu lassen, als ob es für die nächsten 24 Stunden mondbeschienen ist."
+	},
+	{
+		"id": "HF-CN035",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Mosmanteltrank",
+		"text": "Du kannst diesen Tee trinken, um sich perfekt in natürliche Umgebungen bis zur nächsten Pause zu mischen."
+	},
+	{
+		"id": "HF-CN036",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Nekroprancer-Glocke",
+		"text": "Du kannst diese rostige, klapperlose Glocke gegen den Boden brechen, um ein Skelettross zu beschwören, das aus der Erde klettert und dir bis zum nächsten Sonnenaufgang dient."
+	},
+	{
+		"id": "HF-CN037",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Night Hag's Dust",
+		"text": "Du kannst diesen Staub in das Gesicht eines Gegners blasen, um zu verhindern, dass er Stress bis zu Deiner nächsten langen Pause räumt."
+	},
+	{
+		"id": "HF-CN038",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Albtraum-Mead",
+		"text": "Du kannst diesen Trank trinken, um die tiefste Furcht der nächsten Person zu entdecken, mit der Sie Augenkontakt aufnehmen."
+	},
+	{
+		"id": "HF-CN039",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Paket von Space Dust",
+		"text": "Dieser Staub bewirkt, dass alles, was er bedeckt, leichter wird als Luft. Ein Paket enthält genug Staub, um den Inhalt eines Picknickkorbes zu bedecken, und die Auswirkungen dauern eine Stunde."
+	},
+	{
+		"id": "HF-CN040",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Phial von Deep Ink",
+		"text": "Du kannst diese Tintenflasche trinken, um sich in der nächsten Stunde in einen Kopffüßer von ungefähr Deiner Größe zu verwandeln. Du erhältst gummiartige Haut, weiche Knochen, die Fähigkeit, unter Wasser zu atmen, und neue Gliedmaßen, bis Sie insgesamt acht haben."
+	},
+	{
+		"id": "HF-CN041",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Pipeweed",
+		"text": "Wenn du während einer kurzen Pause die Clear-Downtime-Bewegung wählen, können Sie dieses nicht berauschende Blatt rauchen, um eine zusätzliche Stress zu löschen. Alle anderen PCs, die die Stress-abbauen-Auszeit-Aktion gewählt haben, erhalten diesen Vorteil ebenfalls."
+	},
+	{
+		"id": "HF-CN042",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Wachsamkeit",
+		"text": "Du kannst diesen Trank trinken, um einen +1 Bonus auf Deinen Ausweichen zu erhalten, bis Sie einen Trefferpunkt markieren."
+	},
+	{
+		"id": "HF-CN043",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Psychopomp-Gurttuch",
+		"text": "Dein könnt dieses Leichentuch über den Leichnam einer kürzlich verstorbenen Kreatur legen. Der Geist der Kreatur tritt in das Leichentuch ein und wird euer Spektralassistent bis zum nächsten Sonnenaufgang, wenn sie durch den Schleier des Todes gehen und das Leichentuch mitnehmen."
+	},
+	{
+		"id": "HF-CN044",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Quintessentieller Trennender",
+		"text": "Du kannst diese magische Klinge benutzen, um eine magische oder metaphysische Bindung zu zerschneiden, wie eine Verzauberung, einen Vertrag, einen magischen Fangband oder einen göttlichen Eid. Wenn du das tust, zerbricht die Klinge."
+	},
+	{
+		"id": "HF-CN045",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Rotes Oozeöl",
+		"text": "Der nächste erfolgreiche Angriff, den du mit dieser Waffe machst, liefert einen zusätzlichen 1W8 magischen Schaden und zündet vorübergehend das Ziel."
+	},
+	{
+		"id": "HF-CN046",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Salamandersalve",
+		"text": "Du kannst diese Salbe auf Deine Haut auftragen, um sich bis zur nächsten Pause immun gegen Hitze zu machen."
+	},
+	{
+		"id": "HF-CN047",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Selbstnahtfaden",
+		"text": "Du kannst diesen Thread verwenden, um entweder einen Trefferpunkt oder 2 Rüstungsschlitze zu löschen."
+	},
+	{
+		"id": "HF-CN048",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Salz des Jägers",
+		"text": "Du kannst dieses Salz in einer Linie entlang Fensterbänken oder Schwellen verteilen, um eine magische Barriere zu schaffen, die untote Kreaturen nicht überschreiten können, bis die Linie gebrochen ist."
+	},
+	{
+		"id": "HF-CN049",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Snakeskin Spirit",
+		"text": "Du kannst diesen Trank trinken, um Deine äußere Hautschicht abzutragen und eine Narbe zu heilen."
+	},
+	{
+		"id": "HF-CN050",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Schnabeldornsamen",
+		"text": "Du kannst diesen Samen an einem Punkt werfen, den Sie sehen können. Er explodiert in ein Gewirr von Bindungsreben, das alle Kreaturen vorübergehend in kurzer Distanz dieses Punktes zurückhält."
+	},
+	{
+		"id": "HF-CN051",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Spriteflasche",
+		"text": "Wenn du deinen letzten Trefferpunkt markierst, zerbricht diese Flasche, um den Sprite im Inneren freizugeben. Der Sprite löscht alle deine Trefferpunkte, bevor er aus dem Sterblichen Reich verblasst."
+	},
+	{
+		"id": "HF-CN052",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Personal von Reversal",
+		"text": "Du kannst dieses Personal gegen den Boden brechen, um eine magische Transformation oder einen Effekt innerhalb von weiter Distanz umzukehren."
+	},
+	{
+		"id": "HF-CN053",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Stake of Abjuration",
+		"text": "Bis zu deiner nächsten Pause muss eine Kreatur innerhalb von weiter Distanz, die diese Proklamation übertritt, 1 Stress markieren. Der Einsatz dauert bis zu deiner nächsten Pause, dann zerbricht er."
+	},
+	{
+		"id": "HF-CN054",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Steelskin Salve",
+		"text": "Du kannst diese Salbe auf Deine Haut auftragen, um bis zum Ende der Szene einen Bonus auf Deine Schadensschwellenwerte zu erhalten, die Deiner Stufe entsprechen."
+	},
+	{
+		"id": "HF-CN055",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Stonemason's Fortune",
+		"text": "Wenn du diesen grauen Ziegelstein auf den Boden werfen, wächst er sofort zu einer 6 Fuß hohen, 10 Fuß breiten und 2 Fuß tiefen Wand aus massivem Stein heran."
+	},
+	{
+		"id": "HF-CN056",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Sonnenschein Orb",
+		"text": "Du kannst diese Kugel zerbrechen, um den Bereich innerhalb von sehr weiter Distanz so aussehen zu lassen, als ob es für die nächsten 24 Stunden sonnenbeleuchtet wäre."
+	},
+	{
+		"id": "HF-CN057",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Tränen des unsterblichen Helden",
+		"text": "Wenn du diesen Trank trinkst, kann dich der Tod erst in der nächsten langen Pause berühren. Wenn du deinen letzten Trefferpunkt markierst, machst du statt eines Todeszugs einen letzten Aktionswurf, bevor du in einen traumlosen Schlaf fällst, bis ein Verbündeter den Tend to Wounds Ausfallzeitzug wählt, um deinen Trefferpunkte zu löschen."
+	},
+	{
+		"id": "HF-CN058",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Verglasersamen",
+		"text": "Du kannst diese Eisscherbe verwenden, um sofort einen Bereich von Wasser bis zu kurzer Distanz einzufrieren."
+	},
+	{
+		"id": "HF-CN059",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Vial von Featherfall",
+		"text": "Du kannst diesen Trank trinken, um Schäden zu ignorieren, die für die nächsten 10 Minuten fallen."
+	},
+	{
+		"id": "HF-CN060",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Warding Candle",
+		"text": "Du kannst diese Kerze anzünden, um einen Bereich innerhalb von kurzer Distanz mit einem Lichtschein zu füllen. Eine Kreatur außerhalb des Heiligenscheins kann nicht hineingehen, wenn sie eine böse Absicht gegenüber einer Kreatur darin hat. Die Kerze brennt eine Stunde lang."
+	},
+	{
+		"id": "HF-CN061",
+		"rarity": "Hope & Fear",
+		"category": "Verbrauchsgut",
+		"name": "Yakamelmilch",
+		"text": "Nach dem Verzehr dieser Milch, das nächste Mal, wenn Sie 1 oder mehr Trefferpunkte löschen, löschen Sie eine zusätzliche Trefferpunkt."
+	}
+]

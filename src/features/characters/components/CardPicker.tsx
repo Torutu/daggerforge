@@ -1,15 +1,26 @@
 import React, { useMemo, useState } from "react";
 import { CharacterData, HeritageCardData } from "../../../types/character";
 import {
-	DOMAIN_CARD_TYPES,
 	DOMAIN_COLORS,
 	DOMAIN_NAMES,
 	GEAR_KIND_LABELS,
 	GearData,
 	SrdDomainCard,
 	SrdHeritage,
+	SrdArmor,
+	SrdWeapon,
 } from "../../../types/srd";
-import { ALL_GEAR, SRD_ANCESTRIES, SRD_COMMUNITIES, SRD_DOMAIN_CARDS, SRD_EQUIPMENT } from "../../../data/srd";
+import {
+	getAllGear,
+	getSrdAncestries,
+	getSrdCommunities,
+	getSrdDomainCards,
+	getSrdEquipment,
+	localizeDamageDie,
+	localizeRange,
+	localizeTrait,
+} from "../../../data/srd";
+import { useLanguage } from "../../../i18n/react";
 import { armorToPatch, composeMixedHeritage, toCharacterWeapon, toHeritageCard } from "../creationTemplate";
 import { CardText } from "./CardText";
 import { DomainIcon } from "./DomainArt";
@@ -31,6 +42,13 @@ interface Props {
  * Players browse/filter and add cards to the open character.
  */
 export function CardPicker({ char, update, tab, onTabChange, onClose, customItems }: Props) {
+	const language = useLanguage();
+	const srdEquipment = useMemo(() => getSrdEquipment(language), [language]);
+	const allGear = useMemo(() => getAllGear(language), [language]);
+	const domainTypes = useMemo(
+		() => [...new Set(getSrdDomainCards(language).map((card) => card.type))],
+		[language],
+	);
 	const [search, setSearch] = useState("");
 	const [domains, setDomains] = useState<Set<string>>(new Set());
 	const [level, setLevel] = useState("All");
@@ -53,25 +71,25 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 
 	const domainCards = useMemo(() => {
 		if (tab !== "domain") return [];
-		return SRD_DOMAIN_CARDS.filter((c) => {
+		return getSrdDomainCards(language).filter((c) => {
 			if (domains.size > 0 && !domains.has(c.domain)) return false;
 			if (level !== "All" && c.level !== Number(level)) return false;
 			if (type !== "All" && c.type !== type) return false;
 			if (query && !(c.name.toLowerCase().includes(query) || c.text.toLowerCase().includes(query))) return false;
 			return true;
 		});
-	}, [tab, domains, level, type, query]);
+	}, [tab, domains, level, type, query, language]);
 
 	const heritages = useMemo(() => {
 		if (tab === "domain") return [];
-		const source = tab === "ancestry" ? SRD_ANCESTRIES : SRD_COMMUNITIES;
+		const source = tab === "ancestry" ? getSrdAncestries(language) : getSrdCommunities(language);
 		if (!query) return source;
 		return source.filter(
 			(h) =>
 				h.name.toLowerCase().includes(query) ||
 				h.features.some((f) => f.toLowerCase().includes(query)),
 		);
-	}, [tab, query]);
+	}, [tab, query, language]);
 
 	const applyHeritageCard = (card: HeritageCardData) => {
 		const patch: Partial<CharacterData> =
@@ -108,29 +126,31 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 	const equipment = useMemo(() => {
 		if (tab !== "equipment") return [];
 		return [
-			...SRD_EQUIPMENT.weapons.map((w) => ({ kind: "weapon" as const, gear: w })),
-			...SRD_EQUIPMENT.wheelchairs.map((w) => ({ kind: "wheelchair" as const, gear: w })),
-			...SRD_EQUIPMENT.armor.map((a) => ({ kind: "armor" as const, gear: a })),
+			...srdEquipment.weapons.map((w) => ({ kind: "weapon" as const, gear: w })),
+			...srdEquipment.wheelchairs.map((w) => ({ kind: "wheelchair" as const, gear: w })),
+			...srdEquipment.armor.map((a) => ({ kind: "armor" as const, gear: a })),
 		].filter(({ gear }) => {
 			if (level !== "All" && gear.tier !== Number(level)) return false;
 			if (query && !gear.name.toLowerCase().includes(query)) return false;
 			return true;
 		});
-	}, [tab, level, query]);
+	}, [tab, level, query, srdEquipment]);
 
 	// Items tab: SRD items/consumables + the vault's custom gear
 	const looseItems = useMemo(() => {
 		if (tab !== "item") return [];
-		return [...(customItems ?? []), ...ALL_GEAR.filter((g) => g.kind === "item" || g.kind === "consumable")].filter(
+		return [...(customItems ?? []), ...allGear.filter((g) => g.kind === "item" || g.kind === "consumable")].filter(
 			(g) =>
 				!query ||
 				g.name.toLowerCase().includes(query) ||
 				g.text.toLowerCase().includes(query),
 		);
-	}, [tab, query, customItems]);
+	}, [tab, query, customItems, allGear]);
 
 	const addToInventory = (g: GearData) => {
-		const line = g.kind === "consumable" ? `${g.name} (consumable)` : g.name;
+		const line = g.kind === "consumable"
+			? `${g.name} (${language === "de" ? "Verbrauchsgut" : "consumable"})`
+			: g.name;
 		update({ inventory: char.inventory.trim() ? `${char.inventory}\n${line}` : line });
 	};
 
@@ -240,7 +260,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							</select>
 							<select className="dropdown" value={type} onChange={(e) => setType(e.target.value)} aria-label="Type filter">
 								<option value="All">All types</option>
-								{DOMAIN_CARD_TYPES.map((t) => (
+								{domainTypes.map((t) => (
 									<option key={t} value={t}>
 										{t}
 									</option>
@@ -295,9 +315,9 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							>
 								<span className="df-cs-pick-name">{gear.name}</span>
 								<span className="df-cs-pick-meta">
-									Tier {gear.tier} · {kind === "armor"
-										? `Thresholds ${(gear as typeof SRD_EQUIPMENT.armor[number]).minor}/${(gear as typeof SRD_EQUIPMENT.armor[number]).major} · Score ${(gear as typeof SRD_EQUIPMENT.armor[number]).score}`
-										: `${(gear as typeof SRD_EQUIPMENT.weapons[number]).trait} - ${(gear as typeof SRD_EQUIPMENT.weapons[number]).range} · ${(gear as typeof SRD_EQUIPMENT.weapons[number]).damage}`}
+									{language === "de" ? "Rang" : "Tier"} {gear.tier} · {kind === "armor"
+										? `${language === "de" ? "Schwellen" : "Thresholds"} ${(gear as SrdArmor).minor}/${(gear as SrdArmor).major} · ${language === "de" ? "Wert" : "Score"} ${(gear as SrdArmor).score}`
+										: `${localizeTrait((gear as SrdWeapon).trait, language)} - ${localizeRange((gear as SrdWeapon).range, language)} · ${localizeDamageDie((gear as SrdWeapon).damage, language)}`}
 								</span>
 							</button>
 							{expanded === gear.id && gear.feature && (
@@ -310,7 +330,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 									<button
 										type="button"
 										className="df-cs-pick-add"
-										onClick={() => update(armorToPatch(gear as typeof SRD_EQUIPMENT.armor[number]))}
+										onClick={() => update(armorToPatch(gear as SrdArmor))}
 									>
 										Equip
 									</button>
@@ -320,7 +340,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 											type="button"
 											className="df-cs-pick-add"
 											onClick={() =>
-												update({ primaryWeapon: toCharacterWeapon(gear as typeof SRD_EQUIPMENT.weapons[number]) })
+												update({ primaryWeapon: toCharacterWeapon(gear as SrdWeapon, language) })
 											}
 										>
 											Primary
@@ -329,7 +349,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 											type="button"
 											className="df-cs-pick-add df-cs-pick-add--secondary"
 											onClick={() =>
-												update({ secondaryWeapon: toCharacterWeapon(gear as typeof SRD_EQUIPMENT.weapons[number]) })
+												update({ secondaryWeapon: toCharacterWeapon(gear as SrdWeapon, language) })
 											}
 										>
 											Secondary

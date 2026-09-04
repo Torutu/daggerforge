@@ -8,11 +8,16 @@ import {
 import { SrdArmor, SrdClass, SrdHeritage, SrdWeapon } from "../../types/srd";
 import {
 	SRD_EQUIPMENT,
+	SRD_CLASSES,
+	getSrdEquipment,
 	getSrdAncestries,
 	getSrdClasses,
 	getSrdCommunities,
 	getSrdDomainCards,
 	getSrdTransformations,
+	localizeDamageDie,
+	localizeRange,
+	localizeTrait,
 } from "../../data/srd";
 import { getLanguage } from "../../i18n";
 
@@ -43,7 +48,9 @@ export function composeMixedHeritage(
 	return {
 		id: `mixed-${primary.id}-${secondary.id}`,
 		name: `${primary.name} / ${secondary.name}`,
-		description: `Mixed ancestry: ${primary.name} and ${secondary.name}.`,
+		description: getLanguage() === "de"
+			? `Gemischte Abstammung: ${primary.name} und ${secondary.name}.`
+			: `Mixed ancestry: ${primary.name} and ${secondary.name}.`,
 		features: [firstFeature, secondFeature].filter(Boolean).join("\n\n"),
 	};
 }
@@ -58,8 +65,11 @@ export function toHeritageCard(heritage: SrdHeritage): HeritageCardData {
 }
 
 /** SRD step 5: standard starting inventory for every new character. */
-const STARTING_INVENTORY =
-	"Torch, 50 feet of rope, basic supplies, a Minor Health Potion or Minor Stamina Potion";
+function startingInventory(language: "en" | "de"): string {
+	return language === "de"
+		? "Fackel, 15 Meter Seil, Grundausstattung, ein leichter Lebenstrank oder ein leichter Ausdauertrank"
+		: "Torch, 50 feet of rope, basic supplies, a Minor Health Potion or Minor Stamina Potion";
+}
 
 /**
  * Builds a level-1 character from wizard choices, following the SRD's
@@ -79,10 +89,10 @@ export function buildCharacterFromChoices(choices: CreationChoices, id: string):
 	char.level = "1";
 	char.hope = char.hope.map((_, i) => i < 2);
 	char.goldHandfuls = char.goldHandfuls.map((_, i) => i < 1);
-	char.inventory = STARTING_INVENTORY;
+	char.inventory = startingInventory(language);
 
 	const srdClass = classes.find((c) => c.id === choices.classId);
-	if (srdClass) applyClass(char, srdClass, choices.subclassId);
+	if (srdClass) applyClass(char, srdClass, choices.subclassId, language);
 
 	const ancestry = ancestries.find((a) => a.id === choices.ancestryId);
 	const ancestry2 = ancestries.find((a) => a.id === choices.ancestryId2);
@@ -119,7 +129,12 @@ export function buildCharacterFromChoices(choices: CreationChoices, id: string):
 	return char;
 }
 
-function applyClass(char: CharacterData, srdClass: SrdClass, subclassId?: string): void {
+function applyClass(
+	char: CharacterData,
+	srdClass: SrdClass,
+	subclassId: string | undefined,
+	language: "en" | "de",
+): void {
 	const subclass = subclassId
 		? srdClass.subclasses.find((candidate) => candidate.id === subclassId)
 		: undefined;
@@ -131,8 +146,12 @@ function applyClass(char: CharacterData, srdClass: SrdClass, subclassId?: string
 	char.hopeFeature = srdClass.hopeFeature;
 	// Class HP becomes the sheet's solid-slot count (the cog can adjust it later)
 	char.sheetSettings.maxHp = Math.min(12, Math.max(1, srdClass.stats.hp));
-	char.notes = `Max HP: ${srdClass.stats.hp} (${srdClass.name})`;
-	char.inventory += `\nClass items: ${srdClass.items}`;
+	char.notes = language === "de"
+		? `Max. TP: ${srdClass.stats.hp} (${srdClass.name})`
+		: `Max HP: ${srdClass.stats.hp} (${srdClass.name})`;
+	char.inventory += language === "de"
+		? `\nKlassengegenstände: ${srdClass.items}`
+		: `\nClass items: ${srdClass.items}`;
 
 	// Suggested trait spread, in printed order (Agility … Knowledge)
 	const traitValues = srdClass.stats.suggestedTraits.split(",").map((v) => v.trim());
@@ -142,32 +161,43 @@ function applyClass(char: CharacterData, srdClass: SrdClass, subclassId?: string
 
 	const features = srdClass.classFeatures.map((f) => `${f.name}: ${f.description}`);
 	if (subclass) {
-		if (subclass.spellcastTrait) features.push(`Spellcast Trait: ${subclass.spellcastTrait}`);
+		if (subclass.spellcastTrait) features.push(
+			language === "de"
+				? `Zauber-Attribut: ${subclass.spellcastTrait}`
+				: `Spellcast Trait: ${subclass.spellcastTrait}`,
+		);
 		for (const f of subclass.foundation) {
-			features.push(`${f.name} (${subclass.name} foundation): ${f.description}`);
+			features.push(`${f.name} (${subclass.name} ${language === "de" ? "Basis" : "foundation"}): ${f.description}`);
 		}
 	}
 	char.classFeature = features.join("\n\n");
 
-	const primary = findWeapon(srdClass.stats.suggestedPrimary);
+	const canonicalClass = SRD_CLASSES.find((item) => item.id === srdClass.id) ?? srdClass;
+	const primary = findWeapon(canonicalClass.stats.suggestedPrimary, language);
 	if (primary) {
-		char.primaryWeapon = toCharacterWeapon(primary);
+		char.primaryWeapon = toCharacterWeapon(primary, language);
 		char.weaponHandOne = true;
 		char.weaponHandTwo = primary.burden === "Two-Handed";
 	}
-	const secondary = findWeapon(srdClass.stats.suggestedSecondary);
+	const secondary = findWeapon(canonicalClass.stats.suggestedSecondary, language);
 	if (secondary) {
-		char.secondaryWeapon = toCharacterWeapon(secondary);
+		char.secondaryWeapon = toCharacterWeapon(secondary, language);
 		char.weaponHandTwo = true;
 	}
 
-	const armor = SRD_EQUIPMENT.armor.find((a) => a.name === srdClass.stats.suggestedArmor);
+	const canonicalArmor = SRD_EQUIPMENT.armor.find((a) => a.name === canonicalClass.stats.suggestedArmor);
+	const armor = canonicalArmor
+		? getSrdEquipment(language).armor.find((item) => item.id === canonicalArmor.id)
+		: undefined;
 	if (armor) applyArmor(char, armor);
 }
 
-function findWeapon(name: string | null): SrdWeapon | undefined {
+function findWeapon(name: string | null, language: "en" | "de"): SrdWeapon | undefined {
 	if (!name) return undefined;
-	return SRD_EQUIPMENT.weapons.find((w) => w.name === name);
+	const canonical = SRD_EQUIPMENT.weapons.find((w) => w.name === name);
+	return canonical
+		? getSrdEquipment(language).weapons.find((item) => item.id === canonical.id)
+		: undefined;
 }
 
 /** Converts SRD weapon stats (weapons and combat wheelchairs share the shape)
@@ -179,12 +209,12 @@ export function toCharacterWeapon(weapon: {
 	damage: string;
 	damageType: string;
 	feature: string | null;
-}): CharacterWeapon {
+}, language: "en" | "de" = getLanguage()): CharacterWeapon {
 	const damageType = weapon.damageType === "Magical" ? "mag" : "phy";
 	return {
 		name: weapon.name,
-		traitRange: `${weapon.trait} - ${weapon.range}`,
-		damageDice: `${weapon.damage} ${damageType}`,
+		traitRange: `${localizeTrait(weapon.trait, language)} - ${localizeRange(weapon.range, language)}`,
+		damageDice: `${localizeDamageDie(weapon.damage, language)} ${damageType}`,
 		feature: weapon.feature ?? "",
 	};
 }

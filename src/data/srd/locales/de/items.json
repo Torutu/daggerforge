@@ -1,0 +1,422 @@
+[
+	{
+		"id": "IT001",
+		"rarity": "Gewöhnlich",
+		"name": "Hochwertiges Bettzeug",
+		"subtype": "Allgemein",
+		"text": "Während einer Auszeit löschst du automatisch 1 Stress."
+	},
+	{
+		"id": "IT002",
+		"rarity": "Gewöhnlich",
+		"name": "Trillerpfeife",
+		"subtype": "Allgemein",
+		"text": "Diese handgefertigte Pfeife erzeugt einen unverwechselbaren, durchdringenden Ton, der in einem Umkreis von 1,5 Kilometern zu hören ist."
+	},
+	{
+		"id": "IT003",
+		"rarity": "Gewöhnlich",
+		"name": "Angriffsköcher",
+		"subtype": "Waffenaufsatz",
+		"text": "Wenn dir ein Angriff mit einem Pfeil aus diesem Köcher gelingt, erhältst du auf den Schadenswurf einen Bonus in Höhe deines aktuellen Rangs."
+	},
+	{
+		"id": "IT004",
+		"rarity": "Gewöhnlich",
+		"name": "Alistairs Fackel",
+		"subtype": "Allgemein",
+		"text": "Du kannst diese magische Fackel jederzeit entzünden. Ihr Licht erfüllt einen ungewöhnlich großen Bereich und kann eine Höhle taghell erleuchten."
+	},
+	{
+		"id": "IT005",
+		"rarity": "Gewöhnlich",
+		"name": "Sprechkugeln",
+		"subtype": "Allgemein",
+		"text": "Mit diesem Kugelpaar können die Kreaturen, die sie halten, über beliebige Entfernungen miteinander sprechen."
+	},
+	{
+		"id": "IT006",
+		"rarity": "Gewöhnlich",
+		"name": "Handfesseln",
+		"subtype": "Allgemein",
+		"text": "Ein Paar verschließbare Handfesseln mit passendem Schlüssel."
+	},
+	{
+		"id": "IT007",
+		"rarity": "Gewöhnlich",
+		"name": "Arkaner Umhang",
+		"subtype": "Allgemein",
+		"text": "Trägt eine Kreatur mit einem Zauber-Attribut diesen Umhang, kann sie seine Farbe, Beschaffenheit und Größe nach Belieben verändern."
+	},
+	{
+		"id": "IT008",
+		"rarity": "Gewöhnlich",
+		"name": "Gewebtes Netz",
+		"subtype": "Allgemein",
+		"text": "Führe mit diesem Netz einen Wurf auf Geschick durch, um eine kleine Kreatur einzufangen. Das gefangene Ziel kann sich mit einem erfolgreichen Angriffswurf (16) befreien."
+	},
+	{
+		"id": "IT009",
+		"rarity": "Gewöhnlich",
+		"name": "Feuergefäß",
+		"subtype": "Allgemein",
+		"text": "Gieße die seltsame Flüssigkeit aus diesem Gefäß, um augenblicklich Feuer zu erzeugen. Bei einer langen Rast füllt sich das Gefäß wieder."
+	},
+	{
+		"id": "IT010",
+		"rarity": "Gewöhnlich",
+		"name": "Schwebender Stab",
+		"subtype": "Allgemein",
+		"text": "Dieser flache, runenbeschriftete Stab bleibt nach seiner Aktivierung unbeweglich an Ort und Stelle. Bis zur Deaktivierung kann er nicht bewegt werden, folgt nicht der Schwerkraft und verändert seine Position nicht."
+	},
+	{
+		"id": "IT011",
+		"rarity": "Gewöhnlich",
+		"name": "Wandelstein",
+		"subtype": "Allgemein",
+		"text": "Aktiviere diesen kieselgroßen Stein, um dir das Aussehen einer sichtbaren Person einzuprägen. Setze 1 Hoffnung ein, um dieses Aussehen als magische Illusion anzunehmen."
+	},
+	{
+		"id": "IT012",
+		"rarity": "Gewöhnlich",
+		"name": "Leere Kiste",
+		"subtype": "Allgemein",
+		"text": "Diese magische Kiste scheint leer. Sprich ein bestimmtes Auslösewort oder führe eine festgelegte Handlung aus und öffne sie, um die darin gelagerten Gegenstände sehen zu können."
+	},
+	{
+		"id": "IT013",
+		"rarity": "Ungewöhnlich",
+		"name": "Seelentierdose",
+		"subtype": "Allgemein",
+		"text": "In diese Dose passt ein kleines tierisches Seelentier. Solange es sich darin befindet, sind das Tier und die Dose immun gegen Schaden und schädliche Effekte."
+	},
+	{
+		"id": "IT014",
+		"rarity": "Ungewöhnlich",
+		"name": "Durchdringende Pfeile",
+		"subtype": "Waffenaufsatz",
+		"text": "Dreimal pro Rast darfst du bei einem erfolgreichen Angriff mit einem dieser Pfeile deine Übung zum Schadenswurf addieren."
+	},
+	{
+		"id": "IT015",
+		"rarity": "Ungewöhnlich",
+		"name": "Mutstein",
+		"subtype": "Rüstungsaufsatz",
+		"text": "Bringe diesen Stein an einer Rüstung ohne Merkmal an. Sie erhält: Zäh: Bevor du dein letztes Rüstungsfeld markierst, würfelst du einen W6. Bei einer 6 reduzierst du die Schwere des Schadens um eine Schwelle, ohne ein Rüstungsfeld zu markieren."
+	},
+	{
+		"id": "IT016",
+		"rarity": "Ungewöhnlich",
+		"name": "Dietrichschlüssel",
+		"subtype": "Allgemein",
+		"text": "Wenn du mit diesem Schlüssel eine verschlossene Tür öffnest, erhältst du einen Vorteil auf den Wurf auf Geschick."
+	},
+	{
+		"id": "IT017",
+		"rarity": "Ungewöhnlich",
+		"name": "Arkanes Prisma",
+		"subtype": "Allgemein",
+		"text": "Stelle dieses Prisma an einem Ort deiner Wahl auf und aktiviere es. Alle Verbündeten in kurzer Distanz erhalten +1 auf Zauberwürfe. Das aktivierte Prisma kann nicht bewegt werden. Nach der Deaktivierung lässt es sich erst nach deiner nächsten langen Rast wieder aktivieren."
+	},
+	{
+		"id": "IT018",
+		"rarity": "Ungewöhnlich",
+		"name": "Rezept für leichten Ausdauertrank",
+		"subtype": "Rezept",
+		"text": "Verwende als Auszeit-Zug den Knochen einer Kreatur, um einen leichten Ausdauertrank herzustellen."
+	},
+	{
+		"id": "IT019",
+		"rarity": "Ungewöhnlich",
+		"name": "Rezept für leichten Lebenstrank",
+		"subtype": "Rezept",
+		"text": "Verwende als Auszeit-Zug eine Phiole Blut, um einen leichten Lebenstrank herzustellen."
+	},
+	{
+		"id": "IT020",
+		"rarity": "Ungewöhnlich",
+		"name": "Zielsuchende Kompasse",
+		"subtype": "Allgemein",
+		"text": "Diese beiden Kompasse zeigen unabhängig von ihrer Entfernung stets aufeinander."
+	},
+	{
+		"id": "IT021",
+		"rarity": "Ungewöhnlich",
+		"name": "Ratgeber-Fee",
+		"subtype": "Allgemein",
+		"text": "Diese winzige Fee sitzt in deinem Gehörgang und flüstert dir im Kampf nützliche Ratschläge zu. Einmal pro kurzer Rast darfst du einen Vorteil auf einen Angriffswurf erhalten."
+	},
+	{
+		"id": "IT022",
+		"rarity": "Ungewöhnlich",
+		"name": "Gecko-Handschuhe",
+		"subtype": "Allgemein",
+		"text": "Du kannst senkrechte Flächen hinauf und an Decken entlangklettern."
+	},
+	{
+		"id": "IT023",
+		"rarity": "Ungewöhnlich",
+		"name": "Hüter des Wissens",
+		"subtype": "Allgemein",
+		"text": "In diesem Buch kannst du Namen und Einzelheiten von bis zu drei feindlichen Kreaturen speichern. Du erhältst +1 auf Aktionswürfe gegen diese Kreaturen."
+	},
+	{
+		"id": "IT024",
+		"rarity": "Ungewöhnlich",
+		"name": "Rezept für eine Phiole mit Dunkelrauch",
+		"subtype": "Rezept",
+		"text": "Markiere als Auszeit-Zug 1 Stress, um eine Phiole mit Dunkelrauch herzustellen."
+	},
+	{
+		"id": "IT025",
+		"rarity": "Selten",
+		"name": "Blutstein",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Stein an einer Waffe ohne Merkmal an. Sie erhält: Brutal: Erzielst du mit einem Schadenswürfel dessen Höchstwert, würfelst du einen zusätzlichen Schadenswürfel."
+	},
+	{
+		"id": "IT026",
+		"rarity": "Selten",
+		"name": "Großstein",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Stein an einer Waffe ohne Merkmal an. Sie erhält: Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis."
+	},
+	{
+		"id": "IT027",
+		"rarity": "Selten",
+		"name": "Gleiter",
+		"subtype": "Allgemein",
+		"text": "Markiere während eines Falls 1 Stress, um diesen kleinen Fallschirm zu entfalten und sicher zu Boden zu gleiten."
+	},
+	{
+		"id": "IT028",
+		"rarity": "Selten",
+		"name": "Ring der Stille",
+		"subtype": "Allgemein",
+		"text": "Setze 1 Hoffnung ein, um diesen Ring zu aktivieren. Deine Schritte bleiben bis zu deiner nächsten Rast lautlos."
+	},
+	{
+		"id": "IT029",
+		"rarity": "Selten",
+		"name": "Beruhigender Anhänger",
+		"subtype": "Allgemein",
+		"text": "Wenn du deinen letzten Stress markieren würdest, würfelst du einen W6. Bei einer 5 oder höher markierst du ihn nicht."
+	},
+	{
+		"id": "IT030",
+		"rarity": "Selten",
+		"name": "Doppelflasche",
+		"subtype": "Allgemein",
+		"text": "Diese Flasche kann zwei verschiedene Flüssigkeiten aufnehmen. Mit einem kleinen Schalter an der Seite wechselst du zwischen ihnen."
+	},
+	{
+		"id": "IT031",
+		"rarity": "Selten",
+		"name": "Beutel mit Launensand",
+		"subtype": "Allgemein",
+		"text": "Überzeuge diesen kleinen Sandbeutel mit einem erfolgreichen Präsenzwurf (10), wesentlich schwerer oder leichter zu werden. Bei einem erfolgreichen Wurf auf Geschick (10) kannst du außerdem Sand in das Gesicht eines Ziels blasen und es vorübergehend Verwundbar machen."
+	},
+	{
+		"id": "IT032",
+		"rarity": "Selten",
+		"name": "Ring des Widerstands",
+		"subtype": "Allgemein",
+		"text": "Einmal pro langer Rast darfst du diesen Ring nach einem erfolgreichen Angriff gegen dich aktivieren, um den Schaden zu halbieren."
+	},
+	{
+		"id": "IT033",
+		"rarity": "Selten",
+		"name": "Phönixfeder",
+		"subtype": "Allgemein",
+		"text": "Trägst du mindestens eine Phönixfeder bei dir, wenn du bewusstlos wirst, erhältst du +1 auf den Wurf, der bestimmt, ob du eine Narbe erhältst."
+	},
+	{
+		"id": "IT034",
+		"rarity": "Selten",
+		"name": "Kiste voller Waren",
+		"subtype": "Allgemein",
+		"text": "Einmal pro langer Rast darfst du diese kleine Kiste öffnen und einen W12 würfeln. Bei 1-6 ist sie leer, bei 7-10 enthält sie einen zufälligen gewöhnlichen Verbrauchsgegenstand und bei 11-12 zwei zufällige gewöhnliche Verbrauchsgegenstände."
+	},
+	{
+		"id": "IT035",
+		"rarity": "Selten",
+		"name": "Luftklingen-Anhänger",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Anhänger an einer Waffe für unmittelbare Distanz an. Dreimal pro Rast darfst du ihn aktivieren, um ein Ziel in kurzer Distanz anzugreifen."
+	},
+	{
+		"id": "IT036",
+		"rarity": "Selten",
+		"name": "Portalsamen",
+		"subtype": "Allgemein",
+		"text": "Pflanze diesen Samen ein, damit an dieser Stelle ein Portal wächst. Nach 24 Stunden kannst du damit zu jedem anderen Ort reisen, an dem du einen Portalsamen gepflanzt hast. Beliebiger magischer Schaden zerstört ein Portal."
+	},
+	{
+		"id": "IT037",
+		"rarity": "Selten",
+		"name": "Kette des Vorbilds",
+		"subtype": "Allgemein",
+		"text": "Meditiere als Auszeit-Zug über ein Ideal oder Prinzip, das dir wichtig ist, und bündele deinen Willen in dieser Kette. Einmal pro langer Rast darfst du 1 Hoffnung einsetzen, um für einen Wurf, der diesem Prinzip unmittelbar entspricht, einen W20 als Hoffnungswürfel zu verwenden."
+	},
+	{
+		"id": "IT038",
+		"rarity": "Selten",
+		"name": "Schwer greifbares Amulett",
+		"subtype": "Allgemein",
+		"text": "Einmal pro langer Rast darfst du dieses Amulett aktivieren, um Versteckt zu werden, bis du dich bewegst. Währenddessen bleibst du selbst dann ungesehen, wenn eine gegnerische Kreatur an einen Ort gelangt, von dem aus sie dich normalerweise sehen könnte."
+	},
+	{
+		"id": "IT039",
+		"rarity": "Selten",
+		"name": "Hoffnungshüter-Medaillon",
+		"subtype": "Allgemein",
+		"text": "Wenn du bei einer langen Rast 6 Hoffnung besitzt, darfst du 1 Hoffnung einsetzen, um dieses Medaillon mit Entschlossenheit zu erfüllen. Wenn du 0 Hoffnung hast, kannst du mit dem Medaillon sofort 1 Hoffnung erhalten. Danach muss es erneut erfüllt werden."
+	},
+	{
+		"id": "IT040",
+		"rarity": "Selten",
+		"name": "Unendlicher Beutel",
+		"subtype": "Allgemein",
+		"text": "Gegenstände in diesem Beutel werden in einer unendlich großen Taschendimension aufbewahrt. Du kannst sie jederzeit wieder hervorholen."
+	},
+	{
+		"id": "IT041",
+		"rarity": "Selten",
+		"name": "Relikt der Gewandtheit",
+		"subtype": "Relikt",
+		"text": "Du erhältst einen Bonus von +1 auf Agilität. Du darfst nur ein Relikt tragen."
+	},
+	{
+		"id": "IT042",
+		"rarity": "Selten",
+		"name": "Relikt der Stärke",
+		"subtype": "Relikt",
+		"text": "Du erhältst einen Bonus von +1 auf Stärke. Du darfst nur ein Relikt tragen."
+	},
+	{
+		"id": "IT043",
+		"rarity": "Selten",
+		"name": "Relikt der Kontrolle",
+		"subtype": "Relikt",
+		"text": "Du erhältst einen Bonus von +1 auf Geschick. Du darfst nur ein Relikt tragen."
+	},
+	{
+		"id": "IT044",
+		"rarity": "Selten",
+		"name": "Relikt der Einstimmung",
+		"subtype": "Relikt",
+		"text": "Du erhältst einen Bonus von +1 auf Instinkt. Du darfst nur ein Relikt tragen."
+	},
+	{
+		"id": "IT045",
+		"rarity": "Selten",
+		"name": "Relikt des Charmes",
+		"subtype": "Relikt",
+		"text": "Du erhältst einen Bonus von +1 auf Präsenz. Du darfst nur ein Relikt tragen."
+	},
+	{
+		"id": "IT046",
+		"rarity": "Selten",
+		"name": "Relikt der Erleuchtung",
+		"subtype": "Relikt",
+		"text": "Du erhältst einen Bonus von +1 auf Wissen. Du darfst nur ein Relikt tragen."
+	},
+	{
+		"id": "IT047",
+		"rarity": "Selten",
+		"name": "Relikt der Verfeinerung",
+		"subtype": "Relikt",
+		"text": "Du erhältst einen Bonus von +1 auf eine Erfahrung deiner Wahl. Du darfst nur ein Relikt tragen."
+	},
+	{
+		"id": "IT048",
+		"rarity": "Selten",
+		"name": "Flimmerfliegen-Anhänger",
+		"subtype": "Waffenaufsatz",
+		"text": "Solange du diesen Anhänger trägst, schimmern deine Waffen für unmittelbare Distanz, die physischen Schaden verursachen, hauchzart und können Ziele in sehr kurzer Distanz angreifen."
+	},
+	{
+		"id": "IT049",
+		"rarity": "Legendär",
+		"name": "Seeläufer-Stiefel",
+		"subtype": "Allgemein",
+		"text": "Du kannst auf einer Wasseroberfläche laufen, als wäre sie weicher Boden."
+	},
+	{
+		"id": "IT050",
+		"rarity": "Legendär",
+		"name": "Seelentier aus Ton",
+		"subtype": "Allgemein",
+		"text": "Formst du diese Tonkugel zu einem tierischen Seelentier, verhält es sich wie das dargestellte Tier: Eine Spinne kann etwa Netze aus Ton spinnen, ein Vogel kann fliegen. Das Seelentier behält über verschiedene Gestalten hinweg Erinnerung und Persönlichkeit, kann aber mit jeder Gestalt neue Eigenarten annehmen."
+	},
+	{
+		"id": "IT051",
+		"rarity": "Legendär",
+		"name": "Rezept für Mythischen Staub",
+		"subtype": "Rezept",
+		"text": "Verwende als Auszeit-Zug eine Handvoll feinen Goldstaub, um Mythischen Staub herzustellen."
+	},
+	{
+		"id": "IT052",
+		"rarity": "Legendär",
+		"name": "Erinnerungssplitter",
+		"subtype": "Allgemein",
+		"text": "Einmal pro langer Rast darfst du 2 Hoffnung einsetzen, um eine Domänenkarte aus deiner Reserve zurückzurufen, ohne ihre Rückruf-Kosten zu bezahlen."
+	},
+	{
+		"id": "IT053",
+		"rarity": "Legendär",
+		"name": "Edelstein der Behändigkeit",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Edelstein an einer Waffe an, damit du bei Angriffen mit ihr Agilität verwenden kannst."
+	},
+	{
+		"id": "IT054",
+		"rarity": "Legendär",
+		"name": "Edelstein der Macht",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Edelstein an einer Waffe an, damit du bei Angriffen mit ihr Stärke verwenden kannst."
+	},
+	{
+		"id": "IT055",
+		"rarity": "Legendär",
+		"name": "Edelstein der Präzision",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Edelstein an einer Waffe an, damit du bei Angriffen mit ihr Geschick verwenden kannst."
+	},
+	{
+		"id": "IT056",
+		"rarity": "Legendär",
+		"name": "Edelstein der Einsicht",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Edelstein an einer Waffe an, damit du bei Angriffen mit ihr Instinkt verwenden kannst."
+	},
+	{
+		"id": "IT057",
+		"rarity": "Legendär",
+		"name": "Edelstein der Kühnheit",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Edelstein an einer Waffe an, damit du bei Angriffen mit ihr Präsenz verwenden kannst."
+	},
+	{
+		"id": "IT058",
+		"rarity": "Legendär",
+		"name": "Edelstein der Weisheit",
+		"subtype": "Waffenaufsatz",
+		"text": "Bringe diesen Edelstein an einer Waffe an, damit du bei Angriffen mit ihr Wissen verwenden kannst."
+	},
+	{
+		"id": "IT059",
+		"rarity": "Legendär",
+		"name": "Ring der ungebrochenen Entschlossenheit",
+		"subtype": "Allgemein",
+		"text": "Einmal pro Spielsitzung, wenn die SL 1 Furcht einsetzt, darfst du 4 Hoffnung einsetzen, um die Auswirkungen dieser Furcht aufzuheben."
+	},
+	{
+		"id": "IT060",
+		"rarity": "Legendär",
+		"name": "Gürtel der Einigkeit",
+		"subtype": "Allgemein",
+		"text": "Einmal pro Spielsitzung darfst du 5 Hoffnung einsetzen, um einen Teamwurf mit drei statt zwei SC anzuführen."
+	}
+]

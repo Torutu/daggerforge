@@ -1,7 +1,8 @@
 import { App, Modal, Notice } from "obsidian";
 import { makeDraggable } from "../../utils/makeDraggable";
 import { getDaggerForgePlugin } from "../../utils/index";
-import { ADVERSARIES } from "../../data/adversaries";
+import { getAdversaries } from "../../data/adversaries";
+import { getLanguage } from "../../i18n";
 import { AdvData } from "../../types/index";
 import { buildAdversaryEmbedBlock } from "../adversaries/AdversaryEmbed";
 import { ConfirmModal } from "../characters/components/ConfirmModal";
@@ -76,7 +77,7 @@ export class EncounterCalcModal extends Modal {
 	private allAdversaries(): AdvData[] {
 		const plugin = getDaggerForgePlugin(this.app);
 		const custom = plugin?.dataManager?.getAdversaries() ?? [];
-		return [...custom, ...ADVERSARIES];
+		return [...custom, ...getAdversaries(getLanguage())];
 	}
 
 	onOpen(): void {
@@ -166,7 +167,7 @@ export class EncounterCalcModal extends Modal {
 
 		const sourceSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
 		sourceSelect.createEl("option", { text: "Any source", value: "all" });
-		const sources = new Set<string>(ADVERSARIES.map(a => (a.source || "core").toLowerCase()));
+		const sources = new Set<string>(getAdversaries(getLanguage()).map(a => (a.source || "core").toLowerCase()));
 		sources.add("custom");
 		[...sources].sort().forEach(s => sourceSelect.createEl("option", { text: capitalize(s), value: s }));
 

@@ -1,0 +1,456 @@
+[
+	{
+		"name": "Flinker Späher",
+		"examples": "Fuchs, Maus, Wiesel",
+		"trait": "Agilität",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Agilität",
+		"attackDamage": "W4",
+		"advantages": ["täuschen", "aufspüren", "schleichen"],
+		"features": [
+			{
+				"name": "Flink",
+				"text": "Du bewegst dich lautlos und darfst 1 Hoffnung einsetzen, um dich ohne Wurf bis in weite Distanz zu bewegen."
+			},
+			{
+				"name": "Zerbrechlich",
+				"text": "Wenn du Mittleren oder höheren Schaden erleidest, verlässt du die Tiergestalt."
+			}
+		]
+	},
+	{
+		"name": "Spähendes Wasserwesen",
+		"examples": "Aal, Fisch, Oktopus",
+		"trait": "Agilität",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Agilität",
+		"attackDamage": "W4",
+		"advantages": ["navigieren", "schleichen", "schwimmen"],
+		"features": [
+			{
+				"name": "Aquatisch",
+				"text": "Du kannst unter Wasser atmen und dich dort ungehindert bewegen."
+			},
+			{
+				"name": "Zerbrechlich",
+				"text": "Wenn du Mittleren oder höheren Schaden erleidest, verlässt du die Tiergestalt."
+			}
+		]
+	},
+	{
+		"name": "Treues Haustier",
+		"examples": "Katze, Hund, Kaninchen",
+		"trait": "Instinkt",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Instinkt",
+		"attackDamage": "W6",
+		"advantages": ["klettern", "aufspüren", "beschützen"],
+		"features": [
+			{
+				"name": "Seelentier",
+				"text": "Wenn du einen verbündeten Charakter unterstützt, darfst du einen W8 als Vorteilswürfel verwenden."
+			},
+			{
+				"name": "Zerbrechlich",
+				"text": "Wenn du Mittleren oder höheren Schaden erleidest, verlässt du die Tiergestalt."
+			}
+		]
+	},
+	{
+		"name": "Wendiges Weidetier",
+		"examples": "Hirsch, Gazelle, Ziege",
+		"trait": "Agilität",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Agilität",
+		"attackDamage": "W6",
+		"advantages": ["springen", "schleichen", "sprinten"],
+		"features": [
+			{
+				"name": "Schwer zu fassen",
+				"text": "Würde ein Angriffswurf gegen dich gelingen, darfst du 1 Stress markieren und einen W4 würfeln. Addiere das Ergebnis für diesen Angriff auf deinen Ausweichen-Wert."
+			},
+			{
+				"name": "Zerbrechlich",
+				"text": "Wenn du Mittleren oder höheren Schaden erleidest, verlässt du die Tiergestalt."
+			}
+		]
+	},
+	{
+		"name": "Rudeljäger",
+		"examples": "Kojote, Hyäne, Wolf",
+		"trait": "Stärke",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Stärke",
+		"attackDamage": "W8",
+		"advantages": ["angreifen", "sprinten", "Fährten lesen"],
+		"features": [
+			{
+				"name": "Lähmender Angriff",
+				"text": "Wenn dir ein Angriff gegen ein Ziel in unmittelbarer Distanz gelingt, darfst du 1 Stress markieren, um das Ziel vorübergehend Verwundbar zu machen."
+			},
+			{
+				"name": "Rudeljagd",
+				"text": "Wenn dir ein Angriff gegen dasselbe Ziel gelingt wie einem verbündeten Charakter, der unmittelbar vor dir gehandelt hat, fügst du deinem Schadenswurf 1W8 hinzu."
+			}
+		]
+	},
+	{
+		"name": "Lauernde Spinne",
+		"examples": "Vogelspinne, Wolfsspinne",
+		"trait": "Geschick",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Geschick",
+		"attackDamage": "W6",
+		"advantages": ["angreifen", "klettern", "schleichen"],
+		"features": [
+			{
+				"name": "Giftiger Biss",
+				"text": "Wenn dir ein Angriff gegen ein Ziel in unmittelbarer Distanz gelingt, wird es vorübergehend Vergiftet. Eine Vergiftete Kreatur erleidet bei jeder Handlung 1W10 direkten physischen Schaden."
+			},
+			{
+				"name": "Netzspinnen",
+				"text": "Du kannst ein starkes Netz erzeugen, das eine Kreatur tragen kann und bei Abenteuern wie im Kampf nützlich ist. Mit einem erfolgreichen Wurf auf Geschick gegen ein Ziel in kurzer Distanz darfst du es vorübergehend Festsetzen."
+			}
+		]
+	},
+	{
+		"name": "Gepanzerter Wächter",
+		"examples": "Gürteltier, Schuppentier, Schildkröte",
+		"trait": "Stärke",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Stärke",
+		"attackDamage": "W8",
+		"advantages": ["graben", "aufspüren", "beschützen"],
+		"features": [
+			{
+				"name": "Panzer",
+				"text": "Deine harte Außenhaut macht dich resistent gegen physischen Schaden. Markiere außerdem 1 Rüstungsfeld, um dich in deinen Panzer zurückzuziehen. Darin wird physischer Schaden nach Anwendung der Resistenz zusätzlich um deinen Rüstungswert reduziert, du kannst jedoch keine anderen Aktionen ausführen, ohne diese Gestalt zu verlassen."
+			},
+			{
+				"name": "Kanonenkugel",
+				"text": "Markiere 1 Stress, damit ein verbündeter Charakter dich auf ein gegnerisches Ziel schleudert. Dafür führt er mit Agilität oder Stärke einen Angriffswurf gegen ein Ziel in kurzer Distanz durch. Bei einem Erfolg erleidet das Ziel abhängig von der Übung des werfenden Charakters W12+2 physischen Schaden. Setze 1 Hoffnung ein, um ein weiteres Ziel in sehr kurzer Distanz zum ersten zu treffen; es erleidet die Hälfte des Schadens."
+			}
+		]
+	},
+	{
+		"name": "Kräftiges Reittier",
+		"examples": "Kamel, Pferd, Zebra",
+		"trait": "Agilität",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Agilität",
+		"attackDamage": "W8",
+		"advantages": ["springen", "navigieren", "sprinten"],
+		"features": [
+			{
+				"name": "Lastenträger",
+				"text": "Du kannst bei deiner Bewegung bis zu zwei bereitwillige verbündete Charaktere tragen."
+			},
+			{
+				"name": "Niedertrampeln",
+				"text": "Markiere 1 Stress, bewege dich in gerader Linie bis in kurze Distanz und greife alle Ziele in unmittelbarer Distanz zu dieser Linie an. Ziele, gegen die du erfolgreich bist, erleiden abhängig von deiner Übung W8+1 physischen Schaden und werden vorübergehend Verwundbar."
+			}
+		]
+	},
+	{
+		"name": "Sprungjäger",
+		"examples": "Gepard, Löwe, Panther",
+		"trait": "Instinkt",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Instinkt",
+		"attackDamage": "W8",
+		"advantages": ["angreifen", "klettern", "schleichen"],
+		"features": [
+			{
+				"name": "Schnell",
+				"text": "Setze 1 Hoffnung ein, um dich ohne Wurf bis in weite Distanz zu bewegen."
+			},
+			{
+				"name": "Zu Fall bringen",
+				"text": "Markiere 1 Stress, um dich in unmittelbare Distanz zu einem Ziel zu bewegen und es anzugreifen. Bei einem Erfolg erhältst du für diesen Angriff +2 auf deine Übung und das Ziel muss 1 Stress markieren."
+			}
+		]
+	},
+	{
+		"name": "Kraftvolles Tier",
+		"examples": "Bär, Stier, Elch",
+		"trait": "Stärke",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Stärke",
+		"attackDamage": "W10",
+		"advantages": ["navigieren", "beschützen", "einschüchtern"],
+		"features": [
+			{
+				"name": "Wüten",
+				"text": "Wenn du auf einem Schadenswürfel eine 1 erzielst, darfst du einen W10 würfeln und das Ergebnis zum Schadenswurf addieren. Vor einem Angriffswurf darfst du außerdem 1 Stress markieren, um für diesen Angriff +1 auf deine Übung zu erhalten."
+			},
+			{
+				"name": "Dicke Haut",
+				"text": "Du erhältst +2 auf deine Schadensschwellen."
+			}
+		]
+	},
+	{
+		"name": "Schnellende Schlange",
+		"examples": "Kobra, Klapperschlange, Viper",
+		"trait": "Geschick",
+		"attackRange": "Sehr kurz",
+		"attackTrait": "Geschick",
+		"attackDamage": "W8",
+		"advantages": ["klettern", "täuschen", "sprinten"],
+		"features": [
+			{
+				"name": "Giftiger Angriff",
+				"text": "Greife eine beliebige Anzahl von Zielen in sehr kurzer Distanz an. Bei einem Erfolg wird ein Ziel vorübergehend Vergiftet. Eine Vergiftete Kreatur erleidet bei jeder Handlung 1W10 direkten physischen Schaden."
+			},
+			{
+				"name": "Warnendes Zischen",
+				"text": "Markiere 1 Stress, um eine beliebige Anzahl von Zielen in unmittelbarer Distanz zu zwingen, sich auf sehr kurze Distanz zurückzuziehen."
+			}
+		]
+	},
+	{
+		"name": "Geflügeltes Tier",
+		"examples": "Falke, Eule, Rabe",
+		"trait": "Geschick",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Geschick",
+		"attackDamage": "W4",
+		"advantages": ["täuschen", "aufspüren", "einschüchtern"],
+		"features": [
+			{
+				"name": "Vogelperspektive",
+				"text": "Du kannst jederzeit fliegen. Einmal pro Rast, während du in der Luft bist, darfst du der SL ohne Wurf eine Frage zur Szene unter dir stellen. Der erste Charakter, der aufgrund dieser Information handelt, erhält einen Vorteil auf den Wurf."
+			},
+			{
+				"name": "Hohle Knochen",
+				"text": "Du erhältst einen Malus von -2 auf deine Schadensschwellen."
+			}
+		]
+	},
+	{
+		"name": "Jäger der Gewässer",
+		"examples": "Delfin, Orca, Hai",
+		"trait": "Agilität",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Agilität",
+		"attackDamage": "W10",
+		"advantages": ["angreifen", "schwimmen", "Fährten lesen"],
+		"features": [
+			{
+				"name": "Aquatisch",
+				"text": "Du kannst unter Wasser atmen und dich dort ungehindert bewegen."
+			},
+			{
+				"name": "Bösartiger Biss",
+				"text": "Wenn dir ein Angriff gegen ein Ziel gelingt, darfst du 1 Hoffnung einsetzen, um es Verwundbar zu machen und für diesen Angriff +1 auf deine Übung zu erhalten."
+			}
+		]
+	},
+	{
+		"name": "Großer Jäger",
+		"examples": "Schreckenswolf, Velociraptor, Säbelzahntiger",
+		"trait": "Stärke",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Stärke",
+		"attackDamage": "W12",
+		"advantages": ["angreifen", "schleichen", "sprinten"],
+		"features": [
+			{
+				"name": "Lastenträger",
+				"text": "Du kannst bei deiner Bewegung bis zu zwei bereitwillige verbündete Charaktere tragen."
+			},
+			{
+				"name": "Bösartiger Biss",
+				"text": "Wenn dir ein Angriff gegen ein Ziel gelingt, darfst du 1 Hoffnung einsetzen, um es vorübergehend Verwundbar zu machen und für diesen Angriff +1 auf deine Übung zu erhalten."
+			}
+		]
+	},
+	{
+		"name": "Großes geflügeltes Tier",
+		"examples": "Riesenadler, Falke",
+		"trait": "Geschick",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Geschick",
+		"attackDamage": "W8",
+		"advantages": ["täuschen", "ablenken", "aufspüren"],
+		"features": [
+			{
+				"name": "Vogelperspektive",
+				"text": "Du kannst jederzeit fliegen. Einmal pro Rast, während du in der Luft bist, darfst du der SL ohne Wurf eine Frage zur Szene unter dir stellen. Der erste Charakter, der aufgrund dieser Information handelt, erhält einen Vorteil auf den Wurf."
+			},
+			{
+				"name": "Lastenträger",
+				"text": "Du kannst bei deiner Bewegung bis zu zwei bereitwillige verbündete Charaktere tragen."
+			}
+		]
+	},
+	{
+		"name": "Legendäres Tier",
+		"examples": "Verbesserte Optionen des 1. Rangs",
+		"trait": null,
+		"attackRange": null,
+		"attackTrait": null,
+		"attackDamage": null,
+		"advantages": [],
+		"features": [
+			{
+				"name": "Weiterentwickelt",
+				"text": "Wähle eine Tiergestalt des 1. Rangs und werde zu einer größeren, mächtigeren Version dieser Kreatur. Du behältst alle Attribute und Merkmale der ursprünglichen Gestalt und erhältst +6 auf Schadenswürfe, +1 auf das von dieser Gestalt verwendete Attribut und +2 auf Ausweichen."
+			}
+		]
+	},
+	{
+		"name": "Legendäres Mischwesen",
+		"examples": "Greif, Sphinx",
+		"trait": "Stärke",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Stärke",
+		"attackDamage": "W10",
+		"advantages": [],
+		"features": [
+			{
+				"name": "Merkmale des Mischwesens",
+				"text": "Markiere 1 zusätzlichen Stress, um diese Gestalt anzunehmen. Wähle zwei beliebige Tiergestalten der Ränge 1-2 und daraus insgesamt vier Vorteile sowie zwei Merkmale."
+			}
+		]
+	},
+	{
+		"name": "Mächtige Echse",
+		"examples": "Alligator, Krokodil, Gila-Krustenechse",
+		"trait": "Instinkt",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Instinkt",
+		"attackDamage": "W10",
+		"advantages": ["angreifen", "schleichen", "Fährten lesen"],
+		"features": [
+			{
+				"name": "Körperliche Abwehr",
+				"text": "Du erhältst +3 auf deine Schadensschwellen."
+			},
+			{
+				"name": "Zuschnappen",
+				"text": "Wenn dir ein Angriff gegen ein Ziel in unmittelbarer Distanz gelingt, darfst du 1 Hoffnung einsetzen, um es mit deinen Kiefern zu packen und vorübergehend Festgesetzt und Verwundbar zu machen."
+			}
+		]
+	},
+	{
+		"name": "Episches Wasserwesen",
+		"examples": "Riesenkalmar, Wal",
+		"trait": "Agilität",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Agilität",
+		"attackDamage": "W10",
+		"advantages": [
+			"aufspüren",
+			"beschützen",
+			"einschüchtern",
+			"Fährten lesen"
+		],
+		"features": [
+			{
+				"name": "Herrscher der Meere",
+				"text": "Du kannst unter Wasser atmen und dich dort ungehindert bewegen. Wenn dir ein Angriff gegen ein Ziel in unmittelbarer Distanz gelingt, darfst du es vorübergehend Festsetzen."
+			},
+			{
+				"name": "Unnachgiebig",
+				"text": "Wenn du ein Rüstungsfeld markieren würdest, würfelst du einen W6. Bei einer 5 oder höher reduzierst du die Schwere um eine Schwelle, ohne ein Rüstungsfeld zu markieren."
+			}
+		]
+	},
+	{
+		"name": "Gewaltiger Koloss",
+		"examples": "Elefant, Mammut, Nashorn",
+		"trait": "Stärke",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Stärke",
+		"attackDamage": "W12",
+		"advantages": ["aufspüren", "beschützen", "einschüchtern", "sprinten"],
+		"features": [
+			{
+				"name": "Lastenträger",
+				"text": "Du kannst bei deiner Bewegung bis zu vier bereitwillige verbündete Charaktere tragen."
+			},
+			{
+				"name": "Zerstören",
+				"text": "Setze 1 Hoffnung ein, bewege dich in gerader Linie bis in weite Distanz und greife alle Ziele in unmittelbarer Distanz zu dieser Linie an. Ziele, gegen die du erfolgreich bist, erleiden abhängig von deiner Übung W8+10 physischen Schaden und werden vorübergehend Verwundbar."
+			},
+			{
+				"name": "Unerschrocken",
+				"text": "Du erhältst +2 auf alle Schadensschwellen."
+			}
+		]
+	},
+	{
+		"name": "Mythischer Himmelsjäger",
+		"examples": "Drache, Flugsaurier, Roch, Wyvern",
+		"trait": "Geschick",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Geschick",
+		"attackDamage": "W10",
+		"advantages": ["angreifen", "täuschen", "aufspüren", "navigieren"],
+		"features": [
+			{
+				"name": "Lastenträger",
+				"text": "Du kannst bei deiner Bewegung bis zu drei bereitwillige verbündete Charaktere tragen."
+			},
+			{
+				"name": "Tödlicher Greifvogel",
+				"text": "Du kannst jederzeit fliegen und dich als Teil deiner Aktion bis in weite Distanz bewegen. Bewegst du dich aus mindestens kurzer Distanz geradlinig in unmittelbare Distanz zu einem Ziel und greifst es in derselben Aktion an, darfst du alle Schadenswürfel erneut werfen, deren Ergebnis niedriger als deine Übung ist."
+			}
+		]
+	},
+	{
+		"name": "Mythisches Tier",
+		"examples": "Verbesserte Optionen des 1. oder 2. Rangs",
+		"trait": null,
+		"attackRange": null,
+		"attackTrait": null,
+		"attackDamage": null,
+		"advantages": [],
+		"features": [
+			{
+				"name": "Weiterentwickelt",
+				"text": "Wähle eine Tiergestalt des 1. oder 2. Rangs und werde zu einer größeren, mächtigeren Version dieser Kreatur. Du behältst alle Attribute und Merkmale der ursprünglichen Gestalt und erhältst +9 auf Schadenswürfe, +2 auf das verwendete Attribut, +3 auf Ausweichen und einen um eine Größe höheren Schadenswürfel (W6 wird W8, W8 wird W10 usw.)."
+			}
+		]
+	},
+	{
+		"name": "Mythisches Mischwesen",
+		"examples": "Chimäre, Cockatrice, Mantikor",
+		"trait": "Stärke",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Stärke",
+		"attackDamage": "W12",
+		"advantages": [],
+		"features": [
+			{
+				"name": "Merkmale des Mischwesens",
+				"text": "Markiere 2 zusätzlichen Stress, um diese Gestalt anzunehmen. Wähle drei beliebige Tiergestalten der Ränge 1-3 und daraus insgesamt fünf Vorteile sowie drei Merkmale."
+			}
+		]
+	},
+	{
+		"name": "Schreckensechse",
+		"examples": "Brachiosaurus, Tyrannosaurus",
+		"trait": "Stärke",
+		"attackRange": "Unmittelbar",
+		"attackTrait": "Stärke",
+		"attackDamage": "W12",
+		"advantages": [
+			"angreifen",
+			"täuschen",
+			"einschüchtern",
+			"Fährten lesen"
+		],
+		"features": [
+			{
+				"name": "Verheerende Angriffe",
+				"text": "Wenn du einem Ziel in unmittelbarer Distanz Schweren Schaden zufügst, darfst du 1 Stress markieren, damit es 1 zusätzlichen TP markiert."
+			},
+			{
+				"name": "Gewaltiger Schritt",
+				"text": "Du kannst dich ohne Wurf bis in weite Distanz bewegen. Aufgrund deiner Größe ignorierst du nach Ermessen der SL schwieriges Terrain."
+			}
+		]
+	}
+]

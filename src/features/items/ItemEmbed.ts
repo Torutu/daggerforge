@@ -1,6 +1,7 @@
 import { EventRef, MarkdownRenderChild } from "obsidian";
 import type DaggerForgePlugin from "../../main";
-import { ALL_GEAR } from "../../data/srd";
+import { getAllGear } from "../../data/srd";
+import { getLanguage } from "../../i18n";
 import { GearData } from "../../types/srd";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
 import { decodeGearCode } from "../embeds/embedCode";
@@ -21,7 +22,7 @@ export const Item_Embed_Language = "daggerforge-item";
 export function findGearById(plugin: DaggerForgePlugin, id: string): GearData | null {
 	return (
 		plugin.dataManager.getItems().find((i) => i.id === id) ??
-		ALL_GEAR.find((i) => i.id === id) ??
+		getAllGear(getLanguage()).find((i) => i.id === id) ??
 		null
 	);
 }

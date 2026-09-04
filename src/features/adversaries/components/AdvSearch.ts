@@ -1,5 +1,6 @@
 import { ItemView, WorkspaceLeaf, Notice, MarkdownView, setIcon } from "obsidian";
-import { ADVERSARIES } from "../../../data/index";
+import { getAdversaries } from "../../../data/index";
+import { getLanguage } from "../../../i18n";
 import {
 	getAdversaryCount,
 	incrementAdversaryCount,
@@ -167,7 +168,7 @@ export class AdversaryView extends ItemView {
 
 	private loadAdversaryData() {
 		try {
-			const builtIn = ADVERSARIES;
+			const builtIn = getAdversaries(getLanguage());
 			const custom = this.loadCustomAdversaries();
 			this.adversaries = [...builtIn, ...custom];
 

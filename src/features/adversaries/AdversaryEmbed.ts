@@ -1,6 +1,7 @@
 import { EventRef, MarkdownRenderChild } from "obsidian";
 import type DaggerForgePlugin from "../../main";
-import { ADVERSARIES } from "../../data/adversaries";
+import { getAdversaries } from "../../data/adversaries";
+import { getLanguage } from "../../i18n";
 import { AdvData } from "../../types/index";
 import { attachDiceBadges } from "../../utils/diceBadges";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
@@ -28,7 +29,7 @@ export const Adversary_Embed_Language = "daggerforge-adversary";
 export function findAdversaryById(plugin: DaggerForgePlugin, id: string): AdvData | null {
 	return (
 		plugin.dataManager.getAdversaries().find((a) => a.id === id) ??
-		ADVERSARIES.find((a) => a.id === id) ??
+		getAdversaries(getLanguage()).find((a) => a.id === id) ??
 		null
 	);
 }

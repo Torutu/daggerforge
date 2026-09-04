@@ -1,5 +1,6 @@
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice, setIcon } from "obsidian";
-import { ENVIRONMENTS } from "../../../data/index";
+import { getEnvironments } from "../../../data/index";
+import { getLanguage } from "../../../i18n";
 import { EnvironmentData } from "../../../types/index";
 import {
 	resolveInsertDestination,
@@ -132,7 +133,7 @@ export class EnvironmentView extends ItemView {
 
 	private loadEnvironmentData() {
 		try {
-			const builtIn = ENVIRONMENTS.map((e: any) => ({
+			const builtIn = getEnvironments(getLanguage()).map((e: any) => ({
 				...e,
 				id: e.id || generateEnvUniqueId(),
 				source: e.source ?? "core",

@@ -1,0 +1,2550 @@
+[
+	{
+		"id": "CE001",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Warum sind diese Gruppen zu Schlägen gekommen?",
+					"Warum ist der Hain jetzt ungenutzt?"
+				],
+				"bullets": [
+					"Spuren einer Schlacht (gebrochene Waffen und Zweige, Aushöhlungen im Boden) verstreuen den Boden.",
+					"Ein mit Moos bedeckter Baumstamm ist eigentlich die Leiche eines Baumes.",
+					"Stehende Bäume werden auf seltsame Weise verdreht, wie durch mächtige Magie."
+				],
+				"name": "Überwachsenes Battlefield",
+				"text": "Es gab hier einen Kampf. Ein PC kann eine Instinkt-Rolle machen, um Beweise für diesen Kampf zu identifizieren. Bei einem Erfolg mit Hoffnung lernen Sie alle drei unten stehenden Informationen. Bei einem Erfolg mit Furcht lernen Sie zwei. Bei einem Fehler kann ein PC 1 Stress markieren, um eine zu lernen und sich beim nächsten Aktionswurf einen Vorteil zu verschaffen, um diese Umgebung zu untersuchen. Ein PC mit einem entsprechenden Hintergrund oder Erfahrung kann ein zusätzliches Detail lernen und eine Folgefrage über die Szene stellen und eine wahrheitsgemäße (wenn nicht immer vollständige) Antwort erhalten."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie viele Reben gibt es?",
+					"Wo packen sie dich?",
+					"Ziehen sie dich herunter oder heben sie dich vom Boden ab?"
+				],
+				"name": "Stäbe",
+				"text": "Alle Ziele innerhalb von sehr kurzer Distanz dieses Punktes müssen auf einem Agilität Reaktionswurf erfolgreich sein oder 1W8+3 physischen Schaden nehmen und Festgesetzt durch Stachelreben werden. Festgesetzt Kreaturen, bis sie mit einem erfolgreichen Geschick oder Stärke befreit werden Rolle oder durch mindestens 6 Schäden an den Reben."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was verheimlichen die Wächter?",
+					"Welche Bedrohung für den Wald könnten die PCs konfrontieren, um die Dryad zu beschwichtigen?"
+				],
+				"name": "Sie sind hier nicht willkommen",
+				"text": "Eine junge Dryad, zwei Sylvan Soldaten und eine Anzahl von kleineren Treants, die der Anzahl der PCs entsprechen, scheinen die Partei wegen ihres Eindringens zu konfrontieren."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Farbe färbt sich das Gras, wenn das Elementar erscheint?",
+					"Wie verwirft das Chaos Insekten und kleine Wildtiere im Hain?"
+				],
+				"name": "Abblendlicht",
+				"cost": "Setze 1 Furcht ein",
+				"text": "ein Elementarelement des Minor Chaos zu beschwören, das von den Echos von Gewalt und Zwietracht angezogen wird, die in weiter Distanz eines ausgewählten PCs erscheinen und sofort ins Rampenlicht rücken."
+			}
+		],
+		"name": "ABANDONIERTE GRUND",
+		"desc": "Ein ehemaliger Druidenhain brachliegend und vollständig von der Natur zurückgewonnen.",
+		"impulse": "Zeichne in die Neugierigen, echo der Vergangenheit",
+		"potentialAdversaries": "Beasts (Bear, Dire Wolf, Glass Snake), Grove Guardians (Minor Treant, Sylvan Soldier, Young Dryad)"
+	},
+	{
+		"id": "CE002",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer rührt den Hinterhalt?",
+					"Was macht deutlich, dass sie verantwortlich sind?"
+				],
+				"name": "Relatives Stärke",
+				"text": "Der Schwierigkeitsgrad dieser Umgebung entspricht dem des Gegners mit dem höchsten Schwierigkeitsgrad."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was wollen die Hinterhälter von der Partei?",
+					"Wie spiegeln ihre Taktiken im Hinterhalt das wider?"
+				],
+				"name": "Überraschung!",
+				"text": "Die Hinterhalte offenbaren sich der Partei, Du erhältst 2 Furcht, und das Rampenlicht wechselt sofort zu einem der Hinterhaltegegner."
+			}
+		],
+		"name": "BESCHLUSS",
+		"desc": "Ein Hinterhalt soll eine ahnungslose Partei abseits der Wache fangen.",
+		"impulse": "Überwältigen, Streuen, Surround",
+		"potentialAdversaries": "Jede"
+	},
+	{
+		"id": "CE003",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welcher Gegner ist am wenigsten vorbereitet?",
+					"Welches ist das meiste?"
+				],
+				"name": "Relatives Stärke",
+				"text": "Der Schwierigkeitsgrad dieser Umgebung entspricht dem des Gegners mit dem höchsten Schwierigkeitsgrad."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Was tun die Gegner mitten im Hinterhalt, wenn der Hinterhalt beginnt?",
+					"Wie wirkt sich das auf ihre Herangehensweise an den Kampf aus?"
+				],
+				"name": "Woher kommen sie?",
+				"text": "Wenn ein PC den Hinterhalt ahnungsloser Gegner startet, verlieren Sie 2 Furcht und der erste Angriffswurf, den ein PC macht, hat einen Vorteil."
+			}
+		],
+		"name": "AUSSCHÜSSE",
+		"desc": "Ein Hinterhalt wird von den PCs gesetzt, um ahnungslose Gegner zu fangen.",
+		"impulse": "Flucht, Gruppe nach oben, schützen die meisten Verwundbar",
+		"potentialAdversaries": "Jede"
+	},
+	{
+		"id": "CE004",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wird eine Münze akzeptiert oder nur eine lokale Währung?",
+					"Wie offen sind die PCs in off ering dieses Bestechungsgeld?"
+				],
+				"name": "Tippen Sie auf die Waage",
+				"text": "PCs können sich auf einer Präsenz-Rolle einen Vorteil verschaffen, indem sie im Rahmen der Interaktion eine Handvoll Gold ernten."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Kosten, die über Gold hinausgehen, wird der Händler im Austausch für diese Seltenheit verlangen?"
+				],
+				"name": "Unerwarteter Fund",
+				"text": "Zeige den PCs, dass einer der Händler etwas hat, was er will oder braucht, wie Essen aus seinem Haus, ein seltenes Buch, magische Komponenten, eine zweifelhafte Schatzkarte oder einen magischen Schlüssel."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was hat diese Person zum Taschendiebstahl getrieben?",
+					"Wo ist das Versteck des Diebes und wie hat es die Aufmerksamkeit vermieden?"
+				],
+				"name": "Sticky Fingers",
+				"text": "Ein Dieb versucht, etwas von einem PC zu stehlen. Der PC muss auf einem Instinkt Wurf erfolgreich sein, um den Dieb zu bemerken oder einen Gegenstand der Wahl des SL zu verlieren, wenn der Dieb in eine enge Entfernung entkommt. Um den gestohlenen Gegenstand abzuholen, müssen die PCs einen Fortschritts-Countdown (6) abschließen, um den Dieb zu jagen, bevor der Dieb einen Folge-Countdown (4) abschließt und in sein Versteck flieht."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wohin führt die Bewegung der Menge sie?",
+					"Wie fühlen sie sich, wenn sie alleine, aber umgeben sind?"
+				],
+				"name": "Crowd schließt sich",
+				"text": "Wenn sich einer der PCs von der Gruppe trennt, verschieben sich die Massen und schneiden sie von der Partei ab."
+			}
+		],
+		"name": "VERPFLICHTUNGSMARKTPLATTE",
+		"desc": "Das wirtschaftliche Herz der Siedlung, mit lokalen Handwerkern, reisenden Kaufleuten und Gönnern aus allen sozialen Schichten.",
+		"impulse": "Kaufe niedrig und verkaufen Sie hoch, verlocken und verlocken Sie mit Waren von nah und fern",
+		"potentialAdversaries": "Garde (Bladed Guard, Head Guard), Masked Thief, Merchant"
+	},
+	{
+		"id": "CE005",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"In welchen seltsamen Formationen sind die Steine angeordnet?",
+					"Welche ominösen Warnungen haben frühere Abenteurer hinterlassen?"
+				],
+				"bullets": [
+					"Kritischer Erfolg: Tick down 3",
+					"Erfolg mit Hoffnung: Tick down 2",
+					"Erfolg mit Furcht: Tick down 1",
+					"Fehler mit Hoffnung: Kein Fortschritt",
+					"Fehler mit Furcht: Tick up 1"
+				],
+				"name": "Der Aufstieg",
+				"text": "Beim Aufstieg auf die Klippe wird ein Fortschritts-Countdown (12) verwendet, der nach folgenden Kriterien ankreuzt, wenn die PCs einen Aktionswurf zum Klettern machen:",
+				"textAfter": "Wenn der Countdown auslöst, hat die Partei es an die Spitze der Klippe geschafft."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was sagen die Form und das Material dieser Pitons über die vorherigen Kletterer aus?",
+					"Wie weit sind sie voneinander entfernt?"
+				],
+				"name": "Zurückgelassene Steine",
+				"text": "Frühere Kletterer hinterließen große Metallstangen, die Kletterer verwenden können, um ihren Aufstieg zu unterstützen. Wenn ein PC mit den Pitonen einen Aktionswurf nicht klettern kann, können sie 1 Stress markieren, anstatt den Countdown zu ticken."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie kannst du sagen, dass viele andere schon einmal hier gefallen sind?",
+					"Was lebt in diesen Mauern, die versuchen könnten, Abenteurer zu erschrecken, um für eine einfache Mahlzeit zu fallen?"
+				],
+				"name": "Fall",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Wenn sie bei der nächsten Aktion nicht gespeichert werden, treffen sie auf den Boden und ticken den Countdown um 2. Der PC nimmt 1W12 physischen Schaden, wenn der Countdown zwischen 8 und 12, 2W12 zwischen 4 und 7 und 3W12 bei 3 oder niedriger liegt."
+			}
+		],
+		"name": "KLIFFSEITENSTAND",
+		"desc": "Eine steile, felsige Klippe, die hoch genug ist, um die Traversal gefährlich zu machen.",
+		"impulse": "Wirf das Unbereite auf ein felsiges Untergang, ziehen Sie die Leute mit dem Versprechen an, was an der Spitze liegt",
+		"potentialAdversaries": "Construct, Deeproot Defender, Giant Scorpion, Glass Snake"
+	},
+	{
+		"id": "CE006",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer hat welche Informationen?",
+					"Welchen Klatsch verbreiten die Einheimischen über die PCs?"
+				],
+				"bullets": [
+					"Ein faszinierendes Gerücht mit einer Verbindung zum Hintergrund eines PCs",
+					"Ein vielversprechender Job für die Partei, der eine nahe gelegene Bedrohung oder Situation beinhaltet",
+					"Lokale Folklore, die sich auf etwas bezieht, das sie gesehen haben",
+					"Stadtklatsch, der auf ein Gemeinschaftsproblem hinweist"
+				],
+				"name": "Was ist das Gespräch der Stadt?",
+				"text": "Ein PC kann Barkeeper, Mitarbeiter oder Kunden nach lokalen Ereignissen, Gerüchten und potenziellen Arbeiten mit einer Präsenz-Rolle fragen. Bei einem Erfolg können sie zwei der unten aufgeführten Details auswählen, um sie zu lernen - oder drei, wenn sie kritisch erfolgreich sind. Bei einem Misserfolg können sie einen auswählen und 1 Stress markieren, während der Einheimische über etwas Unwesentliches berichtet."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welches Stück performst du?",
+					"Was bedeutet dieses Stück für dich?",
+					"Wann hast du es das letzte Mal für eine Menschenmenge aufgeführt?"
+				],
+				"name": "Singen für dein Abendessen",
+				"text": "Ein PC kann einmalig für die Gäste spielen, indem er eine Präsenz-Rolle macht. Bei einem Erfolg verdienen sie 1W4 Handvoll Gold (2W4, wenn sie kritisch erfolgreich sind). Bei einem Misserfolg markieren sie 1 Stress."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was wollen sie?",
+					"Was ist ihr Eindruck von den PCs?",
+					"Welche Manierismen oder Accessoires haben sie?"
+				],
+				"name": "Mysteriöser Fremder",
+				"text": "Enthülle einen Fremden, der seine Identität verbirgt und in einer schattigen Kabine lauert."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wussten Sie, dass die PCs hier sind?",
+					"Was wollen sie in dieser Stadt?"
+				],
+				"name": "Jemand kommt in die Stadt",
+				"text": "Stellen Sie einen bedeutenden NPC vor, der die Party für etwas einstellen möchte oder sich auf den Hintergrund eines PCs bezieht."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wer hat den Kampf begonnen?",
+					"Was wird es brauchen, um es zu stoppen?"
+				],
+				"name": "Bar Fight!",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Wenn ein PC versucht, sich durch die Taverne zu bewegen, während der Kampf andauert, muss er auf einem Agilität oder Präsenz Wurf erfolgreich sein oder 1W6 + 2 physischen Schaden von einem wilden Schaukel- oder geworfenen Objekt nehmen. Ein PC kann versuchen, diese Funktion zu aktivieren, indem er auf einem Aktionswurf erfolgreich ist, der Tavernengönner provozieren würde."
+			}
+		],
+		"name": "ÖRTLICHER TAVERN",
+		"desc": "Eine lebhafte Taverne, die als soziales Zentrum für ihre Stadt dient.",
+		"impulse": "Bieten Sie Möglichkeiten für Abenteurer, Pflege Gemeinschaft",
+		"potentialAdversaries": "Garde (Bladed Guard, Head Guard), Söldner (Harrier, Sellsword, Spellblade, Weaponmaster), Kaufmann"
+	},
+	{
+		"id": "CE007",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Neuigkeiten haben die PCs, die sie an neugierige Reisende weitergeben könnten?",
+					"Was denken die Einheimischen über diese Ereignisse?"
+				],
+				"bullets": [
+					"Kritischer Erfolg: Erfahre mehr über zwei wichtige Ereignisse. Der PC kann eine Folgefrage zu einem der Gerüchte stellen und eine wahrheitsgemäße (wenn nicht immer vollständige) Antwort erhalten.",
+					"Erfolg mit Hoffnung: Erfahre mehr über zwei Ereignisse, von denen mindestens eines für den Hintergrund des Charakters relevant ist.",
+					"Erfolg mit Furcht: Erfahre ein alarmierendes Gerücht über den Hintergrund des Charakters.",
+					"Jeder Fehler: Die Einheimischen reagieren schlecht auf ihre Anfragen. Der PC muss 1 Stress markieren, um ein relevantes Gerücht zu erfahren."
+				],
+				"name": "Gerüchte gibt es reichlich",
+				"text": "Klatsch ist die am schnellsten reisende Währung im Reich. Ein PC kann sich über wichtige Ereignisse erkundigen, indem er einen Präsenz Wurf macht. Was er lernt, hängt vom Ergebnis seines Wurfs ab, basierend auf den folgenden Kriterien:"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was rühmen sich die Abenteurer hier und was glauben Sie, sind wahr?"
+				],
+				"name": "Gesellschaft des gebrochenen Kompasses",
+				"text": "Eine abenteuerlustige Gesellschaft unterhält hier ein Kapitelhaus, in dem Helden mit Prahlereien und Gerüchten handeln, zu ihren imaginären Erfolgen trinken und ihre Rivalen untergraben."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welcher PC hat eine Verbindung zu einem der rivalisierenden Parteimitglieder?",
+					"Nähern sie sich zuerst dem PC oder warten sie darauf, dass sich der PC bewegt?"
+				],
+				"name": "Rivalenpartei",
+				"text": "Eine weitere abenteuerliche Party ist hier und sucht den gleichen Schatz oder führt wie die PCs."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Probleme verursacht es, wenn die PCs eingreifen?"
+				],
+				"name": "Es wäre eine Schande, wenn Deinem Shop etwas passieren würde",
+				"text": "Die PCs bezeugen, wie Agenten eines lokalen Verbrechensboss einen allgemeinen Warenladen niederschütteln."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche Details zeigen der Partei, dass diese Leute verzweifelte ehemalige Abenteurer sind?"
+				],
+				"name": "Falscher Ort, falsche Zeit",
+				"text": "Nachts oder wenn die Party alleine in einer Hintergasse ist, kannst du 1 Furcht ausgeben, um eine Gruppe von Dieben vorzustellen, die versuchen, sie auszurauben. Die Diebe erscheinen am kurzer Distanz eines ausgewählten PCs und schließen einen gezackten Messerkniebrecher, so viele Lakaien wie es PCs gibt, und einen Leutnant ein."
+			}
+		],
+		"name": "OUTPOST TOWN",
+		"desc": "Eine kleine Stadt am Rande einer Nation oder Region, in der Nähe eines Kerkers, Gräber oder anderer abenteuerlicher Ziele.",
+		"impulse": "Fahren Sie die verzweifelten zu bestimmten Untergang, profitieren Sie von zerlumpten Hoffnung",
+		"potentialAdversaries": "Zackige Messerbanditen (Hexer, Kniebrecher, Lackey, Leutnant, Schatten, Scharfschütze), Maskendieb, Kaufmann"
+	},
+	{
+		"id": "CE008",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Haben irgendwelche der PCs Flüsse wie diese schon einmal geforstet?",
+					"Hat jemand Angst vor dem Ertrinken?"
+				],
+				"name": "Gefährliche Überfahrt",
+				"text": "Beim Überqueren des Flusses muss die Partei einen Fortschritts-Countdown abschließen (4). Ein PC, der einen Fehler mit Furcht rollt, wird sofort von der Aktion \"Undertow\" angegriffen, ohne dass 1 Furcht für die Funktion ausgegeben werden muss."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Schmuckstücke und Kugeln liegen am Boden des Flussbettes?",
+					"Schwimmen Raubtiere in diesen Flüssen?"
+				],
+				"name": "Unterschiff",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Wenn sie ausfallen, nehmen sie 1W6+1 physischen Schaden und werden in kurzer Entfernung den Fluss entlang bewegt, bis sie aus dem Fluss herauskommen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Schätze hat das Tier in seinem Bau?",
+					"Welche Reisenden sind bereits Opfer dieses Raubtiers geworden?"
+				],
+				"name": "Patient Jäger",
+				"cost": "Setze 1 Furcht ein",
+				"text": "eine Glasschlange innerhalb von kurzer Distanz eines ausgewählten PCs zu beschwören. Die Schlange erscheint im oder in der Nähe des Flusses und rückt sofort in den Mittelpunkt, um ihre Aktion \"Spinning Serpent\" zu verwenden."
+			}
+		],
+		"name": "RAGUNGSFLUSS",
+		"desc": "Ein sich schnell bewegender Fluss ohne Brückenübergang, tief genug, um die meisten Menschen wegzufegen.",
+		"impulse": "Bar-Überquerung, tragen weg die unready, teilen Sie das Land",
+		"potentialAdversaries": "Beasts (Bear, Glass Snake), Jagged Knife Bandits (Hexer, Kneebreaker, Lackey, Lieutenant, Shadow, Sniper)"
+	},
+	{
+		"id": "CE009",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie bemerken die PCs zuerst, dass an diesem Ort etwas nicht stimmt?",
+					"Welche Ängste tauchen wieder auf, während Hoffnung in Schach gehalten wird?"
+				],
+				"name": "Entweihter Boden",
+				"text": "Die Kultisten widmeten diesen Ort den Gefallenen Göttern, und ihr übler Einfluss sickert hinein. Reduzieren Sie die Hoffnung Die PCs auf ein W10 während in dieser Umgebung. Die Entweihung kann mit einem Fortschritts-Countdown (6) entfernt werden."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie verändert sich der Feind im Aussehen?",
+					"Welche Ängste bringen ihre Schläge an die Oberfläche?"
+				],
+				"bullets": [
+					"Du erhältst bei allen Angriffen Vorteile.",
+					"Sie verursachen einen zusätzlichen 1W10 Schaden bei einem erfolgreichen Angriff.",
+					"Du erhältst folgendes Merkmal:"
+				],
+				"name": "Blasphemische Kraft",
+				"text": "Ein Teil der Macht des Rituals wird in ein Kultmitglied umgeleitet, um Eindringlinge zu bekämpfen. Wähle einen Gegner, der von schrecklicher Magie durchdrungen wird, bis die Szene endet oder sie besiegt sind. Ein durchdrungener Gegner tritt sofort ins Rampenlicht und erhält einen der folgenden Vorteile, oder alle drei, wenn Sie 1 Furcht ausgeben:",
+				"textAfter": "Unerbittlich (2) - Passiv. Dieser Gegner kann bis zu zweimal pro SL-Zug in den Fokus gerückt werden. Setze Furcht ein wie üblich, um sie zu in den Fokus rücken."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Was wird der Kult mit diesem an der Leine gesessenen Dämon tun, wenn sie Erfolg haben?",
+					"Was werden sie als nächstes vorladen?"
+				],
+				"name": "Die Beschwörung",
+				"text": "Countdown (6). Wenn die PCs die Szene betreten oder der Kult das Ritual beginnt, um einen Dämon zu beschwören, aktivieren Sie den Countdown. Bestimmen Sie einen Gegner, um das Ritual zu leiten. Der Countdown tickt, wenn ein PC mit Furcht rollt. Wenn er auslöst, beschwören Sie einen kleinen Dämon innerhalb von sehr kurzer Distanz des Anführers des Rituals. Wenn der Anführer besiegt wird, endet der Countdown ohne Wirkung, da das Ritual fehlschlägt."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie fühlt es sich an, wenn man sieht, wie sich eine solche Hingabe dem Streben nach Furcht und der Dominanz zuwendet?"
+				],
+				"name": "Beende das Ritual",
+				"text": "Wenn der Anführer des Rituals von einem Angriff oder Zauber angegriffen wird, kann ein Verbündeter innerhalb von sehr kurzer Distanz 1 Stress markieren, der stattdessen von diesem Angriff oder Zauber angegriffen wird."
+			}
+		],
+		"name": "KULTURRECHT",
+		"desc": "Ein gefallener Kult versammelt sich um eine Siegel der besiegten Götter und ein Lagerfeuer, das einen kränklichen Grünton brennt.",
+		"impulse": "Das Land ist propan, vereinigt das Sterbliche Reich mit den Kreisen unten",
+		"potentialAdversaries": "Cult of the Fallen (Cult Adept, Cult Fang, Cult Initiate, Secret-Keeper)"
+	},
+	{
+		"id": "CE010",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie riecht der Weihrauch?",
+					"Welche Lieder singen die Akolyten?"
+				],
+				"name": "Ein Ort der Heilung",
+				"text": "Ein PC, der sich im Heiligen Tempel ausruht, löscht automatisch alle TP."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie fühlt es sich an, wenn Sie von dieser Vision berührt werden?",
+					"Welches Gefühl bleibt, nachdem die Bilder vergangen sind?"
+				],
+				"bullets": [
+					"Kritischer Erfolg: Der PC erhält klare Informationen. Zusätzlich erhalten sie 1W4 Hoffnung, die zwischen der Partei verteilt werden können, wenn sie die Vision und Anleitung teilen, die sie erhalten haben.",
+					"Erfolg mit Hoffnung: Der PC erhält klare Informationen.",
+					"Erfolg mit Furcht: Der PC erhält kurze Einblicke und einen emotionalen Eindruck, der eine Antwort vermittelt.",
+					"Jeder Fehler: Der PC erhält nur vage Blitze. Du kannst 1 Stress markieren, um ein klares Bild ohne Kontext zu erhalten."
+				],
+				"name": "Göttliche Führung",
+				"text": "Ein PC, der im heiligen Tempel zu einer Gottheit betet, kann eine Instinkt-Rolle machen, um Antworten zu erhalten. Wenn der Gott, den sie anflehen, in diesem Tempel nicht willkommen ist, wird die Rolle mit Nachteilen gemacht."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Mit welchen Emotionen oder Erinnerungen verbinden Sie sich, wenn Furcht eindrückt?"
+				],
+				"name": "Unerbittlich Hoffnung",
+				"text": "Einmal pro Szene kann jeder PC 1 Stress markieren, um ein Ergebnis mit Furcht in ein Ergebnis mit Hoffnung umzuwandeln."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche Symbole oder Ikonen tragen sie, die signalisieren, dass sie gesalbte Agenten der Göttlichkeit sind?",
+					"Wer führt die Gruppe und was hat sie zu dieser Berufung geführt?"
+				],
+				"name": "Göttlicher Tadel",
+				"text": "Wenn die PCs den Klerus überschritten, gelästert oder beendet haben, können Sie 1 Furcht ausgeben, um einen Hohen Seraph und 1W4 Bladed Guards innerhalb des kurzer Distanz des Seniorpriesters zu beschwören, um ihren Willen zu verstärken."
+			}
+		],
+		"name": "GEHALTETER TEMPEL",
+		"desc": "Ein geschäftiger, aber gepflegter Tempel, der Heilung bietet und regelmäßige Gottesdienste beherbergt, die von einem Priester oder Seraph beaufsichtigt werden.",
+		"impulse": "Verbinde das Sterbliche Reich mit den Heiligtümern oben, zeige die Macht des Göttlichen, biete Hilfe und Beistand für die Gläubigen",
+		"potentialAdversaries": "Wachen (Archer Guard, Bladed Guard, Head Guard)"
+	},
+	{
+		"id": "CE011",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche größeren Geheimnisse enthält die Stadt?",
+					"Warum haben sich hier so viele Geister aufgehalten?",
+					"Welche zum Scheitern verurteilten Abenteurer haben hier bereits ein schlechtes Schicksal erlitten?"
+				],
+				"bullets": [
+					"Kritischer Erfolg: Erhalten Sie wertvolle Informationen und einen damit verbundenen nützlichen Artikel.",
+					"Erfolg mit Hoffnung: Erhalte wertvolle Informationen.",
+					"Erfolg mit Furcht: Unbestimmte oder unvollständige Informationen aufdecken.",
+					"Jeder Fehler: Markiere 1 Stress, um nach einer umfassenden Suche einen Lead zu finden."
+				],
+				"name": "Begraben Wissen",
+				"text": "Ein PC, der Wissen über die gefallene Stadt sucht, kann eine Instinkt oder Wissen Wurf machen, um etwas über diesen Ort zu erfahren und (potenziell verfolgte) Beute zu entdecken."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Verletzungen ihrer physischen Form sprechen für ihre Todesursache?",
+					"Welcher unerfüllte Zweck hält sie in der sterblichen Ebene?"
+				],
+				"name": "Gespenstige Form",
+				"text": "Gegner, die hier erscheinen, sind von einer geisterhaften Form. Sie haben Widerstand gegen physischen Schaden und können 1 Stress markieren, um sich durch feste Objekte zu kurzer Distanz zu bewegen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was wollen die Geister von dir?",
+					"Was brauchen Sie von ihnen?"
+				],
+				"name": "Dead Ends",
+				"text": "Die Geister einer früheren Ära manifestieren Szenen aus ihrer vergangenen Zeit, wie ein Straßenfest, eine Revolution oder ein Raubüberfall. Diese Spuke verändern die Anordnung der Stadt um die PCs herum, blockieren den Weg hinter ihnen, zwingen einen Umweg oder stellen sie vor eine Herausforderung, wie sie während des Raubüberfalls für rivalisierende Diebe gehalten werden."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Ist das die Katastrophe, die die Stadt dazu gebracht hat, verlassen zu werden?",
+					"Was ist über diese Katastrophe bekannt, und wie könnte das den PCs helfen zu entkommen?"
+				],
+				"name": "Apokalypse dann",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Um den Countdown zu beenden und der Katastrophe zu entkommen, müssen die PCs Bedrohungen wie wütende Brände, das Ausstanzen von Zivilisten, das Einsturz von Gebäuden oder bröckelnde Straßen überwinden, während sie an die Geschichte erinnern und Hinweise finden, um dem Unvermeidlichen zu entkommen."
+			}
+		],
+		"name": "HAUNTEDSTADT",
+		"desc": "Eine verlassene Stadt, bevölkert von den unruhigen Geistern vergangener Epochen.",
+		"impulse": "Misdirect und desorientiert, Wiederholung Apokalypsen sowohl öffentlich als auch persönlich",
+		"potentialAdversaries": "Geister (Spektralbogenschütze, Spektralkapitän, Spektralwächter), geisterhafte Versionen anderer Gegner (siehe \"Geisterhafte Form\")"
+	},
+	{
+		"id": "CE012",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer hat diesen Zauber gelegt?",
+					"Sind sie in der Nähe?",
+					"Warum wollten sie, dass das Wetter entmutigender wird?"
+				],
+				"name": "Gravierte Sigilen",
+				"text": "Große Markierungen und Gravuren wurden in den Berghängen gemacht. Ein PC mit einem relevanten Hintergrund oder Erfahrung identifiziert sie als Wettermagie, die die Kraft der eisigen Winde erhöht. Ein PC, der auf einer Wissen-Rolle erfolgreich ist, kann sich Informationen über die Siegel, potenzielle Informationen über ihre Schöpfer und die Wissen, wie man sie zerstreuen kann, abrufen. Wenn ein PC kritisch erfolgreich ist, erkennen sie, dass die Siegel von einem Stil sind, der von ridgeborne Verzauberern geschaffen wurde, und sie gewinnen Vorteil auf einer Rolle, um die Siegel zu zerstreuen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie versuchen die PCs, die Lawine zu überstehen?",
+					"Welchen Ansatz verfolgen die Charaktere, um einander zu finden, wenn ihre Gefährten den Berg hinunter rasen?"
+				],
+				"name": "Lawine",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Alle PCs auf ihrem Weg müssen auf einem Agilität oder Stärke Reaktionswurf erfolgreich sein oder über den Berg geworfen und getragen werden. Ein PC mit Seil, Pitonen oder anderen Kletterausrüstungen gewinnt bei diesem Wurf Vorteile. Ziele, die scheitern, werden den Berg hinunter zu weiter Distanz gestoßen, nehmen 2W20 physischen Schaden und müssen 1 Stress markieren. Ziele, die erfolgreich sind, müssen 1 Stress markieren."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie lange ist es her, dass die adler zuletzt beute gefunden haben?.",
+					"Haben sie Eier in ihrem Nest oder unfledged junge?"
+				],
+				"name": "Raptorente",
+				"text": "Wenn die PCs die Jagdgründe der Raptoren betreten, erscheinen zwei Riesenadler bei sehr weiter Distanz eines ausgewählten PCs und identifizieren die PCs als wahrscheinliche Beute."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche Teile des PC-Körpers werden zuerst taub?",
+					"Wie versuchen sie, sich warm zu halten, während sie sich vorwärts bewegen?"
+				],
+				"name": "Eisige Winde",
+				"text": "Countdown (Loop 4) Wenn die PCs in den Bergpass einsteigen, aktivieren Sie den Countdown. Wenn er auslöst, müssen alle Zeichen, die durch den Pass reisen, auf einem Stärke Reaktionswurf erfolgreich sein oder 1 Stress markieren. Ein PC, der Kleidung trägt, die für extreme Kälte geeignet ist, gewinnt auf diesen Rollen Vorteile."
+			}
+		],
+		"name": "BEIHALTSPASS",
+		"desc": "Steinige Spitzen, die die Wolken durchdringen, mit einem sich drehenden Pfad, der sich durch viele Rückschaltungen auf und über schlängelt.",
+		"impulse": "Genau eine abschreckende Maut in Vorräten und Ausdauer, enthüllen magische Manipulation, verlangsamen Reise",
+		"potentialAdversaries": "Beasts (Bear, Giant Eagle, Glass Snake), Chaos Skull, Minotaurus Wrecker, Sterblicher Jäger"
+	},
+	{
+		"id": "CE013",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie fühlt es sich an, an diesem vom Chaos berührten Ort magisch zu arbeiten?",
+					"Was passiert, wenn Sie die Kontrolle über den Zauber verlieren?"
+				],
+				"name": "Chaos Magic Locus",
+				"text": "Wenn ein PC ein Zauberwurf erstellt, muss er zwei Furcht-Würfel rollen und das höhere Ergebnis erzielen."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welcher Fallen-Kult hat diese Wälder verdorben?",
+					"Was haben sie schon mit dem verfluchten Holz und Saft von diesem Baum gemacht?"
+				],
+				"bullets": [
+					"Bei einem Erfolg: Sie lernen drei der unten stehenden Details. Bei einem Erfolg mit Furcht lernen sie zwei.",
+					"Bei einem Fehler: Du kannst 1 Stress markieren, um einen zu lernen, und sich beim nächsten Aktionswurf einen Vorteil verschaffen, um diese Umgebung zu untersuchen.",
+					"Details: Das ist ein Ergebnis von gefallener Magie. Die Korruption wird durch das Aschenmoos verbreitet. Sie kann nur durch ein Ritual der Naturmagie mit einem Fortschritts-Countdown (8) gereinigt werden."
+				],
+				"name": "Die Indigo-Flamme",
+				"text": "PCs, die sich dem zentralen Baum nähern, können eine Wissen-Rolle erstellen, um zu versuchen, die Magie zu identifizieren, die diese Umgebung verbraucht hat."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche schmerzhaften Erinnerungen bringen die Reben an die Oberfläche, wenn sie Fleisch durchdringen?"
+				],
+				"name": "Rebstöcke",
+				"text": "Ein Ziel muss auf einem Agilität Reaktionswurf erfolgreich sein oder Festgesetzt und Verwundbar werden, bis sie sich befreien und beide Bedingungen beseitigen, mit einem erfolgreichen Geschick oder Stärke Wurf oder indem sie 10 Schäden an den Reben verursachen. Wenn das Ziel eine Rolle zum Entweichen macht, nehmen sie 1W8 + 4 physischen Schaden und verlieren 1 Hoffnung."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Sind diese echten Tiere von der Flamme verzehrt oder nur Konstrukte der korrumpierenden Magie?"
+				],
+				"name": "Holzkohlekonstruktionen",
+				"text": "Alle Ziele innerhalb von kurzer Distanz dieses Punktes müssen ein Agilität Reaktionswurf bilden. Ziele, die scheitern, nehmen 3W12+3 physischen Schaden. Ziele, die erfolgreich sind, nehmen stattdessen halben Schaden."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche Halluzinationen verursacht die Asche?",
+					"Welchen unpassenden Geschmack besitzt er?"
+				],
+				"name": "Erstickungsasche",
+				"text": "Countdown (Loop 6). Wenn die PCs in das Brennende Herz des Waldes eintreten, aktivieren Sie den Countdown. Wenn er auslöst, müssen alle Charaktere einen Stärke oder Instinkt Reaktionswurf erstellen. Ziele, die scheitern, nehmen 4W6+5 direkte physischen Schaden. Targes, die erfolgreich sind, nehmen halben Schaden. Schutzmasken oder Kleidung bieten Vorteile auf dem Reaktionswurf."
+			}
+		],
+		"name": "VERBRENNUNG DES HERZES DER WOODS",
+		"desc": "Dicke Indigo-Asche füllt die Luft um einen hoch aufragenden, mit Moos bedeckten Baum, der ewig mit Flammen brennt, einen kränklichen Blauton.",
+		"impulse": "Schlagen Sie einen unheimlichen Rhythmus für alle, um zu folgen, verderben Sie den Wald",
+		"potentialAdversaries": "Tiere (Bär, Glasschlange), Elementare (Elementarfunken), Verdant Verteidiger (Trocken, Eichenbaum, Hirschritter)"
+	},
+	{
+		"id": "CE014",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie kommen sie hinein, ohne den Angreifern den Weg zu zeigen?",
+					"Beobachten einige der Verteidiger diesen Weg?"
+				],
+				"name": "Geheimer Eingang",
+				"text": "Ein PC kann einen geheimen Weg in das Schloss mit einem erfolgreichen Instinkt oder Wissen Wurf finden oder zurückrufen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Belagerungswaffen werden eingesetzt?",
+					"Sind sie magisch, weltlich oder eine Mischung aus beidem?",
+					"Welche Verteidigung müssen die Charaktere überwinden, um das Schloss zu stürmen?"
+				],
+				"name": "Belagerungswaffen (Umweltwandel)",
+				"text": "Folgen-Countdown (6). Die angreifende Kraft setzt Belagerungswaffen ein, um zu versuchen, die Befestigungen der Verteidiger zu zerstören. Aktiviere den Countdown, wenn die Belagerung beginnt (für eine langwierige Belagerung, machen Sie dies stattdessen zu einem langfristigen Countdown). Wenn es auslöst, wurden die Befestigungen der Verteidiger durchbrochen und die Angreifer fluten nach innen. Du erhältst 2 Furcht, wechseln Sie dann in die Pitched Battle-Umgebung und stellen Sie sie in den Mittelpunkt."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wen zielen sie zuerst an?",
+					"Welche Formation nehmen sie an?"
+				],
+				"name": "Verstärkungen!",
+				"text": "Beschwöre einen Ritter des Reiches, eine Anzahl von Tier-3-Minions, die der Anzahl der PCs entspricht, und zwei Gegner Deiner Wahl innerhalb von weiter Distanz eines ausgewählten PCs als Verstärkung."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche Trümmer werden durch den Angriff verstreut?",
+					"Was wird durch den Streik gebrochen, der nicht leicht repariert werden kann?"
+				],
+				"bullets": [
+					"Ziele, die fehlschlagen, nehmen 3W8+3 physisch oder magischen Schaden und müssen 1 Stress markieren.",
+					"Ziele, die erfolgreich sind, müssen 1 Stress markieren."
+				],
+				"name": "Sicherheitenschaden",
+				"text": "Wenn ein Gegner besiegt wird, kann man 1 Furcht ausgeben, um einen verirrten Angriff einer Belagerungswaffe auf einen Punkt auf dem Schlachtfeld zu bringen."
+			}
+		],
+		"name": "KAPSTLEISE",
+		"desc": "Eine aktive Belagerung mit einer angreifenden Kraft, die darum kämpft, Zugang zu einer befestigten Burg zu erhalten.",
+		"impulse": "Blutet den Willen zu kämpfen aus, durchbricht die Mauern, baut Spannung auf",
+		"potentialAdversaries": "Söldner (Harrier, Sellsword, Spellblade, Weaponmaster), Edle Kräfte (Archer Squadron, Wehrpflichtiger, Elitesoldaten, Ritter des Reiches)"
+	},
+	{
+		"id": "CE015",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Verwechseln die Kämpfer dich mit dem Feind oder betrachten sie dich als Eindringlinge?",
+					"Kannst du den Unterschied zwischen Freund und Feind im Kampf erkennen?"
+				],
+				"name": "Abwandern auf einem Meer aus Stahl",
+				"text": "Ein PC muss auf einem Agilität Wurf erfolgreich sein, um sich überhaupt zu bewegen, und kann nur bei einem Erfolg auf kurzer Distanz hochgehen. Wenn ein Gegner innerhalb von unmittelbarer Distanz von ihnen ist, muss er 1 Stress markieren, um einen Agilität Wurf zu bewegen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was ist hier wertvoll?",
+					"Wer ist am meisten Verwundbar?"
+				],
+				"name": "Raze und Pillage",
+				"text": "Die angreifende Kraft erhöht den Einsatz, indem sie ein Feuer anzündet, ein wertvolles Gut stiehlt, eine wichtige Person entführt oder die Bevölkerung tötet."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Form nimmt der Angriff an – Feuerball, regnende Säure, ein Sturm aus Klingen?",
+					"Welches taktische Ziel soll dieser Angriff erreichen, und was kommt als nächstes?"
+				],
+				"name": "War Magic",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Wenn ein Magier von einer Seite groß angelegte destruktive Magie benutzt, wählen Sie einen Punkt auf dem Schlachtfeld innerhalb von sehr weiter Distanz des Magiers. Alle Ziele innerhalb von kurzer Distanz dieses Punktes müssen einen Agilität Reaktionswurf bilden. Ziele, die scheitern, nehmen 3W12+8 magischen Schaden und müssen 1 Stress markieren."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wen zielen sie zuerst an?",
+					"Welche Formation nehmen sie an?"
+				],
+				"name": "Verstärkungen!",
+				"text": "Beschwöre einen Ritter des Reiches, eine Anzahl von Tier-3-Minions, die der Anzahl der PCs entspricht, und zwei Gegner Deiner Wahl innerhalb von weiter Distanz eines ausgewählten PCs als Verstärkung."
+			}
+		],
+		"name": "PITCHED-BATTER",
+		"desc": "Ein massiver Kampf zwischen zwei großen Gruppen bewaffneter Kämpfer.",
+		"impulse": "Ergreife Menschen, Land und Reichtum, vergieße Blut für Gier und Ruhm",
+		"potentialAdversaries": "Söldner (Sellsword, Harrier, Spellblade, Weaponmaster), Edle Kräfte (Archer Squadron, Wehrpflichtiger, Elitesoldaten, Ritter des Reiches)"
+	},
+	{
+		"id": "CE016",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie fühlt es sich an, sich in einem Raum zu bewegen, der dem Sterblichen Reich so fremd ist?",
+					"Auf welchen Meilenstein oder Punkt fixierst du dich, um dein Gleichgewicht zu halten?",
+					"Welche bizarren Sehenswürdigkeiten durchqueren Sie auf Deiner Reise?"
+				],
+				"name": "Unmögliche Architektur",
+				"text": "Oben ist unten, unten ist rechts, rechts ist sternwärts. Gravitation und Direktionalität selbst sind im Fluss, und jeder Versuch, sich durch dieses Reich zu bewegen, ist eine Odyssee für sich, die einen Fortschritts-Countdown (8) erfordert. Bei einem Ausfall muss ein PC zusätzlich zu den anderen Konsequenzen des Wurfs 1 Stress markieren."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie versucht dieser Ort, dir das zu stehlen, was dich legendär macht?",
+					"Was fühlt es sich an, wenn dir diese Kraft genommen wird?"
+				],
+				"name": "Alles, was du bist, wird dieser Ort von dir nehmen",
+				"text": "Countdown (Loop 1W4): Aktiviere den Countdown. Wenn er auslöst, müssen alle PCs auf einem Präsenz Reaktionswurf erfolgreich sein, oder ihr höchstes Merkmal wird vorübergehend um 1W4 reduziert, es sei denn, sie markieren eine Anzahl von Stress, die ihrem Wert entspricht. Alle verlorenen Merkmalspunkte werden wiedergewonnen, wenn der PC kritisch erfolgreich ist oder dem Chaos-Reich entkommt."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welchen Blick auf andere Welten fangen Sie, während dieser Ort versucht, Sie zu entwirren?",
+					"Welche Kernfacette deiner Persönlichkeit versucht das Unmachen zu löschen?"
+				],
+				"name": "Unverbesserlich",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Ein PC wird gezwungen, Stärke Reaktionswurf zu erstellen. Bei einem Fehler nehmen sie 4W10 direkte magischen Schaden. Bei einem Erfolg müssen sie 1 Stress markieren."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche halb verzehrten Überreste der zerbrochenen Welt werfen diese Monstrositäten beiseite, um nach lebendigem Fleisch zu streben?",
+					"Welche zerklüfteten Reflexionen der früheren Persönlichkeit fangen Sie zwischen Momenten der bedingungslosen Bosheit?"
+				],
+				"name": "Outer Realms Predators Ubersetzungen",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Um einen Outer Realms Abomination, einen Outer Realms Corruptor und 2W6 Outer Realms Thralls zu beschwören, die am kurzer Distanz eines ausgewählten PCs erscheinen, trotz Logik und Kausalität. Sofort einen dieser Gegner ins Rampenlicht zu rücken, und Du kannst einen zusätzlichen Furcht ausgeben, um automatisch beim Standardangriff dieses Gegners erfolgreich zu sein."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welchen Moment sehen sie?",
+					"Wenn es eine Erinnerung ist, wie wird es von diesem Ort verzerrt?",
+					"Wie schwer wird es sein, an der realen Erinnerung festzuhalten?"
+				],
+				"name": "Desorientierende Realität",
+				"text": "Bei einem Ergebnis mit Furcht können Sie den PC bitten, zu beschreiben, welche ihrer Ängste das Chaos-Reich hervorruft, wenn eine Vision der Realität sich auflöst und sich für den PC rekonstruiert. Der PC verliert 1 Hoffnung. Wenn es ihr letzter Hoffnung ist, erhalten Sie 1 Furcht."
+			}
+		],
+		"name": "CHAOS REALM",
+		"desc": "Ein jenseitiger Raum, in dem die Gesetze der Realität instabil und gefährlich sind.",
+		"impulse": "Vernichte Gewissheit, verbrauche Macht, trotze der Logik",
+		"potentialAdversaries": "Monstrositäten der äußeren Reiche (Gräuel, Korruptor, Thrall)"
+	},
+	{
+		"id": "CE017",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was braucht der Usurpator noch: Das Herz eines Hohen Seraphs?",
+					"Der Lodestone eines alten Waygate?",
+					"Die Loyalität zweier Erzfeinde?",
+					"Die untröstlich Tränen einer reinen Seele?"
+				],
+				"name": "Endvorbereitungen",
+				"text": "Wenn die Umgebung zum ersten Mal in den Fokus rückt, benennt man einen Gegner als den Usurpator, der versucht, die Götter zu stürzen. Aktiviere einen Langzeit-Countdown (8), während der Usurpator zusammenstellt, was er für die Durchführung des Rituals benötigt. Wenn es auslöst, in den Fokus rücken Sie diese Umgebung, um die Funktion \"Anfang des Endes\" zu verwenden. Während diese Umgebung im Spiel bleibt, können Sie bis zu 15 Furcht halten."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welcher Gott bevorzugt dich, wenn du gegen diese Usurpation kämpfst?",
+					"Wie spiegelt eure erneuerte Kraft ihren Einfluss wider?"
+				],
+				"name": "Göttlicher Segen",
+				"text": "Wenn ein PC kritisch erfolgreich ist, kann er 2 Hoffnung ausgeben, um eine Fähigkeit aufzufrischen, die normalerweise durch die Verwendung eingeschränkt ist (z. B. einmal pro Ruhezeit, einmal pro Sitzung)."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welchen Hoch Gefallenen dienen diese Truppen?",
+					"Welches Fleisch Gottes wollen sie sich gönnen?"
+				],
+				"name": "Überfluss an Defilen",
+				"text": "Setze 2 Furcht ein, um 1W4+2 Gefallene Schocktruppen, die innerhalb von kurzer Distanz des Usurpers erscheinen, um ihre göttliche Belagerung zu unterstützen, zu beschwören."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welcher Gott trifft sein Ende?",
+					"Was sind ihre letzten Worte?",
+					"Wie manifestiert sich die neue gestohlene Macht des Usurpers?"
+				],
+				"name": "Totschlager",
+				"text": "Wenn der Countdown der Göttlichen Belagerung (siehe „Beginn des Endes) ausgelöst wurde, kannst du 3 Furcht ausgeben, um den Usurper zu beschreiben, wie er einen der Götter der Heiligen oben tötet, sich an ihrer Macht schlemmt und stärker wird. Der Usurper löscht 2 TP. Erhöhen Sie ihren Schwierigkeitsgrad, beschädigen, angreifen oder geben Sie ihnen ein neues Feature vom getöteten Gott."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie wischt sich das Sterbliche Reich, wenn die natürliche Ordnung verletzt wird?",
+					"Welche Sterblichen werden Zeuge dieser Blasphemie aus der Ferne?"
+				],
+				"name": "Der Anfang vom Ende",
+				"text": "Wenn der langfristige Countdown der „Endvorbereitungen auslöst, beginnt der Usurper selbst an die Tore der Heiligtümer zu hämmern. Aktiviere einen Countdown der göttlichen Belagerung (10). in den Fokus rücken Sie den Usurper, um den Angriff des Usurpers zu beschreiben, und markieren Sie diesen Countdown um 1. Wenn der Usurper größeren oder größeren Schaden nimmt, markieren Sie den Countdown um 1. Wenn es auslöst, zerbricht der Usurper die Barriere zwischen dem Sterblichen Reich und den Heiligtümern darüber, um die Götter zu töten und ihren Platz einzunehmen. Du erhältst 1 Furcht für jedes unmarkierte TP, das der Usurper hat. Du kannst sofort die \"Godslayer\" -Funktion verwenden, ohne Furcht auszugeben, um einen zusätzlichen SL-Zug zu machen."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche Visionen von Misserfolgen, die Sie in der Vergangenheit quälen, wenn Deine eff orts zu kurz kommen?",
+					"Wie werden diese Erinnerungen vom Usurper verdreht?"
+				],
+				"name": "Ritual Nexus",
+				"text": "Bei einem Ausfall mit Furcht gegen den Usurper muss der PC 1W4 Stress aus dem Spiel der magischen Kraft markieren."
+			}
+		],
+		"name": "DIVINE VERWENDUNG",
+		"desc": "Ein massives Ritual, das dazu bestimmt ist, die Tore der Heiligen oben zu durchbrechen und die Neuen Götter selbst zu entleeren.",
+		"impulse": "Sammle Macht, überschwangen, Schweigen Dissens",
+		"potentialAdversaries": "Erznekromant, gefallene Schocktruppen, Sterblicher Jäger, Orakel des Untergangs, perfektionierter Zombie"
+	},
+	{
+		"id": "CE018",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie macht die Art und Weise, wie Sprache verwendet wird, auch nur die Diskussion über alternative Lebensweisen schwierig?",
+					"Welche offensichtlichen Vorteile für Loyalität schaffen Reibung, wenn Sie versuchen, Alternativen zu diskutieren?"
+				],
+				"name": "Alle Wege führen hier",
+				"text": "Während im kaiserlichen Hof, hat ein PC Nachteil auf Präsenz Rolls gemacht, um Maßnahmen zu ergreifen, die nicht passen die imperiale Lebensweise oder die Dominanz des Imperiums zu unterstützen."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie profitieren sie von Vasallen und was hat sie gekostet?",
+					"Welche Ausbeutung treibt sie dazu, sich dem Unaufhaltsamen zu widersetzen?"
+				],
+				"name": "Rivalische Vasallen",
+				"text": "Die PCs können imperiale Untertanen, Vasallen und Bittsteller im Gericht finden, die alle um Gunst wetteifern, die Nähe zur Macht suchen, Gefälligkeiten für Loyalität austauschen und ihren Status über andere erheben. Einige könnten verzweifelt ihre Rivalen untergraben, während andere sogar für Diskussionen offen sein könnten, die an Aufruhr grenzen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was wollen die PCs so verzweifelt, dass sie in Betracht ziehen könnten, diese rücksichtslose Macht einzuwerfen?",
+					"Wie haben imperiale Agenten die größten Wünsche des PC gelernt?"
+				],
+				"name": "Die Schwerkraft des Imperiums",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Einen PC mit einer goldenen Gelegenheit zu präsentieren oder aus dem Gleichgewicht zu bringen, um ein großes Ziel zu erreichen, im Austausch für Gehorsam oder Unterstützung des Imperiums. Das Ziel muss ein Präsenz Reaktionswurf machen. Bei einem Misserfolg müssen sie alle ihre Stress markieren oder das Ausschalten akzeptieren. Wenn sie bereits alle ihre Stress markiert haben, müssen sie das Ausschalten akzeptieren oder sich selbst aus dem Imperium vertreiben. Bei einem Erfolg müssen sie 1W4 Stress markieren, da sie von der Versuchung besteuert werden."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Machtdarstellung oder Vermögensübertragung war nötig, um diesen Plan zu beschleunigen?",
+					"Wessen Leben wurden gestört oder auf den Kopf gestellt, um dies zu ermöglichen?"
+				],
+				"name": "Reichsdekret",
+				"cost": "Setze 1 Furcht ein",
+				"text": "einen langfristigen Countdown im Zusammenhang mit der Agenda des Imperiums bis 1W4 anzukreuzen. Wenn dies den Countdown auslöst, wird eine Proklamation im Zusammenhang mit der Agenda vor Gericht angekündigt, während der Plan ausgeführt wird."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie hat das Imperium diesen Zeugen kompromittiert?",
+					"Warum ist ihr erster Impuls, das Imperium zu schützen, auch wenn sie es nicht gut behandelt?"
+				],
+				"name": "Augen überall",
+				"text": "Bei einem Ergebnis mit Furcht können Sie 1 Furcht ausgeben, um jemanden, der dem Imperium treu ist, zu hören, wie er aufrührerische Gespräche innerhalb des Gerichts führt. NECROMANCER’S OSSUARY Tier 4 Exploration Eine staubige Krypta mit einer Bibliothek, sich verdrehenden Korridoren und reichlich Sarkophagen, übersät mit dem Blut von unglücklichen Eindringlingen. Impulse: Verwirrende Eindringlinge, tauchen in Geheimnisse ein, die am besten begraben sind, manifestieren Unleben, entfesseln eine Flut von Untoten Schwierigkeitsgrad: 19 Potenzielle Gegner: Arch-Necromancer’s Host (Perfected Zombie, Zombie Legion) Features"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie fühlt es sich an, an einem Ort zu heilen, der so gegensätzlich zum Leben ist?"
+				],
+				"name": "Kein Platz für die Lebenden",
+				"text": "Eine Funktion oder Aktion, die TP löscht, erfordert die Verwendung eines Hoffnung. Wenn es bereits Hoffnung kostet, muss ein PC einen zusätzlichen Hoffnung ausgeben."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie heißen die Bücher?",
+					"An welchem Projekt arbeitet der Nekromant und was kommuniziert er über seine Pläne?"
+				],
+				"name": "Jahrhunderte von Wissen",
+				"text": "Ein PC kann die Bibliothek und das Labor untersuchen und eine Wissen-Rolle erstellen, um Informationen über Arkane, lokale Geschichte und die Pläne des Nekromanten zu erfahren."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche alte Skelettarchitektur wurde zerstört?",
+					"Welche Knochen stecken in deiner Rüstung?"
+				],
+				"name": "Skelettburst",
+				"text": "Alle Ziele innerhalb von kurzer Distanz eines Punktes, den Sie in dieser Umgebung auswählen, müssen auf einem Agilität Reaktionswurf erfolgreich sein oder 4W8+8 physischen Schaden aus Skelettsplittern als Teil der Ossuariendetonate um sie herum nehmen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie manifestiert sich ihre erneuerte Kraft?",
+					"Sehen sie lebensechter aus oder sind sie paradoxerweise verfallener, aber kräftiger?"
+				],
+				"name": "Aura des Todes",
+				"text": "Jeder Untote innerhalb von weiter Distanz des Nekromanten kann TP und Stress gleich dem gerollten Ergebnis löschen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wer waren diese Leute, bevor sie zu den Bauern der Nekromanten wurden?",
+					"Welche Überreste dieser Leben bleiben für die Helden zu sehen?"
+				],
+				"name": "Sie kommen einfach weiter!",
+				"cost": "Setze 1 Furcht ein",
+				"text": "1W6 Verrottete Zombies, zwei perfekte Zombies oder eine Zombie-Legion, die am kurzer Distanz eines ausgewählten PCs erscheinen, zu beschwören."
+			}
+		],
+		"name": "IMPERIALER GERICHTSHOF",
+		"desc": "Die majestätische Domäne eines mächtigen Imperiums, üppig mit gestohlenen Schätzen ausgestattet.",
+		"impulse": "Rechtfertigen und verewigen Sie die imperiale Herrschaft, verführen Sie Rivalen mit Versprechen von Macht und Komfort",
+		"potentialAdversaries": "Bladed Guard, Courtesan, Ritter des Reiches, Monarch, Spion"
+	},
+	{
+		"id": "HF-E001",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welchen Brennstoff verwendet die Lichtquelle der Partei und wie lange hält sie?",
+					"Welche unerwünschte Aufmerksamkeit erregt das Licht?"
+				],
+				"name": "Pitch Black",
+				"richContent": "Es gibt kein Licht, weder natürlich noch anderweitig, in diesen unterirdischen Bergbautunneln. Fragt die PCs, was sie für Licht verwenden oder wie sie sich sonst im Dunkeln zurechtfinden. PCs ohne zuverlässige Lichtquelle machen Aktion und Reaktion mit Nachteilen.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was haben die Miner hier zuvor extrahiert?",
+					"Wer in der Partei weiß, wie man unter der Erde navigiert?",
+					"Was sind die PCs am meisten Angst, könnte ihnen hier unten passieren?"
+				],
+				"name": "Labyrinth",
+				"richContent": "Jedes Mal, wenn ein PC mit Hoffnung rollt, während er sich durchsetzt, entdecken sie eine der Kuriositäten unten. Eine unverminte Ader aus Edelmetallen oder Edelsteinen Verschiedene Bergbauwerkzeuge, darunter ein gebrochener (aber ausbesserbarer) Minenwagen aus unerforschten psychischen Echos der Bergleute &#x27; tragisches Ende Die ausgetrockneten Leichen von Bergleuten, die ihren Weg in den Tunneln verloren haben Zertrümmerte Überreste von Darkweb-Spinnenseide</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie nutzt die Darkweave Queen ihr Versteck zu ihrem Vorteil?",
+					"Welche Überreste ihrer vergangenen Mahlzeiten kann die Party hier finden?"
+				],
+				"name": "In das Spinnennetz",
+				"richContent": "<p>Setze 1 Furcht ein, um eine Darkweave Queen in ihrem Gänsehautversteck zu beschwören. Sie fällt von der Decke innerhalb der kurzer Distanz eines PCs und steht sofort im Rampenlicht.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche anderen Anzeichen von Instabilität bietet die Mine der Partei?",
+					"Welchen neuen Gefahren setzt die neue Konfiguration des Tunnelsystems die Partei aus?"
+				],
+				"name": "Drohender Zusammenbruch",
+				"richContent": "<p>Countdown (2). Beschreibe beim ersten Mal, wenn die PCs mit Furcht rollen, wie der Boden subtil vibriert, wenn sich Felsen über Kopf verschieben und den Countdown aktivieren. Es tickt, wenn ein PC mit Furcht rollt. Wenn er auslöst, muss jeder PC auf einem Agilität Reaktionswurf erfolgreich sein oder 1W8 + 3 physischen Schaden nehmen und durch den Trümmern zu vorübergehend Festgesetzt werden.</p>"
+			}
+		],
+		"name": "Verlassene Mine",
+		"desc": "Ein sich drehendes Warnen aus stillgelegten Tunneln, das von einem zum Scheitern verurteilten Bergbauunternehmen aus dem Grundgestein geschnitzt wurde.",
+		"impulse": "Vergiften Sie die Partei mit tödlichen Gasen, rumpeln und kollabieren, teilen Sie die Partei, drehen Sie sie um",
+		"potentialAdversaries": "Darkweave Spiders (Darkweave Crawler, Darkweave Spinner, Darkweave Swarmlings); Miner Ghosts (Poltergeist, Will-o'-the-wisps)"
+	},
+	{
+		"id": "HF-E002",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was studierte der Alchemist?",
+					"Welcher Geruch überwältigt dich, wenn du durch ihre Dinge schlurft?"
+				],
+				"name": "Kabinett der Kuriositäten",
+				"richContent": "<p>Die Regale, Schränke und Tische der Werkstatt sind mit makaberem Bric-a-brac überladen, einschließlich Körperteilen in Gläsern aus Formaldehyd und blutigen chirurgischen Geräten. Einmal pro Szene kann ein PC eine Instinkt-Rolle machen, um nach etwas Nützlichem im Chaos zu suchen.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was machen diese Maschinen?",
+					"Was messen diese Instrumente?"
+				],
+				"name": "Seltsame Maschinen",
+				"richContent": "<p>Der Workshop enthält zahlreiche bizarre Technologien und wissenschaftliche Instrumente. Ein PC kann eine Wissen-Rolle herstellen, um herauszufinden, wie sie funktioniert. Bei einem Erfolg können sie sie zum Laufen bringen. Bei einem Ausfall brechen sie etwas und nehmen 1W8+4 direktes magischen Schaden, während sie von Elektrizität schockiert und mit ätzenden Chemikalien übergossen werden.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was versuchte der Alchemist mit diesem Experiment zu erreichen?",
+					"Woher haben sie die Materialien dafür?"
+				],
+				"name": "Es ist lebendig!",
+				"richContent": "Folgen Countdown (6). Ein Gewitter sammelt sich über uns, droht, die Blitzableiterbaugruppe auf der Oberseite der Werkstatt zu rütteln. Aktiviere den Countdown und erzählen Sie, wie der Sturm &#x27; s Macht jedes Mal zunimmt, wenn es nach unten tickt, wenn ein PC eine Aktionswurf macht. Wenn es auslöst, schlägt Blitz auf die Stange und überlastet die Werkstattmaschinerie, die nach dem Wiederaufleben eines der Alchemisten explodiert&#x27;s verlassene Projekte. Jedes Ziel innerhalb von kurzer Distanz der Maschine muss auf einem Agilität Reaktionswurf erfolgreich sein oder 1W10 magischen Schaden nehmen. Beschwöre ein fehlgeschlagenes Experiment an einem Ort innerhalb der Werkstatt und erhalten Sie 1 Furcht für jeden PC innerhalb von sehr kurzer Distanz.</p>"
+			}
+		],
+		"name": "Alchemist verlassen Workshop",
+		"desc": "Ein blitzbetriebenes Labor, das von einem Wissenschaftler gebaut wurde, der nach dem Geheimnis der Unsterblichkeit sucht.",
+		"impulse": "Brechen Sie die Barriere zwischen Leben und Tod, ziehen Sie den Blitz vom Himmel herunter, übertakten Sie die Maschinerie",
+		"potentialAdversaries": "Lab Leftovers (Konstrukt, Minor Fire Elemental, Patchwork Zombie Hulk, Schwarm der Ratten)"
+	},
+	{
+		"id": "HF-E003",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was sagen dir die Entwürfe der Verteidigung der Erzmage über ihr spezifisches Fachgebiet?",
+					"Welchen Signaturstil oder welche Blüte teilen die Fallen und Gefahren?"
+				],
+				"name": "Mystische Verteidigung",
+				"richContent": "<p>Countdown (12). Um den Turm zu erklimmen, müssen die PCs den Countdown abschließen. Bei einem Fehler oder einem Wurf mit Furcht lösen sie eine der vielen arkanen Fallen und Gefahren aus, die 3W10 magischen Schaden nehmen. Bei einem Fehler mit Furcht erhält der verursachte Schaden einen Bonus, der dem PC entspricht.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welcher Teil der Aerie ruft dich an?",
+					"Was verraten dir die Notizen der Erzmage?"
+				],
+				"name": "Archmage's Aerie",
+				"richContent": "<p>Die oberste Etage des Turms ist ein vielkammeriges Labor, eine Bibliothek und eine Werkstatt, die alles enthält, was man braucht, um Magie in ihren höchsten Formen zu studieren. Ein PC mit einer Zauberwirken-Eigenschaft kann eine Wissen-Rolle machen, um an der Forschung der Erzmage teilzunehmen. Bei einem Erfolg erhalten sie einen +1-Bonus auf ihre Zauberwirken-Rolls bis zu ihrer nächsten langen Pause. Bei einem Misserfolg geht ihre Untersuchung schief und sie nehmen 3W8 + 4 magischen Schaden.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche Kreaturen hat die Erzmagier ausgewählt, um sie zu kombinieren?",
+					"Was lernen sie Hoffnung dabei?"
+				],
+				"name": "Amalgamische Gegner",
+				"richContent": "<p>Setze 1 Furcht ein, um zwei Gegner innerhalb des kurzer Distanz eines PCs zu beschwören. Jeder Gegner kann die anderen Funktionen so verwenden, als wären sie seine eigenen.</p>"
+			}
+		],
+		"name": "Archmage's Tower",
+		"desc": "Ein unglaublich hoher Turm, der den Himmel durchdringt und mit immenser Kraft in Resonanz ist.",
+		"impulse": "Sammle magische Energie, Auspuff Eindringlinge, enthüllen das Unbekannte, entfesseln Sie Ausbrüche von magischer Kraft",
+		"potentialAdversaries": "Alchemistische Schöpfungen (Chimera, Lamia, Manticore); Gegner (Archmage)"
+	},
+	{
+		"id": "HF-E004",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie unterscheidet sich die Projektion deines mentalen Selbstbildes von deiner physischen Erscheinung?",
+					"Welches ist das \"echte\" Du?"
+				],
+				"name": "Out-of-Body Erfahrung",
+				"richContent": "Da die Partei physisch nicht in diesem Bereich ist, versagen Stärke, Agilität und Geschick Rolls automatisch. Wenn ein Zeichen ein TP markieren würde, muss es 1 Hoffnung verlieren oder stattdessen 1 Stress markieren."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Ist das Konstrukt, das du manifestierst, eine Erinnerung aus dem wirklichen Leben oder eine Erfindung deiner eigenen Vorstellung?",
+					"Auf welches wichtige Detail konzentrieren Sie sich, um es stabiler zu machen?"
+				],
+				"name": "Mentale Manifestationen",
+				"richContent": "Mit einer erfolgreichen Wissen-Rolle können PCs die psychische Umgebung verändern, indem sie beispielsweise die Schwerkraft umkehren oder eine sich schnell selbst zusammensetzende Treppe heraufbeschwören.Ein PC kann einmal pro Szene eine mentale Manifestation verwenden, um auf einer Rolle Vorteile zu erzielen, um durch das Astralreich zu navigieren.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Denkst oder fühlst du dich durch diesen Ort?",
+					"Welchen Unterschied macht es hier?"
+				],
+				"name": "Materie ist Illusion",
+				"richContent": "Zeit und Entfernung sind hier relativ, und das Bewegen durch den Raum erfordert einen Willensakt. Um das Astralreich zu durchqueren, muss die Partei den Countdown nur mit Wissen, Instinkt oder Präsenz Rolls abschließen. Bei einem Fehler mit Furcht nimmt ein PC 3W8 direkt magischen Schaden.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie unterscheidet sich die astrale Form eines Gegners von seiner physischen Form?",
+					"Warum werden diese psychischen Projektionen auf die PCs gezogen?"
+				],
+				"name": "Astrale Gegner",
+				"richContent": "Gegner im Astralreich sind immun gegen physischen Schaden, da sie psychische Projektionen anstelle von Fleisch und Blut sind."
+			}
+		],
+		"name": "Astralbereich",
+		"desc": "Ein psychisches Reich der Energie und Emotion, in dem die Starken im Geist die Regeln der Realität neu gestalten können.",
+		"impulse": "Greife ihre Psyche an, rufen Sie ihre unterbewussten Ängste auf, verzerren Sie ihre Wahrnehmungen",
+		"potentialAdversaries": "Gegner (Dämon der Verzweiflung, Elementarfunken, Schmerzpriester); Psychische Vampire (Kopfvampir, Nachtkinder)"
+	},
+	{
+		"id": "HF-E005",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was ist so entspannend an diesem Ort?",
+					"Erinnert es dich an einen Ort, an dem du schon einmal warst?"
+				],
+				"name": "R&R",
+				"richContent": "Die Partei befindet sich an einem Ort, an dem die Sorgen und Konflikte der Außenwelt verschwinden. Wenn die PCs hier ruhen, bekommen sie eine zusätzliche Ausfallzeitbewegung, der SL gewinnt nicht Furcht und keine langfristigen Countdowns."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Geräusche, Gerüche oder Empfindungen beschwört die Erinnerung in deinem Geist?",
+					"Wie hat dieser Moment Sie dauerhaft verändert - oder Deine Meinung über Deinen Begleiter?"
+				],
+				"name": "\"Unsere Geschichte bisher...\"",
+				"richContent": "<p>Einmal pro Szene, wenn ein PC einen denkwürdigen Moment aus der Kampagne im Gespräch mit einem anderen PC erzählt, erhalten beide 1 Hoffnung.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Warum zieht dieser PC seine Aufmerksamkeit auf sich?",
+					"Was interessieren die Einheimischen mehr als diese neu angekommenen Abenteurer?"
+				],
+				"name": "Lokale Probleme",
+				"richContent": "<p>Setze 1 Furcht ein, um die Pause eines PCs mit einer kleinen Komplikation zu unterbrechen, wie z.B. einer Bande mürrischer Strandbummler, einem übermäßig ausgelassenen Ventilator oder einem wirklich schlechten Sonnenbrand. Der PC muss die Situation anmutig lösen oder 1 Stress aus der daraus resultierenden Verlegenheit oder Frustration markieren.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Was ist die Mode in diesem Bereich?",
+					"Woher beziehen die PCs ihre neuen Beach-Artikel und Zubehör?"
+				],
+				"name": "Fashion Show",
+				"richContent": "Wenn sich die Party auf ihren ersten Tag am Strand vorbereitet, muss jeder Spieler beschreiben, wie sein PC seine Kleidung verändert, um für die Umwelt besser geeignet zu sein. Der SL gibt dem PC mit dem frischesten Look einen W6 Fresh Die, den man ausgeben kann, um zu jeder Aktion oder Reaktionswurf hinzuzufügen.</p>"
+			}
+		],
+		"name": "Strandtag",
+		"desc": "Die Party macht eine Pause von ihrem Abenteuer für etwas Ruhe und Entspannung in einer Küstensiedlung.",
+		"impulse": "Beschwöre Bilder von Sand und Surfen, geben Sie ihnen eine Verschnaufpause, bereiten Sie sie auf den bevorstehenden Konflikt vor"
+	},
+	{
+		"id": "HF-E006",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Ist der Sumpf voller Leben, gefüllt mit Verfall oder beides?",
+					"Welche Kraft hat diesen Sumpf verdorben, und welche Anzeichen seiner Herkunft sind noch vorhanden?"
+				],
+				"name": "Sumpfkrankheit",
+				"richContent": "Am Ende einer langen Pause muss jeder PC auf einem Stärke Reaktionswurf erfolgreich sein oder einen W4 Sickened Die erhalten, beginnend mit dem 1 Wert, der nach oben zeigt. Wenn ein PC diesen Wurf ausfällt und bereits einen Sickened Die hat, erhöht er den Wert um 1, auf einen Maximalwert von 4. Ein PC mit einem Sickened Die erhält eine Strafe für seine Action-Rollen, die seinem Wert entsprechen. Wenn ein PC mit einem Sickened Die einen TP löschen würde, können sie den Wert ihres Sickened Die um 1 verringern."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Lebewesen, ob lebendig oder nicht, lauern unter der trüben Oberfläche des Wassers?",
+					"Wo oder wie finden die PCs Erleichterung vom stinkenden Wasser?"
+				],
+				"name": "Soggy und Slogging It",
+				"richContent": "<p>Wenn sich ein PC im Rahmen einer Aktion bewegt, kann er nur bis zu sehr kurzer Distanz hochfahren. Actionrollen, die dazu gemacht wurden, sich weiter zu bewegen als sehr kurzer Distanz haben Nachteile. Vor dem Rollen kann ein PC 1 Stress markieren, um diesen Nachteil zu beseitigen.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie kann man sagen, dass die Pflanzen, die diesen Pollen ausstoßen, fleischfressend sind?",
+					"Welche Albträume oder Traumlandschaften beschwört der Pollenduft?"
+				],
+				"name": "Rotbloom",
+				"richContent": "Jedes Ziel in diesem Bereich muss auf einem Stärke oder Instinkt Reaktionswurf erfolgreich sein oder 1W6+3 magischen Schaden nehmen und Verwundbar bis zum Ende der Szene werden."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was sieht der verlorene PC in den Lichtern, die sie in die Dunkelheit ziehen?",
+					"Welche anderen Einblicke in überraschende Schönheit begegnen die PCs hier?"
+				],
+				"name": "Tanzlichter",
+				"richContent": "Zu Beginn einer Pause können Sie 1 Furcht ausgeben, um schwimmende Kugeln die Müdigkeit zu begeistern und einen PC tiefer in den Sumpf zu locken. Ein anderer PC kann einen Downtime-Move verwenden, um ein Aktionswurf zu machen, um nach ihnen zu suchen. Bei einem Erfolg kehren beide PCs zum Lager zurück und können Ausfallzeiten wie gewohnt auswählen. Bei einem Ausfall - oder wenn niemand nach ihnen sucht - kehrt der verlorene PC Stunden später zurück, ist mit Schlamm und Schlimmerem bedeckt und kann keine Ausfallzeiten bis zur nächsten Pause wählen."
+			}
+		],
+		"name": "Korrupter Sumpf",
+		"desc": "Ein elender Abschnitt von schleimigem Wasser, giftigen Kreaturen und Verfall.",
+		"impulse": "Korrupt, betonen Fäulnis, offenbaren die verdrehte und unnatürliche, krank"
+	},
+	{
+		"id": "HF-E007",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche neuen Informationen oder Erfahrungen gewinnt ein PC, wenn er ein Gespenst wird?",
+					"Wie kann die Partei den Geist des PC mit ihrem Fleisch wiedervereinigen?",
+					"Was passiert, wenn ihr Ritual schief geht?"
+				],
+				"name": "Raum für noch eins",
+				"richContent": "Wenn ein PC sein letztes TP markiert, während er auf dem Friedhof ist, wird er zu einem Specter, anstatt einen Todesschritt zu machen. Während ein Specter, kann ein PC mit den Lebenden kommunizieren, kann aber nicht mit der physischen Welt interagieren, und er muss innerhalb von kurzer Distanz bleiben oder den Schleier des Todes durchqueren. Dieser Zustand wird gelöscht, wenn der PC ein TP löscht.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer hat diesen Ort geheiligt, und was ist mit ihnen geschehen?",
+					"Welche heiligen Reliquien können hier gefunden werden?"
+				],
+				"name": "Heilig gemachter Boden",
+				"richContent": "Auf einer erfolgreichen Instinkt Wurf kann ein PC entdecken, dass diese Struktur gegen die Bewohner des Friedhofs geheiligt ist. Während in der Kapelle die PCs Actionrollen im Vorteil haben, um Geister und Untote zu bekämpfen oder zu vertreiben."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Schrecken sehen die PCs im Nebel?",
+					"Welchen desorientierenden Geruch strahlt das Miasma aus?"
+				],
+				"name": "Misty Miasma",
+				"richContent": "<p>Setze 1 Furcht ein, um einen Bereich innerhalb von weiter Distanz mit einem tief liegenden ektoplasmatischen Nebel zu füllen, der durch die feuchte Erde sickert. Wenn ein PC mit Furcht rollt, während er sich im Miasma befindet, muss er 1 Stress markieren.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wer waren diese Menschen im Leben?",
+					"Warum wurden sie hier begraben?",
+					"Warum bleiben sie nicht tot?"
+				],
+				"name": "Die Toten steigen auf",
+				"richContent": "<p>Setze 1 Furcht ein, um untote Hände unter einem PC aus dem Boden platzen zu lassen. Das Ziel muss auf einem Agilität oder Präsenz Reaktionswurf erfolgreich sein oder 1 Stress markieren und vorübergehend Festgesetzt werden, wenn die Hände sie ergreifen.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wer hat dem Lande befohlen, den Tod zu verwerfen?",
+					"Wie kommen die Toten hier anders zurück?"
+				],
+				"name": "Die Toten sterben nicht leicht",
+				"richContent": "<p>Wenn ein Gegner seinen letzten TP markieren würde, rolle einen W6. Bei einem Ergebnis von 5 oder 6 markiert der Gegner ihn nicht.</p>"
+			}
+		],
+		"name": "Verfluchter Friedhof",
+		"desc": "Ein weitläufiger Friedhof voller bröckelnder Grabsteine, verdrehter Bäume, die von den Toten besessen sind, und Krypten, die mit Moos und Efeu überwachsen sind.",
+		"impulse": "Begraben sie sechs Fuß tief, ersticken mit Nebel, locken mit Versprechen von begrabenen Schätzen, entfesseln die unruhigen Toten",
+		"potentialAdversaries": "Korrupted Spirits (Deeproot Defender, Phantom); Living Dead (Skeleton Warrior, Zombie Pack, Patchwork Zombie Hulk)"
+	},
+	{
+		"id": "HF-E008",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Belohnung liegt im Herzen des Labyrinths?",
+					"Wer hat dieses Labyrinth gebaut, um es zu schützen?"
+				],
+				"name": "Drehungen und Wendungen",
+				"richContent": "<p>Countdown (6). Wenn die Partei den Dungeon betritt, aktivieren Sie den Countdown. Er tickt, wenn ein PC auf einem Aktionswurf erfolgreich durch die Passagen navigieren kann. Wenn er auslöst, erreichen die PCs den tiefsten, dunkelsten und am besten verteidigten Teil des Dungeons.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie waren die früheren Besitzer?",
+					"Wie planen die PCs, ihre eingekauften Gegenstände aus dem Dungeon zu bekommen?"
+				],
+				"name": "Tiefe Taschen",
+				"richContent": "Einmal pro Ruhepause können die PCs einen Schatzvorrat im Dungeon finden, entweder auf den Leichen früherer Delvers oder hinter Verborgen Türen. Auf einer erfolgreichen Rolle, um den Dungeon zu navigieren, kann ein PC bis zu 5 Hoffnung ausgeben, um diese Anzahl von W6{d6s} zu rollen. Jedes gerollte Ergebnis erhält die Party die folgende Beute oder Ausrüstung: Lose Edelsteine, Schmuck, Kugeln oder Münzen, die einer Handvoll Gold entsprechen Ein gemeinsamer Gegenstand oder Verbrauchsmaterial Ein ungewöhnlicher Gegenstand oder Verbrauchsmaterial Ein seltener Gegenstand oder Verbrauchsmaterial Ein legendärer Gegenstand oder Verbrauchsmaterial Eine Waffe oder eine Rüstung von der Partei&#x27;s Tier</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie kamen diese Kreaturen hierher?",
+					"Was taten sie, als die PCs auf sie trafen?"
+				],
+				"name": "Wanderndes Monster",
+				"richContent": "Wenn die Gruppe einen neuen Bereich des Dungeons betritt, kannst du 1 Furcht ausgeben, um 1W4-Gegner an oder unterhalb der Gruppe innerhalb von weiter Distanz zu beschwören und einen W6 zu rollen. Bei einem Ergebnis von 1 oder 2 bemerken die PCs Warnzeichen und können sich auf die Begegnung vorbereiten; der erste PC, der einen Aktionswurf macht, gewinnt einen Vorteil. Bei einem Ergebnis von 3 oder 4 tritt der Kampf wie gewohnt auf. Bei einem Ergebnis von 5 oder 6 erhalten die Gegner den Tropfen auf den PCs und treten sofort ins Rampenlicht, und Du erhältst 1 Furcht.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche Arten von Fallen und Gefahren füllen diesen Dungeon?",
+					"Was sagt dir ihre Konstruktion über den, der sie entworfen hat?",
+					"Wurden sie vor der Ankunft der Partei ausgelöst?"
+				],
+				"name": "Sprengfallen",
+				"richContent": "<p>Wenn ein PC einen Aktionswurf ausfällt, um durch den Dungeon zu navigieren, eine Falle oder ein Risiko wie eine Spike-Pit, einen Handschuh mit schwingenden Klingen oder einen verschlossenen Raum, der sich langsam mit Wasser füllt, zu aktivieren. Die Gruppe Aktionswurf muss es schaffen, ihn zu deaktivieren, zu entwaffnen oder zu entkommen. Bei einem Ausfall nimmt jeder PC, der an der Gruppe Aktionswurf beteiligt ist, 2W6+3 physisch oder magischen Schaden (SL&#x27;s Wahl).</p>"
+			}
+		],
+		"name": "Tödlicher Dungeon",
+		"desc": "Ein schwach beleuchtetes unterirdisches Netzwerk von Tunneln und Kammern, gefüllt mit Monstern, Fallen und Schätzen.",
+		"impulse": "Verschlinge die Ressourcen der Partei, springen Sie in die Falle, versuchen Sie sie mit Schätzen, werfen Sie Monster auf sie, drehen Sie sie um",
+		"potentialAdversaries": "Dungeon-Bürger (Gobstalker, Green Ooze, Ravenous Mockery, Rust Eater); Rivalen Abenteurer (Giant Brawler, Masked Thief, War Wizard)"
+	},
+	{
+		"id": "HF-E009",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wo schlummert dieser Drache?",
+					"Wovon träumt er?"
+				],
+				"name": "Der Drache erwacht",
+				"richContent": "<p>Konsequenz-Countdown (8). Der Drache, der diesen Schatz angehäuft hat, liegt irgendwo auf, unter oder in der Nähe des Horts. Wenn die PCs in den Versteck eintreten, aktivieren Sie den Countdown. Wenn er auslöst, erwacht der Drache und jeder PC muss auf einem Präsenz Reaktionswurf erfolgreich sein oder 1 Stress markieren. Du erhältst 1 Furcht für jeden Stress, der auf diese Weise markiert ist.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie hat die Partei von dieser Sammlung erfahren?",
+					"Was finden sie Hoffnung hier?"
+				],
+				"name": "Schatzkammer",
+				"richContent": "<p>Im Herzen des Verstecks steht ein Schatzberg. Wenn die Partei den Schatz finden möchte, muss sie einen Fortschritts-Countdown (12) abschließen. Wenn er auslöst, kann die Partei den Folgen-Countdown ankreuzen, um den Schatzhügel zu durchsuchen, indem sie eine Anzahl von d12s gleich 1 + ihre Stufe auf dem Artikel oder Verbrauchstisch rollt (ihre Wahl).</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Fluchtwege werden durch die sich verändernde Konfiguration des Vulkans blockiert?",
+					"Wie schützen sich die PCs vor der erstickenden Hitze?"
+				],
+				"name": "Vulkanaktivität",
+				"richContent": "Einen Furcht zum Auslösen eines Vulkanausbruchs verwenden. Jeder Charakter muss einen Agilität Reaktionswurf erstellen. Ziele, die scheitern, werden durch Gicht von Lava und Flamme verbrannt, während die Erde um sie herum bricht, und nehmen 3W8+5 physischen Schaden. Ziele, die erfolgreich sind, nehmen halben Schaden.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Warum dienen diese Kreaturen dem schlummernden Drachen?",
+					"Welche Anzeichen findet die Partei, die ihre Präsenz vorwegnehmen?"
+				],
+				"name": "Wachhunde",
+				"richContent": "<p>Wenn ein PC eine Rolle ausfällt, um durch das Versteck zu navigieren, können Sie 1 Furcht ausgeben, um 1W6 Drakes und bis zu zwei Wyverns zu beschwören, die innerhalb des kurzer Distanz eines PCs erscheinen und sofort in den Fokus gerückt werden.</p>"
+			}
+		],
+		"name": "Drachenversteck",
+		"desc": "Eine Sammlung von Gold, Juwelen und Artefakten im Herzen eines aktiven Vulkans.",
+		"impulse": "Locken Sie in die Ebenen unten, machen Flucht unmöglich, mit Schätzen versucht, wecken Sie den Drachen",
+		"potentialAdversaries": "The Dragon's Minions (Drake, Wyvern) und Adversaries (Young Fire Dragon)"
+	},
+	{
+		"id": "HF-E010",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Warum wurde dieser PC gewählt?",
+					"Was erwarten sie, wenn sie siegreich sind?"
+				],
+				"name": "\"Ich verlange Zufriedenheit.\"",
+				"richContent": "Wenn ein Gegner einen PC zum Eins-gegen-Eins-Kampf herausfordert, entscheidet der PC, ob er akzeptiert. Wenn er die Herausforderung ablehnt, muss er 1 Stress markieren, und du erhältst 1 Furcht. Wenn ein PC die Herausforderung eines Gegners akzeptiert, aktivieren Sie einen Fortschritts-Countdown (6) und einen Folge-Countdown (4). Wenn der Fortschritts-Countdown zuerst auslöst, gewinnt der PC das Duell und erhält eine Gunst oder Konzession von seinem Gegner. Wenn der Konsequenz-Countdown zuerst auslöst, gewinnt der Gegner das Duell und beansprucht eine Gunst oder Konzession vom PC.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer stellt die Herausforderung?",
+					"Wofür kämpfen sie?"
+				],
+				"name": "Relatives Stärke",
+				"richContent": "<p>Das Schwierigkeitsgrad dieser Umgebung entspricht dem des Gegners, der die Herausforderung ausstellte.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wo findet dieser Konflikt statt?",
+					"Wie bietet die Umwelt dem Rest der Partei die Möglichkeit, ihrem Verbündeten zu helfen, ohne sich einzumischen?"
+				],
+				"name": "Einsatzregeln",
+				"richContent": "Während des Duells ist der herausgeforderte PC der einzige, der Actionrollen machen kann. Andere PCs können dem herausgeforderten PC nur indirekt helfen: Du kannst einem Verbündeten helfen, Gruppen-Actionrollen initiieren oder Teamrollen markieren und alle ihre Funktionen nutzen, die den herausfordernden Gegner nicht direkt beeinflussen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was ist off-limits in diesem Konflikt?",
+					"Wie verbiegt der Verbündete des Gegners die Regeln, ohne sie zu brechen, oder bricht die Regeln, ohne erwischt zu werden?",
+					"Wie können die PCs die Waage neu ausbalancieren?"
+				],
+				"name": "Dirty Tricks",
+				"richContent": "<p>Setze 1 Furcht ein, um den herausfordernden Gegner oder einen seiner Verbündeten betrügen zu lassen. Ein PC kann seine hinterhältige Aktion mit einem erfolgreichen Instinkt Reaktionswurf bemerken und in der Art antworten.</p>"
+			}
+		],
+		"name": "Duell",
+		"desc": "Ein Gegner fordert einen der PCs zum Einzelkampf heraus, während der Rest der Partei ihnen von der Seitenlinie aus hilft.",
+		"impulse": "Konzentriere sich auf einen PC, treiben Sie sie dazu, sich zu überfordern, verursachen Sie eine peinliche Niederlage, stellen Sie den Rest der Partei ins Abseits"
+	},
+	{
+		"id": "HF-E011",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer sind die PCs schützen, und was ist die Ladung versucht zu tun?",
+					"Wer will sie aufhalten?",
+					"Was passiert, wenn die Ladung ihre Aufgabe nicht erfüllen kann?"
+				],
+				"name": "Bodyguards",
+				"richContent": "Die PCs müssen einen NPC (ihren Ladepreis) lange genug schützen, damit der Ladesatz eine Aufgabe abschließen kann, wie z.B. das Beenden eines magischen Rituals oder das Reparieren eines mechanischen Geräts. Am Anfang der Szene aktivieren Sie einen Task Countdown mit einem Wert, der der Anzahl der PCs in der Szene entspricht. Er tickt, wenn die PCs eine Welle von Gegnern besiegen. Wenn er auslöst, beendet der Ladesatz ihre Aufgabe.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Warum ist diese Aufgabe für die Ladung so wichtig?",
+					"Was hat die Macht, ihre Entschlossenheit zu brechen?"
+				],
+				"name": "\"Ich darf nicht scheitern!\"",
+				"richContent": "<p>Wenn die erste Welle von Gegnern erscheint, platzieren Sie einen Resolve Countdown neben der Ladung mit einem Wert, der der Anzahl der PCs in der Szene entspricht. Wenn ein Gegner einen Angriff gegen die Ladung ausführt, ist der Angriff automatisch erfolgreich und tickt den Resolve Countdown. Wenn er auslöst, flieht die Ladung entweder, stirbt oder wird handlungsunfähig.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Woher kommt die neu gewonnene Macht dieser Feinde?",
+					"Gibt es eine Möglichkeit, sie davon abzuschneiden?"
+				],
+				"name": "Schwarm-Multituden",
+				"richContent": "<p>Alle Gegner erhalten die &quot;Relentless (2)&quot; Funktion: Du kannst bis zu zweimal pro SL-Zug in den Fokus gerückt werden."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Woher kommen diese Gegner?",
+					"Wer führt sie aus den Schatten?"
+				],
+				"name": "Wellen auf Wellen",
+				"richContent": "<p>Wenn es keine Gegner in der Szene gibt, beschwören Sie eine Welle von Gegnern bei weiter Distanz aus der Ladung. Jede Welle besteht aus zwei Tier-1-Minions für jeden PC in der Szene.</p>"
+			}
+		],
+		"name": "Halte die Linie",
+		"desc": "Die Partei muss mehrere Wellen von Feinden lange genug abwehren, damit ein Verbündeter ein wichtiges Ziel erreichen kann.",
+		"impulse": "Crash-Wellen von Feinden auf den Ufern der Partei, lassen Sie sie nie atmen, zielen auf ihre Ladung"
+	},
+	{
+		"id": "HF-E012",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was macht sie anders?",
+					"Was feiern die Einheimischen?",
+					"Wofür ist das Festival berühmt?",
+					"Wie haben die PCs das erste Mal davon gehört?"
+				],
+				"name": "Erinnern Sie sich, erinnern",
+				"richContent": "Diese Jahreszeit markiert ein wichtiges Jubiläum oder astronomisches Ereignis, wie die Gründung der Stadt oder die Sommersonnenwende. Auf einer erfolgreichen Wissen Wurf kann ein PC eine der folgenden Fragen beantworten (oder zwei, wenn sie kritisch erfolgreich sind). Bei einem Misserfolg beantworten sie eine Frage, aber Sie entscheiden, welcher Teil ihrer Antwort ungenau ist und erhalten 1 Furcht. Das Festival feiert eine Ernte oder einen Export, der für die Wirtschaft hier von entscheidender Bedeutung ist. Warum ist das Festival letztes Jahr nicht passiert? Dieses Festival ähnelt einem anderen, das in einer Nachbarregion stattfindet.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche neue Krise ist in aller Munde?",
+					"Warum kann diese Gemeinschaft das Problem nicht alleine lösen?",
+					"Welche Belohnung können sie den PCs im Austausch für ihre Hilfe anbieten?"
+				],
+				"name": "Politische Machenschaften",
+				"richContent": "Während alle an einem Ort versammelt sind, nutzen die Einheimischen die Gelegenheit, Fehden zu zerschlagen, neue Geschäfte zu machen und durch die lokale Politik zu navigieren. Ein PC kann sich mit einer Präsenz-Rolle in die Sache stecken. Bei einem Erfolg stellen sie eine Verbindung zu einer lokalen Koryphäe her, die ihnen einen Job geben, wichtige Informationen austauschen oder nützliche Einführungen machen kann. Bei einem Misserfolg müssen sie 1 Stress markieren.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Fähigkeiten oder Fähigkeiten wird dieser Wettbewerb Test?",
+					"Was gewinnt der Sieger?",
+					"Warum ist ein Scheitern keine Option für die PCs oder ihre Rivalen?"
+				],
+				"name": "\"Lasst die Spiele beginnen!\"",
+				"richContent": "<p>Eines der Festival-Events ist ein Sportwettbewerb oder eine Reihe von Spielen. Wenn ein oder mehrere PCs ihren Hut in den Ring werfen, stellen sie rivalisierende Konkurrenten vor, damit sie sich gegen sie stellen können. Um den Sieg zu erringen, müssen die PCs einen Fortschritts-Countdown (5) abschließen, um Events zu gewinnen oder Punkte zu erzielen, bevor ihre Rivalen einen Folge-Countdown (5) abschließen.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Ist dies eine einzigartige Entität oder ein Mantel, der von Person zu Person weitergegeben wird?",
+					"Welche unverwechselbare Form besitzen sie?",
+					"Was ist die Quelle ihrer Macht, Segen und Vergehen zu gewähren?"
+				],
+				"name": "Legendäre Lokale",
+				"richContent": "Das Festival gipfelt in der Ankunft einer Figur aus der lokalen Folklore, die besondere Aufgaben für die lokale Gemeinschaft erfüllt, wie zum Beispiel Kinder zu behandeln, den Adel zu zwischenschalten oder die Ernten im nächsten Jahr zu segnen. Wenn die PCs dieser Figur die richtige Achtung und Respekt zeigen, erhalten sie einen angemessenen Segen, wie eine kryptische Prophezeiung oder einen magischen Schmuck und erhalten W4 Hoffnung, um unter der Partei zu verteilen. Wenn sie die Figur beleidigen, nehmen sie 1W6 + 2 magischen Schaden, da die Figur sie verflucht, und Du erhältst 1 Furcht.</p>"
+			}
+		],
+		"name": "Lokales Festival",
+		"desc": "Bürgerliche und Adlige versammeln sich gleichermaßen aus der Umgebung für eine einwöchige Feier.",
+		"impulse": "Lokale Kultur und Geschichte ausdrücken, neue Beziehungen knüpfen, Gemeinschaft stärken",
+		"potentialAdversaries": "Festivalsicherheit (Bladed Guard, Head Guard); Lokale Luminaries (Händler, Petty Noble); Sundru Ne'er-Do-Wells (Zackige Messerbandit, Zackige Messerlackey)"
+	},
+	{
+		"id": "HF-E013",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie sind die PCs gekleidet?",
+					"Was verraten ihre Kostüme über ihr wahres Selbst?"
+				],
+				"name": "Erforderliche Kostüme",
+				"richContent": "PCs haben einen Vorteil auf Präsenz Rolls, um andere davon zu überzeugen, dass sie jemand sind - oder etwas - sie sind es nicht."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was ist bemerkenswert oder einzigartig an den Tänzen, die hier in Mode sind?",
+					"Wo haben die PCs gelernt, wie man sie durchführt?"
+				],
+				"name": "\"Kümmere dich um Tanz?\"",
+				"richContent": "<p>Während des Tanzens kann ein PC eine Agilität-Rolle anstelle einer Präsenz-Rolle erstellen, um andere zu beeinflussen.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Für wen hält der VIP ihn falsch?",
+					"Welche Türen öffnet ihr Fehler?",
+					"Welche Gefahren bringt er mit sich?"
+				],
+				"name": "Falsche Identität",
+				"richContent": "Eine sehr wichtige Person verwechselt einen PC mit einer noch wichtigeren Person. Das Ziel kann das Missverständnis mit einem Präsenz Reaktionswurf spielen. Bei einem Erfolg kann der PC den VIP bitten, einen Gefallen zu tun, eine wichtige Information weiterzugeben oder eine Einführung zu machen. Bei einem Fehler markiert der PC 1 Stress, da seine wahre Identität entdeckt wird, und er wird mit dem Auswurf aus der Partei bedroht."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Für wen arbeitet die operative Arbeit?",
+					"Warum schickten sie sie zur Maskerade?"
+				],
+				"name": "Cloak und Dagger",
+				"richContent": "Ein PC kann eine Instinkt-Rolle machen, um zu versuchen, sie zu bemerken, bevor sie ihr Ziel erreichen. Bei einem Erfolg erhält der PC die Möglichkeit einzugreifen. Bei einem Fehler mit Furcht ist der PC irrtümlicherweise in das Verbrechen verwickelt."
+			}
+		],
+		"name": "Maskerade Ball",
+		"desc": "Eine High Society Gala, wo maskierte Nachtschwärmer Geschäftsgeheimnisse und Gefälligkeiten.",
+		"impulse": "Tanzen Sie die Nacht durch, essen und fröhlich sein, geheime Geschäfte machen, Handel wertvolle Informationen",
+		"potentialAdversaries": "Operatives (Masked Thief, Master Assassin, Spy); Revelers (Courtesan, Merchant Baron, Royal Advisor)"
+	},
+	{
+		"id": "HF-E014",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wo ist der sicherste Ort, um den Sturm zu überstehen?",
+					"Wofür sind die Menschen hier bereit, ihr Leben zu riskieren?"
+				],
+				"name": "Sturmfront",
+				"richContent": "<p>Countdown (8). Wenn der Sturm eintrifft, aktivieren Sie den Countdown. Er tickt, wenn ein PC mit Hoffnung rollt. Wenn er auslöst, verteilt sich der Sturm oder bewegt sich in einen anderen Bereich.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer hat sonst noch im Gyre verloren?",
+					"Wie können Sie sie herausführen?"
+				],
+				"name": "Gefährliche Bedingungen",
+				"richContent": "Der extreme Wind, Nebel und Wolkenbedeckung des Megastorms machen das Navigieren im gesamten Bereich schwierig. PCs können sich nicht als Teil eines Aktionswurf bewegen, ohne auf einem Agilität Reaktionswurf erfolgreich zu sein.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Ist dies das schlechteste Wetter, das jeder der PCs je erlebt hat?",
+					"Was in der unmittelbaren Umgebung können die PCs nutzen, um sich zu schützen?"
+				],
+				"name": "Zyklonbombe",
+				"richContent": "Ein Furcht wird verwendet, um ein extremes Wetterereignis wie ein Gewitter oder einen Tornado an einem Punkt Deiner Wahl zu beschwören. Jedes Ziel innerhalb von kurzer Distanz dieses Punktes muss mit einem Merkmal erfolgreich sein, das Sie wählen, um zu vermeiden, dass Sie durch Hagel geschlagen, in die Luft geworfen, durch Blitze oder einen ähnlichen Effekt gesprengt werden. Ziele, die nicht funktionieren, erleiden 2W10 + 2 Schaden eines Typs, den Sie wählen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Hat diese Kreatur den Sturm für ihre eigenen Zwecke heraufbeschworen, oder dienen sie einer noch größeren Einheit?",
+					"Warum haben sie diesen Ort zur Zerstörung bestimmt?"
+				],
+				"name": "Sturmherz",
+				"richContent": "<p>Setze 1 Furcht ein, um die lebende Batterie des Megastorms zu enthüllen. Beschwöre einen Sturmriesen oder ein Elementar-Großwasser in weiter Distanz eines PCs und leuchten Sie sie dann sofort an. Bis dieser Gegner besiegt ist, tickt der &quot;Stormfront&quot; Countdown nicht."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wer nutzt die Situation aus?",
+					"Wer soll hier die Verantwortung übernehmen, und was ist mit ihnen passiert?"
+				],
+				"name": "Panik auf den Straßen",
+				"richContent": "Der Megastorm sät Furcht und Chaos unter den Einheimischen. Beschreibe, wie der Sturm einen NPC in Gefahr bringt. Wenn der PC, der als nächstes ins Rampenlicht rückt, seine Aktion nicht nutzt, um den gefährdeten NPC zu retten, erhalten Sie 1 Furcht.</p>"
+			}
+		],
+		"name": "Megastorm",
+		"desc": "Ein extremes Wetterereignis manifestiert sich plötzlich und zwingt die Partei, ihr eigenes Überleben gegen die Sicherheit anderer auszugleichen.",
+		"impulse": "Schlag Hurrikanwinde, ersticken mit Schlammlawinen, bröckeln Strukturen, Flut, Schutt werfen, den Himmel erleuchten",
+		"potentialAdversaries": "Gegner (Greater Water Elemental, Storm Titan)"
+	},
+	{
+		"id": "HF-E015",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche ätherischen Düfte oder Empfindungen erleben die PCs?",
+					"Wie beeinflusst die Atmosphäre die Interaktionen zwischen ihnen?"
+				],
+				"name": "Traumhafte Atmosphäre",
+				"richContent": "Alles im Mondkönigreich fühlt sich traumhaft und schwebend an. Ein Sprung bringt dich weit und der Klang ist gedämpft. Die Luft ist voller schillerndem kristallinem Staub, der sich als Reaktion auf Gedanken oder Emotionen verschiebt und Erinnerungen an die Vergangenheit oder Visionen der Zukunft aufzeichnen könnte. Einmal pro Szene kann ein PC eine Instinkt-Rolle machen, um die psychischen Eindrücke zu lesen, die durch vergangene Ereignisse hinterlassen wurden.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie sieht die Erde aus, wie diese Mondpflanzen aussehen?",
+					"Wie schmecken sie und wie beeinflussen sie den Esser körperlich?"
+				],
+				"name": "Stille Ruinen",
+				"richContent": "Die hoch aufragende silberne und blaue Architektur der Hauptstadt ist unbeschädigt, aber mit biolumineszenter Flora überwachsen, die mit den Mondfluten pulsiert. Ein PC, der auf einer Geschick Wurf folgt, kann eine Mondpflanze ernten, ohne sie zu töten. Ein PC, der eine oder mehrere lebende Mondpflanzen isst, erhält bis zu ihrer nächsten langen Ruhezeit einen +1 Bonus auf Zauberwirken Rolls."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie sieht diese Maschine aus und wie funktioniert sie?",
+					"Was erfahren die PCs über die Geschichte des Mondkönigreichs?"
+				],
+				"name": "Mondastrolog",
+				"richContent": "Auf dem höchsten Turm der Hauptstadt sitzt eine Kristalltraummaschine, die Geschichte wiedergeben kann. Ein PC, der auf einer Wissen Wurf erfolgreich ist, kann die Maschine reparieren. Sobald die Maschine repariert ist, kann ein PC, der auf einer Präsenz Wurf erfolgreich ist, sie bedienen, um die Geschichte des Aufstiegs und Falls des Mondkönigreichs zu erfahren. Kritischer Erfolg: Der PC erhält klare Informationen über Schlüsselereignisse und -zahlen in der Geschichte des Mondkönigreichs und erhält 1W4 Hoffnung, die er auf PCs verteilen kann, mit denen er seine Visionen teilt. Erfolg mit Hoffnung: Der PC erhält klare Informationen über Schlüsselereignisse und -zahlen in der Geschichte des Mondkönigreichs. Jeder Wurf mit Furcht: Der PC erhält kurze Blitze und Empfindungen im Zusammenhang mit dem katastrophalen Ende des Königreichs. Wenn der Wurf ein Fehler war, nimmt der PC 4W10 + 5 magischen Schaden, während die Visionen ihre Psyche angreifen."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wer hat sie hier begraben und warum?",
+					"Kann sie auferstehen, oder ist die Zerstörung ihres Geistes der einzige Weg nach vorne?"
+				],
+				"name": "Das Grab der Mondkönigin",
+				"richContent": "Das Mondkönigreich &#x27;s letzter Herrscher wurde in einem Selenit-Sarg tief in der Zitadelle bewahrt. Auf einer Rolle mit Furcht, um ihre Kammer zu untersuchen, erwacht ihr unheilvoller Schatten und greift die Party an. Beschwöre die Mondkönigin &#x27;s Geist (Erz-Necromancer) neben ihrem Sarg und leuchten Sie sie sofort an."
+			}
+		],
+		"name": "Mondkönigreich",
+		"desc": "Die geheimnisvollen, leuchtenden und isolierten Ruinen eines lange verlorenen Mondkönigreichs, das mit vergessener Magie und alter Technologie widerhallt.",
+		"impulse": "Verwischen Sie die Grenze zwischen Traum und Realität, lassen Sie das Bewusstsein ebnen und fließen wie die Flut, flüstern Echos der alten Opulenz",
+		"potentialAdversaries": "Lokale Fauna (Cryptimoth, Yufo); Gegner (Erznekromantiker)"
+	},
+	{
+		"id": "HF-E016",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie fühlt es sich an, an einem Ort zu heilen, der so gegensätzlich zum Leben ist?"
+				],
+				"name": "Kein Platz für die Lebenden",
+				"richContent": "<p>Eine Funktion oder Aktion, die TP löscht, erfordert die Ausgabe eines Hoffnung. Wenn es bereits Hoffnung kostet, muss ein PC einen zusätzlichen Hoffnung ausgeben.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie heißen die Bücher?",
+					"An welchem Projekt arbeitet der Nekromant und was kommuniziert er über seine Pläne?"
+				],
+				"name": "Jahrhunderte von Wissen",
+				"richContent": "Ein PC kann die Bibliothek und das Labor untersuchen und eine Wissen-Rolle erstellen, um Informationen über Arkane, lokale Geschichte und die Pläne des Nekromanten zu erfahren."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche alte Skelettarchitektur wurde zerstört?",
+					"Welche Knochen stecken in deiner Rüstung?"
+				],
+				"name": "Skelettburst",
+				"richContent": "<p>Alle Ziele innerhalb von kurzer Distanz eines Punktes, den Sie in dieser Umgebung auswählen, müssen auf einem Agilität Reaktionswurf erfolgreich sein oder 4W8+8 physischen Schaden aus Skelettsplittern als Teil der Ossuary-Detonate um sie herum nehmen.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie manifestiert sich ihre erneuerte Kraft?",
+					"Sehen sie lebensechter aus oder sind sie paradoxerweise verfallener, aber kräftiger?"
+				],
+				"name": "Aura des Todes",
+				"richContent": "Jeder Untote innerhalb von weiter Distanz des Nekromanten kann TP und Stress gleich dem gerollten Ergebnis löschen. Der Untote kann wählen, wie diese Zahl zwischen TP und Stress aufgeteilt wird.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wer waren diese Leute, bevor sie die Bauern des Nekromanten wurden?",
+					"Welche Überreste dieser Leben bleiben für die Helden zu sehen?"
+				],
+				"name": "Sie kommen einfach weiter!",
+				"richContent": "<p>Setze 1 Furcht ein, um 1W6 Rotted Zombie, zwei Perfected Zombie oder eine Zombie-Legion zu beschwören, die bei kurzer Distanz eines ausgewählten PCs erscheinen.</p>"
+			}
+		],
+		"name": "Necromancer's Ossuary (Deutsche Übersetzung)",
+		"desc": "Eine staubige Krypta mit einer Bibliothek, sich verdrehenden Korridoren und reichlich Sarkophagen, übersät mit dem Blut von unglücklichen Eindringlingen.",
+		"impulse": "Verwirrte Eindringlinge, tauchen in Geheimnisse ein, die am besten begraben sind, manifestieren Unleben, entfesseln eine Flut von Untoten",
+		"potentialAdversaries": "Der Gastgeber des Erznekromancers (Perfected Zombie, Zombie Legion)"
+	},
+	{
+		"id": "HF-E017",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wohin steuert das Schiff?",
+					"Von welchen Gefahren entlang der Strecke spricht die Besatzung in gedämpften Tönen?"
+				],
+				"name": "Offenes Wasser",
+				"richContent": "<p>Countdown (8). Um ihr Ziel zu erreichen, muss die Partei den Open Water Countdown abschließen. Es tickt, wenn ein PC auf einem Aktionswurf erfolgreich ist, um das Schiff zu unterstützen.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was ist mit den Rationen passiert?",
+					"Welche drastischen Maßnahmen ergreift die Crew, um sicherzustellen, dass nicht alle an Hunger und Durst sterben?"
+				],
+				"name": "Rationen laufen niedrig",
+				"richContent": "<p>Das erste Mal, wenn ein PC auf dieser Reise einen Fehler mit Furcht würfelt, entdeckt die Crew, dass das Essen und das frische Wasser im Frachtraum des Schiffes von Schädlingen und Schimmel beschmutzt wurden. Bis die Partei ihr Ziel erreicht, muss ein PC, der einen Aktionswurf macht, um den Open Water Countdown voranzutreiben, auf einem Stärke Reaktionswurf erfolgreich sein oder 1 Stress zuerst markieren.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Erkennt der Kapitän das Schiff, das Jagd macht?",
+					"Für welche ungeschickten Praktiken sind die Piraten in diesem Gebiet berühmt?"
+				],
+				"name": "\"Fluch!\"",
+				"richContent": "Setze 1 Furcht ein, um ein Besatzungsmitglied in der Krähe zu haben&#x27;s Nestspion schwarze Segel am Horizont! Starten Sie einen Folgen-Countdown (4). Wenn es auslöst, bevor die Gruppe ihr Ziel erreicht, holen die Piraten das Schiff ein und steigen an Bord."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Was unterscheidet dieses Wetter von allem, was die PCs zuvor erlebt haben?",
+					"Wie koordinieren sie sich mit der Besatzung, um sich durch diese Gefahr zu finden?"
+				],
+				"name": "Schlechtwetter",
+				"richContent": "Wenn der Open Water Countdown auf eine ungerade Zahl herunterkommt, rollen Sie einen W6. Bei einem Ergebnis von 4 oder höher läuft das Schiff auf einen Fleck mit schlechtem Wetter, wie eine Nebelbank, die die Navigation erschwert, oder eine Böe, die das Schiff zu kentern droht. Jeder PC muss auf einem Reaktionswurf mit einem relevanten Merkmal erfolgreich sein, das vom SL gewählt wurde oder 1W4 Stress markiert.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Was zieht diese Kreaturen an das Schiff?",
+					"Gibt es eine Möglichkeit, sie ohne Kampf zu vertreiben?"
+				],
+				"name": "Hier gibt es Monster",
+				"richContent": "<p>Wenn der Open Water Countdown auf eine gerade Zahl herunterkommt, rollen Sie eine W6. Bei einem Ergebnis von 4 oder höher rufen Sie 1W4 Deep Sea Denizens.</p>"
+			}
+		],
+		"name": "Ozeanreise",
+		"desc": "Die PCs erhalten Durchgang zu einem fernen Ziel, indem sie ihre Arbeit im Austausch anbieten.",
+		"impulse": "Enthülle, was unter den Wellen lauert, senden Sie sie in die falsche Richtung, versenken Sie das Schiff, verbrauchen Sie ihre Ressourcen",
+		"potentialAdversaries": "Tiefseebewohner (Elektrische Aale, Kraken, Hai, Sirene); Piraten (Piratenkapitän, Piratenräuber)"
+	},
+	{
+		"id": "HF-E018",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie bedrohen oder gefährden die Piraten die Stadt, anstatt ihre Bewohner anzugreifen?",
+					"Welche Verteidigung können die PCs nutzen?"
+				],
+				"name": "Rallye der Einheimischen",
+				"richContent": "Fortschritts-Countdown (5). Wenn die Piraten zum ersten Mal auftauchen, aktivieren Sie den Countdown. Er tickt, wenn ein PC mit einem Aktionswurf erfolgreich ist, um das Chaos und die Zerstörung des Piratenüberfalls einzudämmen. Wenn er auslöst, werden die Einheimischen von den Aktionen der Partei inspiriert und schließen sich dem Kampf gegen die Piraten an. Jeder PC erhält einen W6 Morale Die, den sie ausgeben können, um eine Aktion, Reaktion oder Schadenswurf hinzuzufügen.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Warum respektieren diese Piraten diesen Kapitän genug, um ihnen zu folgen?",
+					"Was kümmert sie mehr als unrechtmäßig erworbene Beute?"
+				],
+				"name": "Parzellen",
+				"richContent": "Bei einer erfolgreichen Wissen-Rolle kennt ein PC genug Piratengesetze, um eine Parley mit dem Piratenkapitän zu verlangen. Sobald die Parley ausgestellt wird, unterbricht der Kapitän den Kampf, damit ein PC Frieden einfordern oder die Kapitulationsbedingungen mit einer Präsenz-Rolle aushandeln kann."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Kollateralschäden verursachen diese Kanonenkugeln?",
+					"Wessen Leben gefährden sie mutwillig?"
+				],
+				"name": "\"Feuert die Kanonen!\"",
+				"richContent": "<p>Setze bis zu 3 Furcht, damit das Piratenschiff seine Kanonen in den Kampf feuern lässt. Für jeden ausgegebenen Furcht wählen Sie einen Punkt irgendwo auf dem Schlachtfeld. Jeder PC innerhalb von kurzer Distanz von einem oder mehreren dieser Punkte muss einen Agilität Reaktionswurf machen. Ziele, die scheitern, nehmen 1W8+3 physischen Schaden. Ziele, die erfolgreich sind, müssen 1 Stress markieren oder halben Schaden nehmen.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wen halten die Piraten für die besten Gefangenen und warum?",
+					"Was wollen sie im Austausch für die Rückkehr der Gefangenen?"
+				],
+				"name": "Nimm Gefangene",
+				"richContent": "Wenn eine Anzahl von Piraten, die der Anzahl der PCs in der Szene entspricht, besiegt wird, würfeln Sie einen W6. Nach 5 oder 6 ändern die Piraten ihre Taktik, fangen Einheimische ein und ziehen sich zum Schiff zurück, damit sie später die Gefangenen erlösen können. Aktiviere einen Folgen-Countdown (4). Es tickt, wenn ein PC einen Aktionswurf macht. Wenn er auslöst, segeln die Piraten mit ihren Opfern davon."
+			}
+		],
+		"name": "Raiding Party",
+		"desc": "Ein Piratenschiff schleppt seine Besatzung in eine Hafenstadt oder ein Küstendorf, um zu plündern und zu plündern.",
+		"impulse": "Leuchten Sie es in Brand, überwältigen Sie mit Geschwindigkeit und Zahlen, nehmen Sie alles, was nicht nagelt",
+		"potentialAdversaries": "Schiffsbesatzung (Pirate Captain, Pirate Raiders, Pirate Tough)"
+	},
+	{
+		"id": "HF-E019",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Gefahren liegen unter der Oberfläche?",
+					"Wie findet man den Rand einer Welt ohne Ende, und was liegt jenseits davon?"
+				],
+				"name": "Meer von Gloom",
+				"richContent": "Dieses Reich ist ein grenzenloser silberner Ozean, der in einer grauen Dunkelheit ohne sichtbare Sterne oder Horizonte bedeckt ist. Der subtile Strom zieht unerbittlich an den PCs &#x27; Beine, aber es ist zu sanft, um die flache, gespiegelte Oberfläche des Wassers zu stören. Action rollt, um dieses Reich zu navigieren, haben Nachteile."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Gedanken halten die PCs hier wach?",
+					"Wie können sie einander unterstützen, ohne selbst der Hoffnungslosigkeit zu erliegen?"
+				],
+				"name": "Die Last des Wachseins",
+				"richContent": "<p>Es ist unmöglich, hier zu schlafen. Wenn die Party ruht, kann jeder PC nur einen Downtime-Move wählen.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Warum weigern sich diese Kreaturen, weiterzumachen?",
+					"Gibt es ein Muster für die Formen, in die die Dunkelheit sie verblasst?"
+				],
+				"name": "Tod-berührte Bürger",
+				"richContent": "Alle sterblichen Kreaturen passieren diesen Ort auf ihrer Reise zur anderen Seite, aber diejenigen, die verweilen oder wandern, werden durch die Dunkelheit verzerrt und mutiert. Alle Gegner, denen die Partei hier begegnet, sind verblasst. Beschreibe, wie ihre Zeit sie hier zu etwas Verzerrtem als Tot gemacht hat. Wenn ein PC Schaden von einem verblassten Gegner nimmt, müssen sie auch 1 Stress markieren. Wenn ein PC hier besiegt wird, wird er zu einem verblassten Gegner, der vom SL kontrolliert wird, anstatt einen Todesschritt zu machen.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie fühlt es sich an, den Willen zu haben, gewaltsam von dir ausgelaugt zu werden?",
+					"Wie konzentrierst du dich durch die Verzweiflung?"
+				],
+				"name": "Die Kälte des Todes",
+				"richContent": "Ein Furcht wird damit verbracht, einen PC zu zwingen, ein Präsenz Reaktionswurf zu machen, da das Meer des Gloom die Wärme aus Blut und Knochen ausleert. Bei einem Ausfall nehmen sie 4W10 direktes magischen Schaden. Bei einem Erfolg müssen sie 1 Stress markieren.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Was bereut es, an der Grenze deines Bewusstseins zu nagen, während du hier bist?",
+					"Welche Erinnerungen halten dich noch an das Sterbliche Reich?"
+				],
+				"name": "Alle Hoffnung",
+				"richContent": "Wenn ein PC Hoffnung im Reich der Toten ausgibt, muss er einen W6 rollen. Bei einem ungeraden Ergebnis muss er einen zusätzlichen Hoffnung ausgeben oder den Vorteil des Hoffnung verlieren, den er bereits ausgegeben hat.</p>"
+			}
+		],
+		"name": "Realm Of The Dead Ubersetzungen",
+		"desc": "Eine scheinbar unendliche Weite stillen Wassers ohne Farbe oder Lachen.",
+		"impulse": "Ertrinken in Verzweiflung, Blutegel Leben, versucht in endlosen Schlaf"
+	},
+	{
+		"id": "HF-E020",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Kennen Sie schon jemanden, der ertrunken ist?",
+					"Was denkst du darüber, um ruhig zu bleiben und deine Luftzufuhr zu dehnen?"
+				],
+				"name": "Unterwasserumgebung",
+				"richContent": "Diese Umgebung ist unter Wasser (siehe &quot;Bewegen und Kämpfen Unterwasser&quot; Regeln auf Seite 168 des Kernregelbuches). Zusätzlich zu diesen Regeln verfolgt eine Kreatur, die Luft atmet, ihre Versorgung mit einem Luftversorgungs-Countdown. Sein Startwert ist gleich 3 + ihre Stufe, und es tickt, wenn sie eine Aktion ausführen. Wenn ein PC einen Aktionswurf ausfällt oder mit Furcht rollt, können Sie einen SL-Zug verwenden, um den Countdown ein weiteres Mal zu ticken. Wenn der Wurf ein Fehler mit Furcht ist, können Sie ihn stattdessen zweimal ankreuzen."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Zeichen oder Strukturen suchen Sie?",
+					"Wie fühlt es sich an zu wissen, dass dies der letzte Atemzug sein könnte, den Sie nehmen?"
+				],
+				"name": "Lufttaschen",
+				"richContent": "Ein PC kann seinen Air Supply Countdown auf seinen Startwert zurücksetzen, indem er eine Lufttasche mit einem erfolgreichen Wissen oder Instinkt Wurf lokalisiert."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer hat diesen Ort einmal zu Hause genannt?",
+					"Wie funktionierte ihre Technologie?",
+					"Warum wurden sie schließlich zerstört und in die Tiefe geworfen?"
+				],
+				"name": "Verlorene Technologie",
+				"richContent": "Die Ruinen sind mit seltsamen magischen Runen geschnitzt und mit verlorener Technologie übersät. Ein PC kann eine Wissen-Rolle machen, um nützliche Informationen über diese verlorene Zivilisation von allen Runen oder Geräten zu erfahren, auf die sie stoßen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Warum bleiben diese Kreaturen hier zwischen den Ruinen?",
+					"Sind sie nicht bereit oder nicht in der Lage, diese einst prosperierende Zivilisation wiederzubeleben?"
+				],
+				"name": "Deepwater-Bürger",
+				"richContent": "<p>Setze 1 Furcht ein, um bis zu zwei Deep Dwellers und 1W6 Cursed Merfolk zu beschwören, die versuchen, die PCs an ihren Willen zu binden. Diese Gegner erscheinen bei kurzer Distanz eines PCs, dann tritt man sofort ins Rampenlicht.</p>"
+			}
+		],
+		"name": "Versunkene Zitadelle",
+		"desc": "Die versunkenen Ruinen einer lange verlorenen Zivilisation, gefüllt mit alter Technologie und dunkler Magie.",
+		"impulse": "Zeichne sie tief, ertränke sie, enthülle alte Wunder",
+		"potentialAdversaries": "Gegner (Verfluchter Merfolk, tiefer Bewohner, Plesiosaurus)"
+	},
+	{
+		"id": "HF-E021",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was außer dem Gerichtssaal befindet sich in dieser Taschendimension?",
+					"Welche Kräfte halten die universelle Barriere aufrecht, die diesen Ort schützt?"
+				],
+				"name": "Außerhalb der Zeit",
+				"richContent": "Die Testversion findet in einer Taschendimension statt, die jenseits des Einflusses der anderen Reiche existiert. Während hier PCs ihre Funktionen und Fähigkeiten nicht nutzen können. Jeder Spieler muss seine Domain-Karten in sein Gewölbe legen."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche PCs werden vor Gericht gestellt?",
+					"Was wird ihnen vorgeworfen?",
+					"Welche möglichen Strafen würde ein Schuldspruch mit sich bringen?"
+				],
+				"name": "Prozess durch Jury",
+				"richContent": "<p>Am Ende des Verfahrens stimmt eine Jury darüber ab, ob sie die Partei freisprechen oder verurteilen soll. Wenn das Gericht zur Ordnung gerufen wird, muss die Staatsanwaltschaft ihren Fall gegen die PCs vorlegen und einen Countdown (9) starten. Es tickt, wenn ein PC ein Aktionswurf macht. Wenn es auslöst, rollen die PCs und SL ihr Urteilsurteil. Wenn das Gesamtergebnis der Partei die GMs erfüllt oder übersteigt, spricht die Jury sie frei.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was ist der schwächste Teil des Falls der Staatsanwaltschaft?",
+					"Was ist der stärkste Teil der Verteidigung der Partei?"
+				],
+				"name": "Ratgeber für die Verteidigung",
+				"richContent": "Ein PC kann ein Aktionswurf machen, um für ihre Unschuld zu argumentieren (wie ein Wissen Wurf, um den Buchstaben des Gesetzes zu interpretieren, ein Präsenz Wurf, um auf die Emotionen der Jury zu spielen, oder ein Instinkt Wurf, um auf Löcher in der Staatsanwaltschaft hinzuweisen). Bei einem Erfolg erhält die Partei einen W6 Judgement Die. Bei einem kritischen Erfolg gewinnen sie zwei. Bei einem Misserfolg widerlegt die Staatsanwaltschaft das Argument des PC und Du erhältst einen W6 Judgement Die."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wer führt die Anklage an und in welchem Verhältnis steht sie zum Zeitrat?",
+					"Auf welche magie oder technologie stützt sich dieses gericht, um beweise zu präsentieren und aufzuzeichnen."
+				],
+				"name": "Anwalt der Anklage",
+				"richContent": "Die Staatsanwaltschaft führt ein vernichtendes Beweisstück ein (wie eine Augenzeugenaussage, Testergebnisse oder ein physisches Exponat, das vom Tatort genommen wurde), und Du erhältst einen W6 Judgement Die. Ein PC kann 1 Stress markieren, um eine Widerlegung des Beweises mit einem Wissen, Instinkt oder Präsenz Reaktionswurf zu versuchen. Bei einem Erfolg erhält die Partei den Judgement Die anstelle von dir. Bei einem Misserfolg erhalten Sie einen zusätzlichen W6 Judgement Die.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Ist die Autorität dieses Gerichts respektwürdig?",
+					"Was außer der Macht des Zeitrates und seiner Vollstrecker rechtfertigt ihre Kontrolle über die Zeitlinie?"
+				],
+				"name": "\"Befehl im Gericht!\"",
+				"richContent": "<p>Wenn die PCs versuchen, der Studie mit Gewalt zu entkommen oder sie zu beenden, rufen Sie eine Anzahl von Temporal Enforcern auf, die der Anzahl der PCs in der Szene innerhalb von kurzer Distanz entspricht, und stellen Sie sofort einen in den Mittelpunkt.</p>"
+			}
+		],
+		"name": "Time Court",
+		"desc": "Ein oder mehrere PCs werden gewaltsam aus der Zeitleiste gerupft und wegen Verbrechen gegen Kontinuität vor Gericht gestellt.",
+		"impulse": "Finde die Wahrheit, erfülle Gerechtigkeit, nimm ihre Macht",
+		"potentialAdversaries": "Gegner (Monarch, Hallowed Choir, Temporal Enforcer)"
+	},
+	{
+		"id": "HF-E022",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was ist so wundersam an den insignien des casinos?.",
+					"Sind sie wirklich magisch in der Natur oder nur banale Wunder, die auf ein unmögliches Extrem gebracht werden?"
+				],
+				"name": "Glitz & Glamour",
+				"richContent": "<p>Das überwältigende Spektakel dieses Ortes kann sogar den abgestumpftesten Gönner betreten. Während hier alle PCs Nachteile auf Reaktionsrollen haben, die von einem Mitarbeiter oder einem regulären Gönner des Casinos verursacht werden.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welches Spiel wählt der PC?",
+					"Welche Hausregeln hat dieses Casino?",
+					"Gibt es etwas anderes als Gold, das die PCs riskieren wollen?"
+				],
+				"name": "Fortune favorisiert den Mut",
+				"richContent": "Einmal pro langer Pause kann ein PC jede Menge Gold spielen, indem er angibt, wie viel er setzen möchte und seinen Hoffnung Die rollt. Bei einem Ergebnis von 7 oder höher gewinnt der PC den gleichen Betrag und verdoppelt sein Geld. Bei einem Ergebnis von 6 oder niedriger verlieren sie alles."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Ist dieser Ort mit unmöglichem Vermögen gesegnet, oder verflucht etwas jeden, der durch seine Türen tritt?"
+				],
+				"name": "Das Haus gewinnt immer",
+				"richContent": "<p>Wenn ein Gegner einen Wurf nicht besteht, können Sie 1 Furcht ausgeben, um ihn stattdessen zum Erfolg zu führen.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wer hat diese Maschinen gebaut?",
+					"Warum sind sie Lebewesen vorzuziehen?"
+				],
+				"name": "Automatisierte Sicherheit",
+				"richContent": "<p>Wenn ein PC versucht, bei einem Spiel im Casino zu betrügen und scheitert, muss er 1 Stress markieren, während er das mechanische Sicherheitsdetail des Casinos aktiviert. Erlangen Sie 1 Furcht und rufen Sie für jeden PC einen Vault Guardian Gaoler und einen Turm zusammen. Alle Gegner erscheinen innerhalb von weiter Distanz der PCs, und der Vault Guardian Sentinel tritt sofort in den Fokus.</p>"
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie hat der Dämon ihren Einfluss bis jetzt maskiert?",
+					"Wie verändert sich das casino selbst, um seine wahre natur zu enthüllen?."
+				],
+				"name": "Der Spielplatz des Teufels",
+				"richContent": "<p>Wenn die PCs die automatisierte Sicherheit des Casinos besiegen oder versuchen, mit gestohlenen Gewinnen zu gehen, können Sie einen Betrag von Furcht ausgeben, der der Anzahl der PCs entspricht, um den wahren Besitzer des Casinos, einen Dämon der Habgier, innerhalb von kurzer Distanz eines PCs zu beschwören. Der Dämon wird sofort in den Mittelpunkt gestellt und sperrt den Ausgang der Partei um jeden Preis.</p>"
+			}
+		],
+		"name": "Upscale Casino",
+		"desc": "Eine glitzernde Spielhalle, in der gut betuchte Kaufleute und Adlige kommen, um ihr Vermögen zu verspielen.",
+		"impulse": "Dangle den Jackpot gerade außer Reichweite, blenden sie mit Spektakel, Beute auf ihre Laster",
+		"potentialAdversaries": "Automatisierte Sicherheit (Vault Guardian Gaoler, Vault Guardian Sentinel, Vault Guardian Turret); Spieler (Courtesan, Merchant Baron, Petty Noble, Spy)"
+	},
+	{
+		"id": "HF-E023",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie reisen die PCs durch die Wüste?",
+					"Was jenseits der extremen Entfernung und des Wassermangels macht es schwierig, diesen Bereich zu überqueren?"
+				],
+				"name": "Endlose Sande",
+				"richContent": "Um die Wüste zu durchqueren, muss die Gruppe den Countdown abschließen. Er tickt, wenn ein PC auf einem Aktionswurf erfolgreich durch die scheinbar endlose Weite navigieren kann."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Arten von wassererhaltenden Flora oder Geländemerkmalen haben die PCs gehört, die in dieser Wüste zu finden sind?",
+					"Wie sammeln und transportieren die PCs das Wasser, das sie finden?"
+				],
+				"name": "Wasserversorgung",
+				"richContent": "Wenn die Gruppe ihre Reise beginnt, legen Sie eine Anzahl von Token auf diesen Stat-Block, die 1 + die Anzahl der PCs in der Szene entspricht. Entferne ein Token am Ende jeder langen Pause oder wenn ein PC einen Aktionswurf ausfällt, um durch die Wüste zu navigieren. Wenn ein Token entfernt werden würde, aber es keine mehr gibt, muss jeder PC einen TP und 1 Stress markieren. Ein PC kann einen Token zu diesem Stat-Block hinzufügen, indem er einen Downtime-Move verwendet und eine erfolgreiche Wissen-Rolle für die Jagd nach Wasser macht.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie verändern sich die Dünen und die Landschaft, wenn die Helden sich ausruhen?",
+					"Was wird vom Wind bedeckt oder aufgedeckt?"
+				],
+				"name": "Sandwechsel",
+				"richContent": "Die sich ständig verändernden Dünen und der peitschende Wind machen es den schleppenden Kreaturen schwer, durch diese Umgebung zu gehen. Action rollt, um Kreaturen durch die Wüste zu verfolgen, werden mit Nachteilen gemacht.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie sieht der Sturm für die Helden aus, wenn er aus Meilen Entfernung hereinrollt?",
+					"Ist der Sturm natürlich oder unnatürlich?",
+					"Wie kannst du das sagen?"
+				],
+				"name": "Gewitter",
+				"richContent": "Wenn du ein tropfenförmiges Regenwasser in die Erde einweichen lassen, müssen Sie entweder Schutz vor dem Sturm suchen oder Regenwasser sammeln. Jeder PC, der Schutz sucht, markiert 1 Stress. Die PCs, die Regenwasser sammeln, bilden eine Gruppe Aktionswurf. Bei einem Erfolg mit Hoffnung fügen Sie 1W4-Token zur Wasserversorgung hinzu. Bei einem Erfolg mit Furcht fügen Sie 1 Token zur Wasserversorgung hinzu. Bei einem Fehler mit Hoffnung markiert jeder PC, der an der Gruppe Aktionswurf teilgenommen hat, 1 Stress. Bei einem Fehler mit Furcht markiert jeder PC, der an der Gruppe Aktionswurf teilgenommen hat, 1 Stress, und der PC, der am niedrigsten gerollt ist, nimmt 2W8+4 physischen Schaden aus dem Sturm.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was tragen die Bewohner dieser Wüste, um die Sandstürme zu überstehen?",
+					"Wie sind die Wohnorte, die die Partei hier findet, so gestaltet, dass sie den Winden standhalten?"
+				],
+				"name": "Sandsturm",
+				"richContent": "<p>Setze 1 Furcht ein, um einen Sandsturm zu beschwören, der Reisende desorientiert und harrt. Jeder PC benötigt 2W6+3 physischen Schaden. Bis der Sandsturm sich auflöst, muss ein PC, der ein Aktionswurf herstellt, auf einem Agilität Reaktionswurf erfolgreich sein, um den Wirbel von Felsen und Trümmern zu vermeiden oder 2W6+3 physischen Schaden zu nehmen.</p>"
+			}
+		],
+		"name": "Weitläufige Wüste",
+		"desc": "Eine ausgedörrte Weite von Sanddünen, trostlosen Salzflächen und windgeblasenen Gesteinsformationen.",
+		"impulse": "Dehydriert, zeigen desolate Schönheit, drohen Gefahr am Horizont",
+		"potentialAdversaries": "Gegner (Acid Burrower, Landshark, Sandwyrm)"
+	},
+	{
+		"id": "HF-E024",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche seltsamen Formen und Farben sehen die PCs in der gekühlten Lava?",
+					"Wie halten die Menschen, die in der Nähe leben, auf der glatten, glänzenden Oberfläche Fuß?"
+				],
+				"name": "Instabiler Boden",
+				"richContent": "Der Boden ist hier uneben, anfällig für Einsturz und ständig wechselnd. PCs, die eine Agilität-Rolle nicht bewegen, müssen eine TP markieren und sind vorübergehend Festgesetzt.</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was lässt die Lava lebendig erscheinen?",
+					"Wie können die PCs ihr Verhalten vorhersagen?"
+				],
+				"name": "Gewalttätige Eruption",
+				"richContent": "Ein Furcht wird so eingesetzt, dass der Boden an einem Punkt Deiner Wahl ausbricht, indem Sie Lava in die Luft spucken und sie entlang des Bodens ausbreiten. Alle Ziele innerhalb von sehr kurzer Distanz dieses Punktes verlieren 1 Hoffnung und nehmen 3W8+3 physischen Schaden. Der Bereich innerhalb von sehr kurzer Distanz des Eruptionspunktes wird zu Lava bis zum Ende der Szene. Eine Kreatur, die sich in oder durch die Lava bewegt, nimmt 3W8+3 physischen Schaden. Bis zum Ende der Szene können Sie 1 Furcht ausgeben, um den Lavabereich um einen Schritt zu erweitern (z. B. Sehr nah an nah oder nah an fern).</p>"
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Anzeichen sehen Sie, um das Präsenz von giftigem Gas anzuzeigen?",
+					"Welcher Geschmack verweilt im Mund der PCs, die das Gas einatmen?"
+				],
+				"name": "Ablassen von giftigem Gas",
+				"richContent": "<p>Setze 1 Furcht ein, um einen Spalt zu öffnen, der giftiges Gas an einem Punkt Deiner Wahl ausstoßt, und erstellen Sie eine Wolke, die alles in weiter Distanz abdeckt. Während in der Cloud ein PC seine Luftversorgung mit einem Countdown der Luftversorgung verfolgen muss. Sein Startwert ist gleich 3 + ihre Stufe, und es tickt, wenn sie eine Aktion ausführen. Wenn ein PC einen Aktionswurf ausfällt oder mit Furcht rollt, können Sie einen SL-Zug verwenden, um den Countdown ein weiteres Mal anzukreuzen. Wenn der Wurf ein Fehler mit Furcht ist, können Sie ihn stattdessen zweimal ankreuzen."
+			}
+		],
+		"name": "Vulkanausbruch",
+		"desc": "Eine Explosion von Hitze und geschmolzenem Gestein, das nur verkohlte Verwüstung hinterlässt.",
+		"impulse": "Erstelle Panik überall, schneiden Sie die Ausgänge ab, isolieren Sie sie, lassen Sie sie für Sicherheit kämpfen, teilen Sie die Party",
+		"potentialAdversaries": "Gegner (Elementarfunke, Elementarer Erdkörper, Vulkandrache: Obsidian Predator)"
+	},
+	{
+		"id": "HF-E025",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Gibt es ein Muster für die Art und Weise, wie sich die Hütte neu anordnet?",
+					"Was ist der überraschendste Ort, den die PCs hier finden konnten?"
+				],
+				"name": "Größer im Inneren",
+				"richContent": "<p>Obwohl das Äußere der Hütte ein rustikales Einzelzimmerhaus ist, ist das Innere ein sich ständig veränderndes Anwesen mit zahlreicher Pracht, Bibliotheken und Innengärten, unter anderem geheimnisvolle Installationen.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer waren diese Puppen vorher?",
+					"Gibt es eine Möglichkeit, sie aus ihrer Haft zu befreien?"
+				],
+				"name": "Creepy Doll Collection Ubersetzungen",
+				"richContent": "<p>Countdown (5). In der gesamten Hütte können die PCs viele, viele Porzellan- oder Holzpuppen mit seltsam lebensechten Augen sehen. Wenn die Party zum ersten Mal in eine Puppe eintritt, aktivieren Sie den Countdown. Es tickt, wenn ein PC eine Rolle ausfällt oder mit Furcht rollt. Wenn es auslöst, werden die Puppen zum Leben erweckt und greifen an. Beschwöre eine Anzahl von lebenden Puppen (Redcap Biters) gleich doppelt so viele wie PCs.</p>"
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Auf welche Art von Gebräu ist die Hexe, die diese Hütte besitzt, spezialisiert?",
+					"Was würde die Hexe tun, wenn sie die PCs mit ihren Sachen finden würden?"
+				],
+				"name": "Hexenbrau",
+				"richContent": "Die Hütte enthält eine Werkstatt mit jedem Werkzeug oder jeder Komponente, die eine Hexe brauchen könnte, einschließlich eines großen Eisenkessels, der auf einem schwelenden Feuer steht. Ein PC, der die Werkstatt nutzen möchte, kann einen Zauberwurf herstellen, um einen Zaubertrank oder ein Gift aus dem Verbrauchsmaterialtisch herzustellen. Jeder Fehler: Das Experiment explodiert ihnen ins Gesicht - buchstäblich. Der PC nimmt 2W10 + 2 magischen Schaden. Jeder Erfolg: Der PC rollt eine Anzahl von d12s gleich 1 + ihre Stufe, addiert die Ergebnisse zusammen und erhält das Verbrauchsmaterial, das diesem Wert in der Verbrauchsmaterialtabelle entspricht."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Warum bewegt sich die Hütte so oft?",
+					"Wo will sie die PCs hinbringen?",
+					"Gibt es eine Möglichkeit, es auf einen bestimmten Ort zu richten?"
+				],
+				"name": "Ausgegrenzt",
+				"richContent": "<p>Die Zeit bewegt sich anders innerhalb der Hexe&#x27;s Hut. Wenn die Tür zur Hütte geschlossen ist, rollen Sie einen W6. Bei einem Ergebnis von 4 oder höher bewegt sich die Hütte zu einem anderen - oft unmöglich weit entfernten Ort, der nur den PCs offenbart wird, wenn sie die Hütte öffnen&#x27;s Tür wieder.</p>"
+			}
+		],
+		"name": "Hexenhütte",
+		"desc": "Eine rustikale, fensterlose Hütte auf zwei riesigen Hühnerbeinen.",
+		"impulse": "Schleichen Sie sie aus, verzögern Sie sie bis zur Rückkehr der Hexe, sperren Sie sie ein, bewegen Sie sich an einen anderen Ort, versuchen Sie sie mit magischen Kuriositäten",
+		"potentialAdversaries": "Gegner (Chicken-foot Hut, Valdenhax); Verzauberte Verteidigung (Ravenous Mockery, Scarecrow); Die Opfer der Hexe (Jack-o'-Laterne, Redcap Biters)"
+	},
+	{
+		"id": "SE001",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie würden die Banditen bemerken, dass die Brombeeren gestört wurden?",
+					"Wie kam die Mauer dorthin - haben sie einen Druiden oder Ranger unter ihrer Nummer?"
+				],
+				"name": "Dornzaun",
+				"text": "Führe einen Angriff auf ein Ziel innerhalb von kurzer Distanz durch. Bei einem Erfolg handeln Sie 1W8+4 physischen Schaden und ziehen Sie das Ziel in unmittelbar."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wann wechseln sie die Uhr?",
+					"Welche Waffen haben sie im Falle eines Angriffs vorbereitet?"
+				],
+				"name": "Patrouillen",
+				"text": "Die Banditen posten eine konstante Uhr, die hauptsächlich außerhalb des Lagers gerichtet ist. Der Eintritt erfordert Stealth (Geschick), Täuschung (Präsenz) oder spezielle Informationen (Wissen)."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Verteidigung müssen die Banditen zum Tragen bringen?",
+					"Bemerkt jemand den Kampf oder ist er vorbei, bevor andere Banditen davon Notiz nehmen?"
+				],
+				"name": "Kämpfe dich durch deinen Weg",
+				"text": "Wenn die Gruppe sich entscheidet, sich durchzukämpfen, aber ihr wollt den Kampf abstrahieren, um Zeit zu sparen, ruft zu einer Gruppenaktion auf, in der jedes Mitglied der Gruppe gefragt wird, wie es zum Kampf beiträgt, wobei ein PC die Hauptrolle für die Gruppe spielt. Bei einem Erfolg mit Furcht muss jeder PC Stress und 1 TP oder 1 Rüstungsplatz markieren. Bei einem Fehler muss jeder PC 2 Stress und eine Kombination aus 2 TP und/oder Panzerungsschlitzen markieren."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Vermeiden die PCs die Tiere?",
+					"Versuchen sie, sie als Ablenkung oder Backup zu verwenden?",
+					"Haben die PCs Futter, das die Aufmerksamkeit der Tiere auf sich ziehen würde?"
+				],
+				"name": "Auf der Jagd",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Eine Packung 1W4+2 hungrige Strixwölfe infiltrieren das Versteck, verzweifelt nach Nahrung."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie ist es klar, dass die Banditen in höherer Alarmbereitschaft sind?",
+					"Welche zusätzlichen Verteidigungstaktiken bereiten sie vor?"
+				],
+				"name": "Alarm",
+				"text": "Bei einem Misserfolg oder Erfolg mit Furcht werden einige der Banditen misstrauisch und aktiver patrouillieren. Versuche, das Versteck mit Stealth zu passieren, haben Nachteile für den Rest der Szene oder bis die aktiv patrouillierenden Banditen von etwas anderem besiegt oder abgelenkt werden."
+			}
+		],
+		"name": "BANDIT-HIDEOUT",
+		"desc": "Ein schäbiges, aber gut verteidigtes Versteck, das sich zwischen den Brombeeren des Sablewood befindet.",
+		"impulse": "Halte Eindringlinge fern, nehmen Sie Wache, halten Sie die Kampfbereitschaft aufrecht",
+		"potentialAdversaries": "Banditen mit gezacktem Messer (Bandit, Shadow, Hexer, Sniper, Lieutenant, Lackey, Kneebreaker)"
+	},
+	{
+		"id": "SE002",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie können sie die Tunnel so gut tarnen?",
+					"Welche Fallen könnten sie im Weg lassen?"
+				],
+				"name": "Verborgen Eingang",
+				"text": "Die erste Herausforderung der Underroot Tunnels besteht darin, sie zu finden. PCs müssen einen Fortschritts-Countdown (3) abschließen, um einen brauchbaren Eingang zu den Tunneln zu finden (Instinkt und Wissen sind am besten geeignet, obwohl Geschick verwendet werden könnte, um manuell nach einer Naht oder einem Schalter zu suchen, und Präsenz könnte verwendet werden, um Informationen von einem Bewohner des Sablewood zu erhalten)."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie wurde dieser Ort gebaut, um Außenseiter absichtlich zu verwirren?",
+					"Wie laufen Patrouillen innerhalb der Tunnel?"
+				],
+				"name": "Eine Reihe von Passageways, alle gleich",
+				"text": "Um zu einem bestimmten Ort in den Tunneln zu navigieren, ist ein Fortschritts-Countdown erforderlich (4 für die meisten bekannten Siedlungen, 6 für weniger bekannte oder abgelegenere Ziele)."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche anderen Hindernisse baute die Underroot-Gemeinschaft ihre Passagen herum?",
+					"Welchen einzigartigen Ansatz haben sie im Umgang mit ihnen verfolgt?"
+				],
+				"name": "Wurzelblockade",
+				"text": "Zeige, dass der Weg vor der Verlagerung eines großen Sablewood-Baums blockiert wurde. Die Gruppe kann um die Wurzel graben (Geschick), versuchen, sie zu durchschneiden (Stärke), oder zurück verdoppeln, um einen anderen Weg zu finden (Instinkt)."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie fühlen sich die Underroot-Leute über diese Maut-Kämpfer?",
+					"Was sonst könnten sie bewachen?"
+				],
+				"name": "Mauthalter",
+				"cost": "Setze 1 Furcht ein",
+				"text": "eine Anzahl von Messerlacken einzuführen, die der Größe der Partei entsprechen, sowie zwei Messerbanditen und ein Messerleutnant, der eine \"Maut\" von zwei Handvoll Gold pro Charakter sucht, um durch ihr \"geschütztes Territorium\" zu gehen."
+			}
+		],
+		"name": "ROTTUNTERNEHMEN",
+		"desc": "Befestigte und gepflegte Tunnel, die zu unterirdischen Gemeinschaften innerhalb des großen Waldes führen.",
+		"impulse": "Verwechselte Reisende, Bar Passage, verbinden Communities",
+		"potentialAdversaries": "Acid Burrower, Stonewraith, Jagged Knife Bandits"
+	},
+	{
+		"id": "SE003",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Familie nimmt die PCs auf?",
+					"Welcher Besucher hat die Gästeprivilegien missbraucht und was wollen sie hier?"
+				],
+				"name": "Gastprivilegien",
+				"text": "Während dieser Zeit haben die Bedürfnisse des Gastes Vorrang und sie können alles nutzen, was ihren Gastgebern gehört. Nach drei Nächten müssen die Besucher Familien tauschen oder die Stadt verlassen."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was ist die Rede von der Taverne?",
+					"Welche Hinweise liefern die in den Schuhen / Stiefeln des PCs verbliebenen Schmuckstücke?"
+				],
+				"name": "Clover's Taverne",
+				"text": "Im Zentrum der Stadt ist eine riesige sechsstöckige Taverne, die um den Stamm eines alten Baumes herum gebaut ist. In der Taverne versammelt sich der größte Teil des Dorfes am Abend. Hier können PCs Gerüchte lernen, die Dorfbewohner treffen und sich entspannen. Wenn sie gehen, haben die Schuhe, die sie auf der Bekleidungslinie aufstellen, kleinere Schmuckstücke im Inneren, die widerspiegeln, wie die Dorfbewohner sie sehen oder die ein kleines Vorzeichen für kommende Herausforderungen darstellen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Warum kommen die Faceless Six in die Stadt?",
+					"Welche Vorbereitungen müssen getroffen werden, bei denen die Partei besonders gerüstet ist?"
+				],
+				"name": "Zubereitungen",
+				"text": "Ein prominentes Mitglied der Gemeinde nähert sich den PCs und bittet um Hilfe bei einzigartigen Vorbereitungen für die Ankunft der Führer der Stadt, der Faceless Six."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Bemerken die Dorfbewohner, wenn das passiert?",
+					"Wie warnen sie die Wächter vor diesen Missbräuchen, oder wissen die Dryaden es nur?",
+					"Was ist der Ursprung des Gastprivilegs?"
+				],
+				"name": "Überlasse es den Bäumen",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Wenn jemand Gästeprivilegien missbraucht, um zwölf junge Dryaden zu beschwören, entführen sie den Schuldigen und ziehen sie vor die Justiz der Sablewoods."
+			}
+		],
+		"name": "DAS VILLAMENT HUSH",
+		"desc": "Ein kleines, aber freundliches Dorf, eingebettet in das Herz des Sablewood.",
+		"impulse": "Display Gastfreundschaft, bieten Erholung von Gefahr",
+		"potentialAdversaries": "Kaufmann, Bladed Guards, Strixwolves"
+	},
+	{
+		"id": "SE004",
+		"type": "Erkundung",
+		"features": [
+			{
+				"type": "Aktion",
+				"questions": [],
+				"name": "Rache des Tales",
+				"cost": "Setze 1 Furcht ein",
+				"text": "zwei weitere Ancient Skeletons aus dem Boden innerhalb von sehr kurzer Distanz eines PCs zu beschwören."
+			}
+		],
+		"name": "DIE OBERE VALE",
+		"desc": "Eine riesige, windgepeitschte Weite von rollendem Grasland und alten Steindenkmälern.",
+		"impulse": "Bewacht die Gefallenen, erhebt euch gegen Eindringlinge",
+		"potentialAdversaries": "Alte Skelette"
+	},
+	{
+		"id": "VE001",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was feiern alle?",
+					"Wo ist die Party?",
+					"Wer bezahlt die Rechnung?"
+				],
+				"name": "Lose Lippen und schnelle Freunde",
+				"text": "PCs haben Vorteile auf Präsenz Rollen, um mit anderen Nachtschwärmern zu sozialisieren."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was möchte der Gastgeber mehr sehen oder hören als alles andere?",
+					"Was können sie im Gegenzug von den PCs absetzen?"
+				],
+				"name": "Sind Sie nicht begeistert?",
+				"text": "Alle PCs können einen Aktionswurf machen, um eine Performance, einen Wettbewerb oder eine andere unbeschwerte Ablenkung zu initiieren. Jeder PC, der erfolgreich ist, wird ein Ehrengast. Bis zum Ende des großen Festes kann ein Ehrengast einen Segen vom Gastgeber beanspruchen und dann den Zustand löschen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Was macht diesen Dud so unangenehm?",
+					"Was ist etwas, das der PC kümmert, dass der Dud ständig abnimmt oder abgibt?",
+					"Was für eine langweilige oder schreckliche Sache kann der Dud nicht den Mund halten?"
+				],
+				"name": "Es gibt immer diesen einen...",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Einen PC im Gespräch mit der unangenehmsten Person auf der Party einzufangen, bis es ihm gelingt, sich aus diesem sozialen Schwarzen Loch zu befreien. Ein eingefangener PC kann keine anderen Actionrollen machen, außer zu versuchen, diesen Zustand zu entfernen. Wenn ein eingefangener PC einen Aktionswurf ausfällt, muss er 1 Stress markieren."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Welche verrückten Geschichten teilen die PCs miteinander, wenn sie die Party verlassen?",
+					"Wen sehen die PCs danach unerwartet kuscheln?"
+				],
+				"name": "Letzter Aufruf",
+				"text": "Nach einer langen Nacht beginnen die Partygänger zu beginnen. Wenn das Fest zu Ende geht, löschen alle PCs, die an den Feierlichkeiten teilgenommen haben, alle Stress und erhalten 1 Hoffnung. Zusätzlich räumt jeder Ehrengast alle TP und erhält einen zusätzlichen Hoffnung, dann löscht die Bedingung. PCs, die überfordert sind, müssen auf einem Stärke Reaktionswurf erfolgreich sein oder werden Hungover bis zu ihrer nächsten Pause. Hungover PCs nehmen eine -1 Strafe auf alle Action-Rollen."
+			}
+		],
+		"name": "GRUNDFEST",
+		"desc": "Eine gemeinschaftsweite Feier mit viel zu viel Getränk, Essen und Spaß.",
+		"impulse": "Bringe alle zusammen, feiern Sie einen bedeutsamen Anlass, fördern Sie die glänzende Verlassenheit",
+		"potentialAdversaries": "Lehrling Assassin, Guard, Merchant, Petty Noble, Sellsword, Spy"
+	},
+	{
+		"id": "VE002",
+		"type": "Ereignis",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie gewinnt der PC diesen Vorteil?",
+					"Geht man alleine oder bittet man um Hilfe?",
+					"Welche unvorhergesehenen Komplikationen entstehen während des Raubüberfalls selbst?"
+				],
+				"name": "Vorbereitungsarbeiten",
+				"text": "Vor dem Überfall hat jeder PC die Möglichkeit, eine wichtige Information zu sammeln, den Standort zu überwachen oder ein hilfreiches Werkzeug oder eine Ressource zu erwerben. Gib jedem Spieler die Möglichkeit, ein Hindernis zu beschreiben, auf das er erwartet und wie er sich darauf einstellt, es zu überwinden, und lassen Sie ihn dann ein Aktionswurf machen. Bei einem Erfolg erhalten sie den Vorteil oder das Asset, das sie suchen. Bei einem Erfolg mit Furcht ist es weniger nützlich als erwartet (zum Beispiel entdecken sie den Standort eines Verborgen-Zugangspunkts, erfahren aber, dass das Durchbrechen wahrscheinlich ein Diffi-Kult und Lärm sein wird)."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was ist die Partei geht nach, und wo ist es gelegen?",
+					"Auf welche unerwarteten Hindernisse werden sie stoßen?",
+					"Was passiert, wenn die Party erwischt wird?"
+				],
+				"name": "Infi-Ergebnis",
+				"text": "Lege das Ziel des Überfalls fest und starten Sie zwei dynamische Countdowns: einen Fortschritts-Countdown (12), um die Arbeit der Partei auf ihr Ziel hin darzustellen, und einen Folgen-Countdown (10), um das steigende Risiko der Entdeckung und Erfassung darzustellen. Wenn der Fortschritts-Countdown fi rst auslöst, strahle diese Umgebung aus, um die Funktion „Exfi-Litration“ zu verwenden. Wenn der Konsequenz-Countdown fi rst auslöst, erhalte 1W4 Furcht, in den Fokus rücken Sie diese Umgebung und verwenden Sie die Funktion „Sound the Alarm“."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was hat der PC im Voraus vorbereitet?",
+					"Woher wussten sie, dass sie es brauchen würden?",
+					"Was hat sie gekostet, oder wem schulden sie einen Gefallen?"
+				],
+				"name": "Sah dieses Kommen",
+				"text": "Einmal pro Sitzung kann ein PC 1 Hoffnung ausgeben, um zu erklären, wie er sich auf die aktuelle Situation vorbereitet hat, und eine wichtige Information (wie den Standort einer Verborgen-Passage oder das Passwort für einen eingeschränkten Bereich) oder einen hilfreichen Gegenstand (wie die unbeaufsichtigte Uniform eines Kultisten oder ein gewöhnliches Verbrauchsmaterial Verborgen in seinem Boot) zu erstellen."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Was macht es noch gefährlicher, rauszukommen als reinzukommen?",
+					"Welche unvorhergesehenen Entwicklungen behindern den ursprünglichen Fluchtplan der Partei?"
+				],
+				"name": "Exfi-Literation",
+				"text": "Wenn der Fortschritts-Countdown auslöst, erwirbt die Partei das Objekt des Raubüberfalls und muss es einer Gruppe Aktionswurf gelingen, zu entkommen, ohne erwischt zu werden."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Was macht diese Gegner einzigartig geeignet, um diesen Ort zu schützen?",
+					"Was wissen sie über diesen Ort, der ihnen einen Vorteil verschafft?"
+				],
+				"name": "Alarm schlagen",
+				"text": "Wenn der Konsequenz-Countdown auslöst, wird die Gruppe entdeckt und der Ort tritt in Hochalarm. Sofort rufen Sie eine Anzahl von Tier-2-Gegnern auf, die der Anzahl der PCs in der Szene entspricht, und stellen Sie einen Scheinwerfer dar. Während diese Umgebung in Hochalarm ist, erhalten alle Gegner einen +1 Bonus auf ihren Schwierigkeitsgrad."
+			}
+		],
+		"name": "HERB",
+		"desc": "Die Partei muss Zugang zu einem Verborgen oder einem gut geschützten Ort erhalten, um die Informationen oder Gegenstände zu erhalten, die darin gesichert sind.",
+		"impulse": "Führe die Partei bereit, teilen Sie sie auf, werfen Sie Hindernisse auf, fangen Sie sie ein, verbrauchen Sie ihre Ressourcen",
+		"potentialAdversaries": "Hauptwache, Minotaurus-Wracker, SecretKeeper, Spektralwächter"
+	},
+	{
+		"id": "VE003",
+		"type": "Durchquerung",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wie verändert die Einstimmung auf diesen Ort Deine sensorische Erfahrung davon?",
+					"Welchen Klang oder Song aus deiner Kindheit beschwört dieser Ort?"
+				],
+				"name": "Harmonische Resonanz",
+				"text": "Die Kristalle hier hallen mit magischer Energie wider. Ein PC kann eine Auszeitbewegung machen, um zu versuchen, sich mit einem erfolgreichen Zauberwurf auf die Umgebung einzustellen. Zauberwirken Rollen, die von einem abgestimmten PC im Kristallödland hergestellt wurden, haben einen Vorteil. Ein PC löscht den Zustand, wenn sie das Ödland verlassen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wie fühlt es sich an, wenn Körper und Geist das Gleichgewicht wiederherstellen?",
+					"Gibt es eine Möglichkeit, dies zu Deinem Vorteil zu nutzen?"
+				],
+				"name": "Gravitationsanomalien",
+				"text": "Seltsame, lokalisierte Phänomene prägen die Landschaft, verzerrende Entfernung und Richtung. Setze 1 Furcht ein, um die Schwerkraft an einem Punkt Deiner Wahl zu verändern. Alle Ziele innerhalb von kurzer Distanz dieses Punktes müssen ein Wissen Reaktionswurf machen, um ihre neuen Flugbahnen zu berechnen. Ziele, die scheitern, nehmen 3W8+4 physischen Schaden, wenn sie auf und ab geworfen werden. Ziele, die erfolgreich sind, müssen 1 Stress markieren oder halben Schaden nehmen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Wen sehen die PCs auf der anderen Seite des Kristalls?",
+					"Wie fühlt es sich an?"
+				],
+				"name": "Arcane Refl-Ektion",
+				"cost": "Setze 1 Furcht ein",
+				"text": "Wenn eine beliebige Anzahl von PCs einen Blick auf die Umkehrung im Kristall werfen, wer sie einmal waren oder werden könnten. Jedes Ziel macht eine Schicksalsrolle. Ziele, die Erfolg haben, sehen eine Vision von ihrem besseren Selbst und können eine Erfahrung ersetzen. Ziele sehen eine Vision ihrer dunklen Vergangenheit - oder einer noch dunkleren Zukunft - und müssen 1 Stress markieren, und Du erhältst 1 Furcht."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie sieht der Kristall aus, wenn er wächst?",
+					"Wie fühlt es sich an?"
+				],
+				"name": "Razor-Sharp Terrain",
+				"text": "Wenn ein PC eine Rolle nicht durchkommt, um durch das Ödland zu navigieren, machen sie einen Geschick Reaktionswurf. Bei einem Fehler schneiden sie sich an den scharfen Rändern des Geländes. Scherben aus magischem Kristall werden in ihre Wunde eingebettet und wachsen langsam, Kristallisieren sie. Aktiviere einen Kristall Countdown (1) für diesen PC. Bis sie die Bedingung mit einem erfolgreichen Wissen Wurf entfernen, tickt ein Kristallisierender PC seinen Kristall-Countdown zu Beginn jeder Pause und hat eine Strafe auf ihren Ausweichen gleich seinem Wert."
+			},
+			{
+				"type": "Reaktion",
+				"questions": [
+					"Wie fühlt es sich an, in der Haut eines anderen zu sein?",
+					"Wenn du dich entscheiden könntest, auf eine Art und Weise wie sie zu bleiben, was wäre es?"
+				],
+				"name": "Psychischer Shuffl",
+				"text": "Wenn die PCs eine lange Pause einlegen, können Sie 1 Furcht ausgeben, um ihre Psyche zu tauschen. Sammle alle Charakterblätter der Spieler, dann mischen Sie sie und verteilen Sie sie zufällig neu. Jedes Charakterblatt wird mit den Domainkarten und Spielerhilfen dieses PCs geliefert. Ein PC kann seine Psyche mit einem erfolgreichen Wissen-Wurf wiedererlangen, an dem sie mit dem Spieler, der ihr ursprüngliches Charakterblatt hat, Blätter tauschen."
+			}
+		],
+		"name": "KRYSTALISCHES WASTELAND",
+		"desc": "Eine raue und fremde Landschaft, die mit Türmen aus glitzernden Kristallen glänzt.",
+		"impulse": "Schneide sie auf ihren Kern, brechen ihre Psyche, zeigen ihre wahre refl Ection",
+		"potentialAdversaries": "Adult Flickerfl y, Konstrukte, Kristallwächter (Vault Guardians), Elementarfunken, Flüstern Wraiths"
+	},
+	{
+		"id": "VE004",
+		"type": "Sozial",
+		"features": [
+			{
+				"type": "Passiv",
+				"questions": [
+					"Welche Art zu sein, herrscht derzeit in der Stadt?",
+					"Welche seltsamen Bräuche praktizieren sie?",
+					"Welcher PC ist am meisten verwirrt oder von ihnen beendet, und welcher PC nimmt diese Bräuche als seine eigenen an?"
+				],
+				"name": "Unmöglichkeiten im Überfluss",
+				"text": "Konvergenz ist ein Nexus von Göttern, Monstern, Aliens und allen möglichen Dimensions-Hüpfern. Weil das sterbliche Leben im Allgemeinen unter der Sorge dieser Wesen liegt, haben PCs Nachteile bei Actionrollen, um sie zu beeinflussen, es sei denn, sie haben einen Einfluss auf sie oder wissen, was dem NPC wichtig ist."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wo (oder wann) will die Partei hin?",
+					"Wo befindet sich dieses Portal und wer kontrolliert diesen Bereich?"
+				],
+				"name": "In das Multiversum",
+				"text": "Die Stadt Convergence hat ein Portal oder eine Tür zu jeder Ebene der Existenz."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Wer hat den Gegenstand, den die Partei braucht?",
+					"Was wollen sie im Gegenzug?"
+				],
+				"bullets": [
+					"Kritischer Erfolg: Der PC finds das perfekte Element, und der Händler, der es hat, will nur etwas, das der PC als belanglos im Austausch betrachtet.",
+					"Erfolg mit Hoffnung: Der PC finds das perfekte Element, und kann etwas von gleichem Wert für sie austauschen.",
+					"Erfolg mit Furcht: Der PC fi nds das perfekte Element, aber der Händler, der es hat, wird es nur gegen etwas austauschen, das die Partei ihnen nicht geben kann ... noch.",
+					"Jeder Fehler: Der PC muss 1 Stress markieren, während sie auf eine wilde Gänsejagd gehen, aber mit leeren Händen auftauchen. Der PC kann eine zusätzliche Stress markieren, um dieses Ergebnis in einen Erfolg mit Furcht zu verwandeln."
+				],
+				"name": "Alles überall auf einmal",
+				"text": "Ein PC, der einen bestimmten Gegenstand mit wundersamen Eigenschaften sucht, kann einen Instinkt oder Präsenz Wurf machen, um ihn auf dem pandimensionalen Marktplatz der Stadt zu finden."
+			},
+			{
+				"type": "Passiv",
+				"questions": [
+					"Was hat die Partei getan (oder was planen sie zu tun), das die Aufmerksamkeit und den Zorn des Konsortiums auf sich zieht?",
+					"Wie können sie fi x das Problem, das sie verursacht haben?"
+				],
+				"name": "Mach keine Wellen",
+				"text": "Countdown (6). Weil in Convergence alles möglich ist, unterhält die Stadt ein labyrinthisches Büro, das Verordnungen über alle Austausche und Interaktionen zwischen den Reichen erlässt und durchsetzt. Wenn die Partei in Convergence ankommt, starten Sie einen Countdown (6), der immer dann ankommt, wenn ein PC etwas tut, das das empfindliche politische Gleichgewicht der Stadt stört. Wenn ein gewollter PC mit Furcht rollt, können Sie 1W4 Temporal Enforcer, die in sehr kurzer Distanz erscheinen, sofort ins Rampenlicht rücken und versuchen, die Partei zu begreifen."
+			},
+			{
+				"type": "Aktion",
+				"questions": [
+					"Welche Fraktion ist der Partei ihre Unterstützung?",
+					"Gegen wen wollen sie, dass die Partei handelt?"
+				],
+				"name": "An Off Er You Can't Refuse (Deutsche Ausgabe)",
+				"text": "Konvergenz ist die Heimat eines schwachen Netzwerks rivalisierender Fraktionen. Gib 1 Furcht aus, damit einer von ihnen der Partei eine einfache Lösung für ein diffi-Kultproblem im Austausch für ihre Loyalität vorlegt. Wenn die Partei sich weigert, muss jeder PC 1 Stress markieren und sie können nicht in Zukunft zu dieser Fraktion zurückkehren, um Hilfe zu erhalten."
+			}
+		],
+		"name": "KONVERGENZ, DIE STADT DER PORTALE",
+		"desc": "Eine weitläufige Metropole am Nexus der Schöpfung, in der sich einflussreiche Fi-Gures aus allen Bereichen versammeln.",
+		"impulse": "Konfrontieren Sie sie mit fremden Bräuchen, blenden Sie sie mit infi Nite Vielfalt, versuchen Sie sie mit dem Unmöglichen",
+		"potentialAdversaries": "Power Players (Monarch, Dämon Lord Orthrax, Fire Giant Warlord, Erznekromant, High Seraph, Vampire Lord, Orakel des Untergangs), Reisende und Bewohner (any)"
+	}
+]

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { App, MarkdownView, Notice, setIcon } from "obsidian";
 import type { AdvData, EnvironmentData } from "../../types/index";
-import { ADVERSARIES } from "../../data/index";
-import { ENVIRONMENTS } from "../../data/index";
+import { getAdversaries, getEnvironments } from "../../data/index";
 import {
 	SearchEngine,
 	SearchControlsUI,
@@ -23,7 +22,8 @@ import { buildCharacterEmbedBlock, characterEmbedCode } from "../characters/Char
 import { ConfirmModal } from "../characters/components/ConfirmModal";
 import type { CharacterData } from "../../types/character";
 import { CLASS_COLORS, GEAR_KIND_COLORS, GEAR_KIND_LABELS, GearData } from "../../types/srd";
-import { ALL_GEAR, SRD_CLASSES } from "../../data/srd";
+import { getAllGear, SRD_CLASSES } from "../../data/srd";
+import { useLanguage } from "../../i18n/react";
 import { buildItemEmbedBlock } from "../items/ItemEmbed";
 import { hexTint } from "../characters/components/SheetSections";
 
@@ -125,6 +125,7 @@ const ADV_TYPES = [
 ];
 
 function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const language = useLanguage();
 	const [cards, setCards] = useState<AdvData[]>([]);
 	const [ready, setReady] = useState(false);
 	const engineRef = useRef(new SearchEngine<AdvData>());
@@ -133,7 +134,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 	const load = useCallback(() => {
 		const plugin = getDaggerForgePlugin(app);
 		const custom = plugin?.dataManager?.getAdversaries()?.map(a => ({ ...a, source: a.source || "custom" })) ?? [];
-		const all = [...ADVERSARIES, ...custom];
+		const all = [...getAdversaries(language), ...custom];
 		engineRef.current.setCards(all);
 		setCards([...engineRef.current.search()]);
 		setReady(true);
@@ -142,7 +143,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			sources: engineRef.current.getFacetCounts("sources"),
 			types:   engineRef.current.getFacetCounts("types"),
 		});
-	}, [app, refreshToken]);
+	}, [app, refreshToken, language]);
 
 	useEffect(() => { load(); }, [load]);
 
@@ -241,6 +242,7 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 // ── Environment Pane ──────────────────────────────────────────────────────────
 
 function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const language = useLanguage();
 	const [cards, setCards] = useState<EnvironmentData[]>([]);
 	const [ready, setReady] = useState(false);
 	const engineRef = useRef(new SearchEngine<EnvironmentData>());
@@ -250,7 +252,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 		const plugin = getDaggerForgePlugin(app);
 		const customRaw = plugin?.dataManager?.getEnvironments() ?? [];
 		const custom = customRaw.map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source || "custom" }));
-		const builtIn = ENVIRONMENTS.map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source ?? "core" }));
+		const builtIn = getEnvironments(language).map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source ?? "core" }));
 		const all = [...builtIn, ...custom];
 		engineRef.current.setCards(all);
 		setCards([...engineRef.current.search()]);
@@ -260,7 +262,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 			sources: engineRef.current.getFacetCounts("sources"),
 			types:   engineRef.current.getFacetCounts("types"),
 		});
-	}, [app, refreshToken]);
+	}, [app, refreshToken, language]);
 
 	useEffect(() => { load(); }, [load]);
 
@@ -299,7 +301,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 		load();
 	}, [app, load]);
 
-	const BADGE_LABELS: Record<string, string> = { core: "Core", custom: "Custom", sablewood: "Sablewood", umbra: "Umbra", void: "Void" };
+	const BADGE_LABELS: Record<string, string> = { core: "Core", "hope-fear": "Hope & Fear", custom: "Custom", sablewood: "Sablewood", umbra: "Umbra", void: "Void" };
 
 	return (
 		<>
@@ -468,13 +470,14 @@ function CharacterCard({ character, onInsert, onDelete }: {
 const GEAR_KINDS = ["all", "weapon", "armor", "wheelchair", "item", "consumable"] as const;
 
 function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const language = useLanguage();
 	const [query, setQuery] = useState("");
 	const [kind, setKind] = useState<(typeof GEAR_KINDS)[number]>("all");
 	void refreshToken;
 
 	const plugin = getDaggerForgePlugin(app);
 	const q = query.trim().toLowerCase();
-	const gear = [...(plugin?.dataManager?.getItems() ?? []), ...ALL_GEAR].filter((g) => {
+	const gear = [...(plugin?.dataManager?.getItems() ?? []), ...getAllGear(language)].filter((g) => {
 		if (kind !== "all" && g.kind !== kind) return false;
 		if (q && !(g.name.toLowerCase().includes(q) || g.text.toLowerCase().includes(q) || g.meta.toLowerCase().includes(q))) return false;
 		return true;

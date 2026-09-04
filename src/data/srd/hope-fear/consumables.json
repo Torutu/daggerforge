@@ -1,0 +1,490 @@
+[
+	{
+		"id": "HF-CN001",
+		"roll": 1,
+		"rarity": "Hope & Fear",
+		"name": "Arcticite Shard",
+		"category": "Consumable",
+		"text": "Choose a point within Far range. All targets within Close range of that point must succeed on a Reaction Roll (16) or take 3d6 magic damage and become temporarily Restrained by ice."
+	},
+	{
+		"id": "HF-CN002",
+		"roll": 2,
+		"rarity": "Hope & Fear",
+		"name": "Berserker's Brew",
+		"category": "Consumable",
+		"text": "When you drink this dram of liquid, you gain a bonus to your Strength and a penalty to your Finesse and Knowledge equal to your Instinct (minimum 1). This effect lasts until you make a death move or until your next rest."
+	},
+	{
+		"id": "HF-CN003",
+		"roll": 3,
+		"rarity": "Hope & Fear",
+		"name": "Bundle of Spiderlegs",
+		"category": "Consumable",
+		"text": "You can eat these spiderlegs to walk on walls until your next rest."
+	},
+	{
+		"id": "HF-CN004",
+		"roll": 4,
+		"rarity": "Hope & Fear",
+		"name": "Cacophonous Concoction",
+		"category": "Consumable",
+		"text": "When you drink this potion, anything you say or do in the next hour becomes impossible for a witness to recount. Any attempts they make to communicate what they saw, heard, or otherwise sensed comes out garbled or nonsensical."
+	},
+	{
+		"id": "HF-CN005",
+		"roll": 5,
+		"rarity": "Hope & Fear",
+		"name": "Chimeric Saliva",
+		"category": "Consumable",
+		"text": "You can apply this saliva to a weapon that deals physical damage to change its damage type to magic until your next rest."
+	},
+	{
+		"id": "HF-CN006",
+		"roll": 6,
+		"rarity": "Hope & Fear",
+		"name": "Ciscan Fog Bottle",
+		"category": "Consumable",
+		"text": "You can break this jar to fill the area within Close range with magical mist. A creature who enters the mist clears a Stress and becomes Hidden."
+	},
+	{
+		"id": "HF-CN007",
+		"roll": 7,
+		"rarity": "Hope & Fear",
+		"name": "Cockerel Claw Tea",
+		"category": "Consumable",
+		"text": "You can drink this tea to refresh your features as if you had taken a long rest."
+	},
+	{
+		"id": "HF-CN008",
+		"roll": 8,
+		"rarity": "Hope & Fear",
+		"name": "Concoction",
+		"category": "Consumable",
+		"text": "You can drink this potion to discover the deepest fear of the next person you make eye contact with."
+	},
+	{
+		"id": "HF-CN009",
+		"roll": 9,
+		"rarity": "Hope & Fear",
+		"name": "Cupbearer's Bezoar",
+		"category": "Consumable",
+		"text": "You can swallow this bezoar to become immune to poisons until your next long rest."
+	},
+	{
+		"id": "HF-CN010",
+		"roll": 10,
+		"rarity": "Hope & Fear",
+		"name": "Deathseer's Powder",
+		"category": "Consumable",
+		"text": "You can sprinkle this powder over a recently deceased corpse to conjure a spectral reprise of their final minute of life."
+	},
+	{
+		"id": "HF-CN011",
+		"roll": 11,
+		"rarity": "Hope & Fear",
+		"name": "Demiurge's Draught",
+		"category": "Consumable",
+		"text": "You can drink this draught to gain a +1 bonus to your Proficiency for your next successful attack roll."
+	},
+	{
+		"id": "HF-CN012",
+		"roll": 12,
+		"rarity": "Hope & Fear",
+		"name": "Displacement Token",
+		"category": "Consumable",
+		"text": "You can swallow this token to conjure two illusions of yourself that you can control. Each illusion lasts until it takes damage or until your next rest."
+	},
+	{
+		"id": "HF-CN013",
+		"roll": 13,
+		"rarity": "Hope & Fear",
+		"name": "Drakemantle",
+		"category": "Consumable",
+		"text": "You can use this enchanted ancient dragon hide to gain draconic characteristics until the end of the scene, when the hide falls aways in tatters. Until then, you can fly and gain a +5 bonus to your damage thresholds and a +1 bonus to your Proficiency."
+	},
+	{
+		"id": "HF-CN014",
+		"roll": 14,
+		"rarity": "Hope & Fear",
+		"name": "Emberite Shard",
+		"category": "Consumable",
+		"text": "Choose a point within Far range. All targets within Close range of that point must succeed on a Reaction Roll (16) or take 3d6 magic damage and become temporarily Ablaze. While Ablaze, a creature must roll a d4 whenever they make an action roll. On a result of 1, they mark a Hit Point. On a result of 4, they clear the Ablaze condition."
+	},
+	{
+		"id": "HF-CN015",
+		"roll": 15,
+		"rarity": "Hope & Fear",
+		"name": "Featherstep Potion",
+		"category": "Consumable",
+		"text": "You can drink this potion to sprout small wings from your ankles that give you a bonus to your Evasion equal to your tier until your next rest."
+	},
+	{
+		"id": "HF-CN016",
+		"roll": 16,
+		"rarity": "Hope & Fear",
+		"name": "Formoid Serum",
+		"category": "Consumable",
+		"text": "You can drink this potion to become a swarm of 16 million ants until the end of the scene. You keep and have access to all equipment, loot, and features."
+	},
+	{
+		"id": "HF-CN017",
+		"roll": 17,
+		"rarity": "Hope & Fear",
+		"name": "Fulgurite Shard",
+		"category": "Consumable",
+		"text": "Choose a point within Far range. All targets within Close range of that point must succeed on a Reaction Roll (16) or take 3d6 magic damage and mark 1d4 Stress as lightning crackles through the area."
+	},
+	{
+		"id": "HF-CN018",
+		"roll": 18,
+		"rarity": "Hope & Fear",
+		"name": "Gambler's Fallacy",
+		"category": "Consumable",
+		"text": "You can spend any number of handfuls of gold by placing them into this slotted ceramic jar shaped like a pig. When you throw the jar at a point within Far range, it explodes and deals 1d20 magic damage for each handful of gold spent to all creatures within Close range of that point. All gold within the jar is destroyed."
+	},
+	{
+		"id": "HF-CN019",
+		"roll": 19,
+		"rarity": "Hope & Fear",
+		"name": "Glowmoss Mushroom",
+		"category": "Consumable",
+		"text": "You can break this mushroom into pieces, causing it to glow bright blue until your next long rest."
+	},
+	{
+		"id": "HF-CN020",
+		"roll": 20,
+		"rarity": "Hope & Fear",
+		"name": "Godling's Pomelo",
+		"category": "Consumable",
+		"text": "You can eat this citrus fruit to clear all Hit Points and Stress."
+	},
+	{
+		"id": "HF-CN021",
+		"roll": 21,
+		"rarity": "Hope & Fear",
+		"name": "Gossip Flower",
+		"category": "Consumable",
+		"text": "You can plant this seed in soil. It instantly grows into a small flower that records everything it hears for up to one week. When plucked, the flower recites what it recorded in real time, then withers."
+	},
+	{
+		"id": "HF-CN022",
+		"roll": 22,
+		"rarity": "Hope & Fear",
+		"name": "Gravity Bomb",
+		"category": "Consumable",
+		"text": "You can throw this peach-sized mechanical orb at a point within Far range. It implodes and pulls all creatures and objects within Close range of that point into Melee range with it."
+	},
+	{
+		"id": "HF-CN023",
+		"roll": 23,
+		"rarity": "Hope & Fear",
+		"name": "Green Ooze Oil",
+		"category": "Consumable",
+		"text": "You can coat your weapon in this oil. The next successful attack you make with this weapon deals an extra 1d8 magic damage and temporarily Corrodes the target. While Corroded, the target gains a -2 penalty to their damage thresholds."
+	},
+	{
+		"id": "HF-CN024",
+		"roll": 24,
+		"rarity": "Hope & Fear",
+		"name": "Instant Camp",
+		"category": "Consumable",
+		"text": "You can unfold this small mechanical box into a camping tent large enough to safely house six people. The tent collapses at the end of your next long rest."
+	},
+	{
+		"id": "HF-CN025",
+		"roll": 25,
+		"rarity": "Hope & Fear",
+		"name": "Invisibility Potion",
+		"category": "Consumable",
+		"text": "You are Hidden until you deal damage to another creature or until your next rest."
+	},
+	{
+		"id": "HF-CN026",
+		"roll": 26,
+		"rarity": "Hope & Fear",
+		"name": "Iridian Dust",
+		"category": "Consumable",
+		"text": "This multicolored powder sticks to everything and prevents creatures covered in it from becoming Hidden."
+	},
+	{
+		"id": "HF-CN027",
+		"roll": 27,
+		"rarity": "Hope & Fear",
+		"name": "Lionheart Tonic",
+		"category": "Consumable",
+		"text": "You can drink this tonic to gain a +1 bonus to your Proficiency until you roll with Fear."
+	},
+	{
+		"id": "HF-CN028",
+		"roll": 28,
+		"rarity": "Hope & Fear",
+		"name": "Lyrebird Lozenge",
+		"category": "Consumable",
+		"text": "You can dissolve this lozenge in your mouth to perfectly mimic any voice you've heard until the end of the scene."
+	},
+	{
+		"id": "HF-CN029",
+		"roll": 29,
+		"rarity": "Hope & Fear",
+		"name": "Magic-User's Malison",
+		"category": "Consumable",
+		"text": "When you release this spellcaster's trapped soul, you can cast one spell from a card in your vault as if it were in your loadout. This doesn't work for permanently vaulted cards."
+	},
+	{
+		"id": "HF-CN030",
+		"roll": 30,
+		"rarity": "Hope & Fear",
+		"name": "Mask of the Echoed Self",
+		"category": "Consumable",
+		"text": "You can wear this mask during your next level up to swap the values of any of your traits. When you do, the mask becomes your permanent face."
+	},
+	{
+		"id": "HF-CN031",
+		"roll": 31,
+		"rarity": "Hope & Fear",
+		"name": "Mesmer's Tonic",
+		"category": "Consumable",
+		"text": "When you drink this tonic, the only thing you can hear until your next rest are the surface thoughts of creatures within Very Close range."
+	},
+	{
+		"id": "HF-CN032",
+		"roll": 32,
+		"rarity": "Hope & Fear",
+		"name": "Midas Flask",
+		"category": "Consumable",
+		"text": "You can pour this small flask of alchemical liquid over a mundane item to instantly transmute it into a handful of gold."
+	},
+	{
+		"id": "HF-CN033",
+		"roll": 33,
+		"rarity": "Hope & Fear",
+		"name": "Mnemonic Potion",
+		"category": "Consumable",
+		"text": "You can drink this potion to Utilize an Experience without spending a Hope."
+	},
+	{
+		"id": "HF-CN034",
+		"roll": 34,
+		"rarity": "Hope & Fear",
+		"name": "Moonlight Orb",
+		"category": "Consumable",
+		"text": "You can shatter this orb to make the area within Very Far range appear as though it's moonlit nighttime for the next 24 hours."
+	},
+	{
+		"id": "HF-CN035",
+		"roll": 35,
+		"rarity": "Hope & Fear",
+		"name": "Mossmantle Potion",
+		"category": "Consumable",
+		"text": "You can drink this tea to perfectly blend into natural environments until your next rest."
+	},
+	{
+		"id": "HF-CN036",
+		"roll": 36,
+		"rarity": "Hope & Fear",
+		"name": "Necroprancer's Bell",
+		"category": "Consumable",
+		"text": "You can break this rusted, clapperless bell against the ground to summon a skeletal steed that climbs out of the earth and serves you until the next sunrise."
+	},
+	{
+		"id": "HF-CN037",
+		"roll": 37,
+		"rarity": "Hope & Fear",
+		"name": "Night Hag's Dust",
+		"category": "Consumable",
+		"text": "You can blow this dust in an adversary's face to prevent them from clearing Stress until your next long rest."
+	},
+	{
+		"id": "HF-CN038",
+		"roll": 38,
+		"rarity": "Hope & Fear",
+		"name": "Nightmare Mead",
+		"category": "Consumable",
+		"text": "You can drink this potion to discover the deepest fear of the next person you make eye contact with. When you do, the GM gains a Fear."
+	},
+	{
+		"id": "HF-CN039",
+		"roll": 39,
+		"rarity": "Hope & Fear",
+		"name": "Packet of Space Dust",
+		"category": "Consumable",
+		"text": "This dust causes anything it covers to become lighter than air. One packet contains enough dust to cover the contents of a picnic basket, and the effects last for an hour."
+	},
+	{
+		"id": "HF-CN040",
+		"roll": 40,
+		"rarity": "Hope & Fear",
+		"name": "Phial of Deep Ink",
+		"category": "Consumable",
+		"text": "You can drink this bottle of ink to transform into a cephalopod of roughly your size for the next hour. You gain rubbery skin, soft bones, the ability to breathe underwater, and new limbs until you have eight total."
+	},
+	{
+		"id": "HF-CN041",
+		"roll": 41,
+		"rarity": "Hope & Fear",
+		"name": "Pipeweed",
+		"category": "Consumable",
+		"text": "When you choose the Clear Stress downtime move during a short rest, you can smoke this non-intoxicating leaf to clear an additional Stress. Any other PCs who chose the Clear Stress downtime move also gain this benefit."
+	},
+	{
+		"id": "HF-CN042",
+		"roll": 42,
+		"rarity": "Hope & Fear",
+		"name": "Potion of Vigilance",
+		"category": "Consumable",
+		"text": "You can drink this potion to gain a +1 bonus to your Evasion until you mark a Hit Point."
+	},
+	{
+		"id": "HF-CN043",
+		"roll": 43,
+		"rarity": "Hope & Fear",
+		"name": "Psychopomp's Shroud",
+		"category": "Consumable",
+		"text": "You can place this shroud over the corpse of a recently deceased creature. The creature's spirit enters the shroud and becomes your spectral assistant until the next sunrise, when they pass through the veil of death and take the shroud with them."
+	},
+	{
+		"id": "HF-CN044",
+		"roll": 44,
+		"rarity": "Hope & Fear",
+		"name": "Quintessential Severant",
+		"category": "Consumable",
+		"text": "You can use this magic blade to cut one magical or metaphysical bond, such as an enchantment, contract, magical tether, or divine oath. When you do, the blade shatters."
+	},
+	{
+		"id": "HF-CN045",
+		"roll": 45,
+		"rarity": "Hope & Fear",
+		"name": "Red Ooze Oil",
+		"category": "Consumable",
+		"text": "You can coat your weapon in this oil. The next successful attack you make with this weapon deals an extra 1d8 magic damage and temporarily Ignites the target. While Ignited, the target takes 1d4 magic damage when they take the spotlight."
+	},
+	{
+		"id": "HF-CN046",
+		"roll": 46,
+		"rarity": "Hope & Fear",
+		"name": "Salamander Salve",
+		"category": "Consumable",
+		"text": "You can apply this salve to your skin to make yourself immune to heat until your next rest."
+	},
+	{
+		"id": "HF-CN047",
+		"roll": 47,
+		"rarity": "Hope & Fear",
+		"name": "Self-Sewing Thread",
+		"category": "Consumable",
+		"text": "You can use this thread to clear either a Hit Point or 2 Armor Slots."
+	},
+	{
+		"id": "HF-CN048",
+		"roll": 48,
+		"rarity": "Hope & Fear",
+		"name": "Slayer's Salt",
+		"category": "Consumable",
+		"text": "You can spread this salt in a line along windowsills or thresholds to create a magical barrier that undead creatures can't cross until the line is broken."
+	},
+	{
+		"id": "HF-CN049",
+		"roll": 49,
+		"rarity": "Hope & Fear",
+		"name": "Snakeskin Spirit",
+		"category": "Consumable",
+		"text": "You can drink this potion to slough off your outer layer of skin and heal a scar."
+	},
+	{
+		"id": "HF-CN050",
+		"roll": 50,
+		"rarity": "Hope & Fear",
+		"name": "Snapthorn Seed",
+		"category": "Consumable",
+		"text": "You can throw this seed at a point you can see. It explodes into a tangle of binding vines that temporarily Restrains all creatures within Close range of that point."
+	},
+	{
+		"id": "HF-CN051",
+		"roll": 51,
+		"rarity": "Hope & Fear",
+		"name": "Sprite Bottle",
+		"category": "Consumable",
+		"text": "When you mark your last Hit Point, this bottle shatters to release the Sprite inside. The Sprite clears all your Hit Points before fading from the Mortal Realm."
+	},
+	{
+		"id": "HF-CN052",
+		"roll": 52,
+		"rarity": "Hope & Fear",
+		"name": "Staff of Reversal",
+		"category": "Consumable",
+		"text": "You can break this staff against the ground to reverse one magical transformation or effect within Far range."
+	},
+	{
+		"id": "HF-CN053",
+		"roll": 53,
+		"rarity": "Hope & Fear",
+		"name": "Stake of Abjuration",
+		"category": "Consumable",
+		"text": "You can hammer this stake into the ground and make a proclamation. Until your next rest, a creature within Far range of the stake who transgresses that proclamation must mark a Stress. The stake lasts until your next rest, then it shatters."
+	},
+	{
+		"id": "HF-CN054",
+		"roll": 54,
+		"rarity": "Hope & Fear",
+		"name": "Steelskin Salve",
+		"category": "Consumable",
+		"text": "You can apply this salve to your skin to gain a bonus to your damage thresholds equal to your tier until the end of the scene."
+	},
+	{
+		"id": "HF-CN055",
+		"roll": 55,
+		"rarity": "Hope & Fear",
+		"name": "Stonemason's Fortune",
+		"category": "Consumable",
+		"text": "When you throw this gray brick on the ground, it immediately grows into a 6-foot-tall, 10-foot-wide, and 2-foot-deep wall of solid stone."
+	},
+	{
+		"id": "HF-CN056",
+		"roll": 56,
+		"rarity": "Hope & Fear",
+		"name": "Sunlight Orb",
+		"category": "Consumable",
+		"text": "You can shatter this orb to make the area within Very Far range appear as though it's sunlit daytime for the next 24 hours."
+	},
+	{
+		"id": "HF-CN057",
+		"roll": 57,
+		"rarity": "Hope & Fear",
+		"name": "Tears of the Undying Hero",
+		"category": "Consumable",
+		"text": "When you drink this potion, death can't touch you until your next long rest. When you would mark your last Hit Point, instead of making a death move, you make one final action roll before falling into a dreamless slumber until an ally chooses the Tend to Wounds downtime move to clear your Hit Points."
+	},
+	{
+		"id": "HF-CN058",
+		"roll": 58,
+		"rarity": "Hope & Fear",
+		"name": "Verglasian Seed",
+		"category": "Consumable",
+		"text": "You can use this ice shard to instantly freeze an area of water up to Close range."
+	},
+	{
+		"id": "HF-CN059",
+		"roll": 59,
+		"rarity": "Hope & Fear",
+		"name": "Vial of Featherfall",
+		"category": "Consumable",
+		"text": "You can drink this potion to ignore damage from falling for the next 10 minutes."
+	},
+	{
+		"id": "HF-CN060",
+		"roll": 60,
+		"rarity": "Hope & Fear",
+		"name": "Warding Candle",
+		"category": "Consumable",
+		"text": "You can light this candle to fill an area within Close range with a halo of light. A creature outside the halo can't enter it if they have ill intent toward a creature within it. The candle burns for an hour."
+	},
+	{
+		"id": "HF-CN061",
+		"roll": 61,
+		"rarity": "Hope & Fear",
+		"name": "Yakamel Milk",
+		"category": "Consumable",
+		"text": "After consuming this milk, the next time you clear 1 or more Hit Points, you clear an additional Hit Point."
+	}
+]

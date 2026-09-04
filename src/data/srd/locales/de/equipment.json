@@ -1,0 +1,1198 @@
+{
+	"weapons": [
+		{
+			"id": "WP001",
+			"name": "Arkane Kampfhandschuhe",
+			"feature": null
+		},
+		{
+			"id": "WP002",
+			"name": "Arkane Kampfhandschuhe (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP003",
+			"name": "Arkane Kampfhandschuhe (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP004",
+			"name": "Arkane Kampfhandschuhe (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP005",
+			"name": "Streitaxt",
+			"feature": null
+		},
+		{
+			"id": "WP006",
+			"name": "Streitaxt (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP007",
+			"name": "Streitaxt (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP008",
+			"name": "Streitaxt (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP009",
+			"name": "Breitschwert",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP010",
+			"name": "Breitschwert (verbessert)",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP011",
+			"name": "Breitschwert (meisterlich)",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP012",
+			"name": "Breitschwert (legendär)",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP013",
+			"name": "Armbrust",
+			"feature": null
+		},
+		{
+			"id": "WP014",
+			"name": "Armbrust (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP015",
+			"name": "Armbrust (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP016",
+			"name": "Armbrust (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP017",
+			"name": "Entermesser",
+			"feature": null
+		},
+		{
+			"id": "WP018",
+			"name": "Entermesser (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP019",
+			"name": "Entermesser (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP020",
+			"name": "Entermesser (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP021",
+			"name": "Dolch",
+			"feature": null
+		},
+		{
+			"id": "WP022",
+			"name": "Dolch (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP023",
+			"name": "Dolch (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP024",
+			"name": "Dolch (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP025",
+			"name": "Doppelstab",
+			"feature": null
+		},
+		{
+			"id": "WP026",
+			"name": "Doppelstab (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP027",
+			"name": "Doppelstab (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP028",
+			"name": "Doppelstab (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP029",
+			"name": "Leuchtringe",
+			"feature": null
+		},
+		{
+			"id": "WP030",
+			"name": "Leuchtringe (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP031",
+			"name": "Leuchtringe (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP032",
+			"name": "Leuchtringe (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP033",
+			"name": "Großer Stab",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP034",
+			"name": "Großer Stab (verbessert)",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP035",
+			"name": "Großer Stab (meisterlich)",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP036",
+			"name": "Großer Stab (legendär)",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP037",
+			"name": "Großschwert",
+			"feature": "Massiv: -1 auf Ausweichen; bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP038",
+			"name": "Großschwert (verbessert)",
+			"feature": "Massiv: -1 auf Ausweichen; bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP039",
+			"name": "Großschwert (meisterlich)",
+			"feature": "Massiv: -1 auf Ausweichen; bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP040",
+			"name": "Großschwert (legendär)",
+			"feature": "Massiv: -1 auf Ausweichen; bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP041",
+			"name": "Hellebarde",
+			"feature": "Unhandlich: -1 auf Geschick"
+		},
+		{
+			"id": "WP042",
+			"name": "Hellebarde (verbessert)",
+			"feature": "Unhandlich: -1 auf Geschick"
+		},
+		{
+			"id": "WP043",
+			"name": "Hellebarde (meisterlich)",
+			"feature": "Unhandlich: -1 auf Geschick"
+		},
+		{
+			"id": "WP044",
+			"name": "Hellebarde (legendär)",
+			"feature": "Unhandlich: -1 auf Geschick"
+		},
+		{
+			"id": "WP045",
+			"name": "Geheiligte Axt",
+			"feature": null
+		},
+		{
+			"id": "WP046",
+			"name": "Geheiligte Axt (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP047",
+			"name": "Geheiligte Axt (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP048",
+			"name": "Geheiligte Axt (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP049",
+			"name": "Handrunen",
+			"feature": null
+		},
+		{
+			"id": "WP050",
+			"name": "Handrunen (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP051",
+			"name": "Handrunen (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP052",
+			"name": "Handrunen (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP053",
+			"name": "Langbogen",
+			"feature": "Unhandlich: -1 auf Geschick"
+		},
+		{
+			"id": "WP054",
+			"name": "Langbogen (verbessert)",
+			"feature": "Unhandlich: -1 auf Geschick"
+		},
+		{
+			"id": "WP055",
+			"name": "Langbogen (meisterlich)",
+			"feature": "Unhandlich: -1 auf Geschick"
+		},
+		{
+			"id": "WP056",
+			"name": "Langbogen (legendär)",
+			"feature": "Unhandlich: -1 auf Geschick"
+		},
+		{
+			"id": "WP057",
+			"name": "Langschwert",
+			"feature": null
+		},
+		{
+			"id": "WP058",
+			"name": "Langschwert (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP059",
+			"name": "Langschwert (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP060",
+			"name": "Langschwert (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP061",
+			"name": "Streitkolben",
+			"feature": null
+		},
+		{
+			"id": "WP062",
+			"name": "Streitkolben (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP063",
+			"name": "Streitkolben (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP064",
+			"name": "Streitkolben (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP065",
+			"name": "Kampfstab",
+			"feature": null
+		},
+		{
+			"id": "WP066",
+			"name": "Kampfstab (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP067",
+			"name": "Kampfstab (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP068",
+			"name": "Kampfstab (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP069",
+			"name": "Rapier",
+			"feature": "Schnell: Wenn du angreifst, darfst du 1 Stress markieren, um eine weitere Kreatur in Reichweite als Ziel zu wählen"
+		},
+		{
+			"id": "WP070",
+			"name": "Rapier (verbessert)",
+			"feature": "Schnell: Wenn du angreifst, darfst du 1 Stress markieren, um eine weitere Kreatur in Reichweite als Ziel zu wählen"
+		},
+		{
+			"id": "WP071",
+			"name": "Rapier (meisterlich)",
+			"feature": "Schnell: Wenn du angreifst, darfst du 1 Stress markieren, um eine weitere Kreatur in Reichweite als Ziel zu wählen"
+		},
+		{
+			"id": "WP072",
+			"name": "Rapier (legendär)",
+			"feature": "Schnell: Wenn du angreifst, darfst du 1 Stress markieren, um eine weitere Kreatur in Reichweite als Ziel zu wählen"
+		},
+		{
+			"id": "WP073",
+			"name": "Rückkehrende Klinge",
+			"feature": "Rückkehrend: Wenn du diese Waffe innerhalb ihrer Reichweite wirfst, erscheint sie unmittelbar nach dem Angriff wieder in deiner Hand"
+		},
+		{
+			"id": "WP074",
+			"name": "Rückkehrende Klinge (verbessert)",
+			"feature": "Rückkehrend: Wenn du diese Waffe innerhalb ihrer Reichweite wirfst, erscheint sie unmittelbar nach dem Angriff wieder in deiner Hand"
+		},
+		{
+			"id": "WP075",
+			"name": "Rückkehrende Klinge (meisterlich)",
+			"feature": "Rückkehrend: Wenn du diese Waffe innerhalb ihrer Reichweite wirfst, erscheint sie unmittelbar nach dem Angriff wieder in deiner Hand"
+		},
+		{
+			"id": "WP076",
+			"name": "Rückkehrende Klinge (legendär)",
+			"feature": "Rückkehrend: Wenn du diese Waffe innerhalb ihrer Reichweite wirfst, erscheint sie unmittelbar nach dem Angriff wieder in deiner Hand"
+		},
+		{
+			"id": "WP077",
+			"name": "Zepter",
+			"feature": "Vielseitig: Auch als Präsenz, Unmittelbar, W8 verwendbar"
+		},
+		{
+			"id": "WP078",
+			"name": "Zepter (verbessert)",
+			"feature": "Vielseitig: Auch als Präsenz, Unmittelbar, W8+3 verwendbar"
+		},
+		{
+			"id": "WP079",
+			"name": "Zepter (meisterlich)",
+			"feature": "Vielseitig: Auch als Präsenz, Unmittelbar, W8+4 verwendbar"
+		},
+		{
+			"id": "WP080",
+			"name": "Zepter (legendär)",
+			"feature": "Vielseitig: Auch als Präsenz, Unmittelbar, W8+6 verwendbar"
+		},
+		{
+			"id": "WP081",
+			"name": "Kurzbogen",
+			"feature": null
+		},
+		{
+			"id": "WP082",
+			"name": "Kurzbogen (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP083",
+			"name": "Kurzbogen (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP084",
+			"name": "Kurzbogen (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP085",
+			"name": "Kurzstab",
+			"feature": null
+		},
+		{
+			"id": "WP086",
+			"name": "Kurzstab (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP087",
+			"name": "Kurzstab (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP088",
+			"name": "Kurzstab (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP089",
+			"name": "Speer",
+			"feature": null
+		},
+		{
+			"id": "WP090",
+			"name": "Speer (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP091",
+			"name": "Speer (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP092",
+			"name": "Speer (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP093",
+			"name": "Zauberstab",
+			"feature": null
+		},
+		{
+			"id": "WP094",
+			"name": "Zauberstab (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP095",
+			"name": "Zauberstab (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP096",
+			"name": "Zauberstab (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP097",
+			"name": "Kriegshammer",
+			"feature": "Schwer: -1 auf Ausweichen"
+		},
+		{
+			"id": "WP098",
+			"name": "Kriegshammer (verbessert)",
+			"feature": "Schwer: -1 auf Ausweichen"
+		},
+		{
+			"id": "WP099",
+			"name": "Kriegshammer (meisterlich)",
+			"feature": "Schwer: -1 auf Ausweichen"
+		},
+		{
+			"id": "WP100",
+			"name": "Kriegshammer (legendär)",
+			"feature": "Schwer: -1 auf Ausweichen"
+		},
+		{
+			"id": "WP101",
+			"name": "Greifhaken",
+			"feature": "Verhakt: Bei einem erfolgreichen Angriff darfst du das Ziel in unmittelbare Distanz ziehen"
+		},
+		{
+			"id": "WP102",
+			"name": "Greifhaken (verbessert)",
+			"feature": "Verhakt: Bei einem erfolgreichen Angriff darfst du das Ziel in unmittelbare Distanz ziehen"
+		},
+		{
+			"id": "WP103",
+			"name": "Greifhaken (meisterlich)",
+			"feature": "Verhakt: Bei einem erfolgreichen Angriff darfst du das Ziel in unmittelbare Distanz ziehen"
+		},
+		{
+			"id": "WP104",
+			"name": "Greifhaken (legendär)",
+			"feature": "Verhakt: Bei einem erfolgreichen Angriff darfst du das Ziel in unmittelbare Distanz ziehen"
+		},
+		{
+			"id": "WP105",
+			"name": "Handarmbrust",
+			"feature": null
+		},
+		{
+			"id": "WP106",
+			"name": "Handarmbrust (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "WP107",
+			"name": "Handarmbrust (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "WP108",
+			"name": "Handarmbrust (legendär)",
+			"feature": null
+		},
+		{
+			"id": "WP109",
+			"name": "Rundschild",
+			"feature": "Schützend: +1 auf den Rüstungswert"
+		},
+		{
+			"id": "WP110",
+			"name": "Rundschild (verbessert)",
+			"feature": "Schützend: +2 auf den Rüstungswert"
+		},
+		{
+			"id": "WP111",
+			"name": "Rundschild (meisterlich)",
+			"feature": "Schützend: +3 auf den Rüstungswert"
+		},
+		{
+			"id": "WP112",
+			"name": "Rundschild (legendär)",
+			"feature": "Schützend: +4 auf den Rüstungswert"
+		},
+		{
+			"id": "WP113",
+			"name": "Kurzschwert",
+			"feature": "Gepaart: +2 auf den Schaden der Primärwaffe gegen Ziele in unmittelbarer Distanz"
+		},
+		{
+			"id": "WP114",
+			"name": "Kurzschwert (verbessert)",
+			"feature": "Gepaart: +3 auf den Schaden der Primärwaffe"
+		},
+		{
+			"id": "WP115",
+			"name": "Kurzschwert (meisterlich)",
+			"feature": "Gepaart: +4 auf den Schaden der Primärwaffe"
+		},
+		{
+			"id": "WP116",
+			"name": "Kurzschwert (legendär)",
+			"feature": "Gepaart: +5 auf den Schaden der Primärwaffe"
+		},
+		{
+			"id": "WP117",
+			"name": "Kleiner Dolch",
+			"feature": "Gepaart: +2 auf den Schaden der Primärwaffe"
+		},
+		{
+			"id": "WP118",
+			"name": "Kleiner Dolch (verbessert)",
+			"feature": "Gepaart: +3 auf den Schaden der Primärwaffe"
+		},
+		{
+			"id": "WP119",
+			"name": "Kleiner Dolch (meisterlich)",
+			"feature": "Gepaart: +4 auf den Schaden der Primärwaffe"
+		},
+		{
+			"id": "WP120",
+			"name": "Kleiner Dolch (legendär)",
+			"feature": "Gepaart: +5 auf den Schaden der Primärwaffe"
+		},
+		{
+			"id": "WP121",
+			"name": "Turmschild",
+			"feature": "Barriere: +2 auf den Rüstungswert; -1 auf Ausweichen"
+		},
+		{
+			"id": "WP122",
+			"name": "Turmschild (verbessert)",
+			"feature": "Barriere: +3 auf den Rüstungswert; -1 auf Ausweichen"
+		},
+		{
+			"id": "WP123",
+			"name": "Turmschild (meisterlich)",
+			"feature": "Barriere: +4 auf den Rüstungswert; -1 auf Ausweichen"
+		},
+		{
+			"id": "WP124",
+			"name": "Turmschild (legendär)",
+			"feature": "Barriere: +5 auf den Rüstungswert; -1 auf Ausweichen"
+		},
+		{
+			"id": "WP125",
+			"name": "Peitsche",
+			"feature": "Aufschreckend: Markiere 1 Stress, um die Peitsche knallen zu lassen und alle gegnerischen Ziele aus unmittelbarer in kurze Distanz zurückzudrängen"
+		},
+		{
+			"id": "WP126",
+			"name": "Peitsche (verbessert)",
+			"feature": "Aufschreckend: Markiere 1 Stress, um die Peitsche knallen zu lassen und alle gegnerischen Ziele aus unmittelbarer in kurze Distanz zurückzudrängen"
+		},
+		{
+			"id": "WP127",
+			"name": "Peitsche (meisterlich)",
+			"feature": "Aufschreckend: Markiere 1 Stress, um die Peitsche knallen zu lassen und alle gegnerischen Ziele aus unmittelbarer in kurze Distanz zurückzudrängen"
+		},
+		{
+			"id": "WP128",
+			"name": "Peitsche (legendär)",
+			"feature": "Aufschreckend: Markiere 1 Stress, um die Peitsche knallen zu lassen und alle gegnerischen Ziele aus unmittelbarer in kurze Distanz zurückzudrängen"
+		},
+		{
+			"id": "WP129",
+			"name": "Aantari-Bogen",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP130",
+			"name": "Axt des Fortunis",
+			"feature": "Glücksbringer: Bei einem fehlgeschlagenen Angriff darfst du 1 Stress markieren, um den Angriff erneut zu würfeln"
+		},
+		{
+			"id": "WP131",
+			"name": "Schwarzpulver-Revolver",
+			"feature": "Nachladen: Würfle nach einem Angriff einen W6. Bei einer 1 musst du 1 Stress markieren, um nachzuladen, bevor du erneut feuern kannst"
+		},
+		{
+			"id": "WP132",
+			"name": "Klingenpeitsche",
+			"feature": "Schnell: Markiere 1 Stress, um eine weitere Kreatur in Reichweite als Ziel zu wählen"
+		},
+		{
+			"id": "WP133",
+			"name": "Gesegneter Dolch",
+			"feature": "Heilend: Während einer Auszeit löschst du automatisch 1 TP"
+		},
+		{
+			"id": "WP134",
+			"name": "Blutstab",
+			"feature": "Schmerzhaft: Nach jedem erfolgreichen Angriff musst du 1 Stress markieren"
+		},
+		{
+			"id": "WP135",
+			"name": "Donnerbüchse",
+			"feature": "Nachladen: Würfle nach einem Angriff einen W6. Bei einer 1 musst du 1 Stress markieren, um nachzuladen"
+		},
+		{
+			"id": "WP136",
+			"name": "Schild der Tapferkeit",
+			"feature": "Schützend: Wenn du ein Rüstungsfeld markierst, reduziert es den Schaden für dich und alle Verbündeten in unmittelbarer Distanz, die denselben Schaden erlitten haben"
+		},
+		{
+			"id": "WP137",
+			"name": "Schwert der Tapferkeit",
+			"feature": "Tapfer: -1 auf Ausweichen; +3 auf deine Schwere Schadensschwelle"
+		},
+		{
+			"id": "WP138",
+			"name": "Faustschild",
+			"feature": "Ablenkend: Wenn du angegriffen wirst, markiere 1 Rüstungsfeld, um einen Bonus in Höhe deines Rüstungswerts auf Ausweichen zu erhalten"
+		},
+		{
+			"id": "WP139",
+			"name": "Zauberschwert",
+			"feature": "Vielseitig: Auch als Wissen, Weit, W6+3 verwendbar"
+		},
+		{
+			"id": "WP140",
+			"name": "Krummer Dolch",
+			"feature": "Gezahnt: Wenn ein Schadenswürfel eine 1 zeigt, verursacht er stattdessen 8 Schaden"
+		},
+		{
+			"id": "WP141",
+			"name": "Verschlingender Dolch",
+			"feature": "Furchterregend: Bei einem erfolgreichen Angriff muss das Ziel 1 Stress markieren"
+		},
+		{
+			"id": "WP142",
+			"name": "Doppelflegel",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP143",
+			"name": "Doppelklingenschwert",
+			"feature": "Schnell: Markiere 1 Stress, um eine weitere Kreatur in Reichweite als Ziel zu wählen"
+		},
+		{
+			"id": "WP144",
+			"name": "Egoklinge",
+			"feature": "Eitel: Du benötigst Präsenz 0 oder niedriger, um diese Waffe einzusetzen"
+		},
+		{
+			"id": "WP145",
+			"name": "Ahnenbogen",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP146",
+			"name": "Verlängerte Stangenwaffe",
+			"feature": "Lang: Der Angriff dieser Waffe zielt auf alle gegnerischen Kreaturen entlang einer Linie innerhalb der Reichweite"
+		},
+		{
+			"id": "WP147",
+			"name": "Feinhaarbogen",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP148",
+			"name": "Feuerstab",
+			"feature": "Brennend: Wenn ein Schadenswürfel eine 6 zeigt, muss das Ziel 1 Stress markieren"
+		},
+		{
+			"id": "WP149",
+			"name": "Flimmerfliegenklinge",
+			"feature": "Scharfe Schwingen: Du erhältst auf Schadenswürfe einen Bonus in Höhe deiner Agilität"
+		},
+		{
+			"id": "WP150",
+			"name": "Schwebende Klingensplitter",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP151",
+			"name": "Fusionshandschuhe",
+			"feature": "Gebunden: Du erhältst auf Schadenswürfe einen Bonus in Höhe deiner Stufe"
+		},
+		{
+			"id": "WP152",
+			"name": "Geisterklinge",
+			"feature": "Jenseitig: Bei einem erfolgreichen Angriff darfst du physischen oder magischen Schaden verursachen"
+		},
+		{
+			"id": "WP153",
+			"name": "Vergoldeter Bogen",
+			"feature": "Selbstkorrigierend: Wenn ein Schadenswürfel eine 1 zeigt, verursacht er stattdessen 6 Schaden"
+		},
+		{
+			"id": "WP154",
+			"name": "Vergoldetes Falchion",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP155",
+			"name": "Großbogen",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP156",
+			"name": "Hammer von Exota",
+			"feature": "Eruptiv: Bei einem erfolgreichen Angriff müssen alle anderen gegnerischen Ziele in sehr kurzer Distanz einen Reaktionswurf (14) bestehen oder erleiden den halben Schaden"
+		},
+		{
+			"id": "WP157",
+			"name": "Hammer des Zorns",
+			"feature": "Verheerend: Markiere vor dem Angriffswurf 1 Stress, um einen W20 als Schadenswürfel zu verwenden"
+		},
+		{
+			"id": "WP158",
+			"name": "Handkanone",
+			"feature": "Nachladen: Würfle nach einem Angriff einen W6. Bei einer 1 musst du 1 Stress markieren, um nachzuladen"
+		},
+		{
+			"id": "WP159",
+			"name": "Handschleuder",
+			"feature": "Vielseitig: Auch als Geschick, Kurz, W8+4 verwendbar"
+		},
+		{
+			"id": "WP160",
+			"name": "Ilmaris Gewehr",
+			"feature": "Nachladen: Würfle nach einem Angriff einen W6. Bei einer 1 musst du 1 Stress markieren, um nachzuladen"
+		},
+		{
+			"id": "WP161",
+			"name": "Schlaghandschuh",
+			"feature": "Erschütternd: Setze bei einem erfolgreichen Angriff 1 Hoffnung ein, um das Ziel in weite Distanz zurückzustoßen"
+		},
+		{
+			"id": "WP162",
+			"name": "Stab der Hüter",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP163",
+			"name": "Knöchelklingen",
+			"feature": "Brutal: Erzielst du mit einem Schadenswürfel dessen Höchstwert, würfelst du einen zusätzlichen Schadenswürfel"
+		},
+		{
+			"id": "WP164",
+			"name": "Knöchelklauen",
+			"feature": "Doppelt: Bei einem Angriff mit deiner Primärwaffe darfst du einem weiteren Ziel in unmittelbarer Distanz Schaden zufügen"
+		},
+		{
+			"id": "WP165",
+			"name": "Labrys-Axt",
+			"feature": "Schützend: +1 auf den Rüstungswert"
+		},
+		{
+			"id": "WP166",
+			"name": "Magierkugel",
+			"feature": "Mächtig: Bei einem erfolgreichen Angriff würfelst du einen zusätzlichen Schadenswürfel und verwirfst das niedrigste Ergebnis"
+		},
+		{
+			"id": "WP167",
+			"name": "Magus-Revolver",
+			"feature": "Nachladen: Würfle nach einem Angriff einen W6. Bei einer 1 musst du 1 Stress markieren, um nachzuladen"
+		},
+		{
+			"id": "WP168",
+			"name": "Meridian-Entermesser",
+			"feature": "Duellierend: Befindet sich keine andere Kreatur in kurzer Distanz zum Ziel, erhältst du einen Vorteil auf Angriffswürfe gegen dieses Ziel"
+		},
+		{
+			"id": "WP169",
+			"name": "Midas-Sense",
+			"feature": "Gierig: Gib eine Handvoll Gold aus, um für einen Schadenswurf +1 auf deine Übung zu erhalten"
+		},
+		{
+			"id": "WP170",
+			"name": "Parierdolch",
+			"feature": "Parade: Wenn du angegriffen wirst, würfelst du die Schadenswürfel dieser Waffe. Übereinstimmende Würfelwerte werden aus dem Schaden des Angriffs entfernt, bevor er addiert wird"
+		},
+		{
+			"id": "WP171",
+			"name": "Kraftkampfhandschuh",
+			"feature": "Aufgeladen: Markiere 1 Stress, um bei einem Angriff mit deiner Primärwaffe +1 auf Übung zu erhalten"
+		},
+		{
+			"id": "WP172",
+			"name": "Fokussplitter",
+			"feature": "Anvisiert: Nach einem erfolgreichen Angriff gelingt dein nächster Angriff mit der Primärwaffe gegen dasselbe Ziel automatisch"
+		},
+		{
+			"id": "WP173",
+			"name": "Einziehbarer Säbel",
+			"feature": "Einziehbar: Die Klinge lässt sich im Griff verbergen"
+		},
+		{
+			"id": "WP174",
+			"name": "Rückkehrende Axt",
+			"feature": "Rückkehrend: Wenn du die Waffe innerhalb ihrer Reichweite wirfst, erscheint sie unmittelbar nach dem Angriff wieder in deiner Hand"
+		},
+		{
+			"id": "WP175",
+			"name": "Abprallende Äxte",
+			"feature": "Abprallend: Markiere mindestens 1 Stress, um entsprechend viele weitere Ziele in Reichweite zu treffen"
+		},
+		{
+			"id": "WP176",
+			"name": "Runen des Verderbens",
+			"feature": "Schmerzhaft: Nach jedem erfolgreichen Angriff musst du 1 Stress markieren"
+		},
+		{
+			"id": "WP177",
+			"name": "Zepter des Elias",
+			"feature": "Belebend: Würfle bei einem erfolgreichen Angriff einen W4; bei einer 4 löschst du 1 Stress"
+		},
+		{
+			"id": "WP178",
+			"name": "Zehrende Kampfhandschuhe",
+			"feature": "Lebensraubend: Würfle bei einem erfolgreichen Angriff einen W6; bei einer 6 löschst du 1 TP oder 1 Stress"
+		},
+		{
+			"id": "WP179",
+			"name": "Vorschlagaxt",
+			"feature": "Zerstörerisch: -1 auf Agilität; bei einem erfolgreichen Angriff müssen alle gegnerischen Ziele in sehr kurzer Distanz 1 Stress markieren"
+		},
+		{
+			"id": "WP180",
+			"name": "Stachelbogen",
+			"feature": "Vielseitig: Auch als Agilität, Unmittelbar, W10+5 verwendbar"
+		},
+		{
+			"id": "WP181",
+			"name": "Stachelschild",
+			"feature": "Doppelfunktion: +1 auf den Rüstungswert; +1 auf den Schaden deiner Primärwaffe in unmittelbarer Distanz"
+		},
+		{
+			"id": "WP182",
+			"name": "Stahlgeschmiedete Hellebarde",
+			"feature": "Furchterregend: Bei einem erfolgreichen Angriff muss das Ziel 1 Stress markieren"
+		},
+		{
+			"id": "WP183",
+			"name": "Schwingende Seilklinge",
+			"feature": "Packend: Setze bei einem erfolgreichen Angriff 1 Hoffnung ein, um das Ziel Festzusetzen oder in unmittelbare Distanz zu ziehen"
+		},
+		{
+			"id": "WP184",
+			"name": "Schwert aus Licht und Flamme",
+			"feature": "Glühend: Diese Waffe schneidet durch festes Material"
+		},
+		{
+			"id": "WP185",
+			"name": "Klauenklingen",
+			"feature": "Brutal: Erzielst du mit einem Schadenswürfel dessen Höchstwert, würfelst du einen zusätzlichen Schadenswürfel"
+		},
+		{
+			"id": "WP186",
+			"name": "Distelbogen",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP187",
+			"name": "Urok-Breitschwert",
+			"feature": "Tödlich: Wenn du Schweren Schaden verursachst, muss das Ziel 1 zusätzlichen TP markieren"
+		},
+		{
+			"id": "WP188",
+			"name": "Zauberstab der Bezauberung",
+			"feature": "Überzeugend: Markiere vor einem Präsenzwurf 1 Stress, um +2 auf das Ergebnis zu erhalten"
+		},
+		{
+			"id": "WP189",
+			"name": "Esseks Zauberstab",
+			"feature": "Zeitbeugend: Du darfst das Ziel deines Angriffs erst nach dem Angriffswurf bestimmen"
+		},
+		{
+			"id": "WP190",
+			"name": "Kriegssense",
+			"feature": "Verlässlich: +1 auf Angriffswürfe"
+		},
+		{
+			"id": "WP191",
+			"name": "Widogast-Anhänger",
+			"feature": "Zeitbeugend: Du bestimmst das Ziel deines Angriffs erst nach dem Angriffswurf"
+		},
+		{
+			"id": "WP192",
+			"name": "Yutari-Blutbogen",
+			"feature": "Brutal: Erzielst du mit einem Schadenswürfel dessen Höchstwert, würfelst du einen zusätzlichen Schadenswürfel"
+		}
+	],
+	"armor": [
+		{
+			"id": "AR001",
+			"name": "Textilrüstung",
+			"feature": "Flexibel: +1 auf Ausweichen"
+		},
+		{
+			"id": "AR002",
+			"name": "Textilrüstung (verbessert)",
+			"feature": "Flexibel: +1 auf Ausweichen"
+		},
+		{
+			"id": "AR003",
+			"name": "Textilrüstung (meisterlich)",
+			"feature": "Flexibel: +1 auf Ausweichen"
+		},
+		{
+			"id": "AR004",
+			"name": "Textilrüstung (legendär)",
+			"feature": "Flexibel: +1 auf Ausweichen"
+		},
+		{
+			"id": "AR005",
+			"name": "Lederrüstung",
+			"feature": null
+		},
+		{
+			"id": "AR006",
+			"name": "Lederrüstung (verbessert)",
+			"feature": null
+		},
+		{
+			"id": "AR007",
+			"name": "Lederrüstung (meisterlich)",
+			"feature": null
+		},
+		{
+			"id": "AR008",
+			"name": "Lederrüstung (legendär)",
+			"feature": null
+		},
+		{
+			"id": "AR009",
+			"name": "Kettenrüstung",
+			"feature": "Schwer: -1 auf Ausweichen"
+		},
+		{
+			"id": "AR010",
+			"name": "Kettenrüstung (verbessert)",
+			"feature": "Schwer: -1 auf Ausweichen"
+		},
+		{
+			"id": "AR011",
+			"name": "Kettenrüstung (meisterlich)",
+			"feature": "Schwer: -1 auf Ausweichen"
+		},
+		{
+			"id": "AR012",
+			"name": "Kettenrüstung (legendär)",
+			"feature": "Schwer: -1 auf Ausweichen"
+		},
+		{
+			"id": "AR013",
+			"name": "Plattenrüstung",
+			"feature": "Sehr schwer: -2 auf Ausweichen; -1 auf Agilität"
+		},
+		{
+			"id": "AR014",
+			"name": "Plattenrüstung (verbessert)",
+			"feature": "Sehr schwer: -2 auf Ausweichen; -1 auf Agilität"
+		},
+		{
+			"id": "AR015",
+			"name": "Plattenrüstung (meisterlich)",
+			"feature": "Sehr schwer: -2 auf Ausweichen; -1 auf Agilität"
+		},
+		{
+			"id": "AR016",
+			"name": "Plattenrüstung (legendär)",
+			"feature": "Sehr schwer: -2 auf Ausweichen; -1 auf Agilität"
+		},
+		{
+			"id": "AR017",
+			"name": "Bellamoi-Prunkrüstung",
+			"feature": "Vergoldet: +1 auf Präsenz"
+		},
+		{
+			"id": "AR018",
+			"name": "Klingenfest-Rüstung",
+			"feature": "Physisch: Du kannst kein Rüstungsfeld markieren, um magischen Schaden zu reduzieren"
+		},
+		{
+			"id": "AR019",
+			"name": "Kanalisierungsrüstung",
+			"feature": "Kanalisierend: +1 auf Zauberwürfe"
+		},
+		{
+			"id": "AR020",
+			"name": "Drachenschuppenrüstung",
+			"feature": "Undurchdringlich: Einmal pro kurzer Rast darfst du 1 Stress markieren, statt deinen letzten TP zu markieren"
+		},
+		{
+			"id": "AR021",
+			"name": "Dunamis-Seidenkette",
+			"feature": "Zeitverlangsamend: Markiere 1 Rüstungsfeld und würfle einen W4. Addiere das Ergebnis gegen einen eingehenden Angriff auf deinen Ausweichen-Wert"
+		},
+		{
+			"id": "AR022",
+			"name": "Elundrische Kettenrüstung",
+			"feature": "Geschützt: Reduziere eingehenden magischen Schaden um deinen Rüstungswert, bevor du ihn mit deinen Schadensschwellen vergleichst"
+		},
+		{
+			"id": "AR023",
+			"name": "Glutgewebte Rüstung",
+			"feature": "Brennend: Greift dich eine gegnerische Kreatur in unmittelbarer Distanz an, markiert sie 1 Stress"
+		},
+		{
+			"id": "AR024",
+			"name": "Vollständig verstärkte Rüstung",
+			"feature": "Verstärkt: Wenn du ein Rüstungsfeld markierst, reduzierst du die Schwere eines Angriffs um zwei statt um eine Schwelle"
+		},
+		{
+			"id": "AR025",
+			"name": "Harrowknochen-Rüstung",
+			"feature": "Zäh: Bevor du dein letztes Rüstungsfeld markierst, würfelst du einen W6; bei einer 6 reduzierst du die Schwere um eine Schwelle, ohne das Feld zu markieren"
+		},
+		{
+			"id": "AR026",
+			"name": "Eisenbaum-Brustplatte",
+			"feature": "Verstärkt: Wenn du dein letztes Rüstungsfeld markierst, erhältst du +2 auf deine Schadensschwellen, bis du mindestens 1 Rüstungsfeld löschst"
+		},
+		{
+			"id": "AR027",
+			"name": "Monetts Umhang",
+			"feature": "Magisch: Du kannst kein Rüstungsfeld markieren, um physischen Schaden zu reduzieren"
+		},
+		{
+			"id": "AR028",
+			"name": "Wildrosenrüstung",
+			"feature": "Hoffnungsvoll: Wenn du Hoffnung einsetzen würdest, darfst du stattdessen 1 Rüstungsfeld markieren"
+		},
+		{
+			"id": "AR029",
+			"name": "Runen der Befestigung",
+			"feature": "Schmerzhaft: Jedes Mal, wenn du ein Rüstungsfeld markierst, musst du 1 Stress markieren"
+		},
+		{
+			"id": "AR030",
+			"name": "Schwebende Runetan-Rüstung",
+			"feature": "Wandelnd: Wirst du Ziel eines Angriffs, markiere 1 Rüstungsfeld, damit der Angriffswurf gegen dich einen Nachteil erhält"
+		},
+		{
+			"id": "AR031",
+			"name": "Retter-Kettenrüstung",
+			"feature": "Beschwerlich: -1 auf alle Attribute und Ausweichen"
+		},
+		{
+			"id": "AR032",
+			"name": "Stachelplattenrüstung",
+			"feature": "Scharf: Bei einem erfolgreichen Angriff gegen ein Ziel in unmittelbarer Distanz fügst du dem Schadenswurf einen W4 hinzu"
+		},
+		{
+			"id": "AR033",
+			"name": "Tyris' weiche Rüstung",
+			"feature": "Leise: Du erhältst +2 auf Würfe, um dich lautlos zu bewegen"
+		},
+		{
+			"id": "AR034",
+			"name": "Veritas-Opalrüstung",
+			"feature": "Wahrheitssuchend: Diese Rüstung leuchtet, wenn eine andere Kreatur in kurzer Distanz lügt"
+		}
+	],
+	"wheelchairs": [
+		{
+			"id": "WH001",
+			"name": "Leichter Rollstuhl",
+			"feature": "Schnell: Wenn du angreifst, darfst du 1 Stress markieren, um eine weitere Kreatur in Reichweite als Ziel zu wählen."
+		},
+		{
+			"id": "WH002",
+			"name": "Leichter Rollstuhl (verbessert)",
+			"feature": "Schnell: Wenn du angreifst, darfst du 1 Stress markieren, um eine weitere Kreatur in Reichweite als Ziel zu wählen."
+		},
+		{
+			"id": "WH003",
+			"name": "Leichter Rollstuhl (meisterlich)",
+			"feature": "Schnell: Wenn du angreifst, darfst du 1 Stress markieren, um eine weitere Kreatur in Reichweite als Ziel zu wählen."
+		},
+		{
+			"id": "WH004",
+			"name": "Leichter Rollstuhl (legendär)",
+			"feature": "Schnell: Wenn du angreifst, darfst du 1 Stress markieren, um eine weitere Kreatur in Reichweite als Ziel zu wählen."
+		},
+		{
+			"id": "WH005",
+			"name": "Schwerer Rollstuhl",
+			"feature": "Schwer: -1 auf Ausweichen."
+		},
+		{
+			"id": "WH006",
+			"name": "Schwerer Rollstuhl (verbessert)",
+			"feature": "Schwer: -1 auf Ausweichen."
+		},
+		{
+			"id": "WH007",
+			"name": "Schwerer Rollstuhl (meisterlich)",
+			"feature": "Schwer: -1 auf Ausweichen."
+		},
+		{
+			"id": "WH008",
+			"name": "Schwerer Rollstuhl (legendär)",
+			"feature": "Schwer: -1 auf Ausweichen."
+		},
+		{
+			"id": "WH009",
+			"name": "Arkaner Rollstuhl",
+			"feature": "Verlässlich: +1 auf Angriffswürfe."
+		},
+		{
+			"id": "WH010",
+			"name": "Arkaner Rollstuhl (verbessert)",
+			"feature": "Verlässlich: +1 auf Angriffswürfe."
+		},
+		{
+			"id": "WH011",
+			"name": "Arkaner Rollstuhl (meisterlich)",
+			"feature": "Verlässlich: +1 auf Angriffswürfe."
+		},
+		{
+			"id": "WH012",
+			"name": "Arkaner Rollstuhl (legendär)",
+			"feature": "Verlässlich: +1 auf Angriffswürfe."
+		}
+	]
+}

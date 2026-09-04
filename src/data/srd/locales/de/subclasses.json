@@ -1,0 +1,478 @@
+{
+	"troubadour": {
+		"name": "Minnesang",
+		"foundation": [
+			{
+				"name": "Bühnentalent",
+				"description": "Beschreibe, wie du vor Publikum eine Darbietung gibst. Du darfst jedes der folgenden Lieder einmal pro langer Rast darbieten: • Beruhigendes Lied: Du und alle Verbündeten innerhalb kurzer Distanz dürfen 1 TP löschen. • Episches Lied: Du darfst einem Ziel innerhalb kurzer Distanz vorübergehend den Zustand Verwundbar zufügen. • Herzzerreißendes Lied: Du und alle Verbündeten innerhalb kurzer Distanz erhalten 1 Hoffnung."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Maestro",
+				"description": "Deine inspirierenden Lieder geben deinem Publikum neuen Mut. Wenn du einem verbündeten Charakter einen Inspirationswürfel gibst, darf er 1 Stress löschen oder erhält 1 Hoffnung."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Virtuos",
+				"description": "Dein Inspirationswürfel erhöht sich auf einen W10. Du gehörst zu den Besten deines Handwerks. Du kannst jedes deiner Lieder aus „Bühnentalent“ zweimal pro langer Rast darbieten."
+			}
+		],
+		"spellcastTrait": "Präsenz"
+	},
+	"wordsmith": {
+		"name": "Wortkunst",
+		"foundation": [
+			{
+				"name": "Mitreißende Rede",
+				"description": "Einmal pro langer Rast darfst du eine von Herzen kommende, inspirierende Rede halten. Alle Verbündeten innerhalb weiter Distanz dürfen 2 Stress löschen."
+			},
+			{
+				"name": "Kraft der Poesie",
+				"description": "Nach einem Aktionswurf, der darauf abzielt, einen Charakter zu beeindrucken, zu überreden oder zu provozieren, darfst du 1 Hoffnung einsetzen, um dem Ergebnis 1W4 hinzuzufügen."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Eloquent",
+				"description": "Deine bewegenden Worte heben die Moral. Einmal pro Sitzung darfst du eine der folgenden Optionen wählen, wenn du einen verbündeten Charakter ermutigst: • Der Charakter findet ein nichtmagisches Objekt oder ein Werkzeug, nach dem er sucht. • Du darfst den Charakter Unterstützen, ohne Hoffnung einzusetzen. • Der Charakter erhält einen zusätzlichen Auszeit-Zug während der nächsten Rast."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Epische Poesie",
+				"description": "Dein Inspirationswürfel ist nun ein W10. Wenn du einen verbündeten Charakter unterstützt, darfst du außerdem den Moment erzählen, als würdest du die Memoiren seiner Heldentaten verfassen. Wenn du das tust, darfst du einen zusätzlichen W10 als Vorteilswürfel werfen."
+			}
+		],
+		"spellcastTrait": "Präsenz"
+	},
+	"warden-of-the-elements": {
+		"name": "Obhut der Elemente",
+		"foundation": [
+			{
+				"name": "Elementar-Inkarnation",
+				"description": "Du darfst 1 Stress markieren, um eines der folgenden Elemente zu Kanalisieren, bis du Schweren Schaden erleidest oder eine Rast einlegst: • Feuer: Wenn dir eine gegnerische Kreatur in unmittelbarer Distanz Schaden zufügt, erleidet sie 1W10 magischen Schaden. • Erde: Du erhältst einen Bonus auf deine Schadensschwellen, der deiner Übung entspricht. • Wasser: Wenn du einer gegnerischen Kreatur in unmittelbarer Distanz Schaden zufügst, müssen alle weiteren gegnerischen Kreaturen innerhalb sehr kurzer Distanz 1 Stress markieren. • Luft: Du kannst schweben und erhältst dadurch einen Vorteil auf Agilitätswürfe."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Elementar-Aura",
+				"description": "Einmal pro Rast, während du ein Element Kanalisierst, darfst du eine entsprechende elementare Aura ausstrahlen. Die Aura wirkt auf Ziele innerhalb kurzer Distanz, bis Kanalisieren endet. • Feuer: Wenn eine gegnerische Kreatur 1 oder mehr TP markiert, muss sie außerdem 1 Stress markieren. • Erde: Deine Verbündeten erhalten +1 auf Stärke. • Wasser: Wenn eine gegnerische Kreatur dir Schaden zufügt, darfst du 1 Stress markieren, um sie an eine beliebige Position innerhalb sehr kurzer Distanz zu ihrer ursprünglichen Position zu bewegen. • Luft: Wenn du oder ein verbündeter Charakter Schaden durch einen Angriff von außerhalb der unmittelbaren Distanz erleiden, wird der Schaden um 1W8 reduziert."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Elementar-Herrschaft",
+				"description": "Du verkörperst dein Element noch stärker. Während du Kanalisierst, erhältst du einen der folgenden Vorteile: • Feuer: Du erhältst +1 auf deine Übung bei Angriffen und Zaubern, die Schaden verursachen. • Erde: Wenn du TP markieren müsstest, darfst du einen W6 für jeden markierten TP würfeln. Für jede 6 darfst du die zu markierenden TP um 1 reduzieren. • Wasser: Wenn ein Angriff auf dich erfolgreich ist, darfst du 1 Stress markieren, um der angreifenden Kreatur vorübergehend den Zustand Verwundbar zuzufügen. • Luft: Du erhältst +1 auf Ausweichen und kannst fliegen."
+			}
+		],
+		"spellcastTrait": "Instinkt"
+	},
+	"warden-of-renewal": {
+		"name": "Born der Erneuerung",
+		"foundation": [
+			{
+				"name": "Friede der Natur",
+				"description": "Einmal pro langer Rast darfst du einen Ort natürlicher Ruhe innerhalb kurzer Distanz erschaffen. Wenn du dich ein paar Minuten an diesem Ort ausruhst, darfst du eine Anzahl Stress-Punkte in Höhe deines Instinkt-Wertes löschen. Du darfst diese Punkte beliebig unter dir und deinen Verbündeten aufteilen."
+			},
+			{
+				"name": "Regeneration",
+				"description": "Berühre eine Kreatur und setze 3 Hoffnung ein. Diese Kreatur darf 1W4 TP löschen."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Aura der Regeneration",
+				"description": "Du kannst deine Fähigkeit „Regeneration“ auf Ziele innerhalb sehr kurzer Distanz anwenden."
+			},
+			{
+				"name": "Schutzmantel",
+				"description": "Einmal pro langer Rast darfst du 2 Hoffnung einsetzen, um 2 TP bei 1W4 Verbündeten innerhalb kurzer Distanz zu löschen."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Defensive",
+				"description": "Deine Tierverwandlung nimmt die Gestalt eines heilenden Wächtergeistes an. Wenn du in Bestiengestalt bist und ein verbündeter Charakter innerhalb kurzer Distanz 2 oder mehr TP markieren muss, darfst du 1 Stress markieren, um die Anzahl der zu markierenden TP um 1 zu reduzieren."
+			}
+		],
+		"spellcastTrait": "Instinkt"
+	},
+	"stalwart": {
+		"name": "Bollwerk",
+		"foundation": [
+			{
+				"name": "Unnachgiebig",
+				"description": "Du erhältst einen permanenten Bonus von +1 auf deine Schadensschwellen."
+			},
+			{
+				"name": "Eiserner Wille",
+				"description": "Wenn du physischen Schaden erleidest, darfst du 1 zusätzliches Rüstungsfeld markieren, um die Schwere des Schadens zu reduzieren."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Unerbittlich",
+				"description": "Du erhältst einen permanenten Bonus von +2 auf deine Schadensschwellen."
+			},
+			{
+				"name": "Kampfgefährten",
+				"description": "Wenn ein verbündeter Charakter innerhalb sehr kurzer Distanz Schaden erleidet, darfst du 1 Rüstungsfeld markieren, um die Schwere des Schadens um 1 Schwelle zu reduzieren."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Unerschrocken",
+				"description": "Du erhältst einen permanenten Bonus von +3 auf deine Schadensschwellen."
+			},
+			{
+				"name": "Schutzengel",
+				"description": "Wenn ein verbündeter Charakter innerhalb kurzer Distanz 2 oder weniger TP hat und Schaden erleiden würde, darfst du 1 Stress markieren, um an dessen Seite zu eilen und den Schaden an seiner Stelle zu erleiden."
+			}
+		]
+	},
+	"vengeance": {
+		"name": "Rache",
+		"foundation": [
+			{
+				"name": "Ruhiges Gemüt",
+				"description": "Du erhältst ein zusätzliches Stress-Feld."
+			},
+			{
+				"name": "Vergeltung",
+				"description": "Wenn eine gegnerische Kreatur in unmittelbarer Distanz einen Erfolg bei einem Angriffswurf gegen dich erzielt, darfst du 2 Stress markieren, um der Kreatur 1 TP Schaden zuzufügen."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Vergeltungsschlag",
+				"description": "Wenn eine gegnerische Kreatur einem verbündeten Charakter in unmittelbarer Distanz Schaden zufügt, erhältst du für deinen nächsten erfolgreichen Angriff auf diese Kreatur einen Bonus von +1 auf deine Übung."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Nemesis",
+				"description": "Du darfst 2 Hoffnung einsetzen, um eine gegnerische Kreatur bis zu deiner nächsten Rast zu Priorisieren. Wenn du einen Angriff auf eine Kreatur durchführst, die den Zustand Priorisiert hat, darfst du die Ergebnisse der Dualwürfel miteinander tauschen. Du darfst nur eine gegnerische Kreatur gleichzeitig Priorisieren."
+			}
+		]
+	},
+	"beastbound": {
+		"name": "Bestienbund",
+		"foundation": [
+			{
+				"name": "Seelentier",
+				"description": "Du hast ein treues tierisches Seelentier. Nimm dir den Charakterbogen für Waldläufer*in-Seelentiere. Dein Seelentier beginnt mit Ausweichen 10 und zwei Erfahrungen auf +2. Sein Angriff verursacht abhängig von deiner Übung W6 physischen Schaden in unmittelbarer Distanz. Erteile ihm mit einem Zauberwurf Befehle; setze Hoffnung ein, um dem Wurf eine Erfahrung des Seelentiers hinzuzufügen. Dein Seelentier markiert Stress statt TP. Wenn sein letztes Stress-Feld markiert wird, scheidet es aus und kehrt bei deiner nächsten langen Rast mit 1 gelöschten Stress zurück."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Sonderausbildung",
+				"description": "Du darfst eine zusätzliche Option für dein Seelentier beim Stufenaufstieg wählen."
+			},
+			{
+				"name": "Im Kampf verbunden",
+				"description": "Wenn eine gegnerische Kreatur dich angreift, während sich dein Seelentier in unmittelbarer Distanz zu ihr befindet, erhältst du gegen diesen Angriff einen Bonus von +2 auf deinen Ausweichen-Wert."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Fortgeschrittenes Training",
+				"description": "Wähle zwei zusätzliche Optionen beim Stufenanstieg für dein Seelentier."
+			},
+			{
+				"name": "Loyal bis zum Schluss",
+				"description": "Einmal pro langer Rast, wenn der Schaden eines Angriffs den letzten Stress-Punkt deines Seelentiers oder deinen letzten TP markieren würde und ihr euch innerhalb kurzer Distanz zueinander befindet, können du oder dein Seelentier zum jeweils anderen eilen und stattdessen diesen Schaden auf sich nehmen."
+			}
+		],
+		"spellcastTrait": "Agilität"
+	},
+	"wayfinder": {
+		"name": "Pfadsuche",
+		"foundation": [
+			{
+				"name": "Erbarmungslose Jagd",
+				"description": "Wenn du einen Schadenswurf durchführst, darfst du 1 Stress markieren, um deiner Übung einen Bonus von +1 hinzuzufügen. Zusätzlich muss ein Ziel 1 Stress markieren, wenn du ihm schweren Schaden zufügst."
+			},
+			{
+				"name": "Den Weg weisen",
+				"description": "Wenn du zu einem Ort reist, den du bereits besucht hast oder einen Gegenstand bei dir trägst, der von diesem Ort stammt, kannst du den kürzesten und direktesten Weg dorthin bestimmen."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Geschmeidige Jagd",
+				"description": "Wenn dein Fokus einen Angriff auf dich ausführt, erhältst du für diesen Angriffswurf einen Bonus von +2 auf Ausweichen."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Vollkommene Jagd",
+				"description": "Du darfst 1 Hoffnung einsetzen, bevor du einen Angriffswurf auf deinen Fokus durchführst. Bei einem Erfolg, darfst du 1 Furcht aus dem Besitz der SL entfernen."
+			}
+		],
+		"spellcastTrait": "Agilität"
+	},
+	"nightwalker": {
+		"name": "Schattenpfad",
+		"foundation": [
+			{
+				"name": "Schattenschritt",
+				"description": "Du kannst dich unbemerkt durch die Schatten bewegen. Wenn du dich in ein dunkles Gebiet oder in den Schatten eines Objektes oder einer Kreatur bewegst, darfst du 1 Stress markieren, um zu verschwinden und an einer neuen, in einem anderen Schatten gelegenen Position innerhalb weiter Distanz wieder aufzutauchen. Wenn du wieder auftauchst, bist du Getarnt."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Dunkle Wolke",
+				"description": "Führe einen Zauberwurf (15) durch. Bei einem Erfolg erschaffst du vorübergehend eine dunkle Wolke, die ein beliebiges Gebiet innerhalb kurzer Distanz bedeckt. Man kann nicht aus dem Inneren der Wolke nach außen sehen oder von außen nach innen. Wenn die Wolke die Sichtlinie zwischen dir und einer gegnerischen Kreatur blockiert, giltst du für diese als Getarnt."
+			},
+			{
+				"name": "Adrenalin",
+				"description": "Während du Verwundbar bist, darfst du deine Stufe zu deinen Schadenswürfen hinzuzählen."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Flüchtiger Schatten",
+				"description": "Du erhältst einen permanenten Bonus von +1 auf Ausweichen. Du kannst deine Fähigkeit „Schattenschritt“ nun auch nutzen, um dich innerhalb sehr weiter Distanz zu bewegen."
+			},
+			{
+				"name": "Entschwinden",
+				"description": "Du darfst 1 Stress markieren, um jederzeit Getarnt zu werden. Wenn du durch diese Fähigkeit Getarnt wirst, verlierst du automatisch den Zustand Festgesetzt, falls du ihn hast. Du bleibst auf diese Weise Getarnt, bis du mit Furcht würfelst oder deine nächste Rast einlegst."
+			}
+		],
+		"spellcastTrait": "Geschick"
+	},
+	"syndicate": {
+		"name": "Syndikat",
+		"foundation": [
+			{
+				"name": "Gut vernetzt",
+				"description": "Wenn du in einer berühmten Stadt oder Umgebung ankommst, kennst du eine Person, die hier zuhause ist. Gib ihr einen Namen, notiere dir, wie sie nützlich werden könnte und wähle einen der folgenden Fakten aus: • Die Person schuldet mir einen Gefallen, aber sie ist schwer aufzuspüren. • Die Person wird im Gegenzug etwas verlangen. • Die Person ist ständig in riesige Probleme verwickelt. • Wir waren mal zusammen. Lange Geschichte. • Unser letztes Treffen endete nicht sehr erfreulich."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Überall Kontakte",
+				"description": "Einmal pro Sitzung darfst du dich mit einem zwielichtigen Kontakt in Verbindung setzen. Beschreibe, wie der Kontakt dich gefunden hat, um dir nun zu helfen, und wähle eine der folgenden Optionen aus: • Der Kontakt stellt 1 Handvoll Gold, ein besonderes Werkzeug oder ein nichtmagisches Objekt zur Verfügung, das die Situation erfordert. • B ei deinem nächsten Aktionswurf gewährt seine Hilfe dir +3 auf das Ergebnis deines Hoffnungs- oder Furchtwürfels. • Bei deinem nächsten Schadenswurf taucht der Kontakt aus den Schatten auf und fügt deinem Schadenswurf 2W8 Schaden hinzu."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Verlässliche Verstärkung",
+				"description": "Du kannst deine Fähigkeit „Überall Kontakte“ dreimal pro Sitzung einsetzen. Die folgenden Optionen werden der Liste der Vorteile hinzugefügt, aus denen du beim Einsatz dieser Fähigkeit wählen kannst: • Wenn du 1 oder mehr TP markierst, kann der Kontakt an deine Seite eilen, um dich zu schützen und die markierten TP um 1 zu reduzieren. • Wenn du in einem Gespräch einen Wurf auf Präsenz durchführst, stärkt dein Kontakt dir den Rücken. Du darfst einen W20 als deinen Hoffnungswürfel verwenden."
+			}
+		],
+		"spellcastTrait": "Geschick"
+	},
+	"divine-wielder": {
+		"name": "Göttlicher Zorn",
+		"foundation": [
+			{
+				"name": "Seelenwaffe",
+				"description": "Wenn du eine Waffe mit unmittelbarer oder sehr kurzer Distanz ausgerüstet hast, kann diese aus deiner Hand zu einem gegnerischen Ziel innerhalb kurzer Distanz fliegen und zu dir zurückkehren. Du darfst 1 Stress markieren, um ein zusätzliches gegnerisches Ziel innerhalb derselben Distanz wie das ursprüngliche Ziel des Angriffs auszuwählen."
+			},
+			{
+				"name": "Schonende Berührung",
+				"description": "Einmal pro langer Rast darfst du eine Kreatur berühren, um bei dieser 2 TP oder 2 Stress zu löschen."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Gottesfürchtig",
+				"description": "Wenn du zu Beginn einer Spielsitzung deine Gebetswürfel würfelst, wirfst du einen zusätzlichen Würfel und verwirfst das niedrigste Ergebnis. Zusätzlich darfst du „Schonende Berührung“ zweimal pro langer Rast einsetzen."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Heilige Resonanz",
+				"description": "Wenn du den Schaden für deine Fähigkeit „Seelenwaffe“ auswürfelst und das Ergebnis beliebiger Würfel bei diesem Wurf übereinstimmt, darfst du den Wert der übereinstimmenden Würfel verdoppeln. Wenn du zum Beispiel zwei 5en würfelst, zählen diese als zweimal 10."
+			}
+		],
+		"spellcastTrait": "Stärke"
+	},
+	"winged-sentinel": {
+		"name": "Geflügelte Schildwache",
+		"foundation": [
+			{
+				"name": "Flügel des Lichts",
+				"description": "Du kannst fliegen. Während du fliegst, darfst du: • 1 Stress markieren, um eine gewillte Kreatur hochzuheben und zu tragen, die in etwa deiner Größe entspricht oder kleiner ist. • 1 Hoffnung einsetzen, um deinem Schadenswurf zusätzlich 1W8 Schaden hinzuzufügen."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Himmlisches Antlitz",
+				"description": "Während du fliegst, erhältst du einen Vorteil auf Präsenzwürfe. Wenn du bei einem Präsenzwurf einen Erfolg mit Hoffnung erzielst, darfst du 1 Furcht aus dem Vorrat der SL entfernen, anstatt Hoffnung zu erhalten."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Aszendenz",
+				"description": "Du erhältst einen permanenten Bonus von +4 auf deine Schwere Schadensschwelle."
+			},
+			{
+				"name": "Göttliche Macht",
+				"description": "Während du fliegst, fügst du mit deiner Fähigkeit „Flügel des Lichts“ zusätzlich 1W12 statt 1W8 Schaden zu."
+			}
+		],
+		"spellcastTrait": "Stärke"
+	},
+	"elemental-origin": {
+		"name": "Elementarquell",
+		"foundation": [
+			{
+				"name": "Elementalismus",
+				"description": "Wähle bei der Charaktererschaffung eines der folgenden Elemente aus: LUFT · ERDE · FEUER · BLITZ · WASSER Du kannst mit diesem Element harmlose Effekte erzeugen. Zusätzlich darfst du 1 Hoffnung einsetzen und beschreiben, wie deine Kontrolle über dieses Element dir bei einem Aktionswurf hilft, bevor du ihn durchführst. Dann erhältst du entweder einen Bonus von +2 auf den Wurf oder einen Bonus von +3 auf den zugehörigen Schadenswurf."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Natürliches Ausweichen",
+				"description": "Du beschwörst dein Element, um dich vor Schaden zu schützen. Wenn ein Angriff gegen dich erfolgreich ist, darfst du 1 Stress markieren, um zu beschreiben, wie dein Element dich schützt. Wirf einen W6 und füge das Ergebnis für diesen Angriff deinem Ausweichen-Wert hinzu."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Transzendenz",
+				"description": "Einmal pro langer Rast darfst du dich in eine physische Manifestation deines Elements verwandeln. Beschreibe deine Verwandlung und wähle zwei der folgenden Vorteile aus, die bis zu deiner nächsten Rast gelten: • Bonus von +4 auf deine Schwere Schadensschwelle. • Bonus von +1 auf ein Charakterattribut deiner Wahl. • Bonus von +1 auf deine Übung. • Bonus von +2 auf Ausweichen."
+			}
+		],
+		"spellcastTrait": "Instinkt"
+	},
+	"primal-origin": {
+		"name": "Urquell",
+		"foundation": [
+			{
+				"name": "Magie manipulieren",
+				"description": "Dein Bezug zum Urquell gewährt dir die Fähigkeit, die Essenz der Magie selbst zu verändern. Nachdem du einen Zauber gewirkt oder einen Angriff mit einer Waffe durchgeführt hast, die magischen Schaden verursacht, darfst du 1 Stress markieren, um eine der folgenden Optionen zu wählen: • Erhöhe die Reichweite des Zaubers oder Angriffs um 1 Distanz. • Erhalte einen Bonus von +2 auf das Ergebnis des Angriffswurfes. • Verdopple das Ergebnis eines Schadenswürfels deiner Wahl. • Triff ein zusätzliches Ziel innerhalb der Distanz."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Magische Unterstützung",
+				"description": "Du kannst die Magie anderer mit deiner Essenz verstärken. Wenn du einen verbündeten Charakter bei einem Zauberwurf unterstützt, darfst du einen W8 als deinen Vorteilswürfel verwenden. Einmal pro langer Rast, nachdem du einem verbündeten Charakter bei diesem geholfen hast, darfst du außerdem die Ergebnisse der Dualwürfel dieses Zauberwurfs miteinander tauschen."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Arkane Aufladung",
+				"description": "Du kannst magische Energie sammeln, um deine Fähigkeiten zu verstärken. Wenn du magischen Schaden erleidest, erhältst du den Zustand Geladen. Alternativ darfst du 2 Hoffnung einsetzen, um Geladen zu erhalten. Wenn du einen erfolgreichen magischen Angriff durchführst, während du Geladen bist, darfst du den Zustand löschen, um entweder +10 auf deinen Schadenswurf zu erhalten oder +3 auf den Schwierigkeitsgrad eines durch den Zauber ausgelösten Reaktionswurfs zu erhalten, den das Ziel durchführen muss. Bei deiner nächsten langen Rast verlierst du Geladen."
+			}
+		],
+		"spellcastTrait": "Instinkt"
+	},
+	"call-of-the-brave": {
+		"name": "Ruf der Tapferkeit",
+		"foundation": [
+			{
+				"name": "Courage",
+				"description": "Wenn du bei einem Wurf einen Misserfolg mit Furcht erzielst, erhältst du 1 Hoffnung."
+			},
+			{
+				"name": "Kampfritual",
+				"description": "Einmal pro langer Rast, bevor du etwas außerordentlich Gefährliches unternimmst oder einer übermächtigen Gegenseite entgegentrittst, darfst du beschreiben, welches Ritual du ausführst oder welche Vorbereitungen du triffst. Wenn du das tust, lösche 2 Stress und erhalte 2 Hoffnung."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Der Herausforderung stellen",
+				"description": "Du stellst dich der aufbäumenden Gefahr wagemutig entgegen. Du darfst einen W20 als Hoffnungswürfel verwenden, solange du 2 oder weniger nichtmarkierte TP hast."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Kameradschaft",
+				"description": "Dein unerschütterlicher Mut spornt deine Verbündeten an. Du darfst einen zusätzlichen Teamwurf pro Sitzung einleiten. Zusätzlich muss ein verbündeter Charakter beim Einleiten eines Teamwurfs mit dir nur 2 Hoffnung einsetzen."
+			}
+		]
+	},
+	"call-of-the-slayer": {
+		"name": "Ruf der Schlacht",
+		"foundation": [
+			{
+				"name": "Berserker",
+				"description": "Du erhältst einen Würfelpool mit sogenannten Schlacht-Würfeln. Bei einem Wurfergebnis mit Hoffnung darfst du einen W6 auf diese Karte legen, statt Hoffnung zu erhalten, und so deinen Würfelpool erweitern. Du darfst eine Anzahl an Schlacht-Würfeln ansammeln, die deiner Übung entspricht. Wenn du einen Angriffs- oder Schadenswurf durchführst, darfst du beliebig viele Schlacht-Würfel zum Wurf hinzufügen. Am Ende einer Sitzung musst du alle übrigen Schlacht- Würfel von dieser Karte entfernen; du erhältst 1 Hoffnung pro übrigem Würfel."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Waffenkoryphäe",
+				"description": "Du tust dich leicht beim Führen verschiedener Waffen. Wenn du einen Erfolg bei einem Angriff erzielst, darfst du 1 Hoffnung einsetzen, um dem Schadenswurf einen der Schadenswürfel deiner Sekundärwaffe hinzuzufügen. Zusätzlich darfst du einmal pro langer Rast alle 1en erneut würfeln, wenn du deinen Schlacht-Würfel verwendest."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Kampfvorbereitung",
+				"description": "Deine Kriegskünste inspirieren alle, die mit dir reisen. Deine Gruppe erhält die Möglichkeit, den Auszeit-Zug „Kampfvorbereitung“ durchzuführen. Beschreibe dabei, wie du deine Gruppe anleitest und mit ihnen trainierst. Du und jeder verbündete Charakter, der diesen Auszeit-Zug wählt, erhaltet je einen W6 als Schlacht-Würfel. Ein SC kann den Schlacht-Würfel einsetzen, um ihn zum Ergebnis eines Angriffsoder Schadenswurfs hinzuzufügen."
+			}
+		]
+	},
+	"school-of-knowledge": {
+		"name": "Schule des Wissens",
+		"foundation": [
+			{
+				"name": "Vorbereitet",
+				"description": "Nimm eine zusätzliche Domänenkarte deiner Stufe (oder niedriger) von einer Domäne, die dir offensteht."
+			},
+			{
+				"name": "Geübt",
+				"description": "Wenn du eine Erfahrung einsetzt, darfst du 1 Stress markieren, statt 1 Hoffnung einzusetzen. Wenn du dies tust, darfst du den Erfahrungsbonus für diesen Wurf verdoppeln."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Versiert",
+				"description": "Du darfst eine zusätzliche Domänenkarte deiner Stufe oder niedriger aus einer Domäne wählen, auf die du Zugriff hast."
+			},
+			{
+				"name": "Perfekter Rückruf",
+				"description": "Einmal pro Rast, wenn du eine Domänenkarte aus deiner Reserve zurückrufst, darfst du ihre Rückruf-Kosten um 1 reduzieren."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Brillant",
+				"description": "Du erhältst eine zusätzliche Domänenkarte deiner Stufe oder niedriger aus einer Domäne, auf die du Zugriff hast."
+			},
+			{
+				"name": "Ausgefeilte Expertise",
+				"description": "Wenn du eine Erfahrung verwendest, darfst du einen W6 würfeln. Bei einem Ergebnis von 5 oder 6 darfst du die Erfahrung verwenden, ohne Hoffnung einzusetzen."
+			}
+		],
+		"spellcastTrait": "Wissen"
+	},
+	"school-of-war": {
+		"name": "Schule des Krieges",
+		"foundation": [
+			{
+				"name": "Kampfmagie",
+				"description": "Du hast deine Studien darauf fokussiert, eine unbezwingbare Größe auf dem Schlachtfeld zu werden. Du erhältst 1 zusätzliches TP-Feld."
+			},
+			{
+				"name": "Der Furcht entgegen",
+				"description": "Wenn du einen Erfolg mit Furcht bei einem Angriffswurf erzielst, fügst du zusätzlich 1W10 magischen Schaden zu."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Schild beschwören",
+				"description": "Du kannst eine schützende, magische Barriere aufbauen. Du darfst deine Übung zu deinem Ausweichen-Wert hinzufügen, solange du mindestens 2 Hoffnung hast."
+			},
+			{
+				"name": "Von Furcht getrieben",
+				"description": "Der zusätzliche magische Schaden durch die Fähigkeit „Der Furcht entgegen“ wird auf 2W10 erhöht."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Im Chaos aufblühen",
+				"description": "Wenn du bei einem Angriff einen Erfolg erzielst, darfst du nach dem Schadenswurf 1 Stress markieren, um das Ziel 1 zusätzlichen TP markieren zu lassen."
+			},
+			{
+				"name": "Furchtlos",
+				"description": "Der zusätzliche Schaden aus deiner Fähigkeit „Der Furcht entgegen“ wird auf 3W10 erhöht."
+			}
+		],
+		"spellcastTrait": "Wissen"
+	}
+}

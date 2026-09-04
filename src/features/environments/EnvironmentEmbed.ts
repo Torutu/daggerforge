@@ -1,6 +1,7 @@
 import { EventRef, MarkdownRenderChild } from "obsidian";
 import type DaggerForgePlugin from "../../main";
-import { ENVIRONMENTS } from "../../data/environments";
+import { getEnvironments } from "../../data/environments";
+import { getLanguage } from "../../i18n";
 import { EnvironmentData } from "../../types/index";
 import { attachDiceBadges } from "../../utils/diceBadges";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
@@ -25,7 +26,7 @@ export const Environment_Embed_Language = "daggerforge-environment";
 export function findEnvironmentById(plugin: DaggerForgePlugin, id: string): EnvironmentData | null {
 	return (
 		plugin.dataManager.getEnvironments().find((e) => e.id === id) ??
-		ENVIRONMENTS.find((e) => e.id === id) ??
+		getEnvironments(getLanguage()).find((e) => e.id === id) ??
 		null
 	);
 }

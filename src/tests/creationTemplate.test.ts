@@ -7,6 +7,12 @@ import {
 	SRD_DOMAIN_CARDS,
 	SRD_TRANSFORMATIONS,
 	getSrdClasses,
+	getSrdAncestries,
+	getSrdCommunities,
+	getSrdEquipment,
+	getSrdItems,
+	getSrdConsumables,
+	getBeastforms,
 	getSrdDomainCards,
 	getSrdTransformations,
 } from "../data/srd";
@@ -18,7 +24,8 @@ describe("ALL_GEAR", () => {
 		expect(ids.size).toBe(ALL_GEAR.length);
 		expect(ALL_GEAR.every((g) => g.name.length > 0)).toBe(true);
 		// 192 weapons + 34 armor + 12 wheelchairs + 60 items + 60 consumables
-		expect(ALL_GEAR.length).toBe(358);
+		// 312 weapons + 70 armor + 12 wheelchairs + 121 items + 121 consumables
+		expect(ALL_GEAR.length).toBe(636);
 	});
 });
 
@@ -59,6 +66,62 @@ describe("German SRD data", () => {
 		expect(getSrdClasses("de").find((item) => item.id === "class-warlock")?.name).toBe("Paktmagier");
 		expect(getSrdDomainCards("de").find((item) => item.id === "domain-card-dread-1-blighting-strike")?.name).toBe("Verheerender Schlag");
 		expect(getSrdTransformations("de").find((item) => item.id === "transformation-demigod")?.name).toBe("Halbgott");
+	});
+
+	test("localizes every core player-data record without changing ids or mechanical values", () => {
+		const sameIds = (english: Array<{ id: string }>, german: Array<{ id: string }>) =>
+			expect(german.map((item) => item.id)).toEqual(english.map((item) => item.id));
+
+		sameIds(SRD_ANCESTRIES, getSrdAncestries("de"));
+		sameIds(SRD_COMMUNITIES, getSrdCommunities("de"));
+		sameIds(getSrdItems("en"), getSrdItems("de"));
+		sameIds(getSrdConsumables("en"), getSrdConsumables("de"));
+
+		const enEquipment = getSrdEquipment("en");
+		const deEquipment = getSrdEquipment("de");
+		for (const group of ["weapons", "armor", "wheelchairs"] as const) {
+			sameIds(enEquipment[group], deEquipment[group]);
+		}
+		expect(deEquipment.weapons.map(({ tier, trait, range, damage, damageType, burden }) =>
+			({ tier, trait, range, damage, damageType, burden }))).toEqual(
+			enEquipment.weapons.map(({ tier, trait, range, damage, damageType, burden }) =>
+				({ tier, trait, range, damage, damageType, burden })),
+		);
+		expect(deEquipment.armor.map(({ tier, minor, major, score }) =>
+			({ tier, minor, major, score }))).toEqual(
+			enEquipment.armor.map(({ tier, minor, major, score }) =>
+				({ tier, minor, major, score })),
+		);
+
+		const enForms = getBeastforms("en");
+		const deForms = getBeastforms("de");
+		expect(deForms).toHaveLength(enForms.length);
+		expect(deForms.map(({ tier, traitMod, evasionMod, attackMod, attackDamage }) => ({
+			tier, traitMod, evasionMod, attackMod,
+			attackDamage: attackDamage ? attackDamage.replace(/^W/, "d") : null,
+		}))).toEqual(enForms.map(({ tier, traitMod, evasionMod, attackMod, attackDamage }) =>
+			({ tier, traitMod, evasionMod, attackMod, attackDamage })));
+
+		const enClasses = getSrdClasses("en").slice(0, 9);
+		const deClasses = getSrdClasses("de").slice(0, 9);
+		sameIds(enClasses, deClasses);
+		expect(deClasses.map(({ id, stats, subclasses }) => ({
+			id, evasion: stats.evasion, hp: stats.hp,
+			subclassIds: subclasses.map((subclass) => subclass.id),
+		}))).toEqual(enClasses.map(({ id, stats, subclasses }) => ({
+			id, evasion: stats.evasion, hp: stats.hp,
+			subclassIds: subclasses.map((subclass) => subclass.id),
+		})));
+	});
+
+	test("creates a German core character with localized starting equipment", () => {
+		setLanguage("de");
+		const char = buildCharacterFromChoices({ classId: "class-bard" }, "CHR_core_de");
+		expect(char.classSubclass).toBe("Bard*in");
+		expect(char.primaryWeapon.name).toBe("Rapier");
+		expect(char.primaryWeapon.traitRange).toBe("Präsenz - Unmittelbar");
+		expect(char.primaryWeapon.damageDice).toBe("W8 phy");
+		expect(char.activeArmor.name).toBe("Textilrüstung");
 	});
 
 	test("creates a German Hope & Fear character with a transformation snapshot", () => {

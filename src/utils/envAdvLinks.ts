@@ -1,7 +1,8 @@
 import { App, MarkdownView } from "obsidian";
 import type DaggerForgePlugin from "../main";
 import type { AdvData } from "../types/adversary";
-import { ADVERSARIES } from "../data/index";
+import { getAdversaries } from "../data/index";
+import { getLanguage } from "../i18n";
 import { buildCardHTML } from "../features/adversaries/AdvToHtml";
 import { injectDiceBadgesIntoHtml } from "./diceBadges";
 
@@ -9,7 +10,7 @@ import { injectDiceBadgesIntoHtml } from "./diceBadges";
 // (same name = custom is the "latest" version).
 function buildNameMap(plugin: DaggerForgePlugin): Map<string, AdvData> {
 	const map = new Map<string, AdvData>();
-	ADVERSARIES.forEach(a => map.set(a.name.toLowerCase().trim(), a));
+	getAdversaries(getLanguage()).forEach(a => map.set(a.name.toLowerCase().trim(), a));
 	plugin.dataManager.getAdversaries().forEach(a => map.set(a.name.toLowerCase().trim(), a));
 	return map;
 }

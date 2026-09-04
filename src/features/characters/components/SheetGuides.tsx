@@ -6,7 +6,7 @@ import {
 	COMPANION_STRESS_SLOTS,
 	hopeSlotCount,
 } from "../../../types/character";
-import { BEASTFORMS, SRD_CLASSES } from "../../../data/srd";
+import { getBeastforms, getSrdClasses } from "../../../data/srd";
 import {
 	COMPANION_EXPERIENCE_EXAMPLES,
 	COMPANION_TRAINING,
@@ -14,6 +14,7 @@ import {
 	tierForLevel,
 } from "../../../data/levelUpGuide";
 import { SrdBeastform } from "../../../types/srd";
+import { useLanguage } from "../../../i18n/react";
 import { CardText } from "./CardText";
 import { ExperienceCapArt } from "./SheetArt";
 import {
@@ -38,13 +39,14 @@ interface SectionProps {
 }
 
 /** Matches the sheet's free-text "Class & Subclass" field to a known class. */
-function sheetClass(char: CharacterData) {
+function sheetClass(char: CharacterData, language: "de" | "en" = "en") {
+	const classes = getSrdClasses(language);
 	if (char.classId) {
-		const byId = SRD_CLASSES.find((candidate) => candidate.id === char.classId);
+		const byId = classes.find((candidate) => candidate.id === char.classId);
 		if (byId) return byId;
 	}
 	const lead = char.classSubclass.trim().toLowerCase();
-	return SRD_CLASSES.find((c) => lead.startsWith(c.name.toLowerCase()));
+	return classes.find((c) => lead.startsWith(c.name.toLowerCase()));
 }
 
 const fmtMod = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
@@ -52,7 +54,8 @@ const fmtMod = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 // ── Background & Connections ──────────────────────────────────────────────────
 
 export function BackgroundSection({ char, update }: SectionProps) {
-	const cls = sheetClass(char);
+	const language = useLanguage();
+	const cls = sheetClass(char, language);
 
 	const setAnswer = (
 		field: "backgroundAnswers" | "connectionAnswers",
@@ -236,22 +239,30 @@ export function LevelUpSection({ char, update }: SectionProps) {
 
 // ── Druid Beastform ───────────────────────────────────────────────────────────
 
-function beastMeta(form: SrdBeastform): string {
+function beastMeta(form: SrdBeastform, language: "de" | "en"): string {
 	const attack =
 		`${form.attackRange}, ${form.attackTrait}, ${form.attackDamage}` +
 		(form.attackMod ? ` ${fmtMod(form.attackMod)}` : "");
-	return `${form.trait} ${fmtMod(form.traitMod)} · Evasion ${fmtMod(form.evasionMod)} · ${attack}`;
+	return `${form.trait} ${fmtMod(form.traitMod)} · ${language === "de" ? "Ausweichen" : "Evasion"} ${fmtMod(form.evasionMod)} · ${attack}`;
 }
 
 export function BeastformSection({ char, update }: SectionProps) {
 	const [expanded, setExpanded] = useState<string | null>(null);
-	if (sheetClass(char)?.name !== "Druid") return null;
+	const language = useLanguage();
+	const beastforms = getBeastforms(language);
+	const classes = getSrdClasses(language);
+	if (sheetClass(char)?.id !== "class-druid") return null;
 
-	const active = BEASTFORMS.find((b) => b.name === char.activeBeastform);
-	const feature = SRD_CLASSES.find((c) => c.name === "Druid")?.classFeatures.find(
-		(f) => f.name === "Beastform",
+	const englishBeastforms = getBeastforms("en");
+	const germanBeastforms = getBeastforms("de");
+	const activeIndex = beastforms.findIndex(
+		(b, index) => b.name === char.activeBeastform ||
+			englishBeastforms[index]?.name === char.activeBeastform ||
+			germanBeastforms[index]?.name === char.activeBeastform,
 	);
-	const tiers = [...new Set(BEASTFORMS.map((b) => b.tier))].sort();
+	const active = activeIndex >= 0 ? beastforms[activeIndex] : undefined;
+	const feature = classes.find((c) => c.id === "class-druid")?.classFeatures[0];
+	const tiers = [...new Set(beastforms.map((b) => b.tier))].sort();
 
 	return (
 		<section className="df-cs-box df-cs-guide">
@@ -264,7 +275,7 @@ export function BeastformSection({ char, update }: SectionProps) {
 			{active && (
 				<div className="df-cs-beast-active">
 					<span className="df-cs-beast-active-name">✦ {active.name}</span>
-					<span className="df-cs-beast-active-meta">{beastMeta(active)}</span>
+					<span className="df-cs-beast-active-meta">{beastMeta(active, language)}</span>
 					<button
 						type="button"
 						className="df-cs-beast-drop"
@@ -278,8 +289,8 @@ export function BeastformSection({ char, update }: SectionProps) {
 				<React.Fragment key={tier}>
 					<h4 className="df-cs-guide-sub">Tier {tier}</h4>
 					<div className="df-cs-beast-list">
-						{BEASTFORMS.filter((b) => b.tier === tier).map((b) => {
-							const isActive = char.activeBeastform === b.name;
+						{beastforms.filter((b) => b.tier === tier).map((b) => {
+							const isActive = activeIndex === beastforms.indexOf(b);
 							const isOpen = expanded === b.name;
 							return (
 								<div key={b.name} className={"df-cs-beast" + (isActive ? " is-active" : "")}>
@@ -296,7 +307,7 @@ export function BeastformSection({ char, update }: SectionProps) {
 									{isOpen && (
 										<div className="df-cs-beast-detail">
 											<p className="df-cs-cardtext-p">
-												<strong>{beastMeta(b)}</strong>
+												<strong>{beastMeta(b, language)}</strong>
 											</p>
 											<p className="df-cs-cardtext-p">
 												<strong>Advantage on:</strong> {b.advantages.join(", ")}
@@ -353,7 +364,7 @@ const COMPANION_DAMAGE_DICE = ["d6", "d8", "d10", "d12"];
 
 export function CompanionSection({ char, update }: SectionProps) {
 	const fileRef = useRef<HTMLInputElement>(null);
-	if (sheetClass(char)?.name !== "Ranger") return null;
+	if (sheetClass(char)?.id !== "class-ranger") return null;
 
 	const comp = char.companion;
 	const patch = (p: Partial<CompanionData>) => update({ companion: { ...comp, ...p } });
