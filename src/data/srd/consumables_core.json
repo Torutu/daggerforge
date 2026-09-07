@@ -1,0 +1,542 @@
+[
+	{
+		"id": "CN001",
+		"source": "core",
+		"roll": 1,
+		"rarity": "Common",
+		"name": "Stride Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your next Agility Roll."
+	},
+	{
+		"id": "CN002",
+		"source": "core",
+		"roll": 2,
+		"rarity": "Common",
+		"name": "Bolster Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your next Strength Roll."
+	},
+	{
+		"id": "CN003",
+		"source": "core",
+		"roll": 3,
+		"rarity": "Common",
+		"name": "Control Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your next Finesse Roll."
+	},
+	{
+		"id": "CN004",
+		"source": "core",
+		"roll": 4,
+		"rarity": "Common",
+		"name": "Attune Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your next Instinct Roll."
+	},
+	{
+		"id": "CN005",
+		"source": "core",
+		"roll": 5,
+		"rarity": "Common",
+		"name": "Charm Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your next Presence Roll."
+	},
+	{
+		"id": "CN006",
+		"source": "core",
+		"roll": 6,
+		"rarity": "Common",
+		"name": "Enlighten Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your next Knowledge Roll."
+	},
+	{
+		"id": "CN007",
+		"source": "core",
+		"roll": 7,
+		"rarity": "Common",
+		"name": "Minor Health Potion",
+		"category": "Healing",
+		"text": "Clear 1d4 HP."
+	},
+	{
+		"id": "CN008",
+		"source": "core",
+		"roll": 8,
+		"rarity": "Common",
+		"name": "Minor Stamina Potion",
+		"category": "Healing",
+		"text": "Clear 1d4 Stress."
+	},
+	{
+		"id": "CN009",
+		"source": "core",
+		"roll": 9,
+		"rarity": "Common",
+		"name": "Grindletooth Venom",
+		"category": "Combat",
+		"text": "You can apply this venom to a weapon that deals physical damage to add a d6 to your next damage roll with that weapon."
+	},
+	{
+		"id": "CN010",
+		"source": "core",
+		"roll": 10,
+		"rarity": "Common",
+		"name": "Varik Leaves",
+		"category": "Utility",
+		"text": "You can eat these paired leaves to immediately gain 2 Hope."
+	},
+	{
+		"id": "CN011",
+		"source": "core",
+		"roll": 11,
+		"rarity": "Common",
+		"name": "Vial of Moondrip",
+		"category": "Utility",
+		"text": "When you drink the contents of this vial, you can see in total darkness until your next rest."
+	},
+	{
+		"id": "CN012",
+		"source": "core",
+		"roll": 12,
+		"rarity": "Common",
+		"name": "Unstable Arcane Shard",
+		"category": "Combat",
+		"text": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 1d20 magic damage."
+	},
+	{
+		"id": "CN013",
+		"source": "core",
+		"roll": 13,
+		"rarity": "Uncommon",
+		"name": "Potion of Stability",
+		"category": "Utility",
+		"text": "You can drink this potion to choose one additional downtime move."
+	},
+	{
+		"id": "CN014",
+		"source": "core",
+		"roll": 14,
+		"rarity": "Uncommon",
+		"name": "Improved Grindletooth Venom",
+		"category": "Combat",
+		"text": "You can apply this venom to a weapon that deals physical damage to add a d8 to your next damage roll with that weapon."
+	},
+	{
+		"id": "CN015",
+		"source": "core",
+		"roll": 15,
+		"rarity": "Uncommon",
+		"name": "Morphing Clay",
+		"category": "Utility",
+		"text": "You can spend a Hope to use this clay, altering your face enough to make you unrecognizable until your next rest."
+	},
+	{
+		"id": "CN016",
+		"source": "core",
+		"roll": 16,
+		"rarity": "Uncommon",
+		"name": "Vial of Darksmoke",
+		"category": "Combat",
+		"text": "When an adversary attacks you, use this vial and roll a number of d6s equal to your Agility. Add the highest result to your Evasion against the attack."
+	},
+	{
+		"id": "CN017",
+		"source": "core",
+		"roll": 17,
+		"rarity": "Uncommon",
+		"name": "Jumping Root",
+		"category": "Utility",
+		"text": "Eat this root to leap up to Far range once without needing to roll."
+	},
+	{
+		"id": "CN018",
+		"source": "core",
+		"roll": 18,
+		"rarity": "Uncommon",
+		"name": "Snap Powder",
+		"category": "Healing",
+		"text": "Mark a Stress and clear a HP."
+	},
+	{
+		"id": "CN019",
+		"source": "core",
+		"roll": 19,
+		"rarity": "Uncommon",
+		"name": "Health Potion",
+		"category": "Healing",
+		"text": "Clear 1d4+1 HP."
+	},
+	{
+		"id": "CN020",
+		"source": "core",
+		"roll": 20,
+		"rarity": "Uncommon",
+		"name": "Stamina Potion",
+		"category": "Healing",
+		"text": "Clear 1d4+1 Stress."
+	},
+	{
+		"id": "CN021",
+		"source": "core",
+		"roll": 21,
+		"rarity": "Uncommon",
+		"name": "Armor Stitcher",
+		"category": "Healing",
+		"text": "You can use this stitcher to spend any number of Hope and clear that many Armor Slots."
+	},
+	{
+		"id": "CN022",
+		"source": "core",
+		"roll": 22,
+		"rarity": "Uncommon",
+		"name": "Gill Salve",
+		"category": "Utility",
+		"text": "You can apply this salve to your neck to breathe underwater for a number of minutes equal to your level."
+	},
+	{
+		"id": "CN023",
+		"source": "core",
+		"roll": 23,
+		"rarity": "Uncommon",
+		"name": "Replication Parchment",
+		"category": "Utility",
+		"text": "By touching this piece of parchment to another, you can perfectly copy the second parchment's contents. Once used, this parchment becomes mundane paper."
+	},
+	{
+		"id": "CN024",
+		"source": "core",
+		"roll": 24,
+		"rarity": "Uncommon",
+		"name": "Improved Arcane Shard",
+		"category": "Combat",
+		"text": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 2d20 magic damage."
+	},
+	{
+		"id": "CN025",
+		"source": "core",
+		"roll": 25,
+		"rarity": "Rare",
+		"name": "Major Stride Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your Agility until your next rest."
+	},
+	{
+		"id": "CN026",
+		"source": "core",
+		"roll": 26,
+		"rarity": "Rare",
+		"name": "Major Bolster Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your Strength until your next rest."
+	},
+	{
+		"id": "CN027",
+		"source": "core",
+		"roll": 27,
+		"rarity": "Rare",
+		"name": "Major Control Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your Finesse until your next rest."
+	},
+	{
+		"id": "CN028",
+		"source": "core",
+		"roll": 28,
+		"rarity": "Rare",
+		"name": "Major Attune Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your Instinct until your next rest."
+	},
+	{
+		"id": "CN029",
+		"source": "core",
+		"roll": 29,
+		"rarity": "Rare",
+		"name": "Major Charm Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your Presence until your next rest."
+	},
+	{
+		"id": "CN030",
+		"source": "core",
+		"roll": 30,
+		"rarity": "Rare",
+		"name": "Major Enlighten Potion",
+		"category": "Enhancement",
+		"text": "You gain a +1 bonus to your Knowledge until your next rest."
+	},
+	{
+		"id": "CN031",
+		"source": "core",
+		"roll": 31,
+		"rarity": "Rare",
+		"name": "Blood of the Yorgi",
+		"category": "Utility",
+		"text": "You can drink this blood to disappear from where you are and immediately reappear at a point you can see within Very Far range."
+	},
+	{
+		"id": "CN032",
+		"source": "core",
+		"roll": 32,
+		"rarity": "Rare",
+		"name": "Homet's Secret Potion",
+		"category": "Combat",
+		"text": "After drinking this potion, the next successful attack you make critically succeeds."
+	},
+	{
+		"id": "CN033",
+		"source": "core",
+		"roll": 33,
+		"rarity": "Rare",
+		"name": "Redthorn Saliva",
+		"category": "Combat",
+		"text": "You can apply this saliva to a weapon that deals physical damage to add a d12 to your next damage roll with that weapon."
+	},
+	{
+		"id": "CN034",
+		"source": "core",
+		"roll": 34,
+		"rarity": "Rare",
+		"name": "Channelstone",
+		"category": "Utility",
+		"text": "You can use this stone to take a spell or grimoire from your vault, use it once, and return it to your vault."
+	},
+	{
+		"id": "CN035",
+		"source": "core",
+		"roll": 35,
+		"rarity": "Rare",
+		"name": "Mythic Dust",
+		"category": "Combat",
+		"text": "You can apply this dust to a weapon that deals magic damage to add a d12 to your next damage roll with that weapon."
+	},
+	{
+		"id": "CN036",
+		"source": "core",
+		"roll": 36,
+		"rarity": "Rare",
+		"name": "Acidpaste",
+		"category": "Utility",
+		"text": "This paste eats away walls and other surfaces in bright flashes."
+	},
+	{
+		"id": "CN037",
+		"source": "core",
+		"roll": 37,
+		"rarity": "Rare",
+		"name": "Hopehold Flare",
+		"category": "Utility",
+		"text": "When you use this flare, allies within Close range roll a d6 when they spend a Hope. On a result of 6, they gain the effect of that Hope without spending it. The flare lasts until the end of the scene."
+	},
+	{
+		"id": "CN038",
+		"source": "core",
+		"roll": 38,
+		"rarity": "Rare",
+		"name": "Major Arcane Shard",
+		"category": "Combat",
+		"text": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 4d20 magic damage."
+	},
+	{
+		"id": "CN039",
+		"source": "core",
+		"roll": 39,
+		"rarity": "Rare",
+		"name": "Featherbone",
+		"category": "Utility",
+		"text": "You can use this bone to control your falling speed for a number of minutes equal to your level."
+	},
+	{
+		"id": "CN040",
+		"source": "core",
+		"roll": 40,
+		"rarity": "Rare",
+		"name": "Circle of the Void",
+		"category": "Utility",
+		"text": "Mark a Stress to create a void that extends up to Far range. No magic can be cast inside the void, and creatures within the void are immune to magic damage."
+	},
+	{
+		"id": "CN041",
+		"source": "core",
+		"roll": 41,
+		"rarity": "Rare",
+		"name": "Sun Tree Sap",
+		"category": "Healing",
+		"text": "Consume this sap to roll a d6. On a result of 5-6, clear 2 HP. On a result of 2-4, clear 3 Stress. On a result of 1, see through the veil of death and return changed, gaining one scar."
+	},
+	{
+		"id": "CN042",
+		"source": "core",
+		"roll": 42,
+		"rarity": "Rare",
+		"name": "Dripfang Poison",
+		"category": "Combat",
+		"text": "A creature who consumes this poison takes 8d10 direct magic damage."
+	},
+	{
+		"id": "CN043",
+		"source": "core",
+		"roll": 43,
+		"rarity": "Rare",
+		"name": "Major Health Potion",
+		"category": "Healing",
+		"text": "Clear 1d4+2 HP."
+	},
+	{
+		"id": "CN044",
+		"source": "core",
+		"roll": 44,
+		"rarity": "Rare",
+		"name": "Major Stamina Potion",
+		"category": "Healing",
+		"text": "Clear 1d4+2 Stress."
+	},
+	{
+		"id": "CN045",
+		"source": "core",
+		"roll": 45,
+		"rarity": "Rare",
+		"name": "Ogre Musk",
+		"category": "Utility",
+		"text": "You can use this musk to prevent anyone from tracking you by mundane or magical means until your next rest."
+	},
+	{
+		"id": "CN046",
+		"source": "core",
+		"roll": 46,
+		"rarity": "Rare",
+		"name": "Wingsprout",
+		"category": "Utility",
+		"text": "You gain magic wings that allow you to fly for a number of minutes equal to your level."
+	},
+	{
+		"id": "CN047",
+		"source": "core",
+		"roll": 47,
+		"rarity": "Rare",
+		"name": "Jar of Lost Voices",
+		"category": "Combat",
+		"text": "You can open this jar to release a deafening echo of voices for a number of minutes equal to your Instinct. Creatures within Far range unprepared for the sound take 6d8 magic damage."
+	},
+	{
+		"id": "CN048",
+		"source": "core",
+		"roll": 48,
+		"rarity": "Rare",
+		"name": "Dragonbloom Tea",
+		"category": "Combat",
+		"text": "You can drink this tea to unleash a fiery breath attack. Make an Instinct Roll against all adversaries in front of you within Close range. Targets you succeed against take 2d20 physical damage using your Proficiency."
+	},
+	{
+		"id": "CN049",
+		"source": "core",
+		"roll": 49,
+		"rarity": "Legendary",
+		"name": "Bridge Seed",
+		"category": "Utility",
+		"text": "Thick vines grow from your location to a point of your choice within Far range, allowing you to climb up or across them. The vines dissipate on your next rest."
+	},
+	{
+		"id": "CN050",
+		"source": "core",
+		"roll": 50,
+		"rarity": "Legendary",
+		"name": "Sleeping Sap",
+		"category": "Utility",
+		"text": "You can drink this potion to fall asleep for a full night's rest. You clear all Stress upon waking."
+	},
+	{
+		"id": "CN051",
+		"source": "core",
+		"roll": 51,
+		"rarity": "Legendary",
+		"name": "Feast of Xuria",
+		"category": "Healing",
+		"text": "You can eat this meal to clear all HP and Stress and gain 1d4 Hope."
+	},
+	{
+		"id": "CN052",
+		"source": "core",
+		"roll": 52,
+		"rarity": "Legendary",
+		"name": "Bonding Honey",
+		"category": "Utility",
+		"text": "This honey can be used to glue two objects together permanently."
+	},
+	{
+		"id": "CN053",
+		"source": "core",
+		"roll": 53,
+		"rarity": "Legendary",
+		"name": "Shrinking Potion",
+		"category": "Enhancement",
+		"text": "You can drink this potion to halve your size until you choose to drop this form or your next rest. While in this form, you have a +2 bonus to Agility and a -1 penalty to your Proficiency."
+	},
+	{
+		"id": "CN054",
+		"source": "core",
+		"roll": 54,
+		"rarity": "Legendary",
+		"name": "Growing Potion",
+		"category": "Enhancement",
+		"text": "You can drink this potion to double your size until you choose to drop this form or your next rest. While in this form, you have a +2 bonus to Strength and a +1 bonus to your Proficiency."
+	},
+	{
+		"id": "CN055",
+		"source": "core",
+		"roll": 55,
+		"rarity": "Legendary",
+		"name": "Knowledge Stone",
+		"category": "Utility",
+		"text": "If you die while holding this stone, an ally can take a card from your loadout to place in their loadout or vault. After they take this knowledge, the stone crumbles."
+	},
+	{
+		"id": "CN056",
+		"source": "core",
+		"roll": 56,
+		"rarity": "Legendary",
+		"name": "Sweet Moss",
+		"category": "Healing",
+		"text": "You can consume this moss during a rest to clear 1d10 HP or 1d10 Stress."
+	},
+	{
+		"id": "CN057",
+		"source": "core",
+		"roll": 57,
+		"rarity": "Legendary",
+		"name": "Blinding Orb",
+		"category": "Combat",
+		"text": "You can activate this orb to create a flash of bright light. All targets within Close range become Vulnerable until they mark HP."
+	},
+	{
+		"id": "CN058",
+		"source": "core",
+		"roll": 58,
+		"rarity": "Legendary",
+		"name": "Death Tea",
+		"category": "Combat",
+		"text": "After you drink this tea, you instantly kill your target when you critically succeed on an attack. If you don't critically succeed on an attack before your next long rest, you die."
+	},
+	{
+		"id": "CN059",
+		"source": "core",
+		"roll": 59,
+		"rarity": "Legendary",
+		"name": "Mirror of Marigold",
+		"category": "Utility",
+		"text": "When you take damage, you can spend a Hope to negate that damage, after which the mirror shatters."
+	},
+	{
+		"id": "CN060",
+		"source": "core",
+		"roll": 60,
+		"rarity": "Legendary",
+		"name": "Stardrop",
+		"category": "Combat",
+		"text": "You can use this stardrop to summon a hailstorm of comets that deals 8d20 physical damage to all targets within Very Far range."
+	}
+]
