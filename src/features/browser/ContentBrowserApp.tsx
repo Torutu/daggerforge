@@ -415,7 +415,7 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		new ConfirmModal(plg.app, {
 			title: dfTranslate("ui.delete.character"),
 			message: dfTranslate("character.delete.confirm", { name: character.name || dfTranslate("ui.dynamic.unnamed.character") }),
-			confirmLabel: "Delete",
+			confirmLabel: dfTranslate("ui.delete"),
 			onConfirm: () => void plg.dataManager.deleteCharacterById(character.id),
 		}).open();
 	}, [app]);

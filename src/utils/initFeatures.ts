@@ -13,23 +13,23 @@ import { ItemModal } from "../features/items/ItemModal";
 export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
     plugin.addRibbonIcon(
         "scroll-text",
-        "DaggerForge menu",
+        dfTranslate("ribbon.menu"),
         (evt: MouseEvent) => {
             const menu = new Menu();
 
-            menu.addItem(item => item.setTitle("Content Browser").setIcon("layout-grid").onClick(() => openContentBrowser(plugin)));
-            menu.addItem(item => item.setTitle("Content Creator").setIcon("pencil-ruler").onClick(() => new ContentCreatorModal(plugin.app, plugin).open()));
-            menu.addItem(item => item.setTitle("Character sheet").setIcon("user").onClick(() => openCharacterSheet(plugin)));
+            menu.addItem(item => item.setTitle(dfTranslate("ui.content.browser")).setIcon("layout-grid").onClick(() => openContentBrowser(plugin)));
+            menu.addItem(item => item.setTitle(dfTranslate("ui.content.creator")).setIcon("pencil-ruler").onClick(() => new ContentCreatorModal(plugin.app, plugin).open()));
+            menu.addItem(item => item.setTitle(dfTranslate("ui.character.sheet")).setIcon("user").onClick(() => openCharacterSheet(plugin)));
 
             menu.addSeparator();
 
-            menu.addItem(item => item.setTitle("Dice roller").setIcon("dice").onClick(() => new DiceRollerModal(plugin.app).open()));
-            menu.addItem(item => item.setTitle("Battle calculator").setIcon("flame").onClick(() => new EncounterCalcModal(plugin.app).open()));
+            menu.addItem(item => item.setTitle(dfTranslate("ui.dice.roller")).setIcon("dice").onClick(() => new DiceRollerModal(plugin.app).open()));
+            menu.addItem(item => item.setTitle(dfTranslate("ui.battle.calculator")).setIcon("flame").onClick(() => new EncounterCalcModal(plugin.app).open()));
 
             menu.addSeparator();
 
-            menu.addItem(item => item.setTitle("Import data").setIcon("upload").onClick(() => new ImportDataModal(plugin.app, plugin).open()));
-            menu.addItem(item => item.setTitle("Delete data file").setIcon("trash").onClick(() => confirmDeleteDataFile(plugin)));
+            menu.addItem(item => item.setTitle(dfTranslate("ui.import.data")).setIcon("upload").onClick(() => new ImportDataModal(plugin.app, plugin).open()));
+            menu.addItem(item => item.setTitle(dfTranslate("ui.delete.data.file.278")).setIcon("trash").onClick(() => confirmDeleteDataFile(plugin)));
 
             menu.showAtMouseEvent(evt);
         },

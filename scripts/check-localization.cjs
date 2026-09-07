@@ -45,8 +45,8 @@ function audit() {
     if(ts.isStringLiteral(node)) {
      const parent=node.parent;
      if(ts.isJsxAttribute(parent)&&/^(title|placeholder|aria-label|label|alt)$/.test(parent.name.text)) value=node.text;
-     if(ts.isPropertyAssignment(parent)&&/^(text|label|title|placeholder|message)$/.test(parent.name.getText(source))) value=node.text;
-     if(ts.isCallExpression(parent)&&/\.(setName|setDesc|setTooltip|setButtonText|setPlaceholder|setText)$/.test(parent.expression.getText(source))) value=node.text;
+     if(ts.isPropertyAssignment(parent)&&/^(text|label|title|placeholder|message|confirmLabel|cancelLabel)$/.test(parent.name.getText(source))) value=node.text;
+     if(ts.isCallExpression(parent)&&/\.(setName|setDesc|setTitle|setTooltip|setButtonText|setPlaceholder|setText)$/.test(parent.expression.getText(source))) value=node.text;
     }
     if(value && /[a-zA-Z]/.test(value) && !names.has(value) && !/^wizard\.step\./.test(value)) {
      add(file,source.getLineAndCharacterOfPosition(node.getStart(source)).line+1,'unlocalized static UI text',value);

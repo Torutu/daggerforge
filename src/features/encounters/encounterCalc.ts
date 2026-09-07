@@ -276,7 +276,7 @@ export class EncounterCalcModal extends Modal {
 			new ConfirmModal(this.app, {
 				title: dfTranslate("ui.insert.with.unspent.battle.points"),
 				message: dfTranslate("enc.unspentWarning", { count: remaining }),
-				confirmLabel: "Insert anyway",
+				confirmLabel: dfTranslate("ui.insert.anyway"),
 				onConfirm: () => void insertEncounter(),
 			}).open();
 		};

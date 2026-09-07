@@ -1,4 +1,9 @@
 export const en = {
+"ribbon.menu": "DaggerForge menu",
+"ui.content.creator": "Content Creator",
+"ui.blank.character": "Blank character",
+"ui.discard": "Discard",
+"ui.insert.anyway": "Insert anyway",
 "term.spellcast": "Spellcast",
 "term.evasion": "Evasion",
 "term.spell": "Spell",

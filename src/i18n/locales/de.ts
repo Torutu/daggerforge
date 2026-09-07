@@ -1,6 +1,11 @@
 import type { TranslationKey } from "./en";
 
 export const de: Record<TranslationKey, string> = {
+"ribbon.menu": "DaggerForge-Menü",
+"ui.content.creator": "Inhaltseditor",
+"ui.blank.character": "Leerer Charakter",
+"ui.discard": "Verwerfen",
+"ui.insert.anyway": "Trotzdem einfügen",
 "term.spellcast": "Zauber",
 "term.evasion": "Ausweichen",
 "term.spell": "Zauber",

@@ -128,7 +128,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 		new ConfirmModal(plugin.app, {
 			title: dfTranslate("ui.discard.unsaved.changes"),
 			message: dfTranslate("ui.this.sheet.has.unsaved.changes.that.will.be.lost"),
-			confirmLabel: "Discard",
+			confirmLabel: dfTranslate("ui.discard"),
 			onConfirm: action,
 		}).open();
 	};
@@ -136,7 +136,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 	const handleNew = (evt: React.MouseEvent) => {
 		const menu = new Menu();
 		menu.addItem((item) =>
-			item.setTitle("Blank character").setIcon("file").onClick(() =>
+			item.setTitle(dfTranslate("ui.blank.character")).setIcon("file").onClick(() =>
 				confirmDiscard(() => {
 					setChar(createEmptyCharacter(generateCharacterUniqueId()));
 					setDirty(false);
@@ -144,7 +144,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 			),
 		);
 		menu.addItem((item) =>
-			item.setTitle("Guided creation").setIcon("wand").onClick(() =>
+			item.setTitle(dfTranslate("ui.guided.creation")).setIcon("wand").onClick(() =>
 				confirmDiscard(() => setWizardOpen(true)),
 			),
 		);
@@ -187,7 +187,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 		new ConfirmModal(plugin.app, {
 			title: dfTranslate("ui.delete.character"),
 			message: dfTranslate("character.delete.confirm", { name: char.name || dfTranslate("ui.dynamic.unnamed.character") }),
-			confirmLabel: "Delete",
+			confirmLabel: dfTranslate("ui.delete"),
 			onConfirm: async () => {
 				await plugin.dataManager.deleteCharacterById(char.id);
 				setChar(createEmptyCharacter(generateCharacterUniqueId()));
