@@ -13,6 +13,7 @@ import { DomainIcon, DomainSprite } from "./DomainArt";
 import { ZapIcon } from "./SheetFields";
 import { TranslationKey } from "../../../i18n";
 import { useLanguage, useTranslation } from "../../../i18n/react";
+import { gameTerm } from "../../../i18n/gameTerms";
 
 interface Props {
 	onComplete: (choices: CreationChoices) => void;
@@ -692,7 +693,8 @@ export function DomainCardsStep({
 	onChange: (ids: string[]) => void;
 }) {
 	const t = useTranslation();
-	const allCards = getSrdDomainCards(useLanguage());
+	const language = useLanguage();
+	const allCards = getSrdDomainCards(language);
 	const cards = allCards.filter(
 		(c) => c.level === 1 && (!classDomains || classDomains.some((domain) => domain.id === c.domainId)),
 	);
@@ -735,7 +737,7 @@ export function DomainCardsStep({
 										accent={color}
 										onClick={() => setOpenId(card.id)}
 										name={card.name}
-										meta={<>{card.type} · <ZapIcon />{card.recallCost}</>}
+										meta={<>{gameTerm(card.type, language)} · <ZapIcon />{card.recallCost}</>}
 									/>
 								))}
 						</React.Fragment>
@@ -755,7 +757,7 @@ export function DomainCardsStep({
 									{open.name}
 								</>
 							}
-							meta={`${open.domain} · ${open.type} · ${t("wizard.domain.recall", { cost: open.recallCost })}`}
+							meta={`${open.domain} · ${gameTerm(open.type, language)} · ${t("wizard.domain.recall", { cost: open.recallCost })}`}
 							footNote={t("wizard.domain.picked", { count: selected.length })}
 							chooseLabel={openPicked ? t("wizard.domain.remove") : t("wizard.domain.add")}
 							chooseDisabled={!openPicked && selected.length >= 2}

@@ -1,6 +1,7 @@
 {
 	"weapons": [
 		{
+			"source": "hope-fear",
 			"id": "HF-W001",
 			"name": "Arcane Rifle",
 			"category": "Primary",
@@ -14,6 +15,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W002",
 			"name": "Bladed Star",
 			"category": "Primary",
@@ -27,6 +29,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W003",
 			"name": "Brass Knuckles",
 			"category": "Primary",
@@ -40,6 +43,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W004",
 			"name": "Brightsword",
 			"category": "Primary",
@@ -53,6 +57,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W005",
 			"name": "Casting Dagger",
 			"category": "Primary",
@@ -66,6 +71,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W006",
 			"name": "Enchanted Chakram",
 			"category": "Primary",
@@ -79,6 +85,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W007",
 			"name": "Fighting Cloak",
 			"category": "Secondary",
@@ -92,6 +99,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W008",
 			"name": "Focus Runes",
 			"category": "Secondary",
@@ -105,6 +113,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W009",
 			"name": "Hatchet",
 			"category": "Secondary",
@@ -118,6 +127,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W010",
 			"name": "Katana",
 			"category": "Primary",
@@ -131,6 +141,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W011",
 			"name": "Offhand Brass Knuckles",
 			"category": "Secondary",
@@ -144,6 +155,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W012",
 			"name": "Rope Dart",
 			"category": "Primary",
@@ -157,6 +169,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W013",
 			"name": "Rune Shield",
 			"category": "Secondary",
@@ -170,6 +183,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W014",
 			"name": "Runelock Pistol",
 			"category": "Primary",
@@ -183,6 +197,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W015",
 			"name": "Scimitar",
 			"category": "Primary",
@@ -196,6 +211,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W016",
 			"name": "Shadowblade",
 			"category": "Primary",
@@ -209,6 +225,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W017",
 			"name": "Throwing Knives",
 			"category": "Secondary",
@@ -222,6 +239,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W018",
 			"name": "Twisted Dagger",
 			"category": "Primary",
@@ -235,6 +253,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W019",
 			"name": "Whipsword",
 			"category": "Primary",
@@ -248,6 +267,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W020",
 			"name": "Bladed Fan",
 			"category": "Primary",
@@ -261,6 +281,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W021",
 			"name": "Cane Sword",
 			"category": "Primary",
@@ -274,6 +295,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W022",
 			"name": "Collapsible Baton",
 			"category": "Secondary",
@@ -287,6 +309,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W023",
 			"name": "Cyrurgien's Scalpel",
 			"category": "Primary",
@@ -300,6 +323,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W024",
 			"name": "Displacement Razor",
 			"category": "Primary",
@@ -313,6 +337,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W025",
 			"name": "Eldritch Vambrace",
 			"category": "Secondary",
@@ -326,6 +351,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W026",
 			"name": "Enchanted Lute",
 			"category": "Primary",
@@ -339,6 +365,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W027",
 			"name": "Enchanted Shillelagh",
 			"category": "Primary",
@@ -352,6 +379,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W028",
 			"name": "Fury Gem",
 			"category": "Primary",
@@ -365,6 +393,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W029",
 			"name": "Improved Arcane Rifle",
 			"category": "Primary",
@@ -378,6 +407,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W030",
 			"name": "Improved Brass Knuckles",
 			"category": "Primary",
@@ -391,6 +421,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W031",
 			"name": "Improved Brightsword",
 			"category": "Primary",
@@ -404,6 +435,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W032",
 			"name": "Improved Casting Dagger",
 			"category": "Primary",
@@ -417,6 +449,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W033",
 			"name": "Improved Enchanted Chakram",
 			"category": "Primary",
@@ -430,6 +463,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W034",
 			"name": "Improved Fighting Cloak",
 			"category": "Secondary",
@@ -443,6 +477,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W035",
 			"name": "Improved Focus Runes",
 			"category": "Secondary",
@@ -456,6 +491,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W036",
 			"name": "Improved Hatchet",
 			"category": "Secondary",
@@ -469,6 +505,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W037",
 			"name": "Improved Katana",
 			"category": "Primary",
@@ -482,6 +519,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W038",
 			"name": "Improved Offhand Brass Knuckles",
 			"category": "Secondary",
@@ -495,6 +533,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W039",
 			"name": "Improved Rope Dart",
 			"category": "Primary",
@@ -508,6 +547,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W040",
 			"name": "Improved Rune Shield",
 			"category": "Secondary",
@@ -521,6 +561,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W041",
 			"name": "Improved Runelock Pistol",
 			"category": "Primary",
@@ -534,6 +575,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W042",
 			"name": "Improved Scimitar",
 			"category": "Primary",
@@ -547,6 +589,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W043",
 			"name": "Improved Shadowblade",
 			"category": "Primary",
@@ -560,6 +603,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W044",
 			"name": "Improved Throwing Knives",
 			"category": "Secondary",
@@ -573,6 +617,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W045",
 			"name": "Improved Twisted Dagger",
 			"category": "Primary",
@@ -586,6 +631,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W046",
 			"name": "Improved Whipsword",
 			"category": "Primary",
@@ -599,6 +645,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W047",
 			"name": "Javelins",
 			"category": "Primary",
@@ -612,6 +659,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W048",
 			"name": "Lance",
 			"category": "Primary",
@@ -625,6 +673,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W049",
 			"name": "Razor Wire",
 			"category": "Secondary",
@@ -638,6 +687,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W050",
 			"name": "Segmented Staff",
 			"category": "Secondary",
@@ -651,6 +701,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W051",
 			"name": "Spellbound Bangles",
 			"category": "Primary",
@@ -664,6 +715,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W052",
 			"name": "Splintershaft Bow",
 			"category": "Primary",
@@ -677,6 +729,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W053",
 			"name": "War Pick",
 			"category": "Primary",
@@ -690,6 +743,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W054",
 			"name": "Advanced Arcane Rifle",
 			"category": "Primary",
@@ -703,6 +757,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W055",
 			"name": "Advanced Brass Knuckles",
 			"category": "Primary",
@@ -716,6 +771,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W056",
 			"name": "Advanced Brightsword",
 			"category": "Primary",
@@ -729,6 +785,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W057",
 			"name": "Advanced Casting Dagger",
 			"category": "Primary",
@@ -742,6 +799,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W058",
 			"name": "Advanced Enchanted Chakram",
 			"category": "Primary",
@@ -755,6 +813,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W059",
 			"name": "Advanced Fighting Cloak",
 			"category": "Secondary",
@@ -768,6 +827,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W060",
 			"name": "Advanced Focus Runes",
 			"category": "Secondary",
@@ -781,6 +841,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W061",
 			"name": "Advanced Hatchet",
 			"category": "Secondary",
@@ -794,6 +855,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W062",
 			"name": "Advanced Katana",
 			"category": "Primary",
@@ -807,6 +869,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W063",
 			"name": "Advanced Offhand Brass Knuckles",
 			"category": "Secondary",
@@ -820,6 +883,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W064",
 			"name": "Advanced Rope Dart",
 			"category": "Primary",
@@ -833,6 +897,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W065",
 			"name": "Advanced Rune Shield",
 			"category": "Secondary",
@@ -846,6 +911,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W066",
 			"name": "Advanced Runelock Pistol",
 			"category": "Primary",
@@ -859,6 +925,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W067",
 			"name": "Advanced Scimitar",
 			"category": "Primary",
@@ -872,6 +939,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W068",
 			"name": "Advanced Shadowblade",
 			"category": "Primary",
@@ -885,6 +953,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W069",
 			"name": "Advanced Throwing Knives",
 			"category": "Secondary",
@@ -898,6 +967,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W070",
 			"name": "Advanced Twisted Dagger",
 			"category": "Primary",
@@ -911,6 +981,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W071",
 			"name": "Advanced Whipsword",
 			"category": "Primary",
@@ -924,6 +995,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W072",
 			"name": "Arc Wand",
 			"category": "Primary",
@@ -937,6 +1009,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W073",
 			"name": "Blitz Hammer",
 			"category": "Primary",
@@ -950,6 +1023,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W074",
 			"name": "Chained Scythe",
 			"category": "Primary",
@@ -963,6 +1037,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W075",
 			"name": "Crystal Spear",
 			"category": "Primary",
@@ -976,6 +1051,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W076",
 			"name": "Gunblade",
 			"category": "Primary",
@@ -989,6 +1065,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W077",
 			"name": "Platinum Estoc",
 			"category": "Primary",
@@ -1002,6 +1079,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W078",
 			"name": "Rime Scepter",
 			"category": "Primary",
@@ -1015,6 +1093,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W079",
 			"name": "Rocket Maul",
 			"category": "Primary",
@@ -1028,6 +1107,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W080",
 			"name": "Singing Sword",
 			"category": "Primary",
@@ -1041,6 +1121,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W081",
 			"name": "Soldier's Pike",
 			"category": "Primary",
@@ -1054,6 +1135,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W082",
 			"name": "Soul Chain",
 			"category": "Secondary",
@@ -1067,6 +1149,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W083",
 			"name": "Staff of Augma",
 			"category": "Primary",
@@ -1080,6 +1163,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W084",
 			"name": "Tinker's Hammer",
 			"category": "Secondary",
@@ -1093,6 +1177,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W085",
 			"name": "Vorpal Shard",
 			"category": "Secondary",
@@ -1106,6 +1191,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W086",
 			"name": "War Dart",
 			"category": "Secondary",
@@ -1119,6 +1205,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W087",
 			"name": "Adder's Fang",
 			"category": "Primary",
@@ -1132,6 +1219,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W088",
 			"name": "Arquebus",
 			"category": "Primary",
@@ -1145,6 +1233,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W089",
 			"name": "Bec de Corbin",
 			"category": "Primary",
@@ -1158,6 +1247,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W090",
 			"name": "Black Powder Serpentine",
 			"category": "Primary",
@@ -1171,6 +1261,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W091",
 			"name": "Blackblood Tendril",
 			"category": "Secondary",
@@ -1184,6 +1275,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W092",
 			"name": "Clockwork Crossbow",
 			"category": "Primary",
@@ -1197,6 +1289,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W093",
 			"name": "Demon's Edge",
 			"category": "Primary",
@@ -1210,6 +1303,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W094",
 			"name": "Echo Blade",
 			"category": "Secondary",
@@ -1223,6 +1317,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W095",
 			"name": "Ethereal Zweihänder",
 			"category": "Primary",
@@ -1236,6 +1331,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W096",
 			"name": "Gravity Arbalest",
 			"category": "Primary",
@@ -1249,6 +1345,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W097",
 			"name": "Infinite Staff",
 			"category": "Primary",
@@ -1262,6 +1359,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W098",
 			"name": "Legendary Arcane Rifle",
 			"category": "Primary",
@@ -1275,6 +1373,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W099",
 			"name": "Legendary Brass Knuckles",
 			"category": "Primary",
@@ -1288,6 +1387,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W100",
 			"name": "Legendary Brightsword",
 			"category": "Primary",
@@ -1301,6 +1401,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W101",
 			"name": "Legendary Casting Dagger",
 			"category": "Primary",
@@ -1314,6 +1415,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W102",
 			"name": "Legendary Enchanted Chakram",
 			"category": "Primary",
@@ -1327,6 +1429,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W103",
 			"name": "Legendary Fighting Cloak",
 			"category": "Secondary",
@@ -1340,6 +1443,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W104",
 			"name": "Legendary Focus Runes",
 			"category": "Secondary",
@@ -1353,6 +1457,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W105",
 			"name": "Legendary Hatchet",
 			"category": "Secondary",
@@ -1366,6 +1471,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W106",
 			"name": "Legendary Katana",
 			"category": "Primary",
@@ -1379,6 +1485,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W107",
 			"name": "Legendary Offhand Brass Knuckles",
 			"category": "Secondary",
@@ -1392,6 +1499,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W108",
 			"name": "Legendary Rope Dart",
 			"category": "Primary",
@@ -1405,6 +1513,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W109",
 			"name": "Legendary Rune Shield",
 			"category": "Secondary",
@@ -1418,6 +1527,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W110",
 			"name": "Legendary Runelock Pistol",
 			"category": "Primary",
@@ -1431,6 +1541,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W111",
 			"name": "Legendary Scimitar",
 			"category": "Primary",
@@ -1444,6 +1555,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W112",
 			"name": "Legendary Shadowblade",
 			"category": "Primary",
@@ -1457,6 +1569,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W113",
 			"name": "Legendary Throwing Knives",
 			"category": "Secondary",
@@ -1470,6 +1583,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W114",
 			"name": "Legendary Twisted Dagger",
 			"category": "Primary",
@@ -1483,6 +1597,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W115",
 			"name": "Legendary Whipsword",
 			"category": "Primary",
@@ -1496,6 +1611,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W116",
 			"name": "Möbius Orb",
 			"category": "Secondary",
@@ -1509,6 +1625,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W117",
 			"name": "Severed Dragon Claw",
 			"category": "Primary",
@@ -1522,6 +1639,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W118",
 			"name": "Starmetal Blade",
 			"category": "Primary",
@@ -1535,6 +1653,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W119",
 			"name": "Storm God's Greataxe",
 			"category": "Primary",
@@ -1548,6 +1667,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-W120",
 			"name": "Void Needle",
 			"category": "Secondary",
@@ -1563,6 +1683,7 @@
 	],
 	"armor": [
 		{
+			"source": "hope-fear",
 			"id": "HF-AR001",
 			"name": "Banded Armor",
 			"tier": 1,
@@ -1573,6 +1694,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR002",
 			"name": "Brigandine Armor",
 			"tier": 1,
@@ -1583,6 +1705,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR003",
 			"name": "Mage Robes",
 			"tier": 1,
@@ -1593,6 +1716,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR004",
 			"name": "Scale Mail Armor",
 			"tier": 1,
@@ -1603,6 +1727,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR005",
 			"name": "Enchanter's Robes",
 			"tier": 2,
@@ -1613,6 +1738,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR006",
 			"name": "Gilded Sunplate",
 			"tier": 2,
@@ -1623,6 +1749,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR007",
 			"name": "Hawkguard's Mantle",
 			"tier": 2,
@@ -1633,6 +1760,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR008",
 			"name": "Improved Banded Armor",
 			"tier": 2,
@@ -1643,6 +1771,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR009",
 			"name": "Improved Brigandine Armor",
 			"tier": 2,
@@ -1653,6 +1782,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR010",
 			"name": "Improved Mage Robes",
 			"tier": 2,
@@ -1663,6 +1793,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR011",
 			"name": "Improved Scale Mail Armor",
 			"tier": 2,
@@ -1673,6 +1804,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR012",
 			"name": "Irontree Breastplate Armor",
 			"tier": 2,
@@ -1683,6 +1815,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR013",
 			"name": "Spidersilk Tunic",
 			"tier": 2,
@@ -1693,6 +1826,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR014",
 			"name": "Stormthread Habit",
 			"tier": 2,
@@ -1703,6 +1837,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR015",
 			"name": "Trollhide Cuirass",
 			"tier": 2,
@@ -1713,6 +1848,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR016",
 			"name": "Wyrdwood Splint Armor",
 			"tier": 2,
@@ -1723,6 +1859,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR017",
 			"name": "Advanced Banded Armor",
 			"tier": 3,
@@ -1733,6 +1870,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR018",
 			"name": "Advanced Brigandine Armor",
 			"tier": 3,
@@ -1743,6 +1881,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR019",
 			"name": "Advanced Mage Robes",
 			"tier": 3,
@@ -1753,6 +1892,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR020",
 			"name": "Advanced Scale Mail Armor",
 			"tier": 3,
@@ -1763,6 +1903,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR021",
 			"name": "Astral Raiment",
 			"tier": 3,
@@ -1773,6 +1914,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR022",
 			"name": "Bloodstone Plate Armor",
 			"tier": 3,
@@ -1783,6 +1925,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR023",
 			"name": "Cloverweave Cloak",
 			"tier": 3,
@@ -1793,6 +1936,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR024",
 			"name": "Deep-Forged Coral Armor",
 			"tier": 3,
@@ -1803,6 +1947,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR025",
 			"name": "Granminster's Finery",
 			"tier": 3,
@@ -1813,6 +1958,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR026",
 			"name": "Skywarden's Lamellar",
 			"tier": 3,
@@ -1823,6 +1969,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR027",
 			"name": "Circle-Forged Dreadplate",
 			"tier": 4,
@@ -1833,6 +1980,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR028",
 			"name": "Darkweave Shroud",
 			"tier": 4,
@@ -1843,6 +1991,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR029",
 			"name": "Godbound Laminar",
 			"tier": 4,
@@ -1853,6 +2002,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR030",
 			"name": "Hallowed Heroplate",
 			"tier": 4,
@@ -1863,6 +2013,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR031",
 			"name": "Legendary Banded Armor",
 			"tier": 4,
@@ -1873,6 +2024,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR032",
 			"name": "Legendary Brigandine Armor",
 			"tier": 4,
@@ -1883,6 +2035,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR033",
 			"name": "Legendary Mage Robes",
 			"tier": 4,
@@ -1893,6 +2046,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR034",
 			"name": "Legendary Scale Mail Armor",
 			"tier": 4,
@@ -1903,6 +2057,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR035",
 			"name": "Resonant Harness",
 			"tier": 4,
@@ -1913,6 +2068,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "hope-fear",
 			"id": "HF-AR036",
 			"name": "Rune-Forged Exosuit",
 			"tier": 4,

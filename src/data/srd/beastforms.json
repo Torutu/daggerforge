@@ -1,5 +1,6 @@
 [
   {
+    "source": "core",
     "name": "Agile Scout",
     "tier": 1,
     "examples": "Fox, Mouse, Weasel",
@@ -17,6 +18,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Aquatic Scout",
     "tier": 1,
     "examples": "Eel, Fish, Octopus",
@@ -34,6 +36,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Household Friend",
     "tier": 1,
     "examples": "Cat, Dog, Rabbit",
@@ -51,6 +54,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Nimble Grazer",
     "tier": 1,
     "examples": "Deer, Gazelle, Goat",
@@ -68,6 +72,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Pack Predator",
     "tier": 1,
     "examples": "Coyote, Hyena, Wolf",
@@ -85,6 +90,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Stalking Arachnid",
     "tier": 1,
     "examples": "Tarantula, Wolf Spider",
@@ -102,6 +108,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Armored Sentry",
     "tier": 2,
     "examples": "Armadillo, Pangolin, Turtle",
@@ -119,6 +126,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Mighty Strider",
     "tier": 2,
     "examples": "Camel, Horse, Zebra",
@@ -136,6 +144,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Pouncing Predator",
     "tier": 2,
     "examples": "Cheetah, Lion, Panther",
@@ -153,6 +162,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Powerful Beast",
     "tier": 2,
     "examples": "Bear, Bull, Moose",
@@ -170,6 +180,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Striking Serpent",
     "tier": 2,
     "examples": "Cobra, Rattlesnake, Viper",
@@ -187,6 +198,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Winged Beast",
     "tier": 2,
     "examples": "Hawk, Owl, Raven",
@@ -204,6 +216,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Aquatic Predator",
     "tier": 3,
     "examples": "Dolphin, Orca, Shark",
@@ -221,6 +234,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Great Predator",
     "tier": 3,
     "examples": "Dire Wolf, Velociraptor, Sabertooth Tiger",
@@ -238,6 +252,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Great Winged Beast",
     "tier": 3,
     "examples": "Giant Eagle, Falcon",
@@ -255,6 +270,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Legendary Beast",
     "tier": 3,
     "examples": "Upgraded Tier 1 Options",
@@ -271,6 +287,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Legendary Hybrid",
     "tier": 3,
     "examples": "Griffon, Sphinx",
@@ -287,6 +304,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Mighty Lizard",
     "tier": 3,
     "examples": "Alligator, Crocodile, Gila Monster",
@@ -304,6 +322,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Epic Aquatic Beast",
     "tier": 4,
     "examples": "Giant Squid, Whale",
@@ -321,6 +340,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Massive Behemoth",
     "tier": 4,
     "examples": "Elephant, Mammoth, Rhinoceros",
@@ -339,6 +359,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Mythic Aerial Hunter",
     "tier": 4,
     "examples": "Dragon, Pterodactyl, Roc, Wyvern",
@@ -356,6 +377,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Mythic Beast",
     "tier": 4,
     "examples": "Upgraded Tier 1 or Tier 2 Options",
@@ -372,6 +394,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Mythic Hybrid",
     "tier": 4,
     "examples": "Chimera, Cockatrice, Manticore",
@@ -388,6 +411,7 @@
     ]
   },
   {
+    "source": "core",
     "name": "Terrible Lizard",
     "tier": 4,
     "examples": "Brachiosaurus, Tyrannosaurus",

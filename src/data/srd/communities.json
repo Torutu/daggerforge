@@ -1,5 +1,6 @@
 [
 	{
+		"source": "core",
 		"name": "Highborne",
 		"description": [
 			"Being part of a highborne community means you're accustomed to a life of elegance, opulence, and prestige within the upper echelons of society. Traditionally, members of a highborne community possess incredible material wealth. While this can take a variety of forms depending on the community—including gold and other minerals, land, or controlling the means of production—this status always comes with power and influence.",
@@ -11,6 +12,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Loreborne",
 		"description": [
 			"Being part of a loreborne community means you're from a society that favors strong academic or political prowess. Loreborne communities highly value knowledge, frequently in the form of historical preservation, political advancement, scientific study, skill development, or lore and mythology compilation. Most members of these communities research in institutions built in bastions of civilization, while some eclectic few thrive in gathering information from the natural world.",
@@ -22,6 +24,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Orderborne",
 		"description": [
 			"Being part of an orderborne community means you're from a collective that focuses on discipline or faith, and you uphold a set of principles that reflect your experience there.",
@@ -33,6 +36,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Ridgeborne",
 		"description": [
 			"Being part of a ridgeborne community means you've called the rocky peaks and sharp cliffs of the mountainside home. Those who've lived in the mountains often consider themselves hardier than most because they've thrived among the most dangerous terrain many continents have to offer. These groups are adept at adaptation, developing unique technologies and equipment to move both people and products across difficult terrain. As such, ridgeborne grow up scrambling and climbing, making them sturdy and strong-willed.",
@@ -44,6 +48,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Seaborne",
 		"description": [
 			"Being part of a seaborne community means you lived on or near a large body of water. Seaborne communities are built, both physically and culturally, around the specific waters they call home. Some of these groups live along the shore, constructing ports for locals and travelers alike. These harbors function as centers of commerce, tourist attractions, or even just a safe place to lay down one's head after weeks of travel.",
@@ -55,6 +60,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Slyborne",
 		"description": [
 			"Being part of a slyborne community means you come from a group that operates outside the law, including all manner of criminals, grifters, and con artists. Members of slyborne communities are brought together by their disreputable goals and their clever means of achieving them. Many people in these communities have an array of unscrupulous skills: forging, thievery, smuggling, and violence.",
@@ -66,6 +72,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Underborne",
 		"description": [
 			"Being part of an underborne community means you're from a subterranean society. Many underborne live right beneath the cities and villages of other collectives, while some live much deeper. These communities range from small family groups in burrows to massive metropolises in caverns of stone. In many locales, underborne are recognized for their incredible boldness and skill that enable great feats of architecture and engineering.",
@@ -77,6 +84,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Wanderborne",
 		"description": [
 			"Being part of a wanderborne community means you've lived as a nomad, forgoing a permanent home and experiencing a wide variety of cultures. Unlike many communities that are defined by their locale, wanderborne are defined by their traveling lifestyle. Because of their frequent migration, wanderborne put less value on the accumulation of material possessions in favor of acquiring information, skills, and connections.",
@@ -88,6 +96,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Wildborne",
 		"description": [
 			"Being part of a wildborne community means you lived deep within the forest. Wildborne communities are defined by their dedication to the conservation of their homelands, and many have strong religious or cultural ties to the fauna they live among. This results in unique architectural and technological advancements that favor sustainability over short-term, high-yield results.",

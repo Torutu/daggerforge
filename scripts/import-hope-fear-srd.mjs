@@ -163,6 +163,7 @@ const classes = classRecords.map((record) => {
 		.map((name) => signed(guide.suggestedTraits[name]))
 		.join(", ");
 	return {
+		source: "hope-fear",
 		name: record.name,
 		description: [htmlToText(record.system.description)],
 		stats: {
@@ -189,6 +190,7 @@ function buildHeritage(type) {
 		.filter((record) => refId(record.system?.features?.[0]?.item ?? record.system?.features?.[0]) &&
 			["Aetheris", "Earthkin", "Emberkin", "Gnome", "Skykin", "Tidekin", "Duneborne", "Freeborne", "Frostborne", "Hearthborne", "Reborne", "Warborne"].includes(record.name))
 		.map((record) => ({
+			source: "hope-fear",
 			name: record.name,
 			description: [htmlToText(record.system.description)],
 			features: record.system.features.map((entry) => {
@@ -203,6 +205,7 @@ const communities = buildHeritage("community");
 const dreadCards = records
 	.filter((record) => record.type === "domainCard" && record.system?.domain === "dread")
 	.map((record) => ({
+		source: "hope-fear",
 		name: record.name,
 		domain: "Dread",
 		type: titleCase(record.system.type),
@@ -216,6 +219,7 @@ const transformationNames = new Set(["Demigod", "Ghost", "Reanimated", "Shapeshi
 const transformations = records
 	.filter((record) => record.type === "transformation" && transformationNames.has(record.name))
 	.map((record) => ({
+		source: "hope-fear",
 		name: record.name,
 		description: [htmlToText(record.system.description)],
 		features: record.system.features.map((reference) => feature(reference)),

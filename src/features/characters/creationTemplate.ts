@@ -19,7 +19,7 @@ import {
 	localizeRange,
 	localizeTrait,
 } from "../../data/srd";
-import { getLanguage } from "../../i18n";
+import { getLanguage, translate } from "../../i18n";
 
 /** Selections made in the guided creation wizard. Everything is optional -
  *  skipped steps simply leave those parts of the sheet blank. */
@@ -48,9 +48,7 @@ export function composeMixedHeritage(
 	return {
 		id: `mixed-${primary.id}-${secondary.id}`,
 		name: `${primary.name} / ${secondary.name}`,
-		description: getLanguage() === "de"
-			? `Gemischte Abstammung: ${primary.name} und ${secondary.name}.`
-			: `Mixed ancestry: ${primary.name} and ${secondary.name}.`,
+		description: translate("creation.mixedAncestry", { primary: primary.name, secondary: secondary.name }),
 		features: [firstFeature, secondFeature].filter(Boolean).join("\n\n"),
 	};
 }
@@ -66,9 +64,7 @@ export function toHeritageCard(heritage: SrdHeritage): HeritageCardData {
 
 /** SRD step 5: standard starting inventory for every new character. */
 function startingInventory(language: "en" | "de"): string {
-	return language === "de"
-		? "Fackel, 15 Meter Seil, Grundausstattung, ein leichter Lebenstrank oder ein leichter Ausdauertrank"
-		: "Torch, 50 feet of rope, basic supplies, a Minor Health Potion or Minor Stamina Potion";
+	return translate("creation.startingInventory", {}, language);
 }
 
 /**
@@ -146,12 +142,8 @@ function applyClass(
 	char.hopeFeature = srdClass.hopeFeature;
 	// Class HP becomes the sheet's solid-slot count (the cog can adjust it later)
 	char.sheetSettings.maxHp = Math.min(12, Math.max(1, srdClass.stats.hp));
-	char.notes = language === "de"
-		? `Max. TP: ${srdClass.stats.hp} (${srdClass.name})`
-		: `Max HP: ${srdClass.stats.hp} (${srdClass.name})`;
-	char.inventory += language === "de"
-		? `\nKlassengegenstände: ${srdClass.items}`
-		: `\nClass items: ${srdClass.items}`;
+	char.notes = translate("creation.maxHp", { hp: srdClass.stats.hp, class: srdClass.name }, language);
+	char.inventory += `\n${translate("creation.classItems", { items: srdClass.items }, language)}`;
 
 	// Suggested trait spread, in printed order (Agility … Knowledge)
 	const traitValues = srdClass.stats.suggestedTraits.split(",").map((v) => v.trim());
@@ -161,13 +153,13 @@ function applyClass(
 
 	const features = srdClass.classFeatures.map((f) => `${f.name}: ${f.description}`);
 	if (subclass) {
-		if (subclass.spellcastTrait) features.push(
-			language === "de"
-				? `Zauber-Attribut: ${subclass.spellcastTrait}`
-				: `Spellcast Trait: ${subclass.spellcastTrait}`,
-		);
+		if (subclass.spellcastTrait) features.push(translate("creation.spellcastTrait", {
+			trait: localizeTrait(subclass.spellcastTrait, language),
+		}, language));
 		for (const f of subclass.foundation) {
-			features.push(`${f.name} (${subclass.name} ${language === "de" ? "Basis" : "foundation"}): ${f.description}`);
+			features.push(translate("creation.foundationFeature", {
+				feature: f.name, subclass: subclass.name, description: f.description,
+			}, language));
 		}
 	}
 	char.classFeature = features.join("\n\n");

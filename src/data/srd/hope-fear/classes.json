@@ -1,5 +1,6 @@
 [
 	{
+		"source": "hope-fear",
 		"name": "Assassin",
 		"description": [
 			"Assassins are masters at inflicting deadly injuries with precise strikes. Unlike those who wield violence as only a means to an end, assassins approach death as a profession. Many members of this class believe theirs is a worthy, if not sacred, trade, and some join guilds to hone their craft, define their beliefs, and earn money. People from all walks of life hire assassins for their skills: powerful rulers looking to avoid all-out war, business leaders seeking to eliminate the competition, and even average people hoping to settle a grudge. Often, an assassin is the last resort for killing those previously believed to be unkillable. While some of these deadly professionals will destroy anyone in their path for the right reasons or the right price, others hold strict moral codes or personal rules that dictate their targets. Those who end up the target of an assassin should count themselves among the dead."
@@ -103,6 +104,7 @@
 		]
 	},
 	{
+		"source": "hope-fear",
 		"name": "Brawler",
 		"description": [
 			"Experts in unarmed combat, brawlers hone their bodies into lethal weapons. Whether they learned from formal training, studied with a mentor, or picked up their skills one fight at a time, the process is always rigorous as brawlers develop their body and mind to work as one. Brawlers are valued for their power and versatility and typically join a party or a cause when the need or desire arises. Because a brawler's body is their strongest weapon, they typically seek out new challenges or consistent sparring partners so they can maintain their skills and add new techniques to their repertoire. Though they might appear unassuming to those accustomed to foes who are armed to the teeth, brawlers often accomplish more with bare knuckles than an average soldier with a sword."
@@ -167,7 +169,7 @@
 				"foundation": [
 					{
 						"name": "Stance Fighter",
-						"description": "You can channel your inner resolve to shift into martial stances that grant you special benefits in combat.\n\nTake the Martial Stances sheet and choose two martial stances from Tier 1. Each time you level up your character, choose an additional stance from your tier or lower._Currently the implementation for this is to simply grab the stances you want from the compendium **Subclasses—> Subclass Features—> Martial Stances**_"
+						"description": "You can channel your inner resolve to shift into martial stances that grant you special benefits in combat.\n\nTake the Martial Stances sheet and choose two martial stances from Tier 1. Each time you level up your character, choose an additional stance from your tier or lower."
 					}
 				],
 				"specialization": [
@@ -204,6 +206,7 @@
 		]
 	},
 	{
+		"source": "hope-fear",
 		"name": "Warlock",
 		"description": [
 			"Those who've traded their lives—or perhaps even their souls—to an otherworldly patron in exchange for incredible power are known as warlocks. Often, these mortals have reached a point of desperation that leads them to make this sacrifice: they hope to protect themselves or a loved one, aid their community, seek vengeance, increase their status, or otherwise further their ambitions. The powerful entities they entreat are as varied as the warlocks themselves: gods, spirits, demons, or other beings unknown to even the mortal who makes the pact. The entities each have their own sphere of influence that defines their otherworldly power, and those that collect souls are rarely known for their benevolence. Thus, a warlock's power is defined by the relationship they maintain with their benefactor. Despite their terrifying magic, warlocks might find that someone or something else is pulling their strings."
@@ -226,7 +229,7 @@
 			},
 			{
 				"name": "Favor",
-				"description": "You start with 3 Favor. You can use a downtime move to show tribute to your patron. Describe how and gain Favor equal to your Spellcast trait. Additionally, when you succeed on an action roll with Hope, you can choose to gain a Favor instead of a Hope."
+				"description": "You start with 3 Favor. You can use a downtime move to show tribute to your patron. Describe how and gain Favor equal to your Spellcast trait. Additionally, when you succeed on an action roll with Hope, you can choose to gain a Favor instead of a Hope.\n\nNote: The maximum Favor you can hold at one time is 6."
 			}
 		],
 		"subclasses": {
@@ -283,7 +286,7 @@
 						"description": "**Spend a Favor** to increase the range of your primary weapon by one step (such as Melee to Very Close or Very Close to Close) to a maximum of Very Far range. This effect ends when you make a successful attack with that weapon."
 					},
 					{
-						"name": "Diminish My Foes",
+						"name": "Diminishing My Foes",
 						"description": "When you succeed with Hope on an action roll against a target, you can **spend any number of Favor** to force the target to mark an equal number of Stress."
 					}
 				],
@@ -311,6 +314,7 @@
 		]
 	},
 	{
+		"source": "hope-fear",
 		"name": "Witch",
 		"description": [
 			"Witches are magical practitioners who commune with the forces of nature and entities from realms beyond. These spellcasters call forth power through craft, combining the tangible and ephemeral by casting spells, murmuring incantations, creating talismans, weaving illusions, and maintaining other personalized practices. They can protect their allies and harm their enemies by invoking powerful forces beyond themselves—supernatural beings such as ancestors, deities, or aspects of nature. Often, their magical knowledge is passed down from these entities or through many generations of practitioners who gather in small groups known as covens. Witches are frequently feared and misunderstood, as their methods can appear mysterious, strange, and even macabre to the uninitiated. Whichever path they walk, a witch treads the boundary between light and shadow without fear."
@@ -389,7 +393,7 @@
 				"mastery": [
 					{
 						"name": "Lunar Phases",
-						"description": "At the beginning of each session, roll a **d6** and place it on this card. You gain the matching effect until the end of session.RollPhaseEffect**1**NewSpend a Hope to negate Minor damage.**2–3**Waxing+2 to damage rolls**4**Full+3 to damage thresholds**5–6**Waning+1 to EvasionOnce per rest, you can **spend a Hope** to increase the value of this die by one. If you increase the value of a 6, it becomes a 1."
+						"description": "At the beginning of each session, roll a **d6** and place it on this card. You gain the matching effect until the end of the session.\n\nRoll | Phase | Effect\n1 | New | Spend a Hope to negate Minor damage.\n2–3 | Waxing | +2 to damage rolls\n4 | Full | +3 to damage thresholds\n5–6 | Waning | +1 to Evasion\n\nOnce per rest, you can **spend a Hope** to increase the value of this die by one. If you increase the value of a 6, it becomes a 1."
 					}
 				]
 			}

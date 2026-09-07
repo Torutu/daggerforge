@@ -1,4 +1,4 @@
-import { translate, TranslationKey } from "./index";
+import { getLanguage, Language, translate, TranslationKey } from "./index";
 
 /** Display labels only: callers must keep canonical values in filters and saves. */
 const keys: Record<string, TranslationKey> = {
@@ -27,16 +27,19 @@ const keys: Record<string, TranslationKey> = {
 	perceive: "term.perceive", sense: "term.sense", navigate: "term.navigate",
 	charm: "term.charm", perform: "term.perform", deceive: "term.deceive",
 	recall: "term.recall", analyze: "term.analyze", comprehend: "term.comprehend",
+	spellcast: "term.spellcast", "one-handed": "term.oneHanded", "two-handed": "term.twoHanded",
+	evasion: "term.evasion",
+	spell: "term.spell", ability: "term.ability", grimoire: "term.grimoire",
 };
 
-export function gameTerm(value: string): string {
+export function gameTerm(value: string, language: Language = getLanguage()): string {
 	const key = keys[value.toLowerCase()];
-	if (key) return translate(key);
+	if (key) return translate(key, {}, language);
 	// Preserve subtype values and counts rather than treating them as prose.
 	const match = value.match(/^([^()]+)(\s*\(.*\))$/);
 	if (match) {
 		const base = keys[match[1].trim().toLowerCase()];
-		if (base) return translate(base) + " " + match[2].trim();
+		if (base) return translate(base, {}, language) + " " + match[2].trim();
 	}
 	return value;
 }

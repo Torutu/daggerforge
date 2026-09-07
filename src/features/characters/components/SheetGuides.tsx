@@ -16,6 +16,7 @@ import {
 	tierForLevel,
 } from "../../../data/levelUpGuide";
 import { SrdBeastform } from "../../../types/srd";
+import { gameTerm } from "../../../i18n/gameTerms";
 import { useLanguage } from "../../../i18n/react";
 import { CardText } from "./CardText";
 import { ExperienceCapArt } from "./SheetArt";
@@ -241,7 +242,7 @@ function beastMeta(form: SrdBeastform, language: "de" | "en"): string {
 	const attack =
 		`${form.attackRange}, ${form.attackTrait}, ${form.attackDamage}` +
 		(form.attackMod ? ` ${fmtMod(form.attackMod)}` : "");
-	return `${form.trait} ${fmtMod(form.traitMod)} · ${language === "de" ? "Ausweichen" : "Evasion"} ${fmtMod(form.evasionMod)} · ${attack}`;
+	return `${form.trait} ${fmtMod(form.traitMod)} · ${gameTerm("Evasion", language)} ${fmtMod(form.evasionMod)} · ${attack}`;
 }
 
 export function BeastformSection({ char, update }: SectionProps) {

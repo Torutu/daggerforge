@@ -3,7 +3,9 @@
 		"id": "community-duneborne",
 		"name": "Aus den Dünen",
 		"description": [
-			"Aus den Dünen zu stammen bedeutet, dass du zwischen dem wandernden Sand und im trockenen Klima der Wüste eine Heimat gefunden hast."
+			"Aus den Dünen zu stammen bedeutet, dass du zwischen dem wandernden Sand und im trockenen Klima der Wüste eine Heimat gefunden hast. Jede solche Enklave entwickelt eigene Methoden, sich vor der sengenden Sonne zu schützen, den glühenden Sand zu überqueren und kostbare Vorräte zu gewinnen und zu lagern. Manche Gruppen ziehen durch ihre Wüstenheimat und treiben Vieh über die Dünen; andere siedeln um Oasen und arbeiten gemeinsam daran, diesen seltenen Ort voller Ressourcen zu erhalten und zu teilen.",
+			"Siedlungen in den Dünen sind für Bauwerke bekannt, die den Wind zur Kühlung einfangen, sowie für Bewässerungssysteme, die unterirdische Wasservorräte erschließen und selbst unter härtesten Bedingungen Felder versorgen. Viele dieser Gemeinschaften legen besonderen Wert auf familiäre Bindungen und darauf, dass alle zum Wohlergehen der Gemeinschaft beitragen.",
+			"Menschen aus den Dünen sind häufig anpassungsfähig, ausgeglichen, gemeinschaftlich, hingebungsvoll, fröhlich und aufmerksam."
 		],
 		"features": [
 			"Oase: Während einer kurzen Rast darfst du oder ein verbündeter Charakter einen Würfel erneut werfen, der für eine Auszeit-Aktion verwendet wurde, und das höhere Ergebnis wählen."
@@ -13,7 +15,9 @@
 		"id": "community-freeborne",
 		"name": "In Freiheit geboren",
 		"description": [
-			"In Freiheit geboren zu sein bedeutet, dass du aus einer Gemeinschaft stammst, die einst unter tyrannischer Herrschaft lebte, sich inzwischen aber befreit hat."
+			"In Freiheit geboren zu sein bedeutet, dass du aus einer Gemeinschaft stammst, die einst unter tyrannischer Herrschaft lebte, sich inzwischen aber befreit hat. Keine zwei dieser Gemeinschaften gleichen einander, doch alle verbindet die Erfahrung, ihre Kultur gegen den Versuch ihrer Auslöschung verteidigt zu haben. Wegen ihrer Religion, ihrer Ressourcen, ihres Lebensraums oder ihrer Kultur wurden sie einst von einer anderen Gemeinschaft unterworfen. Für manche endete diese Unterdrückung erst vor Kurzem; für andere liegen Befreiung und Sieg lange zurück, doch die Narben der Tyrannei verbinden Familien und Nachbarschaften noch Jahrzehnte oder Generationen später. Viele bauen gemeinsam das Land wieder auf, das sie ihren Unterdrückern abgerungen haben oder aus dem sie einst verschleppt wurden. Andere verstehen unter Heimat jene Menschen, die füreinander sorgen – unabhängig davon, wo sie leben.",
+			"Viele dieser Gemeinschaften feiern voller Leidenschaft ihre eigenen Feiertage, ihre Kunst, Speisen, Verzierungen und Bräuche – seien es alte Traditionen oder neue Gepflogenheiten, die erst durch die Befreiung entstanden. Ihre Vergangenheit lässt sie ihre Gemeinschaft oft entschlossen beschützen und ihre Kultur ebenso leidenschaftlich feiern.",
+			"In Freiheit Geborene sind häufig optimistisch, wachsam, mutig, lebensfroh, aufrührerisch und von ihren Erfahrungen gezeichnet."
 		],
 		"features": [
 			"Ungebunden: Wenn du bei einem Wurf ein Ergebnis mit Furcht erzielst, darfst du dieses Ergebnis einmal pro Spielsitzung stattdessen in ein Ergebnis mit Hoffnung ändern."
@@ -23,7 +27,9 @@
 		"id": "community-frostborne",
 		"name": "Aus dem Frost",
 		"description": [
-			"Aus dem Frost zu stammen bedeutet, dass du aus einem Land voller Schnee und Eis kommst."
+			"Aus dem Frost zu stammen bedeutet, dass du aus einem Land voller Schnee und Eis kommst. Vom bitteren, unerbittlichen Frost geprägt, sind diese Gemeinschaften daran gewöhnt, unter härtesten Bedingungen zu überleben. In den Gletschern und Tundren ihrer Heimat gibt es meist kaum Holz. Deshalb errichten sie ihre Unterkünfte aus leichter verfügbaren Materialien wie Eis, Stein, Knochen und Tierfellen und bewahren damit die Wärme. Sie verstehen es, Vorräte lange reichen zu lassen und allen die lebensnotwendigen Dinge zugänglich zu machen.",
+			"Als Teil ihrer Überlebensweise beobachten viele Gemeinschaften aus dem Frost aufmerksam das Wetter, den Lauf der Sonne und die Bedürfnisse der örtlichen Pflanzen und Tiere. Wegen heulender Winde und beißenden Schnees entwickeln manche wortlose Verständigungsformen, damit sie ihre Gesichter bei gefährlichem Wetter geschützt halten können.",
+			"Menschen aus dem Frost sind häufig listig, gesellig, unerschrocken, zielgerichtet, still und warmherzig."
 		],
 		"features": [
 			"Abgehärtet: Wenn du eine Rast einlegst, löschst du 1 TP."
@@ -33,7 +39,9 @@
 		"id": "community-hearthborne",
 		"name": "Vom Lande",
 		"description": [
-			"Vom Lande zu sein bedeutet, dass du aus einfachen Verhältnissen stammst und in einem bescheidenen Dorf oder einer idyllischen ländlichen Gegend gelebt hast."
+			"Vom Lande zu sein bedeutet, dass du aus einfachen Verhältnissen stammst und in einem bescheidenen Dorf oder einer idyllischen ländlichen Gegend gelebt hast. Solche Gemeinschaften sind häufig kleine Gruppen in friedlichen, ressourcenreichen Gebieten. Familien und Nachbarschaften haben dort Zeit, enge Beziehungen zu knüpfen, anstatt um knappe Vorräte zu kämpfen. Das Leben ist meist landwirtschaftlich geprägt und die Dörfer werden um Felder, Pflanzen und Tiere angelegt. Im Ortskern befinden sich üblicherweise kleine Geschäfte ortsansässiger Handwerker wie Schmiede, Schuster oder Alchemisten.",
+			"Manche ländlichen Gemeinschaften unterstehen fernen, aber mächtigen Herrschern, denen das Land gehört, auf dem die Dorfbewohner leben und arbeiten. In solchen Fällen kontrollieren Wohlhabende die Ressourcen, obwohl die Einheimischen die Arbeit leisten, und viele können sich kaum das Lebensnotwendige leisten. Einige Landbewohner begegnen Fremden mit Misstrauen, die meisten gelten jedoch als einladend, friedlich und gastfreundlich.",
+			"Menschen vom Lande sind häufig umsichtig, großzügig, zurückgezogen, redselig, heiter und traditionsbewusst."
 		],
 		"features": [
 			"Zusammenhalt: Einmal pro langer Rast darfst du eine beliebige Anzahl Hoffnung einsetzen, um einem verbündeten Charakter innerhalb weiter Distanz ebenso viel Hoffnung zu gewähren."
@@ -43,7 +51,10 @@
 		"id": "community-reborne",
 		"name": "Neu verwurzelt",
 		"description": [
-			"Du warst einst Teil einer anderen Gemeinschaft, der du heute nicht mehr angehörst."
+			"Du warst einst Teil einer anderen Gemeinschaft, der du heute nicht mehr angehörst. Anders als Gemeinschaften, die durch Vertrautheit, einen gemeinsamen Ort, Geschichte und Kultur verbunden sind, begegnen sich neu Verwurzelte womöglich nie. Sie verbindet allein ihre Erfahrung der Einsamkeit. Ob sie aus eigenem Entschluss gingen oder ihrer Gemeinschaft entrissen wurden: Alle haben den Ort verloren, an den sie einst gehörten, und tragen diese Wunde mit sich.",
+			"Manche sind von ihrer Gemeinschaft getrennt, weil sie diese ablehnten oder ihr abschworen; andere wurden von deren Mitgliedern verstoßen. Häufig ist ein Konflikt der Grund, etwa unvereinbare Überzeugungen, ein Bruch mit den eigenen Leuten oder ein Ereignis, das sie zur Flucht zwang. Andere kennen ihre Kultur aufgrund ihrer Erziehung nicht oder haben ihre Erinnerungen durch eine Verletzung oder Magie verloren. Einige sind sogar nach dem Tod von jenseits des Schleiers zurückgekehrt, ohne Erinnerung an ihr früheres Leben oder die Kultur, die sie geprägt hat.",
+			"Viele neu Verwurzelte suchen unermüdlich nach ihrer Vergangenheit oder fürchten, nie wieder Teil einer Gemeinschaft zu sein. Doch alle erhalten die Gelegenheit, sich der Zukunft zuzuwenden, sich neu zu bestimmen und neue Bindungen zu den Menschen aufzubauen, die sie kennen und lieben lernen.",
+			"Neu Verwurzelte sind häufig neugierig, hoffnungsvoll, arglos, einsam, schwermütig und unheimlich."
 		],
 		"features": [
 			"Wahlfamilie: Einmal pro Rast darfst du 1 Hoffnung einsetzen, um die Erfahrung eines verbündeten Charakters wie deine eigene zu verwenden. Beschreibe dabei, wie dich deine gemeinsame Zeit mit diesem Charakter auf diesen Moment vorbereitet hat.\n\nWenn du dich einer neuen Gemeinschaft anschließt oder deine frühere Gemeinschaft wiederfindest, darfst du diese Karte dauerhaft gegen die entsprechende Gemeinschaftskarte austauschen."
@@ -53,7 +64,9 @@
 		"id": "community-warborne",
 		"name": "Vom Krieg geprägt",
 		"description": [
-			"Vom Krieg geprägt zu sein bedeutet, dass du aus einem Ort stammst, der vom Krieg verwüstet wird oder wurde."
+			"Vom Krieg geprägt zu sein bedeutet, dass du aus einem Ort stammst, der vom Krieg verwüstet wird oder wurde. Solche Gemeinschaften können aus Zivilisten in einem aktiven Kriegsgebiet, aus Soldaten, die gemeinsam dienten, oder aus Bürgern von Nationen bestehen, die seit Jahrzehnten im Konflikt liegen. Ob zivil oder militärisch: Menschen aus diesen Gemeinschaften können sich üblicherweise gut verteidigen, selbst wenn ihre Taktiken eher auf Vermeidung als auf Angriffe ausgerichtet sind.",
+			"Wer seine Heimat verteidigt, nutzt häufig die Umgebung zum eigenen Vorteil, während eine Invasionsarmee sich vielleicht allein auf militärische Stärke verlässt. Unabhängig von ihrer Herkunft ist das Leben dieser Menschen zumindest teilweise von Einfallsreichtum geprägt. Bewohner eines besetzten Gebiets müssen womöglich gewaltige Wiederaufbauarbeiten leisten, um Häuser, Höfe, Arbeitsstätten oder Kulturdenkmäler zu retten; dabei werden die Überreste eines Gebäudes oft zum Material für ein anderes. Mitglieder einer einfallenden Armee tragen hingegen meist nur wenige persönliche Dinge bei sich und sind darauf angewiesen, die besetzten Kriegsgebiete nach Vorräten abzusuchen. Ob auf der siegreichen oder unterlegenen Seite: Menschen aus kriegsgeprägten Gemeinschaften tragen das Erlebte wahrscheinlich ein Leben lang mit sich; Massensterben und Zerstörung haben ihr Gefühl von Sicherheit und Sterblichkeit dauerhaft erschüttert.",
+			"Vom Krieg Geprägte sind häufig strategisch, erschüttert, entschlossen, berechnend, standhaft und hingebungsvoll."
 		],
 		"features": [
 			"Tapfere Miene: Wenn du gezwungen wärst, 1 Stress zu markieren, darfst du stattdessen einmal pro Spielsitzung 1 Hoffnung einsetzen."

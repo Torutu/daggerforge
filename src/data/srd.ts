@@ -43,22 +43,24 @@ import type {
 	SrdHeritage,
 	SrdItem,
 	SrdSubclass,
+	SrdSource,
 	SrdTransformation,
 } from "../types/srd";
-import type { Language } from "../i18n";
+import { translate, type Language } from "../i18n";
+import { gameTerm } from "../i18n/gameTerms";
 
 /**
  * Bundled Daggerheart SRD reference data for the character sheet's card
  * picker, guided creation wizard, and item embeds. See src/types/srd.ts
  * for provenance.
  */
-type RawSrdSubclass = Omit<SrdSubclass, "id">;
-type RawSrdClass = Omit<SrdClass, "id" | "domains" | "subclasses"> & {
+type RawSrdSubclass = Omit<SrdSubclass, "id" | "source">;
+type RawSrdClass = Omit<SrdClass, "id" | "source" | "domains" | "subclasses"> & {
 	subclasses: Record<string, RawSrdSubclass>;
 };
-type RawSrdHeritage = Omit<SrdHeritage, "id">;
-type RawSrdDomainCard = Omit<SrdDomainCard, "id" | "domainId">;
-type RawSrdTransformation = Omit<SrdTransformation, "id">;
+type RawSrdHeritage = Omit<SrdHeritage, "id" | "source">;
+type RawSrdDomainCard = Omit<SrdDomainCard, "id" | "source" | "domainId">;
+type RawSrdTransformation = Omit<SrdTransformation, "id" | "source">;
 
 function slug(value: string): string {
 	return value
@@ -84,65 +86,85 @@ function classDomains(raw: RawSrdClass): [SrdDomainRef, SrdDomainRef] {
 	return [domainRef(names[0]), domainRef(names[1])];
 }
 
-function normalizeClass(raw: RawSrdClass): SrdClass {
+function normalizeClass(raw: RawSrdClass, source: SrdSource): SrdClass {
 	const id = `class-${slug(raw.name)}`;
 	return {
 		...raw,
 		id,
+		source,
 		domains: classDomains(raw),
 		subclasses: Object.values(raw.subclasses).map((subclass) => ({
 			...subclass,
 			id: `subclass-${slug(raw.name)}-${slug(subclass.name)}`,
+			source,
 		})),
 	};
 }
 
-function normalizeHeritage(kind: "ancestry" | "community", raw: RawSrdHeritage): SrdHeritage {
-	return { ...raw, id: `${kind}-${slug(raw.name)}` };
+function normalizeHeritage(kind: "ancestry" | "community", raw: RawSrdHeritage, source: SrdSource): SrdHeritage {
+	return { ...raw, id: `${kind}-${slug(raw.name)}`, source };
 }
 
-function normalizeDomainCard(raw: RawSrdDomainCard): SrdDomainCard {
+function normalizeDomainCard(raw: RawSrdDomainCard, source: SrdSource): SrdDomainCard {
 	return {
 		...raw,
 		id: `domain-card-${slug(raw.domain)}-${raw.level}-${slug(raw.name)}`,
+		source,
 		domainId: domainId(raw.domain),
 	};
 }
 
 function normalizeTransformation(raw: RawSrdTransformation): SrdTransformation {
-	return { ...raw, id: `transformation-${slug(raw.name)}` };
+	return { ...raw, id: `transformation-${slug(raw.name)}`, source: "hope-fear" };
 }
 
 // JSON remains the canonical English SRD snapshot. Stable technical IDs are
 // attached here, so visible names can be localized without changing links.
-export const SRD_CLASSES = ([...classesJson, ...hopeFearClassesJson] as unknown as RawSrdClass[]).map(normalizeClass);
-export const SRD_ANCESTRIES = ([...ancestriesJson, ...hopeFearAncestriesJson] as RawSrdHeritage[]).map((item) =>
-	normalizeHeritage("ancestry", item),
-);
-export const SRD_COMMUNITIES = ([...communitiesJson, ...hopeFearCommunitiesJson] as RawSrdHeritage[]).map((item) =>
-	normalizeHeritage("community", item),
-);
-export const SRD_DOMAIN_CARDS = ([...domainsJson, ...hopeFearDomainsJson] as RawSrdDomainCard[]).map(normalizeDomainCard);
+export const SRD_CLASSES = [
+	...(classesJson as unknown as RawSrdClass[]).map(item => normalizeClass(item, "core")),
+	...(hopeFearClassesJson as unknown as RawSrdClass[]).map(item => normalizeClass(item, "hope-fear")),
+];
+export const SRD_ANCESTRIES = [
+	...(ancestriesJson as RawSrdHeritage[]).map(item => normalizeHeritage("ancestry", item, "core")),
+	...(hopeFearAncestriesJson as RawSrdHeritage[]).map(item => normalizeHeritage("ancestry", item, "hope-fear")),
+];
+export const SRD_COMMUNITIES = [
+	...(communitiesJson as RawSrdHeritage[]).map(item => normalizeHeritage("community", item, "core")),
+	...(hopeFearCommunitiesJson as RawSrdHeritage[]).map(item => normalizeHeritage("community", item, "hope-fear")),
+];
+export const SRD_DOMAIN_CARDS = [
+	...(domainsJson as RawSrdDomainCard[]).map(item => normalizeDomainCard(item, "core")),
+	...(hopeFearDomainsJson as RawSrdDomainCard[]).map(item => normalizeDomainCard(item, "hope-fear")),
+];
 export const SRD_TRANSFORMATIONS = (hopeFearTransformationsJson as RawSrdTransformation[]).map(normalizeTransformation);
-const coreEquipment = equipmentJson as SrdEquipment;
-const hopeFearEquipment = hopeFearEquipmentJson as SrdEquipment;
+type RawEquipment = { [K in keyof SrdEquipment]: Array<Omit<SrdEquipment[K][number], "source">> };
+const withSource = <T extends object>(items: T[], source: SrdSource): Array<T & { source: SrdSource }> =>
+	items.map(item => ({ ...item, source }));
+const coreEquipment = equipmentJson as RawEquipment;
+const hopeFearEquipment = hopeFearEquipmentJson as RawEquipment;
 export const SRD_EQUIPMENT: SrdEquipment = {
-	weapons: [...coreEquipment.weapons, ...hopeFearEquipment.weapons],
-	armor: [...coreEquipment.armor, ...hopeFearEquipment.armor],
-	wheelchairs: [...coreEquipment.wheelchairs, ...hopeFearEquipment.wheelchairs],
+	weapons: [...withSource(coreEquipment.weapons, "core"), ...withSource(hopeFearEquipment.weapons, "hope-fear")],
+	armor: [...withSource(coreEquipment.armor, "core"), ...withSource(hopeFearEquipment.armor, "hope-fear")],
+	wheelchairs: [...withSource(coreEquipment.wheelchairs, "core"), ...withSource(hopeFearEquipment.wheelchairs, "hope-fear")],
 };
-export const SRD_ITEMS = [...(itemsJson as SrdItem[]), ...(hopeFearItemsJson as SrdItem[])];
-export const SRD_CONSUMABLES = [...(consumablesJson as SrdConsumable[]), ...(hopeFearConsumablesJson as SrdConsumable[])];
-export const BEASTFORMS = beastformsJson as SrdBeastform[];
+export const SRD_ITEMS: SrdItem[] = [
+	...withSource(itemsJson as Array<Omit<SrdItem, "source">>, "core"),
+	...withSource(hopeFearItemsJson as Array<Omit<SrdItem, "source">>, "hope-fear"),
+];
+export const SRD_CONSUMABLES: SrdConsumable[] = [
+	...withSource(consumablesJson as Array<Omit<SrdConsumable, "source">>, "core"),
+	...withSource(hopeFearConsumablesJson as Array<Omit<SrdConsumable, "source">>, "hope-fear"),
+];
+export const BEASTFORMS = withSource(beastformsJson as Array<Omit<SrdBeastform, "source">>, "core");
 
 type ClassTranslation = Partial<Omit<SrdClass, "id" | "domains" | "stats" | "subclasses">> & {
 	id: string;
 	stats?: Partial<SrdClass["stats"]>;
 };
 
-function mergeById<T extends { id: string }>(items: T[], translations: Array<Partial<T> & { id: string }>): T[] {
+function mergeById<T extends { id: string; source: SrdSource }>(items: T[], translations: Array<Partial<T> & { id: string }>): T[] {
 	const byId = new Map(translations.map((item) => [item.id, item]));
-	return items.map((item) => ({ ...item, ...byId.get(item.id) }));
+	return items.map((item) => ({ ...item, ...byId.get(item.id), id: item.id, source: item.source }));
 }
 
 function germanClasses(): SrdClass[] {
@@ -160,12 +182,14 @@ function germanClasses(): SrdClass[] {
 			...item,
 			...translated,
 			id: item.id,
+			source: item.source,
 			domains: item.domains,
 			stats: { ...item.stats, ...translated?.stats },
 			subclasses: item.subclasses.map((subclass) => ({
 				...subclass,
 				...(subclassTranslations[slug(subclass.name)] ?? {}),
 				id: subclass.id,
+				source: subclass.source,
 			})),
 		};
 	});
@@ -195,10 +219,20 @@ export function getSrdCommunities(language: Language): SrdHeritage[] {
 
 export function getSrdDomainCards(language: Language): SrdDomainCard[] {
 	if (language !== "de") return SRD_DOMAIN_CARDS;
-	return mergeById(SRD_DOMAIN_CARDS, [
+	const localized = mergeById(SRD_DOMAIN_CARDS, [
 		...(deCoreDomainsJson as Array<Partial<SrdDomainCard> & { id: string }>),
 		...(deHopeFearDomainsJson as Array<Partial<SrdDomainCard> & { id: string }>),
 	]);
+	return localized.map((item, index) => ({
+		...item,
+		id: SRD_DOMAIN_CARDS[index].id,
+		source: SRD_DOMAIN_CARDS[index].source,
+		domainId: SRD_DOMAIN_CARDS[index].domainId,
+		domain: SRD_DOMAIN_CARDS[index].domain,
+		type: SRD_DOMAIN_CARDS[index].type,
+		level: SRD_DOMAIN_CARDS[index].level,
+		recallCost: SRD_DOMAIN_CARDS[index].recallCost,
+	}));
 }
 
 export function getSrdTransformations(language: Language): SrdTransformation[] {
@@ -243,33 +277,28 @@ export function getSrdConsumables(language: Language): SrdConsumable[] {
 export function getBeastforms(language: Language): SrdBeastform[] {
 	if (language !== "de") return BEASTFORMS;
 	const translations = deCoreBeastformsJson as Array<Partial<SrdBeastform>>;
-	return BEASTFORMS.map((item, index) => ({ ...item, ...translations[index] }));
+	return BEASTFORMS.map((item, index) => ({ ...item, ...translations[index], source: item.source }));
 }
 
-const DE_TRAITS: Record<string, string> = {
-	Agility: "Agilität", Strength: "Stärke", Finesse: "Geschick",
-	Instinct: "Instinkt", Presence: "Präsenz", Knowledge: "Wissen", Spellcast: "Zauber",
-};
-
-const DE_RANGES: Record<string, string> = {
-	Melee: "Unmittelbar", "Very Close": "Sehr kurz", Close: "Kurz", Far: "Weit", "Very Far": "Sehr weit",
-};
-
 export function localizeTrait(value: string, language: Language): string {
-	return language === "de" ? (DE_TRAITS[value] ?? value) : value;
+	return gameTerm(value, language);
 }
 
 export function localizeRange(value: string, language: Language): string {
-	return language === "de" ? (DE_RANGES[value] ?? value) : value;
+	return gameTerm(value, language);
 }
 
 export function localizeDamageDie(value: string, language: Language): string {
-	return language === "de" ? value.replace(/^d/, "W") : value;
+	return value.replace(/^d/, translate("srd.diePrefix", {}, language));
 }
 
 function weaponMeta(w: { trait: string; range: string; damage: string; damageType: string; burden: string }, language: Language): string {
-	const burden = language === "de" ? (w.burden === "Two-Handed" ? "Zweihändig" : "Einhändig") : w.burden;
-	return `${localizeTrait(w.trait, language)} - ${localizeRange(w.range, language)} · ${localizeDamageDie(w.damage, language)} ${w.damageType === "Magical" ? "mag" : "phy"} · ${burden}`;
+	return translate("srd.weaponMeta", {
+		trait: localizeTrait(w.trait, language), range: localizeRange(w.range, language),
+		damage: localizeDamageDie(w.damage, language),
+		damageType: translate(w.damageType === "Magical" ? "srd.magicAbbreviation" : "srd.physicalAbbreviation", {}, language),
+		burden: gameTerm(w.burden, language),
+	}, language);
 }
 
 /** Everything browsable as gear, in one normalized list. */
@@ -286,7 +315,7 @@ export function getAllGear(language: Language): GearData[] {
 		rarity: null,
 		meta: weaponMeta(w, language),
 		text: w.feature ?? "",
-		source: "srd",
+		source: w.source,
 	})),
 	...equipment.armor.map((a): GearData => ({
 		id: a.id,
@@ -294,9 +323,9 @@ export function getAllGear(language: Language): GearData[] {
 		name: a.name,
 		tier: a.tier,
 		rarity: null,
-		meta: language === "de" ? `Schwellen ${a.minor}/${a.major} · Wert ${a.score}` : `Thresholds ${a.minor}/${a.major} · Score ${a.score}`,
+		meta: translate("srd.armorMeta", { minor: a.minor, major: a.major, score: a.score }, language),
 		text: a.feature ?? "",
-		source: "srd",
+		source: a.source,
 	})),
 	...equipment.wheelchairs.map((w): GearData => ({
 		id: w.id,
@@ -306,7 +335,7 @@ export function getAllGear(language: Language): GearData[] {
 		rarity: null,
 		meta: weaponMeta(w, language),
 		text: w.feature ?? "",
-		source: "srd",
+		source: w.source,
 	})),
 	...items.map((i): GearData => ({
 		id: i.id,
@@ -316,7 +345,7 @@ export function getAllGear(language: Language): GearData[] {
 		rarity: i.rarity,
 		meta: i.subtype,
 		text: i.text,
-		source: "srd",
+		source: i.source,
 	})),
 	...consumables.map((c): GearData => ({
 		id: c.id,
@@ -326,7 +355,7 @@ export function getAllGear(language: Language): GearData[] {
 		rarity: c.rarity,
 		meta: c.category,
 		text: c.text,
-		source: "srd",
+		source: c.source,
 	})),
 	];
 }

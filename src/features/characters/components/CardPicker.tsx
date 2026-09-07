@@ -153,7 +153,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 
 	const addToInventory = (g: GearData) => {
 		const line = g.kind === "consumable"
-			? `${g.name} (${language === "de" ? "Verbrauchsgut" : "consumable"})`
+			? `${g.name} (${gameTerm("Consumable", language)})`
 			: g.name;
 		update({ inventory: char.inventory.trim() ? `${char.inventory}\n${line}` : line });
 	};
@@ -265,7 +265,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 								<option value="All">{dfTranslate("ui.all.types")}</option>
 								{domainTypes.map((t) => (
 									<option key={t} value={t}>
-										{t}
+										{gameTerm(t, language)}
 									</option>
 								))}
 							</select>
@@ -318,8 +318,8 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							>
 								<span className="df-cs-pick-name">{gear.name}</span>
 								<span className="df-cs-pick-meta">
-									{language === "de" ? "Rang" : "Tier"} {gear.tier} · {kind === "armor"
-										? `${language === "de" ? "Schwellen" : "Thresholds"} ${(gear as SrdArmor).minor}/${(gear as SrdArmor).major} · ${language === "de" ? "Wert" : "Score"} ${(gear as SrdArmor).score}`
+									{dfTranslate("srd.tierLabel", {}, language)} {gear.tier} · {kind === "armor"
+										? dfTranslate("srd.armorMeta", { minor: (gear as SrdArmor).minor, major: (gear as SrdArmor).major, score: (gear as SrdArmor).score }, language)
 										: `${localizeTrait((gear as SrdWeapon).trait, language)} - ${localizeRange((gear as SrdWeapon).range, language)} · ${localizeDamageDie((gear as SrdWeapon).damage, language)}`}
 								</span>
 							</button>
@@ -429,7 +429,7 @@ function PickerDomainRow({
 				<DomainIcon domain={card.domain} className="df-cs-dcard-icon" style={{ color }} />
 				<span className="df-cs-pick-name">{card.name}</span>
 				<span className="df-cs-pick-meta">
-					{card.domain} · {card.type} · <ZapIcon />{card.recallCost}
+					{card.domain} · {gameTerm(card.type)} · <ZapIcon />{card.recallCost}
 				</span>
 			</button>
 			{expanded && (

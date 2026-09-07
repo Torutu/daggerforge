@@ -5,6 +5,12 @@ import {
 	SRD_CONSUMABLES,
 	SRD_EQUIPMENT,
 	SRD_ITEMS,
+	BEASTFORMS,
+	getSrdAncestries,
+	getSrdClasses,
+	getSrdCommunities,
+	getSrdDomainCards,
+	getSrdTransformations,
 	getSrdConsumables,
 	getSrdEquipment,
 	getSrdItems,
@@ -74,6 +80,63 @@ describe("SRD 2.0 bundled content", () => {
 		expect(uniqueIds(SRD_EQUIPMENT.armor)).toBe(true);
 		expect(uniqueIds(SRD_ITEMS)).toBe(true);
 		expect(uniqueIds(SRD_CONSUMABLES)).toBe(true);
+	});
+
+	test("labels every canonical SRD record with its source", () => {
+		const expectSources = <T extends { source: string }>(items: T[], core: number, hopeFear: number) => {
+			expect(items.filter(item => item.source === "core")).toHaveLength(core);
+			expect(items.filter(item => item.source === "hope-fear")).toHaveLength(hopeFear);
+			expect(items.every(item => item.source === "core" || item.source === "hope-fear")).toBe(true);
+		};
+		expectSources(SRD_CLASSES, 9, 4);
+		expectSources(SRD_CLASSES.flatMap(item => item.subclasses), 18, 8);
+		expectSources(SRD_ANCESTRIES, 18, 6);
+		expectSources(SRD_COMMUNITIES, 9, 6);
+		expectSources(SRD_DOMAIN_CARDS, 189, 21);
+		expectSources(SRD_TRANSFORMATIONS, 0, 6);
+		expectSources(SRD_EQUIPMENT.weapons, 192, 120);
+		expectSources(SRD_EQUIPMENT.armor, 34, 36);
+		expectSources(SRD_EQUIPMENT.wheelchairs, 12, 0);
+		expectSources(SRD_ITEMS, 60, 61);
+		expectSources(SRD_CONSUMABLES, 60, 61);
+		expectSources(BEASTFORMS, 24, 0);
+	});
+
+	test("stores source labels in every canonical JSON record", () => {
+		for (const source of ["core", "hope-fear"] as const) {
+			const prefix = source === "core" ? "../data/srd" : "../data/srd/hope-fear";
+			const names = source === "core"
+				? ["classes", "ancestries", "communities", "domains", "items", "consumables", "beastforms"]
+				: ["classes", "ancestries", "communities", "domains", "items", "consumables", "transformations"];
+			for (const name of names) {
+				const records = require(`${prefix}/${name}.json`);
+				expect(records.length).toBeGreaterThan(0);
+				expect(records.every((item: { source?: string }) => item.source === source)).toBe(true);
+			}
+			const equipment = require(`${prefix}/equipment.json`);
+			for (const records of Object.values(equipment) as Array<Array<{ source?: string }>>) {
+				expect(records.every(item => item.source === source)).toBe(true);
+			}
+		}
+	});
+
+	test("German overlays cannot replace canonical source labels", () => {
+		const pairs = [
+			[SRD_CLASSES, getSrdClasses("de")],
+			[SRD_ANCESTRIES, getSrdAncestries("de")],
+			[SRD_COMMUNITIES, getSrdCommunities("de")],
+			[SRD_DOMAIN_CARDS, getSrdDomainCards("de")],
+			[SRD_TRANSFORMATIONS, getSrdTransformations("de")],
+			[SRD_ITEMS, getSrdItems("de")],
+			[SRD_CONSUMABLES, getSrdConsumables("de")],
+		] as const;
+		for (const [canonical, localized] of pairs) {
+			expect(localized.map(item => item.source)).toEqual(canonical.map(item => item.source));
+		}
+		const equipment = getSrdEquipment("de");
+		for (const kind of ["weapons", "armor", "wheelchairs"] as const) {
+			expect(equipment[kind].map(item => item.source)).toEqual(SRD_EQUIPMENT[kind].map(item => item.source));
+		}
 	});
 
 	test("German overlays keep stable ids and mechanical values", () => {

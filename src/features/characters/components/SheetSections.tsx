@@ -850,7 +850,7 @@ function DomainCardItem({
 				<DomainIcon domain={card.domain} className="df-cs-dcard-icon" style={{ color }} />
 				<span className="df-cs-dcard-name">{card.name}</span>
 				<span className="df-cs-dcard-meta">
-					{card.domain} · {card.type} · <ZapIcon />{card.recallCost}
+					{card.domain} · {gameTerm(card.type)} · <ZapIcon />{card.recallCost}
 				</span>
 				<button type="button" className="df-cs-card-remove" aria-label={dfTranslate("sheet.removeNamed", { name: card.name })} onClick={onRemove}>
 					✕

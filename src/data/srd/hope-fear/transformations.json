@@ -1,5 +1,6 @@
 [
 	{
+		"source": "hope-fear",
 		"name": "Demigod",
 		"description": [
 			"Demigods are mortal creatures whose veins flow with the blood of the gods."
@@ -24,6 +25,7 @@
 		]
 	},
 	{
+		"source": "hope-fear",
 		"name": "Ghost",
 		"description": [
 			"Ghosts are the spirits of the once-living who are bound to the Mortal Realm."
@@ -48,6 +50,7 @@
 		]
 	},
 	{
+		"source": "hope-fear",
 		"name": "Reanimated",
 		"description": [
 			"Reanimated are corpses who have been brought back to life."
@@ -72,6 +75,7 @@
 		]
 	},
 	{
+		"source": "hope-fear",
 		"name": "Shapeshifter",
 		"description": [
 			"Shapeshifters are creatures who can change their physical form."
@@ -96,6 +100,7 @@
 		]
 	},
 	{
+		"source": "hope-fear",
 		"name": "Vampire",
 		"description": [
 			"Vampires are undead creatures with sharp fangs who feed on the blood of the living."
@@ -120,6 +125,7 @@
 		]
 	},
 	{
+		"source": "hope-fear",
 		"name": "Werewolf",
 		"description": [
 			"Werewolves are creatures who transform into large supernatural wolves."
