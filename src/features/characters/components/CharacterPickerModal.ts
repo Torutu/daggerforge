@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../../i18n";
 import { App, FuzzySuggestModal } from "obsidian";
 import { CharacterData } from "../../../types/character";
 
@@ -10,7 +11,7 @@ export class CharacterPickerModal extends FuzzySuggestModal<CharacterData> {
 		super(app);
 		this.characters = characters;
 		this.onChoose = onChoose;
-		this.setPlaceholder("Pick a character to insert…");
+		this.setPlaceholder(dfTranslate("ui.pick.a.character.to.insert"));
 	}
 
 	getItems(): CharacterData[] {

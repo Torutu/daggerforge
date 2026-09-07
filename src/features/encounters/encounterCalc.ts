@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { App, Modal, Notice } from "obsidian";
 import { makeDraggable } from "../../utils/makeDraggable";
 import { getDaggerForgePlugin } from "../../utils/index";
@@ -37,22 +38,22 @@ interface EncounterState {
 	source: string; // "all" | lowercase source name
 }
 
-const ADJUSTMENTS = [
-	{ value: -1, label: "Less difficult / shorter" },
-	{ value: -2, label: "2+ Solo adversaries" },
-	{ value: -2, label: "+1d4 or +2 damage" },
-	{ value:  1, label: "Lower tier adversary" },
-	{ value:  1, label: "No Bruisers / Hordes / Leaders / Solos" },
-	{ value:  2, label: "More dangerous / longer" },
+const getAdjustments = () => [
+	{ value: -1, label: dfTranslate("ui.less.difficult.shorter") },
+	{ value: -2, label: dfTranslate("ui.2.solo.adversaries") },
+	{ value: -2, label: dfTranslate("ui.1d4.or.2.damage") },
+	{ value:  1, label: dfTranslate("ui.lower.tier.adversary") },
+	{ value:  1, label: dfTranslate("ui.no.bruisers.hordes.leaders.solos") },
+	{ value:  2, label: dfTranslate("ui.more.dangerous.longer") },
 ];
 
-const SPEND_OPTIONS = [
-	{ cost: 1, key: "minion",   label: "Minions (party size)",              match: /minion/i },
-	{ cost: 1, key: "social",   label: "Social / Support",                  match: /social|support/i },
-	{ cost: 2, key: "standard", label: "Horde / Ranged / Skulk / Standard", match: /horde|ranged|skulk|standard/i },
-	{ cost: 3, key: "leader",   label: "Leader",                            match: /leader/i },
-	{ cost: 4, key: "bruiser",  label: "Bruiser",                           match: /bruiser/i },
-	{ cost: 5, key: "solo",     label: "Solo",                              match: /solo/i },
+const getSpendOptions = () => [
+	{ cost: 1, key: "minion",   label: dfTranslate("ui.minions.party.size"),              match: /minion/i },
+	{ cost: 1, key: "social",   label: dfTranslate("ui.social.support"),                  match: /social|support/i },
+	{ cost: 2, key: "standard", label: dfTranslate("ui.horde.ranged.skulk.standard"), match: /horde|ranged|skulk|standard/i },
+	{ cost: 3, key: "leader",   label: dfTranslate("ui.leader"),                            match: /leader/i },
+	{ cost: 4, key: "bruiser",  label: dfTranslate("ui.bruiser"),                           match: /bruiser/i },
+	{ cost: 5, key: "solo",     label: dfTranslate("ui.solo"),                              match: /solo/i },
 ];
 
 const capitalize = (text: string) => (text ? text[0].toUpperCase() + text.slice(1) : text);
@@ -70,7 +71,7 @@ export class EncounterCalcModal extends Modal {
 
 	constructor(app: App) {
 		super(app);
-		this.titleEl.setText("Battle Calculator");
+		this.titleEl.setText(dfTranslate("ui.battle.calculator"));
 	}
 
 	/** Custom adversaries first (they shadow bundled ids), then the bundled list. */
@@ -91,7 +92,7 @@ export class EncounterCalcModal extends Modal {
 		const headerRow = contentEl.createEl("div", { cls: "df-enc-header-row" });
 
 		const pcGroup = headerRow.createEl("div", { cls: "df-enc-pc-group" });
-		pcGroup.createEl("label", { cls: "df-enc-label", text: "Number of PCs" });
+		pcGroup.createEl("label", { cls: "df-enc-label", text: dfTranslate("ui.number.of.pcs") });
 		const pcInput = pcGroup.createEl("input", { cls: "df-enc-pc-input" }) as HTMLInputElement;
 		pcInput.type = "number";
 		pcInput.min = "1";
@@ -132,7 +133,7 @@ export class EncounterCalcModal extends Modal {
 		const adjHead = adjSection.createEl("div", { cls: "df-enc-section-label" });
 		adjHead.innerHTML = `${SLIDERS}<span>Adjust Battle Points</span>`;
 		const adjGrid = adjSection.createEl("div", { cls: "df-enc-btn-grid" });
-		ADJUSTMENTS.forEach(adj => {
+		getAdjustments().forEach(adj => {
 			const btn = adjGrid.createEl("button", { cls: "df-enc-action-btn" });
 			btn.setAttribute("data-adjust", adj.value.toString());
 			btn.createEl("span", { cls: "df-enc-btn-label", text: adj.label });
@@ -147,7 +148,7 @@ export class EncounterCalcModal extends Modal {
 		const spendHead = spendSection.createEl("div", { cls: "df-enc-section-label" });
 		spendHead.innerHTML = `${SWORDS}<span>Spend Battle Points</span>`;
 		const spendGrid = spendSection.createEl("div", { cls: "df-enc-btn-grid" });
-		SPEND_OPTIONS.forEach(opt => {
+		getSpendOptions().forEach(opt => {
 			const btn = spendGrid.createEl("button", { cls: "df-enc-action-btn" });
 			btn.setAttribute("data-cost", opt.cost.toString());
 			btn.setAttribute("data-key", opt.key);
@@ -162,11 +163,11 @@ export class EncounterCalcModal extends Modal {
 
 		const filterRow = sugSection.createEl("div", { cls: "df-enc-suggest-filters" });
 		const tierSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
-		tierSelect.createEl("option", { text: "Any tier", value: "all" });
+		tierSelect.createEl("option", { text: dfTranslate("ui.any.tier"), value: "all" });
 		["1", "2", "3", "4"].forEach(t => tierSelect.createEl("option", { text: `Tier ${t}`, value: t }));
 
 		const sourceSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
-		sourceSelect.createEl("option", { text: "Any source", value: "all" });
+		sourceSelect.createEl("option", { text: dfTranslate("ui.any.source"), value: "all" });
 		const sources = new Set<string>(getAdversaries(getLanguage()).map(a => (a.source || "core").toLowerCase()));
 		sources.add("custom");
 		[...sources].sort().forEach(s => sourceSelect.createEl("option", { text: capitalize(s), value: s }));
@@ -174,7 +175,7 @@ export class EncounterCalcModal extends Modal {
 		const sugList = sugSection.createEl("div", { cls: "df-enc-suggest" });
 
 		const insertRow = sugSection.createEl("div", { cls: "df-enc-insert-row" });
-		const insertBtn = insertRow.createEl("button", { cls: "mod-cta df-enc-insert-btn", text: "Insert encounter" });
+		const insertBtn = insertRow.createEl("button", { cls: "mod-cta df-enc-insert-btn", text: dfTranslate("ui.insert.encounter") });
 		const insertNote = insertRow.createEl("span", { cls: "df-enc-insert-note" });
 
 		// ── Footer ────────────────────────────────────────────────────────
@@ -211,7 +212,7 @@ export class EncounterCalcModal extends Modal {
 		/** Assign a suggested adversary to the first open slot of its category -
 		 *  nothing is written until Insert encounter. Choosing beyond the plan
 		 *  spends the points for a new, already-filled slot. */
-		const chooseSuggestion = (adv: AdvData, opt: (typeof SPEND_OPTIONS)[number]) => {
+		const chooseSuggestion = (adv: AdvData, opt: ReturnType<typeof getSpendOptions>[number]) => {
 			const slot = this.state.spentItems.find(s => s.category === opt.key && !s.adversary);
 			if (slot) slot.adversary = adv;
 			else this.state.spentItems.push({ cost: opt.cost, label: opt.label, category: opt.key, adversary: adv });
@@ -226,7 +227,7 @@ export class EncounterCalcModal extends Modal {
 			if (chosen.length === 0) return;
 			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin) {
-				new Notice("Open a note or canvas first.");
+				new Notice(dfTranslate("ui.open.a.note.or.canvas.first"));
 				return;
 			}
 			if (!insertAtFocusedTarget(plugin, buildSummaryMarkdown(), { width: 440, height: 280 }, undefined, true)) {
@@ -272,7 +273,7 @@ export class EncounterCalcModal extends Modal {
 				return;
 			}
 			new ConfirmModal(this.app, {
-				title: "Insert with unspent battle points?",
+				title: dfTranslate("ui.insert.with.unspent.battle.points"),
 				message: `You still have ${remaining} unspent battle point${remaining === 1 ? "" : "s"}. Inserting finalizes this encounter and clears the calculator - you would have to rebuild the plan from scratch to spend them.`,
 				confirmLabel: "Insert anyway",
 				onConfirm: () => void insertEncounter(),
@@ -290,14 +291,14 @@ export class EncounterCalcModal extends Modal {
 			if (planKeys.length === 0) {
 				sugList.createEl("p", {
 					cls: "df-enc-suggest-hint",
-					text: "Spend battle points above and matching adversaries will be suggested here.",
+					text: dfTranslate("ui.spend.battle.points.above.and.matching.adversaries.will.be.suggested.here"),
 				});
 				return;
 			}
 
 			const pool = this.allAdversaries();
 			planKeys.forEach(key => {
-				const opt = SPEND_OPTIONS.find(o => o.key === key);
+				const opt = getSpendOptions().find(o => o.key === key);
 				if (!opt) return;
 				const slots = this.state.spentItems.filter(s => s.category === key);
 				const done = slots.filter(s => s.adversary).length;
@@ -317,7 +318,7 @@ export class EncounterCalcModal extends Modal {
 				});
 
 				if (matches.length === 0) {
-					group.createEl("p", { cls: "df-enc-suggest-hint", text: "No adversaries match these filters." });
+					group.createEl("p", { cls: "df-enc-suggest-hint", text: dfTranslate("ui.no.adversaries.match.these.filters") });
 					return;
 				}
 

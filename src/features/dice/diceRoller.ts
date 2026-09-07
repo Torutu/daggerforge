@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { App, Modal } from "obsidian";
 import { rollDice } from "../index";
 import { makeDraggable } from "../../utils/makeDraggable";
@@ -16,7 +17,7 @@ const diceLog: string[] = [];
 export class DiceRollerModal extends Modal {
 	constructor(app: App) {
 		super(app);
-		this.titleEl.setText("Dice Roller");
+		this.titleEl.setText(dfTranslate("ui.dice.roller"));
 	}
 
 	onOpen(): void {
@@ -30,7 +31,7 @@ export class DiceRollerModal extends Modal {
 		const controls = contentEl.createEl("div", { cls: "df-dr-controls" });
 
 		const countGroup = controls.createEl("div", { cls: "df-dr-count-group" });
-		countGroup.createEl("label", { cls: "df-dr-label", text: "Count" });
+		countGroup.createEl("label", { cls: "df-dr-label", text: dfTranslate("ui.count") });
 		const countInput = countGroup.createEl("input", { cls: "df-dr-count-input" }) as HTMLInputElement;
 		countInput.type = "number";
 		countInput.min = "1";
@@ -55,7 +56,7 @@ export class DiceRollerModal extends Modal {
 		// ── Queue ─────────────────────────────────────────────────────────
 		const queueSection = contentEl.createEl("div", { cls: "df-dr-queue-section" });
 		const queueHeader = queueSection.createEl("div", { cls: "df-dr-queue-header" });
-		queueHeader.createEl("span", { cls: "df-dr-section-label-text", text: "Queue" });
+		queueHeader.createEl("span", { cls: "df-dr-section-label-text", text: dfTranslate("ui.queue") });
 		const queueContainer = queueSection.createEl("div", { cls: "df-dr-queue" });
 
 		// ── Log ───────────────────────────────────────────────────────────
@@ -85,7 +86,7 @@ export class DiceRollerModal extends Modal {
 		const updateQueue = () => {
 			queueContainer.empty();
 			if (diceQueue.length === 0) {
-				queueContainer.createEl("span", { cls: "df-dr-queue-empty", text: "No dice added yet" });
+				queueContainer.createEl("span", { cls: "df-dr-queue-empty", text: dfTranslate("ui.no.dice.added.yet") });
 				return;
 			}
 			diceQueue.forEach((expr, idx) => {

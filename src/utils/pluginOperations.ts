@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../i18n";
 import { App, MarkdownView, Notice } from "obsidian";
 import { resolveInsertDestination } from "./canvasHelpers";
 import DaggerForgePlugin from "../main";
@@ -41,7 +42,7 @@ export function openCreator(plugin: DaggerForgePlugin, type: "adversary" | "envi
 	if (kind === "markdown" && leaf) {
 		const view = leaf.view as MarkdownView;
 		if (view.getMode() === "preview") {
-			new Notice("Please switch to Edit mode.");
+			new Notice(dfTranslate("ui.please.switch.to.edit.mode"));
 			return;
 		}
 		if (type === "adversary") new AdversaryModal(plugin, view.editor).open();
@@ -49,7 +50,7 @@ export function openCreator(plugin: DaggerForgePlugin, type: "adversary" | "envi
 		return;
 	}
 
-	new Notice("No note or canvas is open. Open one in Edit mode first.");
+	new Notice(dfTranslate("ui.no.note.or.canvas.is.open.open.one.in.edit.mode.first"));
 }
 
 /**

@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { Modal, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { GearData } from "../../types/srd";
@@ -38,7 +39,7 @@ export class ItemModal extends Modal {
 	constructor(plugin: DaggerForgePlugin) {
 		super(plugin.app);
 		this.plugin = plugin;
-		this.titleEl.setText("Create an item");
+		this.titleEl.setText(dfTranslate("ui.create.an.item"));
 	}
 
 	onOpen() {
@@ -94,11 +95,11 @@ export class ItemModal extends Modal {
 		});
 
 		const buttons = contentEl.createDiv({ cls: "df-cs-confirm-buttons" });
-		const create = buttons.createEl("button", { text: "Create & insert", cls: "mod-cta" });
+		const create = buttons.createEl("button", { text: dfTranslate("ui.create.insert"), cls: "mod-cta" });
 		create.addEventListener("click", async () => {
 			const name = nameInput.value.trim();
 			if (!name) {
-				new Notice("Give the item a name first.");
+				new Notice(dfTranslate("ui.give.the.item.a.name.first"));
 				return;
 			}
 			const tier = Number(tierInput.value);
@@ -118,7 +119,7 @@ export class ItemModal extends Modal {
 			insertAtFocusedTarget(this.plugin, buildItemEmbedBlock(item.id, code), { width: 420, height: 260 }, name);
 			this.close();
 		});
-		buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
+		buttons.createEl("button", { text: dfTranslate("ui.cancel") }).addEventListener("click", () => this.close());
 	}
 
 	onClose() {

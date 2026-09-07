@@ -5,14 +5,14 @@
 		"features": [
 			{
 				"type": "Aktion",
-				"name": "Zurück aus",
+				"name": "Zurück!",
 				"cost": "Setze 1 Furcht ein",
-				"desc": "Angriffswurf gegen alle Ziele innerhalb von unmittelbarer Distanz zu machen. Alle, gegen die sie erfolgreich sind, werden rückwärts gesprengt, 2W6 + 3 magischen Schaden behandelt und in weiter Distanz geschoben."
+				"desc": "Lege einen Angriffswurf gegen alle Ziele in unmittelbarer Reichweite ab. Jedes Ziel, gegen das der Wurf gelingt, erleidet 2W6+3 magischen Schaden und wird in weite Reichweite zurückgeschleudert."
 			}
 		],
-		"name": "Thistlefolk Dieb",
+		"name": "Dieb des Distelvolks",
 		"desc": "Beschreibung: Ein flinkes Volk mit gezackten Klingen und schlauen Taktiken.",
-		"motives": "Schlagen und Streuen, verwenden Sie Magie, um Feinde wegzusprengen",
+		"motives": "Zuschlagen und auseinanderstieben, Feinde mit Magie wegschleudern",
 		"weaponName": "gezackte Klinge"
 	},
 	{
@@ -22,12 +22,12 @@
 			{
 				"type": "Reaktion",
 				"name": "Hinterhalt",
-				"desc": "Wenn der Hinterhalt die Szene betritt, ohne vorher entdeckt zu werden, können sie sofort mit einem Ziel in unmittelbar einziehen und einen Angriff gegen sie durchführen. Bei einem Erfolg schlagen sie mit ihrem Dolch für 2W4 + 8 physischen Schaden."
+				"desc": "Wenn der Hinterhaltkämpfer unentdeckt die Szene betritt, darf er sich sofort in unmittelbare Reichweite eines Ziels bewegen und es angreifen. Bei einem Erfolg verursacht sein Dolch 2W4+8 physischen Schaden."
 			}
 		],
-		"name": "Thistlefolk Ambusher (Deutscher)",
+		"name": "Hinterhaltkämpfer des Distelvolks",
 		"desc": "Ein schneller und tödlicher Stürmer, der auf den perfekten Moment wartet, um zuzuschlagen.",
-		"motives": "Hinterhalt, Rückstosse, verschwinden",
+		"motives": "Aus dem Hinterhalt angreifen, in den Rücken fallen, verschwinden",
 		"weaponName": "Dolch"
 	},
 	{
@@ -37,7 +37,7 @@
 			{
 				"type": "Passiv",
 				"name": "Packtaktik",
-				"desc": "Wenn du einen Bite and Claw-Angriff ausführen und sich ein anderer Strixwolf ebenfalls in unmittelbarer Distanz des Ziels befindet, handeln Sie stattdessen mit 2W8 + 2 physischen Schaden."
+				"desc": "Wenn sich bei einem Angriff mit „Biss und Klaue“ ein weiterer Strixwolf in unmittelbarer Reichweite des Ziels befindet, verursacht der Angriff stattdessen 2W8+2 physischen Schaden."
 			},
 			{
 				"type": "Passiv",
@@ -48,14 +48,14 @@
 				"type": "Aktion",
 				"name": "Fliegen",
 				"cost": "Markiere 1 Stress",
-				"desc": "um die Strixwolf fliegen zu lassen, ihren Schwierigkeitsgrad um +2 zu erhöhen und ihre Angriffe auf +2 Schaden zu machen, bis der Strixwolf landet."
+				"desc": "Der Strixwolf erhebt sich in die Luft. Bis er landet, steigt seine Schwierigkeit um +2 und seine Angriffe verursachen +2 Schaden."
 			}
 		],
 		"name": "Strixwolf",
 		"desc": "Ein Wolf-Eulen-Rudeljäger mit Flügeln und einem rotierenden Kopf.",
-		"motives": "Stiel, umgeben, schützen Packung",
+		"motives": "Anschleichen, einkreisen, das Rudel schützen",
 		"weaponName": "Biss und Klaue",
-		"xp": "Tracker +4"
+		"xp": "Fährtenleser +4"
 	},
 	{
 		"id": "SA004",
@@ -65,13 +65,13 @@
 				"type": "Aktion",
 				"name": "Gruppenangriff",
 				"cost": "Setze 1 Furcht ein",
-				"desc": "Diese Kreaturen bewegen sich in unmittelbarer Distanz des Ziels und machen ein gemeinsames Angriffswurf. Bei einem Erfolg behandeln sie jeweils 4 physischen Schaden. Kombiniere diesen Schaden."
+				"desc": "Wähle ein Ziel und rücke alle Alten Skelette in kurzer Reichweite dieses Ziels in den Fokus. Sie bewegen sich in unmittelbare Reichweite des Ziels und legen einen gemeinsamen Angriffswurf ab. Bei einem Erfolg verursachen sie jeweils 4 physischen Schaden. Addiere diesen Schaden."
 			}
 		],
 		"name": "Altes Skelett",
 		"desc": "Die verwitterten Überreste eines längst vergessenen Kriegers, beseelt von dunkler Magie.",
 		"motives": "Angriff in Zahlen, überwältigen durch Koordination",
-		"weaponName": "Rustiges Schwert"
+		"weaponName": "Rostiges Schwert"
 	},
 	{
 		"id": "SA005",
@@ -80,24 +80,24 @@
 			{
 				"type": "Passiv",
 				"name": "Spektralkörper",
-				"desc": "Der Forest Wraith hat Widerstand gegen physischen Schaden."
+				"desc": "Der Waldgeist besitzt Resistenz gegen physischen Schaden."
 			},
 			{
 				"type": "Aktion",
-				"name": "Speicherlösung",
-				"desc": "Wenn es gelingt, fliegt der Waldwrait in unmittelbar und legt seine Hand auf die Wange des Ziels. Bitten Sie den Spieler, einen schrecklichen Moment aus der Kindheit seines Charakters zu beschreiben. Dann geben Sie 3W4 + 9 magischen Schaden aus und machen Sie sie Verwundbar bis zu ihrer nächsten Pause."
+				"name": "Erinnerungen durchdringen",
+				"desc": "Lege einen Angriffswurf gegen ein Ziel in kurzer Reichweite ab. Bei einem Erfolg fliegt der Waldgeist in unmittelbare Reichweite und legt seine Hand auf die Wange des Ziels. Bitte die spielende Person, einen erschreckenden Moment aus der Kindheit ihres Charakters zu beschreiben. Füge dem Ziel anschließend 3W4+9 magischen Schaden zu. Es ist bis zu seiner nächsten Rast Verwundbar."
 			},
 			{
 				"type": "Aktion",
-				"name": "Pass-Through",
+				"name": "Durchdringen",
 				"cost": "Setze 1 Furcht ein",
-				"desc": "Wenn es gelingt, geht der Waldgeist durch das Ziel, schiebt seine Seele aus seinem Körper, macht sie ungebunden. Du kannst nicht wieder handeln, bis der Ritual Countdown tickt, und diesen Zustand klären. Wenn die gesamte Gruppe gleichzeitig ungebunden wird, markieren sie alle 2 Trefferpunkte und ihre Seelen kehren zurück, um den Zustand zu klären."
+				"desc": "Lege einen Angriffswurf gegen ein Ziel in unmittelbarer Reichweite ab. Bei einem Erfolg durchdringt der Waldgeist das Ziel und löst dessen Seele vorübergehend vom Körper. Das Ziel ist Ungebunden und kann erst wieder handeln, wenn der Ritual-Countdown herunterzählt und den Zustand beendet. Sind alle Gruppenmitglieder gleichzeitig Ungebunden, markieren sie jeweils 2 Trefferpunkte. Ihre Seelen kehren in ihre Körper zurück und der Zustand endet."
 			}
 		],
-		"name": "Waldwraith",
+		"name": "Waldgeist",
 		"desc": "Eine spektrale Einheit, die aus uraltem Leid geboren wurde und sich von Furcht und Gedächtnis ernährt.",
-		"motives": "Haunt, Tauche in Trauma, untether Seelen",
-		"weaponName": "Lebenslauf"
+		"motives": "Heimsuchen, traumatische Erinnerungen ergründen, Seelen vom Körper lösen",
+		"weaponName": "Lebensentzug"
 	},
 	{
 		"id": "SA006",

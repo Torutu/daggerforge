@@ -1,3 +1,5 @@
+import { useLanguage as useUiLanguage } from "../../../i18n/react";
+import { translate as dfTranslate } from "../../../i18n";
 import React, { useMemo, useState } from "react";
 import { CharacterData, HeritageCardData } from "../../../types/character";
 import {
@@ -42,6 +44,7 @@ interface Props {
  * Players browse/filter and add cards to the open character.
  */
 export function CardPicker({ char, update, tab, onTabChange, onClose, customItems }: Props) {
+	useUiLanguage();
 	const language = useLanguage();
 	const srdEquipment = useMemo(() => getSrdEquipment(language), [language]);
 	const allGear = useMemo(() => getAllGear(language), [language]);
@@ -178,7 +181,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 						{label}
 					</button>
 				))}
-				<button type="button" className="df-cs-card-remove" aria-label="Close card picker" onClick={onClose}>
+				<button type="button" className="df-cs-card-remove" aria-label={dfTranslate("ui.close.card.picker")} onClick={onClose}>
 					✕
 				</button>
 			</div>
@@ -187,7 +190,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 				<input
 					type="text"
 					className="df-cs-picker-search"
-					placeholder="Search cards…"
+					placeholder={dfTranslate("ui.search.cards")}
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
 				/>
@@ -203,8 +206,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							}}
 						>
 							<span className="df-cs-check-box" />
-							Mixed ancestry
-						</button>
+							{dfTranslate("ui.mixed.ancestry")}</button>
 						<span className="df-cs-picker-mixed-hint">
 							{mixedMode
 								? mixedPrimary
@@ -216,10 +218,10 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 				)}
 				{tab === "equipment" && (
 					<div className="df-cs-picker-selects">
-						<select className="dropdown" value={level} onChange={(e) => setLevel(e.target.value)} aria-label="Tier filter">
-							<option value="All">All tiers</option>
+						<select className="dropdown" value={level} onChange={(e) => setLevel(e.target.value)} aria-label={dfTranslate("ui.tier.filter")}>
+							<option value="All">{dfTranslate("ui.all.tiers")}</option>
 							{[1, 2, 3, 4].map((t) => (
-								<option key={t} value={String(t)}>Tier {t}</option>
+								<option key={t} value={String(t)}>{dfTranslate("ui.tier")} {t}</option>
 							))}
 						</select>
 					</div>
@@ -250,16 +252,16 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							})}
 						</div>
 						<div className="df-cs-picker-selects">
-							<select className="dropdown" value={level} onChange={(e) => setLevel(e.target.value)} aria-label="Level filter">
-								<option value="All">All levels</option>
+							<select className="dropdown" value={level} onChange={(e) => setLevel(e.target.value)} aria-label={dfTranslate("ui.level.filter")}>
+								<option value="All">{dfTranslate("ui.all.levels")}</option>
 								{Array.from({ length: 10 }, (_, i) => (
 									<option key={i + 1} value={String(i + 1)}>
-										Level {i + 1}
+										{dfTranslate("ui.level")} {i + 1}
 									</option>
 								))}
 							</select>
-							<select className="dropdown" value={type} onChange={(e) => setType(e.target.value)} aria-label="Type filter">
-								<option value="All">All types</option>
+							<select className="dropdown" value={type} onChange={(e) => setType(e.target.value)} aria-label={dfTranslate("ui.type.filter")}>
+								<option value="All">{dfTranslate("ui.all.types")}</option>
 								{domainTypes.map((t) => (
 									<option key={t} value={t}>
 										{t}
@@ -332,8 +334,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 										className="df-cs-pick-add"
 										onClick={() => update(armorToPatch(gear as SrdArmor))}
 									>
-										Equip
-									</button>
+										{dfTranslate("ui.equip")}</button>
 								) : (
 									<>
 										<button
@@ -343,8 +344,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 												update({ primaryWeapon: toCharacterWeapon(gear as SrdWeapon, language) })
 											}
 										>
-											Primary
-										</button>
+											{dfTranslate("ui.primary")}</button>
 										<button
 											type="button"
 											className="df-cs-pick-add df-cs-pick-add--secondary"
@@ -352,8 +352,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 												update({ secondaryWeapon: toCharacterWeapon(gear as SrdWeapon, language) })
 											}
 										>
-											Secondary
-										</button>
+											{dfTranslate("ui.secondary")}</button>
 									</>
 								)}
 							</div>
@@ -381,18 +380,17 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 								</div>
 							)}
 							<button type="button" className="df-cs-pick-add" onClick={() => addToInventory(g)}>
-								Add
-							</button>
+								{dfTranslate("ui.add")}</button>
 						</div>
 					))}
 				{tab === "domain" && domainCards.length === 0 && (
-					<p className="df-cs-picker-none">No cards match these filters.</p>
+					<p className="df-cs-picker-none">{dfTranslate("ui.no.cards.match.these.filters")}</p>
 				)}
 				{tab === "equipment" && equipment.length === 0 && (
-					<p className="df-cs-picker-none">No equipment matches these filters.</p>
+					<p className="df-cs-picker-none">{dfTranslate("ui.no.equipment.matches.these.filters")}</p>
 				)}
 				{tab === "item" && looseItems.length === 0 && (
-					<p className="df-cs-picker-none">No items match.</p>
+					<p className="df-cs-picker-none">{dfTranslate("ui.no.items.match")}</p>
 				)}
 			</div>
 		</div>
@@ -416,6 +414,7 @@ function PickerDomainRow({
 	onToggle: () => void;
 	onAdd: () => void;
 }) {
+	useUiLanguage();
 	const color = DOMAIN_COLORS[card.domain] ?? "var(--df-cs-mid)";
 	return (
 		<div
@@ -461,6 +460,7 @@ function PickerHeritageRow({
 	onToggle: () => void;
 	onAdd: () => void;
 }) {
+	useUiLanguage();
 	const featureNames = heritage.features
 		.map((f) => f.split(":")[0])
 		.join(" · ");

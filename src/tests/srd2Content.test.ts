@@ -1,6 +1,7 @@
 import { ADVERSARIES, getAdversaries } from "../data/adversaries";
 import { ENVIRONMENTS, getEnvironments } from "../data/environments";
 import {
+	SRD_CLASSES, SRD_ANCESTRIES, SRD_COMMUNITIES, SRD_DOMAIN_CARDS, SRD_TRANSFORMATIONS,
 	SRD_CONSUMABLES,
 	SRD_EQUIPMENT,
 	SRD_ITEMS,
@@ -14,6 +15,46 @@ function uniqueIds(items: Array<{ id: string }>): boolean {
 }
 
 describe("SRD 2.0 bundled content", () => {
+	test("raw German overlays cover every canonical id exactly once", () => {
+		const groups = {
+			classes: SRD_CLASSES, ancestries: SRD_ANCESTRIES, communities: SRD_COMMUNITIES,
+			domains: SRD_DOMAIN_CARDS, items: SRD_ITEMS, consumables: SRD_CONSUMABLES,
+		};
+		for (const [name, originals] of Object.entries(groups)) {
+			const core = require(`../data/srd/locales/de/${name}.json`);
+			const expansion = require(`../data/srd/locales/de/hope-fear/${name}.json`);
+			expect([...core, ...expansion].map(x => x.id).sort()).toEqual(originals.map(x => x.id).sort());
+		}
+		const transformations = require("../data/srd/locales/de/hope-fear/transformations.json");
+		expect(transformations.map((x: {id: string}) => x.id).sort()).toEqual(SRD_TRANSFORMATIONS.map(x => x.id).sort());
+		const adversaries = require("../data/locales/de/adversaries.json");
+		const environments = require("../data/locales/de/environments.json");
+		expect(adversaries.map((x: {id: string}) => x.id).sort()).toEqual(ADVERSARIES.map(x => x.id).sort());
+		expect(environments.map((x: {id: string}) => x.id).sort()).toEqual(ENVIRONMENTS.map(x => x.id).sort());
+		const coreGear = require("../data/srd/locales/de/equipment.json");
+		const expansionGear = require("../data/srd/locales/de/hope-fear/equipment.json");
+		for (const group of ["weapons", "armor", "wheelchairs"] as const) {
+			expect([...coreGear[group], ...expansionGear[group]].map(x => x.id).sort()).toEqual(SRD_EQUIPMENT[group].map(x => x.id).sort());
+		}
+	});
+	test("localized adversaries preserve all filter and mechanical fields", () => {
+		const fields = ["id", "tier", "type", "source", "difficulty", "thresholdMajor", "thresholdSevere", "hp", "stress", "atk", "weaponRange", "weaponDamage", "count"] as const;
+		const german = getAdversaries("de");
+		for (const [index, original] of ADVERSARIES.entries()) {
+			for (const field of fields) expect(german[index][field]).toEqual(original[field]);
+			expect(german[index].features.map(f => f.type)).toEqual(original.features.map(f => f.type));
+		}
+	});
+
+	test("localized environments preserve filters, difficulty and countdowns", () => {
+		const german = getEnvironments("de");
+		for (const [index, original] of ENVIRONMENTS.entries()) {
+			for (const field of ["id", "type", "tier", "source", "difficulty", "countdowns"] as const) {
+				expect(german[index][field]).toEqual(original[field]);
+			}
+			expect(german[index].features.map(f => f.type)).toEqual(original.features.map(f => f.type));
+		}
+	});
 	test("includes Core, Hope & Fear, and the existing adventure content", () => {
 		expect(ADVERSARIES).toHaveLength(289);
 		expect(ENVIRONMENTS).toHaveLength(51);

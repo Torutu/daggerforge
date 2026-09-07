@@ -1,3 +1,6 @@
+import { useLanguage as useUiLanguage } from "../../i18n/react";
+import { gameTerm } from "../../i18n/gameTerms";
+import { translate as dfTranslate } from "../../i18n";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { App, MarkdownView, Notice, setIcon } from "obsidian";
 import type { AdvData, EnvironmentData } from "../../types/index";
@@ -39,6 +42,7 @@ interface Props {
 // ── Counter ───────────────────────────────────────────────────────────────────
 
 function CounterControls() {
+	useUiLanguage();
 	const [count, setCount] = useState(getAdversaryCount());
 
 	const decrement = () => {
@@ -60,7 +64,7 @@ function CounterControls() {
 
 	return (
 		<div className="df-adversary-counter-container">
-			<LucideBtn icon="minus" title="Decrease" onClick={decrement} cls="df-adversary-counter-btn" />
+			<LucideBtn icon="minus" title={dfTranslate("ui.decrease")} onClick={decrement} cls="df-adversary-counter-btn" />
 			<input
 				type="number" min={1} max={99}
 				value={count}
@@ -72,7 +76,7 @@ function CounterControls() {
 					if (isNaN(v) || v < 1) { setAdversaryCount(1); setCount(1); }
 				}}
 			/>
-			<LucideBtn icon="plus" title="Increase" onClick={increment} cls="df-adversary-counter-btn" />
+			<LucideBtn icon="plus" title={dfTranslate("ui.increase")} onClick={increment} cls="df-adversary-counter-btn" />
 		</div>
 	);
 }
@@ -85,12 +89,14 @@ function isCustomRecord(record: { id?: string; source?: string }): boolean {
 }
 
 function LucideBtn({ icon, title, onClick, cls }: { icon: string; title: string; onClick: (e: React.MouseEvent) => void; cls?: string }) {
+	useUiLanguage();
 	const ref = useRef<HTMLButtonElement>(null);
 	useEffect(() => { if (ref.current) setIcon(ref.current, icon); }, [icon]);
 	return <button ref={ref} title={title} className={cls} onClick={onClick} />;
 }
 
 function LucideIcon({ icon, cls }: { icon: string; cls?: string }) {
+	useUiLanguage();
 	const ref = useRef<HTMLSpanElement>(null);
 	useEffect(() => { if (ref.current) setIcon(ref.current, icon); }, [icon]);
 	return <span ref={ref} className={cls} />;
@@ -104,6 +110,7 @@ function SearchPane({ configFactory, onUiReady }: {
 	configFactory: () => SearchControlsConfig;
 	onUiReady?: (ui: SearchControlsUI) => void;
 }) {
+	useUiLanguage();
 	const ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		if (!ref.current) return;
@@ -125,6 +132,7 @@ const ADV_TYPES = [
 ];
 
 function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	useUiLanguage();
 	const language = useLanguage();
 	const [cards, setCards] = useState<AdvData[]>([]);
 	const [ready, setReady] = useState(false);
@@ -206,7 +214,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			)}
 			<div className="df-adversary-results">
 				{cards.length === 0
-					? <p>No adversaries found.</p>
+					? <p>{dfTranslate("ui.no.adversaries.found")}</p>
 					: cards.map(a => (
 						<AdvCard key={a.id || a.name} adversary={a} onInsert={insert} onDelete={deleteAdv} />
 					))
@@ -221,16 +229,17 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 	onInsert: (a: AdvData) => void;
 	onDelete: (a: AdvData) => void;
 }) {
+	useUiLanguage();
 	const source = adversary.source || "core";
 	const isCustom = source.toLowerCase() === "custom";
 	return (
 		<div className={`df-adversary-card df-source-${source.toLowerCase()}`} onClick={() => onInsert(adversary)}>
 			<p className="df-tier-text">
-				Tier {adversary.tier} {adversary.type}{" "}
+				{dfTranslate("ui.tier")} {adversary.tier} {gameTerm(adversary.type)}{" "}
 				<span className={`df-source-badge-${source.toLowerCase()}`}>{source.toLowerCase()}</span>
 			</p>
 			{isCustom && (
-				<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
+				<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 					onClick={(e: any) => { e.stopPropagation(); onDelete(adversary); }} />
 			)}
 			<h3 className="df-title-small-padding">{adversary.name || "Unnamed"}</h3>
@@ -242,6 +251,7 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 // ── Environment Pane ──────────────────────────────────────────────────────────
 
 function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	useUiLanguage();
 	const language = useLanguage();
 	const [cards, setCards] = useState<EnvironmentData[]>([]);
 	const [ready, setReady] = useState(false);
@@ -321,7 +331,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 			)}
 			<div className="df-environment-results">
 				{cards.length === 0
-					? <p>No environments found.</p>
+					? <p>{dfTranslate("ui.no.environments.found")}</p>
 					: cards.map(e => (
 						<EnvCard key={e.id || e.name} env={e} badgeLabels={BADGE_LABELS} onInsert={insert} onDelete={deleteEnv} />
 					))
@@ -337,16 +347,17 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 	onInsert: (e: EnvironmentData) => void;
 	onDelete: (e: EnvironmentData) => void;
 }) {
+	useUiLanguage();
 	const source = env.source || "core";
 	const isCustom = (badgeLabels[source] ?? source) === "Custom";
 	return (
 		<div className={`df-env-card df-source-${source.toLowerCase()}`} onClick={() => onInsert(env)}>
 			<p className="df-tier-text">
-				Tier {env.tier} {env.type}{" "}
+				{dfTranslate("ui.tier")} {env.tier} {gameTerm(env.type)}{" "}
 				<span className={`df-source-badge-${source.toLowerCase()}`}>{badgeLabels[source] || source}</span>
 			</p>
 			{isCustom && (
-				<LucideBtn icon="trash" title="Delete" cls="df-env-delete-btn"
+				<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-env-delete-btn"
 					onClick={(e: any) => { e.stopPropagation(); onDelete(env); }} />
 			)}
 			<h3 className="df-title-small-padding">{env.name || "Unnamed"}</h3>
@@ -369,6 +380,7 @@ function characterClassInfo(character: CharacterData): { className: string | nul
 }
 
 function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	useUiLanguage();
 	const [query, setQuery] = useState("");
 	// refreshToken re-renders the pane whenever stored data changes
 	void refreshToken;
@@ -401,7 +413,7 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		const plg = getDaggerForgePlugin(app);
 		if (!plg) return;
 		new ConfirmModal(plg.app, {
-			title: "Delete character?",
+			title: dfTranslate("ui.delete.character"),
 			message: `"${character.name || "Unnamed character"}" will be removed from your saved characters.`,
 			confirmLabel: "Delete",
 			onConfirm: () => void plg.dataManager.deleteCharacterById(character.id),
@@ -413,7 +425,7 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			<input
 				type="text"
 				className="df-char-search"
-				placeholder="Search characters…"
+				placeholder={dfTranslate("ui.search.characters")}
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
 			/>
@@ -435,6 +447,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 	onInsert: (c: CharacterData) => void;
 	onDelete: (c: CharacterData) => void;
 }) {
+	useUiLanguage();
 	const { className, color } = characterClassInfo(character);
 	const tag = className ?? (character.classSubclass.trim() || "No class");
 	const badgeColor = color ?? "var(--text-faint)";
@@ -457,7 +470,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 					{tag}
 				</span>
 			</p>
-			<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
+			<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 				onClick={(e: any) => { e.stopPropagation(); onDelete(character); }} />
 			<h3 className="df-title-small-padding">{character.name || "Unnamed character"}</h3>
 			<p className="df-desc-small-padding">{character.heritage}</p>
@@ -470,6 +483,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 const GEAR_KINDS = ["all", "weapon", "armor", "wheelchair", "item", "consumable"] as const;
 
 function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	useUiLanguage();
 	const language = useLanguage();
 	const [query, setQuery] = useState("");
 	const [kind, setKind] = useState<(typeof GEAR_KINDS)[number]>("all");
@@ -502,18 +516,18 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 			<input
 				type="text"
 				className="df-char-search"
-				placeholder="Search items…"
+				placeholder={dfTranslate("ui.search.items")}
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
 			/>
-			<select className="dropdown df-item-kind-filter" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)} aria-label="Kind filter">
+			<select className="dropdown df-item-kind-filter" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)} aria-label={dfTranslate("ui.kind.filter")}>
 				{GEAR_KINDS.map((k) => (
 					<option key={k} value={k}>{k === "all" ? "All kinds" : GEAR_KIND_LABELS[k]}</option>
 				))}
 			</select>
 			<div className="df-adversary-results">
 				{gear.length === 0
-					? <p>No items match.</p>
+					? <p>{dfTranslate("ui.no.items.match")}</p>
 					: gear.map((g) => (
 						<div
 							key={g.id}
@@ -525,10 +539,10 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 								{GEAR_KIND_LABELS[g.kind]}
 								{g.tier !== null ? ` · Tier ${g.tier}` : ""}
 								{g.rarity ? ` · ${g.rarity}` : ""}{" "}
-								{g.source === "custom" && <span className="df-source-badge-custom">custom</span>}
+								{g.source === "custom" && <span className="df-source-badge-custom">{dfTranslate("ui.custom")}</span>}
 							</p>
 							{g.source === "custom" && (
-								<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
+								<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 									onClick={(e: any) => { e.stopPropagation(); void deleteItem(g); }} />
 							)}
 							<h3 className="df-title-small-padding">{g.name}</h3>
@@ -558,6 +572,7 @@ const TAB_LABELS: Record<BrowserTab, string> = {
 };
 
 export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshToken }: Props) {
+	useUiLanguage();
 	const [activeTab, setActiveTab] = useState<BrowserTab>("adversary");
 	const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -605,7 +620,7 @@ export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshTo
 			{/* Scroll-to-top */}
 			<button
 				className={`df-scroll-to-top${showScrollTop ? " df-scroll-to-top--visible" : ""}`}
-				aria-label="Scroll to top"
+				aria-label={dfTranslate("ui.scroll.to.top")}
 				onClick={() => scrollContainer.scrollTo({ top: 0, behavior: "smooth" })}
 			>↑</button>
 		</>

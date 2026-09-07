@@ -60,7 +60,7 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 			.addExtraButton((btn) =>
 				btn
 					.setIcon("reset")
-					.setTooltip(`Default: ${DEFAULT_SETTINGS.diceBadgeTooltipMs / 1000}s`)
+					.setTooltip(t("settings.rollDuration.default", { seconds: DEFAULT_SETTINGS.diceBadgeTooltipMs / 1000 }))
 					.onClick(async () => {
 						this.plugin.settings.diceBadgeTooltipMs = DEFAULT_SETTINGS.diceBadgeTooltipMs;
 						await this.save();

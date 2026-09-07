@@ -1,3 +1,5 @@
+import { useLanguage as useUiLanguage } from "../../i18n/react";
+import { translate as dfTranslate } from "../../i18n";
 import React, { useEffect, useRef, useState } from "react";
 import { Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
@@ -21,6 +23,7 @@ interface Props {
  * useful when the same character is embedded in several files.
  */
 export function CharacterSheetEmbedApp({ plugin, characterId, code }: Props) {
+	useUiLanguage();
 	const [char, setChar] = useState<CharacterData | null>(() => findCharacter(plugin, characterId));
 	const [dirty, setDirty] = useState(false);
 
@@ -39,18 +42,18 @@ export function CharacterSheetEmbedApp({ plugin, characterId, code }: Props) {
 		if (!current) return;
 		void plugin.dataManager.upsertCharacter({ ...current, lastUpdated: Date.now() }, originToken);
 		setDirty(false);
-		new Notice("Character saved.");
+		new Notice(dfTranslate("ui.character.saved"));
 	};
 
 	const load = () => {
 		const stored = findCharacter(plugin, characterId);
 		if (!stored) {
-			new Notice("This character is not in the vault anymore.");
+			new Notice(dfTranslate("ui.this.character.is.not.in.the.vault.anymore"));
 			return;
 		}
 		setChar(stored);
 		setDirty(false);
-		new Notice("Loaded the latest saved version.");
+		new Notice(dfTranslate("ui.loaded.the.latest.saved.version"));
 	};
 
 	// Snapshot fallback for synced vaults: the block's `code:` line carries the
@@ -104,14 +107,11 @@ export function CharacterSheetEmbedApp({ plugin, characterId, code }: Props) {
 	if (!char) {
 		return (
 			<div className="df-cs-missing">
-				<p className="df-cs-missing-title">Character not found</p>
+				<p className="df-cs-missing-title">{dfTranslate("ui.character.not.found")}</p>
 				<p className="df-cs-missing-hint">
-					It may have been deleted or not imported into this vault yet. Import the player's
-					character code and this embed will pick it up automatically.
-				</p>
+					{dfTranslate("ui.it.may.have.been.deleted.or.not.imported.into.this.vault.yet.import.the.player.s.character.code.and.this.embed.will.pick.it.up.automatically")}</p>
 				<button type="button" onClick={() => void openCharacterSheet(plugin)}>
-					Open character sheet
-				</button>
+					{dfTranslate("ui.open.character.sheet")}</button>
 			</div>
 		);
 	}
@@ -120,15 +120,14 @@ export function CharacterSheetEmbedApp({ plugin, characterId, code }: Props) {
 		<div className="df-cs-root">
 			<div className="df-cs-embed-bar">
 				<button type="button" className="mod-cta" onClick={save}>
-					Save{dirty ? " •" : ""}
+					{dfTranslate("ui.save")}{dirty ? " •" : ""}
 				</button>
 				<button
 					type="button"
 					onClick={load}
-					title="Pull the latest saved version of this character"
+					title={dfTranslate("ui.pull.the.latest.saved.version.of.this.character")}
 				>
-					Load
-				</button>
+					{dfTranslate("ui.load")}</button>
 			</div>
 			<SheetBody char={char} update={update} />
 		</div>

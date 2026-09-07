@@ -57,15 +57,19 @@ export function getEnvironments(language: Language): EnvironmentData[] {
 		if (!translated) return item;
 		return {
 			...item,
-			...translated,
-			id: item.id,
+			name: translated.name ?? item.name,
+			desc: translated.desc ?? item.desc,
+			impulse: translated.impulse ?? item.impulse,
+			potentialAdversaries: translated.potentialAdversaries ?? item.potentialAdversaries,
 			features: item.features.map((feature, index) => {
 				const translatedFeature = translated.features?.[index];
 				return {
 					...feature,
-					...translatedFeature,
+					name: translatedFeature?.name ?? feature.name,
+					cost: translatedFeature?.cost ?? feature.cost,
+					questions: translatedFeature?.questions ?? feature.questions,
 					richContent: translatedFeature
-						? buildEnvRichContent(translatedFeature as Record<string, unknown>)
+						? buildEnvRichContent(translatedFeature as Record<string, unknown>) || feature.richContent
 						: feature.richContent,
 				};
 			}),

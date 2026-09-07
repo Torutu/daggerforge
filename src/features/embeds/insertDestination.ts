@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { App, FuzzySuggestModal, MarkdownView, Notice, TFile, WorkspaceLeaf } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { createCanvasCard, resolveInsertDestination } from "../../utils/canvasHelpers";
@@ -35,7 +36,7 @@ export function insertAtFocusedTarget(
 			return true;
 		}
 	}
-	new Notice("Open a note or canvas first.");
+	new Notice(dfTranslate("ui.open.a.note.or.canvas.first"));
 	return false;
 }
 
@@ -112,7 +113,7 @@ export class DestinationPickerModal extends FuzzySuggestModal<InsertDestination>
 		super(app);
 		this.destinations = destinations;
 		this.onChoose = onChoose;
-		this.setPlaceholder("Insert into which note or canvas?");
+		this.setPlaceholder(dfTranslate("ui.insert.into.which.note.or.canvas"));
 	}
 
 	getItems(): InsertDestination[] {
@@ -156,7 +157,7 @@ export async function insertTextAtDestination(
 	}
 
 	if (!dest.file) {
-		new Notice("Could not resolve the insert target.");
+		new Notice(dfTranslate("ui.could.not.resolve.the.insert.target"));
 		return;
 	}
 
@@ -181,7 +182,7 @@ export function pickDestinationAndInsert(
 ): void {
 	const destinations = listInsertDestinations(plugin.app, plugin.lastMainLeaf);
 	if (destinations.length === 0) {
-		new Notice("No notes or canvases found in this vault.");
+		new Notice(dfTranslate("ui.no.notes.or.canvases.found.in.this.vault"));
 		return;
 	}
 	new DestinationPickerModal(plugin.app, destinations, (dest) => {

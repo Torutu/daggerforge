@@ -4,9 +4,31 @@ import {
 	subscribeLanguage,
 	translate,
 } from "../i18n";
+import { en } from "../i18n/locales/en";
+import { de } from "../i18n/locales/de";
+import { gameTerm } from "../i18n/gameTerms";
 
 describe("i18n", () => {
 	afterEach(() => setLanguage("en"));
+
+	test("English and German have exactly the same nonempty keys and interpolation parameters", () => {
+		expect(Object.keys(de).sort()).toEqual(Object.keys(en).sort());
+		const parameters = (text: string) => [...text.matchAll(/\{([a-zA-Z]\w*)\}/g)].map(m => m[1]).sort();
+		for (const key of Object.keys(en) as Array<keyof typeof en>) {
+			expect(de[key].trim().length).toBeGreaterThan(0);
+			expect(parameters(de[key])).toEqual(parameters(en[key]));
+		}
+	});
+
+	test("game labels change with the language but unknown custom names stay unchanged", () => {
+		setLanguage("de");
+		expect(gameTerm("Leader")).toBe("Anführer");
+		expect(gameTerm("Very Close")).toBe("Sehr kurz");
+		expect(gameTerm("Horde (5/HP)")).toBe("Horde (5/HP)");
+		expect(gameTerm("My custom creature")).toBe("My custom creature");
+		setLanguage("en");
+		expect(gameTerm("Leader")).toBe("Leader");
+	});
 
 	test("uses English by default", () => {
 		expect(getLanguage()).toBe("en");

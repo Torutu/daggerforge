@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../../i18n";
 import { ItemView, WorkspaceLeaf, MarkdownView, Notice, setIcon } from "obsidian";
 import { getEnvironments } from "../../../data/index";
 import { getLanguage } from "../../../i18n";
@@ -69,7 +70,7 @@ export class EnvironmentView extends ItemView {
 		container.empty();
 
 		container.createEl("h2", {
-			text: "Environment Browser",
+			text: dfTranslate("ui.environment.browser"),
 			cls: "df-env-title",
 		});
 
@@ -89,14 +90,14 @@ export class EnvironmentView extends ItemView {
 		try {
 			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin || !plugin.dataManager) {
-				new Notice("DaggerForge plugin not found.");
+				new Notice(dfTranslate("ui.daggerforge.plugin.not.found"));
 				return;
 			}
 
 			const envId = env.id;
 
 			if (!envId) {
-				new Notice("Cannot delete environment: missing ID.");
+				new Notice(dfTranslate("ui.cannot.delete.environment.missing.id"));
 				return;
 			}
 
@@ -105,7 +106,7 @@ export class EnvironmentView extends ItemView {
 			this.refresh();
 		} catch (error) {
 			console.error("Error deleting custom environment:", error);
-			new Notice("Failed to delete environment.");
+			new Notice(dfTranslate("ui.failed.to.delete.environment"));
 		}
 	}
 
@@ -166,9 +167,9 @@ export class EnvironmentView extends ItemView {
 			this.renderResults(this.environments);
 		} catch (e) {
 			console.error("Error loading environment data:", e);
-			new Notice("Failed to load environment data.");
+			new Notice(dfTranslate("ui.failed.to.load.environment.data"));
 			if (this.resultsDiv) {
-				this.resultsDiv.setText("Error loading environment data.");
+				this.resultsDiv.setText(dfTranslate("ui.error.loading.environment.data"));
 			}
 		}
 	}
@@ -202,7 +203,7 @@ export class EnvironmentView extends ItemView {
 		if (!this.resultsDiv) return;
 		this.resultsDiv.empty();
 		if (filtered.length === 0) {
-			this.resultsDiv.setText("No environments found.");
+			this.resultsDiv.setText(dfTranslate("ui.no.environments.found"));
 			return;
 		}
 		filtered.forEach((env) => {
@@ -321,19 +322,19 @@ export class EnvironmentView extends ItemView {
 				if (success) {
 					new Notice(`Inserted ${env.name}.`);
 				} else {
-					new Notice("Failed to insert environment into canvas.");
+					new Notice(dfTranslate("ui.failed.to.insert.environment.into.canvas"));
 				}
 				return;
 			}
 
 			if (kind === "markdown") {
 				if (!leaf) {
-					new Notice("No note is open in Edit mode.");
+					new Notice(dfTranslate("ui.no.note.is.open.in.edit.mode"));
 					return;
 				}
 				const view = leaf.view as MarkdownView;
 				if (view.getMode() === "preview") {
-					new Notice("Please switch to Edit mode.");
+					new Notice(dfTranslate("ui.please.switch.to.edit.mode"));
 					return;
 				}
 				view.editor.replaceSelection(injectDiceBadgesIntoHtml(envHTML));
@@ -341,7 +342,7 @@ export class EnvironmentView extends ItemView {
 				return;
 			}
 
-			new Notice("No active editor or canvas. Click on a note or canvas first.");
+			new Notice(dfTranslate("ui.no.active.editor.or.canvas.click.on.a.note.or.canvas.first"));
 		});
 
 		return card;

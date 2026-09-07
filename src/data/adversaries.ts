@@ -47,13 +47,17 @@ export function getAdversaries(language: Language): AdvData[] {
 		if (!translated) return item;
 		return {
 			...item,
-			...translated,
-			id: item.id,
+			name: translated.name ?? item.name,
+			desc: translated.desc ?? item.desc,
+			motives: translated.motives ?? item.motives,
+			weaponName: translated.weaponName ?? item.weaponName,
+			xp: translated.xp ?? item.xp,
 			features: item.features.map((feature, index) => {
 				const translatedFeature = translated.features?.[index];
 				return {
 					...feature,
-					...translatedFeature,
+					name: translatedFeature?.name ?? feature.name,
+					cost: translatedFeature?.cost ?? feature.cost,
 					richContent: translatedFeature?.richContent ??
 						(translatedFeature?.desc ? `<p>${translatedFeature.desc}</p>` : feature.richContent),
 				};

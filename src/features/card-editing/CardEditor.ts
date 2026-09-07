@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { App, ItemView, MarkdownView, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { EnvironmentModal, extractEnvironmentData } from "../environments/index";
@@ -181,13 +182,13 @@ async function editAdversaryInMarkdown(
 ): Promise<void> {
 	const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) {
-		new Notice("Please open a markdown note first.");
+		new Notice(dfTranslate("ui.please.open.a.markdown.note.first"));
 		return;
 	}
 
 	const { startIndex, endIndex } = findCardSectionBounds(view.editor.getValue(), cardId, "adv");
 	if (startIndex === -1 || endIndex === -1) {
-		new Notice("Could not find card in markdown.");
+		new Notice(dfTranslate("ui.could.not.find.card.in.markdown"));
 		return;
 	}
 
@@ -197,7 +198,7 @@ async function editAdversaryInMarkdown(
 	modal.onEditUpdate = async (newHTML: string, newData: AdvData) => {
 		const replaced = await replaceCardInMarkdown(plugin, cardId, "adv", newHTML);
 		if (!replaced) {
-			new Notice("Could not find card in markdown for update.");
+			new Notice(dfTranslate("ui.could.not.find.card.in.markdown.for.update"));
 			return;
 		}
 
@@ -206,7 +207,7 @@ async function editAdversaryInMarkdown(
 			new Notice(`Updated adversary: ${cardName}`);
 		} catch (error) {
 			console.error("Error saving adversary:", error);
-			new Notice("Error saving adversary. Check console for details.");
+			new Notice(dfTranslate("ui.error.saving.adversary.check.console.for.details"));
 		}
 
 		refreshBrowsers(plugin);
@@ -223,13 +224,13 @@ async function editEnvironmentInMarkdown(
 ): Promise<void> {
 	const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) {
-		new Notice("Please open a markdown note first.");
+		new Notice(dfTranslate("ui.please.open.a.markdown.note.first"));
 		return;
 	}
 
 	const { startIndex, endIndex } = findCardSectionBounds(view.editor.getValue(), cardId, "env");
 	if (startIndex === -1 || endIndex === -1) {
-		new Notice("Could not find environment card in markdown.");
+		new Notice(dfTranslate("ui.could.not.find.environment.card.in.markdown"));
 		return;
 	}
 
@@ -239,7 +240,7 @@ async function editEnvironmentInMarkdown(
 	modal.onEditUpdate = async (newHTML: string, newData) => {
 		const replaced = await replaceCardInMarkdown(plugin, cardId, "env", newHTML);
 		if (!replaced) {
-			new Notice("Could not find environment card in markdown for update.");
+			new Notice(dfTranslate("ui.could.not.find.environment.card.in.markdown.for.update"));
 			return;
 		}
 
@@ -267,7 +268,7 @@ function editAdversaryInCanvas(
 			new Notice(`Updated adversary: ${cardName}`);
 		} catch (error) {
 			console.error("Error updating adversary:", error);
-			new Notice("Error updating adversary. Check console for details.");
+			new Notice(dfTranslate("ui.error.updating.adversary.check.console.for.details"));
 		}
 
 		refreshBrowsers(plugin);
@@ -291,7 +292,7 @@ function editEnvironmentInCanvas(
 			await plugin.dataManager.addEnvironment(newData);
 		} catch (error) {
 			console.error("Error updating environment:", error);
-			new Notice("Error updating environment. Check console for details.");
+			new Notice(dfTranslate("ui.error.updating.environment.check.console.for.details"));
 		}
 
 		refreshBrowsers(plugin);
@@ -314,13 +315,13 @@ export const onEditClick = (
 	const button = evt.target as HTMLElement;
 	const cardElement = findCardElement(button, cardType);
 	if (!cardElement) {
-		new Notice("Could not find card element!");
+		new Notice(dfTranslate("ui.could.not.find.card.element"));
 		return;
 	}
 
 	const cardId = button.id;
 	if (!cardId) {
-		new Notice("Edit button missing ID!");
+		new Notice(dfTranslate("ui.edit.button.missing.id"));
 		return;
 	}
 
@@ -351,7 +352,7 @@ export async function handleCardEditClick(
 	if (!cardType) return;
 
 	if (!plugin) {
-		new Notice("Plugin instance not available for editing.");
+		new Notice(dfTranslate("ui.plugin.instance.not.available.for.editing"));
 		return;
 	}
 
@@ -383,7 +384,7 @@ function handleCanvasEdit(
 ) {
 	const cardElement = findCardElement(target, cardType);
 	if (!cardElement) {
-		new Notice("Could not find card element!");
+		new Notice(dfTranslate("ui.could.not.find.card.element"));
 		return;
 	}
 

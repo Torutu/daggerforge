@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { Notice, TFile } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { AdvData, EnvironmentData } from "../../types/index";
@@ -48,7 +49,7 @@ async function editEmbeddedAdversary(
 	const code = sectionSnapshotCode(section);
 	const adv = findAdversaryById(plugin, id) ?? (code ? await decodeAdversaryCode(code) : null);
 	if (!adv) {
-		new Notice("This adversary no longer exists.");
+		new Notice(dfTranslate("ui.this.adversary.no.longer.exists"));
 		return;
 	}
 
@@ -79,7 +80,7 @@ async function editEmbeddedEnvironment(
 	const code = sectionSnapshotCode(section);
 	const env = findEnvironmentById(plugin, id) ?? (code ? await decodeEnvironmentCode(code) : null);
 	if (!env) {
-		new Notice("This environment no longer exists.");
+		new Notice(dfTranslate("ui.this.environment.no.longer.exists"));
 		return;
 	}
 

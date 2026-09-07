@@ -1,3 +1,4 @@
+import { translate } from "../../i18n";
 import { ItemView, WorkspaceLeaf } from "obsidian";
 import { createRoot, Root } from "react-dom/client";
 import { createElement } from "react";
@@ -14,7 +15,7 @@ export class ContentBrowserView extends ItemView {
 	constructor(leaf: WorkspaceLeaf) { super(leaf); }
 
 	getViewType()    { return Content_Browser_View_Type; }
-	getDisplayText() { return "Content Browser"; }
+	getDisplayText() { return translate("ui.content.browser"); }
 	getIcon()        { return "layout-grid"; }
 
 	private renderApp(container: HTMLElement) {
