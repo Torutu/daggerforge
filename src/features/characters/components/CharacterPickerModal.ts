@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../../i18n";
 import { App, FuzzySuggestModal } from "obsidian";
 import { CharacterData } from "../../../types/character";
 
@@ -10,17 +11,17 @@ export class CharacterPickerModal extends FuzzySuggestModal<CharacterData> {
 		super(app);
 		this.characters = characters;
 		this.onChoose = onChoose;
-		this.setPlaceholder("Pick a character to insert…");
+		this.setPlaceholder(dfTranslate("ui.pick.a.character.to.insert"));
 	}
 
 	getItems(): CharacterData[] {
 		return [...this.characters].sort((a, b) =>
-			(a.name || "Unnamed").localeCompare(b.name || "Unnamed"),
+			(a.name || dfTranslate("ui.dynamic.unnamed")).localeCompare(b.name || dfTranslate("ui.dynamic.unnamed")),
 		);
 	}
 
 	getItemText(character: CharacterData): string {
-		return character.name || "Unnamed character";
+		return character.name || dfTranslate("ui.dynamic.unnamed.character");
 	}
 
 	onChooseItem(character: CharacterData): void {

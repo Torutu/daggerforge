@@ -1,7 +1,10 @@
+import { gameTerm } from "../../i18n/gameTerms";
+import { translate as dfTranslate } from "../../i18n";
 import { App, Modal, Notice } from "obsidian";
 import { makeDraggable } from "../../utils/makeDraggable";
 import { getDaggerForgePlugin } from "../../utils/index";
-import { ADVERSARIES } from "../../data/adversaries";
+import { getAdversaries } from "../../data/adversaries";
+import { getLanguage, subscribeLanguage } from "../../i18n";
 import { AdvData } from "../../types/index";
 import { buildAdversaryEmbedBlock } from "../adversaries/AdversaryEmbed";
 import { ConfirmModal } from "../characters/components/ConfirmModal";
@@ -29,35 +32,36 @@ interface SpentItem {
 
 interface EncounterState {
 	baseBP: number;
-	adjustments: { value: number; reason: string }[];
+	adjustments: { value: number; reason: string; key?: string }[];
 	spentItems: SpentItem[];
 	pcCount: number;
 	tier: string;   // "all" | "1".."4"
 	source: string; // "all" | lowercase source name
 }
 
-const ADJUSTMENTS = [
-	{ value: -1, label: "Less difficult / shorter" },
-	{ value: -2, label: "2+ Solo adversaries" },
-	{ value: -2, label: "+1d4 or +2 damage" },
-	{ value:  1, label: "Lower tier adversary" },
-	{ value:  1, label: "No Bruisers / Hordes / Leaders / Solos" },
-	{ value:  2, label: "More dangerous / longer" },
+const getAdjustments = () => [
+	{ key: "shorter", value: -1, label: dfTranslate("ui.less.difficult.shorter") },
+	{ key: "two-solos", value: -2, label: dfTranslate("ui.2.solo.adversaries") },
+	{ key: "low-damage", value: -2, label: dfTranslate("ui.1d4.or.2.damage") },
+	{ key: "lower-tier", value:  1, label: dfTranslate("ui.lower.tier.adversary") },
+	{ key: "restricted-types", value:  1, label: dfTranslate("ui.no.bruisers.hordes.leaders.solos") },
+	{ key: "longer", value:  2, label: dfTranslate("ui.more.dangerous.longer") },
 ];
 
-const SPEND_OPTIONS = [
-	{ cost: 1, key: "minion",   label: "Minions (party size)",              match: /minion/i },
-	{ cost: 1, key: "social",   label: "Social / Support",                  match: /social|support/i },
-	{ cost: 2, key: "standard", label: "Horde / Ranged / Skulk / Standard", match: /horde|ranged|skulk|standard/i },
-	{ cost: 3, key: "leader",   label: "Leader",                            match: /leader/i },
-	{ cost: 4, key: "bruiser",  label: "Bruiser",                           match: /bruiser/i },
-	{ cost: 5, key: "solo",     label: "Solo",                              match: /solo/i },
+const getSpendOptions = () => [
+	{ cost: 1, key: "minion",   label: dfTranslate("ui.minions.party.size"),              match: /minion/i },
+	{ cost: 1, key: "social",   label: dfTranslate("ui.social.support"),                  match: /social|support/i },
+	{ cost: 2, key: "standard", label: dfTranslate("ui.horde.ranged.skulk.standard"), match: /horde|ranged|skulk|standard/i },
+	{ cost: 3, key: "leader",   label: dfTranslate("ui.leader"),                            match: /leader/i },
+	{ cost: 4, key: "bruiser",  label: dfTranslate("ui.bruiser"),                           match: /bruiser/i },
+	{ cost: 5, key: "solo",     label: dfTranslate("ui.solo"),                              match: /solo/i },
 ];
 
 const capitalize = (text: string) => (text ? text[0].toUpperCase() + text.slice(1) : text);
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
 export class EncounterCalcModal extends Modal {
+	private unsubscribeLanguage: (() => void) | null = null;
 	private state: EncounterState = {
 		baseBP: 0,
 		adjustments: [],
@@ -69,19 +73,47 @@ export class EncounterCalcModal extends Modal {
 
 	constructor(app: App) {
 		super(app);
-		this.titleEl.setText("Battle Calculator");
+		this.titleEl.setText(dfTranslate("ui.battle.calculator"));
 	}
 
 	/** Custom adversaries first (they shadow bundled ids), then the bundled list. */
 	private allAdversaries(): AdvData[] {
 		const plugin = getDaggerForgePlugin(this.app);
 		const custom = plugin?.dataManager?.getAdversaries() ?? [];
-		return [...custom, ...ADVERSARIES];
+		return [...custom, ...getAdversaries(getLanguage())];
 	}
 
 	onOpen(): void {
 		makeDraggable(this.modalEl, this.modalEl);
 		this.modalEl.addClass("df-enc-modal");
+		this.unsubscribeLanguage = subscribeLanguage(() => {
+			this.relocalizeState();
+			this.contentEl.empty();
+			this.renderContent();
+		});
+		this.renderContent();
+	}
+
+	private relocalizeState(): void {
+		const adjustmentLabels = new Map(getAdjustments().map((item) => [item.key, item.label]));
+		this.state.adjustments = this.state.adjustments.map((item) => ({
+			...item,
+			reason: item.key ? adjustmentLabels.get(item.key) ?? item.reason : item.reason,
+		}));
+		const spendingLabels = new Map(getSpendOptions().map((item) => [item.key, item.label]));
+		const adversaries = this.allAdversaries();
+		this.state.spentItems = this.state.spentItems.map((item) => ({
+			...item,
+			label: item.category ? spendingLabels.get(item.category) ?? item.label : item.label,
+			adversary:
+				item.adversary && (item.adversary.source ?? "core") !== "custom"
+					? adversaries.find((candidate) => candidate.id === item.adversary?.id) ?? item.adversary
+					: item.adversary,
+		}));
+	}
+
+	private renderContent(): void {
+		this.titleEl.setText(dfTranslate("ui.battle.calculator"));
 
 		const { contentEl } = this;
 		contentEl.addClass("df-enc-content");
@@ -90,7 +122,7 @@ export class EncounterCalcModal extends Modal {
 		const headerRow = contentEl.createEl("div", { cls: "df-enc-header-row" });
 
 		const pcGroup = headerRow.createEl("div", { cls: "df-enc-pc-group" });
-		pcGroup.createEl("label", { cls: "df-enc-label", text: "Number of PCs" });
+		pcGroup.createEl("label", { cls: "df-enc-label", text: dfTranslate("ui.number.of.pcs") });
 		const pcInput = pcGroup.createEl("input", { cls: "df-enc-pc-input" }) as HTMLInputElement;
 		pcInput.type = "number";
 		pcInput.min = "1";
@@ -98,7 +130,7 @@ export class EncounterCalcModal extends Modal {
 		pcInput.value = this.state.pcCount.toString();
 
 		const calcBtn = headerRow.createEl("button", { cls: "df-enc-calc-btn" });
-		calcBtn.innerHTML = `${ZAP}<span>Calculate</span>`;
+		calcBtn.innerHTML = `${ZAP}<span>${dfTranslate("enc.calculate")}</span>`;
 
 		// ── Stats bar ─────────────────────────────────────────────────────
 		const statsBar = contentEl.createEl("div", { cls: "df-enc-stats" });
@@ -108,32 +140,33 @@ export class EncounterCalcModal extends Modal {
 			const val = chip.createEl("span", { cls: "df-enc-stat-value", text: "0" });
 			return val;
 		};
-		const svBase      = makeStatEl("Base BP");
-		const svAdj       = makeStatEl("Adjustments");
-		const svSpent     = makeStatEl("Spent");
-		const svRemaining = makeStatEl("Remaining", "df-enc-stat--highlight");
+		const svBase      = makeStatEl(dfTranslate("enc.base.bp"));
+		const svAdj       = makeStatEl(dfTranslate("enc.adjustments"));
+		const svSpent     = makeStatEl(dfTranslate("enc.spent"));
+		const svRemaining = makeStatEl(dfTranslate("enc.remaining"), "df-enc-stat--highlight");
 
 		// ── Log columns ───────────────────────────────────────────────────
 		const columnsDiv = contentEl.createEl("div", { cls: "df-enc-columns" });
 
 		const adjCol = columnsDiv.createEl("div", { cls: "df-enc-column" });
 		const adjColHead = adjCol.createEl("div", { cls: "df-enc-col-header" });
-		adjColHead.innerHTML = `${SLIDERS}<span>Adjustments</span>`;
+		adjColHead.innerHTML = `${SLIDERS}<span>${dfTranslate("enc.adjustments")}</span>`;
 		const adjustmentsList = adjCol.createEl("div", { cls: "df-enc-log" });
 
 		const spendCol = columnsDiv.createEl("div", { cls: "df-enc-column" });
 		const spendColHead = spendCol.createEl("div", { cls: "df-enc-col-header" });
-		spendColHead.innerHTML = `${SWORDS}<span>Spending</span>`;
+		spendColHead.innerHTML = `${SWORDS}<span>${dfTranslate("enc.spending")}</span>`;
 		const spendingList = spendCol.createEl("div", { cls: "df-enc-log" });
 
 		// ── Adjustment buttons ────────────────────────────────────────────
 		const adjSection = contentEl.createEl("div", { cls: "df-enc-section" });
 		const adjHead = adjSection.createEl("div", { cls: "df-enc-section-label" });
-		adjHead.innerHTML = `${SLIDERS}<span>Adjust Battle Points</span>`;
+		adjHead.innerHTML = `${SLIDERS}<span>${dfTranslate("enc.adjust.battle.points")}</span>`;
 		const adjGrid = adjSection.createEl("div", { cls: "df-enc-btn-grid" });
-		ADJUSTMENTS.forEach(adj => {
+		getAdjustments().forEach(adj => {
 			const btn = adjGrid.createEl("button", { cls: "df-enc-action-btn" });
 			btn.setAttribute("data-adjust", adj.value.toString());
+			btn.setAttribute("data-key", adj.key);
 			btn.createEl("span", { cls: "df-enc-btn-label", text: adj.label });
 			btn.createEl("span", {
 				cls: `df-enc-badge ${adj.value > 0 ? "df-enc-badge--pos" : "df-enc-badge--neg"}`,
@@ -144,9 +177,9 @@ export class EncounterCalcModal extends Modal {
 		// ── Spend buttons ─────────────────────────────────────────────────
 		const spendSection = contentEl.createEl("div", { cls: "df-enc-section" });
 		const spendHead = spendSection.createEl("div", { cls: "df-enc-section-label" });
-		spendHead.innerHTML = `${SWORDS}<span>Spend Battle Points</span>`;
+		spendHead.innerHTML = `${SWORDS}<span>${dfTranslate("enc.spend.battle.points")}</span>`;
 		const spendGrid = spendSection.createEl("div", { cls: "df-enc-btn-grid" });
-		SPEND_OPTIONS.forEach(opt => {
+		getSpendOptions().forEach(opt => {
 			const btn = spendGrid.createEl("button", { cls: "df-enc-action-btn" });
 			btn.setAttribute("data-cost", opt.cost.toString());
 			btn.setAttribute("data-key", opt.key);
@@ -157,29 +190,29 @@ export class EncounterCalcModal extends Modal {
 		// ── Suggestions ───────────────────────────────────────────────────
 		const sugSection = contentEl.createEl("div", { cls: "df-enc-section" });
 		const sugHead = sugSection.createEl("div", { cls: "df-enc-section-label" });
-		sugHead.innerHTML = `${WAND}<span>Suggested Adversaries</span>`;
+		sugHead.innerHTML = `${WAND}<span>${dfTranslate("enc.suggested.adversaries")}</span>`;
 
 		const filterRow = sugSection.createEl("div", { cls: "df-enc-suggest-filters" });
 		const tierSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
-		tierSelect.createEl("option", { text: "Any tier", value: "all" });
-		["1", "2", "3", "4"].forEach(t => tierSelect.createEl("option", { text: `Tier ${t}`, value: t }));
+		tierSelect.createEl("option", { text: dfTranslate("ui.any.tier"), value: "all" });
+		["1", "2", "3", "4"].forEach(t => tierSelect.createEl("option", { text: `${dfTranslate("ui.tier")} ${t}`, value: t }));
 
 		const sourceSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
-		sourceSelect.createEl("option", { text: "Any source", value: "all" });
-		const sources = new Set<string>(ADVERSARIES.map(a => (a.source || "core").toLowerCase()));
+		sourceSelect.createEl("option", { text: dfTranslate("ui.any.source"), value: "all" });
+		const sources = new Set<string>(getAdversaries(getLanguage()).map(a => (a.source || "core").toLowerCase()));
 		sources.add("custom");
 		[...sources].sort().forEach(s => sourceSelect.createEl("option", { text: capitalize(s), value: s }));
 
 		const sugList = sugSection.createEl("div", { cls: "df-enc-suggest" });
 
 		const insertRow = sugSection.createEl("div", { cls: "df-enc-insert-row" });
-		const insertBtn = insertRow.createEl("button", { cls: "mod-cta df-enc-insert-btn", text: "Insert encounter" });
+		const insertBtn = insertRow.createEl("button", { cls: "mod-cta df-enc-insert-btn", text: dfTranslate("ui.insert.encounter") });
 		const insertNote = insertRow.createEl("span", { cls: "df-enc-insert-note" });
 
 		// ── Footer ────────────────────────────────────────────────────────
 		const footer = contentEl.createEl("div", { cls: "df-enc-footer" });
 		const clearBtn = footer.createEl("button", { cls: "df-enc-clear-btn" });
-		clearBtn.innerHTML = `${TRASH}<span>Clear all</span>`;
+		clearBtn.innerHTML = `${TRASH}<span>${dfTranslate("enc.clear.all")}</span>`;
 
 		// ── Logic ─────────────────────────────────────────────────────────
 		const totals = () => {
@@ -192,25 +225,25 @@ export class EncounterCalcModal extends Modal {
 		 *  into the note/canvas once, before the first inserted adversary, so
 		 *  the encounter can be read back later. */
 		const buildSummaryMarkdown = (): string => {
-			const scope = [`${this.state.pcCount} PCs`];
-			if (this.state.tier !== "all") scope.push(`Tier ${this.state.tier}`);
+			const scope = [dfTranslate("enc.pcCount", { count: this.state.pcCount })];
+			if (this.state.tier !== "all") scope.push(`${dfTranslate("ui.tier")} ${this.state.tier}`);
 			if (this.state.source !== "all") scope.push(capitalize(this.state.source));
-			const lines = [`> [!note] Battle plan - ${scope.join(" · ")}`];
-			lines.push(`> - Base battle points: ${this.state.baseBP}`);
+			const lines = [`> [!note] ${dfTranslate("enc.plan", { scope: scope.join(" · ") })}`];
+			lines.push(`> - ${dfTranslate("enc.base", { count: this.state.baseBP })}`);
 			this.state.adjustments.forEach(a =>
 				lines.push(`> - ${a.reason} (${a.value >= 0 ? "+" : ""}${a.value})`),
 			);
 			this.state.spentItems.forEach(s =>
 				lines.push(`> - ${s.label}${s.adversary ? ` - ${s.adversary.name}` : ""} (−${s.cost})`),
 			);
-			lines.push(`> - Remaining battle points: ${totals().remaining}`);
+			lines.push(`> - ${dfTranslate("enc.remaining", { count: totals().remaining })}`);
 			return lines.join("\n") + "\n";
 		};
 
 		/** Assign a suggested adversary to the first open slot of its category -
 		 *  nothing is written until Insert encounter. Choosing beyond the plan
 		 *  spends the points for a new, already-filled slot. */
-		const chooseSuggestion = (adv: AdvData, opt: (typeof SPEND_OPTIONS)[number]) => {
+		const chooseSuggestion = (adv: AdvData, opt: ReturnType<typeof getSpendOptions>[number]) => {
 			const slot = this.state.spentItems.find(s => s.category === opt.key && !s.adversary);
 			if (slot) slot.adversary = adv;
 			else this.state.spentItems.push({ cost: opt.cost, label: opt.label, category: opt.key, adversary: adv });
@@ -225,7 +258,7 @@ export class EncounterCalcModal extends Modal {
 			if (chosen.length === 0) return;
 			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin) {
-				new Notice("Open a note or canvas first.");
+				new Notice(dfTranslate("ui.open.a.note.or.canvas.first"));
 				return;
 			}
 			if (!insertAtFocusedTarget(plugin, buildSummaryMarkdown(), { width: 440, height: 280 }, undefined, true)) {
@@ -255,7 +288,7 @@ export class EncounterCalcModal extends Modal {
 					true,
 				);
 			}
-			new Notice(`Inserted the battle plan and ${chosen.length} ${chosen.length === 1 ? "adversary" : "adversaries"} on ${groups.size} ${groups.size === 1 ? "card" : "cards"}.`);
+			new Notice(dfTranslate("enc.inserted", { count: chosen.length, cards: groups.size }));
 
 			// Finalized - reset for the next encounter (same party size)
 			this.state.baseBP      = 3 * this.state.pcCount + 2;
@@ -271,9 +304,9 @@ export class EncounterCalcModal extends Modal {
 				return;
 			}
 			new ConfirmModal(this.app, {
-				title: "Insert with unspent battle points?",
-				message: `You still have ${remaining} unspent battle point${remaining === 1 ? "" : "s"}. Inserting finalizes this encounter and clears the calculator - you would have to rebuild the plan from scratch to spend them.`,
-				confirmLabel: "Insert anyway",
+				title: dfTranslate("ui.insert.with.unspent.battle.points"),
+				message: dfTranslate("enc.unspentWarning", { count: remaining }),
+				confirmLabel: dfTranslate("ui.insert.anyway"),
 				onConfirm: () => void insertEncounter(),
 			}).open();
 		};
@@ -289,14 +322,14 @@ export class EncounterCalcModal extends Modal {
 			if (planKeys.length === 0) {
 				sugList.createEl("p", {
 					cls: "df-enc-suggest-hint",
-					text: "Spend battle points above and matching adversaries will be suggested here.",
+					text: dfTranslate("ui.spend.battle.points.above.and.matching.adversaries.will.be.suggested.here"),
 				});
 				return;
 			}
 
 			const pool = this.allAdversaries();
 			planKeys.forEach(key => {
-				const opt = SPEND_OPTIONS.find(o => o.key === key);
+				const opt = getSpendOptions().find(o => o.key === key);
 				if (!opt) return;
 				const slots = this.state.spentItems.filter(s => s.category === key);
 				const done = slots.filter(s => s.adversary).length;
@@ -312,11 +345,11 @@ export class EncounterCalcModal extends Modal {
 				head.createEl("span", { text: opt.label });
 				head.createEl("span", {
 					cls: "df-enc-suggest-progress" + (done >= slots.length ? " is-done" : ""),
-					text: done >= slots.length ? `${done}/${slots.length} ✓` : `${done}/${slots.length} chosen`,
+					text: done >= slots.length ? `${done}/${slots.length} ✓` : dfTranslate("enc.chosen", { done, total: slots.length }),
 				});
 
 				if (matches.length === 0) {
-					group.createEl("p", { cls: "df-enc-suggest-hint", text: "No adversaries match these filters." });
+					group.createEl("p", { cls: "df-enc-suggest-hint", text: dfTranslate("ui.no.adversaries.match.these.filters") });
 					return;
 				}
 
@@ -330,7 +363,7 @@ export class EncounterCalcModal extends Modal {
 						if (picks > 0) chip.createEl("span", { cls: "df-enc-chip-check", text: picks > 1 ? `✓×${picks}` : "✓" });
 						chip.createEl("span", { text: adv.name });
 						chip.createEl("span", { cls: "df-enc-chip-tier", text: `T${adv.tier}` });
-						chip.title = `${adv.type} · ${capitalize((adv.source || "core").toLowerCase())} - choose for this slot`;
+						chip.title = dfTranslate("enc.chooseSlot", { type: gameTerm(adv.type), source: gameTerm(adv.source || "core") });
 						chip.addEventListener("click", () => chooseSuggestion(adv, opt));
 					});
 				};
@@ -351,7 +384,7 @@ export class EncounterCalcModal extends Modal {
 				}
 				[...subTypes.keys()].sort().forEach(typeName => {
 					const sub = group.createEl("div", { cls: "df-enc-suggest-subhead" });
-					sub.createEl("span", { cls: "df-enc-suggest-subtype", text: typeName });
+					sub.createEl("span", { cls: "df-enc-suggest-subtype", text: gameTerm(typeName) });
 					makeChips(group, subTypes.get(typeName)!);
 				});
 			});
@@ -384,7 +417,7 @@ export class EncounterCalcModal extends Modal {
 				row.createEl("span", { cls: "df-enc-log-val df-enc-neg", text: `-${item.cost}` });
 				const rm = row.createEl("button", { cls: "df-enc-remove-btn" });
 				rm.innerHTML = X_SM;
-				rm.title = item.adversary ? "Clear the chosen adversary" : "Remove this slot";
+				rm.title = item.adversary ? dfTranslate("ui.dynamic.clear.the.chosen.adversary") : dfTranslate("ui.dynamic.remove.this.slot");
 				// First click clears the pick, second removes the slot entirely
 				rm.addEventListener("click", () => {
 					if (item.adversary) item.adversary = undefined;
@@ -409,10 +442,10 @@ export class EncounterCalcModal extends Modal {
 			insertBtn.disabled = chosenCount === 0;
 			insertNote.textContent =
 				chosenCount === 0
-					? "Choose adversaries above, then insert them all at once."
+					? dfTranslate("ui.dynamic.choose.adversaries.above.then.insert.them.all.at.once")
 					: remaining > 0
-						? `${remaining} BP still unspent`
-						: `${chosenCount} chosen - ready to insert`;
+						? dfTranslate("enc.unspent", { count: remaining })
+						: dfTranslate("enc.ready", { count: chosenCount });
 
 			renderSuggestions();
 		};
@@ -431,8 +464,9 @@ export class EncounterCalcModal extends Modal {
 		contentEl.querySelectorAll("[data-adjust]").forEach(btn => {
 			btn.addEventListener("click", () => {
 				const val    = parseInt((btn as HTMLElement).dataset.adjust!);
+				const key    = (btn as HTMLElement).dataset.key;
 				const reason = (btn as HTMLElement).querySelector(".df-enc-btn-label")?.textContent ?? "";
-				this.state.adjustments.push({ value: val, reason });
+				this.state.adjustments.push({ value: val, reason, key });
 				updateDisplay();
 			});
 		});
@@ -467,6 +501,8 @@ export class EncounterCalcModal extends Modal {
 	}
 
 	onClose(): void {
+		this.unsubscribeLanguage?.();
+		this.unsubscribeLanguage = null;
 		this.contentEl.empty();
 	}
 }

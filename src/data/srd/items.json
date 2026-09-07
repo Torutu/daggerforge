@@ -1,5 +1,6 @@
 [
 	{
+		"source": "core",
 		"id": "IT001",
 		"roll": 1,
 		"rarity": "Common",
@@ -8,6 +9,7 @@
 		"text": "During downtime, you automatically clear a Stress."
 	},
 	{
+		"source": "core",
 		"id": "IT002",
 		"roll": 2,
 		"rarity": "Common",
@@ -16,6 +18,7 @@
 		"text": "This handcrafted whistle has a distinctive sound. When you blow this whistle, its piercing tone can be heard within a 1-mile radius."
 	},
 	{
+		"source": "core",
 		"id": "IT003",
 		"roll": 3,
 		"rarity": "Common",
@@ -24,6 +27,7 @@
 		"text": "When you succeed on an attack with an arrow stored in this quiver, gain a bonus to the damage roll equal to your current tier."
 	},
 	{
+		"source": "core",
 		"id": "IT004",
 		"roll": 4,
 		"rarity": "Common",
@@ -32,6 +36,7 @@
 		"text": "You can light this magic torch at will. The flame's light fills a much larger space than it should, enough to illuminate a cave bright as day."
 	},
 	{
+		"source": "core",
 		"id": "IT005",
 		"roll": 5,
 		"rarity": "Common",
@@ -40,6 +45,7 @@
 		"text": "This pair of orbs allows any creatures holding them to communicate with each other across any distance."
 	},
 	{
+		"source": "core",
 		"id": "IT006",
 		"roll": 6,
 		"rarity": "Common",
@@ -48,6 +54,7 @@
 		"text": "This pair of locking cuffs comes with a key."
 	},
 	{
+		"source": "core",
 		"id": "IT007",
 		"roll": 7,
 		"rarity": "Common",
@@ -56,6 +63,7 @@
 		"text": "A creature with a Spellcast trait wearing this cloak can adjust its color, texture, and size at will."
 	},
 	{
+		"source": "core",
 		"id": "IT008",
 		"roll": 8,
 		"rarity": "Common",
@@ -64,6 +72,7 @@
 		"text": "You can make a Finesse Roll using this net to trap a small creature. A trapped target can break free with a successful Attack Roll (16)."
 	},
 	{
+		"source": "core",
 		"id": "IT009",
 		"roll": 9,
 		"rarity": "Common",
@@ -72,6 +81,7 @@
 		"text": "You can pour out the strange liquid contents of this jar to instantly produce fire. The contents regenerate when you take a long rest."
 	},
 	{
+		"source": "core",
 		"id": "IT010",
 		"roll": 10,
 		"rarity": "Common",
@@ -80,6 +90,7 @@
 		"text": "This flat rod is inscribed with runes. When you activate the rod, it is immediately suspended in place. Until the rod is deactivated, it can't move, doesn't abide by the rules of gravity, and remains in place."
 	},
 	{
+		"source": "core",
 		"id": "IT011",
 		"roll": 11,
 		"rarity": "Common",
@@ -88,6 +99,7 @@
 		"text": "Activate this pebble-sized stone to memorize the appearance of someone you can see. Spend a Hope to magically recreate this guise on yourself as an illusion."
 	},
 	{
+		"source": "core",
 		"id": "IT012",
 		"roll": 12,
 		"rarity": "Common",
@@ -96,6 +108,7 @@
 		"text": "This magical chest appears empty. When you speak a specific trigger word or action and open the chest, you can see the items stored within it."
 	},
 	{
+		"source": "core",
 		"id": "IT013",
 		"roll": 13,
 		"rarity": "Uncommon",
@@ -104,6 +117,7 @@
 		"text": "This case can fit a small animal companion. While the companion is inside, the animal and case are immune to all damage and harmful effects."
 	},
 	{
+		"source": "core",
 		"id": "IT014",
 		"roll": 14,
 		"rarity": "Uncommon",
@@ -112,6 +126,7 @@
 		"text": "Three times per rest when you succeed on an attack with one of these arrows, you can add your Proficiency to the damage roll."
 	},
 	{
+		"source": "core",
 		"id": "IT015",
 		"roll": 15,
 		"rarity": "Uncommon",
@@ -120,6 +135,7 @@
 		"text": "You can attach this stone to armor that doesn't already have a feature. The armor gains the following feature. Resilient: Before you mark your last Armor Slot, roll a d6. On a result of 6, reduce the severity by one threshold without marking an Armor Slot."
 	},
 	{
+		"source": "core",
 		"id": "IT016",
 		"roll": 16,
 		"rarity": "Uncommon",
@@ -128,6 +144,7 @@
 		"text": "When you use this key to open a locked door, you gain advantage on the Finesse Roll."
 	},
 	{
+		"source": "core",
 		"id": "IT017",
 		"roll": 17,
 		"rarity": "Uncommon",
@@ -136,6 +153,7 @@
 		"text": "Position this prism in a location of your choosing and activate it. All allies within Close range of it gain a +1 bonus to their Spellcast Rolls. While activated, the prism can't be moved. Once the prism is deactivated, it can't be activated again until your next long rest."
 	},
 	{
+		"source": "core",
 		"id": "IT018",
 		"roll": 18,
 		"rarity": "Uncommon",
@@ -144,6 +162,7 @@
 		"text": "As a downtime move, you can use the bone of a creature to craft a Minor Stamina Potion."
 	},
 	{
+		"source": "core",
 		"id": "IT019",
 		"roll": 19,
 		"rarity": "Uncommon",
@@ -152,6 +171,7 @@
 		"text": "As a downtime move, you can use a vial of blood to craft a Minor Health Potion."
 	},
 	{
+		"source": "core",
 		"id": "IT020",
 		"roll": 20,
 		"rarity": "Uncommon",
@@ -160,6 +180,7 @@
 		"text": "These two compasses point toward each other no matter how far apart they are."
 	},
 	{
+		"source": "core",
 		"id": "IT021",
 		"roll": 21,
 		"rarity": "Uncommon",
@@ -168,6 +189,7 @@
 		"text": "This tiny sprite sits in the curve of your ear canal and whispers helpful advice during combat. Once per short rest, you can gain advantage on an attack roll."
 	},
 	{
+		"source": "core",
 		"id": "IT022",
 		"roll": 22,
 		"rarity": "Uncommon",
@@ -176,6 +198,7 @@
 		"text": "You can climb up vertical surfaces and across ceilings."
 	},
 	{
+		"source": "core",
 		"id": "IT023",
 		"roll": 23,
 		"rarity": "Uncommon",
@@ -184,6 +207,7 @@
 		"text": "You can store the name and details of up to three hostile creatures inside this book. You gain a +1 bonus to action rolls against those creatures."
 	},
 	{
+		"source": "core",
 		"id": "IT024",
 		"roll": 24,
 		"rarity": "Uncommon",
@@ -192,6 +216,7 @@
 		"text": "As a downtime move, you can mark a Stress to craft a Vial of Darksmoke."
 	},
 	{
+		"source": "core",
 		"id": "IT025",
 		"roll": 25,
 		"rarity": "Rare",
@@ -200,6 +225,7 @@
 		"text": "You can attach this stone to a weapon that doesn't already have a feature. The weapon gains the following feature. Brutal: When you roll the maximum value on a damage die, roll an additional damage die."
 	},
 	{
+		"source": "core",
 		"id": "IT026",
 		"roll": 26,
 		"rarity": "Rare",
@@ -208,6 +234,7 @@
 		"text": "You can attach this stone to a weapon that doesn't already have a feature. The weapon gains the following feature. Powerful: On a successful attack, roll an additional damage die and discard the lowest result."
 	},
 	{
+		"source": "core",
 		"id": "IT027",
 		"roll": 27,
 		"rarity": "Rare",
@@ -216,6 +243,7 @@
 		"text": "While falling, you can mark a Stress to deploy this small parachute and glide safely to the ground."
 	},
 	{
+		"source": "core",
 		"id": "IT028",
 		"roll": 28,
 		"rarity": "Rare",
@@ -224,6 +252,7 @@
 		"text": "Spend a Hope to activate this ring. Your footsteps are silent until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "IT029",
 		"roll": 29,
 		"rarity": "Rare",
@@ -232,6 +261,7 @@
 		"text": "When you would mark your last Stress, roll a d6. On a result of 5 or higher, don't mark it."
 	},
 	{
+		"source": "core",
 		"id": "IT030",
 		"roll": 30,
 		"rarity": "Rare",
@@ -240,6 +270,7 @@
 		"text": "This flask can hold two different liquids. You can swap between them by flipping a small switch on the flask's side."
 	},
 	{
+		"source": "core",
 		"id": "IT031",
 		"roll": 31,
 		"rarity": "Rare",
@@ -248,6 +279,7 @@
 		"text": "You can convince this small bag of sand to be much heavier or lighter with a successful Presence Roll (10). Additionally, on a successful Finesse Roll (10), you can blow a bit of sand into a target's face to make them temporarily Vulnerable."
 	},
 	{
+		"source": "core",
 		"id": "IT032",
 		"roll": 32,
 		"rarity": "Rare",
@@ -256,6 +288,7 @@
 		"text": "Once per long rest, you can activate this ring after a successful attack against you to halve the damage."
 	},
 	{
+		"source": "core",
 		"id": "IT033",
 		"roll": 33,
 		"rarity": "Rare",
@@ -264,6 +297,7 @@
 		"text": "If you have at least one Phoenix Feather on you when you fall unconscious, you gain a +1 bonus to the roll you make to determine whether you gain a scar."
 	},
 	{
+		"source": "core",
 		"id": "IT034",
 		"roll": 34,
 		"rarity": "Rare",
@@ -272,6 +306,7 @@
 		"text": "Once per long rest, you can open this small box and roll a d12. On a result of 1-6, it's empty. On a result of 7-10, it contains one random common consumable. On a result of 11-12, it contains two random common consumables."
 	},
 	{
+		"source": "core",
 		"id": "IT035",
 		"roll": 35,
 		"rarity": "Rare",
@@ -280,6 +315,7 @@
 		"text": "You can attach this charm to a weapon with a Melee range. Three times per rest, you can activate the charm and attack a target within Close range."
 	},
 	{
+		"source": "core",
 		"id": "IT036",
 		"roll": 36,
 		"rarity": "Rare",
@@ -288,6 +324,7 @@
 		"text": "You can plant this seed in the ground to grow a portal in that spot. The portal is ready to use in 24 hours. You can use this portal to travel to any other location where you planted a portal seed. A portal can be destroyed by dealing any amount of magic damage to it."
 	},
 	{
+		"source": "core",
 		"id": "IT037",
 		"roll": 37,
 		"rarity": "Rare",
@@ -296,6 +333,7 @@
 		"text": "As a downtime move, you can meditate on an ideal or principle you hold dear and focus your will into this chain. Once per long rest, you can spend a Hope to roll a d20 as your Hope Die for rolls that directly align with that principle."
 	},
 	{
+		"source": "core",
 		"id": "IT038",
 		"roll": 38,
 		"rarity": "Rare",
@@ -304,6 +342,7 @@
 		"text": "Once per long rest, you can activate this amulet to become Hidden until you move. While Hidden in this way, you remain unseen even if an adversary moves to where they would normally see you."
 	},
 	{
+		"source": "core",
 		"id": "IT039",
 		"roll": 39,
 		"rarity": "Rare",
@@ -312,6 +351,7 @@
 		"text": "During a long rest, if you have 6 Hope, you can spend a Hope to imbue this locket with your bountiful resolve. When you have 0 Hope, you can use the locket to immediately gain a Hope. The locket must be re-imbued before it can be used this way again."
 	},
 	{
+		"source": "core",
 		"id": "IT040",
 		"roll": 40,
 		"rarity": "Rare",
@@ -320,6 +360,7 @@
 		"text": "When you store items in this bag, they are kept in a pocket dimension that never runs out of space. You can retrieve an item at any time."
 	},
 	{
+		"source": "core",
 		"id": "IT041",
 		"roll": 41,
 		"rarity": "Rare",
@@ -328,6 +369,7 @@
 		"text": "You gain a +1 bonus to your Agility. You can only carry one relic."
 	},
 	{
+		"source": "core",
 		"id": "IT042",
 		"roll": 42,
 		"rarity": "Rare",
@@ -336,6 +378,7 @@
 		"text": "You gain a +1 bonus to your Strength. You can only carry one relic."
 	},
 	{
+		"source": "core",
 		"id": "IT043",
 		"roll": 43,
 		"rarity": "Rare",
@@ -344,6 +387,7 @@
 		"text": "You gain a +1 bonus to your Finesse. You can only carry one relic."
 	},
 	{
+		"source": "core",
 		"id": "IT044",
 		"roll": 44,
 		"rarity": "Rare",
@@ -352,6 +396,7 @@
 		"text": "You gain a +1 bonus to your Instinct. You can only carry one relic."
 	},
 	{
+		"source": "core",
 		"id": "IT045",
 		"roll": 45,
 		"rarity": "Rare",
@@ -360,6 +405,7 @@
 		"text": "You gain a +1 bonus to your Presence. You can only carry one relic."
 	},
 	{
+		"source": "core",
 		"id": "IT046",
 		"roll": 46,
 		"rarity": "Rare",
@@ -368,6 +414,7 @@
 		"text": "You gain a +1 bonus to your Knowledge. You can only carry one relic."
 	},
 	{
+		"source": "core",
 		"id": "IT047",
 		"roll": 47,
 		"rarity": "Rare",
@@ -376,6 +423,7 @@
 		"text": "You gain a +1 bonus to an Experience of your choice. You can only carry one relic."
 	},
 	{
+		"source": "core",
 		"id": "IT048",
 		"roll": 48,
 		"rarity": "Rare",
@@ -384,6 +432,7 @@
 		"text": "While you carry this pendant, your weapons with a Melee range that deal physical damage have a gossamer sheen and can attack targets within Very Close range."
 	},
 	{
+		"source": "core",
 		"id": "IT049",
 		"roll": 49,
 		"rarity": "Legendary",
@@ -392,6 +441,7 @@
 		"text": "You can walk on the surface of water as if it were soft ground."
 	},
 	{
+		"source": "core",
 		"id": "IT050",
 		"roll": 50,
 		"rarity": "Legendary",
@@ -400,6 +450,7 @@
 		"text": "When you sculpt this ball of clay into a clay animal companion, it behaves as that animal. For example, a clay spider can spin clay webs, while a clay bird can fly. The clay companion retains memory and identity across different shapes, but they can adopt new mannerisms with each form."
 	},
 	{
+		"source": "core",
 		"id": "IT051",
 		"roll": 51,
 		"rarity": "Legendary",
@@ -408,6 +459,7 @@
 		"text": "As a downtime move, you can use a handful of fine gold dust to craft Mythic Dust."
 	},
 	{
+		"source": "core",
 		"id": "IT052",
 		"roll": 52,
 		"rarity": "Legendary",
@@ -416,6 +468,7 @@
 		"text": "Once per long rest, you can spend 2 Hope to recall a domain card from your vault instead of paying its Recall Cost."
 	},
 	{
+		"source": "core",
 		"id": "IT053",
 		"roll": 53,
 		"rarity": "Legendary",
@@ -424,6 +477,7 @@
 		"text": "You can attach this gem to a weapon, allowing you to use your Agility when making an attack with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "IT054",
 		"roll": 54,
 		"rarity": "Legendary",
@@ -432,6 +486,7 @@
 		"text": "You can attach this gem to a weapon, allowing you to use your Strength when making an attack with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "IT055",
 		"roll": 55,
 		"rarity": "Legendary",
@@ -440,6 +495,7 @@
 		"text": "You can attach this gem to a weapon, allowing you to use your Finesse when making an attack with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "IT056",
 		"roll": 56,
 		"rarity": "Legendary",
@@ -448,6 +504,7 @@
 		"text": "You can attach this gem to a weapon, allowing you to use your Instinct when making an attack with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "IT057",
 		"roll": 57,
 		"rarity": "Legendary",
@@ -456,6 +513,7 @@
 		"text": "You can attach this gem to a weapon, allowing you to use your Presence when making an attack with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "IT058",
 		"roll": 58,
 		"rarity": "Legendary",
@@ -464,6 +522,7 @@
 		"text": "You can attach this gem to a weapon, allowing you to use your Knowledge when making an attack with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "IT059",
 		"roll": 59,
 		"rarity": "Legendary",
@@ -472,6 +531,7 @@
 		"text": "Once per session, when the GM spends a Fear, you can spend 4 Hope to cancel the effects of that spent Fear."
 	},
 	{
+		"source": "core",
 		"id": "IT060",
 		"roll": 60,
 		"rarity": "Legendary",

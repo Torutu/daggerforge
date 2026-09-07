@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { EnvFeatureElements, EnvSavedFeatureState } from "../../types/index";
 import { RichTextEditor } from "../../utils/RichTextEditor";
 
@@ -29,14 +30,14 @@ export const addEnvFeature = (
 		true,
 	);
 
-	wrapper.createDiv({ cls: "df-env-feature-desc-label", text: "Description:" });
+	wrapper.createDiv({ cls: "df-env-feature-desc-label", text: dfTranslate("ui.description") });
 	const editorContainer = wrapper.createDiv({ cls: "df-env-feature-editor-container" });
 	const richEditor = new RichTextEditor(editorContainer, savedFeature?.richContent);
 
 	const questionEls = createQuestionSection(wrapper, savedFeature?.questions);
 
 	const removeBtn = wrapper.createEl("button", {
-		text: "Remove Feature",
+		text: dfTranslate("ui.remove.feature"),
 		cls: "df-env-btn-remove-feature",
 	});
 	removeBtn.onclick = () => {
@@ -102,20 +103,20 @@ function createQuestionSection(
 	const container = wrapper.createDiv({ cls: "df-env-feature-question-container" });
 	container.createDiv({
 		cls: "df-env-feature-question-header",
-		text: "GM Prompt Questions:",
+		text: dfTranslate("ui.gm.prompt.questions"),
 	});
 	const questionsWrapper = container.createDiv({ cls: "df-env-questions-wrapper" });
 	const questionEls: HTMLTextAreaElement[] = [];
 
 	const addBtn = questionsWrapper.createEl("button", {
-		text: "+ Add question",
+		text: dfTranslate("ui.add.question"),
 		cls: "df-env-btn-add-question",
 	});
 
 	const createQuestion = (text?: string) => {
 		const el = questionsWrapper.createEl("textarea", {
 			cls: "df-env-feature-input-question",
-			attr: { placeholder: 'e.g. "Why did this feature occur?"', rows: "2" },
+			attr: { placeholder: dfTranslate("ui.e.g.why.did.this.feature.occur"), rows: "2" },
 		});
 		el.value = text || "";
 		questionEls.push(el);

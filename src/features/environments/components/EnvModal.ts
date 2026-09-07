@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../../i18n";
 import { Modal, Editor, Notice } from "obsidian";
 import { addEnvFeature, getEnvFeatureValues, envToHtml, Env_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
@@ -41,7 +42,7 @@ async function persistEnvironment(
 		new Notice(`Environment "${data.name}" saved successfully!`);
 	} catch (error) {
 		console.error("Error saving environment:", error);
-		new Notice("Failed to save environment. Check console for details.");
+		new Notice(dfTranslate("ui.failed.to.save.environment.check.console.for.details"));
 	}
 }
 
@@ -104,7 +105,7 @@ export class EnvironmentModal extends Modal {
 		contentEl.empty();
 
 		contentEl.createEl("h2", {
-			text: this.isEditMode ? "Edit environment" : "Create environment",
+			text: this.isEditMode ? dfTranslate("ui.dynamic.edit.environment") : dfTranslate("ui.dynamic.create.environment"),
 			cls: "df-modal-title",
 		});
 
@@ -121,12 +122,12 @@ export class EnvironmentModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-env-form-section" });
-		section.createEl("h3", { text: "Basic information", cls: "df-section-title" });
+		section.createEl("h3", { text: dfTranslate("ui.basic.information"), cls: "df-section-title" });
 
 		const row = section.createDiv({ cls: "df-env-row-basic-info" });
 
 		createInlineField(row, this.inputs, {
-			label: "Name",
+			label: dfTranslate("ui.name"),
 			key: "name",
 			type: "input",
 			savedValues: saved,
@@ -134,7 +135,7 @@ export class EnvironmentModal extends Modal {
 		});
 
 		createInlineField(row, this.inputs, {
-			label: "Tier",
+			label: dfTranslate("ui.tier"),
 			key: "tier",
 			type: "select",
 			options: ["1", "2", "3", "4"],
@@ -143,7 +144,7 @@ export class EnvironmentModal extends Modal {
 		});
 
 		createInlineField(row, this.inputs, {
-			label: "Type",
+			label: dfTranslate("ui.type"),
 			key: "type",
 			type: "select",
 			options: ["Event", "Exploration", "Social", "Traversal"],
@@ -154,7 +155,7 @@ export class EnvironmentModal extends Modal {
 		const details = section.createDiv({ cls: "df-env-form-section-content" });
 		const descTextarea = details.createEl("textarea", {
 			cls: "df-env-field-desc-textarea",
-			attr: { placeholder: "Enter environment description...", rows: "4" },
+			attr: { placeholder: dfTranslate("ui.enter.environment.description"), rows: "4" },
 		});
 		this.inputs["desc"] = descTextarea;
 		if (saved["desc"]) descTextarea.value = String(saved["desc"]);
@@ -165,11 +166,11 @@ export class EnvironmentModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-env-form-section" });
-		section.createEl("h3", { text: "Gameplay", cls: "df-section-title" });
+		section.createEl("h3", { text: dfTranslate("ui.gameplay"), cls: "df-section-title" });
 
 		const row = section.createDiv({ cls: "df-env-row-impulse" });
 		createInlineField(row, this.inputs, {
-			label: "Impulses",
+			label: dfTranslate("ui.impulses"),
 			key: "impulse",
 			type: "input",
 			savedValues: saved,
@@ -183,13 +184,13 @@ export class EnvironmentModal extends Modal {
 	) {
 		const section = contentEl.createDiv({ cls: "df-env-form-section" });
 		section.createEl("h3", {
-			text: "Difficulty & adversaries",
+			text: dfTranslate("ui.difficulty.adversaries"),
 			cls: "df-section-title",
 		});
 
 		const diffRow = section.createDiv({ cls: "df-env-row-difficulty" });
 		createInlineField(diffRow, this.inputs, {
-			label: "Difficulty",
+			label: dfTranslate("ui.difficulty"),
 			key: "difficulty",
 			type: "input",
 			savedValues: saved,
@@ -198,7 +199,7 @@ export class EnvironmentModal extends Modal {
 
 		const advRow = section.createDiv({ cls: "df-env-row-adversaries" });
 		createInlineField(advRow, this.inputs, {
-			label: "Potential adversaries",
+			label: dfTranslate("ui.potential.adversaries"),
 			key: "potentialAdversaries",
 			type: "input",
 			savedValues: saved,
@@ -211,7 +212,7 @@ export class EnvironmentModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-env-form-section" });
-		section.createEl("h3", { text: "Countdown Clocks", cls: "df-section-title" });
+		section.createEl("h3", { text: dfTranslate("ui.countdown.clocks"), cls: "df-section-title" });
 
 		this.countdownRows = [];
 		this.countdownContainer = section.createDiv({ cls: "df-env-countdown-form-list" });
@@ -222,7 +223,7 @@ export class EnvironmentModal extends Modal {
 		}
 
 		const addBtn = section.createEl("button", {
-			text: "+ Add countdown clock",
+			text: dfTranslate("ui.add.countdown.clock"),
 			cls: "df-env-btn-add-countdown",
 		});
 		addBtn.onclick = () => this.addCountdownRow();
@@ -233,13 +234,13 @@ export class EnvironmentModal extends Modal {
 
 		const nameEl = row.createEl("input", {
 			cls: "df-env-countdown-form-name",
-			attr: { type: "text", placeholder: "Clock name (e.g. Storm Arrival)" },
+			attr: { type: "text", placeholder: dfTranslate("ui.clock.name.e.g.storm.arrival") },
 		}) as HTMLInputElement;
 		nameEl.value = name;
 
 		const maxEl = row.createEl("input", {
 			cls: "df-env-countdown-form-max",
-			attr: { type: "number", min: "1", max: "20", placeholder: "Max" },
+			attr: { type: "number", min: "1", max: "20", placeholder: dfTranslate("ui.max") },
 		}) as HTMLInputElement;
 		if (max > 0) maxEl.value = String(max);
 
@@ -261,7 +262,7 @@ export class EnvironmentModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-env-form-section" });
-		section.createEl("h3", { text: "Features", cls: "df-section-title" });
+		section.createEl("h3", { text: dfTranslate("ui.features"), cls: "df-section-title" });
 
 		this.featureContainer = section.createDiv({ cls: "df-env-feature-container" });
 		this.features = [];
@@ -296,7 +297,7 @@ export class EnvironmentModal extends Modal {
 		}
 
 		const addBtn = section.createEl("button", {
-			text: "+ Add feature",
+			text: dfTranslate("ui.add.feature"),
 			cls: "df-env-btn-add-feature",
 		});
 		addBtn.onclick = () => addEnvFeature(this.featureContainer, this.features);
@@ -304,7 +305,7 @@ export class EnvironmentModal extends Modal {
 
 	private buildActionButtons(contentEl: HTMLElement) {
 		const btn = contentEl.createEl("button", {
-			text: this.isEditMode ? "Update card" : "Insert card",
+			text: this.isEditMode ? dfTranslate("ui.dynamic.update.card") : dfTranslate("ui.dynamic.insert.card"),
 			cls: "df-modal-submit-btn",
 		});
 		btn.onclick = () => this.handleSubmit();

@@ -46,6 +46,8 @@ export interface CharacterTrait {
 }
 
 export interface CharacterWeapon {
+	/** Stable SRD id; absent for legacy and user-authored weapons. */
+	id?: string;
 	name: string;
 	traitRange: string;
 	damageDice: string;
@@ -60,6 +62,8 @@ export interface CharacterInventoryWeapon extends CharacterWeapon {
 }
 
 export interface CharacterArmor {
+	/** Stable SRD id; absent for legacy and user-authored armor. */
+	id?: string;
 	name: string;
 	baseThresholds: string;
 	baseScore: string;
@@ -118,6 +122,8 @@ export function defaultSheetSettings(): SheetSettings {
 /** An ancestry or community card attached to the character.
  *  Stored as a full snapshot so share codes stay self-contained. */
 export interface HeritageCardData {
+	/** Stable SRD id; absent on legacy and user-authored cards. */
+	id?: string;
 	name: string;
 	description: string;
 	features: string;
@@ -125,6 +131,8 @@ export interface HeritageCardData {
 
 /** A domain ability card in the character's loadout or vault. */
 export interface CharacterDomainCard {
+	/** Stable SRD id; absent on legacy and user-authored cards. */
+	id?: string;
 	name: string;
 	domain: string;
 	level: number;
@@ -199,6 +207,16 @@ export interface CharacterData {
 	pronouns: string;
 	heritage: string;
 	classSubclass: string;
+	/** Stable SRD ids; empty for legacy or free-form class entries. */
+	classId: string;
+	subclassId: string;
+	/** User-edited display fields that must not be replaced by localized SRD text. */
+	customSrdFields: {
+		heritage: boolean;
+		classSubclass: boolean;
+		hopeFeature: boolean;
+		classFeature: boolean;
+	};
 	level: string;
 	traits: Record<TraitName, CharacterTrait>;
 	evasion: string;
@@ -228,12 +246,16 @@ export interface CharacterData {
 	notes: string;
 	ancestryCard: HeritageCardData | null;
 	communityCard: HeritageCardData | null;
+	/** Optional Hope & Fear transformation card. */
+	transformationCard: HeritageCardData | null;
 	domainCards: CharacterDomainCard[];
 	/** Answers to the class's background/connection questions, index-aligned. */
 	backgroundAnswers: string[];
 	connectionAnswers: string[];
 	/** Name of the Druid Beastform currently assumed ("" when not transformed). */
 	activeBeastform: string;
+	/** Stable SRD id; absent for legacy Beastform selections. */
+	activeBeastformId: string;
 	levelUp: LevelUpState;
 	companion: CompanionData;
 	sheetSettings: SheetSettings;
@@ -259,6 +281,14 @@ export function createEmptyCharacter(id: string): CharacterData {
 		pronouns: "",
 		heritage: "",
 		classSubclass: "",
+		classId: "",
+		subclassId: "",
+		customSrdFields: {
+			heritage: false,
+			classSubclass: false,
+			hopeFeature: false,
+			classFeature: false,
+		},
 		level: "",
 		traits: {
 			agility: emptyTrait(),
@@ -293,10 +323,12 @@ export function createEmptyCharacter(id: string): CharacterData {
 		notes: "",
 		ancestryCard: null,
 		communityCard: null,
+		transformationCard: null,
 		domainCards: [],
 		backgroundAnswers: [],
 		connectionAnswers: [],
 		activeBeastform: "",
+		activeBeastformId: "",
 		levelUp: defaultLevelUp(),
 		companion: defaultCompanion(),
 		sheetSettings: defaultSheetSettings(),
@@ -338,6 +370,19 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 	base.pronouns = asString(data.pronouns);
 	base.heritage = asString(data.heritage);
 	base.classSubclass = asString(data.classSubclass);
+	base.classId = asString(data.classId);
+	base.subclassId = asString(data.subclassId);
+	const customSrdFields = (
+		data.customSrdFields && typeof data.customSrdFields === "object"
+			? data.customSrdFields
+			: {}
+	) as Record<string, unknown>;
+	base.customSrdFields = {
+		heritage: customSrdFields.heritage === true,
+		classSubclass: customSrdFields.classSubclass === true,
+		hopeFeature: customSrdFields.hopeFeature === true,
+		classFeature: customSrdFields.classFeature === true,
+	};
 	base.level = asString(data.level);
 	base.evasion = asString(data.evasion);
 	base.armorScore = asString(data.armorScore);
@@ -373,6 +418,7 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 		? data.activeArmor
 		: {}) as Record<string, unknown>;
 	base.activeArmor = {
+		id: asString(armor.id) || undefined,
 		name: asString(armor.name),
 		baseThresholds: asString(armor.baseThresholds),
 		baseScore: asString(armor.baseScore),
@@ -397,12 +443,14 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 	base.notes = asString(data.notes);
 	base.ancestryCard = normalizeHeritageCard(data.ancestryCard);
 	base.communityCard = normalizeHeritageCard(data.communityCard);
+	base.transformationCard = normalizeHeritageCard(data.transformationCard);
 	base.domainCards = (Array.isArray(data.domainCards) ? data.domainCards : [])
 		.map(normalizeDomainCard)
 		.filter((c): c is CharacterDomainCard => c !== null);
 	base.backgroundAnswers = asStringArray(data.backgroundAnswers, 8);
 	base.connectionAnswers = asStringArray(data.connectionAnswers, 8);
 	base.activeBeastform = asString(data.activeBeastform);
+	base.activeBeastformId = asString(data.activeBeastformId);
 	base.levelUp = normalizeLevelUp(data.levelUp);
 	base.companion = normalizeCompanion(data.companion);
 	base.lastUpdated = typeof data.lastUpdated === "number" ? data.lastUpdated : Date.now();
@@ -462,7 +510,12 @@ function normalizeHeritageCard(raw: unknown): HeritageCardData | null {
 	const c = raw as Record<string, unknown>;
 	const name = asString(c.name);
 	if (!name) return null;
-	return { name, description: asString(c.description), features: asString(c.features) };
+	return {
+		id: asString(c.id) || undefined,
+		name,
+		description: asString(c.description),
+		features: asString(c.features),
+	};
 }
 
 function normalizeDomainCard(raw: unknown): CharacterDomainCard | null {
@@ -471,6 +524,7 @@ function normalizeDomainCard(raw: unknown): CharacterDomainCard | null {
 	const name = asString(c.name);
 	if (!name) return null;
 	return {
+		id: asString(c.id) || undefined,
 		name,
 		domain: asString(c.domain),
 		level: typeof c.level === "number" ? c.level : 1,
@@ -521,6 +575,7 @@ function normalizeSheetSettings(raw: unknown): SheetSettings {
 function normalizeWeapon(raw: unknown): CharacterWeapon {
 	const w = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
 	return {
+		id: asString(w.id) || undefined,
 		name: asString(w.name),
 		traitRange: asString(w.traitRange),
 		damageDice: asString(w.damageDice),

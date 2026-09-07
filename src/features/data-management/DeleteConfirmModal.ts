@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { Modal, App, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 
@@ -18,33 +19,33 @@ export class DeleteConfirmModal extends Modal {
 		const { contentEl } = this;
 		contentEl.empty();
 
-		contentEl.createEl("h2", { text: "Delete Data File?" });
+		contentEl.createEl("h2", { text: dfTranslate("ui.delete.data.file") });
 		
 		contentEl.createEl("p", { 
-			text: "Are you sure you want to delete the data.json file?",
+			text: dfTranslate("ui.are.you.sure.you.want.to.delete.the.data.json.file"),
 			cls: "df-delete-warning"
 		});
 
 		contentEl.createEl("p", {
-			text: "This will permanently remove ALL stored adversaries and environments.",
+			text: dfTranslate("ui.this.will.permanently.remove.all.stored.adversaries.and.environments"),
 			cls: "df-delete-warning-bold"
 		});
 
 		contentEl.createEl("p", {
-			text: "This action cannot be undone!",
+			text: dfTranslate("ui.this.action.cannot.be.undone"),
 			cls: "df-delete-warning-bold"
 		});
 
 		const buttonContainer = contentEl.createDiv({ cls: "df-delete-button-container" });
 
 		const deleteBtn = buttonContainer.createEl("button", {
-			text: "Delete",
+			text: dfTranslate("ui.delete"),
 			cls: "df-delete-confirm-btn"
 		});
 		deleteBtn.addEventListener("click", async () => {
 			try {
 				await this.onConfirm();
-				new Notice("Data file deleted successfully!");
+				new Notice(dfTranslate("ui.data.file.deleted.successfully"));
 				this.close();
 			} catch (err) {
 				new Notice("Error deleting data file: " + (err as Error).message);
@@ -53,7 +54,7 @@ export class DeleteConfirmModal extends Modal {
 		});
 
 		const cancelBtn = buttonContainer.createEl("button", {
-			text: "Cancel",
+			text: dfTranslate("ui.cancel"),
 			cls: "df-delete-cancel-btn"
 		});
 		cancelBtn.addEventListener("click", () => {

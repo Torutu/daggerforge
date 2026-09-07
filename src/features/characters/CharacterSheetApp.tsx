@@ -1,3 +1,5 @@
+import { useLanguage as useUiLanguage } from "../../i18n/react";
+import { translate as dfTranslate } from "../../i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Menu, Notice } from "obsidian";
 import type DaggerForgePlugin from "../../main";
@@ -22,6 +24,7 @@ interface Props {
  * it into "Import code" to get the same character.
  */
 export function CharacterSheetApp({ plugin }: Props) {
+	useUiLanguage();
 	const [char, setChar] = useState<CharacterData>(() =>
 		createEmptyCharacter(generateCharacterUniqueId()),
 	);
@@ -39,7 +42,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 	const characters = useMemo(
 		() =>
 			[...plugin.dataManager.getCharacters()].sort((a, b) =>
-				(a.name || "Unnamed").localeCompare(b.name || "Unnamed"),
+				(a.name || dfTranslate("ui.dynamic.unnamed")).localeCompare(b.name || dfTranslate("ui.dynamic.unnamed")),
 			),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[plugin, storeVersion],
@@ -76,7 +79,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 
 	const handleSave = async () => {
 		await save();
-		new Notice("Character saved.");
+		new Notice(dfTranslate("ui.character.saved"));
 	};
 
 	const handleInsert = async () => {
@@ -90,10 +93,10 @@ export function CharacterSheetApp({ plugin }: Props) {
 			const saved = await save();
 			const code = await encodeCharacterCode(saved);
 			await navigator.clipboard.writeText(code);
-			new Notice("Character saved and code copied - send it to your GM.");
+			new Notice(dfTranslate("ui.character.saved.and.code.copied.send.it.to.your.gm"));
 		} catch (error) {
 			console.error("DaggerForge: failed to copy character code", error);
-			new Notice("Could not copy the character code.");
+			new Notice(dfTranslate("ui.could.not.copy.the.character.code"));
 		}
 	};
 
@@ -109,10 +112,10 @@ export function CharacterSheetApp({ plugin }: Props) {
 			setStoreVersion((v) => v + 1);
 			setImportOpen(false);
 			setImportText("");
-			new Notice(existed ? "Character updated from code." : "Character imported from code.");
+			new Notice(existed ? dfTranslate("ui.dynamic.character.updated.from.code") : dfTranslate("ui.dynamic.character.imported.from.code"));
 		} catch (error) {
 			console.error("DaggerForge: failed to import character code", error);
-			new Notice("That doesn't look like a valid character code.");
+			new Notice(dfTranslate("ui.that.doesn.t.look.like.a.valid.character.code"));
 		}
 	};
 
@@ -123,9 +126,9 @@ export function CharacterSheetApp({ plugin }: Props) {
 			return;
 		}
 		new ConfirmModal(plugin.app, {
-			title: "Discard unsaved changes?",
-			message: "This sheet has unsaved changes that will be lost.",
-			confirmLabel: "Discard",
+			title: dfTranslate("ui.discard.unsaved.changes"),
+			message: dfTranslate("ui.this.sheet.has.unsaved.changes.that.will.be.lost"),
+			confirmLabel: dfTranslate("ui.discard"),
 			onConfirm: action,
 		}).open();
 	};
@@ -133,7 +136,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 	const handleNew = (evt: React.MouseEvent) => {
 		const menu = new Menu();
 		menu.addItem((item) =>
-			item.setTitle("Blank character").setIcon("file").onClick(() =>
+			item.setTitle(dfTranslate("ui.blank.character")).setIcon("file").onClick(() =>
 				confirmDiscard(() => {
 					setChar(createEmptyCharacter(generateCharacterUniqueId()));
 					setDirty(false);
@@ -141,7 +144,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 			),
 		);
 		menu.addItem((item) =>
-			item.setTitle("Guided creation").setIcon("wand").onClick(() =>
+			item.setTitle(dfTranslate("ui.guided.creation")).setIcon("wand").onClick(() =>
 				confirmDiscard(() => setWizardOpen(true)),
 			),
 		);
@@ -182,15 +185,15 @@ export function CharacterSheetApp({ plugin }: Props) {
 			return;
 		}
 		new ConfirmModal(plugin.app, {
-			title: "Delete character?",
-			message: `"${char.name || "Unnamed character"}" will be removed from your saved characters.`,
-			confirmLabel: "Delete",
+			title: dfTranslate("ui.delete.character"),
+			message: dfTranslate("character.delete.confirm", { name: char.name || dfTranslate("ui.dynamic.unnamed.character") }),
+			confirmLabel: dfTranslate("ui.delete"),
 			onConfirm: async () => {
 				await plugin.dataManager.deleteCharacterById(char.id);
 				setChar(createEmptyCharacter(generateCharacterUniqueId()));
 				setDirty(false);
 				setStoreVersion((v) => v + 1);
-				new Notice("Character deleted.");
+				new Notice(dfTranslate("ui.character.deleted"));
 			},
 		}).open();
 	};
@@ -210,18 +213,17 @@ export function CharacterSheetApp({ plugin }: Props) {
 			<div className="df-cs-root">
 				<div className="df-cs-intro">
 					<span className="df-cs-intro-orn">✦ ✦ ✦</span>
-					<h2 className="df-cs-intro-title">Forge your first hero</h2>
-					<p className="df-cs-intro-sub">No saved characters yet. How do you want to begin?</p>
+					<h2 className="df-cs-intro-title">{dfTranslate("ui.forge.your.first.hero")}</h2>
+					<p className="df-cs-intro-sub">{dfTranslate("ui.no.saved.characters.yet.how.do.you.want.to.begin")}</p>
 					<div className="df-cs-intro-options">
 						<button
 							type="button"
 							className="df-cs-intro-opt"
 							onClick={() => setIntroDismissed(true)}
 						>
-							<span className="df-cs-intro-opt-name">Blank sheet</span>
+							<span className="df-cs-intro-opt-name">{dfTranslate("ui.blank.sheet")}</span>
 							<span className="df-cs-intro-opt-desc">
-								Start from an empty character sheet and fill everything in yourself.
-							</span>
+								{dfTranslate("ui.start.from.an.empty.character.sheet.and.fill.everything.in.yourself")}</span>
 						</button>
 						<button
 							type="button"
@@ -231,11 +233,9 @@ export function CharacterSheetApp({ plugin }: Props) {
 								setWizardOpen(true);
 							}}
 						>
-							<span className="df-cs-intro-opt-name">Guided creation</span>
+							<span className="df-cs-intro-opt-name">{dfTranslate("ui.guided.creation")}</span>
 							<span className="df-cs-intro-opt-desc">
-								Pick a class, heritage, experiences, and domain cards step by step; the sheet
-								fills itself from your choices.
-							</span>
+								{dfTranslate("ui.pick.a.class.heritage.experiences.and.domain.cards.step.by.step.the.sheet.fills.itself.from.your.choices")}</span>
 						</button>
 					</div>
 				</div>
@@ -250,32 +250,29 @@ export function CharacterSheetApp({ plugin }: Props) {
 					className="dropdown"
 					value={isSaved ? char.id : ""}
 					onChange={(e) => handleSelect(e.target.value)}
-					aria-label="Saved characters"
+					aria-label={dfTranslate("ui.saved.characters")}
 				>
 					<option value="" disabled>
-						{isSaved ? "Switch character…" : "New character"}
+						{isSaved ? dfTranslate("ui.dynamic.switch.character") : dfTranslate("ui.dynamic.new.character")}
 					</option>
 					{characters.map((c) => (
 						<option key={c.id} value={c.id}>
-							{c.name || "Unnamed character"}
+							{c.name || dfTranslate("ui.dynamic.unnamed.character")}
 						</option>
 					))}
 				</select>
-				<button type="button" onClick={handleNew}>New</button>
+				<button type="button" onClick={handleNew}>{dfTranslate("ui.new")}</button>
 				<button type="button" className="mod-cta" onClick={handleSave}>
-					Save{dirty ? " •" : ""}
+					{dfTranslate("ui.save")}{dirty ? " •" : ""}
 				</button>
-				<button type="button" onClick={handleCopyCode}>Copy code</button>
-				<button type="button" onClick={handleInsert} title="Embed this sheet in the last-focused note or canvas">
-					Insert in note/canvas
-				</button>
+				<button type="button" onClick={handleCopyCode}>{dfTranslate("ui.copy.code")}</button>
+				<button type="button" onClick={handleInsert} title={dfTranslate("ui.embed.this.sheet.in.the.last.focused.note.or.canvas")}>
+					{dfTranslate("ui.insert.in.note.canvas")}</button>
 				<button type="button" onClick={() => setImportOpen((open) => !open)}>
-					Import code
-				</button>
+					{dfTranslate("ui.import.code")}</button>
 				<button type="button" onClick={() => openCardPicker("domain")}>
-					Add cards
-				</button>
-				<button type="button" onClick={handleDelete}>Delete</button>
+					{dfTranslate("ui.add.cards")}</button>
+				<button type="button" onClick={handleDelete}>{dfTranslate("ui.delete")}</button>
 			</div>
 
 			{importOpen && (
@@ -283,15 +280,14 @@ export function CharacterSheetApp({ plugin }: Props) {
 					<textarea
 						className="df-cs-import-text"
 						rows={3}
-						placeholder="Paste a character code (DHC1.…) from your player"
+						placeholder={dfTranslate("ui.paste.a.character.code.dhc1.from.your.player")}
 						value={importText}
 						onChange={(e) => setImportText(e.target.value)}
 					/>
 					<div className="df-cs-import-buttons">
 						<button type="button" className="mod-cta" onClick={handleImport} disabled={!importText.trim()}>
-							Import
-						</button>
-						<button type="button" onClick={() => setImportOpen(false)}>Cancel</button>
+							{dfTranslate("ui.import")}</button>
+						<button type="button" onClick={() => setImportOpen(false)}>{dfTranslate("ui.cancel")}</button>
 					</div>
 				</div>
 			)}

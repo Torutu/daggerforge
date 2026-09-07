@@ -1,5 +1,7 @@
+import { translate as dfTranslate } from "../../../i18n";
 import { ItemView, WorkspaceLeaf, Notice, MarkdownView, setIcon } from "obsidian";
-import { ADVERSARIES } from "../../../data/index";
+import { getAdversaries } from "../../../data/index";
+import { getLanguage } from "../../../i18n";
 import {
 	getAdversaryCount,
 	incrementAdversaryCount,
@@ -38,7 +40,7 @@ export class AdversaryView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Adversary Browser";
+		return dfTranslate("ui.dynamic.adversary.browser");
 	}
 
 	getIcon(): string {
@@ -53,14 +55,14 @@ export class AdversaryView extends ItemView {
 		try {
 			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin || !plugin.dataManager) {
-				new Notice("DaggerForge plugin not found.");
+				new Notice(dfTranslate("ui.daggerforge.plugin.not.found"));
 				return;
 			}
 
 			const adversaryId = adversary.id;
 
 			if (!adversaryId) {
-				new Notice("Cannot delete adversary: missing ID.");
+				new Notice(dfTranslate("ui.cannot.delete.adversary.missing.id"));
 				return;
 			}
 
@@ -69,7 +71,7 @@ export class AdversaryView extends ItemView {
 			this.refresh();
 		} catch (error) {
 			console.error("Error deleting custom adversary:", error);
-			new Notice("Failed to delete adversary.");
+			new Notice(dfTranslate("ui.failed.to.delete.adversary"));
 		}
 	}
 
@@ -136,7 +138,7 @@ export class AdversaryView extends ItemView {
 		container.empty();
 
 		container.createEl("h2", {
-			text: "Adversary Browser",
+			text: dfTranslate("ui.adversary.browser"),
 			cls: "df-adv-title",
 		});
 
@@ -167,7 +169,7 @@ export class AdversaryView extends ItemView {
 
 	private loadAdversaryData() {
 		try {
-			const builtIn = ADVERSARIES;
+			const builtIn = getAdversaries(getLanguage());
 			const custom = this.loadCustomAdversaries();
 			this.adversaries = [...builtIn, ...custom];
 
@@ -195,9 +197,9 @@ export class AdversaryView extends ItemView {
 			this.renderResults(this.adversaries);
 		} catch (e) {
 			console.error("Error loading adversary data:", e);
-			new Notice("Failed to load adversary data.");
+			new Notice(dfTranslate("ui.failed.to.load.adversary.data"));
 			if (this.resultsDiv) {
-				this.resultsDiv.setText("Error loading adversary data.");
+				this.resultsDiv.setText(dfTranslate("ui.error.loading.adversary.data"));
 			}
 		}
 	}
@@ -255,7 +257,7 @@ export class AdversaryView extends ItemView {
 	private createCounterControls(container: HTMLElement): void {
 		const minusBtn = container.createEl("button", {
 			cls: "df-adversary-counter-btn",
-			attr: { "aria-label": "Decrease count", title: "Decrease" },
+			attr: { "aria-label": "Decrease count", title: dfTranslate("ui.decrease") },
 		});
 		setIcon(minusBtn, "minus");
 
@@ -265,14 +267,14 @@ export class AdversaryView extends ItemView {
 				min: "1",
 				max: "99",
 				value: getAdversaryCount().toString(),
-				placeholder: "Count",
+				placeholder: dfTranslate("ui.count"),
 			},
 			cls: "df-inline-input df-count-input",
 		});
 
 		const plusBtn = container.createEl("button", {
 			cls: "df-adversary-counter-btn",
-			attr: { "aria-label": "Increase count", title: "Increase" },
+			attr: { "aria-label": "Increase count", title: dfTranslate("ui.increase") },
 		});
 		setIcon(plusBtn, "plus");
 
@@ -321,7 +323,7 @@ export class AdversaryView extends ItemView {
 		this.resultsDiv.empty();
 
 		if (adversaries.length === 0) {
-			this.resultsDiv.setText("No adversaries found.");
+			this.resultsDiv.setText(dfTranslate("ui.no.adversaries.found"));
 			return;
 		}
 
@@ -365,12 +367,12 @@ export class AdversaryView extends ItemView {
 
 		const title = document.createElement("h3");
 		title.classList.add("df-title-small-padding");
-		title.textContent = adversary.name || "Unnamed Adversary";
+		title.textContent = adversary.name || dfTranslate("ui.dynamic.unnamed.adversary");
 		card.appendChild(title);
 
 		const desc = document.createElement("p");
 		desc.classList.add("df-desc-small-padding");
-		desc.textContent = adversary.desc || "No description available.";
+		desc.textContent = adversary.desc || dfTranslate("ui.dynamic.no.description.available");
 		card.appendChild(desc);
 
 		card.addEventListener("click", () =>
@@ -398,13 +400,13 @@ export class AdversaryView extends ItemView {
 		}
 
 		if (kind !== "markdown" || !leaf) {
-			new Notice("No note is open in Edit mode.");
+			new Notice(dfTranslate("ui.no.note.is.open.in.edit.mode"));
 			return;
 		}
 
 		const view = leaf.view as MarkdownView;
 		if (view.getMode() === "preview") {
-			new Notice("Please switch to Edit mode.");
+			new Notice(dfTranslate("ui.please.switch.to.edit.mode"));
 			return;
 		}
 

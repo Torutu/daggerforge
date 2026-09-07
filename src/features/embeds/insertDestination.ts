@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { App, FuzzySuggestModal, MarkdownView, Notice, TFile, WorkspaceLeaf } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { createCanvasCard, resolveInsertDestination } from "../../utils/canvasHelpers";
@@ -14,7 +15,7 @@ export function insertAtFocusedTarget(
 	itemName?: string,
 	quiet = false,
 ): boolean {
-	const label = itemName ? `Inserted ${itemName}.` : "Inserted.";
+	const label = itemName ? dfTranslate("insert.item", { name: itemName }) : dfTranslate("insert.inserted_Label");
 	const { kind, canvas, leaf } = resolveInsertDestination(plugin.app, plugin.lastMainLeaf);
 
 	if (kind === "canvas" && canvas) {
@@ -35,7 +36,7 @@ export function insertAtFocusedTarget(
 			return true;
 		}
 	}
-	new Notice("Open a note or canvas first.");
+	new Notice(dfTranslate("ui.open.a.note.or.canvas.first"));
 	return false;
 }
 
@@ -75,15 +76,15 @@ export function listInsertDestinations(
 		seen.add(key);
 		out.push({
 			kind: isCanvas ? "open-canvas" : "open-md",
-			label: `${prefix} ${isCanvas ? "canvas" : "note"}: ${file?.basename ?? "Untitled"}`,
+			label: `${prefix} ${isCanvas ? dfTranslate("insert.canvas") : dfTranslate("insert.note")}: ${file?.basename ?? dfTranslate("insert.untitledLabel")}`,
 			leaf,
 			file,
 		});
 	};
 
-	if (lastMainLeaf) pushLeaf(lastMainLeaf, "Last focused");
-	for (const leaf of app.workspace?.getLeavesOfType?.("markdown") ?? []) pushLeaf(leaf, "Open");
-	for (const leaf of app.workspace?.getLeavesOfType?.("canvas") ?? []) pushLeaf(leaf, "Open");
+	if (lastMainLeaf) pushLeaf(lastMainLeaf, dfTranslate("insert.last_focusedLabel"));
+	for (const leaf of app.workspace?.getLeavesOfType?.("markdown") ?? []) pushLeaf(leaf, dfTranslate("insert.openLabel"));
+	for (const leaf of app.workspace?.getLeavesOfType?.("canvas") ?? []) pushLeaf(leaf, dfTranslate("insert.openLabel"));
 
 	const files = [
 		...(app.vault?.getMarkdownFiles?.() ?? []),
@@ -95,7 +96,7 @@ export function listInsertDestinations(
 		seen.add(file.path);
 		out.push({
 			kind: file.extension === "canvas" ? "file-canvas" : "file-md",
-			label: `${file.extension === "canvas" ? "Canvas" : "Note"}: ${file.path}`,
+			label: `${file.extension === "canvas" ? dfTranslate("insert.canvas.label") : dfTranslate("insert.note.label")}: ${file.path}`,
 			leaf: undefined,
 			file,
 		});
@@ -112,7 +113,7 @@ export class DestinationPickerModal extends FuzzySuggestModal<InsertDestination>
 		super(app);
 		this.destinations = destinations;
 		this.onChoose = onChoose;
-		this.setPlaceholder("Insert into which note or canvas?");
+		this.setPlaceholder(dfTranslate("ui.insert.into.which.note.or.canvas"));
 	}
 
 	getItems(): InsertDestination[] {
@@ -140,7 +141,7 @@ export async function insertTextAtDestination(
 	if (dest.kind === "open-canvas" && dest.leaf) {
 		const canvas = (dest.leaf.view as unknown as { canvas?: unknown }).canvas;
 		if (canvas && createCanvasCard(app, blockText, canvas, canvasSize)) {
-			new Notice(`Placed on canvas "${name}".`);
+			new Notice(dfTranslate("insert.placed", { name }));
 			return;
 		}
 	}
@@ -149,14 +150,14 @@ export async function insertTextAtDestination(
 		const view = dest.leaf.view as MarkdownView;
 		if (view.getMode() !== "preview") {
 			view.editor.replaceSelection("\n" + blockText);
-			new Notice(`Inserted at the cursor in "${name}".`);
+			new Notice(dfTranslate("insert.cursor", { name }));
 			return;
 		}
 		// Reading mode has no cursor - fall through to appending to the file
 	}
 
 	if (!dest.file) {
-		new Notice("Could not resolve the insert target.");
+		new Notice(dfTranslate("ui.could.not.resolve.the.insert.target"));
 		return;
 	}
 
@@ -164,12 +165,12 @@ export async function insertTextAtDestination(
 		await app.vault.process(dest.file, (content) =>
 			addTextNodeToCanvasJson(content, blockText, canvasSize),
 		);
-		new Notice(`Added to canvas "${name}".`);
+		new Notice(dfTranslate("insert.added", { name }));
 		return;
 	}
 
 	await app.vault.process(dest.file, (content) => content.replace(/\n*$/, "\n\n") + blockText);
-	new Notice(`Appended to "${name}".`);
+	new Notice(dfTranslate("insert.appended", { name }));
 }
 
 /** Snapshot destinations, let the user pick, insert. The snapshot happens
@@ -181,7 +182,7 @@ export function pickDestinationAndInsert(
 ): void {
 	const destinations = listInsertDestinations(plugin.app, plugin.lastMainLeaf);
 	if (destinations.length === 0) {
-		new Notice("No notes or canvases found in this vault.");
+		new Notice(dfTranslate("ui.no.notes.or.canvases.found.in.this.vault"));
 		return;
 	}
 	new DestinationPickerModal(plugin.app, destinations, (dest) => {

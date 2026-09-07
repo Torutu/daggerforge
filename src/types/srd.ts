@@ -13,7 +13,12 @@ export interface SrdClassFeature {
 	description: string;
 }
 
+/** Canonical book a bundled SRD record originates from. */
+export type SrdSource = "core" | "hope-fear";
+
 export interface SrdSubclass {
+	id: string;
+	source: SrdSource;
 	name: string;
 	/** Missing on non-spellcasting subclasses. */
 	spellcastTrait?: string;
@@ -36,26 +41,43 @@ export interface SrdClassStats {
 }
 
 export interface SrdClass {
+	id: string;
+	source: SrdSource;
 	name: string;
+	domains: [SrdDomainRef, SrdDomainRef];
 	description: string[];
 	stats: SrdClassStats;
 	items: string;
 	hopeFeature: string;
 	classFeatures: SrdClassFeature[];
-	subclasses: Record<string, SrdSubclass>;
+	subclasses: SrdSubclass[];
 	backgroundQuestions?: string[];
 	connectionQuestions?: string[];
 }
 
 /** Ancestries and communities share one shape; features are "Name: text" strings. */
 export interface SrdHeritage {
+	id: string;
+	source: SrdSource;
 	name: string;
 	description: string[];
 	features: string[];
 }
 
+/** Optional Hope & Fear transformation card. */
+export interface SrdTransformation {
+	id: string;
+	source: SrdSource;
+	name: string;
+	description: string[];
+	features: SrdClassFeature[];
+	questions?: string[];
+}
+
 /** Druid Beastform options (official Beastform list). */
 export interface SrdBeastform {
+	id: string;
+	source: SrdSource;
 	name: string;
 	tier: number;
 	/** e.g. "Fox, Mouse, Weasel" */
@@ -74,8 +96,11 @@ export interface SrdBeastform {
 }
 
 export interface SrdDomainCard {
+	id: string;
+	source: SrdSource;
 	name: string;
 	level: number;
+	domainId: string;
 	domain: string;
 	/** "Ability" | "Spell" | "Grimoire" */
 	type: string;
@@ -84,8 +109,14 @@ export interface SrdDomainCard {
 	text: string;
 }
 
+export interface SrdDomainRef {
+	id: string;
+	name: string;
+}
+
 export interface SrdWeapon {
 	id: string;
+	source: SrdSource;
 	name: string;
 	category: string;
 	damageType: string;
@@ -100,6 +131,7 @@ export interface SrdWeapon {
 
 export interface SrdArmor {
 	id: string;
+	source: SrdSource;
 	name: string;
 	tier: number;
 	minor: number;
@@ -111,6 +143,7 @@ export interface SrdArmor {
 
 export interface SrdWheelchair {
 	id: string;
+	source: SrdSource;
 	name: string;
 	frame: string;
 	damageType: string;
@@ -130,6 +163,7 @@ export interface SrdEquipment {
 
 export interface SrdItem {
 	id: string;
+	source: SrdSource;
 	roll: number;
 	rarity: string;
 	name: string;
@@ -139,6 +173,7 @@ export interface SrdItem {
 
 export interface SrdConsumable {
 	id: string;
+	source: SrdSource;
 	roll: number;
 	rarity: string;
 	name: string;
@@ -158,7 +193,7 @@ export interface GearData {
 	meta: string;
 	/** Effect / feature text. */
 	text: string;
-	source: "srd" | "custom";
+	source: SrdSource | "custom";
 }
 
 export const GEAR_KIND_LABELS: Record<GearData["kind"], string> = {
@@ -188,6 +223,7 @@ export const DOMAIN_NAMES = [
 	"Sage",
 	"Splendor",
 	"Valor",
+	"Dread",
 ] as const;
 
 /** Signature color per domain (from the printed cards / dhtools). */
@@ -201,6 +237,7 @@ export const DOMAIN_COLORS: Record<string, string> = {
 	Sage: "#60d890",
 	Splendor: "#e8c547",
 	Valor: "#f0903a",
+	Dread: "#5f273f",
 };
 
 /** Signature color per class, used for character cards (border + class tag). */
@@ -214,6 +251,14 @@ export const CLASS_COLORS: Record<string, string> = {
 	Sorcerer: "#a05fd6",  // purple
 	Warrior: "#9aa5b1",   // steel grey
 	Wizard: "#4f8fe8",    // blue
+	Assassin: "#39414f",
+	Brawler: "#a95832",
+	Warlock: "#7f315f",
+	Witch: "#527c55",
+	Assassine: "#39414f",
+	Faustkämpfer: "#a95832",
+	Paktmagier: "#7f315f",
+	Hexe: "#527c55",
 };
 
 export const CLASS_DOMAINS: Record<string, [string, string]> = {
@@ -226,6 +271,10 @@ export const CLASS_DOMAINS: Record<string, [string, string]> = {
 	Sorcerer: ["Arcana", "Midnight"],
 	Warrior: ["Blade", "Bone"],
 	Wizard: ["Codex", "Splendor"],
+	Assassin: ["Blade", "Midnight"],
+	Brawler: ["Valor", "Bone"],
+	Warlock: ["Dread", "Grace"],
+	Witch: ["Sage", "Dread"],
 };
 
 export const DOMAIN_CARD_TYPES = ["Ability", "Spell", "Grimoire"] as const;

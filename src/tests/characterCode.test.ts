@@ -160,7 +160,47 @@ describe("normalizeCharacter", () => {
 	});
 
 	test("uses the fallback id when none is present", () => {
-		expect(normalizeCharacter({}, "CHR_fallback").id).toBe("CHR_fallback");
+		const character = normalizeCharacter({}, "CHR_fallback");
+		expect(character.id).toBe("CHR_fallback");
+		expect(character.classId).toBe("");
+		expect(character.subclassId).toBe("");
+	});
+
+	test("preserves stable SRD ids while remaining compatible with legacy cards", () => {
+		const character = normalizeCharacter(
+			{
+				classId: "class-bard",
+				subclassId: "subclass-bard-troubadour",
+				ancestryCard: {
+					id: "ancestry-faun",
+					name: "Faun",
+					description: "Description",
+					features: "Feature",
+				},
+				domainCards: [
+					{
+						id: "domain-card-arcana-1-rune-ward",
+						name: "Rune Ward",
+						domain: "Arcana",
+						level: 1,
+						type: "Spell",
+						recallCost: 1,
+						text: "Text",
+					},
+					{
+						name: "Legacy Card",
+						domain: "Codex",
+					},
+				],
+			},
+			"CHR_ids",
+		);
+
+		expect(character.classId).toBe("class-bard");
+		expect(character.subclassId).toBe("subclass-bard-troubadour");
+		expect(character.ancestryCard?.id).toBe("ancestry-faun");
+		expect(character.domainCards[0].id).toBe("domain-card-arcana-1-rune-ward");
+		expect(character.domainCards[1].id).toBeUndefined();
 	});
 
 	test("defaults sheet settings when missing and clamps junk values", () => {

@@ -1,8 +1,10 @@
+import { useLanguage as useUiLanguage } from "../../i18n/react";
+import { gameTerm } from "../../i18n/gameTerms";
+import { translate as dfTranslate } from "../../i18n";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { App, MarkdownView, Notice, setIcon } from "obsidian";
 import type { AdvData, EnvironmentData } from "../../types/index";
-import { ADVERSARIES } from "../../data/index";
-import { ENVIRONMENTS } from "../../data/index";
+import { getAdversaries, getEnvironments } from "../../data/index";
 import {
 	SearchEngine,
 	SearchControlsUI,
@@ -23,9 +25,13 @@ import { buildCharacterEmbedBlock, characterEmbedCode } from "../characters/Char
 import { ConfirmModal } from "../characters/components/ConfirmModal";
 import type { CharacterData } from "../../types/character";
 import { CLASS_COLORS, GEAR_KIND_COLORS, GEAR_KIND_LABELS, GearData } from "../../types/srd";
-import { ALL_GEAR } from "../../data/srd";
+import { getAllGear, getSrdClasses } from "../../data/srd";
 import { buildItemEmbedBlock } from "../items/ItemEmbed";
 import { hexTint } from "../characters/components/SheetSections";
+import {
+	localizedClassSubclass,
+	localizedHeritageSummary,
+} from "../characters/localizedCharacter";
 
 export type BrowserTab = "adversary" | "environment" | "character" | "item";
 
@@ -39,6 +45,7 @@ interface Props {
 // ── Counter ───────────────────────────────────────────────────────────────────
 
 function CounterControls() {
+	useUiLanguage();
 	const [count, setCount] = useState(getAdversaryCount());
 
 	const decrement = () => {
@@ -60,7 +67,7 @@ function CounterControls() {
 
 	return (
 		<div className="df-adversary-counter-container">
-			<LucideBtn icon="minus" title="Decrease" onClick={decrement} cls="df-adversary-counter-btn" />
+			<LucideBtn icon="minus" title={dfTranslate("ui.decrease")} onClick={decrement} cls="df-adversary-counter-btn" />
 			<input
 				type="number" min={1} max={99}
 				value={count}
@@ -72,7 +79,7 @@ function CounterControls() {
 					if (isNaN(v) || v < 1) { setAdversaryCount(1); setCount(1); }
 				}}
 			/>
-			<LucideBtn icon="plus" title="Increase" onClick={increment} cls="df-adversary-counter-btn" />
+			<LucideBtn icon="plus" title={dfTranslate("ui.increase")} onClick={increment} cls="df-adversary-counter-btn" />
 		</div>
 	);
 }
@@ -85,12 +92,14 @@ function isCustomRecord(record: { id?: string; source?: string }): boolean {
 }
 
 function LucideBtn({ icon, title, onClick, cls }: { icon: string; title: string; onClick: (e: React.MouseEvent) => void; cls?: string }) {
+	useUiLanguage();
 	const ref = useRef<HTMLButtonElement>(null);
 	useEffect(() => { if (ref.current) setIcon(ref.current, icon); }, [icon]);
 	return <button ref={ref} title={title} className={cls} onClick={onClick} />;
 }
 
 function LucideIcon({ icon, cls }: { icon: string; cls?: string }) {
+	useUiLanguage();
 	const ref = useRef<HTMLSpanElement>(null);
 	useEffect(() => { if (ref.current) setIcon(ref.current, icon); }, [icon]);
 	return <span ref={ref} className={cls} />;
@@ -104,6 +113,7 @@ function SearchPane({ configFactory, onUiReady }: {
 	configFactory: () => SearchControlsConfig;
 	onUiReady?: (ui: SearchControlsUI) => void;
 }) {
+	useUiLanguage();
 	const ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		if (!ref.current) return;
@@ -125,6 +135,7 @@ const ADV_TYPES = [
 ];
 
 function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const language = useUiLanguage();
 	const [cards, setCards] = useState<AdvData[]>([]);
 	const [ready, setReady] = useState(false);
 	const engineRef = useRef(new SearchEngine<AdvData>());
@@ -133,7 +144,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 	const load = useCallback(() => {
 		const plugin = getDaggerForgePlugin(app);
 		const custom = plugin?.dataManager?.getAdversaries()?.map(a => ({ ...a, source: a.source || "custom" })) ?? [];
-		const all = [...ADVERSARIES, ...custom];
+		const all = [...getAdversaries(language), ...custom];
 		engineRef.current.setCards(all);
 		setCards([...engineRef.current.search()]);
 		setReady(true);
@@ -142,7 +153,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			sources: engineRef.current.getFacetCounts("sources"),
 			types:   engineRef.current.getFacetCounts("types"),
 		});
-	}, [app, refreshToken]);
+	}, [app, refreshToken, language]);
 
 	useEffect(() => { load(); }, [load]);
 
@@ -191,6 +202,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			<CounterControls />
 			{ready && (
 				<SearchPane
+					key={language}
 					configFactory={buildConfig}
 					onUiReady={(ui) => {
 						uiRef.current = ui;
@@ -205,7 +217,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			)}
 			<div className="df-adversary-results">
 				{cards.length === 0
-					? <p>No adversaries found.</p>
+					? <p>{dfTranslate("ui.no.adversaries.found")}</p>
 					: cards.map(a => (
 						<AdvCard key={a.id || a.name} adversary={a} onInsert={insert} onDelete={deleteAdv} />
 					))
@@ -220,19 +232,20 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 	onInsert: (a: AdvData) => void;
 	onDelete: (a: AdvData) => void;
 }) {
+	useUiLanguage();
 	const source = adversary.source || "core";
 	const isCustom = source.toLowerCase() === "custom";
 	return (
 		<div className={`df-adversary-card df-source-${source.toLowerCase()}`} onClick={() => onInsert(adversary)}>
 			<p className="df-tier-text">
-				Tier {adversary.tier} {adversary.type}{" "}
+				{dfTranslate("ui.tier")} {adversary.tier} {gameTerm(adversary.type)}{" "}
 				<span className={`df-source-badge-${source.toLowerCase()}`}>{source.toLowerCase()}</span>
 			</p>
 			{isCustom && (
-				<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
+				<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 					onClick={(e: any) => { e.stopPropagation(); onDelete(adversary); }} />
 			)}
-			<h3 className="df-title-small-padding">{adversary.name || "Unnamed"}</h3>
+			<h3 className="df-title-small-padding">{adversary.name || dfTranslate("ui.dynamic.unnamed")}</h3>
 			<p className="df-desc-small-padding">{adversary.desc || ""}</p>
 		</div>
 	);
@@ -241,6 +254,7 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 // ── Environment Pane ──────────────────────────────────────────────────────────
 
 function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const language = useUiLanguage();
 	const [cards, setCards] = useState<EnvironmentData[]>([]);
 	const [ready, setReady] = useState(false);
 	const engineRef = useRef(new SearchEngine<EnvironmentData>());
@@ -250,7 +264,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 		const plugin = getDaggerForgePlugin(app);
 		const customRaw = plugin?.dataManager?.getEnvironments() ?? [];
 		const custom = customRaw.map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source || "custom" }));
-		const builtIn = ENVIRONMENTS.map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source ?? "core" }));
+		const builtIn = getEnvironments(language).map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source ?? "core" }));
 		const all = [...builtIn, ...custom];
 		engineRef.current.setCards(all);
 		setCards([...engineRef.current.search()]);
@@ -260,7 +274,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 			sources: engineRef.current.getFacetCounts("sources"),
 			types:   engineRef.current.getFacetCounts("types"),
 		});
-	}, [app, refreshToken]);
+	}, [app, refreshToken, language]);
 
 	useEffect(() => { load(); }, [load]);
 
@@ -299,12 +313,13 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 		load();
 	}, [app, load]);
 
-	const BADGE_LABELS: Record<string, string> = { core: "Core", custom: "Custom", sablewood: "Sablewood", umbra: "Umbra", void: "Void" };
+	const BADGE_LABELS: Record<string, string> = { core: "Core", "hope-fear": "Hope & Fear", custom: "Custom", sablewood: "Sablewood", umbra: "Umbra", void: "Void" };
 
 	return (
 		<>
 			{ready && (
 				<SearchPane
+					key={language}
 					configFactory={buildConfig}
 					onUiReady={(ui) => {
 						uiRef.current = ui;
@@ -319,7 +334,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 			)}
 			<div className="df-environment-results">
 				{cards.length === 0
-					? <p>No environments found.</p>
+					? <p>{dfTranslate("ui.no.environments.found")}</p>
 					: cards.map(e => (
 						<EnvCard key={e.id || e.name} env={e} badgeLabels={BADGE_LABELS} onInsert={insert} onDelete={deleteEnv} />
 					))
@@ -335,19 +350,20 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 	onInsert: (e: EnvironmentData) => void;
 	onDelete: (e: EnvironmentData) => void;
 }) {
+	useUiLanguage();
 	const source = env.source || "core";
 	const isCustom = (badgeLabels[source] ?? source) === "Custom";
 	return (
 		<div className={`df-env-card df-source-${source.toLowerCase()}`} onClick={() => onInsert(env)}>
 			<p className="df-tier-text">
-				Tier {env.tier} {env.type}{" "}
+				{dfTranslate("ui.tier")} {env.tier} {gameTerm(env.type)}{" "}
 				<span className={`df-source-badge-${source.toLowerCase()}`}>{badgeLabels[source] || source}</span>
 			</p>
 			{isCustom && (
-				<LucideBtn icon="trash" title="Delete" cls="df-env-delete-btn"
+				<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-env-delete-btn"
 					onClick={(e: any) => { e.stopPropagation(); onDelete(env); }} />
 			)}
-			<h3 className="df-title-small-padding">{env.name || "Unnamed"}</h3>
+			<h3 className="df-title-small-padding">{env.name || dfTranslate("ui.dynamic.unnamed")}</h3>
 			<p className="df-desc-small-padding">{env.desc || ""}</p>
 		</div>
 	);
@@ -355,15 +371,22 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 
 // ── Character Pane ────────────────────────────────────────────────────────────
 
-/** Maps a sheet's free-text "Class & Subclass" to a known class and its color. */
-function characterClassInfo(classSubclass: string): { className: string | null; color: string | null } {
-	const text = classSubclass.toLowerCase();
-	const className =
+/** Resolves the stable class id first, then falls back to legacy free text. */
+function characterClassInfo(character: CharacterData, language: "en" | "de"): { className: string | null; color: string | null } {
+	const byId = character.classId
+		? getSrdClasses(language).find((candidate) => candidate.id === character.classId)
+		: undefined;
+	const canonical = character.classId
+		? getSrdClasses("en").find((candidate) => candidate.id === character.classId)
+		: undefined;
+	const text = character.classSubclass.toLowerCase();
+	const className = byId?.name ??
 		Object.keys(CLASS_COLORS).find((name) => text.includes(name.toLowerCase())) ?? null;
-	return { className, color: className ? CLASS_COLORS[className] : null };
+	return { className, color: canonical ? CLASS_COLORS[canonical.name] : className ? CLASS_COLORS[className] : null };
 }
 
 function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const language = useUiLanguage();
 	const [query, setQuery] = useState("");
 	// refreshToken re-renders the pane whenever stored data changes
 	void refreshToken;
@@ -374,11 +397,11 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		.filter(
 			(c) =>
 				!q ||
-				(c.name || "Unnamed character").toLowerCase().includes(q) ||
-				c.classSubclass.toLowerCase().includes(q) ||
-				c.heritage.toLowerCase().includes(q),
+				(c.name || dfTranslate("ui.dynamic.unnamed.character")).toLowerCase().includes(q) ||
+				localizedClassSubclass(c, language).toLowerCase().includes(q) ||
+				localizedHeritageSummary(c, language).toLowerCase().includes(q),
 		)
-		.sort((a, b) => (a.name || "Unnamed").localeCompare(b.name || "Unnamed"));
+		.sort((a, b) => (a.name || dfTranslate("ui.dynamic.unnamed")).localeCompare(b.name || dfTranslate("ui.dynamic.unnamed")));
 
 	const insert = useCallback(async (character: CharacterData) => {
 		const plg = getDaggerForgePlugin(app);
@@ -396,9 +419,9 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		const plg = getDaggerForgePlugin(app);
 		if (!plg) return;
 		new ConfirmModal(plg.app, {
-			title: "Delete character?",
-			message: `"${character.name || "Unnamed character"}" will be removed from your saved characters.`,
-			confirmLabel: "Delete",
+			title: dfTranslate("ui.delete.character"),
+			message: dfTranslate("character.delete.confirm", { name: character.name || dfTranslate("ui.dynamic.unnamed.character") }),
+			confirmLabel: dfTranslate("ui.delete"),
 			onConfirm: () => void plg.dataManager.deleteCharacterById(character.id),
 		}).open();
 	}, [app]);
@@ -408,13 +431,13 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			<input
 				type="text"
 				className="df-char-search"
-				placeholder="Search characters…"
+				placeholder={dfTranslate("ui.search.characters")}
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
 			/>
 			<div className="df-adversary-results">
 				{characters.length === 0 ? (
-					<p>{q ? "No characters match." : "No saved characters yet. Open the character sheet to create one."}</p>
+					<p>{q ? dfTranslate("ui.dynamic.no.characters.match") : dfTranslate("ui.dynamic.no.saved.characters.yet.open.the.character.sheet.to.create.one")}</p>
 				) : (
 					characters.map((c) => (
 						<CharacterCard key={c.id} character={c} onInsert={insert} onDelete={deleteCharacter} />
@@ -430,8 +453,9 @@ function CharacterCard({ character, onInsert, onDelete }: {
 	onInsert: (c: CharacterData) => void;
 	onDelete: (c: CharacterData) => void;
 }) {
-	const { className, color } = characterClassInfo(character.classSubclass);
-	const tag = className ?? (character.classSubclass.trim() || "No class");
+	const language = useUiLanguage();
+	const { className, color } = characterClassInfo(character, language);
+	const tag = className ?? (character.classSubclass.trim() || dfTranslate("ui.dynamic.no.class"));
 	const badgeColor = color ?? "var(--text-faint)";
 	return (
 		<div
@@ -440,7 +464,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 			onClick={() => onInsert(character)}
 		>
 			<p className="df-tier-text">
-				{character.level.trim() ? `Level ${character.level}` : "Level -"}{" "}
+				{dfTranslate("sheet.levelValue", { level: character.level.trim() || "-" })}{" "}
 				<span
 					className="df-class-badge"
 					style={{
@@ -452,10 +476,10 @@ function CharacterCard({ character, onInsert, onDelete }: {
 					{tag}
 				</span>
 			</p>
-			<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
+			<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 				onClick={(e: any) => { e.stopPropagation(); onDelete(character); }} />
-			<h3 className="df-title-small-padding">{character.name || "Unnamed character"}</h3>
-			<p className="df-desc-small-padding">{character.heritage}</p>
+			<h3 className="df-title-small-padding">{character.name || dfTranslate("ui.dynamic.unnamed.character")}</h3>
+			<p className="df-desc-small-padding">{localizedHeritageSummary(character, language)}</p>
 		</div>
 	);
 }
@@ -465,13 +489,14 @@ function CharacterCard({ character, onInsert, onDelete }: {
 const GEAR_KINDS = ["all", "weapon", "armor", "wheelchair", "item", "consumable"] as const;
 
 function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
+	const language = useUiLanguage();
 	const [query, setQuery] = useState("");
 	const [kind, setKind] = useState<(typeof GEAR_KINDS)[number]>("all");
 	void refreshToken;
 
 	const plugin = getDaggerForgePlugin(app);
 	const q = query.trim().toLowerCase();
-	const gear = [...(plugin?.dataManager?.getItems() ?? []), ...ALL_GEAR].filter((g) => {
+	const gear = [...(plugin?.dataManager?.getItems() ?? []), ...getAllGear(language)].filter((g) => {
 		if (kind !== "all" && g.kind !== kind) return false;
 		if (q && !(g.name.toLowerCase().includes(q) || g.text.toLowerCase().includes(q) || g.meta.toLowerCase().includes(q))) return false;
 		return true;
@@ -496,18 +521,18 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 			<input
 				type="text"
 				className="df-char-search"
-				placeholder="Search items…"
+				placeholder={dfTranslate("ui.search.items")}
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
 			/>
-			<select className="dropdown df-item-kind-filter" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)} aria-label="Kind filter">
+			<select className="dropdown df-item-kind-filter" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)} aria-label={dfTranslate("ui.kind.filter")}>
 				{GEAR_KINDS.map((k) => (
-					<option key={k} value={k}>{k === "all" ? "All kinds" : GEAR_KIND_LABELS[k]}</option>
+					<option key={k} value={k}>{k === "all" ? dfTranslate("ui.dynamic.all.kinds") : gameTerm(GEAR_KIND_LABELS[k])}</option>
 				))}
 			</select>
 			<div className="df-adversary-results">
 				{gear.length === 0
-					? <p>No items match.</p>
+					? <p>{dfTranslate("ui.no.items.match")}</p>
 					: gear.map((g) => (
 						<div
 							key={g.id}
@@ -516,13 +541,13 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 							onClick={() => insert(g)}
 						>
 							<p className="df-tier-text">
-								{GEAR_KIND_LABELS[g.kind]}
+								{gameTerm(GEAR_KIND_LABELS[g.kind])}
 								{g.tier !== null ? ` · Tier ${g.tier}` : ""}
 								{g.rarity ? ` · ${g.rarity}` : ""}{" "}
-								{g.source === "custom" && <span className="df-source-badge-custom">custom</span>}
+								{g.source === "custom" && <span className="df-source-badge-custom">{dfTranslate("ui.custom")}</span>}
 							</p>
 							{g.source === "custom" && (
-								<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
+								<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 									onClick={(e: any) => { e.stopPropagation(); void deleteItem(g); }} />
 							)}
 							<h3 className="df-title-small-padding">{g.name}</h3>
@@ -552,6 +577,7 @@ const TAB_LABELS: Record<BrowserTab, string> = {
 };
 
 export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshToken }: Props) {
+	useUiLanguage();
 	const [activeTab, setActiveTab] = useState<BrowserTab>("adversary");
 	const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -577,7 +603,7 @@ export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshTo
 						onClick={() => setActiveTab(tab)}
 					>
 						<LucideIcon icon={TAB_ICONS[tab]} cls="df-tab-icon" />
-						{TAB_LABELS[tab]}
+						{gameTerm(TAB_LABELS[tab])}
 					</div>
 				))}
 			</div>
@@ -599,7 +625,7 @@ export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshTo
 			{/* Scroll-to-top */}
 			<button
 				className={`df-scroll-to-top${showScrollTop ? " df-scroll-to-top--visible" : ""}`}
-				aria-label="Scroll to top"
+				aria-label={dfTranslate("ui.scroll.to.top")}
 				onClick={() => scrollContainer.scrollTo({ top: 0, behavior: "smooth" })}
 			>↑</button>
 		</>

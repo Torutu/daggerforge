@@ -1,3 +1,6 @@
+import { getLanguage, translate as t } from "../../i18n";
+import { gameTerm } from "../../i18n/gameTerms";
+import { localizeDamageDie } from "../../data/srd";
 import { Feature } from "../../types/index";
 import { toCustomHtml } from "../../utils/richContentTransform";
 
@@ -131,17 +134,17 @@ ${resetBtn}</div>
 
 		return `
             ${countdownsHtml}<div class="df-hp-tickboxes">
-                <span class="df-hp-stress">HP</span>${hpTickboxes}
+                <span class="df-hp-stress">${t("ui.hp")}</span>${hpTickboxes}
                 <span class="df-adversary-count">${index + 1}</span>
             </div>
             <div class="df-stress-tickboxes">
-                <span class="df-hp-stress">Stress</span>${stressTickboxes}
+                <span class="df-hp-stress">${t("ui.stress")}</span>${stressTickboxes}
             </div>
         `;
 	}).join("");
 
 	const stressBlock = stress
-		? `Stress: <span class="df-stat">${stress}</span>`
+		? `${t("ui.stress")}: <span class="df-stat">${stress}</span>`
 		: "";
 
 	const sourceBadge = source ? `<span class="df-source-badge-${source.toLowerCase()}">${source.toLowerCase()}</span>` : `<span class="df-source-badge-custom">custom</span>`;
@@ -151,7 +154,7 @@ ${resetBtn}</div>
 			(f) => `
         <div class="df-feature">
             <span class="df-feature-title">
-                ${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ":"}
+                ${f.name} - ${gameTerm(f.type)}${f.cost ? `: ${f.cost}` : ":"}
             </span>
             <div class="df-feature-desc">${toCustomHtml(f.richContent)}</div>
         </div>`,
@@ -160,26 +163,26 @@ ${resetBtn}</div>
 	return `
 <section id="custom" class="df-card-outer df-pseudo-cut-corners outer${wide ? ' df-card--wide' : ''}" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
-		<button class="df-adv-collapse-btn" aria-label="Toggle HP and Stress"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg></button>
-		<button class="df-wide-toggle-btn" data-edit-mode-only="true" aria-label="Toggle wide card"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg></button>
-		<button class="df-adv-edit-button" data-edit-mode-only="true" aria-label="Edit" id="${hiddenID}"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button>
+		<button class="df-adv-collapse-btn" aria-label="${t("embed.toggleTracks")}"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg></button>
+		<button class="df-wide-toggle-btn" data-edit-mode-only="true" aria-label="${t("embed.toggleWide")}"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg></button>
+		<button class="df-adv-edit-button" data-edit-mode-only="true" aria-label="${t("embed.edit")}" id="${hiddenID}"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button>
         <div class="df-hp-stress-section"><div class="df-hp-stress-inner">${hpStressRepeat}</div></div>
         <h2 class="df-card-name" id="${hiddenID}">${name}</h2>
-        <div class="df-subtitle">Tier ${tier} ${type} ${sourceBadge}</div>
+        <div class="df-subtitle">${t("ui.tier")} ${tier} ${gameTerm(type)} ${sourceBadge}</div>
         <div class="df-desc">${desc}</div>
-        <div class="df-motives">Motives & Tactics:
+        <div class="df-motives">${t("embed.motives")}:
             <span class="df-motives-desc">${motives}</span>
         </div>
         <div class="df-stats">
-            Difficulty: <span class="df-stat">${difficulty} |</span>
-            Thresholds: <span class="df-stat">${thresholdMajor}/${thresholdSevere} |</span>
-            HP: <span class="df-stat">${hp} |</span>
+            ${t("ui.difficulty")}: <span class="df-stat">${difficulty} |</span>
+            ${t("embed.thresholds")}: <span class="df-stat">${thresholdMajor}/${thresholdSevere} |</span>
+            ${t("ui.hp")}: <span class="df-stat">${hp} |</span>
             ${stressBlock}
-            <br>ATK: <span class="df-stat">${atk} |</span>
-            ${weaponName}: <span class="df-stat">${weaponRange} | ${weaponDamage}</span><br>
-            <div class="df-experience-line">Experience: <span class="df-stat">${xp}</span></div>
+            <br>${t("embed.attack")}: <span class="df-stat">${atk} |</span>
+            ${weaponName}: <span class="df-stat">${gameTerm(weaponRange)} | ${localizeDamageDie(weaponDamage, getLanguage())}</span><br>
+            <div class="df-experience-line">${t("ui.experience")}: <span class="df-stat">${xp}</span></div>
         </div>
-        <div class="df-section">FEATURES</div>
+        <div class="df-section">${t("embed.features")}</div>
         ${featuresHTML}
     </div>
 </section>

@@ -1,5 +1,6 @@
 [
 	{
+		"source": "core",
 		"name": "Bard",
 		"description": [
 			"Bards are the most charismatic people in all the realms. Members of this class are masters of captivation and specialize in a variety of performance types, including singing, playing musical instruments, weaving tales, or telling jokes. Whether performing for an audience or speaking to an individual, bards thrive in social situations.",
@@ -84,6 +85,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Druid",
 		"description": [
 			"Becoming a druid is more than an occupation; it's a calling for those who wish to learn from and protect the magic of the wilderness. While one might underestimate a gentle druid who practices the often-quiet work of cultivating flora, druids who channel the untamed forces of nature are terrifying to behold.",
@@ -176,6 +178,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Guardian",
 		"description": [
 			"The title of guardian represents an array of martial professions, speaking more to their moral compass and unshakeable fortitude than the means by which they fight. While many guardians join groups of militants for either a country or cause, they're more likely to follow those few they truly care for, majority be damned.",
@@ -270,6 +273,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Ranger",
 		"description": [
 			"Rangers are highly skilled hunters who, despite their martial abilities, rarely lend their skills to an army. Through mastery of the body and a deep understanding of the wilderness, rangers become sly tacticians, pursuing their quarry with cunning and patience.",
@@ -362,6 +366,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Rogue",
 		"description": [
 			"Rogues are scoundrels, often in both attitude and practice. Broadly known as liars and thieves, the best among this class move through the world anonymously. Utilizing their sharp wits and blades, rogues trick their foes through social manipulation as easily as breaking locks, climbing through windows, or dealing underhanded blows.",
@@ -454,6 +459,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Seraph",
 		"description": [
 			"Seraphs are divine fighters and healers imbued with sacred purpose. A wide array of deities exist within the realms, and thus numerous kinds of seraphs are appointed by these gods. Their ethos traditionally aligns with the domain or goals of their god, such as defending the weak, exacting vengeance, protecting a land or artifact, or upholding a particular faith.",
@@ -542,6 +548,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Sorcerer",
 		"description": [
 			"Not all innate magic users choose to hone their craft, but those who do can become powerful sorcerers. The gifts of these wielders are passed down through families, even if the family is unaware of or reluctant to practice them. A sorcerer's abilities can range from the elemental to the illusionary and beyond, and many practitioners band together into collectives based on their talents.",
@@ -630,6 +637,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Warrior",
 		"description": [
 			"Becoming a warrior requires years, often a lifetime, of training and dedication to the mastery of weapons and violence. While many who seek to fight hone only their strength, warriors understand the importance of an agile body and mind, making them some of the most sought-after fighters across the realms.",
@@ -716,6 +724,7 @@
 		]
 	},
 	{
+		"source": "core",
 		"name": "Wizard",
 		"description": [
 			"Whether through an institution or individual study, those known as wizards acquire and hone immense magical power over years of learning using a variety of tools, including books, stones, potions, and herbs. Some wizards dedicate their lives to mastering a particular school of magic, while others learn from a wide variety of disciplines.",

@@ -1,0 +1,429 @@
+[
+	{
+		"id": "HF-IT001",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Augurs Reliquie",
+		"text": "Einmal pro längerer Pause können Sie Deine Hoffnung-Funktion aktivieren, ohne Hoffnung auszugeben."
+	},
+	{
+		"id": "HF-IT002",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Kugellager",
+		"text": "Dieser Beutel enthält perfekt glatte Metallkugeln."
+	},
+	{
+		"id": "HF-IT003",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Schwungklappe",
+		"text": "Diese Schreibfeder hat nie keine Tinte mehr oder muss geschärft werden."
+	},
+	{
+		"id": "HF-IT004",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Stiefel von Supple Mystic",
+		"text": "Während du diese Stiefel tragen, hinterlassen Sie keine Spuren oder Fußspuren."
+	},
+	{
+		"id": "HF-IT005",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Box von Dragon Dust",
+		"text": "Diese Schnupftruhe ist mit brennbarem Pulver gefüllt."
+	},
+	{
+		"id": "HF-IT006",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Broche",
+		"text": "Bei einem erfolgreichen Waffenangriff kannst du dein Ziel von seinem Standort aus wieder in kurzer Distanz bringen."
+	},
+	{
+		"id": "HF-IT007",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Caltrops",
+		"text": "Du kannst diese Caltropen in einem sehr nahen Bereich um Sie herum verbreiten. Eine Kreatur, die durch diesen Bereich eilt, muss 1 Stress markieren."
+	},
+	{
+		"id": "HF-IT008",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Cheater's Coin",
+		"text": "Wenn du diese Münze umdrehen, können Sie 1 Hoffnung ausgeben, um festzustellen, auf welcher Seite sie landet."
+	},
+	{
+		"id": "HF-IT009",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Einklappbarer Pol",
+		"text": "Du kannst diesen 18-Fuß-Stang in sechs miteinander verbundene 3-Fuß-Segmente zerlegen."
+	},
+	{
+		"id": "HF-IT010",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Kragen der Aufstiegskraft",
+		"text": "Ein Tier, das dieses Halsband trägt, erhält die Fähigkeit, zu sprechen und die gemeinsame Sprache zu verstehen."
+	},
+	{
+		"id": "HF-IT011",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Kommunion Reliquie",
+		"text": "Einmal pro Pause kannst du 1 Hoffnung ausgeben, um die Erfahrung eines Verbündeten so zu nutzen, als wäre es dein eigenes."
+	},
+	{
+		"id": "HF-IT012",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Schmelzrahmen",
+		"text": "Diese Brille zeigt Schwachstellen in Objekten und Kreaturen. Drei Mal pro Ruhezeit können Sie 1 Hoffnung ausgeben, um einen Vorteil auf einem Angriffswurf zu erzielen."
+	},
+	{
+		"id": "HF-IT013",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Dagginae-Obsidianschiefer",
+		"text": "Diese hauchdünne Scheibe aus Vulkanglas wird von Archivaren benutzt, um Notizen zu halten. Alle Informationen, die auf ihre Oberfläche geätzt wurden, verschwinden, können aber über einen von dir festgelegten Befehl abgerufen werden."
+	},
+	{
+		"id": "HF-IT014",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Eclipse-Münze",
+		"text": "Einmal pro Pause 1W2{umdrehen einer Münze.} Auf Köpfen erhältst du einen +1 Bonus für Angriffswürfe bis zum nächsten erfolgreichen Angriff. Auf Zahlen erhältst du +1 zu deinem Ausweichen, bis ein Angriff gegen dich fehlschlägt."
+	},
+	{
+		"id": "HF-IT015",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Elfen-Spyglas",
+		"text": "Du kannst dieses Spyglas verwenden, um Deine Vision hundertfach zu vergrößern."
+	},
+	{
+		"id": "HF-IT016",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Enchanter's Loupe",
+		"text": "Du kannst diese Lupe benutzen, um Illusionen und Verzauberungen zu durchschauen."
+	},
+	{
+		"id": "HF-IT017",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Escher's Mirrorball",
+		"text": "Einmal pro langer Pause kannst du dieser faustgroßen silbernen Kugel befehlen, ein omnidirektionales Bild ihrer Umgebung auf ihrer Oberfläche aufzunehmen. Dieses Bild dauert bis zu deiner nächsten langen Pause."
+	},
+	{
+		"id": "HF-IT018",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Kraftscheibe",
+		"text": "Diese schimmernde zweidimensionale Scheibe mit magischer Kraft hat einen Durchmesser von 4 Fuß und ist auf magische Weise an einen Kieselstein gebunden. Die Scheibe schwimmt immer 3 Fuß nördlich und auf derselben Höhe wie der Kieselstein. Der Kieselstein hat eine Masse, die einem Hundertstel der Gesamtmasse entspricht, die von der Scheibe getragen wird."
+	},
+	{
+		"id": "HF-IT019",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Furballbeutel",
+		"text": "Einmal pro Ruhepause können Sie 2W20 harmlose, katzengroße Pelzkreaturen von unbestimmter Herkunft und Arten aus dieser Tasche produzieren."
+	},
+	{
+		"id": "HF-IT020",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Gadimans Rucksack",
+		"text": "Einmal pro Pause können Sie 1 Hoffnung ausgeben, um einen weltlichen Gegenstand bis zu einem Kubikfuß in dieser Tasche zu beschwören."
+	},
+	{
+		"id": "HF-IT021",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Ghoulskin Handschuhe",
+		"text": "Wenn du mit einer physischen Waffe angreifen, während Sie diese Handschuhe tragen, wird der Schaden sowohl als physisch als auch als magisch betrachtet."
+	},
+	{
+		"id": "HF-IT022",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Handschuhe von Alacrity",
+		"text": "Wenn du zum Nachladen einer Waffe 1 Stress markieren müsstest, markierst du diesen Stress nicht."
+	},
+	{
+		"id": "HF-IT023",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Gourmet-Granulat",
+		"text": "Dieses herzhafte Pulver macht jedes Essen, das es auf lecker und gesund gestreut hat, egal wie fad oder faul es ist."
+	},
+	{
+		"id": "HF-IT024",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Grapnel",
+		"text": "Du erhältst Vorteil auf Action-Rollen, um schiere Oberflächen zu klettern."
+	},
+	{
+		"id": "HF-IT025",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Gravewarden's Bell",
+		"text": "Diese Glocke klingelt, wenn sich ein Geist oder eine untote Kreatur innerhalb von weiter Distanz bewegt."
+	},
+	{
+		"id": "HF-IT026",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Helm des Helden",
+		"text": "Wenn du bei einem Angriff kritisch erfolgreich sind, erhalten alle Verbündeten innerhalb von kurzer Distanz 1 Hoffnung."
+	},
+	{
+		"id": "HF-IT027",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Hohlrindenhorn",
+		"text": "Du kannst dieses Horn blasen, um eine kleine Waldkreatur zu beschwören, um eine einfache Aufgabe zu erfüllen."
+	},
+	{
+		"id": "HF-IT028",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Insomniac's Periapt",
+		"text": "Wenn du sich ausruhen, ohne Trefferpunkte oder Stress zu löschen, erhalten Sie einen Bonus von +2, um bis zur nächsten Pause angreifen und Schadenswürfe verursachen zu können."
+	},
+	{
+		"id": "HF-IT029",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Eisendachanhänger",
+		"text": "Einmal pro langer Pause kannst du 1 Hoffnung ausgeben, um dem Anhänger den Namen einer Kreatur mitzuteilen. Der Anhänger zieht dich sanft zum aktuellen Standort dieser Kreatur bis zu deiner nächsten langen Pause."
+	},
+	{
+		"id": "HF-IT030",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Eisenschleimhaut",
+		"text": "Diese Kettengliedkopfbedeckung macht den Träger für fey Kreaturen unsichtbar."
+	},
+	{
+		"id": "HF-IT031",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Kingfisher's Net",
+		"text": "Einmal pro langer Pause können Sie dieses Netz verwenden, um einen lebenden Fisch aus einer beliebigen Menge Wasser zu schöpfen, egal wie unwahrscheinlich es ist, dass dieses Wasser Fisch darin hat."
+	},
+	{
+		"id": "HF-IT032",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Knockback Armbänder",
+		"text": "Bei einem erfolgreichen Waffenangriff kannst du dein Ziel von seinem Standort aus wieder in kurzer Distanz bringen."
+	},
+	{
+		"id": "HF-IT033",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Würfel geladen",
+		"text": "Du kannst wählen, welches Ergebnis dieser Satz von gewichteten Würfeln mit einer erfolgreichen Geschick-Rolle (14) würfelt."
+	},
+	{
+		"id": "HF-IT034",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Mandragorische Fackel",
+		"text": "Diese Fackel gibt Licht ab, das nur der Träger sehen kann."
+	},
+	{
+		"id": "HF-IT035",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Karte der Offenbarung",
+		"text": "Man kann diese Karte auf eine Kreatur nach der anderen abstimmen. Die Karte zeigt immer die Position der abgestimmten Kreatur."
+	},
+	{
+		"id": "HF-IT036",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Molepaw Mittens",
+		"text": "Setze 1 Hoffnung ein, um die nächsten 10 Minuten durch die Erde zu schwimmen, als wäre es Wasser."
+	},
+	{
+		"id": "HF-IT037",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Orakel des Namensgebers",
+		"text": "Einmal pro Sitzung können Sie diesen Satz runischer Würfel rollen, um den vollständigen Namen der letzten Person zu enthüllen, die Sie berührt haben."
+	},
+	{
+		"id": "HF-IT038",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Nighthawker's Ring",
+		"text": "Setze 1 Hoffnung ein, um den Edelstein in diesem Ring bis zum Ende der Szene zu aktivieren. Während er aktiv ist, ändert er die Farbe, um die Nähe des Trägers zum Verborgen-Schatz anzuzeigen: warme Farben für nahe, kühle Farben für weit."
+	},
+	{
+		"id": "HF-IT039",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Phobophage's Circlet",
+		"text": "Wenn der SL 1 Furcht ausgibt, rollen Sie ein W4. Einmal pro Szene auf einem Ergebnis von 4, löschen Sie 1 Stress."
+	},
+	{
+		"id": "HF-IT040",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Portalrahmen",
+		"text": "Dieses Paar kleiner, kunstvoller Rahmen, ein roter und ein blauer, sind miteinander verbunden. Alles, was in einen übergeht, geht aus dem anderen aus."
+	},
+	{
+		"id": "HF-IT041",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Quillshaw",
+		"text": "Wenn ein Gegner Sie innerhalb von unmittelbarer Distanz angreift, muss er auf einem Reaktionswurf (12) erfolgreich sein oder ein Trefferpunkt markieren."
+	},
+	{
+		"id": "HF-IT042",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Reliquienbuch des Sightless Saint",
+		"text": "Du erhältst einen +1 Bonus auf Deinen Hoffnung Die, wenn Sie den Risk It All Death-Move machen."
+	},
+	{
+		"id": "HF-IT043",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Zurückkehrender Ring",
+		"text": "Wenn du Deine primäre Waffe werfen, während Sie diesen Ring tragen, erscheint die Waffe unmittelbar nach dem Angriff in Deiner Hand."
+	},
+	{
+		"id": "HF-IT044",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Ringe der Allianz",
+		"text": "Zwei Kreaturen können dieses Paar Roségold-Ringe tragen. Einmal pro Sitzung können Sie einen Tag Team Wurf mit demjenigen initiieren, der den anderen Ring trägt, ohne Hoffnung auszugeben oder gegen Dein Sitzungslimit für Tag Team Rolls zu zählen."
+	},
+	{
+		"id": "HF-IT045",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Ringe der Kameradschaft",
+		"text": "Zwei Kreaturen können dieses Paar Holzringe tragen. Du kannst den Stress desjenigen markieren, der den anderen Ring trägt (mit ihrer Erlaubnis), als wäre er Dein eigener."
+	},
+	{
+		"id": "HF-IT046",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Ringe der Freundschaft",
+		"text": "Zwei Kreaturen können dieses Ringpaar in Form von Schlangen tragen. Du kannst den Hoffnung von jedem, der den anderen Ring trägt, (mit ihrer Erlaubnis) so ausgeben, als wäre es Dein eigener."
+	},
+	{
+		"id": "HF-IT047",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Selbstbindendes Seil",
+		"text": "Du kannst dieses Seil bestellen, um sich zu binden oder zu lösen."
+	},
+	{
+		"id": "HF-IT048",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Silee's Folding Knife",
+		"text": "Diese 3-Zoll-Klinge hat eine Kante, die leicht alles durchschneidet, außer dem Griff, in dem sie gelagert ist."
+	},
+	{
+		"id": "HF-IT049",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Der Zaubererhut",
+		"text": "Dieser konische blaue Hut ist mit silbernen Sternen bedeckt. Einmal pro Pause können Sie einen Zauberspruch aus Deinem Tresor mit einem Rückrufpreis von gleich oder kleiner als Deine Stufe auswerfen."
+	},
+	{
+		"id": "HF-IT050",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Soul-Twin Circlets",
+		"text": "Zwei Kreaturen können dieses Paar Kreise tragen. Du kannst 1 Hoffnung ausgeben, um mit demjenigen, der das andere Kreist trägt, den Platz zu wechseln."
+	},
+	{
+		"id": "HF-IT051",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Zeitliches Heiligtum",
+		"text": "Ein PC, der sich im zeitlichen Heiligtum ausruht, kann einen zusätzlichen Ausfallmodus wählen."
+	},
+	{
+		"id": "HF-IT052",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Der Kompass des Diebes",
+		"text": "Dieser Kompass weist den Weg zum nächsten Ausgang, während drinnen und der nächste Eingang, während draußen."
+	},
+	{
+		"id": "HF-IT053",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Zeitnehmeranhänger",
+		"text": "Du kannst eine zusätzliche Ausfallzeit bewegen jede Pause wählen."
+	},
+	{
+		"id": "HF-IT054",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Titans Gürtel",
+		"text": "Einmal pro Szene kannst du diesen Gürtel aktivieren, um einen +1 Bonus auf deine Fähigkeiten für deinen nächsten Angriff zu erhalten."
+	},
+	{
+		"id": "HF-IT055",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Reiseglocke",
+		"text": "Einmal pro langer Pause können Sie diese Glocke läuten, um den kürzesten sicheren Weg durch unwegsames Gelände für 1 Stunde magisch zu öffnen."
+	},
+	{
+		"id": "HF-IT056",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Zweigesichtige Aegis Brooch",
+		"text": "Einmal pro Pause, 1W2{umdrehen eine Münze}. Auf Köpfen werden Sie immun gegen das nächste physischen Schaden, das Sie nehmen. Auf Zahlen werden Sie immun gegen das nächste magischen Schaden, das Sie nehmen."
+	},
+	{
+		"id": "HF-IT057",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Warp-Anhänger",
+		"text": "Markiere einmal pro Pause 1 Stress, um sich an einen Ort zu teleportieren, den Sie deutlich sehen können."
+	},
+	{
+		"id": "HF-IT058",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Whisperstep-Knöchel",
+		"text": "Dieser Knöchel macht Deine Schritte still, solange Sie sich nicht schneller bewegen als die Gehgeschwindigkeit."
+	},
+	{
+		"id": "HF-IT059",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Wildriders Sattel",
+		"text": "Dieser Sattel gewährt jedem Tier, das es auf die Fähigkeit, die Befehle ihres Reiters zu verstehen geschnallt ist."
+	},
+	{
+		"id": "HF-IT060",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Windup-Spielzeug",
+		"text": "Dieses kleine mechanische Gerät ist wie ein Strixwolf-Welpe geformt und kann so programmiert werden, dass es einfache Tricks ausführt."
+	},
+	{
+		"id": "HF-IT061",
+		"rarity": "Hope & Fear",
+		"subtype": "Beute",
+		"name": "Zephyr's Jar",
+		"text": "Man kann dieses leere Glas bei schlechtem Wetter öffnen, um den Sturm einzufangen und den klaren Himmel zu hinterlassen. Der Sturm bleibt im Inneren, bis er durch das Wiedereröffnen des Glases entfesselt wird."
+	}
+]

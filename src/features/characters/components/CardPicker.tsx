@@ -1,15 +1,24 @@
+import { gameTerm } from "../../../i18n/gameTerms";
+import { useLanguage as useUiLanguage } from "../../../i18n/react";
+import { translate as dfTranslate } from "../../../i18n";
 import React, { useMemo, useState } from "react";
 import { CharacterData, HeritageCardData } from "../../../types/character";
 import {
-	DOMAIN_CARD_TYPES,
 	DOMAIN_COLORS,
 	DOMAIN_NAMES,
 	GEAR_KIND_LABELS,
 	GearData,
 	SrdDomainCard,
 	SrdHeritage,
+	SrdArmor,
+	SrdWeapon,
 } from "../../../types/srd";
-import { ALL_GEAR, SRD_ANCESTRIES, SRD_COMMUNITIES, SRD_DOMAIN_CARDS, SRD_EQUIPMENT } from "../../../data/srd";
+import {
+	localizeDamageDie,
+	localizeRange,
+	localizeTrait,
+} from "../../../data/srd";
+import { useLocalizedSrd } from "../../../data/useLocalizedSrd";
 import { armorToPatch, composeMixedHeritage, toCharacterWeapon, toHeritageCard } from "../creationTemplate";
 import { CardText } from "./CardText";
 import { DomainIcon } from "./DomainArt";
@@ -31,6 +40,19 @@ interface Props {
  * Players browse/filter and add cards to the open character.
  */
 export function CardPicker({ char, update, tab, onTabChange, onClose, customItems }: Props) {
+	useUiLanguage();
+	const {
+		language,
+		ancestries,
+		communities,
+		domainCards: allDomainCards,
+		equipment: srdEquipment,
+		gear: allGear,
+	} = useLocalizedSrd();
+	const domainTypes = useMemo(
+		() => [...new Set(allDomainCards.map((card) => card.type))],
+		[allDomainCards],
+	);
 	const [search, setSearch] = useState("");
 	const [domains, setDomains] = useState<Set<string>>(new Set());
 	const [level, setLevel] = useState("All");
@@ -38,7 +60,8 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 	const [expanded, setExpanded] = useState<string | null>(null);
 	// Mixed ancestry: first pick supplies the 1st feature, second pick the 2nd
 	const [mixedMode, setMixedMode] = useState(false);
-	const [mixedPrimary, setMixedPrimary] = useState<SrdHeritage | null>(null);
+	const [mixedPrimaryId, setMixedPrimaryId] = useState<string | null>(null);
+	const mixedPrimary = ancestries.find((item) => item.id === mixedPrimaryId) ?? null;
 
 	const toggleDomain = (name: string) => {
 		setDomains((current) => {
@@ -53,25 +76,25 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 
 	const domainCards = useMemo(() => {
 		if (tab !== "domain") return [];
-		return SRD_DOMAIN_CARDS.filter((c) => {
+		return allDomainCards.filter((c) => {
 			if (domains.size > 0 && !domains.has(c.domain)) return false;
 			if (level !== "All" && c.level !== Number(level)) return false;
 			if (type !== "All" && c.type !== type) return false;
 			if (query && !(c.name.toLowerCase().includes(query) || c.text.toLowerCase().includes(query))) return false;
 			return true;
 		});
-	}, [tab, domains, level, type, query]);
+	}, [tab, domains, level, type, query, allDomainCards]);
 
 	const heritages = useMemo(() => {
 		if (tab === "domain") return [];
-		const source = tab === "ancestry" ? SRD_ANCESTRIES : SRD_COMMUNITIES;
+		const source = tab === "ancestry" ? ancestries : communities;
 		if (!query) return source;
 		return source.filter(
 			(h) =>
 				h.name.toLowerCase().includes(query) ||
 				h.features.some((f) => f.toLowerCase().includes(query)),
 		);
-	}, [tab, query]);
+	}, [tab, query, ancestries, communities]);
 
 	const applyHeritageCard = (card: HeritageCardData) => {
 		const patch: Partial<CharacterData> =
@@ -81,6 +104,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 		const autoHeritage = composeHeritage(char.ancestryCard?.name, char.communityCard?.name);
 		if (!char.heritage.trim() || char.heritage === autoHeritage) {
 			patch.heritage = composeHeritage(nextAncestry, nextCommunity);
+			patch.customSrdFields = { ...char.customSrdFields, heritage: false };
 		}
 		update(patch);
 	};
@@ -88,11 +112,11 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 	const addHeritage = (h: SrdHeritage) => {
 		if (tab === "ancestry" && mixedMode) {
 			if (!mixedPrimary) {
-				setMixedPrimary(h);
+			setMixedPrimaryId(h.id);
 				return;
 			}
 			applyHeritageCard(composeMixedHeritage(mixedPrimary, h));
-			setMixedPrimary(null);
+			setMixedPrimaryId(null);
 			return;
 		}
 		applyHeritageCard(toHeritageCard(h));
@@ -102,35 +126,37 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 		update({ domainCards: [...char.domainCards, { ...c, inVault: false }] });
 
 	const isDomainCardAdded = (c: SrdDomainCard) =>
-		char.domainCards.some((existing) => existing.name === c.name);
+		char.domainCards.some((existing) => existing.id === c.id || (!existing.id && existing.name === c.name));
 
 	// Equipment tab: weapons/wheelchairs slot into primary/secondary, armor equips
 	const equipment = useMemo(() => {
 		if (tab !== "equipment") return [];
 		return [
-			...SRD_EQUIPMENT.weapons.map((w) => ({ kind: "weapon" as const, gear: w })),
-			...SRD_EQUIPMENT.wheelchairs.map((w) => ({ kind: "wheelchair" as const, gear: w })),
-			...SRD_EQUIPMENT.armor.map((a) => ({ kind: "armor" as const, gear: a })),
+			...srdEquipment.weapons.map((w) => ({ kind: "weapon" as const, gear: w })),
+			...srdEquipment.wheelchairs.map((w) => ({ kind: "wheelchair" as const, gear: w })),
+			...srdEquipment.armor.map((a) => ({ kind: "armor" as const, gear: a })),
 		].filter(({ gear }) => {
 			if (level !== "All" && gear.tier !== Number(level)) return false;
 			if (query && !gear.name.toLowerCase().includes(query)) return false;
 			return true;
 		});
-	}, [tab, level, query]);
+	}, [tab, level, query, srdEquipment]);
 
 	// Items tab: SRD items/consumables + the vault's custom gear
 	const looseItems = useMemo(() => {
 		if (tab !== "item") return [];
-		return [...(customItems ?? []), ...ALL_GEAR.filter((g) => g.kind === "item" || g.kind === "consumable")].filter(
+		return [...(customItems ?? []), ...allGear.filter((g) => g.kind === "item" || g.kind === "consumable")].filter(
 			(g) =>
 				!query ||
 				g.name.toLowerCase().includes(query) ||
 				g.text.toLowerCase().includes(query),
 		);
-	}, [tab, query, customItems]);
+	}, [tab, query, customItems, allGear]);
 
 	const addToInventory = (g: GearData) => {
-		const line = g.kind === "consumable" ? `${g.name} (consumable)` : g.name;
+		const line = g.kind === "consumable"
+			? `${g.name} (${gameTerm("Consumable", language)})`
+			: g.name;
 		update({ inventory: char.inventory.trim() ? `${char.inventory}\n${line}` : line });
 	};
 
@@ -158,7 +184,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 						{label}
 					</button>
 				))}
-				<button type="button" className="df-cs-card-remove" aria-label="Close card picker" onClick={onClose}>
+				<button type="button" className="df-cs-card-remove" aria-label={dfTranslate("ui.close.card.picker")} onClick={onClose}>
 					✕
 				</button>
 			</div>
@@ -167,7 +193,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 				<input
 					type="text"
 					className="df-cs-picker-search"
-					placeholder="Search cards…"
+					placeholder={dfTranslate("ui.search.cards")}
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
 				/>
@@ -179,27 +205,26 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							aria-pressed={mixedMode}
 							onClick={() => {
 								setMixedMode(!mixedMode);
-								setMixedPrimary(null);
+								setMixedPrimaryId(null);
 							}}
 						>
 							<span className="df-cs-check-box" />
-							Mixed ancestry
-						</button>
+							{dfTranslate("ui.mixed.ancestry")}</button>
 						<span className="df-cs-picker-mixed-hint">
 							{mixedMode
 								? mixedPrimary
-									? `1st feature: ${mixedPrimary.name} - now add the ancestry for the 2nd feature.`
-									: "Add the ancestry whose FIRST feature you take."
-								: "Combine two ancestries: the first feature of one, the second of another."}
+									? dfTranslate("sheet.mixed.next", { name: mixedPrimary.name })
+									: dfTranslate("sheet.mixed.first")
+								: dfTranslate("sheet.mixed.help")}
 						</span>
 					</div>
 				)}
 				{tab === "equipment" && (
 					<div className="df-cs-picker-selects">
-						<select className="dropdown" value={level} onChange={(e) => setLevel(e.target.value)} aria-label="Tier filter">
-							<option value="All">All tiers</option>
+						<select className="dropdown" value={level} onChange={(e) => setLevel(e.target.value)} aria-label={dfTranslate("ui.tier.filter")}>
+							<option value="All">{dfTranslate("ui.all.tiers")}</option>
 							{[1, 2, 3, 4].map((t) => (
-								<option key={t} value={String(t)}>Tier {t}</option>
+								<option key={t} value={String(t)}>{dfTranslate("ui.tier")} {t}</option>
 							))}
 						</select>
 					</div>
@@ -224,25 +249,25 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 										onClick={() => toggleDomain(name)}
 									>
 										<DomainIcon domain={name} className="df-cs-picker-chip-icon" />
-										{name}
+										{gameTerm(name, language)}
 									</button>
 								);
 							})}
 						</div>
 						<div className="df-cs-picker-selects">
-							<select className="dropdown" value={level} onChange={(e) => setLevel(e.target.value)} aria-label="Level filter">
-								<option value="All">All levels</option>
+							<select className="dropdown" value={level} onChange={(e) => setLevel(e.target.value)} aria-label={dfTranslate("ui.level.filter")}>
+								<option value="All">{dfTranslate("ui.all.levels")}</option>
 								{Array.from({ length: 10 }, (_, i) => (
 									<option key={i + 1} value={String(i + 1)}>
-										Level {i + 1}
+										{dfTranslate("ui.level")} {i + 1}
 									</option>
 								))}
 							</select>
-							<select className="dropdown" value={type} onChange={(e) => setType(e.target.value)} aria-label="Type filter">
-								<option value="All">All types</option>
-								{DOMAIN_CARD_TYPES.map((t) => (
+							<select className="dropdown" value={type} onChange={(e) => setType(e.target.value)} aria-label={dfTranslate("ui.type.filter")}>
+								<option value="All">{dfTranslate("ui.all.types")}</option>
+								{domainTypes.map((t) => (
 									<option key={t} value={t}>
-										{t}
+										{gameTerm(t, language)}
 									</option>
 								))}
 							</select>
@@ -255,11 +280,11 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 				{tab === "domain" &&
 					domainCards.map((card) => (
 						<PickerDomainRow
-							key={card.name}
+							key={card.id}
 							card={card}
-							expanded={expanded === card.name}
+							expanded={expanded === card.id}
 							added={isDomainCardAdded(card)}
-							onToggle={() => setExpanded(expanded === card.name ? null : card.name)}
+							onToggle={() => setExpanded(expanded === card.id ? null : card.id)}
 							onAdd={() => addDomainCard(card)}
 						/>
 					))}
@@ -268,18 +293,20 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 						const mixing = tab === "ancestry" && mixedMode;
 						return (
 							<PickerHeritageRow
-								key={h.name}
+								key={h.id}
 								heritage={h}
-								expanded={expanded === h.name}
+								expanded={expanded === h.id}
 								added={
 									!mixing &&
-									(tab === "ancestry" ? char.ancestryCard : char.communityCard)?.name === h.name
+									((tab === "ancestry" ? char.ancestryCard : char.communityCard)?.id === h.id ||
+										(!(tab === "ancestry" ? char.ancestryCard : char.communityCard)?.id &&
+											(tab === "ancestry" ? char.ancestryCard : char.communityCard)?.name === h.name))
 								}
 								addLabel={
-									mixing ? (mixedPrimary ? "2nd feature" : "1st feature") : "Add"
+									mixing ? (mixedPrimary ? dfTranslate("ui.dynamic.2nd.feature") : dfTranslate("ui.dynamic.1st.feature")) : dfTranslate("ui.dynamic.add")
 								}
-								pending={mixing && mixedPrimary?.name === h.name}
-								onToggle={() => setExpanded(expanded === h.name ? null : h.name)}
+								pending={mixing && mixedPrimaryId === h.id}
+								onToggle={() => setExpanded(expanded === h.id ? null : h.id)}
 								onAdd={() => addHeritage(h)}
 							/>
 						);
@@ -295,9 +322,9 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							>
 								<span className="df-cs-pick-name">{gear.name}</span>
 								<span className="df-cs-pick-meta">
-									Tier {gear.tier} · {kind === "armor"
-										? `Thresholds ${(gear as typeof SRD_EQUIPMENT.armor[number]).minor}/${(gear as typeof SRD_EQUIPMENT.armor[number]).major} · Score ${(gear as typeof SRD_EQUIPMENT.armor[number]).score}`
-										: `${(gear as typeof SRD_EQUIPMENT.weapons[number]).trait} - ${(gear as typeof SRD_EQUIPMENT.weapons[number]).range} · ${(gear as typeof SRD_EQUIPMENT.weapons[number]).damage}`}
+									{dfTranslate("srd.tierLabel", {}, language)} {gear.tier} · {kind === "armor"
+										? dfTranslate("srd.armorMeta", { minor: (gear as SrdArmor).minor, major: (gear as SrdArmor).major, score: (gear as SrdArmor).score }, language)
+										: `${localizeTrait((gear as SrdWeapon).trait, language)} - ${localizeRange((gear as SrdWeapon).range, language)} · ${localizeDamageDie((gear as SrdWeapon).damage, language)}`}
 								</span>
 							</button>
 							{expanded === gear.id && gear.feature && (
@@ -310,30 +337,27 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 									<button
 										type="button"
 										className="df-cs-pick-add"
-										onClick={() => update(armorToPatch(gear as typeof SRD_EQUIPMENT.armor[number]))}
+										onClick={() => update(armorToPatch(gear as SrdArmor))}
 									>
-										Equip
-									</button>
+										{dfTranslate("ui.equip")}</button>
 								) : (
 									<>
 										<button
 											type="button"
 											className="df-cs-pick-add"
 											onClick={() =>
-												update({ primaryWeapon: toCharacterWeapon(gear as typeof SRD_EQUIPMENT.weapons[number]) })
+												update({ primaryWeapon: toCharacterWeapon(gear as SrdWeapon, language) })
 											}
 										>
-											Primary
-										</button>
+											{dfTranslate("ui.primary")}</button>
 										<button
 											type="button"
 											className="df-cs-pick-add df-cs-pick-add--secondary"
 											onClick={() =>
-												update({ secondaryWeapon: toCharacterWeapon(gear as typeof SRD_EQUIPMENT.weapons[number]) })
+												update({ secondaryWeapon: toCharacterWeapon(gear as SrdWeapon, language) })
 											}
 										>
-											Secondary
-										</button>
+											{dfTranslate("ui.secondary")}</button>
 									</>
 								)}
 							</div>
@@ -350,7 +374,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							>
 								<span className="df-cs-pick-name">{g.name}</span>
 								<span className="df-cs-pick-meta">
-									{GEAR_KIND_LABELS[g.kind]}
+									{gameTerm(GEAR_KIND_LABELS[g.kind])}
 									{g.rarity ? ` · ${g.rarity}` : ""}
 									{g.meta ? ` · ${g.meta}` : ""}
 								</span>
@@ -361,18 +385,17 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 								</div>
 							)}
 							<button type="button" className="df-cs-pick-add" onClick={() => addToInventory(g)}>
-								Add
-							</button>
+								{dfTranslate("ui.add")}</button>
 						</div>
 					))}
 				{tab === "domain" && domainCards.length === 0 && (
-					<p className="df-cs-picker-none">No cards match these filters.</p>
+					<p className="df-cs-picker-none">{dfTranslate("ui.no.cards.match.these.filters")}</p>
 				)}
 				{tab === "equipment" && equipment.length === 0 && (
-					<p className="df-cs-picker-none">No equipment matches these filters.</p>
+					<p className="df-cs-picker-none">{dfTranslate("ui.no.equipment.matches.these.filters")}</p>
 				)}
 				{tab === "item" && looseItems.length === 0 && (
-					<p className="df-cs-picker-none">No items match.</p>
+					<p className="df-cs-picker-none">{dfTranslate("ui.no.items.match")}</p>
 				)}
 			</div>
 		</div>
@@ -396,6 +419,7 @@ function PickerDomainRow({
 	onToggle: () => void;
 	onAdd: () => void;
 }) {
+	useUiLanguage();
 	const color = DOMAIN_COLORS[card.domain] ?? "var(--df-cs-mid)";
 	return (
 		<div
@@ -409,7 +433,7 @@ function PickerDomainRow({
 				<DomainIcon domain={card.domain} className="df-cs-dcard-icon" style={{ color }} />
 				<span className="df-cs-pick-name">{card.name}</span>
 				<span className="df-cs-pick-meta">
-					{card.domain} · {card.type} · <ZapIcon />{card.recallCost}
+					{gameTerm(card.domain)} · {gameTerm(card.type)} · <ZapIcon />{card.recallCost}
 				</span>
 			</button>
 			{expanded && (
@@ -418,7 +442,7 @@ function PickerDomainRow({
 				</div>
 			)}
 			<button type="button" className="df-cs-pick-add" disabled={added} onClick={onAdd}>
-				{added ? "Added ✓" : "Add"}
+				{added ? dfTranslate("ui.dynamic.added") : dfTranslate("ui.dynamic.add")}
 			</button>
 		</div>
 	);
@@ -441,6 +465,7 @@ function PickerHeritageRow({
 	onToggle: () => void;
 	onAdd: () => void;
 }) {
+	useUiLanguage();
 	const featureNames = heritage.features
 		.map((f) => f.split(":")[0])
 		.join(" · ");
@@ -457,7 +482,7 @@ function PickerHeritageRow({
 				</div>
 			)}
 			<button type="button" className="df-cs-pick-add" disabled={added || pending} onClick={onAdd}>
-				{added ? "Added ✓" : pending ? "1st ✓" : addLabel}
+				{added ? dfTranslate("ui.dynamic.added") : pending ? dfTranslate("ui.dynamic.1st") : addLabel}
 			</button>
 		</div>
 	);

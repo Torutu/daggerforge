@@ -1,0 +1,73 @@
+[
+	{
+		"id": "ancestry-aetheris",
+		"name": "Ätheris",
+		"description": [
+			"Ätheris sind Humanoide, die vor allem an ihren Flügeln und heiligen Zeichen zu erkennen sind. Sie stammen von Engeln aus den Himmlischen Hallen ab. Ätheris sind üblicherweise 1,50 bis 2,10 Meter groß; manche besitzen auffallend lange Gliedmaßen. Ihre Augen, Haare und Haut sind häufig leuchtend gefärbt, können aber auch Erd- oder Pastelltöne aufweisen. Viele Angehörige dieser Abstammung werden mit heiligen Zeichen geboren, etwa leuchtenden Siegeln oder kunstvollen Mustern aus Linien und Symbolen. Spätestens beim Heranwachsen entwickeln jedoch alle Ätheris solche Zeichen. Im Laufe ihres Lebens verändern sie sich, häufig infolge von Prophezeiungen, Offenbarungen oder göttlicher Führung aus den Himmlischen Hallen.",
+			"Alle Ätheris besitzen eine „geweihte Aura“, die sich willentlich zeigen kann, wenn sie ihre Macht anrufen, oder unwillkürlich bei Freude und anderen starken Gefühlen. Wenn sie dieses Strahlen hervorrufen, können ihre Augen und Körper leuchten, ihre Zeichen deutlicher hervortreten oder über die Haut wandern, oder ein Heiligenschein über beziehungsweise um ihren Kopf erscheinen. Jeder dieser Heiligenscheine ist so einzigartig wie ein Fingerabdruck, kann aber Ähnlichkeiten mit denen anderer Familienmitglieder aufweisen. Vielleicht aufgrund ihrer himmlischen Abstammung leben Ätheris gewöhnlich etwa 350 Jahre und bewahren selbst im Alter ein jugendliches Leuchten."
+		],
+		"features": [
+			"Geweihte Aura: Wenn ein verbündeter Charakter in kurzer Distanz bei einem Wurf ein Ergebnis mit Furcht erzielt, darfst du dieses Ergebnis einmal pro langer Rast stattdessen in ein Ergebnis mit Hoffnung ändern.",
+			"Himmlische Flügel: Du besitzt Flügel, mit denen du fliegen kannst. Einmal pro Szene darfst du während des Fliegens 1 Hoffnung einsetzen, anstatt 1 Rüstungsfeld zu markieren."
+		]
+	},
+	{
+		"id": "ancestry-earthkin",
+		"name": "Erdkind",
+		"description": [
+			"Erdkinder sind Humanoide, deren Körper aus Fleisch und Erde bestehen. Als Nachfahren von Erdelementaren setzen sich ihre Körper aus Fleisch und Fels, Kristall, Lehm, Erde, Sand oder einer Mischung dieser Materialien zusammen. Manche bestehen überwiegend aus Fleisch und Blut und besitzen nur ein erdiges Merkmal, etwa steinfarbene oder steinartige Haut oder Kristallformationen, die ihren Kopf wie Haare schmücken. Andere sind oftmals asymmetrische Verbindungen aus Muskeln und natürlichen Mineralien, während wieder andere fast vollständig aus Erde und Stein bestehen. Erdkinder können die mineralischen Teile ihres Körpers formen und verzieren, indem sie Muster hineinmeißeln, Edelsteine oder Metalle einsetzen oder Samen pflanzen, aus denen schmückende Pflanzen wachsen. Ihre Farben gehen auf ihre elementare Herkunft zurück: Selbst jene, die mehr Fleisch als Erde besitzen, tragen Farbtöne von Marmor, Edelsteinen, Sand oder Erde.",
+			"Erdkinder beginnen ihr Leben als kleine Ansammlungen von Erde, etwa als Felsbrocken, Lehmkugel oder Kristallgruppe. Ihre humanoiden Merkmale bilden sich recht schnell aus, danach altern sie während ihrer ungefähr 300-jährigen Lebensspanne jedoch langsam. Ausgewachsen sind sie im Durchschnitt 1,50 bis 2 Meter groß; ihre Körperform wird stark von ihrem vorherrschenden Material bestimmt. Verletzungen erscheinen bei vielen Erdkindern wie Risse im Stein. Selbst lange nachdem die ursprüngliche Wunde verheilt ist, schließen sich diese Spalten nur langsam. Wenn Erdkinder sterben, zerfallen sie schließlich zu einem Haufen Erde."
+		],
+		"features": [
+			"Steinhaut: Du erhältst bei der Charaktererschaffung einen permanenten Bonus von +1 auf deinen Rüstungswert und deine Schadensschwellen.",
+			"Unverrückbar: Solange du den Boden berührst, kannst du nicht gegen deinen Willen angehoben oder bewegt werden."
+		]
+	},
+	{
+		"id": "ancestry-emberkin",
+		"name": "Glutkind",
+		"description": [
+			"Glutkinder sind Humanoide, deren Körper aus Fleisch und Feuer bestehen. Als Nachfahren von Feuerelementaren zeigt sich ihr feuriges Erbe etwa in flammendem Haar, glutgleichen Augen, leuchtenden Strömen über ihrer Haut, einer rauchenden Oberfläche oder einem Flackern in Muskeln, Adern, Organen oder Fingerspitzen. Diese Merkmale verändern oder verstärken sich mit ihren Gefühlen und sind bei manchen wandelbarer als bei anderen. Haut und Haare tragen die Farben des Feuers: leuchtendes Rot, Orange, Gelb, Holzkohlegrau oder sogar einen Hauch Blau. Ihre Ohren sind wie Flammenzungen gebogen und zugespitzt. Glutkinder sind meist wärmer als andere Wesen; manche fühlen sich sogar heiß an.",
+			"Neugeborene Glutkinder ähneln kleinen Feuerbällen oder glimmenden Kohlen. Da sie ihre Temperatur noch nicht kontrollieren können, werden sie häufig in feuerfesten Behältnissen wie Dracheneiern, Herdstellen oder Kochgefäßen untergebracht. Ihre humanoiden Merkmale entwickeln sich bis zum Ende der Jugend, wenn sich ihre erwachsene Gestalt festigt. Glutkinder werden 1,50 bis 2,10 Meter groß und ungefähr 250 Jahre alt; mit zunehmendem Alter verblassen ihr Licht und ihre Hitze. Wenn sie sterben, leuchten sie einen Augenblick hell auf und verbrennen anschließend zu Asche."
+		],
+		"features": [
+			"Feuerfest: Du bist immun gegen Schaden durch magisches oder gewöhnliches Feuer.",
+			"Entzündung: Markiere 1 Stress, um deine Primärwaffe bis zum Ende der Szene in Flammen zu hüllen. Solange die Waffe brennt, spendet sie helles Licht und du erhältst bei Schadenswürfen mit dieser Waffe einen Bonus von 1W6."
+		]
+	},
+	{
+		"id": "ancestry-gnome",
+		"name": "Gnom",
+		"description": [
+			"Gnome sind üblicherweise kleine Humanoide mit kegelförmigen Köpfen, die sich über kurze Entfernungen teleportieren können. Ein durchschnittlicher Gnom ist etwa 90 Zentimeter groß, doch seine verhältnismäßig langen Arme und großen Hände verleihen ihm für seine Größe eine erstaunliche Reichweite. Dazu stehen sein kantiger Körperbau sowie sein kurzer Rumpf und seine kurzen Beine im Gegensatz. Gnome erkennt man außerdem an ihren sanft zugespitzten Ohren und großen Augen. Ihre Köpfe sind groß, wobei die Kegelform von Familie zu Familie variiert. Auch ihre Fähigkeit zur kurzen Teleportation erben sie von ihren Eltern; jede Familie zeigt beim Verschwinden und Wiedererscheinen eigene Erscheinungsformen, etwa kleine Rauchwolken, Lichtfunken oder ein scheinbares Verdunsten in der Luft. Gnome lernen schon sehr früh, Gegenstände zu greifen und festzuhalten. Selbst wenn ihr Körper im Alter langsamer wird, bleiben ihre Hände während ihrer etwa 200-jährigen Lebensspanne geschickt."
+		],
+		"features": [
+			"Flinke Finger: Wenn du einen Finessewurf durchführst, darfst du 2 Hoffnung einsetzen, um deinen Hoffnungswürfel erneut zu werfen.",
+			"Flimmerschritt: Einmal pro Szene darfst du dich an einen anderen sichtbaren Punkt in weiter Distanz teleportieren."
+		]
+	},
+	{
+		"id": "ancestry-skykin",
+		"name": "Himmelskind",
+		"description": [
+			"Himmelskinder sind Humanoide, deren Körper aus Fleisch und Luft bestehen. Als Nachfahren von Luftelementaren besitzt ihre Haut wechselnde Farben: das blasse Grau und Blau eines klaren Morgenhimmels, die glühenden Orange- und Fuchsientöne eines Sonnenuntergangs oder das tiefe Schwarz und Violett einer sternenübersäten Nacht. Häufig haben sie halb durchscheinende Haut, schwebendes Haar aus Rauchschwaden oder Wolken oder kleine Luftzüge, die beständig durch ihre Kleidung fahren. Die Stärke dieser Merkmale nimmt mit ihren Gefühlen zu oder ab. Himmelskinder werden im Durchschnitt 1,65 bis 2,10 Meter groß. Manche haben verlängerte Merkmale wie spitze Ohren, lange Hälse, Hände, Füße oder Gliedmaßen.",
+			"Himmelskinder werden als Luftwirbel oder kleine Wolken geboren und sind anfangs schwer zu sehen oder festzuhalten. Bis sie heranreifen und fester werden, bewahrt man sie in Gläsern oder ähnlichen Gefäßen auf. Im Laufe ihrer Jugend nehmen sie eine immer menschlichere Gestalt an, doch ihre Körper bleiben formbar. Manche Erwachsene können ihre Gestalt ihr Leben lang verändern, auch wenn dies Zeit und Anstrengung erfordert. Himmelskinder leben ungefähr 300 Jahre. Mit ihrem letzten Atemzug lösen sie sich in der Luft auf."
+		],
+		"features": [
+			"Sturmkraft: Markiere 1 Stress, um einen Windstoß zu beschwören, der dich oder einen verbündeten Charakter in sehr kurzer Distanz bis zu einer Position in sehr weiter Distanz trägt. Außerdem kannst du jederzeit kontrollieren, wie schnell du fällst.",
+			"Auge des Sturms: Setze 2 Hoffnung ein, um dir oder einem verbündeten Charakter in unmittelbarer Distanz einen Bonus von +1 auf den Ausweichen-Wert zu gewähren, bis du schweren Schaden erleidest oder dieses Merkmal erneut einsetzt."
+		]
+	},
+	{
+		"id": "ancestry-tidekin",
+		"name": "Gezeitenkind",
+		"description": [
+			"Gezeitenkinder sind Humanoide, deren Körper aus Fleisch und Wasser bestehen. Als Nachfahren von Wasserelementaren besitzen sie flossenartige Ohren und Schwimmhäute zwischen Fingern und Zehen. Die Farben ihrer Haut, Haare und Augen spiegeln die vielen Formen des Wassers wider: Manche zeigen leuchtendes Türkis, Grün und Meerschaum wie flache Flüsse oder tropische Meere, andere das dunkle Blau und Violett der tiefsten Ozeane. Bei einigen wandern diese Farben wie Wellen unter halb durchscheinender Haut. Manche Gezeitenkinder tragen Wassergebilde wie Haare auf dem Kopf oder Wellen, die sich über ihren Körper bewegen. Anstelle von Tränen verändern diese Gebilde sich mit ihren Gefühlen. Die wechselnden Farben und Formen dienen ihnen bewusst oder unbewusst als wortlose Verständigung.",
+			"Gezeitenkinder werden als kleine Wassermengen geboren, etwa als Pfütze oder flüssige Kugel. Als Kinder hält man sie häufig in wasserdichten Behältern wie Schalen oder Flaschen. Bis sie in der Jugend eine festere humanoide Gestalt annehmen, wirken sie sehr flüssig. Erwachsene Gezeitenkinder sind 1,50 bis 2 Meter groß. Die Wandelbarkeit des Wassers prägt ihre Körperform, die sie während ihrer ungefähr 300-jährigen Lebensspanne mit einiger Anstrengung verändern können. Wenn Angehörige dieser Abstammung sterben, lösen sie sich in Wasser auf und fließen davon."
+		],
+		"features": [
+			"Amphibisch: Du kannst unter Wasser atmen und dich dort natürlich bewegen.",
+			"Lebensquelle: Wenn dir eine kleine Menge Wasser zur Verfügung steht, darfst du einmal pro Rast 1 Stress markieren, um bei dir oder einem verbündeten Charakter in sehr kurzer Distanz 1 TP zu löschen."
+		]
+	}
+]

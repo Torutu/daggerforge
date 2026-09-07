@@ -1,3 +1,5 @@
+import { translate as dfTranslate } from "../i18n";
+import { gameTerm } from "../i18n/gameTerms";
 /**
  * UI Factory for Search Controls
  *
@@ -82,25 +84,25 @@ export class SearchControlsUI {
 		const filterRow = this.container.createDiv({ cls: "df-filter-row" });
 
 		this.createMultiSelectFilter(filterRow, {
-			label: "Tier",
+			label: dfTranslate("ui.tier"),
 			options: this.config.availableTiers ?? [],
-			formatOption: (v) => `Tier ${v}`,
+			formatOption: (v) => `${dfTranslate("ui.tier")} ${v}`,
 			stateKey: "tiers",
 			onChange: (values) => this.config.onTierChange?.(values),
 		});
 
 		this.createMultiSelectFilter(filterRow, {
-			label: "Source",
+			label: dfTranslate("ui.source"),
 			options: this.config.availableSources ?? [],
-			formatOption: (v) => this.capitalize(v),
+			formatOption: (v) => gameTerm(this.capitalize(v)),
 			stateKey: "sources",
 			onChange: (values) => this.config.onSourceChange?.(values),
 		});
 
 		this.createMultiSelectFilter(filterRow, {
-			label: "Type",
+			label: dfTranslate("ui.type"),
 			options: this.config.availableTypes ?? [],
-			formatOption: (v) => v,
+			formatOption: (v) => gameTerm(v),
 			stateKey: "types",
 			onChange: (values) => this.config.onTypeChange?.(values),
 		});
@@ -330,7 +332,7 @@ export class SearchControlsUI {
 		}) as HTMLInputElement;
 
 		wrapper.createEl("label", {
-			text: "Wide",
+			text: dfTranslate("ui.wide"),
 			attr: { for: "df-wide-card-checkbox" },
 			cls: "df-wide-card-label",
 		});
@@ -345,7 +347,7 @@ export class SearchControlsUI {
 	private createClearButton(container: HTMLElement): void {
 		const button = container.createEl("button", {
 			cls: "df-clear-filters-btn",
-			attr: { "aria-label": "Clear filters", title: "Clear filters" },
+			attr: { "aria-label": "Clear filters", title: dfTranslate("ui.clear.filters") },
 		}) as HTMLButtonElement;
 
 		button.innerHTML = CLEAR_ICON;

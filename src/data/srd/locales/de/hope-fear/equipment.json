@@ -1,0 +1,748 @@
+{
+	"weapons": [
+		{
+			"id": "HF-W001",
+			"name": "Arkanes Gewehr",
+			"feature": "Ziel: Dein Angriff hat Nachteile, wenn das Ziel innerhalb von sehr kurzer Distanz von dir oder innerhalb von unmittelbarer Distanz eines Deiner Verbündeten liegt."
+		},
+		{
+			"id": "HF-W002",
+			"name": "Bladed Star",
+			"feature": "Rebounding: Wenn du diese Waffe werfen, kehrt sie zu Deiner Hand zurück. Bei einem fehlgeschlagenen Angriff können Sie Deinen Angriff mit Nachteilen erneut rollen."
+		},
+		{
+			"id": "HF-W003",
+			"name": "Knöchel aus Messing"
+		},
+		{
+			"id": "HF-W004",
+			"name": "Helles Schwert"
+		},
+		{
+			"id": "HF-W005",
+			"name": "Dolch spielen"
+		},
+		{
+			"id": "HF-W006",
+			"name": "Verzaubertes Chakram",
+			"feature": "Wenn du diese Waffe wirfst, kehrt sie zu deiner Hand zurück. Wenn du einen Angriff machst, kannst du 1 Stress markieren, um eine andere Kreatur innerhalb von sehr kurzer Distanz des ersten Ziels mit diesem Angriff zu zielen."
+		},
+		{
+			"id": "HF-W007",
+			"name": "Kampfmantel",
+			"feature": "Padded: Erlange die Stufe + 1 dieser Waffe, um Schwellen zu beschädigen."
+		},
+		{
+			"id": "HF-W008",
+			"name": "Focus Runes",
+			"feature": "Konzentriert: +1 auf primäre Waffenschäden an Zielen innerhalb von sehr kurzer Distanz."
+		},
+		{
+			"id": "HF-W009",
+			"name": "Lukenbeschlag",
+			"feature": "Follow-up: Bei einem erfolgreichen Angriff mit Deiner Primärwaffe innerhalb von unmittelbarer Distanz können Sie 1 Stress markieren, um einen +1 Bonus auf Deine Fähigkeiten für diesen Angriff zu erhalten."
+		},
+		{
+			"id": "HF-W010",
+			"name": "Katana",
+			"feature": "Schnell: Wenn du einen Angriff ausführen, können Sie 1 Stress markieren, um eine andere Kreatur in Reichweite zu erreichen."
+		},
+		{
+			"id": "HF-W011",
+			"name": "Offhand Messing Knuckles",
+			"feature": "Gepaart: @Resolve[@item.tier + 1|sign]{Hinzufügen dieser sekundären Waffen-Stufe + 1} um primäre Waffen-Schäden an Zielen innerhalb von unmittelbarer Distanz zu verursachen"
+		},
+		{
+			"id": "HF-W012",
+			"name": "Kabelpfeil"
+		},
+		{
+			"id": "HF-W013",
+			"name": "Rune Shield",
+			"feature": "Schutz: @Resolve[@item.tier|sign]{Hinzufügen der Stufe des Gegenstands} zum Rüstungs-Score"
+		},
+		{
+			"id": "HF-W014",
+			"name": "Runelock-Pistole",
+			"feature": "Nachladen: Nach einem Angriff eine W6 würfeln. Bei einem Ergebnis von 1 muss man 1 Stress markieren, um diese Waffe neu zu laden, bevor man sie erneut abfeuern kann."
+		},
+		{
+			"id": "HF-W015",
+			"name": "Scimitar"
+		},
+		{
+			"id": "HF-W016",
+			"name": "Schattenklinge"
+		},
+		{
+			"id": "HF-W017",
+			"name": "Messer werfen",
+			"feature": "Gelagert: Du kannst diese Waffe in den Bereich @Lookup[@item.attack.range|type:range|adjustment:2] werfen. Du musst sie nicht abrufen, da Sie immer eine andere zur Hand haben."
+		},
+		{
+			"id": "HF-W018",
+			"name": "Verdrehter Dolch"
+		},
+		{
+			"id": "HF-W019",
+			"name": "Whipsword"
+		},
+		{
+			"id": "HF-W020",
+			"name": "Klingenventilator",
+			"feature": "Parry: Wenn du angegriffen wirst, rolle die Schadenswürfel dieser Waffe. Wenn einer der Schadenswürfel des Angreifers den gleichen Wert wie deine Würfel gewürfelt hat, werden die übereinstimmenden Ergebnisse von den Schadenswürfeln des Angreifers verworfen, bevor der Schaden, den du nimmst, summiert wird."
+		},
+		{
+			"id": "HF-W021",
+			"name": "Rohrschwert",
+			"feature": "Retractable: Die Klinge kann Verborgen im Griff sein, um eine Erkennung zu vermeiden."
+		},
+		{
+			"id": "HF-W022",
+			"name": "Einklappbarer BAT",
+			"feature": "Nonlethal: Wenn ein Ziel eine beliebige Anzahl von Trefferpunkte aus einem Angriff mit dieser Waffe markieren würde, markieren sie stattdessen eine gleiche Anzahl von Stress."
+		},
+		{
+			"id": "HF-W023",
+			"name": "Cyrurgien-Skalpell",
+			"feature": "Scary: Bei einem erfolgreichen Angriff muss das Ziel 1 Stress markieren."
+		},
+		{
+			"id": "HF-W024",
+			"name": "Verdrängungsrasor",
+			"feature": "Omnipräsent: Du kannst Angriffe auf Ziele innerhalb von sehr weiter Distanz durchführen, müssen dies jedoch mit Nachteil tun."
+		},
+		{
+			"id": "HF-W025",
+			"name": "Eldritch Vambrace",
+			"feature": "Ausweichen: Wenn du angegriffen wirst, kannst du einen Rüstungsplatz markieren, um einen Bonus auf deinen Ausweichen zu erhalten, der deinem Rüstungs-Score entspricht."
+		},
+		{
+			"id": "HF-W026",
+			"name": "Verzauberte Laute",
+			"feature": "Belebend: Bei einem erfolgreichen Angriff, rollen Sie eine W4. Bei einem Ergebnis von 4, löschen Sie 1 Stress."
+		},
+		{
+			"id": "HF-W027",
+			"name": "Verzauberte Shillelagh",
+			"feature": "Schutz: @Resolve[@item.tier|sign]{Hinzufügen der Stufe des Gegenstands} zum Rüstungs-Score"
+		},
+		{
+			"id": "HF-W028",
+			"name": "Fury Gem",
+			"feature": "Brennen: Wenn du eine 6 auf einem Schadenswürfel rollen, muss das Ziel 1 Stress markieren."
+		},
+		{
+			"id": "HF-W029",
+			"name": "Verbessertes arkanes Gewehr",
+			"feature": "Ziel: Dein Angriff hat Nachteile, wenn das Ziel innerhalb von sehr kurzer Distanz von dir oder innerhalb von unmittelbarer Distanz eines Deiner Verbündeten liegt."
+		},
+		{
+			"id": "HF-W030",
+			"name": "Verbesserte Messing Knuckles"
+		},
+		{
+			"id": "HF-W031",
+			"name": "Verbessertes Brightsword"
+		},
+		{
+			"id": "HF-W032",
+			"name": "Verbessertes Casting Dolch"
+		},
+		{
+			"id": "HF-W033",
+			"name": "Verbessertes verzaubertes Chakram",
+			"feature": "Wenn du diese Waffe wirfst, kehrt sie zu deiner Hand zurück. Wenn du einen Angriff machst, kannst du 1 Stress markieren, um eine andere Kreatur innerhalb von sehr kurzer Distanz des ersten Ziels mit diesem Angriff zu zielen."
+		},
+		{
+			"id": "HF-W034",
+			"name": "Verbesserter Kampfmantel",
+			"feature": "Padded: Erlange die Stufe + 1 dieser Waffe, um Schwellen zu beschädigen."
+		},
+		{
+			"id": "HF-W035",
+			"name": "Verbesserte Fokus Runen",
+			"feature": "Konzentriert: +1 auf primäre Waffenschäden an Zielen innerhalb von sehr kurzer Distanz."
+		},
+		{
+			"id": "HF-W036",
+			"name": "Verbessertes Hatchet",
+			"feature": "Follow-up: Bei einem erfolgreichen Angriff mit Deiner Primärwaffe innerhalb von unmittelbarer Distanz können Sie 1 Stress markieren, um einen +1 Bonus auf Deine Fähigkeiten für diesen Angriff zu erhalten."
+		},
+		{
+			"id": "HF-W037",
+			"name": "Verbesserte Katana",
+			"feature": "Schnell: Wenn du einen Angriff ausführen, können Sie 1 Stress markieren, um eine andere Kreatur in Reichweite zu erreichen."
+		},
+		{
+			"id": "HF-W038",
+			"name": "Verbesserte Offhand Messing Knuckles",
+			"feature": "Gepaart: @Resolve[@item.tier + 1|sign]{Hinzufügen dieser sekundären Waffen-Stufe + 1} um primäre Waffen-Schäden an Zielen innerhalb von unmittelbarer Distanz zu verursachen"
+		},
+		{
+			"id": "HF-W039",
+			"name": "Verbesserter Rope Dart"
+		},
+		{
+			"id": "HF-W040",
+			"name": "Verbessertes Rune Shield",
+			"feature": "Schutz: @Resolve[@item.tier|sign]{Hinzufügen der Stufe des Gegenstands} zum Rüstungs-Score"
+		},
+		{
+			"id": "HF-W041",
+			"name": "Verbesserte Runelock Pistole",
+			"feature": "Nachladen: Nach einem Angriff eine W6 würfeln. Bei einem Ergebnis von 1 muss man 1 Stress markieren, um diese Waffe neu zu laden, bevor man sie erneut abfeuern kann."
+		},
+		{
+			"id": "HF-W042",
+			"name": "Verbesserter Scimitar"
+		},
+		{
+			"id": "HF-W043",
+			"name": "Verbessertes Shadowblade"
+		},
+		{
+			"id": "HF-W044",
+			"name": "Verbessertes Werfen von Messern",
+			"feature": "Gelagert: Du kannst diese Waffe in den Bereich @Lookup[@item.attack.range|type:range|adjustment:2] werfen. Du musst sie nicht abrufen, da Sie immer eine andere zur Hand haben."
+		},
+		{
+			"id": "HF-W045",
+			"name": "Verbesserter verdrehter Dolch"
+		},
+		{
+			"id": "HF-W046",
+			"name": "Verbessertes Whipsword"
+		},
+		{
+			"id": "HF-W047",
+			"name": "Javelins",
+			"feature": "Gelagert: Du kannst diese Waffe in den Bereich @Lookup[@item.attack.range|type:range|adjustment:2] werfen. Du musst sie nicht abrufen, da Sie immer eine andere zur Hand haben."
+		},
+		{
+			"id": "HF-W048",
+			"name": "Lanze",
+			"feature": "Umständlich: -1 bis Geschick"
+		},
+		{
+			"id": "HF-W049",
+			"name": "Rasierdraht",
+			"feature": "Verwickeln: Bei einem erfolgreichen Angriff mit Deiner Primärwaffe gegen ein Ziel innerhalb von sehr kurzer Distanz können Sie 1 Hoffnung ausgeben, um das Ziel vorübergehend Verwundbar zu machen."
+		},
+		{
+			"id": "HF-W050",
+			"name": "Segmentiertes Personal",
+			"feature": "Doppelte Pflicht: +1 für Rüstungs-Score; +1 für primäre Waffenschäden innerhalb von unmittelbarer Distanz"
+		},
+		{
+			"id": "HF-W051",
+			"name": "Spellbound Bangles"
+		},
+		{
+			"id": "HF-W052",
+			"name": "Splitterwellenbogen",
+			"feature": "Volleyed: Setze 1 Hoffnung ein, um eine Gruppe von Kreaturen in Reichweite anzuvisieren. Ziele, gegen die Sie erfolgreich sind, nehmen halben Schaden."
+		},
+		{
+			"id": "HF-W053",
+			"name": "War Pick",
+			"feature": "Tödlich: Wenn du Massiven Schaden behandeln, muss das Ziel ein zusätzliches TP markieren."
+		},
+		{
+			"id": "HF-W054",
+			"name": "Fortgeschrittenes Arkanes Gewehr",
+			"feature": "Ziel: Dein Angriff hat Nachteile, wenn das Ziel innerhalb von sehr kurzer Distanz von dir oder innerhalb von unmittelbarer Distanz eines Deiner Verbündeten liegt."
+		},
+		{
+			"id": "HF-W055",
+			"name": "Fortgeschrittene Messing Knuckles"
+		},
+		{
+			"id": "HF-W056",
+			"name": "Advanced Brightsword"
+		},
+		{
+			"id": "HF-W057",
+			"name": "Advanced Casting Dagger"
+		},
+		{
+			"id": "HF-W058",
+			"name": "Fortgeschrittenes verzaubertes Chakram",
+			"feature": "Wenn du diese Waffe wirfst, kehrt sie zu deiner Hand zurück. Wenn du einen Angriff machst, kannst du 1 Stress markieren, um eine andere Kreatur innerhalb von sehr kurzer Distanz des ersten Ziels mit diesem Angriff zu zielen."
+		},
+		{
+			"id": "HF-W059",
+			"name": "Fortgeschrittener Kampfmantel",
+			"feature": "Padded: Erlange die Stufe + 1 dieser Waffe, um Schwellen zu beschädigen."
+		},
+		{
+			"id": "HF-W060",
+			"name": "Advanced Focus Runes (Deutsche Übersetzung)",
+			"feature": "Konzentriert: +1 auf primäre Waffenschäden an Zielen innerhalb von sehr kurzer Distanz."
+		},
+		{
+			"id": "HF-W061",
+			"name": "Fortgeschrittene Hatchet",
+			"feature": "Follow-up: Bei einem erfolgreichen Angriff mit Deiner Primärwaffe innerhalb von unmittelbarer Distanz können Sie 1 Stress markieren, um einen +1 Bonus auf Deine Fähigkeiten für diesen Angriff zu erhalten."
+		},
+		{
+			"id": "HF-W062",
+			"name": "Fortgeschrittene Katana",
+			"feature": "Schnell: Wenn du einen Angriff ausführen, können Sie 1 Stress markieren, um eine andere Kreatur in Reichweite zu erreichen."
+		},
+		{
+			"id": "HF-W063",
+			"name": "Erweiterte Offhand Messing Knuckles",
+			"feature": "Gepaart: @Resolve[@item.tier + 1|sign]{Hinzufügen dieser sekundären Waffen-Stufe + 1} um primäre Waffen-Schäden an Zielen innerhalb von unmittelbarer Distanz zu verursachen"
+		},
+		{
+			"id": "HF-W064",
+			"name": "Advanced Rope Dart"
+		},
+		{
+			"id": "HF-W065",
+			"name": "Fortgeschrittene Rune Shield",
+			"feature": "Schutz: @Resolve[@item.tier|sign]{Hinzufügen der Stufe des Gegenstands} zum Rüstungs-Score"
+		},
+		{
+			"id": "HF-W066",
+			"name": "Kompakt Runelock Pistolen",
+			"feature": "Nachladen: Nach einem Angriff eine W6 würfeln. Bei einem Ergebnis von 1 muss man 1 Stress markieren, um diese Waffe neu zu laden, bevor man sie erneut abfeuern kann."
+		},
+		{
+			"id": "HF-W067",
+			"name": "Fortgeschrittene Scimitar"
+		},
+		{
+			"id": "HF-W068",
+			"name": "Advanced Shadowblade"
+		},
+		{
+			"id": "HF-W069",
+			"name": "Fortgeschrittene Werfer",
+			"feature": "Gelagert: Du kannst diese Waffe in den Bereich @Lookup[@item.attack.range|type:range|adjustment:2] werfen. Du musst sie nicht abrufen, da Sie immer eine andere zur Hand haben."
+		},
+		{
+			"id": "HF-W070",
+			"name": "Fortgeschrittener verdrehter Dolch"
+		},
+		{
+			"id": "HF-W071",
+			"name": "Advanced Whipsword"
+		},
+		{
+			"id": "HF-W072",
+			"name": "Arc Wand",
+			"feature": "Springen: Markiere 1 oder mehr Stress, um so viele Ziele in Reichweite des Angriffs zu treffen."
+		},
+		{
+			"id": "HF-W073",
+			"name": "Blitzhammer",
+			"feature": "Beschleuniger: Markiere einmal pro Szene 1 Stress, um zu weiter Distanz zu wechseln und dann einen Angriff durchzuführen."
+		},
+		{
+			"id": "HF-W074",
+			"name": "Kettenscythe",
+			"feature": "Schnell: Wenn du einen Angriff ausführen, können Sie 1 Stress markieren, um eine andere Kreatur in Reichweite zu erreichen."
+		},
+		{
+			"id": "HF-W075",
+			"name": "Kristallspeer"
+		},
+		{
+			"id": "HF-W076",
+			"name": "Kanonenblatt"
+		},
+		{
+			"id": "HF-W077",
+			"name": "Platinum Estoc"
+		},
+		{
+			"id": "HF-W078",
+			"name": "Rime Scepter",
+			"feature": "Einfrieren: Wenn ein Angriff dieser Waffe bewirkt, dass ein Ziel 2 oder mehr TP markiert, werden sie zu vorübergehend Festgesetzt."
+		},
+		{
+			"id": "HF-W079",
+			"name": "Rakete Maul",
+			"feature": "Bewusst: Bei einem erfolgreichen Angriff können Sie 1 Hoffnung ausgeben, um das Ziel zurück zu weiter Distanz zu bringen."
+		},
+		{
+			"id": "HF-W080",
+			"name": "Singendes Schwert",
+			"feature": "Bolstering: Wenn du bei einem Angriff kritisch erfolgreich sind, erhalten alle PCs innerhalb von kurzer Distanz 1 Hoffnung."
+		},
+		{
+			"id": "HF-W081",
+			"name": "Soldatenpike",
+			"feature": "Gespannt: Wenn ein Gegner in der Reichweite dieser Waffe dir Schaden zufügt, können Sie 2 Stress markieren, um ihn zu zwingen, ein Trefferpunkt zu markieren."
+		},
+		{
+			"id": "HF-W082",
+			"name": "Seelenkette",
+			"feature": "Entwässerung: Bei einem erfolgreichen Angriff können Sie 1 Hoffnung ausgeben, um das Ziel zu zwingen, 1 Stress zu markieren."
+		},
+		{
+			"id": "HF-W083",
+			"name": "Mitarbeiter von Augma",
+			"feature": "Katalytisch: Bei einem erfolgreichen Angriff können Sie 1 Stress markieren, um einem Verbündeten innerhalb von kurzer Distanz einen +3-Bonus für den nächsten Angriffswurf zu geben."
+		},
+		{
+			"id": "HF-W084",
+			"name": "Tinker's Hammer Ubersetzungen",
+			"feature": "Trusty: +1, um Rollen anzugreifen, die mit deiner primären Waffe hergestellt wurden."
+		},
+		{
+			"id": "HF-W085",
+			"name": "Vorpal Shard",
+			"feature": "Gezielt: Wenn du einen Waffenangriff nicht bestehen, können Sie 1 Hoffnung ausgeben, um bei Deinem nächsten Waffenangriff erfolgreich zu sein."
+		},
+		{
+			"id": "HF-W086",
+			"name": "War Dart"
+		},
+		{
+			"id": "HF-W087",
+			"name": "Fang des Adders",
+			"feature": "Gift: Wenn du mit dieser Waffe größeren oder größeren Schaden verursachen, wird das Ziel vorübergehend Verwundbar."
+		},
+		{
+			"id": "HF-W088",
+			"name": "Arquebus",
+			"feature": "Nachladen: Nach einem Angriff eine W6 würfeln. Bei einem Ergebnis von 1 muss man 1 Stress markieren, um diese Waffe neu zu laden, bevor man sie erneut abfeuern kann."
+		},
+		{
+			"id": "HF-W089",
+			"name": "Bec de Corbin",
+			"feature": "Verheerend: Bevor du ein Angriffswurf erstellen, können Sie 1 Stress markieren, um ein W20 als Schadenssterben zu verwenden."
+		},
+		{
+			"id": "HF-W090",
+			"name": "Schwarzpulver Serpentin",
+			"feature": "Brandstift: -1 bis Agilität; bei einem erfolgreichen Angriff müssen alle Kreaturen innerhalb von sehr kurzer Distanz des Ziels einen Trefferpunkt markieren."
+		},
+		{
+			"id": "HF-W091",
+			"name": "Blackblood Tendril CAS-Nr.",
+			"feature": "Giftig: Wenn ein Ziel eine beliebige Anzahl von Trefferpunkte von einem Angriff markiert, den Sie mit Furcht gerollt haben, markieren sie eine gleiche Anzahl von Stress."
+		},
+		{
+			"id": "HF-W092",
+			"name": "Uhrwerksarmbrust",
+			"feature": "Schnell: Wenn du einen Angriff ausführen, können Sie 1 Stress markieren, um eine andere Kreatur in Reichweite zu erreichen."
+		},
+		{
+			"id": "HF-W093",
+			"name": "Dämonenrand",
+			"feature": "Störend: Wenn du eine Kreatur mit dieser Waffe besiegen, müssen alle Gegner innerhalb von kurzer Distanz 1 Stress markieren."
+		},
+		{
+			"id": "HF-W094",
+			"name": "Echoklinge",
+			"feature": "Verdoppelt: Wenn du einen Angriff mit Deiner Primärwaffe durchführen, können Sie einem anderen Ziel innerhalb von unmittelbarer Distanz Schaden zufügen."
+		},
+		{
+			"id": "HF-W095",
+			"name": "Etherische Zweihänder",
+			"feature": "Ätherisch: Du musst 1 Stress markieren, um diese Waffe zu beschwören."
+		},
+		{
+			"id": "HF-W096",
+			"name": "Gravitation Arbalest",
+			"feature": "Magnetisch: Wenn du mit dieser Waffe angreifen, können Sie 1 Hoffnung ausgeben, um alle Gegner innerhalb des sehr kurzer Distanz des Ziels zu zwingen, ein Reaktionswurf (16) zu machen."
+		},
+		{
+			"id": "HF-W097",
+			"name": "Unendliche Mitarbeiter",
+			"feature": "Erweitern: Du kannst die Reichweite dieser Waffe bis sehr weit erhöhen. Du erhältst eine Strafe von -1, um für jeden Schritt, den du die Reichweite erhöhst, zu würfeln (z. B. unmittelbar bis sehr nah, sehr nah an nah oder nah an weit)."
+		},
+		{
+			"id": "HF-W098",
+			"name": "Legendäres Arkanes Gewehr",
+			"feature": "Ziel: Dein Angriff hat Nachteile, wenn das Ziel innerhalb von sehr kurzer Distanz von dir oder innerhalb von unmittelbarer Distanz eines Deiner Verbündeten liegt."
+		},
+		{
+			"id": "HF-W099",
+			"name": "Legendäre Messing Knuckles"
+		},
+		{
+			"id": "HF-W100",
+			"name": "Legendäres Brightsword"
+		},
+		{
+			"id": "HF-W101",
+			"name": "Legendäres Casting Dolch"
+		},
+		{
+			"id": "HF-W102",
+			"name": "Legendäres verzaubertes Chakram",
+			"feature": "Wenn du diese Waffe wirfst, kehrt sie zu deiner Hand zurück. Wenn du einen Angriff machst, kannst du 1 Stress markieren, um eine andere Kreatur innerhalb von sehr kurzer Distanz des ersten Ziels mit diesem Angriff zu zielen."
+		},
+		{
+			"id": "HF-W103",
+			"name": "Legendäre Kampfkleidung",
+			"feature": "Padded: Erlange die Stufe + 1 dieser Waffe, um Schwellen zu beschädigen."
+		},
+		{
+			"id": "HF-W104",
+			"name": "Legendäre Fokus-Runen",
+			"feature": "Konzentriert: +1 auf primäre Waffenschäden an Zielen innerhalb von sehr kurzer Distanz."
+		},
+		{
+			"id": "HF-W105",
+			"name": "Legendäres Hatchet",
+			"feature": "Follow-up: Bei einem erfolgreichen Angriff mit Deiner Primärwaffe innerhalb von unmittelbarer Distanz können Sie 1 Stress markieren, um einen +1 Bonus auf Deine Fähigkeiten für diesen Angriff zu erhalten."
+		},
+		{
+			"id": "HF-W106",
+			"name": "Legendäre Katana",
+			"feature": "Schnell: Wenn du einen Angriff ausführen, können Sie 1 Stress markieren, um eine andere Kreatur in Reichweite zu erreichen."
+		},
+		{
+			"id": "HF-W107",
+			"name": "Legendäre Offhand Messing Knuckles",
+			"feature": "Gepaart: @Resolve[@item.tier + 1|sign]{Hinzufügen dieser sekundären Waffen-Stufe + 1} um primäre Waffen-Schäden an Zielen innerhalb von unmittelbarer Distanz zu verursachen"
+		},
+		{
+			"id": "HF-W108",
+			"name": "Legendäres Rope Dart"
+		},
+		{
+			"id": "HF-W109",
+			"name": "Legendäre Runenschild",
+			"feature": "Schutz: @Resolve[@item.tier|sign]{Hinzufügen der Stufe des Gegenstands} zum Rüstungs-Score"
+		},
+		{
+			"id": "HF-W110",
+			"name": "Legendäre Runelock Pistole",
+			"feature": "Nachladen: Nach einem Angriff eine W6 würfeln. Bei einem Ergebnis von 1 muss man 1 Stress markieren, um diese Waffe neu zu laden, bevor man sie erneut abfeuern kann."
+		},
+		{
+			"id": "HF-W111",
+			"name": "Legendäre Scimitar"
+		},
+		{
+			"id": "HF-W112",
+			"name": "Legendäre Schattenklinge"
+		},
+		{
+			"id": "HF-W113",
+			"name": "Legendäres Werfen von Messern",
+			"feature": "Gelagert: Du kannst diese Waffe in den Bereich @Lookup[@item.attack.range|type:range|adjustment:2] werfen. Du musst sie nicht abrufen, da Sie immer eine andere zur Hand haben."
+		},
+		{
+			"id": "HF-W114",
+			"name": "Legendärer verdrehter Dolch"
+		},
+		{
+			"id": "HF-W115",
+			"name": "Legendäres Whipsword"
+		},
+		{
+			"id": "HF-W116",
+			"name": "Möbius Πανα Πανα Πανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα ανα"
+		},
+		{
+			"id": "HF-W117",
+			"name": "Abgetrennte Drachenklaue",
+			"feature": "Destruktiv: -1 bis Agilität; bei einem erfolgreichen Angriff müssen alle Gegner innerhalb von sehr kurzer Distanz 1 Stress markieren."
+		},
+		{
+			"id": "HF-W118",
+			"name": "Starmetalschaufel",
+			"feature": "Serrated: Wenn du eine 1 auf einem Schadenswürfel rollen, verursacht sie stattdessen 8 Schaden."
+		},
+		{
+			"id": "HF-W119",
+			"name": "Sturm Gottes Greataxe",
+			"feature": "Springen: Markiere 1 oder mehr Stress, um so viele Ziele in Reichweite des Angriffs zu treffen."
+		},
+		{
+			"id": "HF-W120",
+			"name": "Hohlnadel"
+		}
+	],
+	"armor": [
+		{
+			"id": "HF-AR001",
+			"name": "Banded Armor (Banded Armor)",
+			"feature": "Bulky: −1 bis Ausweichen; Wenn du Massiven Schaden einnehmen, müssen Sie 1 Stress markieren."
+		},
+		{
+			"id": "HF-AR002",
+			"name": "Brigandine-Rüstung",
+			"feature": "Lined: Markiere 1 Stress, um kleinere Schäden zu negieren."
+		},
+		{
+			"id": "HF-AR003",
+			"name": "Mage Robes",
+			"feature": "Verzaubert: Erhalten Sie einen Bonus auf Deine Schadensschwellen, die Deinem Zauberwirken-Merkmal entsprechen."
+		},
+		{
+			"id": "HF-AR004",
+			"name": "Skalieren Mail Armor",
+			"feature": "Umständlich: -1 bis Geschick"
+		},
+		{
+			"id": "HF-AR005",
+			"name": "Die Roben von Enchanter",
+			"feature": "Mnemonisch: Einmal pro Szene können Sie eine Domainkarte aus Deinem Tresor abrufen, ohne die Rückrufkosten zu bezahlen."
+		},
+		{
+			"id": "HF-AR006",
+			"name": "Vergoldete Sonnenplatte",
+			"feature": "Prägend: Einmal pro Szene, wenn Sie Hoffnung ausgeben, können Sie ein Rüstungsplatz löschen."
+		},
+		{
+			"id": "HF-AR007",
+			"name": "Hawkguards Mantle",
+			"feature": "Gleiten: Du kannst bis zu weiter Distanz gleiten und sind immun gegen Schäden durch Stürze."
+		},
+		{
+			"id": "HF-AR008",
+			"name": "Verbesserte Banded Armor",
+			"feature": "Bulky: −1 bis Ausweichen; Wenn du Massiven Schaden einnehmen, müssen Sie 1 Stress markieren."
+		},
+		{
+			"id": "HF-AR009",
+			"name": "Verbesserte Brigandine-Rüstung",
+			"feature": "Lined: Markiere 1 Stress, um kleinere Schäden zu negieren."
+		},
+		{
+			"id": "HF-AR010",
+			"name": "Verbesserte Mage Robes",
+			"feature": "Verzaubert: Erhalten Sie einen Bonus auf Deine Schadensschwellen, die Deinem Zauberwirken-Merkmal entsprechen."
+		},
+		{
+			"id": "HF-AR011",
+			"name": "Verbesserte Mail Armor",
+			"feature": "Umständlich: -1 bis Geschick"
+		},
+		{
+			"id": "HF-AR012",
+			"name": "Irontree Breastplate Rüstung",
+			"feature": "Verstärkt: Wenn du Deinen letzten Rüstungsplatz markieren, erhöhen Sie Deine Schadensschwellen um +2, bis Sie mindestens 1 Rüstungsplatz gelöscht haben."
+		},
+		{
+			"id": "HF-AR013",
+			"name": "Spinnenseiden-Tunika",
+			"feature": "Wand-Crawling: +1 Ausweichen; Du kannst auf Wänden so leicht wie auf dem Boden gehen."
+		},
+		{
+			"id": "HF-AR014",
+			"name": "Sturmfadengewohnheit",
+			"feature": "Absorbieren: Einmal pro Szene, wenn Sie magischen Schaden einnehmen, können Sie ein Rüstungsplatz löschen."
+		},
+		{
+			"id": "HF-AR015",
+			"name": "Trollhide Cuirass",
+			"feature": "Selbstheilung: Wenn du sich ausruhen, löschen Sie ein Rüstungsplatz."
+		},
+		{
+			"id": "HF-AR016",
+			"name": "Wyrdwood Splint Rüstung",
+			"feature": "Schnelle Schritte: Du kannst nicht Festgesetzt sein und können als Teil eines Aktionswurf zu weiter Distanz aufsteigen."
+		},
+		{
+			"id": "HF-AR017",
+			"name": "Fortgeschrittene Bandrüstung",
+			"feature": "Bulky: −1 bis Ausweichen; Wenn du Massiven Schaden einnehmen, müssen Sie 1 Stress markieren."
+		},
+		{
+			"id": "HF-AR018",
+			"name": "Fortgeschrittene Brigandine-Rüstung",
+			"feature": "Lined: Markiere 1 Stress, um kleinere Schäden zu negieren."
+		},
+		{
+			"id": "HF-AR019",
+			"name": "Fortgeschrittene Mage Robes",
+			"feature": "Verzaubert: Erhalten Sie einen Bonus auf Deine Schadensschwellen, die Deinem Zauberwirken-Merkmal entsprechen."
+		},
+		{
+			"id": "HF-AR020",
+			"name": "Advanced Scale Mail Rüstung",
+			"feature": "Umständlich: -1 bis Geschick"
+		},
+		{
+			"id": "HF-AR021",
+			"name": "Astralriß",
+			"feature": "Stellar: Markiere 1 Stress, um einen Vorteil auf einem Zauberwurf zu erlangen."
+		},
+		{
+			"id": "HF-AR022",
+			"name": "Bloodstone Plate Rüstung",
+			"feature": "Blutdurst: Wenn du einen Waffenangriff innerhalb von unmittelbarer Distanz kritisch erfolgreich durchführen, löschen Sie einen Trefferpunkt."
+		},
+		{
+			"id": "HF-AR023",
+			"name": "Cloverwebehülle",
+			"feature": "Fortune-Favored: Einmal pro Szene können Sie einen Fehler mit Hoffnung in einen Erfolg mit Furcht umwandeln."
+		},
+		{
+			"id": "HF-AR024",
+			"name": "Tiefgeschmiedete Coral Rüstung",
+			"feature": "Aquatisch: Du kannst unter Wasser atmen und sich im Unterwasserbereich Vorteile auf den Agilität Rolls verschaffen."
+		},
+		{
+			"id": "HF-AR025",
+			"name": "Granminster's Finery",
+			"feature": "Großartig: Erhalten Sie einen Bonus auf Deinen Rüstungs-Score, der Deinem Präsenz entspricht."
+		},
+		{
+			"id": "HF-AR026",
+			"name": "Skywardens Lamellar",
+			"feature": "Wachsamkeit: +2 bis Ausweichen."
+		},
+		{
+			"id": "HF-AR027",
+			"name": "Kreisgeschmiedete Dreadplatte",
+			"feature": "Verflucht: Wenn du eine beliebige Anzahl von Trefferpunkte aus einem Angriff markieren, rollen Sie eine W4. Bei einem Ergebnis von 4, muss der Angreifer eine gleiche Anzahl von Stress markieren."
+		},
+		{
+			"id": "HF-AR028",
+			"name": "Darkweave-Schleier",
+			"feature": "Ghostwalker: Markiere einmal pro Ruhezeit 1 Stress, um durch feste Objekte zu kurzer Distanz zu gelangen."
+		},
+		{
+			"id": "HF-AR029",
+			"name": "Gottgebundenes Laminar",
+			"feature": "Divine: Wenn du ein Rüstungsplatz markieren, erhalten Sie 1 Hoffnung."
+		},
+		{
+			"id": "HF-AR030",
+			"name": "Hallowed Heroplate",
+			"feature": "Gesegnet: Einmal pro langer Pause kannst du eine beliebige Anzahl von Hoffnung ausgeben, bevor du den Risiko-All-Tod-Move machst. Du erhältst einen Bonus auf das Ergebnis deines Hoffnung Die, der der Anzahl der ausgegebenen Hoffnung entspricht."
+		},
+		{
+			"id": "HF-AR031",
+			"name": "Legendäre Banded Armor",
+			"feature": "Bulky: −1 bis Ausweichen; Wenn du Massiven Schaden einnehmen, müssen Sie 1 Stress markieren."
+		},
+		{
+			"id": "HF-AR032",
+			"name": "Legendäre Brigandine Rüstung",
+			"feature": "Lined: Markiere 1 Stress, um kleinere Schäden zu negieren."
+		},
+		{
+			"id": "HF-AR033",
+			"name": "Legendäre Mage Robes",
+			"feature": "Verzaubert: Erhalten Sie einen Bonus auf Deine Schadensschwellen, die Deinem Zauberwirken-Merkmal entsprechen."
+		},
+		{
+			"id": "HF-AR034",
+			"name": "Legendäre Mail Armor",
+			"feature": "Umständlich: -1 bis Geschick"
+		},
+		{
+			"id": "HF-AR035",
+			"name": "Resonant Harness",
+			"feature": "Vitreous: Wenn ihr schweren oder größeren Schaden nehmen würdet, könnt ihr 2 Rüstungsschlitze markieren, um diesen Schaden zu negieren."
+		},
+		{
+			"id": "HF-AR036",
+			"name": "Rune-Forged Exosuit",
+			"feature": "Eingestellt: Die maximale Anzahl von Domainkarten in Deinem Loadout wird um eins reduziert, aber Du erhältst einen Bonus auf Deine Schadensschwellen, die Deiner Stufe entsprechen."
+		}
+	],
+	"wheelchairs": []
+}

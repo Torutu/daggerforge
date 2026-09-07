@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../i18n";
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import { toCustomHtml, toStandardHtml } from "./richContentTransform";
@@ -59,21 +60,21 @@ export class RichTextEditor {
 			{
 				kind: "button",
 				icon: ICONS.bold,
-				title: "Bold",
+				title: dfTranslate("ui.bold"),
 				action: () => this.editor.chain().focus().toggleBold().run(),
 				isActive: () => this.editor.isActive("bold"),
 			},
 			{
 				kind: "button",
 				icon: ICONS.italic,
-				title: "Italic",
+				title: dfTranslate("ui.italic"),
 				action: () => this.editor.chain().focus().toggleItalic().run(),
 				isActive: () => this.editor.isActive("italic"),
 			},
 			{
 				kind: "button",
 				icon: ICONS.strike,
-				title: "Strikethrough",
+				title: dfTranslate("ui.strikethrough"),
 				action: () => this.editor.chain().focus().toggleStrike().run(),
 				isActive: () => this.editor.isActive("strike"),
 			},
@@ -81,14 +82,14 @@ export class RichTextEditor {
 			{
 				kind: "button",
 				icon: ICONS.h1,
-				title: "Heading 1",
+				title: dfTranslate("ui.heading.1"),
 				action: () => this.editor.chain().focus().toggleHeading({ level: 1 }).run(),
 				isActive: () => this.editor.isActive("heading", { level: 1 }),
 			},
 			{
 				kind: "button",
 				icon: ICONS.h2,
-				title: "Heading 2",
+				title: dfTranslate("ui.heading.2"),
 				action: () => this.editor.chain().focus().toggleHeading({ level: 2 }).run(),
 				isActive: () => this.editor.isActive("heading", { level: 2 }),
 			},
@@ -96,14 +97,14 @@ export class RichTextEditor {
 			{
 				kind: "button",
 				icon: ICONS.list,
-				title: "Bullet list",
+				title: dfTranslate("ui.bullet.list"),
 				action: () => this.editor.chain().focus().toggleBulletList().run(),
 				isActive: () => this.editor.isActive("bulletList"),
 			},
 			{
 				kind: "button",
 				icon: ICONS.listOrdered,
-				title: "Numbered list",
+				title: dfTranslate("ui.numbered.list"),
 				action: () => this.editor.chain().focus().toggleOrderedList().run(),
 				isActive: () => this.editor.isActive("orderedList"),
 			},
@@ -111,14 +112,14 @@ export class RichTextEditor {
 			{
 				kind: "button",
 				icon: ICONS.undo,
-				title: "Undo",
+				title: dfTranslate("ui.undo"),
 				action: () => this.editor.chain().focus().undo().run(),
 				isActive: () => false,
 			},
 			{
 				kind: "button",
 				icon: ICONS.redo,
-				title: "Redo",
+				title: dfTranslate("ui.redo"),
 				action: () => this.editor.chain().focus().redo().run(),
 				isActive: () => false,
 			},

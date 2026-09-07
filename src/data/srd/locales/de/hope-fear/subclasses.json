@@ -1,0 +1,252 @@
+{
+	"executioners-guild": {
+		"name": "Gilde der Henker",
+		"foundation": [
+			{
+				"name": "Erster Schlag",
+				"description": "Wenn dir in einer Szene zum ersten Mal ein Angriff gelingt, fügst du doppelten Schaden zu."
+			},
+			{
+				"name": "Hinterhalt",
+				"description": "Dein Merkmal „Zum Tode markiert“ verwendet W6 statt W4."
+			}
+		],
+		"spellcastTrait": "Agilität",
+		"specialization": [
+			{
+				"name": "Todesstoß",
+				"description": "Wenn du einer Kreatur schweren Schaden zufügst, darfst du 1 Stress markieren, damit sie 1 zusätzlichen TP markieren muss."
+			},
+			{
+				"name": "Haltung des Skorpions",
+				"description": "Du erhältst einen Bonus von +2 auf deinen Ausweichen-Wert gegen Angriffe einer Kreatur, die du zum Tode markiert hast."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Sicherer Treffer",
+				"description": "Einmal pro langer Rast darfst du bei einem misslungenen Angriff 1 Hoffnung einsetzen, damit der Angriff stattdessen gelingt."
+			},
+			{
+				"name": "Meuchelangriff",
+				"description": "Dein Merkmal „Zum Tode markiert“ verwendet W8 statt W6."
+			}
+		]
+	},
+	"poisoners-guild": {
+		"name": "Gilde der Giftmischer",
+		"foundation": [
+			{
+				"name": "Giftige Gebräue",
+				"description": "Markiere 1 Stress, um 1W4+1 Marker auf diese Karte zu legen. Nach einem erfolgreichen Waffenangriff darfst du 1 Marker ausgeben, um dem Ziel ein Gift zu verabreichen. Du kennst diese Gifte:\n• Geisterblüte: Das Ziel wird vorübergehend Verwundbar.\n• Grabsporen: Das Ziel muss außerdem 1 Stress markieren.\n• Egelkraut: Du fügst mit diesem Angriff 1W6 zusätzlichen Schaden zu.\nWenn du eine lange Rast einlegst, entferne alle nicht ausgegebenen Marker."
+			}
+		],
+		"spellcastTrait": "Wissen",
+		"specialization": [
+			{
+				"name": "Giftkompendium",
+				"description": "Du kennst außerdem diese Gifte:\n• Nachtranke: Das Ziel hat bei Angriffswürfen einen Nachteil, bis es 1 Stress markiert, um diesen Zustand zu beenden.\n• Gorgonenwurzel: Das Ziel wird vorübergehend Festgesetzt."
+			},
+			{
+				"name": "Doppelzahn",
+				"description": "Wenn du einem zum Tode markierten Ziel ein dir bekanntes Gift verabreichst, darfst du 1 zusätzlichen Marker ausgeben, um ihm außerdem die Wirkung eines zweiten dir bekannten Gifts zuzufügen."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Giftmeister",
+				"description": "Du kennst außerdem diese Gifte:\n• Fäulnissamen: Das Ziel erhält bis zum Ende der Szene einen Malus von −3 auf seine Schadensschwellen. Dieser Effekt ist nicht kumulativ.\n• Furchtblatt: Du fügst mit diesem Angriff zusätzlichen Schaden in Höhe des Ergebnisses deines Furchtwürfels zu.\n• Leichendorn: Das Ziel hat bis zum Ende der Szene einen Nachteil bei Reaktionswürfen."
+			},
+			{
+				"name": "Segen der Natter",
+				"description": "Du bist immun gegen Gifte und andere Toxine."
+			}
+		]
+	},
+	"juggernaut": {
+		"name": "Bollwerk",
+		"foundation": [
+			{
+				"name": "Unverwüstlich",
+				"description": "Du erhältst einen permanenten Bonus von +3 auf deine Schwelle für schweren Schaden."
+			},
+			{
+				"name": "Überwältigen",
+				"description": "Wenn dir ein Angriff gegen ein Ziel gelingt, darfst du 1 Hoffnung einsetzen, um das Ziel an eine Position innerhalb kurzer Distanz zu schleudern oder es zu zwingen, 1 Stress zu markieren."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Umzingelt",
+				"description": "Wenn du mit einer Nahkampfwaffe angreifst, darfst du beliebig viel Hoffnung einsetzen, um ebenso viele zusätzliche Kreaturen in unmittelbarer Distanz als Ziele zu wählen."
+			},
+			{
+				"name": "Auge um Auge",
+				"description": "Einmal pro Rast darfst du 1 Stress markieren, wenn dich ein gegnerisches Ziel in unmittelbarer Distanz zwingt, beliebig viele TP zu markieren. Das Ziel muss anschließend ebenso viele TP markieren."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Prügelfreude",
+				"description": "Wenn du bei einem Angriff mit einer Nahkampfwaffe einen kritischen Erfolg erzielst, erhältst du 1 zusätzliche Hoffnung, löschst 1 zusätzlichen Stress und erhältst für diesen Angriff einen Bonus von +1 auf deine Übung."
+			},
+			{
+				"name": "Noch lange nicht",
+				"description": "Wenn du schweren Schaden erleidest, darfst du 1 Hoffnung erhalten oder 1 Stress löschen."
+			}
+		]
+	},
+	"martial-artist": {
+		"name": "Kampfkunstmeister",
+		"foundation": [
+			{
+				"name": "Haltungskämpfer",
+				"description": "Du kannst deine innere Entschlossenheit bündeln und verschiedene Kampfhaltungen einnehmen, die dir im Kampf besondere Vorteile gewähren.\n\nNimm den Bogen für Kampfhaltungen und wähle zwei Kampfhaltungen des Rangs 1. Wähle jedes Mal, wenn dein Charakter eine Stufe aufsteigt, eine zusätzliche Haltung deines Rangs oder eines niedrigeren Rangs."
+			}
+		],
+		"specialization": [
+			{
+				"name": "Wachsame Verteidigung",
+				"description": "Wenn du Ziel eines Angriffs wirst, darfst du 1 Fokus ausgeben, um gegen diesen Angriff einen Bonus in Höhe deines Rangs auf deinen Ausweichen-Wert zu erhalten."
+			},
+			{
+				"name": "Fokusgeschoss",
+				"description": "Gib 1 Fokus aus, um einen Instinktwurf gegen ein gegnerisches Ziel in weiter Distanz durchzuführen. Bei einem Erfolg fügst du abhängig von deiner Übung W20+3 magischen Schaden zu."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Grenzen sprengen",
+				"description": "Einmal pro Rast darfst du eine unglaubliche athletische Leistung vollbringen, etwa über Wasser laufen, zwischen weit entfernten Dächern springen oder ein Gebäude erklimmen, ohne dafür würfeln zu müssen. Wenn du dies tust, erhältst du 1 Hoffnung und löschst 1 Stress."
+			},
+			{
+				"name": "Im Fluss",
+				"description": "Du darfst 1 Stress markieren, statt 1 Fokus auszugeben, um eine andere Haltung einzunehmen. Außerdem darfst du 1 Fokus ausgeben, statt 1 Stress zu markieren, um einen Kombinationsschlag zu beginnen."
+			}
+		]
+	},
+	"pact-of-the-endless": {
+		"name": "Pakt des Ewigen",
+		"foundation": [
+			{
+				"name": "Mantel des Patrons",
+				"description": "Gib 1 Gunst aus, um dich in eine furchterregende Erscheinung deines Patrons zu hüllen. Der Effekt hält an, bis du schweren Schaden erleidest oder die Szene endet. Solange er aktiv ist, erhältst du einen Bonus in Höhe deines Rangs auf deine Schadensschwellen und hast einen Vorteil bei Aktionswürfen, mit denen du ein Ziel einschüchterst."
+			},
+			{
+				"name": "Unsterbliche Umarmung",
+				"description": "Gib einmal pro Rast beliebig viel Gunst aus, um ebenso viele Patronwürfel zu werfen. Lösche für jedes Ergebnis von 4 oder höher 1 TP."
+			}
+		],
+		"spellcastTrait": "Präsenz",
+		"specialization": [
+			{
+				"name": "Erschütternde Anrufung",
+				"description": "Wenn ein gegnerisches Ziel dich oder einen verbündeten Charakter in sehr kurzer Distanz angreift, darfst du 1 Gunst ausgeben, um dem Angriffswurf einen Nachteil zu geben. Misslingt der Wurf, muss das gegnerische Ziel außerdem 1 Stress markieren."
+			},
+			{
+				"name": "Schadenssenke",
+				"description": "Einmal pro Rast darfst du 1 Gunst ausgeben, um eingehenden Schaden zu halbieren."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Dunkle Aegis",
+				"description": "Einmal pro langer Rast darfst du 1 Gunst ausgeben, wenn du Schaden erleiden würdest, anstatt TP zu markieren."
+			},
+			{
+				"name": "Zehrender Fluch",
+				"description": "Wenn ein gegnerisches Ziel dich oder einen verbündeten Charakter in sehr kurzer Distanz angreift, darfst du 1 Gunst ausgeben, um es auszusaugen. Es muss dann 1 Stress markieren und du darfst 1 Stress löschen. Solange es ausgesaugt ist, verwendet das Ziel für Angriffswürfe einen W12 statt eines W20 – auch für Vorteil und Nachteil –, bis ihm ein Wurf misslingt."
+			}
+		]
+	},
+	"pact-of-the-wrathful": {
+		"name": "Pakt des Zornigen",
+		"foundation": [
+			{
+				"name": "Zorn des Patrons",
+				"description": "Gib 1 Gunst aus, um deine Angriffe mit der Macht deines Patrons zu erfüllen, bis du schweren Schaden zufügst oder die Szene endet. Wenn du während dieses Effekts Schaden würfelst, wirfst du außerdem eine Anzahl Patronwürfel in Höhe deines Rangs und addierst ihre Summe zum verursachten Schaden."
+			},
+			{
+				"name": "Tödliche Vergeltung",
+				"description": "Wenn du durch einen Angriff beliebig viele TP markierst, darfst du 1 Gunst ausgeben und ebenso viele Patronwürfel werfen. Für jedes Ergebnis von 4 oder höher muss der Angreifer 1 TP markieren."
+			}
+		],
+		"spellcastTrait": "Präsenz",
+		"specialization": [
+			{
+				"name": "Drohende Reichweite",
+				"description": "Gib 1 Gunst aus, um die Reichweite deiner Primärwaffe um eine Stufe zu erhöhen, beispielsweise von unmittelbar auf sehr kurz oder von sehr kurz auf kurz, höchstens jedoch auf sehr weite Distanz. Der Effekt endet, sobald dir mit dieser Waffe ein Angriff gelingt."
+			},
+			{
+				"name": "Feinde schwächen",
+				"description": "Wenn dir bei einem Aktionswurf gegen ein Ziel ein Erfolg mit Hoffnung gelingt, darfst du beliebig viel Gunst ausgeben. Das Ziel muss ebenso viel Stress markieren."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Furchterregender Angriff",
+				"description": "Gib 1 Gunst aus, um beliebig viele deiner Schadenswürfel erneut zu werfen. Du darfst weiterhin Gunst ausgeben, um dieses Merkmal beim selben Schadenswurf mehrfach einzusetzen."
+			},
+			{
+				"name": "Jenseitiger Zorn",
+				"description": "Einmal pro Rast darfst du, wenn du Schaden erleidest, beliebig viel Gunst ausgeben und ebenso viele Patronwürfel werfen. Wähle eine Anzahl Kreaturen in kurzer Distanz bis zur Höhe des höchsten Ergebnisses. Jedes Ziel muss 1 TP markieren."
+			}
+		]
+	},
+	"hedge": {
+		"name": "Heckenmagier",
+		"foundation": [
+			{
+				"name": "Pflanzliche Heilmittel",
+				"description": "Wenn du oder ein verbündeter Charakter in der Szene durch ein Verbrauchsgut mindestens 1 TP oder Stress löscht, erhöht sich die gelöschte Anzahl um 1."
+			},
+			{
+				"name": "Verzauberter Talisman",
+				"description": "Einmal pro Rast darfst du einen kleinen Gegenstand mit deiner schützenden Essenz erfüllen. Setze beliebig viel Hoffnung ein, um ebenso viele Marker auf diese Karte zu legen. Wenn die Person mit dem Talisman Schaden erleidet, darfst du 1 Marker ausgeben, damit sie 1 TP weniger markieren muss. Entferne alle Marker von dieser Karte, wenn du eine Rast einlegst."
+			}
+		],
+		"spellcastTrait": "Wissen",
+		"specialization": [
+			{
+				"name": "Zwischen den Welten wandeln",
+				"description": "Führe in einem ruhigen Moment einen Zauberwurf (13) durch. Bei einem Erfolg darfst du einmal pro Rast 1 Stress markieren, um hinter den Schleier des Todes zu treten und mit Geistern in der Nähe zu sprechen. Lege eine Anzahl Marker in Höhe deines Zauber-Attributswerts auf diese Karte und entferne jedes Mal 1 Marker, wenn ein Geist eine Frage beantwortet. Sobald der letzte Marker entfernt wird oder die Szene endet, kehrst du an derselben Stelle ins Reich der Sterblichen zurück."
+			},
+			{
+				"name": "Quälender Fluch",
+				"description": "Du hast einen Vorteil bei Angriffen gegen verfluchte Kreaturen."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Kreis der Macht",
+				"description": "Markiere einmal pro Rast einen Kreis auf dem Boden, der ein Gebiet in sehr kurzer Distanz um dich herum umfasst, und lege eine Anzahl Marker in Höhe deines Zauber-Attributswerts auf diese Karte. Innerhalb des Kreises erhalten du und deine verbündeten Charaktere einen Bonus von +2 auf Schadensschwellen, Angriffswürfe und den Ausweichen-Wert. Entferne jedes Mal 1 Marker, wenn du oder ein verbündeter Charakter im Kreis einen Aktionswurf durchführt oder einem Angriff ausweicht. Der Zauber hält an, bis der letzte Marker entfernt wird oder du den Kreis verlässt."
+			}
+		]
+	},
+	"moon": {
+		"name": "Mond",
+		"foundation": [
+			{
+				"name": "Zauber der Nacht",
+				"description": "Führe einen Zauberwurf (13) durch, um dich mit einer betörenden Fassade zu verzaubern. Solange du verzaubert bist, hast du einen Vorteil bei Würfen, für die du dein illusionäres Erscheinungsbild nutzt. Außerdem müssen gegnerische Ziele in kurzer Distanz 1 Stress markieren, um dich anzugreifen.\n\nSofern du nicht 1 Stress markierst, um den Zauber aufrechtzuerhalten, endet er, wenn du 1 TP markierst oder Schaden zufügst."
+			}
+		],
+		"spellcastTrait": "Instinkt",
+		"specialization": [
+			{
+				"name": "Mondstrahl",
+				"description": "Einmal pro Spielsitzung darfst du eine Säule aus Mondlicht beschwören, die bis zum Ende der Szene das Gebiet in kurzer Distanz erhellt. In diesem Mondlicht erhalten du und deine verbündeten Charaktere einen Bonus von +1 auf Zauberwürfe und können Illusionen durchschauen."
+			},
+			{
+				"name": "Zorn des bleichen Lichts",
+				"description": "Wenn einer verfluchten Kreatur in sehr weiter Distanz ein Angriff misslingt, muss sie 1 Stress markieren."
+			}
+		],
+		"mastery": [
+			{
+				"name": "Mondphasen",
+				"description": "Wirf zu Beginn jeder Spielsitzung einen W6 und lege ihn auf diese Karte. Du erhältst bis zum Ende der Spielsitzung den entsprechenden Effekt.\n\nWurf | Phase | Effekt\n1 | Neumond | Setze 1 Hoffnung ein, um leichten Schaden zu negieren.\n2–3 | Zunehmend | +2 auf Schadenswürfe\n4 | Vollmond | +3 auf Schadensschwellen\n5–6 | Abnehmend | +1 auf den Ausweichen-Wert\n\nEinmal pro Rast darfst du 1 Hoffnung einsetzen, um den Wert dieses Würfels um 1 zu erhöhen. Erhöhst du eine 6, wird daraus eine 1."
+			}
+		]
+	}
+}
