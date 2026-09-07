@@ -11,6 +11,21 @@ import { gameTerm } from "../i18n/gameTerms";
 describe("i18n", () => {
 	afterEach(() => setLanguage("en"));
 
+	test("dynamic UI labels interpolate in both languages without changing canonical values", () => {
+		setLanguage("de");
+		expect(gameTerm("Weapon")).toBe("Waffe");
+		expect(gameTerm("Characters")).toBe("Charaktere");
+		expect(translate("sheet.markHp", { count: 3 })).toBe("Markiere 3 TP");
+		expect(translate("sheet.levelValue", { level: 4 })).toBe("Stufe 4");
+		expect(translate("enc.unspent", { count: 2 })).toBe("2 Kampfpunkte übrig");
+		expect(translate("sheet.mixed.next", { name: "Testname" })).toContain("Testname");
+		setLanguage("en");
+		expect(gameTerm("Weapon")).toBe("Weapon");
+		expect(gameTerm("Characters")).toBe("Characters");
+		expect(translate("sheet.markHp", { count: 3 })).toBe("Mark 3 HP");
+		expect(translate("sheet.levelValue", { level: 4 })).toBe("Level 4");
+	});
+
 	test("English and German have exactly the same nonempty keys and interpolation parameters", () => {
 		expect(Object.keys(de).sort()).toEqual(Object.keys(en).sort());
 		const parameters = (text: string) => [...text.matchAll(/\{([a-zA-Z]\w*)\}/g)].map(m => m[1]).sort();

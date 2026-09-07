@@ -106,7 +106,7 @@
 			{
 				"type": "Aktion",
 				"name": "Zungenstreik",
-				"desc": "Führe einen Angriff auf ein Ziel innerhalb von kurzer Distanz durch. Bei einem Erfolg handeln Sie 1W8+4 physischen Schaden und ziehen Sie das Ziel in unmittelbar."
+				"desc": "Greife ein Ziel in kurzer Reichweite an. Bei einem Erfolg verursachst du 1W8+4 physischen Schaden und ziehst das Ziel in unmittelbare Reichweite."
 			},
 			{
 				"type": "Aktion",
@@ -144,7 +144,7 @@
 			{
 				"type": "Aktion",
 				"name": "Death Grip",
-				"desc": "Bei einem erfolgreichen Bissangriff markieren Sie 1 Stress, um den Kiefer dieser Kreatur auf das Ziel zu sperren, indem Sie 1 zusätzliches Trefferpunkt austeilen und sie Festgesetzt machen, bis der Eeligator behandelt wird Schweren Schaden."
+				"desc": "Markiere nach einem erfolgreichen Bissangriff 1 Stress, damit sich der Aaligator am Ziel festbeißt. Das Ziel markiert 1 zusätzlichen TP und ist Festgesetzt, bis der Aaligator schweren Schaden erleidet. Sobald das Ziel freikommt, muss es 1 Stress markieren."
 			}
 		],
 		"name": "Eligner",
@@ -234,7 +234,7 @@
 			{
 				"type": "Reaktion",
 				"name": "Rampagierende Wut",
-				"desc": "Wenn der Ogre 2 oder mehr TP markiert, kann er randalieren. Bewege den Ogre zu einem Punkt innerhalb von kurzer Distanz und geben Sie 2W6+3 physischen Schaden an alle Ziele in ihrem Pfad."
+				"desc": "Wenn der Oger 2 oder mehr TP markiert, darf er wüten. Bewege ihn zu einem Punkt in kurzer Reichweite. Alle Ziele auf seinem Weg erleiden 2W6+3 direkten physischen Schaden."
 			}
 		],
 		"name": "Höhle Ogre",
@@ -314,7 +314,7 @@
 			{
 				"type": "Aktion",
 				"name": "Graben und Drag",
-				"desc": "Führe einen Angriff auf ein Ziel innerhalb von kurzer Distanz aus. Bei einem Erfolg geben Sie 1 Furcht aus, um sie in unmittelbarer Distanz zu ziehen, handeln Sie 1W6 + 2 physischen Schaden und halten Sie sie zurück, bis der Verteidiger Massiven Schaden nimmt."
+				"desc": "Greife ein Ziel in kurzer Reichweite an. Gib bei einem Erfolg 1 Furcht aus, um das Ziel in unmittelbare Reichweite zu ziehen und ihm 1W6+2 physischen Schaden zuzufügen. Es ist Festgesetzt, bis der Verteidiger kritischen Schaden erleidet."
 			}
 		],
 		"name": "Deeproot Defender",
@@ -406,7 +406,7 @@
 			{
 				"type": "Aktion",
 				"name": "Giftige Stinger",
-				"desc": "Wenn es erfolgreich ist, geben Sie 1 Furcht aus, um 1W4+4 physischen Schaden zu behandeln und vergiften Sie es bis zu ihrer nächsten Pause oder sie sind erfolgreich auf einem Wissen Wurf (16). Während vergiftet, muss das Ziel ein W6 rollen, bevor sie ein Aktionswurf machen. Bei einem Ergebnis von 4 oder niedriger müssen sie 1 Stress markieren."
+				"desc": "Greife ein Ziel in sehr kurzer Reichweite an. Gib bei einem Erfolg 1 Furcht aus, um 1W4+4 physischen Schaden zu verursachen und das Ziel zu vergiften. Der Zustand Vergiftet endet bei seiner nächsten Rast oder einem erfolgreichen Wissenswurf (16). Solange das Ziel Vergiftet ist, muss es vor jedem Aktionswurf einen W6 würfeln. Bei 4 oder weniger muss es 1 Stress markieren."
 			},
 			{
 				"type": "Reaktion",
@@ -496,7 +496,7 @@
 			{
 				"type": "Aktion",
 				"name": "Festhalten",
-				"desc": "Führe einen Angriff auf ein Ziel innerhalb von sehr kurzer Distanz durch. markieren Sie bei einem Erfolg 1 Stress, um das Ziel so lange zurückzuhalten, bis es sich mit einem erfolgreichen Angriff, Geschick Wurf oder Stärke Wurf, löst."
+				"desc": "Greife ein Ziel in sehr kurzer Reichweite an. Markiere bei einem Erfolg 1 Stress, um das Ziel Festzusetzen. Es kann sich mit einem erfolgreichen Angriff, Geschickwurf oder Stärkewurf befreien."
 			}
 		],
 		"name": "Klingenschutz",
@@ -623,7 +623,7 @@
 			{
 				"type": "Aktion",
 				"name": "Taktiker",
-				"desc": "Wenn du den Leutnant in den Mittelpunkt stellen, markieren Sie 1 Stress, um auch zwei Verbündete in kurzer Distanz in den Fokus zu rücken."
+				"desc": "Wenn du den Leutnant in den Fokus rückst, darfst du 1 Stress markieren, um auch zwei Verbündete in kurzer Reichweite in den Fokus zu rücken."
 			},
 			{
 				"type": "Aktion",
@@ -1015,7 +1015,7 @@
 			{
 				"type": "Aktion",
 				"name": "Räumt die Decks",
-				"desc": "Bei einem Erfolg markieren Sie 1 Stress, um in unmittelbarer Distanz des Ziels zu wechseln, 3W4 physischen Schaden zu handeln und das Ziel zurück in kurzer Distanz zu bringen."
+				"desc": "Greife ein Ziel in sehr kurzer Reichweite an. Markiere bei einem Erfolg 1 Stress, um dich in unmittelbare Reichweite des Ziels zu bewegen, ihm 3W4 physischen Schaden zuzufügen und es in kurze Reichweite zurückzustoßen."
 			}
 		],
 		"name": "Piraterie hart",
@@ -1057,7 +1057,7 @@
 			{
 				"type": "Aktion",
 				"name": "Tödlicher Schuss",
-				"desc": "Führe einen Angriff auf ein Verwundbar-Ziel innerhalb von weiter Distanz durch. bei einem Erfolg markieren Sie 1 Stress, um 3W4+8 physischen Schaden zu behandeln."
+				"desc": "Greife ein Verwundbares Ziel in weiter Reichweite an. Markiere bei einem Erfolg 1 Stress, um 3W4+8 physischen Schaden zu verursachen."
 			}
 		],
 		"name": "Skelettbogenschütze",
@@ -1229,10 +1229,10 @@
 			{
 				"type": "Reaktion",
 				"name": "Belastung",
-				"desc": "Wenn der Schwarm bei einem Angriff erfolgreich ist, geben Sie dem Ziel ein Brombe-Token. Wenn ein Ziel irgendwelche Brombe-Token hat, sind es Festgesetzt. Wenn ein Ziel 3 oder mehr Brombe-Token hat, sind es auch Verwundbar. Alle Brombe-Token können entfernt werden, indem Sie auf einem Geschick-Wurf (12 + die Anzahl der Brombe-Token) erfolgreich sind oder dem Schwarm größeren oder größeren Schaden zufügen. Wenn Bromble-Token mit einem Geschick-Wurf von einem Ziel entfernt werden, wird eine Anzahl von Tangle Bramble Minions innerhalb von unmittelbarer Distanz erzeugt, die der Anzahl der entfernten Token entspricht."
+				"desc": "Wenn dem Schwarm ein Angriff gelingt, erhält das Ziel einen Dornenmarker. Solange es mindestens einen Dornenmarker hat, ist es Festgesetzt. Mit mindestens 3 Dornenmarkern ist es zusätzlich Verwundbar. Alle Dornenmarker werden entfernt, wenn ein Geschickwurf (12 + Anzahl der Dornenmarker) gelingt oder der Schwarm schweren oder höheren Schaden erleidet. Werden die Marker durch einen Geschickwurf entfernt, erscheinen in unmittelbarer Reichweite ebenso viele Schlingdorn-Schergen wie entfernte Marker."
 			}
 		],
-		"name": "Tangle Bramble Swarm (Deutsche Ausgabe)",
+		"name": "Schlingdornschwarm",
 		"desc": "Eine Gruppe von belebten, bluttrinkenden Tumbleweeds, jede von der Größe eines großen Kürbisses.",
 		"motives": "Digest, verfangen, immobilisieren",
 		"weaponName": "Dornen",
@@ -1271,7 +1271,7 @@
 			{
 				"type": "Aktion",
 				"name": "Ansporn zum Streik",
-				"desc": "Wenn ein Ziel erfolgreich ist, markieren Sie 1 Stress, um das Ziel bis zum nächsten erfolgreichen Angriff zu verspotten."
+				"desc": "Führe einen Standardangriff gegen ein Ziel aus. Markiere bei einem Erfolg 1 Stress, um das Ziel bis zu seinem nächsten erfolgreichen Angriff zu Provozieren. Bei seinem nächsten Angriff hat das Provozierte Ziel Nachteil gegen alle Ziele außer dem Waffenmeister."
 			},
 			{
 				"type": "Aktion",
@@ -1556,7 +1556,7 @@
 				"type": "Aktion",
 				"name": "Randomisierte Taktiken",
 				"cost": "Markiere 1 Stress",
-				"desc": "Die Box benutzt den entsprechenden Zug: <br> 1. Mana Beam. Die Box feuert einen sengenden Strahl ab. Führe einen Angriff auf ein Ziel innerhalb von weiter Distanz aus. Bei einem Erfolg handeln Sie 2W10 + 2 magischen Schaden. <br> 2. Feuerjets. Die Box schießt in die Luft, dreht und löst Flammenstrahlen aus. Greife alle Ziele innerhalb von kurzer Distanz an. Ziele, gegen die die Box erfolgreich ist, nehmen Sie 2W8 physischen Schaden. <br> 3. Trample. Die Box rakelt unberechenbar herum. Angriff gegen alle PCs innerhalb von kurzer Distanz. Ziele, gegen die die Box erfolgreich ist, nehmen 1W6+5 physischen Schaden und sind Verwundbar bis zu ihrem nächsten Wurf mit Hoffnung. <br> 4. Schockierendes Gas. Die Box sprüht ein silbernes Gas aus, das mit Blitzen funkt. Alle Ziele innerhalb von kurzer Distanz müssen auf einem Geschick Reaktionswurf erfolgreich sein oder 3 Stress markieren. <br> 5. Atemberaubender Schlag. Die Box springt und ihre Seiten klatschen, wodurch ein kleiner Schallknall entsteht. Alle Ziele innerhalb von sehr kurzer Distanz müssen auf einem Stärke Reaktionswurf erfolgreich sein oder Verwundbar werden, bis der Würfel besiegt ist. <br> 6. Psionisches Heulen. Die Box gibt eine Gruppe mechanischer Bienen frei, deren Summen sterbliche Köpfe rasseln. Alle Ziele innerhalb von kurzer Distanz müssen auf einem Präsenz Reaktionswurf erfolgreich sein oder 2W4 + 9 direktes magischen Schaden nehmen."
+				"desc": "Würfle einen W6. Die Box führt die entsprechende Aktion aus: <br> 1. Manastrahl. Die Box feuert einen sengenden Strahl ab. Greife ein Ziel in weiter Reichweite an. Bei einem Erfolg verursachst du 2W10+2 magischen Schaden. <br> 2. Flammenstrahlen. Die Box schießt in die Luft, dreht sich und stößt Flammenstrahlen aus. Greife alle Ziele in kurzer Reichweite an. Jedes Ziel, gegen das der Angriff gelingt, erleidet 2W8 physischen Schaden. <br> 3. Niedertrampeln. Die Box rast unberechenbar umher. Greife alle SC in kurzer Reichweite an. Jedes Ziel, gegen das der Angriff gelingt, erleidet 1W6+5 physischen Schaden und ist bis zu seinem nächsten Wurf mit Hoffnung Verwundbar. <br> 4. Elektrisierendes Gas. Die Box versprüht silbernes, von Blitzen durchzucktes Gas. Allen Zielen in kurzer Reichweite muss ein Geschick-Reaktionswurf gelingen, andernfalls markieren sie 3 Stress. <br> 5. Betäubender Knall. Die Box springt hoch und schlägt ihre Seiten zusammen, wodurch ein kleiner Überschallknall entsteht. Allen Zielen in sehr kurzer Reichweite muss ein Stärke-Reaktionswurf gelingen, andernfalls sind sie Verwundbar, bis die Box besiegt ist. <br> 6. Psionisches Heulen. Die Box setzt mechanische Bienen frei, deren Summen den Verstand Sterblicher erschüttert. Allen Zielen in kurzer Reichweite muss ein Präsenz-Reaktionswurf gelingen, andernfalls erleiden sie 2W4+9 direkten magischen Schaden."
 			},
 			{
 				"type": "Reaktion",
@@ -1786,7 +1786,7 @@
 		],
 		"name": "Elitesoldaten",
 		"desc": "Ein gepanzerter Knappe oder erfahrener Bürgerlicher, der nach vorne sucht.",
-		"motives": "Erhalte Ruhm, halten Sie Ordnung, machen Sie Allianzen",
+		"motives": "Ruhm erlangen, Ordnung wahren, Bündnisse schließen",
 		"weaponName": "Speer"
 	},
 	{
@@ -1938,7 +1938,7 @@
 			{
 				"type": "Aktion",
 				"name": "Krone der Schlangen",
-				"desc": "Wenn ein Angriffswurf gegen ein Ziel innerhalb von unmittelbarer Distanz mit den Schutzschlangen des Gorgons ankämpft, markieren Sie bei einem Erfolg 1 Stress, um 2W10+4 physischen Schaden zu behandeln, und das Ziel muss 1 Stress markieren."
+				"desc": "Lege mit den schützenden Schlangen der Gorgone einen Angriffswurf gegen ein Ziel in unmittelbarer Reichweite ab. Markiere bei einem Erfolg 1 Stress, um 2W10+4 physischen Schaden zu verursachen. Das Ziel muss außerdem 1 Stress markieren."
 			},
 			{
 				"type": "Reaktion",
@@ -2027,7 +2027,7 @@
 			{
 				"type": "Aktion",
 				"name": "Quick Hands",
-				"desc": "Führe einen Angriff auf ein Ziel innerhalb von unmittelbarer Distanz durch. Bei einem Erfolg handeln Sie mit 1W8+2 physischen Schaden und der Dieb stiehlt einen Gegenstand oder ein Verbrauchsmaterial aus dem Inventar des Ziels."
+				"desc": "Greife ein Ziel in unmittelbarer Reichweite an. Bei einem Erfolg verursachst du 1W8+2 physischen Schaden und der Dieb stiehlt einen Gegenstand oder ein Verbrauchsgut aus dem Inventar des Ziels."
 			},
 			{
 				"type": "Aktion",
@@ -2164,7 +2164,7 @@
 			{
 				"type": "Reaktion",
 				"name": "Der Wille unseres Meisters",
-				"desc": "Wenn du einen Verbündeten in weiter Distanz hervorheben, markieren Sie 1 Stress, um 1 Furcht zu erhalten."
+				"desc": "Wenn du einen Verbündeten in weiter Reichweite in den Fokus rückst, darfst du 1 Stress markieren, um 1 Furcht zu erhalten."
 			},
 			{
 				"type": "Reaktion",
@@ -2340,7 +2340,7 @@
 			{
 				"type": "Aktion",
 				"name": "Rocky Ambush",
-				"desc": "Während Verborgen, markieren Sie 1 Stress, um in unmittelbarer Distanz mit einem Ziel innerhalb sehr kurzer Distanz zu springen. Das Ziel muss auf einem Agilität oder Instinkt Reaktionswurf (15) erfolgreich sein oder 2W8 physischen Schaden nehmen und vorübergehend Festgesetzt werden."
+				"desc": "Solange diese Kreatur Verborgen ist, darfst du 1 Stress markieren, damit sie in unmittelbare Reichweite eines Ziels in sehr kurzer Reichweite springt. Dem Ziel muss ein Agilität- oder Instinkt-Reaktionswurf (15) gelingen, andernfalls erleidet es 2W8 physischen Schaden und ist vorübergehend Festgesetzt."
 			},
 			{
 				"type": "Aktion",
@@ -2366,12 +2366,12 @@
 		"features": [
 			{
 				"type": "Passiv",
-				"name": "Battle Teleport",
+				"name": "Kampfteleportation",
 				"desc": "Vor oder nach einem Standardangriff können Sie 1 Stress markieren, um sich an einen Ort innerhalb von weiter Distanz zu teleportieren."
 			},
 			{
 				"type": "Aktion",
-				"name": "Erfrischende Warding Sphere",
+				"name": "Schutzsphäre erneuern",
 				"cost": "Markiere 1 Stress",
 				"desc": "um die \"Warding Sphere\"-Reaktion des Zauberers aufzufrischen."
 			},
@@ -2389,11 +2389,11 @@
 			},
 			{
 				"type": "Reaktion",
-				"name": "Warding Sphere",
-				"desc": "Wenn der Wizard durch einen Angriff innerhalb von kurzer Distanz Schaden nimmt, geben Sie dem Angreifer 2W6 magischen Schaden. Diese Reaktion kann nicht wieder verwendet werden, bis der Wizard sie mit der Aktion \"Refresh Warding Sphere\" aktualisiert."
+				"name": "Schutzsphäre",
+				"desc": "Wenn der Kriegsmagier durch einen Angriff in kurzer Reichweite Schaden erleidet, füge dem Angreifer 2W6 magischen Schaden zu. Diese Reaktion kann erst wieder verwendet werden, nachdem der Kriegsmagier sie mit seiner Aktion „Schutzsphäre erneuern“ erneuert hat."
 			}
 		],
-		"name": "War Wizard",
+		"name": "Kriegsmagier",
 		"desc": "Ein kampferprobter Magier, der in zerstörerischer Magie ausgebildet ist.",
 		"motives": "Entwickeln Sie neue Zaubersprüche, suchen Sie Macht, zerbrechen Sie Formationen",
 		"weaponName": "Personal",
@@ -2554,7 +2554,7 @@
 			{
 				"type": "Reaktion",
 				"name": "Mein Zug",
-				"desc": "Wenn der Dämon TP von einem Angriff markiert, geben Sie eine Anzahl von Furcht aus, die dem vom Dämon markierten TP entspricht, um den Angreifer zu veranlassen, die gleiche Anzahl von TP zu markieren."
+				"desc": "Wenn der Dämon durch einen Angriff TP markiert, darfst du ebenso viel Furcht ausgeben, damit der Angreifer dieselbe Anzahl TP markieren muss."
 			},
 			{
 				"type": "Reaktion",
@@ -3051,7 +3051,7 @@
 		],
 		"name": "Wachturmturm",
 		"desc": "Ein massiver, lebender Turm mit verstärkter Panzerung und zwölf kolbengetriebenen mechanischen Beinen.",
-		"motives": "Konzentriere Feuer, sperren Sie, markieren Sie, schützen Sie",
+		"motives": "Feuer konzentrieren, abriegeln, markieren, schützen",
 		"weaponName": "Magitech-Kanone"
 	},
 	{
@@ -3130,10 +3130,10 @@
 			{
 				"type": "Reaktion",
 				"name": "Dein Leben gehört mir",
-				"desc": "Countdown (Loop 2W6): Wenn der Necromancer 6 oder mehr seiner TP markiert hat, aktivieren Sie den Countdown. Wenn er auslöst, geben Sie 2W10+6 magischen Schaden direkt an ein Ziel innerhalb von kurzer Distanz. Der Necromancer löscht dann eine Anzahl von Stress oder TP, die der Anzahl von TP entspricht, die durch das Ziel von diesem Angriff markiert ist."
+				"desc": "Countdown (wiederholend 2W6). Aktiviere den Countdown, sobald der Erznekromant mindestens 6 seiner TP markiert hat. Wenn er auslöst, füge einem Ziel in kurzer Reichweite 2W10+6 direkten magischen Schaden zu. Der Erznekromant baut anschließend so viel Stress ab oder heilt so viele TP, wie das Ziel durch diesen Angriff markiert hat."
 			}
 		],
-		"name": "Arch-Necromancer",
+		"name": "Erznekromant",
 		"desc": "Ein verfallener Magier, geschmückt in dunklen, zerfetzten Gewändern.",
 		"motives": "Korrupt, Verfall, fliehen, um einen anderen Tag zu kämpfen, wiederauferstehen",
 		"weaponName": "Nekrotische Explosion",
@@ -3364,7 +3364,7 @@
 			{
 				"type": "Aktion",
 				"name": "Wir sind eins",
-				"desc": "Einmal pro Szene geben Sie 1 Furcht aus, um alle anderen Gegner innerhalb von weiter Distanz zu in den Fokus rücken. Angriffe, die sie während des Spotlights auf diese Weise ausführen, verursachen halben Schaden."
+				"desc": "Einmal pro Szene darfst du 1 Furcht ausgeben, um alle anderen Gegner in weiter Reichweite in den Fokus zu rücken. Angriffe, die sie dadurch ausführen, verursachen halben Schaden."
 			}
 		],
 		"name": "Hochseraphel",
@@ -3390,7 +3390,7 @@
 			{
 				"type": "Aktion",
 				"name": "Grapple und Drown",
-				"desc": "Wenn es erfolgreich ist, markieren Sie ein Angriffswurf gegen ein Ziel innerhalb von kurzer Distanz. Wenn es erfolgreich ist, markieren Sie 1 Stress, um es mit einem Tentakel zu greifen und unter Wasser zu ziehen. Das Ziel ist Festgesetzt und Verwundbar, bis sie sich mit einem erfolgreichen Stärke-Wurf oder dem Kraken befreien, nimmt es größeren oder größeren Schaden. Während Festgesetzt und Verwundbar auf diese Weise ein Ziel 1 Stress markieren muss, wenn sie ein Aktionswurf machen."
+				"desc": "Lege einen Angriffswurf gegen ein Ziel in kurzer Reichweite ab. Markiere bei einem Erfolg 1 Stress, um das Ziel mit einem Tentakel zu packen und unter Wasser zu ziehen. Es ist Festgesetzt und Verwundbar, bis es sich mit einem erfolgreichen Stärkewurf befreit oder der Kraken schweren oder höheren Schaden erleidet. Solange das Ziel auf diese Weise Festgesetzt und Verwundbar ist, muss es bei jedem Aktionswurf 1 Stress markieren."
 			},
 			{
 				"type": "Aktion",
@@ -3459,7 +3459,7 @@
 			{
 				"type": "Passiv",
 				"name": "Chaotische Form",
-				"desc": "Wenn der Abomination-Angriffe, rollen 2W4 und verwenden Sie das Ergebnis als Angriffsmodifikator."
+				"desc": "Wenn die Abscheulichkeit angreift, würfle 2W4 und verwende das Ergebnis als ihren Angriffsmodifikator."
 			},
 			{
 				"type": "Passiv",
@@ -3478,7 +3478,7 @@
 				"desc": "Wenn der Gräuel Schaden nimmt, reduzieren Sie ihn um 1W2 0. Wenn der Gräuel 1 oder weniger Trefferpunkte aus einem erfolgreichen Angriff gegen sie markiert, erhalten Sie 1 Furcht."
 			}
 		],
-		"name": "Outer Realms Abomination",
+		"name": "Abscheulichkeit der Äußeren Reiche",
 		"desc": "Eine chaotische Verhöhnung des Lebens, ständig im Fluss.",
 		"motives": "Abreißen, verschlingen, untergraben",
 		"weaponName": "Massiver Pseudopod"
@@ -3601,7 +3601,7 @@
 			{
 				"type": "Aktion",
 				"name": "Tauchmombe",
-				"desc": "Wenn der Obsidian Predator fliegt, markieren Sie 1 Stress, um einen Punkt innerhalb von weiter Distanz zu wählen. Bewege sich zu diesem Punkt und führen Sie einen Angriff gegen alle Ziele innerhalb von sehr kurzer Distanz aus. Ziele, gegen die der Obsidian Predator erfolgreich ist, nehmen Sie 2W10 + 6 physischen Schaden und müssen 1 Stress markieren und 1 Hoffnung verlieren."
+				"desc": "Wenn der Obsidianjäger fliegt, darfst du 1 Stress markieren und einen Punkt in weiter Reichweite wählen. Bewege ihn dorthin und greife alle Ziele in sehr kurzer Reichweite an. Jedes Ziel, gegen das der Angriff gelingt, erleidet 2W10+6 physischen Schaden, muss 1 Stress markieren und verliert 1 Hoffnung."
 			},
 			{
 				"type": "Reaktion",
@@ -3609,7 +3609,7 @@
 				"desc": "Wenn der Obsidian Predator seinen letzten TP markiert, ersetzen Sie ihn durch die Geißel und strahlen Sie ihn sofort an."
 			}
 		],
-		"name": "Vulkandrache: Obsidian Predator",
+		"name": "Vulkandrache: Obsidianjäger",
 		"desc": "Eine massive geflügelte Kreatur mit obsidianen Schuppen und unglaublich scharfen Krallen.",
 		"motives": "Verteidige Höhle, Tauchbombe, fliege, jage, einschüchtere",
 		"weaponName": "Obsidianklauen",
@@ -3830,7 +3830,7 @@
 			{
 				"type": "Aktion",
 				"name": "Angsttaktik",
-				"desc": "Bis zu dreimal pro Szene geben Sie 1 Furcht aus, um das Banshee-Teleportieren bis sehr weiter Distanz zu haben und erschrecken Sie einen PC innerhalb von unmittelbarer Distanz. Der PC markiert 1W4 Stress. Wenn dies dazu führt, dass sie TP markieren, verlieren sie auch 1 Hoffnung."
+				"desc": "Bis zu dreimal pro Szene darfst du 1 Furcht ausgeben, damit sich die Banshee bis in sehr weite Reichweite teleportiert und einen SC in unmittelbarer Reichweite erschreckt. Dieser SC markiert 1W4 Stress. Muss er dadurch TP markieren, verliert er zusätzlich 1 Hoffnung."
 			},
 			{
 				"type": "Aktion",
@@ -4078,7 +4078,7 @@
 		],
 		"name": "Cephilith Novitiate CAS-Nr.",
 		"desc": "Ein Licht des Sterblichen Reiches, das seinen Geist extradimensionalen Wesen im Austausch für eldritch Fähigkeiten gegeben hat.",
-		"motives": "Helfen Sie anderen, die Wahrheit zu sehen, machen Sie Platz für Sie, suchen Sie verboten Wissen",
+		"motives": "Anderen die Wahrheit zeigen, Ihr den Weg bereiten, verbotenes Wissen suchen",
 		"weaponName": "Eldritch könnte",
 		"xp": "Visionen +2"
 	},
@@ -4937,7 +4937,7 @@
 			{
 				"type": "Aktion",
 				"name": "Schädelteiler",
-				"desc": "Wenn der Titan das nächste Mal ins Rampenlicht gestellt wird, müssen Sie das Token aus diesem Stat-Block ausgeben und einen Angriff auf einen PC innerhalb von kurzer Distanz durchführen. Bei einem Erfolg, handeln Sie mit 3W20+5 direkt physischen Schaden. Bei einem Fehler markiert das Ziel 1 Stress."
+				"desc": "Markiere 1 Stress, um einen Marker auf diesen Werteblock zu legen. Wenn der Titan das nächste Mal in den Fokus gerückt wird, musst du den Marker ausgeben und einen SC in kurzer Reichweite angreifen. Bei einem Erfolg verursachst du 3W20+5 direkten physischen Schaden. Bei einem Misserfolg markiert das Ziel 1 Stress."
 			},
 			{
 				"type": "Reaktion",
@@ -5046,12 +5046,12 @@
 			{
 				"type": "Aktion",
 				"name": "War Horn",
-				"desc": "Markiere 1 Stress, um jeden PC innerhalb von weiter Distanz zu zwingen, auf einem Präsenz Reaktionswurf erfolgreich zu sein, oder markieren Sie 1 Stress und werden Sie Verwundbar bis nach dem nächsten Angriff gegen sie."
+				"desc": "Markiere 1 Stress. Jedem SC in weiter Reichweite muss ein Präsenz-Reaktionswurf gelingen, andernfalls markiert er 1 Stress und ist bis nach dem nächsten Angriff gegen ihn Verwundbar."
 			},
 			{
 				"type": "Aktion",
 				"name": "Bullenrausch",
-				"desc": "Markiere 1 Stress, um zu kurzer Distanz aufzusteigen und ein Angriffswurf gegen ein Ziel innerhalb von unmittelbarer Distanz zu machen. Bei einem Erfolg handeln Sie 4W10 + 2 physischen Schaden und klopfen Sie das Ziel zurück zu kurzer Distanz."
+				"desc": "Markiere 1 Stress, um dich bis in kurze Reichweite zu bewegen und einen Angriffswurf gegen ein Ziel in unmittelbarer Reichweite abzulegen. Bei einem Erfolg verursachst du 4W10+2 physischen Schaden und stößt das Ziel in kurze Reichweite zurück."
 			},
 			{
 				"type": "Reaktion",
@@ -5159,7 +5159,7 @@
 		],
 		"name": "Gargantuan-Seeschildkröte",
 		"desc": "Eine monströse Meeresschildkröte, die eine unnachgiebige Schale und Schnabel hat.",
-		"motives": "Erwirb Reichtum, kentern Sie Handelsschiffe, warten Sie, verwenden Sie die Wellen als Deckung",
+		"motives": "Reichtümer anhäufen, Handelsschiffe zum Kentern bringen, auflauern, die Wellen als Deckung nutzen",
 		"weaponName": "Zerkleinerung von Kiefern",
 		"xp": "Offenes Meer +5"
 	},
@@ -5927,8 +5927,8 @@
 			},
 			{
 				"type": "Aktion",
-				"name": "Swell Ranks",
-				"desc": "Einmal pro Szene markieren Sie eine beliebige Anzahl von Stress, damit die Nachtkinder ein Portal öffnen, das Verstärkungen ausspuckt und die Reihen der Horde wieder auffüllt."
+				"name": "Reihen auffüllen",
+				"desc": "Einmal pro Szene darfst du beliebig viel Stress markieren, damit die Nachtkinder ein Portal öffnen, aus dem Verstärkungen strömen und die Reihen der Horde auffüllen. Heile ebenso viele TP, wie Stress markiert wurde."
 			},
 			{
 				"type": "Reaktion",
@@ -7206,7 +7206,7 @@
 			{
 				"type": "Aktion",
 				"name": "Regeneration",
-				"desc": "Bis zu dreimal pro Szene geben Sie eine beliebige Anzahl von Furcht aus, um eine gleiche Anzahl von TP zu löschen."
+				"desc": "Bis zu dreimal pro Szene darfst du beliebig viel Furcht ausgeben, um ebenso viele TP zu heilen."
 			}
 		],
 		"name": "Xero Der Schlossmörder",
@@ -7424,7 +7424,7 @@
 			{
 				"type": "Reaktion",
 				"name": "Hide Stacheln",
-				"desc": "Wenn sich ein Angreifer innerhalb von sehr kurzer Distanz befindet, wenn das Schmerztier 2 oder mehr TP markiert, geben Sie 1 Furcht aus, um 1W8 + 3 physischen Schaden an den Angreifer zu verteilen."
+				"desc": "Wenn das Schmerztier mindestens 2 TP markiert und der Angreifer in sehr kurzer Reichweite ist, darfst du 1 Furcht ausgeben, um dem Angreifer 1W8+3 physischen Schaden zuzufügen."
 			}
 		],
 		"name": "Schmerztiere",
@@ -7753,10 +7753,10 @@
 			{
 				"type": "Reaktion",
 				"name": "Rechtschaffene Rache",
-				"desc": "Wenn der Fane Warden 2 oder mehr TP aus einem Angriff innerhalb von sehr kurzer Distanz markiert, markieren Sie 1 Stress, um einen Standardangriff gegen den Angreifer durchzuführen."
+				"desc": "Wenn der Heiligtumswächter durch einen Angriff in sehr kurzer Reichweite mindestens 2 TP markiert, darfst du 1 Stress markieren, um einen Standardangriff gegen den Angreifer auszuführen. Bei einem Erfolg verursacht der Heiligtumswächter 2W10+8 physischen Schaden und stößt das Ziel in weite Reichweite."
 			}
 		],
-		"name": "Korrupter Fane Warden",
+		"name": "Korrumpierter Heiligtumswächter",
 		"desc": "Der einst geliebte Beschützer des Wealds schmoret jetzt in Korruption, halb verrückt und sucht Blut für ihre Klinge als Buße für den Verfall des Landes.",
 		"motives": "Jagd, Strafe",
 		"weaponName": "Die Klinge des Fane"
@@ -7822,7 +7822,7 @@
 			{
 				"type": "Reaktion",
 				"name": "Vergeltungsmaßnahmen",
-				"desc": "Wenn Evelyar durch einen Angriff innerhalb von sehr kurzer Distanz des Schülers Schaden nimmt, markieren Sie 1 Stress, um einen Standardangriff gegen den Angreifer durchzuführen."
+				"desc": "Wenn Evelyar durch einen Angriff in sehr kurzer Reichweite des Schülers Schaden erleidet, darfst du 1 Stress markieren, um einen Standardangriff gegen den Angreifer auszuführen."
 			}
 		],
 		"name": "Profane Schüler",
@@ -7987,7 +7987,7 @@
 				"type": "Aktion",
 				"name": "Augenstiele",
 				"cost": "Markiere 1 Stress",
-				"desc": "Ein Ziel innerhalb von weiter Distanz anzugreifen. Bei einem Treffer geben Sie 1 Furcht aus, um ein eff ect auszuwählen oder ein W10 für ein zufälliges eff ect zu rollen. Der Gobstalker verwendet den entsprechenden magischen Strahl: 1. Beguile. Das Ziel wird beguiled und sieht den Gobstalker als Freund. Eine beguiled Kreatur kann den Gobstalker nicht angreifen. Zusätzlich muss ein beguiled PC 1 Stress markieren oder einen Standardangriff gegen ihren nächsten Verbündeten durchführen, wenn jemand mit Furcht rollt. Diese Wirkung dauert, bis die Ziele auf einer Präsenz- oder Wissen-Rolle erfolgreich sind (16). 2. Korrode. Das Ziel nimmt 2W8 magischen Schaden und markiert einen Rüstungsplatz, ohne seine Wohltaten zu erhalten (sie können immer noch Panzerung verwenden, um den Schaden zu reduzieren). Das Ziel markiert sofort alle gelöschten TP, kann aber die Anzahl der auf diese Weise markierten TP reduzieren, indem es eine beliebige Anzahl von Hoffnung ausgibt. Für jedes Hoffnung, das auf diese Weise ausgegeben wird, reduzieren Sie die Anzahl der TP, die durch 1. 4 gekennzeichnet ist. Das Ziel wacht auf, wenn es von einem Angriff getroffen wird, markiert 1 oder mehr TP oder gelingt es auf einer Instinkt-Rolle (16) aufzuwachen. 5. Lähmen. Das Ziel friert ein und wird Verwundbar und Festgesetzt, bis es 2 Stress markiert. 6. Petrify. Lege einen Petrifi-Kationen-Countdown (6) auf das Ziel. Es tickt, wenn ein PC mit Furcht rollt. Wenn es auslöst, dreht sich das Ziel zu Stein, bis der Gobstalker besiegt ist oder sie eine lange Pause einlegen. Während Stein ist das Ziel immun gegen jeglichen Schaden und sich seiner Umgebung bewusst, kann aber keine Aktionen ausführen. 7. Drücken. Das Ziel wird auf weiter Distanz geworfen und nimmt 3W6 physischen Schaden von dem, was sie treffen. 8. Sear. Das Ziel nimmt 2W8 direkten magischen Schaden. 9. Langsam. Das Ziel ist Verwundbar und muss 1 Stress markieren, um sich zu bewegen. Das Ziel kann 2 Hoffnung jederzeit ausgeben, um diesen Effekt zu beenden. 1 0. Erschreckend. Das Ziel kann nicht handeln, außer den Kampf zu fliegen oder zu versuchen, seinen Furcht mit einem erfolgreichen Insight Wurf abzuschütteln (16). Außerdem muss das Ziel, wenn Sie Furcht ausgeben, 1 Stress markieren."
+				"desc": "Greife ein Ziel in weiter Reichweite an. Gib bei einem Treffer 1 Furcht aus und wähle einen Effekt oder würfle einen W10 für einen zufälligen Effekt. Der Gobstalker verwendet den entsprechenden magischen Strahl: 1. Bezaubern. Das Ziel ist Bezaubert und betrachtet den Gobstalker als Freund. Eine Bezauberte Kreatur kann ihn nicht angreifen. Ein Bezauberter SC muss außerdem immer dann, wenn jemand mit Furcht würfelt, entweder 1 Stress markieren oder einen Standardangriff gegen seinen nächsten Verbündeten ausführen. Der Effekt endet, wenn dem Ziel ein Präsenz- oder Wissenswurf (16) gelingt. 2. Verätzen. Das Ziel erleidet 2W8 magischen Schaden und markiert einen Rüstungsplatz, ohne dessen Vorteil zu erhalten. Es darf weiterhin Rüstung verwenden, um den Schaden zu verringern. Sind bereits alle Rüstungsplätze markiert, verdopple den Schaden. 3. Verhängnis. Das Ziel markiert sofort alle unmarkierten TP. Es darf beliebig viel Hoffnung ausgeben, um pro ausgegebener Hoffnung 1 TP weniger zu markieren. 4. Hypnose. Das Ziel fällt in eine tiefe, schlafähnliche Trance und kann nur noch versuchen, aufzuwachen. Es erwacht, wenn es von einem Angriff getroffen wird, mindestens 1 TP markiert oder ihm ein Instinktwurf (16) zum Aufwachen gelingt. 5. Lähmen. Das Ziel erstarrt und ist Verwundbar und Festgesetzt, bis es 2 Stress markiert. 6. Versteinern. Lege einen Versteinerungs-Countdown (6) auf das Ziel. Er zählt herunter, wenn ein SC mit Furcht würfelt. Wenn er auslöst, wird das Ziel zu Stein, bis der Gobstalker besiegt ist oder das Ziel eine lange Rast beendet. Solange es versteinert ist, ist es gegen jeden Schaden immun und nimmt seine Umgebung wahr, kann aber keine Handlungen ausführen. 7. Wegschleudern. Das Ziel wird bis in weite Reichweite geschleudert und erleidet durch den Aufprall 3W6 physischen Schaden. 8. Versengen. Das Ziel erleidet 2W8 direkten magischen Schaden. 9. Verlangsamen. Das Ziel ist Verwundbar und muss 1 Stress markieren, um sich zu bewegen. Es darf jederzeit 2 Hoffnung ausgeben, um diesen Effekt zu beenden. 10. Verängstigen. Das Ziel kann nur aus dem Kampf fliehen oder versuchen, seine Furcht mit einem erfolgreichen Einsichtswurf (16) abzuschütteln. Immer wenn du Furcht ausgibst, muss das Ziel außerdem 1 Stress markieren. Dieser Effekt endet, wenn der Gobstalker besiegt ist oder das Ziel eine Rast beendet."
 			}
 		],
 		"name": "Gobstalker",
@@ -8157,15 +8157,15 @@
 				"type": "Aktion",
 				"name": "Aural Asault",
 				"cost": "Setze 1 Furcht ein",
-				"desc": "Alle Tokens aus diesem Stat-Block entfernen (siehe \"Celestia Coda\"). Für jedes entfernte Token geben Sie 1W12 direkt magischen Schaden an alle Feinde innerhalb von kurzer Distanz."
+				"desc": "Der Chor entfesselt göttliche Energie. Entferne alle Marker von diesem Werteblock (siehe „Himmlische Coda“). Verursache für jeden entfernten Marker 1W12 direkten magischen Schaden bei allen Feinden in kurzer Reichweite."
 			},
 			{
 				"type": "Reaktion",
-				"name": "Celestial Coda",
+				"name": "Himmlische Coda",
 				"desc": "Countdown (Loop 3). Der göttliche Song des Chors baut mit jedem Refrain auf sich auf. Aktiviere den Countdown, wenn der Chor zuerst beleuchtet wird. Er tickt auf jedem Aktionswurf. Wenn er auslöst, legen Sie ein Zeichen auf diesen Stat-Block. Der Chor erhält einen Bonus auf seinen Schwierigkeitsgrad und einen Standard-Angriffsschaden, der der Anzahl der Token auf diesem Stat-Block entspricht."
 			}
 		],
-		"name": "Hallowed Choir",
+		"name": "Geweihter Chor",
 		"desc": "Eine himmlische Schar geflügelter Humanoiden, deren Lied Tränen religiöser Ehrfurcht hervorruft.",
 		"motives": "Ertrinken Sie Unglauben, erheben Sie Stimmen",
 		"weaponName": "Choral Blast",
@@ -8243,7 +8243,7 @@
 			{
 				"type": "Aktion",
 				"name": "Regeneration",
-				"desc": "Bis zu dreimal pro Szene geben Sie eine beliebige Anzahl von Furcht aus, um eine gleiche Anzahl von TP zu löschen."
+				"desc": "Bis zu dreimal pro Szene darfst du beliebig viel Furcht ausgeben, um ebenso viele TP zu heilen."
 			}
 		],
 		"name": "Xero, Burgmörder",

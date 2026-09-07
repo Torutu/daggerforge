@@ -105,7 +105,7 @@ export class AdversaryModal extends Modal {
 		contentEl.empty();
 
 		contentEl.createEl("h2", {
-			text: this.isEditMode ? "Edit adversary" : "Create adversary",
+			text: this.isEditMode ? dfTranslate("ui.dynamic.edit.adversary") : dfTranslate("ui.dynamic.create.adversary"),
 			cls: "df-modal-title",
 		});
 
@@ -285,7 +285,7 @@ export class AdversaryModal extends Modal {
 
 	private buildActionButtons(contentEl: HTMLElement) {
 		const btn = contentEl.createEl("button", {
-			text: this.isEditMode ? "Update card" : "Insert card",
+			text: this.isEditMode ? dfTranslate("ui.dynamic.update.card") : dfTranslate("ui.dynamic.insert.card"),
 			cls: "df-modal-submit-btn",
 		});
 		btn.onclick = () => this.handleSubmit();

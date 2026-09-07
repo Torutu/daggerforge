@@ -37,7 +37,7 @@ export class EnvironmentView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Environment Browser";
+		return dfTranslate("ui.dynamic.environment.browser");
 	}
 
 	getIcon(): string {
@@ -297,12 +297,12 @@ export class EnvironmentView extends ItemView {
 
 		const title = document.createElement("h3");
 		title.classList.add("df-title-small-padding");
-		title.textContent = env.name || "Unnamed Environment";
+		title.textContent = env.name || dfTranslate("ui.dynamic.unnamed.environment");
 		card.appendChild(title);
 
 		const desc = document.createElement("p");
 		desc.classList.add("df-desc-small-padding");
-		desc.textContent = env.desc || "No description available.";
+		desc.textContent = env.desc || dfTranslate("ui.dynamic.no.description.available");
 		card.appendChild(desc);
 
 		card.addEventListener("click", () => {

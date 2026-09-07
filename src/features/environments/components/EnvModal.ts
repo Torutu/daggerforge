@@ -105,7 +105,7 @@ export class EnvironmentModal extends Modal {
 		contentEl.empty();
 
 		contentEl.createEl("h2", {
-			text: this.isEditMode ? "Edit environment" : "Create environment",
+			text: this.isEditMode ? dfTranslate("ui.dynamic.edit.environment") : dfTranslate("ui.dynamic.create.environment"),
 			cls: "df-modal-title",
 		});
 
@@ -305,7 +305,7 @@ export class EnvironmentModal extends Modal {
 
 	private buildActionButtons(contentEl: HTMLElement) {
 		const btn = contentEl.createEl("button", {
-			text: this.isEditMode ? "Update card" : "Insert card",
+			text: this.isEditMode ? dfTranslate("ui.dynamic.update.card") : dfTranslate("ui.dynamic.insert.card"),
 			cls: "df-modal-submit-btn",
 		});
 		btn.onclick = () => this.handleSubmit();

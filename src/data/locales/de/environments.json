@@ -643,7 +643,7 @@
 					"Welche Verteidigung müssen die Charaktere überwinden, um das Schloss zu stürmen?"
 				],
 				"name": "Belagerungswaffen (Umweltwandel)",
-				"text": "Folgen-Countdown (6). Die angreifende Kraft setzt Belagerungswaffen ein, um zu versuchen, die Befestigungen der Verteidiger zu zerstören. Aktiviere den Countdown, wenn die Belagerung beginnt (für eine langwierige Belagerung, machen Sie dies stattdessen zu einem langfristigen Countdown). Wenn es auslöst, wurden die Befestigungen der Verteidiger durchbrochen und die Angreifer fluten nach innen. Du erhältst 2 Furcht, wechseln Sie dann in die Pitched Battle-Umgebung und stellen Sie sie in den Mittelpunkt."
+				"text": "Folgen-Countdown (6). Die Angreifer setzen Belagerungswaffen ein, um die Befestigungen der Verteidiger zu zerstören. Aktiviere den Countdown zu Beginn der Belagerung; verwende bei einer langwierigen Belagerung stattdessen einen langfristigen Countdown. Wenn er auslöst, sind die Befestigungen durchbrochen und die Angreifer strömen hinein. Du erhältst 2 Furcht. Wechsle anschließend zur Umgebung „Feldschlacht“ und rücke sie in den Fokus."
 			},
 			{
 				"type": "Aktion",
@@ -819,8 +819,8 @@
 					"Was sind ihre letzten Worte?",
 					"Wie manifestiert sich die neue gestohlene Macht des Usurpers?"
 				],
-				"name": "Totschlager",
-				"text": "Wenn der Countdown der Göttlichen Belagerung (siehe „Beginn des Endes) ausgelöst wurde, kannst du 3 Furcht ausgeben, um den Usurper zu beschreiben, wie er einen der Götter der Heiligen oben tötet, sich an ihrer Macht schlemmt und stärker wird. Der Usurper löscht 2 TP. Erhöhen Sie ihren Schwierigkeitsgrad, beschädigen, angreifen oder geben Sie ihnen ein neues Feature vom getöteten Gott."
+				"name": "Göttertöter",
+				"text": "Wenn der Countdown „Göttliche Belagerung“ (siehe „Der Anfang vom Ende“) ausgelöst wurde, darfst du 3 Furcht ausgeben. Beschreibe, wie der Usurpator eine Gottheit der Oberen Heiligtümer erschlägt, ihre Macht verschlingt und stärker wird. Der Usurpator heilt 2 TP. Erhöhe seine Schwierigkeit, seinen Schaden oder seinen Angriffsmodifikator oder gib ihm ein neues Merkmal der erschlagenen Gottheit."
 			},
 			{
 				"type": "Reaktion",
@@ -829,7 +829,7 @@
 					"Welche Sterblichen werden Zeuge dieser Blasphemie aus der Ferne?"
 				],
 				"name": "Der Anfang vom Ende",
-				"text": "Wenn der langfristige Countdown der „Endvorbereitungen auslöst, beginnt der Usurper selbst an die Tore der Heiligtümer zu hämmern. Aktiviere einen Countdown der göttlichen Belagerung (10). in den Fokus rücken Sie den Usurper, um den Angriff des Usurpers zu beschreiben, und markieren Sie diesen Countdown um 1. Wenn der Usurper größeren oder größeren Schaden nimmt, markieren Sie den Countdown um 1. Wenn es auslöst, zerbricht der Usurper die Barriere zwischen dem Sterblichen Reich und den Heiligtümern darüber, um die Götter zu töten und ihren Platz einzunehmen. Du erhältst 1 Furcht für jedes unmarkierte TP, das der Usurper hat. Du kannst sofort die \"Godslayer\" -Funktion verwenden, ohne Furcht auszugeben, um einen zusätzlichen SL-Zug zu machen."
+				"text": "Wenn der langfristige Countdown „Endvorbereitungen“ auslöst, beginnt der Usurpator, gegen die Tore der Heiligtümer selbst zu hämmern. Aktiviere einen Countdown „Göttliche Belagerung“ (10). Rücke den Usurpator in den Fokus, um seinen Angriff zu beschreiben, und verringere den Countdown um 1. Erleidet der Usurpator schweren oder höheren Schaden, erhöhe den Countdown um 1. Wenn er auslöst, durchbricht der Usurpator die Barriere zwischen der Welt der Sterblichen und den Oberen Heiligtümern, um die Götter zu erschlagen und ihren Platz einzunehmen. Du erhältst 1 Furcht für jeden seiner unmarkierten TP. Du darfst sofort das Merkmal „Göttertöter“ einsetzen, ohne Furcht auszugeben, um einen zusätzlichen SL-Zug auszuführen."
 			},
 			{
 				"type": "Reaktion",
@@ -841,7 +841,7 @@
 				"text": "Bei einem Ausfall mit Furcht gegen den Usurper muss der PC 1W4 Stress aus dem Spiel der magischen Kraft markieren."
 			}
 		],
-		"name": "DIVINE VERWENDUNG",
+		"name": "Göttliche Usurpation",
 		"desc": "Ein massives Ritual, das dazu bestimmt ist, die Tore der Heiligen oben zu durchbrechen und die Neuen Götter selbst zu entleeren.",
 		"impulse": "Sammle Macht, überschwangen, Schweigen Dissens",
 		"potentialAdversaries": "Erznekromant, gefallene Schocktruppen, Sterblicher Jäger, Orakel des Untergangs, perfektionierter Zombie"
@@ -1158,7 +1158,7 @@
 		],
 		"name": "Strandtag",
 		"desc": "Die Party macht eine Pause von ihrem Abenteuer für etwas Ruhe und Entspannung in einer Küstensiedlung.",
-		"impulse": "Beschwöre Bilder von Sand und Surfen, geben Sie ihnen eine Verschnaufpause, bereiten Sie sie auf den bevorstehenden Konflikt vor"
+		"impulse": "Bilder von Sand und Brandung heraufbeschwören, eine Verschnaufpause gewähren, auf den bevorstehenden Konflikt vorbereiten"
 	},
 	{
 		"id": "HF-E006",
@@ -2164,7 +2164,7 @@
 					"Wie kam die Mauer dorthin - haben sie einen Druiden oder Ranger unter ihrer Nummer?"
 				],
 				"name": "Dornzaun",
-				"text": "Führe einen Angriff auf ein Ziel innerhalb von kurzer Distanz durch. Bei einem Erfolg handeln Sie 1W8+4 physischen Schaden und ziehen Sie das Ziel in unmittelbar."
+				"text": "Greife ein Ziel in kurzer Reichweite an. Bei einem Erfolg verursachst du 1W8+4 physischen Schaden und ziehst das Ziel in unmittelbare Reichweite."
 			},
 			{
 				"type": "Passiv",
@@ -2392,8 +2392,8 @@
 					"Auf welche unerwarteten Hindernisse werden sie stoßen?",
 					"Was passiert, wenn die Party erwischt wird?"
 				],
-				"name": "Infi-Ergebnis",
-				"text": "Lege das Ziel des Überfalls fest und starten Sie zwei dynamische Countdowns: einen Fortschritts-Countdown (12), um die Arbeit der Partei auf ihr Ziel hin darzustellen, und einen Folgen-Countdown (10), um das steigende Risiko der Entdeckung und Erfassung darzustellen. Wenn der Fortschritts-Countdown fi rst auslöst, strahle diese Umgebung aus, um die Funktion „Exfi-Litration“ zu verwenden. Wenn der Konsequenz-Countdown fi rst auslöst, erhalte 1W4 Furcht, in den Fokus rücken Sie diese Umgebung und verwenden Sie die Funktion „Sound the Alarm“."
+				"name": "Infiltration",
+				"text": "Lege das Ziel des Raubzugs fest und starte zwei dynamische Countdowns: einen Fortschritts-Countdown (12) für die Arbeit der Gruppe an ihrem Ziel und einen Folgen-Countdown (10) für das wachsende Risiko, entdeckt und gefangen genommen zu werden. Passe beide gemäß der Tabelle für den Fortschritt dynamischer Countdowns an, wenn die SC Aktionswürfe ablegen, um den Raubzug abzuschließen. Löst der Fortschritts-Countdown zuerst aus, rücke diese Umgebung in den Fokus und nutze das Merkmal „Rückzug“. Löst der Folgen-Countdown zuerst aus, erhältst du 1W4 Furcht. Rücke diese Umgebung in den Fokus und nutze „Alarm schlagen“."
 			},
 			{
 				"type": "Passiv",
@@ -2411,7 +2411,7 @@
 					"Was macht es noch gefährlicher, rauszukommen als reinzukommen?",
 					"Welche unvorhergesehenen Entwicklungen behindern den ursprünglichen Fluchtplan der Partei?"
 				],
-				"name": "Exfi-Literation",
+				"name": "Rückzug",
 				"text": "Wenn der Fortschritts-Countdown auslöst, erwirbt die Partei das Objekt des Raubüberfalls und muss es einer Gruppe Aktionswurf gelingen, zu entkommen, ohne erwischt zu werden."
 			},
 			{
@@ -2424,7 +2424,7 @@
 				"text": "Wenn der Konsequenz-Countdown auslöst, wird die Gruppe entdeckt und der Ort tritt in Hochalarm. Sofort rufen Sie eine Anzahl von Tier-2-Gegnern auf, die der Anzahl der PCs in der Szene entspricht, und stellen Sie einen Scheinwerfer dar. Während diese Umgebung in Hochalarm ist, erhalten alle Gegner einen +1 Bonus auf ihren Schwierigkeitsgrad."
 			}
 		],
-		"name": "HERB",
+		"name": "Raubzug",
 		"desc": "Die Partei muss Zugang zu einem Verborgen oder einem gut geschützten Ort erhalten, um die Informationen oder Gegenstände zu erhalten, die darin gesichert sind.",
 		"impulse": "Führe die Partei bereit, teilen Sie sie auf, werfen Sie Hindernisse auf, fangen Sie sie ein, verbrauchen Sie ihre Ressourcen",
 		"potentialAdversaries": "Hauptwache, Minotaurus-Wracker, SecretKeeper, Spektralwächter"
@@ -2538,7 +2538,7 @@
 					"Welche Fraktion ist der Partei ihre Unterstützung?",
 					"Gegen wen wollen sie, dass die Partei handelt?"
 				],
-				"name": "An Off Er You Can't Refuse (Deutsche Ausgabe)",
+				"name": "Ein Angebot, das du nicht ablehnen kannst",
 				"text": "Konvergenz ist die Heimat eines schwachen Netzwerks rivalisierender Fraktionen. Gib 1 Furcht aus, damit einer von ihnen der Partei eine einfache Lösung für ein diffi-Kultproblem im Austausch für ihre Loyalität vorlegt. Wenn die Partei sich weigert, muss jeder PC 1 Stress markieren und sie können nicht in Zukunft zu dieser Fraktion zurückkehren, um Hilfe zu erhalten."
 			}
 		],

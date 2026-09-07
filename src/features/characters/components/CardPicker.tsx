@@ -1,3 +1,4 @@
+import { gameTerm } from "../../../i18n/gameTerms";
 import { useLanguage as useUiLanguage } from "../../../i18n/react";
 import { translate as dfTranslate } from "../../../i18n";
 import React, { useMemo, useState } from "react";
@@ -210,9 +211,9 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 						<span className="df-cs-picker-mixed-hint">
 							{mixedMode
 								? mixedPrimary
-									? `1st feature: ${mixedPrimary.name} - now add the ancestry for the 2nd feature.`
-									: "Add the ancestry whose FIRST feature you take."
-								: "Combine two ancestries: the first feature of one, the second of another."}
+									? dfTranslate("sheet.mixed.next", { name: mixedPrimary.name })
+									: dfTranslate("sheet.mixed.first")
+								: dfTranslate("sheet.mixed.help")}
 						</span>
 					</div>
 				)}
@@ -298,7 +299,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 									(tab === "ancestry" ? char.ancestryCard : char.communityCard)?.name === h.name
 								}
 								addLabel={
-									mixing ? (mixedPrimary ? "2nd feature" : "1st feature") : "Add"
+									mixing ? (mixedPrimary ? dfTranslate("ui.dynamic.2nd.feature") : dfTranslate("ui.dynamic.1st.feature")) : dfTranslate("ui.dynamic.add")
 								}
 								pending={mixing && mixedPrimary?.name === h.name}
 								onToggle={() => setExpanded(expanded === h.name ? null : h.name)}
@@ -369,7 +370,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 							>
 								<span className="df-cs-pick-name">{g.name}</span>
 								<span className="df-cs-pick-meta">
-									{GEAR_KIND_LABELS[g.kind]}
+									{gameTerm(GEAR_KIND_LABELS[g.kind])}
 									{g.rarity ? ` · ${g.rarity}` : ""}
 									{g.meta ? ` · ${g.meta}` : ""}
 								</span>
@@ -437,7 +438,7 @@ function PickerDomainRow({
 				</div>
 			)}
 			<button type="button" className="df-cs-pick-add" disabled={added} onClick={onAdd}>
-				{added ? "Added ✓" : "Add"}
+				{added ? dfTranslate("ui.dynamic.added") : dfTranslate("ui.dynamic.add")}
 			</button>
 		</div>
 	);
@@ -477,7 +478,7 @@ function PickerHeritageRow({
 				</div>
 			)}
 			<button type="button" className="df-cs-pick-add" disabled={added || pending} onClick={onAdd}>
-				{added ? "Added ✓" : pending ? "1st ✓" : addLabel}
+				{added ? dfTranslate("ui.dynamic.added") : pending ? dfTranslate("ui.dynamic.1st") : addLabel}
 			</button>
 		</div>
 	);

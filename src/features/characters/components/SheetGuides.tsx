@@ -319,7 +319,7 @@ export function BeastformSection({ char, update }: SectionProps) {
 												disabled={isActive}
 												onClick={() => update({ activeBeastform: b.name })}
 											>
-												{isActive ? "Current form" : "Take this form"}
+												{isActive ? dfTranslate("ui.dynamic.current.form") : dfTranslate("ui.dynamic.take.this.form")}
 											</button>
 										</div>
 									)}
@@ -421,7 +421,7 @@ export function CompanionSection({ char, update }: SectionProps) {
 					)}
 					<div className="df-cs-comp-portrait-btns">
 						<button type="button" onClick={() => fileRef.current?.click()}>
-							{comp.art ? "Change picture" : "Add picture"}
+							{comp.art ? dfTranslate("ui.dynamic.change.picture") : dfTranslate("ui.dynamic.add.picture")}
 						</button>
 						{comp.art && (
 							<button type="button" onClick={() => patch({ art: "" })}>

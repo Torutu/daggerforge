@@ -151,7 +151,7 @@
 		"rarity": "Hope & Fear",
 		"subtype": "Beute",
 		"name": "Handschuhe von Alacrity",
-		"text": "Wenn du 1 Stress markieren würden, um eine Waffe neu zu laden, markieren Sie ihn nicht."
+		"text": "Wenn du zum Nachladen einer Waffe 1 Stress markieren müsstest, markierst du diesen Stress nicht."
 	},
 	{
 		"id": "HF-IT023",

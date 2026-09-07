@@ -42,7 +42,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 	const characters = useMemo(
 		() =>
 			[...plugin.dataManager.getCharacters()].sort((a, b) =>
-				(a.name || "Unnamed").localeCompare(b.name || "Unnamed"),
+				(a.name || dfTranslate("ui.dynamic.unnamed")).localeCompare(b.name || dfTranslate("ui.dynamic.unnamed")),
 			),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[plugin, storeVersion],
@@ -112,7 +112,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 			setStoreVersion((v) => v + 1);
 			setImportOpen(false);
 			setImportText("");
-			new Notice(existed ? "Character updated from code." : "Character imported from code.");
+			new Notice(existed ? dfTranslate("ui.dynamic.character.updated.from.code") : dfTranslate("ui.dynamic.character.imported.from.code"));
 		} catch (error) {
 			console.error("DaggerForge: failed to import character code", error);
 			new Notice(dfTranslate("ui.that.doesn.t.look.like.a.valid.character.code"));
@@ -186,7 +186,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 		}
 		new ConfirmModal(plugin.app, {
 			title: dfTranslate("ui.delete.character"),
-			message: `"${char.name || "Unnamed character"}" will be removed from your saved characters.`,
+			message: dfTranslate("character.delete.confirm", { name: char.name || dfTranslate("ui.dynamic.unnamed.character") }),
 			confirmLabel: "Delete",
 			onConfirm: async () => {
 				await plugin.dataManager.deleteCharacterById(char.id);
@@ -253,11 +253,11 @@ export function CharacterSheetApp({ plugin }: Props) {
 					aria-label={dfTranslate("ui.saved.characters")}
 				>
 					<option value="" disabled>
-						{isSaved ? "Switch character…" : "New character"}
+						{isSaved ? dfTranslate("ui.dynamic.switch.character") : dfTranslate("ui.dynamic.new.character")}
 					</option>
 					{characters.map((c) => (
 						<option key={c.id} value={c.id}>
-							{c.name || "Unnamed character"}
+							{c.name || dfTranslate("ui.dynamic.unnamed.character")}
 						</option>
 					))}
 				</select>

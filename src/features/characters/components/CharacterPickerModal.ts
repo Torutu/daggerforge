@@ -16,12 +16,12 @@ export class CharacterPickerModal extends FuzzySuggestModal<CharacterData> {
 
 	getItems(): CharacterData[] {
 		return [...this.characters].sort((a, b) =>
-			(a.name || "Unnamed").localeCompare(b.name || "Unnamed"),
+			(a.name || dfTranslate("ui.dynamic.unnamed")).localeCompare(b.name || dfTranslate("ui.dynamic.unnamed")),
 		);
 	}
 
 	getItemText(character: CharacterData): string {
-		return character.name || "Unnamed character";
+		return character.name || dfTranslate("ui.dynamic.unnamed.character");
 	}
 
 	onChooseItem(character: CharacterData): void {

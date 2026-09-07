@@ -2,6 +2,15 @@ import { translate, TranslationKey } from "./index";
 
 /** Display labels only: callers must keep canonical values in filters and saves. */
 const keys: Record<string, TranslationKey> = {
+	items: "term.items",
+	characters: "term.characters",
+	environments: "term.environments",
+	adversaries: "term.adversaries",
+	consumable: "term.consumable",
+	item: "term.item",
+	wheelchair: "term.wheelchair",
+	armor: "term.armor",
+	weapon: "term.weapon",
 	agility: "term.agility", strength: "term.strength", finesse: "term.finesse",
 	instinct: "term.instinct", presence: "term.presence", knowledge: "term.knowledge",
 	bruiser: "term.bruiser", horde: "term.horde", leader: "term.leader",

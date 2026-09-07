@@ -39,12 +39,12 @@ export class DiceRollerModal extends Modal {
 		countInput.value = "1";
 
 		const rollBtn = controls.createEl("button", { cls: "df-dr-roll-btn" });
-		rollBtn.innerHTML = `${PLAY}<span>Roll All</span>`;
+		rollBtn.innerHTML = `${PLAY}<span>${dfTranslate("dice.rollAll")}</span>`;
 
 		// ── Dice grid ─────────────────────────────────────────────────────
 		const diceSection = contentEl.createEl("div", { cls: "df-dr-section" });
 		const diceSectionLabel = diceSection.createEl("div", { cls: "df-dr-section-label" });
-		diceSectionLabel.innerHTML = `${DICE}<span>Select dice</span>`;
+		diceSectionLabel.innerHTML = `${DICE}<span>${dfTranslate("dice.select")}</span>`;
 
 		const diceGrid = diceSection.createEl("div", { cls: "df-dr-dice-grid" });
 		DICE_SIDES.forEach(sides => {
@@ -63,10 +63,10 @@ export class DiceRollerModal extends Modal {
 		const logSection = contentEl.createEl("div", { cls: "df-dr-log-section" });
 		const logHeader = logSection.createEl("div", { cls: "df-dr-log-header" });
 		const logTitle = logHeader.createEl("div", { cls: "df-dr-section-label" });
-		logTitle.innerHTML = `${HISTORY}<span>Roll History</span>`;
+		logTitle.innerHTML = `${HISTORY}<span>${dfTranslate("dice.history")}</span>`;
 		const clearBtn = logHeader.createEl("button", { cls: "df-dr-clear-btn" });
 		clearBtn.innerHTML = TRASH;
-		clearBtn.setAttribute("title", "Clear history");
+		clearBtn.setAttribute("title", dfTranslate("dice.clear"));
 
 		const logContainer = logSection.createEl("div", { cls: "df-dr-log" });
 

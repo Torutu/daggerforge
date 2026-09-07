@@ -40,7 +40,7 @@ export class AdversaryView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Adversary Browser";
+		return dfTranslate("ui.dynamic.adversary.browser");
 	}
 
 	getIcon(): string {
@@ -367,12 +367,12 @@ export class AdversaryView extends ItemView {
 
 		const title = document.createElement("h3");
 		title.classList.add("df-title-small-padding");
-		title.textContent = adversary.name || "Unnamed Adversary";
+		title.textContent = adversary.name || dfTranslate("ui.dynamic.unnamed.adversary");
 		card.appendChild(title);
 
 		const desc = document.createElement("p");
 		desc.classList.add("df-desc-small-padding");
-		desc.textContent = adversary.desc || "No description available.";
+		desc.textContent = adversary.desc || dfTranslate("ui.dynamic.no.description.available");
 		card.appendChild(desc);
 
 		card.addEventListener("click", () =>

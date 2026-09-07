@@ -242,7 +242,7 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 				<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 					onClick={(e: any) => { e.stopPropagation(); onDelete(adversary); }} />
 			)}
-			<h3 className="df-title-small-padding">{adversary.name || "Unnamed"}</h3>
+			<h3 className="df-title-small-padding">{adversary.name || dfTranslate("ui.dynamic.unnamed")}</h3>
 			<p className="df-desc-small-padding">{adversary.desc || ""}</p>
 		</div>
 	);
@@ -360,7 +360,7 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 				<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-env-delete-btn"
 					onClick={(e: any) => { e.stopPropagation(); onDelete(env); }} />
 			)}
-			<h3 className="df-title-small-padding">{env.name || "Unnamed"}</h3>
+			<h3 className="df-title-small-padding">{env.name || dfTranslate("ui.dynamic.unnamed")}</h3>
 			<p className="df-desc-small-padding">{env.desc || ""}</p>
 		</div>
 	);
@@ -391,11 +391,11 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		.filter(
 			(c) =>
 				!q ||
-				(c.name || "Unnamed character").toLowerCase().includes(q) ||
+				(c.name || dfTranslate("ui.dynamic.unnamed.character")).toLowerCase().includes(q) ||
 				c.classSubclass.toLowerCase().includes(q) ||
 				c.heritage.toLowerCase().includes(q),
 		)
-		.sort((a, b) => (a.name || "Unnamed").localeCompare(b.name || "Unnamed"));
+		.sort((a, b) => (a.name || dfTranslate("ui.dynamic.unnamed")).localeCompare(b.name || dfTranslate("ui.dynamic.unnamed")));
 
 	const insert = useCallback(async (character: CharacterData) => {
 		const plg = getDaggerForgePlugin(app);
@@ -414,7 +414,7 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 		if (!plg) return;
 		new ConfirmModal(plg.app, {
 			title: dfTranslate("ui.delete.character"),
-			message: `"${character.name || "Unnamed character"}" will be removed from your saved characters.`,
+			message: dfTranslate("character.delete.confirm", { name: character.name || dfTranslate("ui.dynamic.unnamed.character") }),
 			confirmLabel: "Delete",
 			onConfirm: () => void plg.dataManager.deleteCharacterById(character.id),
 		}).open();
@@ -431,7 +431,7 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			/>
 			<div className="df-adversary-results">
 				{characters.length === 0 ? (
-					<p>{q ? "No characters match." : "No saved characters yet. Open the character sheet to create one."}</p>
+					<p>{q ? dfTranslate("ui.dynamic.no.characters.match") : dfTranslate("ui.dynamic.no.saved.characters.yet.open.the.character.sheet.to.create.one")}</p>
 				) : (
 					characters.map((c) => (
 						<CharacterCard key={c.id} character={c} onInsert={insert} onDelete={deleteCharacter} />
@@ -449,7 +449,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 }) {
 	useUiLanguage();
 	const { className, color } = characterClassInfo(character);
-	const tag = className ?? (character.classSubclass.trim() || "No class");
+	const tag = className ?? (character.classSubclass.trim() || dfTranslate("ui.dynamic.no.class"));
 	const badgeColor = color ?? "var(--text-faint)";
 	return (
 		<div
@@ -458,7 +458,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 			onClick={() => onInsert(character)}
 		>
 			<p className="df-tier-text">
-				{character.level.trim() ? `Level ${character.level}` : "Level -"}{" "}
+				{dfTranslate("sheet.levelValue", { level: character.level.trim() || "-" })}{" "}
 				<span
 					className="df-class-badge"
 					style={{
@@ -472,7 +472,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 			</p>
 			<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 				onClick={(e: any) => { e.stopPropagation(); onDelete(character); }} />
-			<h3 className="df-title-small-padding">{character.name || "Unnamed character"}</h3>
+			<h3 className="df-title-small-padding">{character.name || dfTranslate("ui.dynamic.unnamed.character")}</h3>
 			<p className="df-desc-small-padding">{character.heritage}</p>
 		</div>
 	);
@@ -522,7 +522,7 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 			/>
 			<select className="dropdown df-item-kind-filter" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)} aria-label={dfTranslate("ui.kind.filter")}>
 				{GEAR_KINDS.map((k) => (
-					<option key={k} value={k}>{k === "all" ? "All kinds" : GEAR_KIND_LABELS[k]}</option>
+					<option key={k} value={k}>{k === "all" ? dfTranslate("ui.dynamic.all.kinds") : gameTerm(GEAR_KIND_LABELS[k])}</option>
 				))}
 			</select>
 			<div className="df-adversary-results">
@@ -536,7 +536,7 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 							onClick={() => insert(g)}
 						>
 							<p className="df-tier-text">
-								{GEAR_KIND_LABELS[g.kind]}
+								{gameTerm(GEAR_KIND_LABELS[g.kind])}
 								{g.tier !== null ? ` · Tier ${g.tier}` : ""}
 								{g.rarity ? ` · ${g.rarity}` : ""}{" "}
 								{g.source === "custom" && <span className="df-source-badge-custom">{dfTranslate("ui.custom")}</span>}
@@ -598,7 +598,7 @@ export function ContentBrowserApp({ app, scrollContainer, onTabSetter, refreshTo
 						onClick={() => setActiveTab(tab)}
 					>
 						<LucideIcon icon={TAB_ICONS[tab]} cls="df-tab-icon" />
-						{TAB_LABELS[tab]}
+						{gameTerm(TAB_LABELS[tab])}
 					</div>
 				))}
 			</div>

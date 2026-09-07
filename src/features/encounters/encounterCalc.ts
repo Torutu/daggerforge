@@ -1,3 +1,4 @@
+import { gameTerm } from "../../i18n/gameTerms";
 import { translate as dfTranslate } from "../../i18n";
 import { App, Modal, Notice } from "obsidian";
 import { makeDraggable } from "../../utils/makeDraggable";
@@ -100,7 +101,7 @@ export class EncounterCalcModal extends Modal {
 		pcInput.value = this.state.pcCount.toString();
 
 		const calcBtn = headerRow.createEl("button", { cls: "df-enc-calc-btn" });
-		calcBtn.innerHTML = `${ZAP}<span>Calculate</span>`;
+		calcBtn.innerHTML = `${ZAP}<span>${dfTranslate("enc.calculate")}</span>`;
 
 		// ── Stats bar ─────────────────────────────────────────────────────
 		const statsBar = contentEl.createEl("div", { cls: "df-enc-stats" });
@@ -110,28 +111,28 @@ export class EncounterCalcModal extends Modal {
 			const val = chip.createEl("span", { cls: "df-enc-stat-value", text: "0" });
 			return val;
 		};
-		const svBase      = makeStatEl("Base BP");
-		const svAdj       = makeStatEl("Adjustments");
-		const svSpent     = makeStatEl("Spent");
-		const svRemaining = makeStatEl("Remaining", "df-enc-stat--highlight");
+		const svBase      = makeStatEl(dfTranslate("enc.base.bp"));
+		const svAdj       = makeStatEl(dfTranslate("enc.adjustments"));
+		const svSpent     = makeStatEl(dfTranslate("enc.spent"));
+		const svRemaining = makeStatEl(dfTranslate("enc.remaining"), "df-enc-stat--highlight");
 
 		// ── Log columns ───────────────────────────────────────────────────
 		const columnsDiv = contentEl.createEl("div", { cls: "df-enc-columns" });
 
 		const adjCol = columnsDiv.createEl("div", { cls: "df-enc-column" });
 		const adjColHead = adjCol.createEl("div", { cls: "df-enc-col-header" });
-		adjColHead.innerHTML = `${SLIDERS}<span>Adjustments</span>`;
+		adjColHead.innerHTML = `${SLIDERS}<span>${dfTranslate("enc.adjustments")}</span>`;
 		const adjustmentsList = adjCol.createEl("div", { cls: "df-enc-log" });
 
 		const spendCol = columnsDiv.createEl("div", { cls: "df-enc-column" });
 		const spendColHead = spendCol.createEl("div", { cls: "df-enc-col-header" });
-		spendColHead.innerHTML = `${SWORDS}<span>Spending</span>`;
+		spendColHead.innerHTML = `${SWORDS}<span>${dfTranslate("enc.spending")}</span>`;
 		const spendingList = spendCol.createEl("div", { cls: "df-enc-log" });
 
 		// ── Adjustment buttons ────────────────────────────────────────────
 		const adjSection = contentEl.createEl("div", { cls: "df-enc-section" });
 		const adjHead = adjSection.createEl("div", { cls: "df-enc-section-label" });
-		adjHead.innerHTML = `${SLIDERS}<span>Adjust Battle Points</span>`;
+		adjHead.innerHTML = `${SLIDERS}<span>${dfTranslate("enc.adjust.battle.points")}</span>`;
 		const adjGrid = adjSection.createEl("div", { cls: "df-enc-btn-grid" });
 		getAdjustments().forEach(adj => {
 			const btn = adjGrid.createEl("button", { cls: "df-enc-action-btn" });
@@ -146,7 +147,7 @@ export class EncounterCalcModal extends Modal {
 		// ── Spend buttons ─────────────────────────────────────────────────
 		const spendSection = contentEl.createEl("div", { cls: "df-enc-section" });
 		const spendHead = spendSection.createEl("div", { cls: "df-enc-section-label" });
-		spendHead.innerHTML = `${SWORDS}<span>Spend Battle Points</span>`;
+		spendHead.innerHTML = `${SWORDS}<span>${dfTranslate("enc.spend.battle.points")}</span>`;
 		const spendGrid = spendSection.createEl("div", { cls: "df-enc-btn-grid" });
 		getSpendOptions().forEach(opt => {
 			const btn = spendGrid.createEl("button", { cls: "df-enc-action-btn" });
@@ -159,12 +160,12 @@ export class EncounterCalcModal extends Modal {
 		// ── Suggestions ───────────────────────────────────────────────────
 		const sugSection = contentEl.createEl("div", { cls: "df-enc-section" });
 		const sugHead = sugSection.createEl("div", { cls: "df-enc-section-label" });
-		sugHead.innerHTML = `${WAND}<span>Suggested Adversaries</span>`;
+		sugHead.innerHTML = `${WAND}<span>${dfTranslate("enc.suggested.adversaries")}</span>`;
 
 		const filterRow = sugSection.createEl("div", { cls: "df-enc-suggest-filters" });
 		const tierSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
 		tierSelect.createEl("option", { text: dfTranslate("ui.any.tier"), value: "all" });
-		["1", "2", "3", "4"].forEach(t => tierSelect.createEl("option", { text: `Tier ${t}`, value: t }));
+		["1", "2", "3", "4"].forEach(t => tierSelect.createEl("option", { text: `${dfTranslate("ui.tier")} ${t}`, value: t }));
 
 		const sourceSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
 		sourceSelect.createEl("option", { text: dfTranslate("ui.any.source"), value: "all" });
@@ -181,7 +182,7 @@ export class EncounterCalcModal extends Modal {
 		// ── Footer ────────────────────────────────────────────────────────
 		const footer = contentEl.createEl("div", { cls: "df-enc-footer" });
 		const clearBtn = footer.createEl("button", { cls: "df-enc-clear-btn" });
-		clearBtn.innerHTML = `${TRASH}<span>Clear all</span>`;
+		clearBtn.innerHTML = `${TRASH}<span>${dfTranslate("enc.clear.all")}</span>`;
 
 		// ── Logic ─────────────────────────────────────────────────────────
 		const totals = () => {
@@ -194,18 +195,18 @@ export class EncounterCalcModal extends Modal {
 		 *  into the note/canvas once, before the first inserted adversary, so
 		 *  the encounter can be read back later. */
 		const buildSummaryMarkdown = (): string => {
-			const scope = [`${this.state.pcCount} PCs`];
-			if (this.state.tier !== "all") scope.push(`Tier ${this.state.tier}`);
+			const scope = [dfTranslate("enc.pcCount", { count: this.state.pcCount })];
+			if (this.state.tier !== "all") scope.push(`${dfTranslate("ui.tier")} ${this.state.tier}`);
 			if (this.state.source !== "all") scope.push(capitalize(this.state.source));
-			const lines = [`> [!note] Battle plan - ${scope.join(" · ")}`];
-			lines.push(`> - Base battle points: ${this.state.baseBP}`);
+			const lines = [`> [!note] ${dfTranslate("enc.plan", { scope: scope.join(" · ") })}`];
+			lines.push(`> - ${dfTranslate("enc.base", { count: this.state.baseBP })}`);
 			this.state.adjustments.forEach(a =>
 				lines.push(`> - ${a.reason} (${a.value >= 0 ? "+" : ""}${a.value})`),
 			);
 			this.state.spentItems.forEach(s =>
 				lines.push(`> - ${s.label}${s.adversary ? ` - ${s.adversary.name}` : ""} (−${s.cost})`),
 			);
-			lines.push(`> - Remaining battle points: ${totals().remaining}`);
+			lines.push(`> - ${dfTranslate("enc.remaining", { count: totals().remaining })}`);
 			return lines.join("\n") + "\n";
 		};
 
@@ -257,7 +258,7 @@ export class EncounterCalcModal extends Modal {
 					true,
 				);
 			}
-			new Notice(`Inserted the battle plan and ${chosen.length} ${chosen.length === 1 ? "adversary" : "adversaries"} on ${groups.size} ${groups.size === 1 ? "card" : "cards"}.`);
+			new Notice(dfTranslate("enc.inserted", { count: chosen.length, cards: groups.size }));
 
 			// Finalized - reset for the next encounter (same party size)
 			this.state.baseBP      = 3 * this.state.pcCount + 2;
@@ -274,7 +275,7 @@ export class EncounterCalcModal extends Modal {
 			}
 			new ConfirmModal(this.app, {
 				title: dfTranslate("ui.insert.with.unspent.battle.points"),
-				message: `You still have ${remaining} unspent battle point${remaining === 1 ? "" : "s"}. Inserting finalizes this encounter and clears the calculator - you would have to rebuild the plan from scratch to spend them.`,
+				message: dfTranslate("enc.unspentWarning", { count: remaining }),
 				confirmLabel: "Insert anyway",
 				onConfirm: () => void insertEncounter(),
 			}).open();
@@ -314,7 +315,7 @@ export class EncounterCalcModal extends Modal {
 				head.createEl("span", { text: opt.label });
 				head.createEl("span", {
 					cls: "df-enc-suggest-progress" + (done >= slots.length ? " is-done" : ""),
-					text: done >= slots.length ? `${done}/${slots.length} ✓` : `${done}/${slots.length} chosen`,
+					text: done >= slots.length ? `${done}/${slots.length} ✓` : dfTranslate("enc.chosen", { done, total: slots.length }),
 				});
 
 				if (matches.length === 0) {
@@ -332,7 +333,7 @@ export class EncounterCalcModal extends Modal {
 						if (picks > 0) chip.createEl("span", { cls: "df-enc-chip-check", text: picks > 1 ? `✓×${picks}` : "✓" });
 						chip.createEl("span", { text: adv.name });
 						chip.createEl("span", { cls: "df-enc-chip-tier", text: `T${adv.tier}` });
-						chip.title = `${adv.type} · ${capitalize((adv.source || "core").toLowerCase())} - choose for this slot`;
+						chip.title = dfTranslate("enc.chooseSlot", { type: gameTerm(adv.type), source: gameTerm(adv.source || "core") });
 						chip.addEventListener("click", () => chooseSuggestion(adv, opt));
 					});
 				};
@@ -353,7 +354,7 @@ export class EncounterCalcModal extends Modal {
 				}
 				[...subTypes.keys()].sort().forEach(typeName => {
 					const sub = group.createEl("div", { cls: "df-enc-suggest-subhead" });
-					sub.createEl("span", { cls: "df-enc-suggest-subtype", text: typeName });
+					sub.createEl("span", { cls: "df-enc-suggest-subtype", text: gameTerm(typeName) });
 					makeChips(group, subTypes.get(typeName)!);
 				});
 			});
@@ -386,7 +387,7 @@ export class EncounterCalcModal extends Modal {
 				row.createEl("span", { cls: "df-enc-log-val df-enc-neg", text: `-${item.cost}` });
 				const rm = row.createEl("button", { cls: "df-enc-remove-btn" });
 				rm.innerHTML = X_SM;
-				rm.title = item.adversary ? "Clear the chosen adversary" : "Remove this slot";
+				rm.title = item.adversary ? dfTranslate("ui.dynamic.clear.the.chosen.adversary") : dfTranslate("ui.dynamic.remove.this.slot");
 				// First click clears the pick, second removes the slot entirely
 				rm.addEventListener("click", () => {
 					if (item.adversary) item.adversary = undefined;
@@ -411,10 +412,10 @@ export class EncounterCalcModal extends Modal {
 			insertBtn.disabled = chosenCount === 0;
 			insertNote.textContent =
 				chosenCount === 0
-					? "Choose adversaries above, then insert them all at once."
+					? dfTranslate("ui.dynamic.choose.adversaries.above.then.insert.them.all.at.once")
 					: remaining > 0
-						? `${remaining} BP still unspent`
-						: `${chosenCount} chosen - ready to insert`;
+						? dfTranslate("enc.unspent", { count: remaining })
+						: dfTranslate("enc.ready", { count: chosenCount });
 
 			renderSuggestions();
 		};

@@ -237,23 +237,23 @@ export function DamageHealthSection({ char, update }: SectionProps) {
 			)}
 			<p className="df-cs-hint">{dfTranslate("ui.add.your.current.level.to.your.damage.thresholds")}</p>
 			<div className={"df-cs-thresholds" + (settings.massiveDamage ? " df-cs-thresholds--massive" : "")}>
-				<ThresholdBlock title={dfTranslate("ui.minor.damage")} caption="Mark 1 HP" />
+				<ThresholdBlock title={dfTranslate("ui.minor.damage")} caption={dfTranslate("sheet.markHp", { count: 1 })} />
 				<ThresholdGap
 					value={char.majorThreshold}
 					onChange={(v) => update({ majorThreshold: v })}
 					label={dfTranslate("ui.major.damage.threshold")}
 				/>
-				<ThresholdBlock title={dfTranslate("ui.major.damage")} caption="Mark 2 HP" />
+				<ThresholdBlock title={dfTranslate("ui.major.damage")} caption={dfTranslate("sheet.markHp", { count: 2 })} />
 				<ThresholdGap
 					value={char.severeThreshold}
 					onChange={(v) => update({ severeThreshold: v })}
 					label={dfTranslate("ui.severe.damage.threshold")}
 				/>
-				<ThresholdBlock title={dfTranslate("ui.severe.damage")} caption="Mark 3 HP" />
+				<ThresholdBlock title={dfTranslate("ui.severe.damage")} caption={dfTranslate("sheet.markHp", { count: 3 })} />
 				{settings.massiveDamage && (
 					<>
 						<MassiveThresholdGap severeThreshold={char.severeThreshold} />
-						<ThresholdBlock title={dfTranslate("ui.massive.damage")} caption="Mark 4 HP" />
+						<ThresholdBlock title={dfTranslate("ui.massive.damage")} caption={dfTranslate("sheet.markHp", { count: 4 })} />
 					</>
 				)}
 			</div>
@@ -562,7 +562,7 @@ export function GoldSection({ char, update }: SectionProps) {
 							<button
 								type="button"
 								className="df-cs-card-remove"
-								aria-label={`Remove currency ${i + 1}`}
+								aria-label={dfTranslate("sheet.removeCurrency", { count: i + 1 })}
 								onClick={() =>
 									patchSettings(char, update, {
 										currencies: settings.currencies.filter((_, j) => j !== i),
@@ -728,12 +728,12 @@ function HeritageSlot({
 	return (
 		<div className="df-cs-hcard">
 			<div className="df-cs-hcard-head">
-				<span className="df-cs-hcard-kind">{kind}</span>
+				<span className="df-cs-hcard-kind">{dfTranslate(kind === "Ancestry" ? "wizard.review.ancestry" : kind === "Community" ? "wizard.review.community" : "wizard.review.transformation")}</span>
 				<span className="df-cs-hcard-name">{card.name}</span>
 				<button
 					type="button"
 					className="df-cs-card-remove"
-					aria-label={`Remove ${kind.toLowerCase()} card`}
+					aria-label={dfTranslate("sheet.removeCard")}
 					onClick={onRemove}
 				>
 					✕
@@ -763,7 +763,7 @@ export function DomainCardsSection({ char, update, onAddCards }: CardSectionProp
 			<SectionBanner title={dfTranslate("ui.domain.cards")} />
 			<div className="df-cs-dcards-groups">
 				<DomainCardGroup
-					title={`Loadout (${loadout.length}/5)`}
+					title={dfTranslate("sheet.loadoutCount", { count: loadout.length })}
 					hint="Active cards you can use during play."
 					cards={loadout}
 					actionLabel="To vault"
@@ -771,7 +771,7 @@ export function DomainCardsSection({ char, update, onAddCards }: CardSectionProp
 					onRemove={remove}
 				/>
 				<DomainCardGroup
-					title={`Vault (${vault.length})`}
+					title={dfTranslate("sheet.vaultCount", { count: vault.length })}
 					hint="Stored cards. Swapping one into your loadout costs its Recall Cost in Stress during play; swapping during downtime is free."
 					cards={vault}
 					actionLabel="To loadout"
@@ -852,7 +852,7 @@ function DomainCardItem({
 				<span className="df-cs-dcard-meta">
 					{card.domain} · {card.type} · <ZapIcon />{card.recallCost}
 				</span>
-				<button type="button" className="df-cs-card-remove" aria-label={`Remove ${card.name}`} onClick={onRemove}>
+				<button type="button" className="df-cs-card-remove" aria-label={dfTranslate("sheet.removeNamed", { name: card.name })} onClick={onRemove}>
 					✕
 				</button>
 			</div>
