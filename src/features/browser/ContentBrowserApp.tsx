@@ -25,10 +25,13 @@ import { buildCharacterEmbedBlock, characterEmbedCode } from "../characters/Char
 import { ConfirmModal } from "../characters/components/ConfirmModal";
 import type { CharacterData } from "../../types/character";
 import { CLASS_COLORS, GEAR_KIND_COLORS, GEAR_KIND_LABELS, GearData } from "../../types/srd";
-import { getAllGear, SRD_CLASSES } from "../../data/srd";
-import { useLanguage } from "../../i18n/react";
+import { getAllGear, getSrdClasses } from "../../data/srd";
 import { buildItemEmbedBlock } from "../items/ItemEmbed";
 import { hexTint } from "../characters/components/SheetSections";
+import {
+	localizedClassSubclass,
+	localizedHeritageSummary,
+} from "../characters/localizedCharacter";
 
 export type BrowserTab = "adversary" | "environment" | "character" | "item";
 
@@ -132,8 +135,7 @@ const ADV_TYPES = [
 ];
 
 function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
-	useUiLanguage();
-	const language = useLanguage();
+	const language = useUiLanguage();
 	const [cards, setCards] = useState<AdvData[]>([]);
 	const [ready, setReady] = useState(false);
 	const engineRef = useRef(new SearchEngine<AdvData>());
@@ -200,6 +202,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			<CounterControls />
 			{ready && (
 				<SearchPane
+					key={language}
 					configFactory={buildConfig}
 					onUiReady={(ui) => {
 						uiRef.current = ui;
@@ -251,8 +254,7 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 // ── Environment Pane ──────────────────────────────────────────────────────────
 
 function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
-	useUiLanguage();
-	const language = useLanguage();
+	const language = useUiLanguage();
 	const [cards, setCards] = useState<EnvironmentData[]>([]);
 	const [ready, setReady] = useState(false);
 	const engineRef = useRef(new SearchEngine<EnvironmentData>());
@@ -317,6 +319,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 		<>
 			{ready && (
 				<SearchPane
+					key={language}
 					configFactory={buildConfig}
 					onUiReady={(ui) => {
 						uiRef.current = ui;
@@ -369,18 +372,21 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 // ── Character Pane ────────────────────────────────────────────────────────────
 
 /** Resolves the stable class id first, then falls back to legacy free text. */
-function characterClassInfo(character: CharacterData): { className: string | null; color: string | null } {
+function characterClassInfo(character: CharacterData, language: "en" | "de"): { className: string | null; color: string | null } {
 	const byId = character.classId
-		? SRD_CLASSES.find((candidate) => candidate.id === character.classId)
+		? getSrdClasses(language).find((candidate) => candidate.id === character.classId)
+		: undefined;
+	const canonical = character.classId
+		? getSrdClasses("en").find((candidate) => candidate.id === character.classId)
 		: undefined;
 	const text = character.classSubclass.toLowerCase();
 	const className = byId?.name ??
 		Object.keys(CLASS_COLORS).find((name) => text.includes(name.toLowerCase())) ?? null;
-	return { className, color: className ? CLASS_COLORS[className] : null };
+	return { className, color: canonical ? CLASS_COLORS[canonical.name] : className ? CLASS_COLORS[className] : null };
 }
 
 function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
-	useUiLanguage();
+	const language = useUiLanguage();
 	const [query, setQuery] = useState("");
 	// refreshToken re-renders the pane whenever stored data changes
 	void refreshToken;
@@ -392,8 +398,8 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 			(c) =>
 				!q ||
 				(c.name || dfTranslate("ui.dynamic.unnamed.character")).toLowerCase().includes(q) ||
-				c.classSubclass.toLowerCase().includes(q) ||
-				c.heritage.toLowerCase().includes(q),
+				localizedClassSubclass(c, language).toLowerCase().includes(q) ||
+				localizedHeritageSummary(c, language).toLowerCase().includes(q),
 		)
 		.sort((a, b) => (a.name || dfTranslate("ui.dynamic.unnamed")).localeCompare(b.name || dfTranslate("ui.dynamic.unnamed")));
 
@@ -447,8 +453,8 @@ function CharacterCard({ character, onInsert, onDelete }: {
 	onInsert: (c: CharacterData) => void;
 	onDelete: (c: CharacterData) => void;
 }) {
-	useUiLanguage();
-	const { className, color } = characterClassInfo(character);
+	const language = useUiLanguage();
+	const { className, color } = characterClassInfo(character, language);
 	const tag = className ?? (character.classSubclass.trim() || dfTranslate("ui.dynamic.no.class"));
 	const badgeColor = color ?? "var(--text-faint)";
 	return (
@@ -473,7 +479,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 			<LucideBtn icon="trash" title={dfTranslate("ui.delete")} cls="df-adv-delete-btn"
 				onClick={(e: any) => { e.stopPropagation(); onDelete(character); }} />
 			<h3 className="df-title-small-padding">{character.name || dfTranslate("ui.dynamic.unnamed.character")}</h3>
-			<p className="df-desc-small-padding">{character.heritage}</p>
+			<p className="df-desc-small-padding">{localizedHeritageSummary(character, language)}</p>
 		</div>
 	);
 }
@@ -483,8 +489,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 const GEAR_KINDS = ["all", "weapon", "armor", "wheelchair", "item", "consumable"] as const;
 
 function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
-	useUiLanguage();
-	const language = useLanguage();
+	const language = useUiLanguage();
 	const [query, setQuery] = useState("");
 	const [kind, setKind] = useState<(typeof GEAR_KINDS)[number]>("all");
 	void refreshToken;

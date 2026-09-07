@@ -61,6 +61,40 @@ describe("SRD 2.0 bundled content", () => {
 			expect(german[index].features.map(f => f.type)).toEqual(original.features.map(f => f.type));
 		}
 	});
+
+	test("known records change visible text while ids and mechanics stay stable", () => {
+		const enClass = getSrdClasses("en").find((item) => item.id === "class-bard")!;
+		const deClass = getSrdClasses("de").find((item) => item.id === "class-bard")!;
+		expect(deClass.id).toBe(enClass.id);
+		expect(deClass.name).not.toBe(enClass.name);
+		expect({ evasion: deClass.stats.evasion, hp: deClass.stats.hp }).toEqual({
+			evasion: enClass.stats.evasion,
+			hp: enClass.stats.hp,
+		});
+
+		const cardId = "domain-card-arcana-1-rune-ward";
+		const enCard = getSrdDomainCards("en").find((item) => item.id === cardId)!;
+		const deCard = getSrdDomainCards("de").find((item) => item.id === cardId)!;
+		expect(deCard.id).toBe(enCard.id);
+		expect(deCard.name).not.toBe(enCard.name);
+		expect(deCard.text).not.toBe(enCard.text);
+		expect({ level: deCard.level, recallCost: deCard.recallCost }).toEqual({
+			level: enCard.level,
+			recallCost: enCard.recallCost,
+		});
+
+		const enAdversary = getAdversaries("en").find((item) => item.id === "SA001")!;
+		const deAdversary = getAdversaries("de").find((item) => item.id === "SA001")!;
+		expect(deAdversary.id).toBe(enAdversary.id);
+		expect(deAdversary.name).not.toBe(enAdversary.name);
+		expect(deAdversary.difficulty).toBe(enAdversary.difficulty);
+
+		const enEnvironment = getEnvironments("en").find((item) => item.id === "CE001")!;
+		const deEnvironment = getEnvironments("de").find((item) => item.id === "CE001")!;
+		expect(deEnvironment.id).toBe(enEnvironment.id);
+		expect(deEnvironment.name).not.toBe(enEnvironment.name);
+		expect(deEnvironment.difficulty).toBe(enEnvironment.difficulty);
+	});
 	test("includes Core, Hope & Fear, and the existing adventure content", () => {
 		expect(ADVERSARIES).toHaveLength(289);
 		expect(ENVIRONMENTS).toHaveLength(51);

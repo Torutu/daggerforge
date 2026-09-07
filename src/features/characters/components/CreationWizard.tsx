@@ -175,6 +175,11 @@ function stepIsAnswered(step: number, choices: CreationChoices): boolean {
 const accentStyle = (accent?: string) =>
 	accent ? ({ "--df-cs-row-accent": accent } as React.CSSProperties) : undefined;
 
+function classColor(srdClass: SrdClass): string | undefined {
+	const canonicalName = getSrdClasses("en").find((item) => item.id === srdClass.id)?.name;
+	return CLASS_COLORS[canonicalName ?? srdClass.name];
+}
+
 function WizardSplit({ list, detail }: { list: React.ReactNode; detail: React.ReactNode }) {
 	return (
 		<div className="df-cs-wiz-split">
@@ -290,7 +295,7 @@ function ClassStep({ selected, onPick }: { selected?: string; onPick: (id: strin
 						key={c.id}
 						selected={selected === c.id}
 						active={openId === c.id}
-						accent={CLASS_COLORS[c.name]}
+						accent={classColor(c)}
 						onClick={() => setOpenId(c.id)}
 						icons={c.domains.map((domain) => (
 							<DomainIcon key={domain.id} domain={domain.name} className="df-cs-domain-icon" style={{ color: DOMAIN_COLORS[domain.name] }} />
@@ -302,7 +307,7 @@ function ClassStep({ selected, onPick }: { selected?: string; onPick: (id: strin
 				detail={
 					open ? (
 						<WizardDetail
-							accent={CLASS_COLORS[open.name]}
+							accent={classColor(open)}
 							title={
 								<>
 									{open.domains.map((domain) => (
@@ -373,13 +378,14 @@ function SubclassStep({
 	onPick: (id: string) => void;
 }) {
 	const t = useTranslation();
+	const language = useLanguage();
 	const [openId, setOpenId] = useState<string | null>(
 		selected ?? srdClass?.subclasses[0]?.id ?? null,
 	);
 	if (!srdClass) {
 		return <p className="df-cs-wizard-hint">{t("wizard.subclass.noClass")}</p>;
 	}
-	const accent = CLASS_COLORS[srdClass.name];
+	const accent = classColor(srdClass);
 	const open = srdClass.subclasses.find((subclass) => subclass.id === openId);
 	return (
 		<>
@@ -393,7 +399,7 @@ function SubclassStep({
 						accent={accent}
 						onClick={() => setOpenId(sub.id)}
 						name={sub.name}
-						meta={sub.spellcastTrait ? t("wizard.subclass.spellcast", { trait: sub.spellcastTrait }) : undefined}
+						meta={sub.spellcastTrait ? t("wizard.subclass.spellcast", { trait: gameTerm(sub.spellcastTrait, language) }) : undefined}
 					/>
 				))}
 				detail={
@@ -401,7 +407,7 @@ function SubclassStep({
 						<WizardDetail
 							accent={accent}
 							title={open.name}
-							meta={open.spellcastTrait ? t("wizard.subclass.spellcast", { trait: open.spellcastTrait }) : undefined}
+							meta={open.spellcastTrait ? t("wizard.subclass.spellcast", { trait: gameTerm(open.spellcastTrait, language) }) : undefined}
 							chooseLabel={t("wizard.choose", { name: open.name })}
 							onChoose={() => onPick(open.id)}
 							onClose={() => setOpenId(null)}
@@ -715,7 +721,7 @@ export function DomainCardsStep({
 		<>
 			<p className="df-cs-wizard-hint">
 				{classDomains
-					? t("wizard.domain.hintForClass", { first: classDomains[0].name, second: classDomains[1].name })
+					? t("wizard.domain.hintForClass", { first: gameTerm(classDomains[0].name, language), second: gameTerm(classDomains[1].name, language) })
 					: t("wizard.domain.hint")}
 			</p>
 			<WizardSplit
@@ -725,7 +731,7 @@ export function DomainCardsStep({
 						<React.Fragment key={domain}>
 							<span className="df-cs-wiz-sub" style={{ color }}>
 								<DomainIcon domain={domain} className="df-cs-domain-icon" style={{ color }} />
-								{domain}
+								{gameTerm(domain, language)}
 							</span>
 							{cards
 								.filter((c) => c.domain === domain)
@@ -757,7 +763,7 @@ export function DomainCardsStep({
 									{open.name}
 								</>
 							}
-							meta={`${open.domain} · ${gameTerm(open.type, language)} · ${t("wizard.domain.recall", { cost: open.recallCost })}`}
+							meta={`${gameTerm(open.domain, language)} · ${gameTerm(open.type, language)} · ${t("wizard.domain.recall", { cost: open.recallCost })}`}
 							footNote={t("wizard.domain.picked", { count: selected.length })}
 							chooseLabel={openPicked ? t("wizard.domain.remove") : t("wizard.domain.add")}
 							chooseDisabled={!openPicked && selected.length >= 2}

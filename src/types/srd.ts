@@ -76,6 +76,7 @@ export interface SrdTransformation {
 
 /** Druid Beastform options (official Beastform list). */
 export interface SrdBeastform {
+	id: string;
 	source: SrdSource;
 	name: string;
 	tier: number;

@@ -1,5 +1,6 @@
-import { translate as t } from "../../i18n";
+import { getLanguage, translate as t } from "../../i18n";
 import { gameTerm } from "../../i18n/gameTerms";
+import { localizeDamageDie } from "../../data/srd";
 import { Feature } from "../../types/index";
 import { toCustomHtml } from "../../utils/richContentTransform";
 
@@ -178,7 +179,7 @@ ${resetBtn}</div>
             ${t("ui.hp")}: <span class="df-stat">${hp} |</span>
             ${stressBlock}
             <br>${t("embed.attack")}: <span class="df-stat">${atk} |</span>
-            ${weaponName}: <span class="df-stat">${gameTerm(weaponRange)} | ${weaponDamage}</span><br>
+            ${weaponName}: <span class="df-stat">${gameTerm(weaponRange)} | ${localizeDamageDie(weaponDamage, getLanguage())}</span><br>
             <div class="df-experience-line">${t("ui.experience")}: <span class="df-stat">${xp}</span></div>
         </div>
         <div class="df-section">${t("embed.features")}</div>

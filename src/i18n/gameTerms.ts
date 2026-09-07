@@ -30,6 +30,10 @@ const keys: Record<string, TranslationKey> = {
 	spellcast: "term.spellcast", "one-handed": "term.oneHanded", "two-handed": "term.twoHanded",
 	evasion: "term.evasion",
 	spell: "term.spell", ability: "term.ability", grimoire: "term.grimoire",
+	arcana: "term.arcana", blade: "term.blade", bone: "term.bone",
+	codex: "term.codex", grace: "term.grace", midnight: "term.midnight",
+	sage: "term.sage", splendor: "term.splendor", valor: "term.valor",
+	dread: "term.dread",
 };
 
 export function gameTerm(value: string, language: Language = getLanguage()): string {

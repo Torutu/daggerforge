@@ -42,13 +42,18 @@ export interface CreationChoices {
 export function composeMixedHeritage(
 	primary: SrdHeritage,
 	secondary: SrdHeritage,
+	language: "en" | "de" = getLanguage(),
 ): HeritageCardData {
 	const firstFeature = primary.features[0];
 	const secondFeature = secondary.features[1] ?? secondary.features[0];
 	return {
 		id: `mixed-${primary.id}-${secondary.id}`,
 		name: `${primary.name} / ${secondary.name}`,
-		description: translate("creation.mixedAncestry", { primary: primary.name, secondary: secondary.name }),
+		description: translate(
+			"creation.mixedAncestry",
+			{ primary: primary.name, secondary: secondary.name },
+			language,
+		),
 		features: [firstFeature, secondFeature].filter(Boolean).join("\n\n"),
 	};
 }
@@ -151,18 +156,7 @@ function applyClass(
 		char.traits[name] = { value: traitValues[i] ?? "", marked: false };
 	});
 
-	const features = srdClass.classFeatures.map((f) => `${f.name}: ${f.description}`);
-	if (subclass) {
-		if (subclass.spellcastTrait) features.push(translate("creation.spellcastTrait", {
-			trait: localizeTrait(subclass.spellcastTrait, language),
-		}, language));
-		for (const f of subclass.foundation) {
-			features.push(translate("creation.foundationFeature", {
-				feature: f.name, subclass: subclass.name, description: f.description,
-			}, language));
-		}
-	}
-	char.classFeature = features.join("\n\n");
+	char.classFeature = buildClassFeatureText(srdClass, subclassId, language);
 
 	const canonicalClass = SRD_CLASSES.find((item) => item.id === srdClass.id) ?? srdClass;
 	const primary = findWeapon(canonicalClass.stats.suggestedPrimary, language);
@@ -184,6 +178,42 @@ function applyClass(
 	if (armor) applyArmor(char, armor);
 }
 
+export function buildClassFeatureText(
+	srdClass: SrdClass,
+	subclassId: string | undefined,
+	language: "en" | "de",
+): string {
+	const subclass = subclassId
+		? srdClass.subclasses.find((candidate) => candidate.id === subclassId)
+		: undefined;
+	const features = srdClass.classFeatures.map((feature) =>
+		`${feature.name}: ${feature.description}`,
+	);
+	if (subclass?.spellcastTrait) {
+		features.push(
+			translate(
+				"creation.spellcastTrait",
+				{ trait: localizeTrait(subclass.spellcastTrait, language) },
+				language,
+			),
+		);
+	}
+	for (const feature of subclass?.foundation ?? []) {
+		features.push(
+			translate(
+				"creation.foundationFeature",
+				{
+					feature: feature.name,
+					subclass: subclass?.name ?? "",
+					description: feature.description,
+				},
+				language,
+			),
+		);
+	}
+	return features.join("\n\n");
+}
+
 function findWeapon(name: string | null, language: "en" | "de"): SrdWeapon | undefined {
 	if (!name) return undefined;
 	const canonical = SRD_EQUIPMENT.weapons.find((w) => w.name === name);
@@ -195,6 +225,7 @@ function findWeapon(name: string | null, language: "en" | "de"): SrdWeapon | und
 /** Converts SRD weapon stats (weapons and combat wheelchairs share the shape)
  *  into a sheet weapon row. Also used by the card picker's Equipment tab. */
 export function toCharacterWeapon(weapon: {
+	id?: string;
 	name: string;
 	trait: string;
 	range: string;
@@ -204,6 +235,7 @@ export function toCharacterWeapon(weapon: {
 }, language: "en" | "de" = getLanguage()): CharacterWeapon {
 	const damageType = weapon.damageType === "Magical" ? "mag" : "phy";
 	return {
+		id: weapon.id,
 		name: weapon.name,
 		traitRange: `${localizeTrait(weapon.trait, language)} - ${localizeRange(weapon.range, language)}`,
 		damageDice: `${localizeDamageDie(weapon.damage, language)} ${damageType}`,
@@ -215,6 +247,7 @@ export function toCharacterWeapon(weapon: {
 export function armorToPatch(armor: SrdArmor): Partial<CharacterData> {
 	return {
 		activeArmor: {
+			id: armor.id,
 			name: armor.name,
 			baseThresholds: `${armor.minor} / ${armor.major}`,
 			baseScore: String(armor.score),

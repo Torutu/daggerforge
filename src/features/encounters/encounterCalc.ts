@@ -4,7 +4,7 @@ import { App, Modal, Notice } from "obsidian";
 import { makeDraggable } from "../../utils/makeDraggable";
 import { getDaggerForgePlugin } from "../../utils/index";
 import { getAdversaries } from "../../data/adversaries";
-import { getLanguage } from "../../i18n";
+import { getLanguage, subscribeLanguage } from "../../i18n";
 import { AdvData } from "../../types/index";
 import { buildAdversaryEmbedBlock } from "../adversaries/AdversaryEmbed";
 import { ConfirmModal } from "../characters/components/ConfirmModal";
@@ -32,7 +32,7 @@ interface SpentItem {
 
 interface EncounterState {
 	baseBP: number;
-	adjustments: { value: number; reason: string }[];
+	adjustments: { value: number; reason: string; key?: string }[];
 	spentItems: SpentItem[];
 	pcCount: number;
 	tier: string;   // "all" | "1".."4"
@@ -40,12 +40,12 @@ interface EncounterState {
 }
 
 const getAdjustments = () => [
-	{ value: -1, label: dfTranslate("ui.less.difficult.shorter") },
-	{ value: -2, label: dfTranslate("ui.2.solo.adversaries") },
-	{ value: -2, label: dfTranslate("ui.1d4.or.2.damage") },
-	{ value:  1, label: dfTranslate("ui.lower.tier.adversary") },
-	{ value:  1, label: dfTranslate("ui.no.bruisers.hordes.leaders.solos") },
-	{ value:  2, label: dfTranslate("ui.more.dangerous.longer") },
+	{ key: "shorter", value: -1, label: dfTranslate("ui.less.difficult.shorter") },
+	{ key: "two-solos", value: -2, label: dfTranslate("ui.2.solo.adversaries") },
+	{ key: "low-damage", value: -2, label: dfTranslate("ui.1d4.or.2.damage") },
+	{ key: "lower-tier", value:  1, label: dfTranslate("ui.lower.tier.adversary") },
+	{ key: "restricted-types", value:  1, label: dfTranslate("ui.no.bruisers.hordes.leaders.solos") },
+	{ key: "longer", value:  2, label: dfTranslate("ui.more.dangerous.longer") },
 ];
 
 const getSpendOptions = () => [
@@ -61,6 +61,7 @@ const capitalize = (text: string) => (text ? text[0].toUpperCase() + text.slice(
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
 export class EncounterCalcModal extends Modal {
+	private unsubscribeLanguage: (() => void) | null = null;
 	private state: EncounterState = {
 		baseBP: 0,
 		adjustments: [],
@@ -85,6 +86,34 @@ export class EncounterCalcModal extends Modal {
 	onOpen(): void {
 		makeDraggable(this.modalEl, this.modalEl);
 		this.modalEl.addClass("df-enc-modal");
+		this.unsubscribeLanguage = subscribeLanguage(() => {
+			this.relocalizeState();
+			this.contentEl.empty();
+			this.renderContent();
+		});
+		this.renderContent();
+	}
+
+	private relocalizeState(): void {
+		const adjustmentLabels = new Map(getAdjustments().map((item) => [item.key, item.label]));
+		this.state.adjustments = this.state.adjustments.map((item) => ({
+			...item,
+			reason: item.key ? adjustmentLabels.get(item.key) ?? item.reason : item.reason,
+		}));
+		const spendingLabels = new Map(getSpendOptions().map((item) => [item.key, item.label]));
+		const adversaries = this.allAdversaries();
+		this.state.spentItems = this.state.spentItems.map((item) => ({
+			...item,
+			label: item.category ? spendingLabels.get(item.category) ?? item.label : item.label,
+			adversary:
+				item.adversary && (item.adversary.source ?? "core") !== "custom"
+					? adversaries.find((candidate) => candidate.id === item.adversary?.id) ?? item.adversary
+					: item.adversary,
+		}));
+	}
+
+	private renderContent(): void {
+		this.titleEl.setText(dfTranslate("ui.battle.calculator"));
 
 		const { contentEl } = this;
 		contentEl.addClass("df-enc-content");
@@ -137,6 +166,7 @@ export class EncounterCalcModal extends Modal {
 		getAdjustments().forEach(adj => {
 			const btn = adjGrid.createEl("button", { cls: "df-enc-action-btn" });
 			btn.setAttribute("data-adjust", adj.value.toString());
+			btn.setAttribute("data-key", adj.key);
 			btn.createEl("span", { cls: "df-enc-btn-label", text: adj.label });
 			btn.createEl("span", {
 				cls: `df-enc-badge ${adj.value > 0 ? "df-enc-badge--pos" : "df-enc-badge--neg"}`,
@@ -434,8 +464,9 @@ export class EncounterCalcModal extends Modal {
 		contentEl.querySelectorAll("[data-adjust]").forEach(btn => {
 			btn.addEventListener("click", () => {
 				const val    = parseInt((btn as HTMLElement).dataset.adjust!);
+				const key    = (btn as HTMLElement).dataset.key;
 				const reason = (btn as HTMLElement).querySelector(".df-enc-btn-label")?.textContent ?? "";
-				this.state.adjustments.push({ value: val, reason });
+				this.state.adjustments.push({ value: val, reason, key });
 				updateDisplay();
 			});
 		});
@@ -470,6 +501,8 @@ export class EncounterCalcModal extends Modal {
 	}
 
 	onClose(): void {
+		this.unsubscribeLanguage?.();
+		this.unsubscribeLanguage = null;
 		this.contentEl.empty();
 	}
 }

@@ -15,8 +15,18 @@ import {
 	getBeastforms,
 	getSrdDomainCards,
 	getSrdTransformations,
+	localizeDamageDie,
 } from "../data/srd";
 import { setLanguage } from "../i18n";
+import {
+	localizedArmor,
+	localizedClassFeature,
+	localizedClassSubclass,
+	localizedDomainCard,
+	localizedHeritageCard,
+	localizedHopeFeature,
+	localizedWeapon,
+} from "../features/characters/localizedCharacter";
 
 describe("ALL_GEAR", () => {
 	test("every entry has a unique id and a name", () => {
@@ -119,9 +129,16 @@ describe("German SRD data", () => {
 		const char = buildCharacterFromChoices({ classId: "class-bard" }, "CHR_core_de");
 		expect(char.classSubclass).toBe("Bard*in");
 		expect(char.primaryWeapon.name).toBe("Rapier");
+		expect(char.primaryWeapon.id).toBe("WP069");
 		expect(char.primaryWeapon.traitRange).toBe("Präsenz - Unmittelbar");
 		expect(char.primaryWeapon.damageDice).toBe("W8 phy");
 		expect(char.activeArmor.name).toBe("Textilrüstung");
+		expect(char.activeArmor.id).toBe("AR001");
+	});
+
+	test("localizes every dice prefix without changing the stored mechanic", () => {
+		expect(localizeDamageDie("2d8+2 phy", "de")).toBe("2W8+2 phy");
+		expect(localizeDamageDie("2d8+2 phy", "en")).toBe("2d8+2 phy");
 	});
 
 	test("creates a German Hope & Fear character with a transformation snapshot", () => {
@@ -135,6 +152,48 @@ describe("German SRD data", () => {
 		expect(char.classSubclass).toContain("Paktmagier");
 		expect(char.transformationCard?.name).toBe("Halbgott");
 		expect(char.domainCards[0]?.name).toBe("Verheerender Schlag");
+	});
+
+	test("resolves an English character in German without mutating its stored snapshots", () => {
+		setLanguage("en");
+		const char = buildCharacterFromChoices(
+			{
+				classId: "class-bard",
+				subclassId: "subclass-bard-troubadour",
+				ancestryId: "ancestry-faun",
+				communityId: "community-wildborne",
+				domainCardIds: ["domain-card-arcana-1-rune-ward"],
+			},
+			"CHR_live_language",
+		);
+		const stored = structuredClone(char);
+
+		expect(localizedClassSubclass(char, "de")).not.toBe(char.classSubclass);
+		expect(localizedHopeFeature(char, "de")).not.toBe(char.hopeFeature);
+		expect(localizedClassFeature(char, "de")).not.toBe(char.classFeature);
+		expect(
+			localizedHeritageCard(char.ancestryCard, "ancestry", "de")?.features,
+		).not.toBe(char.ancestryCard?.features);
+		expect(localizedDomainCard(char.domainCards[0], "de").name).not.toBe(
+			char.domainCards[0].name,
+		);
+		expect(localizedWeapon(char.primaryWeapon, "de").id).toBe(char.primaryWeapon.id);
+		expect(localizedArmor(char.activeArmor, "de").id).toBe(char.activeArmor.id);
+		expect(char).toEqual(stored);
+	});
+
+	test("keeps user-authored and legacy snapshots static", () => {
+		const char = buildCharacterFromChoices({ classId: "class-bard" }, "CHR_custom_text");
+		char.classFeature = "My custom feature";
+		char.customSrdFields.classFeature = true;
+		char.primaryWeapon = {
+			name: "My custom weapon",
+			traitRange: "Special",
+			damageDice: "X",
+			feature: "Custom",
+		};
+		expect(localizedClassFeature(char, "de")).toBe("My custom feature");
+		expect(localizedWeapon(char.primaryWeapon, "de")).toBe(char.primaryWeapon);
 	});
 });
 

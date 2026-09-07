@@ -46,6 +46,8 @@ export interface CharacterTrait {
 }
 
 export interface CharacterWeapon {
+	/** Stable SRD id; absent for legacy and user-authored weapons. */
+	id?: string;
 	name: string;
 	traitRange: string;
 	damageDice: string;
@@ -60,6 +62,8 @@ export interface CharacterInventoryWeapon extends CharacterWeapon {
 }
 
 export interface CharacterArmor {
+	/** Stable SRD id; absent for legacy and user-authored armor. */
+	id?: string;
 	name: string;
 	baseThresholds: string;
 	baseScore: string;
@@ -206,6 +210,13 @@ export interface CharacterData {
 	/** Stable SRD ids; empty for legacy or free-form class entries. */
 	classId: string;
 	subclassId: string;
+	/** User-edited display fields that must not be replaced by localized SRD text. */
+	customSrdFields: {
+		heritage: boolean;
+		classSubclass: boolean;
+		hopeFeature: boolean;
+		classFeature: boolean;
+	};
 	level: string;
 	traits: Record<TraitName, CharacterTrait>;
 	evasion: string;
@@ -243,6 +254,8 @@ export interface CharacterData {
 	connectionAnswers: string[];
 	/** Name of the Druid Beastform currently assumed ("" when not transformed). */
 	activeBeastform: string;
+	/** Stable SRD id; absent for legacy Beastform selections. */
+	activeBeastformId: string;
 	levelUp: LevelUpState;
 	companion: CompanionData;
 	sheetSettings: SheetSettings;
@@ -270,6 +283,12 @@ export function createEmptyCharacter(id: string): CharacterData {
 		classSubclass: "",
 		classId: "",
 		subclassId: "",
+		customSrdFields: {
+			heritage: false,
+			classSubclass: false,
+			hopeFeature: false,
+			classFeature: false,
+		},
 		level: "",
 		traits: {
 			agility: emptyTrait(),
@@ -309,6 +328,7 @@ export function createEmptyCharacter(id: string): CharacterData {
 		backgroundAnswers: [],
 		connectionAnswers: [],
 		activeBeastform: "",
+		activeBeastformId: "",
 		levelUp: defaultLevelUp(),
 		companion: defaultCompanion(),
 		sheetSettings: defaultSheetSettings(),
@@ -352,6 +372,17 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 	base.classSubclass = asString(data.classSubclass);
 	base.classId = asString(data.classId);
 	base.subclassId = asString(data.subclassId);
+	const customSrdFields = (
+		data.customSrdFields && typeof data.customSrdFields === "object"
+			? data.customSrdFields
+			: {}
+	) as Record<string, unknown>;
+	base.customSrdFields = {
+		heritage: customSrdFields.heritage === true,
+		classSubclass: customSrdFields.classSubclass === true,
+		hopeFeature: customSrdFields.hopeFeature === true,
+		classFeature: customSrdFields.classFeature === true,
+	};
 	base.level = asString(data.level);
 	base.evasion = asString(data.evasion);
 	base.armorScore = asString(data.armorScore);
@@ -387,6 +418,7 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 		? data.activeArmor
 		: {}) as Record<string, unknown>;
 	base.activeArmor = {
+		id: asString(armor.id) || undefined,
 		name: asString(armor.name),
 		baseThresholds: asString(armor.baseThresholds),
 		baseScore: asString(armor.baseScore),
@@ -418,6 +450,7 @@ export function normalizeCharacter(raw: unknown, fallbackId: string): CharacterD
 	base.backgroundAnswers = asStringArray(data.backgroundAnswers, 8);
 	base.connectionAnswers = asStringArray(data.connectionAnswers, 8);
 	base.activeBeastform = asString(data.activeBeastform);
+	base.activeBeastformId = asString(data.activeBeastformId);
 	base.levelUp = normalizeLevelUp(data.levelUp);
 	base.companion = normalizeCompanion(data.companion);
 	base.lastUpdated = typeof data.lastUpdated === "number" ? data.lastUpdated : Date.now();
@@ -542,6 +575,7 @@ function normalizeSheetSettings(raw: unknown): SheetSettings {
 function normalizeWeapon(raw: unknown): CharacterWeapon {
 	const w = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
 	return {
+		id: asString(w.id) || undefined,
 		name: asString(w.name),
 		traitRange: asString(w.traitRange),
 		damageDice: asString(w.damageDice),

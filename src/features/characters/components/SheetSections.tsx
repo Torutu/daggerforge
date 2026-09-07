@@ -19,6 +19,16 @@ import {
 } from "../../../types/character";
 import { DOMAIN_COLORS } from "../../../types/srd";
 import { CardText } from "./CardText";
+import {
+	localizedArmor,
+	localizedClassFeature,
+	localizedClassSubclass,
+	localizedDomainCard,
+	localizedHeritageCard,
+	localizedHeritageSummary,
+	localizedHopeFeature,
+	localizedWeapon,
+} from "../localizedCharacter";
 import { DomainIcon } from "./DomainArt";
 import {
 	ArmorShieldArt,
@@ -70,7 +80,7 @@ function patchSettings(
 // ── Header ────────────────────────────────────────────────────────────────────
 
 export function SheetHeader({ char, update }: SectionProps) {
-	useUiLanguage();
+	const language = useUiLanguage();
 	return (
 		<div className="df-cs-header">
 			<div className="df-cs-header-logo">
@@ -80,11 +90,11 @@ export function SheetHeader({ char, update }: SectionProps) {
 			<div className="df-cs-header-fields">
 				<FieldBox label={dfTranslate("ui.name")} value={char.name} onChange={(v) => update({ name: v })} />
 				<FieldBox label={dfTranslate("ui.pronouns")} value={char.pronouns} onChange={(v) => update({ pronouns: v })} />
-				<FieldBox label={dfTranslate("ui.heritage")} value={char.heritage} onChange={(v) => update({ heritage: v })} />
+				<FieldBox label={dfTranslate("ui.heritage")} value={localizedHeritageSummary(char, language)} onChange={(v) => update({ heritage: v, customSrdFields: { ...char.customSrdFields, heritage: true } })} />
 				<FieldBox
 					label={dfTranslate("ui.class.subclass")}
-					value={char.classSubclass}
-					onChange={(v) => update({ classSubclass: v })}
+					value={localizedClassSubclass(char, language)}
+					onChange={(v) => update({ classSubclass: v, customSrdFields: { ...char.customSrdFields, classSubclass: true } })}
 				/>
 			</div>
 			<div className="df-cs-level">
@@ -374,7 +384,7 @@ function TrackRow({
 // ── Hope ──────────────────────────────────────────────────────────────────────
 
 export function HopeSection({ char, update }: SectionProps) {
-	useUiLanguage();
+	const language = useUiLanguage();
 	const [cogOpen, setCogOpen] = useState(false);
 	const maxHope = char.sheetSettings.maxHope;
 
@@ -425,8 +435,8 @@ export function HopeSection({ char, update }: SectionProps) {
 			))}
 			<LineField
 				label={dfTranslate("ui.hope.feature")}
-				value={char.hopeFeature}
-				onChange={(v) => update({ hopeFeature: v })}
+				value={localizedHopeFeature(char, language)}
+				onChange={(v) => update({ hopeFeature: v, customSrdFields: { ...char.customSrdFields, hopeFeature: true } })}
 			/>
 		</section>
 	);
@@ -639,14 +649,14 @@ export function GoldSection({ char, update }: SectionProps) {
 // ── Class feature / notes ─────────────────────────────────────────────────────
 
 export function ClassFeatureSection({ char, update }: SectionProps) {
-	useUiLanguage();
+	const language = useUiLanguage();
 	return (
 		<section className="df-cs-box">
 			<SectionBanner title={dfTranslate("ui.class.feature")} />
 			<textarea
 				className="df-cs-area df-cs-area--tall"
-				value={char.classFeature}
-				onChange={(e) => update({ classFeature: e.target.value })}
+				value={localizedClassFeature(char, language)}
+				onChange={(e) => update({ classFeature: e.target.value, customSrdFields: { ...char.customSrdFields, classFeature: true } })}
 				aria-label={dfTranslate("ui.class.feature.168")}
 			/>
 		</section>
@@ -676,27 +686,27 @@ export function domainTint(domain: string, alpha: number): string {
 }
 
 export function HeritageCardsSection({ char, update, onAddCards }: CardSectionProps) {
-	useUiLanguage();
+	const language = useUiLanguage();
 	return (
 		<section className="df-cs-box">
 			<SectionBanner title={dfTranslate("ui.heritage.cards")} />
 			<div className="df-cs-hcards">
 				<HeritageSlot
 					kind="Ancestry"
-					card={char.ancestryCard}
+					card={localizedHeritageCard(char.ancestryCard, "ancestry", language)}
 					onRemove={() => update({ ancestryCard: null })}
 					onAdd={onAddCards ? () => onAddCards("ancestry") : undefined}
 				/>
 				<HeritageSlot
 					kind="Community"
-					card={char.communityCard}
+					card={localizedHeritageCard(char.communityCard, "community", language)}
 					onRemove={() => update({ communityCard: null })}
 					onAdd={onAddCards ? () => onAddCards("community") : undefined}
 				/>
 				{char.transformationCard && (
 					<HeritageSlot
 						kind="Transformation"
-						card={char.transformationCard}
+						card={localizedHeritageCard(char.transformationCard, "transformation", language)}
 						onRemove={() => update({ transformationCard: null })}
 					/>
 				)}
@@ -747,16 +757,22 @@ function HeritageSlot({
 }
 
 export function DomainCardsSection({ char, update, onAddCards }: CardSectionProps) {
-	useUiLanguage();
-	const loadout = char.domainCards.filter((c) => !c.inVault);
-	const vault = char.domainCards.filter((c) => c.inVault);
+	const language = useUiLanguage();
+	const entries = char.domainCards.map((card, storedIndex) => ({
+		storedIndex,
+		card: localizedDomainCard(card, language),
+	}));
+	const loadout = entries.filter(({ card }) => !card.inVault);
+	const vault = entries.filter(({ card }) => card.inVault);
 
-	const setVault = (card: CharacterDomainCard, inVault: boolean) =>
+	const setVault = (storedIndex: number, inVault: boolean) =>
 		update({
-			domainCards: char.domainCards.map((c) => (c === card ? { ...c, inVault } : c)),
+			domainCards: char.domainCards.map((card, index) =>
+				index === storedIndex ? { ...card, inVault } : card,
+			),
 		});
-	const remove = (card: CharacterDomainCard) =>
-		update({ domainCards: char.domainCards.filter((c) => c !== card) });
+	const remove = (storedIndex: number) =>
+		update({ domainCards: char.domainCards.filter((_, index) => index !== storedIndex) });
 
 	return (
 		<section className="df-cs-box">
@@ -767,7 +783,7 @@ export function DomainCardsSection({ char, update, onAddCards }: CardSectionProp
 					hint={dfTranslate("sheet.loadoutHint")}
 					cards={loadout}
 					actionLabel={dfTranslate("sheet.toVault")}
-					onAction={(c) => setVault(c, true)}
+					onAction={(index) => setVault(index, true)}
 					onRemove={remove}
 				/>
 				<DomainCardGroup
@@ -775,7 +791,7 @@ export function DomainCardsSection({ char, update, onAddCards }: CardSectionProp
 					hint={dfTranslate("sheet.vaultHint")}
 					cards={vault}
 					actionLabel={dfTranslate("sheet.toLoadout")}
-					onAction={(c) => setVault(c, false)}
+					onAction={(index) => setVault(index, false)}
 					onRemove={remove}
 				/>
 			</div>
@@ -797,10 +813,10 @@ function DomainCardGroup({
 }: {
 	title: string;
 	hint: string;
-	cards: CharacterDomainCard[];
+	cards: Array<{ storedIndex: number; card: CharacterDomainCard }>;
 	actionLabel: string;
-	onAction: (card: CharacterDomainCard) => void;
-	onRemove: (card: CharacterDomainCard) => void;
+	onAction: (storedIndex: number) => void;
+	onRemove: (storedIndex: number) => void;
 }) {
 	useUiLanguage();
 	return (
@@ -810,13 +826,13 @@ function DomainCardGroup({
 				<p className="df-cs-dcards-hint">{hint}</p>
 			) : (
 				<div className="df-cs-dcards-list">
-					{cards.map((card, i) => (
+					{cards.map(({ card, storedIndex }) => (
 						<DomainCardItem
-							key={`${card.name}-${i}`}
+							key={`${card.id ?? card.name}-${storedIndex}`}
 							card={card}
 							actionLabel={actionLabel}
-							onAction={() => onAction(card)}
-							onRemove={() => onRemove(card)}
+							onAction={() => onAction(storedIndex)}
+							onRemove={() => onRemove(storedIndex)}
 						/>
 					))}
 				</div>
@@ -850,7 +866,7 @@ function DomainCardItem({
 				<DomainIcon domain={card.domain} className="df-cs-dcard-icon" style={{ color }} />
 				<span className="df-cs-dcard-name">{card.name}</span>
 				<span className="df-cs-dcard-meta">
-					{card.domain} · {gameTerm(card.type)} · <ZapIcon />{card.recallCost}
+					{gameTerm(card.domain)} · {gameTerm(card.type)} · <ZapIcon />{card.recallCost}
 				</span>
 				<button type="button" className="df-cs-card-remove" aria-label={dfTranslate("sheet.removeNamed", { name: card.name })} onClick={onRemove}>
 					✕
@@ -926,7 +942,9 @@ function WeaponFields({
 }
 
 export function ActiveWeaponsSection({ char, update }: SectionProps) {
-	useUiLanguage();
+	const language = useUiLanguage();
+	const primaryWeapon = localizedWeapon(char.primaryWeapon, language);
+	const secondaryWeapon = localizedWeapon(char.secondaryWeapon, language);
 	return (
 		<section className="df-cs-box">
 			<div className="df-cs-banner-with-hands">
@@ -967,14 +985,14 @@ export function ActiveWeaponsSection({ char, update }: SectionProps) {
 			</div>
 			<h3 className="df-cs-weapon-title">{dfTranslate("ui.primary")}</h3>
 			<WeaponFields
-				weapon={char.primaryWeapon}
-				onChange={(p) => update({ primaryWeapon: { ...char.primaryWeapon, ...p } })}
+				weapon={primaryWeapon}
+				onChange={(p) => update({ primaryWeapon: { ...char.primaryWeapon, ...p, id: undefined } })}
 				idPrefix="primary"
 			/>
 			<h3 className="df-cs-weapon-title">{dfTranslate("ui.secondary")}</h3>
 			<WeaponFields
-				weapon={char.secondaryWeapon}
-				onChange={(p) => update({ secondaryWeapon: { ...char.secondaryWeapon, ...p } })}
+				weapon={secondaryWeapon}
+				onChange={(p) => update({ secondaryWeapon: { ...char.secondaryWeapon, ...p, id: undefined } })}
 				idPrefix="secondary"
 			/>
 		</section>
@@ -982,10 +1000,10 @@ export function ActiveWeaponsSection({ char, update }: SectionProps) {
 }
 
 export function ActiveArmorSection({ char, update }: SectionProps) {
-	useUiLanguage();
-	const armor = char.activeArmor;
+	const language = useUiLanguage();
+	const armor = localizedArmor(char.activeArmor, language);
 	const setArmor = (patch: Partial<typeof armor>) =>
-		update({ activeArmor: { ...armor, ...patch } });
+		update({ activeArmor: { ...char.activeArmor, ...patch, id: undefined } });
 
 	return (
 		<section className="df-cs-box">
@@ -1014,7 +1032,7 @@ export function ActiveArmorSection({ char, update }: SectionProps) {
 }
 
 export function InventorySection({ char, update }: SectionProps) {
-	useUiLanguage();
+	const language = useUiLanguage();
 	const setInventoryWeapon = (
 		index: number,
 		patch: Partial<CharacterData["inventoryWeapons"][number]>,
@@ -1035,7 +1053,9 @@ export function InventorySection({ char, update }: SectionProps) {
 				onChange={(e) => update({ inventory: e.target.value })}
 				aria-label={dfTranslate("ui.inventory")}
 			/>
-			{char.inventoryWeapons.map((weapon, i) => (
+			{char.inventoryWeapons.map((storedWeapon, i) => {
+				const weapon = { ...storedWeapon, ...localizedWeapon(storedWeapon, language) };
+				return (
 				<div key={i} className="df-cs-inventory-weapon">
 					<div className="df-cs-inventory-weapon-head">
 						<h3 className="df-cs-weapon-title">{dfTranslate("ui.inventory.weapon")}</h3>
@@ -1069,11 +1089,12 @@ export function InventorySection({ char, update }: SectionProps) {
 					</div>
 					<WeaponFields
 						weapon={weapon}
-						onChange={(p) => setInventoryWeapon(i, p)}
+							onChange={(p) => setInventoryWeapon(i, { ...p, id: undefined })}
 						idPrefix={`inventory-${i}`}
 					/>
 				</div>
-			))}
+				);
+			})}
 		</section>
 	);
 }

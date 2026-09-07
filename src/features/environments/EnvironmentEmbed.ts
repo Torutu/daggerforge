@@ -1,7 +1,7 @@
 import { EventRef, MarkdownRenderChild } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { getEnvironments } from "../../data/environments";
-import { getLanguage } from "../../i18n";
+import { getLanguage, subscribeLanguage } from "../../i18n";
 import { EnvironmentData } from "../../types/index";
 import { attachDiceBadges } from "../../utils/diceBadges";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
@@ -44,6 +44,7 @@ class EnvironmentEmbedChild extends MarkdownRenderChild {
 	// Decoded `code:` snapshot, used only when the id isn't in this vault
 	private snapshot: EnvironmentData | null = null;
 	private snapshotTried = false;
+	private unsubscribeLanguage: (() => void) | null = null;
 
 	constructor(
 		containerEl: HTMLElement,
@@ -57,6 +58,7 @@ class EnvironmentEmbedChild extends MarkdownRenderChild {
 	onload() {
 		this.containerEl.addClass("df-embed");
 		this.render();
+		this.unsubscribeLanguage = subscribeLanguage(() => this.render());
 
 		const events = this.plugin.dataManager.events;
 		this.refs = [
@@ -74,6 +76,8 @@ class EnvironmentEmbedChild extends MarkdownRenderChild {
 		const events = this.plugin.dataManager.events;
 		this.refs.forEach((ref) => events.offref(ref));
 		this.refs = [];
+		this.unsubscribeLanguage?.();
+		this.unsubscribeLanguage = null;
 	}
 
 	private render() {

@@ -331,16 +331,15 @@ export function BeastformSection({ char, update }: SectionProps) {
 	const language = useLanguage();
 	const beastforms = getBeastforms(language);
 	const classes = getSrdClasses(language);
-	if (sheetClass(char)?.id !== "class-druid") return null;
+	if (sheetClass(char, language)?.id !== "class-druid") return null;
 
-	const englishBeastforms = getBeastforms("en");
-	const germanBeastforms = getBeastforms("de");
-	const activeIndex = beastforms.findIndex(
-		(b, index) =>
-			b.name === char.activeBeastform ||
-			englishBeastforms[index]?.name === char.activeBeastform ||
-			germanBeastforms[index]?.name === char.activeBeastform,
-	);
+	const activeIndex = char.activeBeastformId
+		? beastforms.findIndex((beastform) => beastform.id === char.activeBeastformId)
+		: getBeastforms("en").findIndex(
+				(beastform, index) =>
+					beastform.name === char.activeBeastform ||
+					getBeastforms("de")[index]?.name === char.activeBeastform,
+			);
 	const active = activeIndex >= 0 ? beastforms[activeIndex] : undefined;
 	const feature = classes.find((c) => c.id === "class-druid")
 		?.classFeatures[0];
@@ -365,7 +364,7 @@ export function BeastformSection({ char, update }: SectionProps) {
 					<button
 						type="button"
 						className="df-cs-beast-drop"
-						onClick={() => update({ activeBeastform: "" })}
+						onClick={() => update({ activeBeastform: "", activeBeastformId: "" })}
 					>
 						{dfTranslate("ui.drop.form")}
 					</button>
@@ -382,7 +381,7 @@ export function BeastformSection({ char, update }: SectionProps) {
 							.map((b) => {
 								const isActive =
 									activeIndex === beastforms.indexOf(b);
-								const isOpen = expanded === b.name;
+								const isOpen = expanded === b.id;
 								return (
 									<div
 										key={b.name}
@@ -397,7 +396,7 @@ export function BeastformSection({ char, update }: SectionProps) {
 											aria-expanded={isOpen}
 											onClick={() =>
 												setExpanded(
-													isOpen ? null : b.name,
+													isOpen ? null : b.id,
 												)
 											}
 										>
@@ -439,11 +438,11 @@ export function BeastformSection({ char, update }: SectionProps) {
 													className="mod-cta df-cs-beast-take"
 													disabled={isActive}
 													onClick={() =>
-														update({
-															activeBeastform:
-																b.name,
-														})
-													}
+													update({
+														activeBeastform: b.name,
+														activeBeastformId: b.id,
+													})
+												}
 												>
 													{isActive
 														? dfTranslate(

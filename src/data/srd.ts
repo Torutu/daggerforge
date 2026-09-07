@@ -155,7 +155,9 @@ export const SRD_CONSUMABLES: SrdConsumable[] = [
 	...withSource(consumablesJson as Array<Omit<SrdConsumable, "source">>, "core"),
 	...withSource(hopeFearConsumablesJson as Array<Omit<SrdConsumable, "source">>, "hope-fear"),
 ];
-export const BEASTFORMS = withSource(beastformsJson as Array<Omit<SrdBeastform, "source">>, "core");
+export const BEASTFORMS: SrdBeastform[] = (
+	beastformsJson as Array<Omit<SrdBeastform, "id" | "source">>
+).map((item) => ({ ...item, id: `beastform-${slug(item.name)}`, source: "core" }));
 
 type ClassTranslation = Partial<Omit<SrdClass, "id" | "domains" | "stats" | "subclasses">> & {
 	id: string;
@@ -277,7 +279,12 @@ export function getSrdConsumables(language: Language): SrdConsumable[] {
 export function getBeastforms(language: Language): SrdBeastform[] {
 	if (language !== "de") return BEASTFORMS;
 	const translations = deCoreBeastformsJson as Array<Partial<SrdBeastform>>;
-	return BEASTFORMS.map((item, index) => ({ ...item, ...translations[index], source: item.source }));
+	return BEASTFORMS.map((item, index) => ({
+		...item,
+		...translations[index],
+		id: item.id,
+		source: item.source,
+	}));
 }
 
 export function localizeTrait(value: string, language: Language): string {
@@ -289,7 +296,9 @@ export function localizeRange(value: string, language: Language): string {
 }
 
 export function localizeDamageDie(value: string, language: Language): string {
-	return value.replace(/^d/, translate("srd.diePrefix", {}, language));
+	if (language === "en") return value;
+	const prefix = translate("srd.diePrefix", {}, language);
+	return value.replace(/(\d*)d(?=\d)/gi, `$1${prefix}`);
 }
 
 function weaponMeta(w: { trait: string; range: string; damage: string; damageType: string; burden: string }, language: Language): string {
