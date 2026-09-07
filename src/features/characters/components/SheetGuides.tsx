@@ -10,7 +10,7 @@ import {
 } from "../../../types/character";
 import { getBeastforms, getSrdClasses } from "../../../data/srd";
 import {
-	COMPANION_EXPERIENCE_EXAMPLES,
+	COMPANION_EXPERIENCE_EXAMPLES_KEY,
 	COMPANION_TRAINING,
 	LEVEL_UP_TIERS,
 	tierForLevel,
@@ -78,26 +78,41 @@ export function BackgroundSection({ char, update }: SectionProps) {
 			{cls ? (
 				<>
 					<p className="df-cs-hint">
-						{dfTranslate("sheet.background.prompt", { className: cls.name })}</p>
-					<h4 className="df-cs-guide-sub">{dfTranslate("ui.background")}</h4>
+						{dfTranslate("sheet.background.prompt", {
+							className: cls.name,
+						})}
+					</p>
+					<h4 className="df-cs-guide-sub">
+						{dfTranslate("ui.background")}
+					</h4>
 					{(cls.backgroundQuestions ?? []).map((q, i) => (
 						<div key={i} className="df-cs-guide-q">
 							<p className="df-cs-guide-question">{q}</p>
 							<LineTextarea
 								value={char.backgroundAnswers[i] ?? ""}
-								onChange={(v) => setAnswer("backgroundAnswers", i, v)}
+								onChange={(v) =>
+									setAnswer("backgroundAnswers", i, v)
+								}
 								rows={1}
 							/>
 						</div>
 					))}
-					<h4 className="df-cs-guide-sub">{dfTranslate("ui.connections")}</h4>
-					<p className="df-cs-hint">{dfTranslate("ui.ask.your.fellow.players.one.or.more.of.these.questions")}</p>
+					<h4 className="df-cs-guide-sub">
+						{dfTranslate("ui.connections")}
+					</h4>
+					<p className="df-cs-hint">
+						{dfTranslate(
+							"ui.ask.your.fellow.players.one.or.more.of.these.questions",
+						)}
+					</p>
 					{(cls.connectionQuestions ?? []).map((q, i) => (
 						<div key={i} className="df-cs-guide-q">
 							<p className="df-cs-guide-question">{q}</p>
 							<LineTextarea
 								value={char.connectionAnswers[i] ?? ""}
-								onChange={(v) => setAnswer("connectionAnswers", i, v)}
+								onChange={(v) =>
+									setAnswer("connectionAnswers", i, v)
+								}
 								rows={1}
 							/>
 						</div>
@@ -106,7 +121,10 @@ export function BackgroundSection({ char, update }: SectionProps) {
 			) : (
 				<>
 					<p className="df-cs-hint">
-						{dfTranslate("ui.set.a.class.in.the.sheet.header.to.see.its.background.and.connection.prompts.or.write.your.own.below")}</p>
+						{dfTranslate(
+							"ui.set.a.class.in.the.sheet.header.to.see.its.background.and.connection.prompts.or.write.your.own.below",
+						)}
+					</p>
 					<LineTextarea
 						label={dfTranslate("ui.background")}
 						value={char.backgroundAnswers[0] ?? ""}
@@ -161,74 +179,136 @@ export function LevelUpSection({ char, update }: SectionProps) {
 						value={lu.pointsPerLevel}
 						min={0}
 						max={9}
-						onChange={(n) => update({ levelUp: { ...lu, pointsPerLevel: n } })}
+						onChange={(n) =>
+							update({ levelUp: { ...lu, pointsPerLevel: n } })
+						}
 					/>
 					<CogNumber
 						label={dfTranslate("ui.points.to.spend.now")}
 						value={lu.pending}
 						min={-99}
 						max={99}
-						onChange={(n) => update({ levelUp: { ...lu, pending: n } })}
+						onChange={(n) =>
+							update({ levelUp: { ...lu, pending: n } })
+						}
 					/>
 				</CogPanel>
 			)}
 			{lu.pending > 0 && (
 				<p className="df-cs-lvl-pill">
-					{dfTranslate(lu.pending === 1 ? "sheet.points.one" : "sheet.points.many", { count: lu.pending })}</p>
+					{dfTranslate(
+						lu.pending === 1
+							? "sheet.points.one"
+							: "sheet.points.many",
+						{ count: lu.pending },
+					)}
+				</p>
 			)}
 			{lu.pending < 0 && (
 				<p className="df-cs-lvl-pill df-cs-lvl-pill--over">
-					{dfTranslate(lu.pending === -1 ? "sheet.over.one" : "sheet.over.many", { count: -lu.pending })}</p>
+					{dfTranslate(
+						lu.pending === -1
+							? "sheet.over.one"
+							: "sheet.over.many",
+						{ count: -lu.pending },
+					)}
+				</p>
 			)}
 			<p className="df-cs-hint">
-				{dfTranslate("ui.options.in.a.heavy.frame.cost.both.of.the.level.s.choices.and.mark.together")}</p>
+				{dfTranslate(
+					"ui.options.in.a.heavy.frame.cost.both.of.the.level.s.choices.and.mark.together",
+				)}
+			</p>
 			<div className="df-cs-lvl-tiers">
 				{LEVEL_UP_TIERS.map((tier) => (
 					<div
 						key={tier.tier}
-						className={"df-cs-lvl-tier" + (currentTier === tier.tier ? " is-current" : "")}
+						className={
+							"df-cs-lvl-tier" +
+							(currentTier === tier.tier ? " is-current" : "")
+						}
 					>
 						<div className="df-cs-lvl-tier-head">
-							<span className="df-cs-lvl-tier-name">{tier.label}:</span>
-							<span className="df-cs-lvl-tier-levels">{tier.levels}</span>
+							<span className="df-cs-lvl-tier-name">
+								{dfTranslate(tier.labelKey)}:
+							</span>
+							<span className="df-cs-lvl-tier-levels">
+								{dfTranslate(tier.levelsKey)}
+							</span>
 						</div>
-						<p className="df-cs-lvl-achievement">{tier.achievement}</p>
-						<p className="df-cs-lvl-chooser">{tier.chooser}</p>
+						<p className="df-cs-lvl-achievement">
+							{dfTranslate(tier.achievementKey)}
+						</p>
+						<p className="df-cs-lvl-chooser">
+							{dfTranslate(tier.chooserKey)}
+						</p>
 						{tier.options.map((opt) => {
 							const key = `t${tier.tier}.${opt.key}`;
 							const marked = lu.marks[key] ?? 0;
+							const optionText = dfTranslate(opt.textKey);
 							return (
 								<div
 									key={opt.key}
-									className={"df-cs-lvl-opt" + (opt.doubleCost ? " df-cs-lvl-opt--double" : "")}
+									className={
+										"df-cs-lvl-opt" +
+										(opt.doubleCost
+											? " df-cs-lvl-opt--double"
+											: "")
+									}
 								>
 									<span className="df-cs-lvl-slots">
-										{Array.from({ length: opt.slots }, (_, i) => (
-											<SlotToggle
-												key={i}
-												on={i < marked}
-												label={`${opt.text} (slot ${i + 1} of ${opt.slots})`}
-												className="df-cs-track-slot df-cs-lvl-slot"
-												onToggle={() => {
-													if (opt.doubleCost) {
-														// Both slots mark together and cost two advancements
-														const next = marked > 0 ? 0 : opt.slots;
-														setMarks(key, next, next - marked);
-														return;
-													}
-													const next = i < marked ? marked - 1 : marked + 1;
-													setMarks(key, next, next - marked);
-												}}
-											/>
-										))}
+										{Array.from(
+											{ length: opt.slots },
+											(_, i) => (
+												<SlotToggle
+													key={i}
+													on={i < marked}
+													label={dfTranslate(
+														"levelUp.slotLabel",
+														{
+															text: optionText,
+															current: i + 1,
+															total: opt.slots,
+														},
+													)}
+													className="df-cs-track-slot df-cs-lvl-slot"
+													onToggle={() => {
+														if (opt.doubleCost) {
+															// Both slots mark together and cost two advancements
+															const next =
+																marked > 0
+																	? 0
+																	: opt.slots;
+															setMarks(
+																key,
+																next,
+																next - marked,
+															);
+															return;
+														}
+														const next =
+															i < marked
+																? marked - 1
+																: marked + 1;
+														setMarks(
+															key,
+															next,
+															next - marked,
+														);
+													}}
+												/>
+											),
+										)}
 									</span>
 									<div className="df-cs-lvl-opt-text">
-										<CardText text={opt.text} />
+										<CardText text={optionText} />
 									</div>
 								</div>
 							);
 						})}
-						<p className="df-cs-lvl-footer">{tier.footer}</p>
+						<p className="df-cs-lvl-footer">
+							{dfTranslate(tier.footerKey)}
+						</p>
 					</div>
 				))}
 			</div>
@@ -256,12 +336,14 @@ export function BeastformSection({ char, update }: SectionProps) {
 	const englishBeastforms = getBeastforms("en");
 	const germanBeastforms = getBeastforms("de");
 	const activeIndex = beastforms.findIndex(
-		(b, index) => b.name === char.activeBeastform ||
+		(b, index) =>
+			b.name === char.activeBeastform ||
 			englishBeastforms[index]?.name === char.activeBeastform ||
 			germanBeastforms[index]?.name === char.activeBeastform,
 	);
 	const active = activeIndex >= 0 ? beastforms[activeIndex] : undefined;
-	const feature = classes.find((c) => c.id === "class-druid")?.classFeatures[0];
+	const feature = classes.find((c) => c.id === "class-druid")
+		?.classFeatures[0];
 	const tiers = [...new Set(beastforms.map((b) => b.tier))].sort();
 
 	return (
@@ -274,59 +356,108 @@ export function BeastformSection({ char, update }: SectionProps) {
 			)}
 			{active && (
 				<div className="df-cs-beast-active">
-					<span className="df-cs-beast-active-name">✦ {active.name}</span>
-					<span className="df-cs-beast-active-meta">{beastMeta(active, language)}</span>
+					<span className="df-cs-beast-active-name">
+						✦ {active.name}
+					</span>
+					<span className="df-cs-beast-active-meta">
+						{beastMeta(active, language)}
+					</span>
 					<button
 						type="button"
 						className="df-cs-beast-drop"
 						onClick={() => update({ activeBeastform: "" })}
 					>
-						{dfTranslate("ui.drop.form")}</button>
+						{dfTranslate("ui.drop.form")}
+					</button>
 				</div>
 			)}
 			{tiers.map((tier) => (
 				<React.Fragment key={tier}>
-					<h4 className="df-cs-guide-sub">{dfTranslate("ui.tier")} {tier}</h4>
+					<h4 className="df-cs-guide-sub">
+						{dfTranslate("ui.tier")} {tier}
+					</h4>
 					<div className="df-cs-beast-list">
-						{beastforms.filter((b) => b.tier === tier).map((b) => {
-							const isActive = activeIndex === beastforms.indexOf(b);
-							const isOpen = expanded === b.name;
-							return (
-								<div key={b.name} className={"df-cs-beast" + (isActive ? " is-active" : "")}>
-									<button
-										type="button"
-										className="df-cs-beast-row"
-										aria-expanded={isOpen}
-										onClick={() => setExpanded(isOpen ? null : b.name)}
+						{beastforms
+							.filter((b) => b.tier === tier)
+							.map((b) => {
+								const isActive =
+									activeIndex === beastforms.indexOf(b);
+								const isOpen = expanded === b.name;
+								return (
+									<div
+										key={b.name}
+										className={
+											"df-cs-beast" +
+											(isActive ? " is-active" : "")
+										}
 									>
-										{isActive && <span className="df-cs-beast-check">✦</span>}
-										<span className="df-cs-beast-name">{b.name}</span>
-										<span className="df-cs-beast-meta">{b.examples}</span>
-									</button>
-									{isOpen && (
-										<div className="df-cs-beast-detail">
-											<p className="df-cs-cardtext-p">
-												<strong>{beastMeta(b, language)}</strong>
-											</p>
-											<p className="df-cs-cardtext-p">
-												<strong>{dfTranslate("ui.advantage.on")}</strong> {b.advantages.join(", ")}
-											</p>
-											{b.features.map((f) => (
-												<CardText key={f.name} text={`${f.name}: ${f.text}`} />
-											))}
-											<button
-												type="button"
-												className="mod-cta df-cs-beast-take"
-												disabled={isActive}
-												onClick={() => update({ activeBeastform: b.name })}
-											>
-												{isActive ? dfTranslate("ui.dynamic.current.form") : dfTranslate("ui.dynamic.take.this.form")}
-											</button>
-										</div>
-									)}
-								</div>
-							);
-						})}
+										<button
+											type="button"
+											className="df-cs-beast-row"
+											aria-expanded={isOpen}
+											onClick={() =>
+												setExpanded(
+													isOpen ? null : b.name,
+												)
+											}
+										>
+											{isActive && (
+												<span className="df-cs-beast-check">
+													✦
+												</span>
+											)}
+											<span className="df-cs-beast-name">
+												{b.name}
+											</span>
+											<span className="df-cs-beast-meta">
+												{b.examples}
+											</span>
+										</button>
+										{isOpen && (
+											<div className="df-cs-beast-detail">
+												<p className="df-cs-cardtext-p">
+													<strong>
+														{beastMeta(b, language)}
+													</strong>
+												</p>
+												<p className="df-cs-cardtext-p">
+													<strong>
+														{dfTranslate(
+															"ui.advantage.on",
+														)}
+													</strong>{" "}
+													{b.advantages.join(", ")}
+												</p>
+												{b.features.map((f) => (
+													<CardText
+														key={f.name}
+														text={`${f.name}: ${f.text}`}
+													/>
+												))}
+												<button
+													type="button"
+													className="mod-cta df-cs-beast-take"
+													disabled={isActive}
+													onClick={() =>
+														update({
+															activeBeastform:
+																b.name,
+														})
+													}
+												>
+													{isActive
+														? dfTranslate(
+																"ui.dynamic.current.form",
+															)
+														: dfTranslate(
+																"ui.dynamic.take.this.form",
+															)}
+												</button>
+											</div>
+										)}
+									</div>
+								);
+							})}
 					</div>
 				</React.Fragment>
 			))}
@@ -350,11 +481,16 @@ async function readPortrait(file: File): Promise<string | null> {
 		const canvas = document.createElement("canvas");
 		canvas.width = Math.max(1, Math.round(img.width * scale));
 		canvas.height = Math.max(1, Math.round(img.height * scale));
-		canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
+		canvas
+			.getContext("2d")
+			?.drawImage(img, 0, 0, canvas.width, canvas.height);
 		URL.revokeObjectURL(url);
 		return canvas.toDataURL("image/jpeg", 0.82);
 	} catch (error) {
-		console.error("DaggerForge: could not read the companion picture", error);
+		console.error(
+			"DaggerForge: could not read the companion picture",
+			error,
+		);
 		return null;
 	}
 }
@@ -367,10 +503,14 @@ export function CompanionSection({ char, update }: SectionProps) {
 	if (sheetClass(char)?.id !== "class-ranger") return null;
 
 	const comp = char.companion;
-	const patch = (p: Partial<CompanionData>) => update({ companion: { ...comp, ...p } });
+	const patch = (p: Partial<CompanionData>) =>
+		update({ companion: { ...comp, ...p } });
 
 	// Resilient training unlocks stress slots beyond the printed base three
-	const stressMax = Math.min(COMPANION_STRESS_SLOTS, 3 + (comp.training["resilient"] ?? 0));
+	const stressMax = Math.min(
+		COMPANION_STRESS_SLOTS,
+		3 + (comp.training["resilient"] ?? 0),
+	);
 
 	const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -381,9 +521,14 @@ export function CompanionSection({ char, update }: SectionProps) {
 		});
 	};
 
-	const setExperience = (index: number, exp: Partial<{ text: string; modifier: string }>) => {
+	const setExperience = (
+		index: number,
+		exp: Partial<{ text: string; modifier: string }>,
+	) => {
 		patch({
-			experiences: comp.experiences.map((e, i) => (i === index ? { ...e, ...exp } : e)),
+			experiences: comp.experiences.map((e, i) =>
+				i === index ? { ...e, ...exp } : e,
+			),
 		});
 	};
 
@@ -392,13 +537,18 @@ export function CompanionSection({ char, update }: SectionProps) {
 		const previous = training[key] ?? 0;
 		if (next <= 0) delete training[key];
 		else training[key] = next;
-		const patchData: Partial<CharacterData> = { companion: { ...comp, training } };
+		const patchData: Partial<CharacterData> = {
+			companion: { ...comp, training },
+		};
 
 		// "Light in the Dark" is an additional Hope slot for the PLAYER's
 		// character - marking it grows the sheet's Hope track, unmarking shrinks it.
 		if (key === "light") {
 			const settings = char.sheetSettings;
-			const newMax = Math.min(24, Math.max(1, settings.maxHope + (next - previous)));
+			const newMax = Math.min(
+				24,
+				Math.max(1, settings.maxHope + (next - previous)),
+			);
 			if (newMax !== settings.maxHope) {
 				patchData.sheetSettings = { ...settings, maxHope: newMax };
 				patchData.hope = Array.from(
@@ -416,17 +566,30 @@ export function CompanionSection({ char, update }: SectionProps) {
 			<div className="df-cs-comp-grid">
 				<div className="df-cs-comp-portrait">
 					{comp.art ? (
-						<img src={comp.art} alt={dfTranslate("ui.companion.portrait")} className="df-cs-comp-img" />
+						<img
+							src={comp.art}
+							alt={dfTranslate("ui.companion.portrait")}
+							className="df-cs-comp-img"
+						/>
 					) : (
 						<span className="df-cs-comp-img-empty">✦</span>
 					)}
 					<div className="df-cs-comp-portrait-btns">
-						<button type="button" onClick={() => fileRef.current?.click()}>
-							{comp.art ? dfTranslate("ui.dynamic.change.picture") : dfTranslate("ui.dynamic.add.picture")}
+						<button
+							type="button"
+							onClick={() => fileRef.current?.click()}
+						>
+							{comp.art
+								? dfTranslate("ui.dynamic.change.picture")
+								: dfTranslate("ui.dynamic.add.picture")}
 						</button>
 						{comp.art && (
-							<button type="button" onClick={() => patch({ art: "" })}>
-								{dfTranslate("ui.remove")}</button>
+							<button
+								type="button"
+								onClick={() => patch({ art: "" })}
+							>
+								{dfTranslate("ui.remove")}
+							</button>
 						)}
 					</div>
 					<input
@@ -450,13 +613,21 @@ export function CompanionSection({ char, update }: SectionProps) {
 						className="df-cs-comp-evasion"
 					/>
 					<p className="df-cs-hint">
-						{dfTranslate("ui.work.with.the.gm.to.decide.what.kind.of.animal.you.have.as.your.companion.give.them.a.name.and.attach.a.picture.then.create.two.experiences.for.them.based.on.their.training.and.the.history.you.have.together")}</p>
+						{dfTranslate(
+							"ui.work.with.the.gm.to.decide.what.kind.of.animal.you.have.as.your.companion.give.them.a.name.and.attach.a.picture.then.create.two.experiences.for.them.based.on.their.training.and.the.history.you.have.together",
+						)}
+					</p>
 				</div>
 			</div>
 
-			<h4 className="df-cs-guide-sub">{dfTranslate("ui.companion.experience")}</h4>
+			<h4 className="df-cs-guide-sub">
+				{dfTranslate("ui.companion.experience")}
+			</h4>
 			<p className="df-cs-hint">
-				{dfTranslate("ui.start.with.2.in.two.experiences.whenever.you.gain.a.new.experience.your.companion.also.gains.one.all.new.experiences.start.at.2")}</p>
+				{dfTranslate(
+					"ui.start.with.2.in.two.experiences.whenever.you.gain.a.new.experience.your.companion.also.gains.one.all.new.experiences.start.at.2",
+				)}
+			</p>
 			<div className="df-cs-experiences df-cs-comp-experiences">
 				{comp.experiences.map((exp, i) => (
 					<div key={i} className="df-cs-experience-row">
@@ -464,8 +635,13 @@ export function CompanionSection({ char, update }: SectionProps) {
 							type="text"
 							className="df-cs-experience-text"
 							value={exp.text}
-							onChange={(e) => setExperience(i, { text: e.target.value })}
-							aria-label={`Companion experience ${i + 1}`}
+							onChange={(e) =>
+								setExperience(i, { text: e.target.value })
+							}
+							aria-label={dfTranslate(
+								"companion.experience.label",
+								{ count: i + 1 },
+							)}
 						/>
 						<div className="df-cs-experience-mod">
 							<ExperienceCapArt />
@@ -473,23 +649,37 @@ export function CompanionSection({ char, update }: SectionProps) {
 								type="text"
 								className="df-cs-experience-mod-input"
 								value={exp.modifier}
-								onChange={(e) => setExperience(i, { modifier: e.target.value })}
-								aria-label={`Companion experience ${i + 1} modifier`}
+								onChange={(e) =>
+									setExperience(i, {
+										modifier: e.target.value,
+									})
+								}
+								aria-label={dfTranslate(
+									"companion.experience.modifierLabel",
+									{ count: i + 1 },
+								)}
 							/>
 						</div>
 					</div>
 				))}
 			</div>
 			<p className="df-cs-hint df-cs-comp-examples">
-				{dfTranslate("ui.example.companion.experiences")}{COMPANION_EXPERIENCE_EXAMPLES}.
+				{dfTranslate("ui.example.companion.experiences")}
+				{dfTranslate(COMPANION_EXPERIENCE_EXAMPLES_KEY)}.
 			</p>
 			<div className="df-cs-comp-rules">
-				<CardText text={dfTranslate("ui.make.a.spellcast.roll.to.connect.with.your.companion.and.command.them.to.take.action.spend.a.hope.to.add.an.applicable.companion.experience.to.the.roll.on.a.success.with.hope.if.your.next.action.builds.on.their.success.you.gain.advantage.on.the.roll")} />
+				<CardText
+					text={dfTranslate(
+						"ui.make.a.spellcast.roll.to.connect.with.your.companion.and.command.them.to.take.action.spend.a.hope.to.add.an.applicable.companion.experience.to.the.roll.on.a.success.with.hope.if.your.next.action.builds.on.their.success.you.gain.advantage.on.the.roll",
+					)}
+				/>
 			</div>
 
 			<div className="df-cs-comp-columns">
 				<div className="df-cs-comp-col">
-					<h4 className="df-cs-guide-sub">{dfTranslate("ui.attack.damage")}</h4>
+					<h4 className="df-cs-guide-sub">
+						{dfTranslate("ui.attack.damage")}
+					</h4>
 					<LineField
 						label={dfTranslate("ui.standard.attack")}
 						value={comp.attack}
@@ -501,14 +691,19 @@ export function CompanionSection({ char, update }: SectionProps) {
 						onChange={(v) => patch({ range: v })}
 					/>
 					<div className="df-cs-comp-dice">
-						<span className="df-cs-comp-dice-label">{dfTranslate("ui.damage.die")}</span>
+						<span className="df-cs-comp-dice-label">
+							{dfTranslate("ui.damage.die")}
+						</span>
 						{COMPANION_DAMAGE_DICE.map((die) => {
 							const selected = (comp.damageDie || "d6") === die;
 							return (
 								<button
 									key={die}
 									type="button"
-									className={"df-cs-comp-die" + (selected ? " is-on" : "")}
+									className={
+										"df-cs-comp-die" +
+										(selected ? " is-on" : "")
+									}
 									aria-pressed={selected}
 									onClick={() => patch({ damageDie: die })}
 								>
@@ -519,55 +714,107 @@ export function CompanionSection({ char, update }: SectionProps) {
 						})}
 					</div>
 					<div className="df-cs-comp-rules">
-						<CardText text={dfTranslate("ui.when.you.command.your.companion.to.attack.they.gain.any.benefits.that.would.normally.only.apply.to.you.such.as.the.effects.of.ranger.s.focus.on.a.success.their.damage.roll.uses.your.proficiency.and.their.damage.die")} />
+						<CardText
+							text={dfTranslate(
+								"ui.when.you.command.your.companion.to.attack.they.gain.any.benefits.that.would.normally.only.apply.to.you.such.as.the.effects.of.ranger.s.focus.on.a.success.their.damage.roll.uses.your.proficiency.and.their.damage.die",
+							)}
+						/>
 					</div>
 
-					<h4 className="df-cs-guide-sub">{dfTranslate("ui.stress")}</h4>
+					<h4 className="df-cs-guide-sub">
+						{dfTranslate("ui.stress")}
+					</h4>
 					<div className="df-cs-track">
-						<span className="df-cs-track-label">{dfTranslate("ui.stress")}</span>
+						<span className="df-cs-track-label">
+							{dfTranslate("ui.stress")}
+						</span>
 						<div className="df-cs-track-slots">
 							{comp.stress.map((on, i) => (
 								<SlotToggle
 									key={i}
 									on={on}
-									label={`Companion stress ${i + 1}`}
+									label={dfTranslate(
+										"companion.stress.label",
+										{ count: i + 1 },
+									)}
 									className={
-										"df-cs-track-slot" + (i >= stressMax ? " df-cs-track-slot--dashed" : "")
+										"df-cs-track-slot" +
+										(i >= stressMax
+											? " df-cs-track-slot--dashed"
+											: "")
 									}
 									onToggle={() =>
-										patch({ stress: comp.stress.map((v, j) => (j === i ? !v : v)) })
+										patch({
+											stress: comp.stress.map((v, j) =>
+												j === i ? !v : v,
+											),
+										})
 									}
 								/>
 							))}
 						</div>
 					</div>
 					<div className="df-cs-comp-rules">
-						<CardText text={dfTranslate("ui.when.your.companion.would.take.any.amount.of.damage.they.mark.a.stress.when.they.mark.their.last.stress.they.drop.out.of.the.scene.by.hiding.fleeing.or.a.similar.action.they.remain.unavailable.until.the.start.of.your.next.long.rest.where.they.return.with.1.stress.cleared")} />
-						<CardText text={dfTranslate("ui.when.you.choose.a.downtime.move.that.clears.stress.on.yourself.your.companion.clears.an.equal.number.of.stress")} />
+						<CardText
+							text={dfTranslate(
+								"ui.when.your.companion.would.take.any.amount.of.damage.they.mark.a.stress.when.they.mark.their.last.stress.they.drop.out.of.the.scene.by.hiding.fleeing.or.a.similar.action.they.remain.unavailable.until.the.start.of.your.next.long.rest.where.they.return.with.1.stress.cleared",
+							)}
+						/>
+						<CardText
+							text={dfTranslate(
+								"ui.when.you.choose.a.downtime.move.that.clears.stress.on.yourself.your.companion.clears.an.equal.number.of.stress",
+							)}
+						/>
 					</div>
 				</div>
 
 				<div className="df-cs-comp-col">
-					<h4 className="df-cs-guide-sub">{dfTranslate("ui.training")}</h4>
+					<h4 className="df-cs-guide-sub">
+						{dfTranslate("ui.training")}
+					</h4>
 					<p className="df-cs-hint">
-						{dfTranslate("ui.when.your.character.levels.up.choose.one.available.option.for.your.companion.from.the.following.list.and.mark.it.here")}</p>
+						{dfTranslate(
+							"ui.when.your.character.levels.up.choose.one.available.option.for.your.companion.from.the.following.list.and.mark.it.here",
+						)}
+					</p>
 					{COMPANION_TRAINING.map((opt) => {
 						const marked = comp.training[opt.key] ?? 0;
+						const optionName = dfTranslate(opt.nameKey);
+						const optionText = dfTranslate(opt.textKey);
 						return (
 							<div key={opt.key} className="df-cs-lvl-opt">
 								<span className="df-cs-lvl-slots">
-									{Array.from({ length: opt.slots }, (_, i) => (
-										<SlotToggle
-											key={i}
-											on={i < marked}
-											label={`${opt.name} (slot ${i + 1} of ${opt.slots})`}
-											className="df-cs-track-slot df-cs-lvl-slot"
-											onToggle={() => setTraining(opt.key, i < marked ? marked - 1 : marked + 1)}
-										/>
-									))}
+									{Array.from(
+										{ length: opt.slots },
+										(_, i) => (
+											<SlotToggle
+												key={i}
+												on={i < marked}
+												label={dfTranslate(
+													"levelUp.slotLabel",
+													{
+														text: optionName,
+														current: i + 1,
+														total: opt.slots,
+													},
+												)}
+												className="df-cs-track-slot df-cs-lvl-slot"
+												onToggle={() =>
+													setTraining(
+														opt.key,
+														i < marked
+															? marked - 1
+															: marked + 1,
+													)
+												}
+											/>
+										),
+									)}
 								</span>
 								<div className="df-cs-lvl-opt-text">
-									<CardText text={`${opt.name}: ${opt.text}`} />
+									<CardText
+										text={`${optionName}: ${optionText}`}
+									/>
 								</div>
 							</div>
 						);
