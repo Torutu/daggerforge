@@ -1,0 +1,542 @@
+[
+	{
+		"id": "CN001hf",
+		"source": "hopefear",
+		"roll": 1,
+		"rarity": "Common",
+		"name": "Warding Candle",
+		"category": "Utility",
+		"text": "You can light this candle to fill an area within Close range with a halo of light. A creature outside the halo can’t enter it if they have ill intent toward a creature within it. The candle burns for an hour."
+	},
+	{
+		"id": "CN002hf",
+		"source": "hopefear",
+		"roll": 2,
+		"rarity": "Common",
+		"name": "Iridian Dust",
+		"category": "Utility",
+		"text": "This multicolored powder sticks to everything and prevents creatures covered in it from becoming Hidden."
+	},
+	{
+		"id": "CN003hf",
+		"source": "hopefear",
+		"roll": 3,
+		"rarity": "Common",
+		"name": "Verglasian Seed",
+		"category": "Utility",
+		"text": "You can use this ice shard to instantly freeze an area of water up to Close range."
+	},
+	{
+		"id": "CN004hf",
+		"source": "hopefear",
+		"roll": 4,
+		"rarity": "Common",
+		"name": "Cupbearer's Bezoar",
+		"category": "Utility",
+		"text": "You can swallow this bezoar to become immune to poisons until your next long rest."
+	},
+	{
+		"id": "CN005hf",
+		"source": "hopefear",
+		"roll": 5,
+		"rarity": "Common",
+		"name": "Mossmantle Potion",
+		"category": "Enhancement",
+		"text": "You can drink this tea to perfectly blend into natural environments until your next rest."
+	},
+	{
+		"id": "CN006hf",
+		"source": "hopefear",
+		"roll": 6,
+		"rarity": "Common",
+		"name": "Lyrebird Lozenge",
+		"category": "Utility",
+		"text": "You can dissolve this lozenge in your mouth to perfectly mimic any voice you’ve heard until the end of the scene."
+	},
+	{
+		"id": "CN007hf",
+		"source": "hopefear",
+		"roll": 7,
+		"rarity": "Common",
+		"name": "Vial of Featherfall",
+		"category": "Utility",
+		"text": "You can drink this potion to ignore damage from falling for the next 10 minutes."
+	},
+	{
+		"id": "CN008hf",
+		"source": "hopefear",
+		"roll": 8,
+		"rarity": "Common",
+		"name": "Chimeric Saliva",
+		"category": "Combat",
+		"text": "You can apply this saliva to a weapon that deals physical damage to change its damage type to magic until your next rest."
+	},
+	{
+		"id": "CN009hf",
+		"source": "hopefear",
+		"roll": 9,
+		"rarity": "Common",
+		"name": "Packet of Space Dust",
+		"category": "Utility",
+		"text": "This dust causes anything it covers to become lighter than air. One packet contains enough dust to cover the contents of a picnic basket, and the effects last for an hour."
+	},
+	{
+		"id": "CN010hf",
+		"source": "hopefear",
+		"roll": 10,
+		"rarity": "Common",
+		"name": "Pipeweed",
+		"category": "Healing",
+		"text": "When you choose the Clear Stress downtime move during a short rest, you can smoke this non-intoxicating leaf to clear an additional Stress. Any other PCs who chose the Clear Stress downtime move also gain this benefit."
+	},
+	{
+		"id": "CN011hf",
+		"source": "hopefear",
+		"roll": 11,
+		"rarity": "Common",
+		"name": "Deathseer's Powder",
+		"category": "Utility",
+		"text": "You can sprinkle this powder over a recently deceased corpse to conjure a spectral reprise of their final minute of life."
+	},
+	{
+		"id": "CN012hf",
+		"source": "hopefear",
+		"roll": 12,
+		"rarity": "Common",
+		"name": "Slayer's Salt",
+		"category": "Utility",
+		"text": "You can spread this salt in a line along windowsills or thresholds to create a magical barrier that undead creatures can’t cross until the line is broken."
+	},
+	{
+		"id": "CN013hf",
+		"source": "hopefear",
+		"roll": 13,
+		"rarity": "Uncommon",
+		"name": "Yakamel Milk",
+		"category": "Healing",
+		"text": "After consuming this milk, the next time you clear 1 or more Hit Points, you clear an additional Hit Point."
+	},
+	{
+		"id": "CN014hf",
+		"source": "hopefear",
+		"roll": 14,
+		"rarity": "Uncommon",
+		"name": "Glowmoss Mushroom",
+		"category": "Utility",
+		"text": "You can break this mushroom into pieces, causing it to glow bright blue until your next long rest."
+	},
+	{
+		"id": "CN015hf",
+		"source": "hopefear",
+		"roll": 15,
+		"rarity": "Uncommon",
+		"name": "Red Ooze Oil",
+		"category": "Combat",
+		"text": "You can coat your weapon in this oil. The next successful attack you make with this weapon deals an extra 1d8 magic damage and temporarily Ignites the target. While Ignited, the target takes 1d4 magic damage when they take the spotlight."
+	},
+	{
+		"id": "CN016hf",
+		"source": "hopefear",
+		"roll": 16,
+		"rarity": "Uncommon",
+		"name": "Instant Camp",
+		"category": "Utility",
+		"text": "You can unfold this small mechanical box into a camping tent large enough to safely house six people. The tent collapses at the end of your next long rest."
+	},
+	{
+		"id": "CN017hf",
+		"source": "hopefear",
+		"roll": 17,
+		"rarity": "Uncommon",
+		"name": "Bundle of Spiderlegs",
+		"category": "Utility",
+		"text": "You can eat these spiderlegs to walk on walls until your next rest."
+	},
+	{
+		"id": "CN018hf",
+		"source": "hopefear",
+		"roll": 18,
+		"rarity": "Uncommon",
+		"name": "Ciscan Fog Bottle",
+		"category": "Healing",
+		"text": "You can break this jar to fill the area within Close range with magical mist. A creature who enters the mist clears a Stress and becomes Hidden."
+	},
+	{
+		"id": "CN019hf",
+		"source": "hopefear",
+		"roll": 19,
+		"rarity": "Uncommon",
+		"name": "Snapthorn Seed",
+		"category": "Combat",
+		"text": "You can throw this seed at a point you can see. It explodes into a tangle of binding vines that temporarily Restrains all creatures within Close range of that point."
+	},
+	{
+		"id": "CN020hf",
+		"source": "hopefear",
+		"roll": 20,
+		"rarity": "Uncommon",
+		"name": "Sprite Bottle",
+		"category": "Healing",
+		"text": "When you mark your last Hit Point, this bottle shatters to release the Sprite inside. The Sprite clears all your Hit Points before fading from the Mortal Realm."
+	},
+	{
+		"id": "CN021hf",
+		"source": "hopefear",
+		"roll": 21,
+		"rarity": "Uncommon",
+		"name": "Gravity Bomb",
+		"category": "Utility",
+		"text": "You can throw this peach-sized mechanical orb at a point within Far range. It implodes and pulls all creatures and objects within Close range of that point into Melee range with it."
+	},
+	{
+		"id": "CN022hf",
+		"source": "hopefear",
+		"roll": 22,
+		"rarity": "Uncommon",
+		"name": "Gossip Flower",
+		"category": "Utility",
+		"text": "You can plant this seed in soil. It instantly grows into a small flower that records everything it hears for up to one week. When plucked, the flower recites what it recorded in real time, then withers."
+	},
+	{
+		"id": "CN023hf",
+		"source": "hopefear",
+		"roll": 23,
+		"rarity": "Uncommon",
+		"name": "Displacement Token",
+		"category": "Utility",
+		"text": "You can swallow this token to conjure two illusions of yourself that you can control. Each illusion lasts until it takes damage or until your next rest."
+	},
+	{
+		"id": "CN024hf",
+		"source": "hopefear",
+		"roll": 24,
+		"rarity": "Uncommon",
+		"name": "Night Hag's Dust",
+		"category": "Combat",
+		"text": "You can blow this dust in an adversary’s face to prevent them from clearing Stress until your next long rest."
+	},
+	{
+		"id": "CN025hf",
+		"source": "hopefear",
+		"roll": 25,
+		"rarity": "Rare",
+		"name": "Self-Sewing Thread",
+		"category": "Healing",
+		"text": "You can use this thread to clear either a Hit Point or 2 Armor Slots."
+	},
+	{
+		"id": "CN026hf",
+		"source": "hopefear",
+		"roll": 26,
+		"rarity": "Rare",
+		"name": "Stonemason's Fortune",
+		"category": "Utility",
+		"text": "When you throw this gray brick on the ground, it immediately grows into a 6-foot-tall, 10-foot-wide, and 2-foot- deep wall of solid stone."
+	},
+	{
+		"id": "CN027hf",
+		"source": "hopefear",
+		"roll": 27,
+		"rarity": "Rare",
+		"name": "Mnemonic Potion",
+		"category": "Enhancement",
+		"text": "You can drink this potion to Utilize an Experience without spending a Hope."
+	},
+	{
+		"id": "CN028hf",
+		"source": "hopefear",
+		"roll": 28,
+		"rarity": "Rare",
+		"name": "Salamander Salve",
+		"category": "Enhancement",
+		"text": "You can apply this salve to your skin to make yourself immune to heat until your next rest."
+	},
+	{
+		"id": "CN029hf",
+		"source": "hopefear",
+		"roll": 29,
+		"rarity": "Rare",
+		"name": "Green Ooze Oil",
+		"category": "Combat",
+		"text": "You can coat your weapon in this oil. The next successful attack you make with this weapon deals an extra 1d8 magic damage and temporarily Corrodes the target. While Corroded, the target gains a −2 penalty to their damage thresholds."
+	},
+	{
+		"id": "CN030hf",
+		"source": "hopefear",
+		"roll": 30,
+		"rarity": "Rare",
+		"name": "Sunlight Orb",
+		"category": "Utility",
+		"text": "You can shatter this orb to make the area within Very Far range appear as though it’s sunlit daytime for the next 24 hours."
+	},
+	{
+		"id": "CN031hf",
+		"source": "hopefear",
+		"roll": 31,
+		"rarity": "Rare",
+		"name": "Moonlight Orb",
+		"category": "Utility",
+		"text": "You can shatter this orb to make the area within Very Far range appear as though it’s moonlit nighttime for the next 24 hours."
+	},
+	{
+		"id": "CN032hf",
+		"source": "hopefear",
+		"roll": 32,
+		"rarity": "Rare",
+		"name": "Midas Flash",
+		"category": "Utility",
+		"text": "You can pour this small flask of alchemical liquid over a mundane item to instantly transmute it into a handful of gold."
+	},
+	{
+		"id": "CN033hf",
+		"source": "hopefear",
+		"roll": 33,
+		"rarity": "Rare",
+		"name": "Staff of Reversal",
+		"category": "Utility",
+		"text": "You can break this staff against the ground to reverse one magical transformation or effect within Far range."
+	},
+	{
+		"id": "CN034hf",
+		"source": "hopefear",
+		"roll": 34,
+		"rarity": "Rare",
+		"name": "Berserker's Brew",
+		"category": "Enhancement",
+		"text": "When you drink this dram of liquid, you gain a bonus to your Strength and a penalty to your Finesse and Knowledge equal to your Instinct (minimum 1). This effect lasts until you make a death move or until your next rest."
+	},
+	{
+		"id": "CN035hf", 
+		"source": "hopefear",
+		"roll": 35,
+		"rarity": "Rare",
+		"name": "Emberite Shard",
+		"category": "Combat",
+		"text": "Choose a point within Far range. All targets within Close range of that point must succeed on a Reaction Roll (16) or take 3d6 magic damage and become temporarily Ablaze. While Ablaze, a creature must roll a d4 whenever they make an action roll. On a result of 1, they mark a Hit Point. On a result of 4, they clear the Ablaze condition."
+	},
+	{
+		"id": "CN036hf",
+		"source": "hopefear",
+		"roll": 36,
+		"rarity": "Rare",
+		"name": "Arcticite Shard",
+		"category": "Combat",
+		"text": "Choose a point within Far range. All targets within Close range of that point must succeed on a Reaction Roll (16) or take 3d6 magic damage and become temporarily Restrained by ice."
+	},
+	{
+		"id": "CN037hf",
+		"source": "hopefear",
+		"roll": 37,
+		"rarity": "Rare",
+		"name": "Fulgurite Shard",
+		"category": "Combat",
+		"text": "Choose a point within Far range. All targets within Close range of that point must succeed on a Reaction Roll (16) or take 3d6 magic damage and mark 1d4 Stress as lightning crackles through the area."
+	},
+	{
+		"id": "CN038hf",
+		"source": "hopefear",
+		"roll": 38,
+		"rarity": "Rare",
+		"name": "Demiurge's Draught",
+		"category": "Enhancement",
+		"text": "You can drink this draught to gain a +1 bonus to your Proficiency for your next successful attack roll."
+	},
+	{
+		"id": "CN039hf",
+		"source": "hopefear",
+		"roll": 39,
+		"rarity": "Rare",
+		"name": "Cockerel Claw Tea",
+		"category": "Utility",
+		"text": "You can drink this tea to refresh your features as if you had taken a long rest."
+	},
+	{
+		"id": "CN040hf",
+		"source": "hopefear",
+		"roll": 40,
+		"rarity": "Rare",
+		"name": "Potion of Vigilance",
+		"category": "Enhancement",
+		"text": "You can drink this potion to gain a +1 bonus to your Evasion until you mark a Hit Point."
+	},
+	{
+		"id": "CN041hf",
+		"source": "hopefear",
+		"roll": 41,
+		"rarity": "Rare",
+		"name": "Cacophonous Concoction",
+		"category": "Utility",
+		"text": "When you drink this potion, anything you say or do in the next hour becomes impossible for a witness to recount. Any attempts they make to communicate what they saw, heard, or otherwise sensed comes out garbled or nonsensical."
+	},
+	{
+		"id": "CN042hf",
+		"source": "hopefear",
+		"roll": 42,
+		"rarity": "Rare",
+		"name": "Nightmare Mead",
+		"category": "Utility",
+		"text": "You can drink this potion to discover the deepest fear of the next person you make eye contact with. When you do, the GM gains a Fear."
+	},
+	{
+		"id": "CN043hf",
+		"source": "hopefear",
+		"roll": 43,
+		"rarity": "Rare",
+		"name": "Stake of Abjuration",
+		"category": "Utility",
+		"text": "You can hammer this stake into the ground and make a proclamation. Until your next rest, a creature within Far range of the stake who transgresses that proclamation must mark a Stress. The stake lasts until your next rest, then it shatters."
+	},
+	{
+		"id": "CN044hf",
+		"source": "hopefear",
+		"roll": 44,
+		"rarity": "Rare",
+		"name": "Psychopomp's Shroud",
+		"category": "Utility",
+		"text": "You can place this shroud over the corpse of a recently deceased creature. The creature’s spirit enters the shroud and becomes your spectral assistant until the next sunrise, when they pass through the veil of death and take the shroud with them."
+	},
+	{
+		"id": "CN045hf",
+		"source": "hopefear",
+		"roll": 45,
+		"rarity": "Rare",
+		"name": "Phial of Deep Ink",
+		"category": "Utility",
+		"text": "You can drink this bottle of ink to transform into a cephalopod of roughly your size for the next hour. You gain rubbery skin, soft bones, the ability to breathe underwater, and new limbs until you have eight total."
+	},
+	{
+		"id": "CN046hf",
+		"source": "hopefear",
+		"roll": 46,
+		"rarity": "Rare",
+		"name": "Mesmer's Tonic",
+		"category": "Utility",
+		"text": "When you drink this tonic, the only thing you can hear until your next rest are the surface thoughts of creatures within Very Close range."
+	},
+	{
+		"id": "CN047hf",
+		"source": "hopefear",
+		"roll": 47,
+		"rarity": "Rare",
+		"name": "Invisibility Potion",
+		"category": "Utility",
+		"text": "You are Hidden until you deal damage to another creature or until your next rest."
+	},
+	{
+		"id": "CN048hf",
+		"source": "hopefear",
+		"roll": 48,
+		"rarity": "Rare",
+		"name": "Formold Serum",
+		"category": "Utility",
+		"text": "You can drink this potion to become a swarm of 16 million ants until the end of the scene. You keep and have access to all equipment, loot, and features."
+	},
+	{
+		"id": "CN049hf",
+		"source": "hopefear",
+		"roll": 49,
+		"rarity": "Legendary",
+		"name": "Steelskin Salve",
+		"category": "Enhancement",
+		"text": "You can apply this salve to your skin to gain a bonus to your damage thresholds equal to your tier until the end of the scene."
+	},
+	{
+		"id": "CN050hf", 
+		"source": "hopefear",
+		"roll": 50,
+		"rarity": "Legendary",
+		"name": "Godling's Pomelo",
+		"category": "Healing",
+		"text": "You can eat this citrus fruit to clear all Hit Points and Stress."
+	},
+	{
+		"id": "CN051hf",
+		"source": "hopefear",
+		"roll": 51,
+		"rarity": "Legendary",
+		"name": "Snakeskin Spirit",
+		"category": "Healing",
+		"text": "You can drink this potion to slough off your outer layer of skin and heal a scar."
+	},
+	{
+		"id": "CN052hf",
+		"source": "hopefear",
+		"roll": 52,
+		"rarity": "Legendary",
+		"name": "Magic-User's Malison",
+		"category": "Utility",
+		"text": "When you release this spellcaster’s trapped soul, you can cast one spell from a card in your vault as if it were in your loadout. This doesn’t work for permanently vaulted cards."
+	},
+	{
+		"id": "CN053hf",
+		"source": "hopefear",
+		"roll": 53,
+		"rarity": "Legendary",
+		"name": "Quintessential Severant",
+		"category": "Utility",
+		"text": "You can use this magic blade to cut one magical or metaphysical bond, such as an enchantment, contract, magical tether, or divine oath. When you do, the blade shatters."
+	},
+	{
+		"id": "CN054hf",
+		"source": "hopefear",
+		"roll": 54,
+		"rarity": "Legendary",
+		"name": "Mask of the Echoed Self",
+		"category": "Utility",
+		"text": "You can wear this mask during your next level up to swap the values of any of your traits. When you do, the mask becomes your permanent face."
+	},
+	{
+		"id": "CN055hf",
+		"source": "hopefear",
+		"roll": 55,
+		"rarity": "Legendary",
+		"name": "Necroprancer's Bell",
+		"category": "Utility",
+		"text": "You can break this rusted, clapperless bell against the ground to summon a skeletal steed that climbs out of the earth and serves you until the next sunrise."
+	},
+	{
+		"id": "CN056hf",
+		"source": "hopefear",
+		"roll": 56,
+		"rarity": "Legendary",
+		"name": "Drakemantle",
+		"category": "Enhancement",
+		"text": "You can use this enchanted ancient dragon hide to gain draconic characteristics until the end of the scene, when the hide falls aways in tatters. Until then, you can fly and gain a +5 bonus to your damage thresholds and a +1 bonus to your Proficiency."
+	},
+	{
+		"id": "CN057hf",
+		"source": "hopefear",
+		"roll": 57,
+		"rarity": "Legendary",
+		"name": "Gambler's Fallacy",
+		"category": "Combat",
+		"text": "You can spend any number of handfuls of gold by placing them into this slotted ceramic jar shaped like a pig. When you throw the jar at a point within Far range, it explodes and deals 1d20 magic damage for each handful of gold spent to all creatures within Close range of that point. All gold within the jar is destroyed."
+	},
+	{
+		"id": "CN058hf",
+		"source": "hopefear",
+		"roll": 58,
+		"rarity": "Legendary",
+		"name": "Lionheart Tonic",
+		"category": "Enhancement",
+		"text": "You can drink this tonic to gain a +1 bonus to your Proficiency until you roll with Fear."
+	},
+	{
+		"id": "CN059hf",
+		"source": "hopefear",
+		"roll": 59,
+		"rarity": "Legendary",
+		"name": "Tears of the Undying Hero",
+		"category": "Utility",
+		"text": "When you drink this potion, death can’t touch you until your next long rest. When you would mark your last Hit Point, instead of making a death move, you make one final action roll before falling into a dreamless slumber until an ally chooses the Tend to Wounds downtime move to clear your Hit Points."
+	},
+	{
+		"id": "CN060hf",
+		"source": "hopefear",
+		"roll": 60,
+		"rarity": "Legendary",
+		"name": "Featherstep Potion",
+		"category": "Enhancement",
+		"text": "You can drink this potion to sprout small wings from your ankles that give you a bonus to your Evasion equal to your tier until your next rest."
+	}
+]
