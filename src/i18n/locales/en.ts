@@ -135,8 +135,13 @@ export const en = {
 	"insert.openLabel": "Open",
 	"insert.untitledLabel": "Untitled",
 	"sheet.loadoutCount": "Loadout ({count}/5)",
+	"sheet.loadoutHint": "Active cards you can use during play.",
+	"sheet.toVault": "To vault",
 	"sheet.markHp": "Mark {count} HP",
 	"sheet.vaultCount": "Vault ({count})",
+	"sheet.vaultHint":
+		"Stored cards. Swapping one into your loadout costs its Recall Cost in Stress during play; swapping during downtime is free.",
+	"sheet.toLoadout": "To loadout",
 	"term.adversaries": "Adversaries",
 	"term.armor": "Armor",
 	"term.characters": "Characters",

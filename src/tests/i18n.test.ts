@@ -22,6 +22,8 @@ describe("i18n", () => {
 		expect(gameTerm("Characters")).toBe("Charaktere");
 		expect(translate("sheet.markHp", { count: 3 })).toBe("Markiere 3 TP");
 		expect(translate("sheet.levelValue", { level: 4 })).toBe("Stufe 4");
+		expect(translate("sheet.toVault")).toBe("Zur Reserve");
+		expect(translate("sheet.toLoadout")).toBe("Zu den aktiven Karten");
 		expect(translate("enc.unspent", { count: 2 })).toBe(
 			"2 Kampfpunkte übrig",
 		);

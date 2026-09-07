@@ -138,8 +138,13 @@ export const de: Record<TranslationKey, string> = {
 	"insert.openLabel": "Geöffnet",
 	"insert.untitledLabel": "Unbenannt",
 	"sheet.loadoutCount": "Aktive Karten ({count}/5)",
+	"sheet.loadoutHint": "Aktive Karten, die du während des Spiels einsetzen kannst.",
+	"sheet.toVault": "Zur Reserve",
 	"sheet.markHp": "Markiere {count} TP",
 	"sheet.vaultCount": "Reserve ({count})",
+	"sheet.vaultHint":
+		"Karten in deiner Reserve. Wenn du während des Spiels eine davon zu deinen aktiven Karten verschiebst, zahlst du ihre Erinnerungskosten als Stress. Während einer Rast ist der Austausch kostenlos.",
+	"sheet.toLoadout": "Zu den aktiven Karten",
 	"term.adversaries": "Gegner",
 	"term.armor": "Rüstung",
 	"term.characters": "Charaktere",

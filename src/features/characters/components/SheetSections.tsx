@@ -764,17 +764,17 @@ export function DomainCardsSection({ char, update, onAddCards }: CardSectionProp
 			<div className="df-cs-dcards-groups">
 				<DomainCardGroup
 					title={dfTranslate("sheet.loadoutCount", { count: loadout.length })}
-					hint="Active cards you can use during play."
+					hint={dfTranslate("sheet.loadoutHint")}
 					cards={loadout}
-					actionLabel="To vault"
+					actionLabel={dfTranslate("sheet.toVault")}
 					onAction={(c) => setVault(c, true)}
 					onRemove={remove}
 				/>
 				<DomainCardGroup
 					title={dfTranslate("sheet.vaultCount", { count: vault.length })}
-					hint="Stored cards. Swapping one into your loadout costs its Recall Cost in Stress during play; swapping during downtime is free."
+					hint={dfTranslate("sheet.vaultHint")}
 					cards={vault}
-					actionLabel="To loadout"
+					actionLabel={dfTranslate("sheet.toLoadout")}
 					onAction={(c) => setVault(c, false)}
 					onRemove={remove}
 				/>

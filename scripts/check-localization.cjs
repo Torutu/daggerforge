@@ -82,7 +82,7 @@ function audit() {
 				const parent = node.parent;
 				if (
 					ts.isJsxAttribute(parent) &&
-					/^(title|placeholder|aria-label|label|alt)$/.test(
+					/^(title|placeholder|aria-label|label|alt|hint|actionLabel)$/.test(
 						parent.name.text,
 					)
 				)
