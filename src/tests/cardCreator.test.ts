@@ -21,12 +21,9 @@ import { EnvironmentModal } from '../features/environments/components/EnvModal';
 // ── Obsidian DOM + crypto polyfills ────────────────────────────────────────
 
 beforeAll(() => {
-    // Obsidian adds .empty() to every HTMLElement; jsdom doesn't have it
-    Object.defineProperty(HTMLElement.prototype, 'empty', {
-        configurable: true,
-        value() { this.innerHTML = ''; },
-    });
-
+    // .empty() (and createEl/createDiv/createSpan/...) are polyfilled
+    // globally for jsdom by src/tests/obsidianDomPolyfill.ts - only the
+    // crypto mock is specific to this file.
     let counter = 0;
     Object.defineProperty(globalThis.crypto, 'randomUUID', {
         writable: true,
@@ -37,34 +34,46 @@ beforeAll(() => {
 
 afterAll(() => {
     delete (globalThis.crypto as any).randomUUID;
-    delete (HTMLElement.prototype as any).empty;
 });
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
+// These mock form controls are never meant to be part of any tree (they're
+// injected directly into modal.inputs as detached stand-ins) - createEl needs
+// a parent to call it on, so document.body briefly stands in and each element
+// is detached again immediately.
 function inp(value: string): HTMLInputElement {
-    const el = document.createElement('input');
+    const el = document.body.createEl('input');
+    el.remove();
     el.value = value;
     return el;
 }
 
 function sel(value: string): HTMLSelectElement {
-    const el = document.createElement('select');
-    const opt = document.createElement('option');
+    const el = document.body.createEl('select');
+    el.remove();
+    const opt = el.createEl('option');
     opt.value = value;
     opt.selected = true;
-    el.appendChild(opt);
     return el;
 }
 
 function ta(value: string): HTMLTextAreaElement {
-    const el = document.createElement('textarea');
+    const el = document.body.createEl('textarea');
+    el.remove();
     el.value = value;
     return el;
 }
 
 function mockRichEditor(html = '') {
     return { getHTML: () => html, destroy: jest.fn() };
+}
+
+/** A detached container div, for mock modal state that's never actually rendered. */
+function detachedDiv(): HTMLDivElement {
+    const el = document.body.createDiv();
+    el.remove();
+    return el;
 }
 
 function mockPlugin() {
@@ -139,7 +148,7 @@ function wireAdvModal(modal: AdversaryModal, opts: {
 } = {}) {
     (modal as any).inputs            = opts.inputs      ?? advInputs();
     (modal as any).features          = opts.features    ?? [];
-    (modal as any).featureContainer  = document.createElement('div');
+    (modal as any).featureContainer  = detachedDiv();
     (modal as any).insertDestination = opts.destination ?? { kind: 'none', canvas: null, leaf: null };
     modal.close = jest.fn();
 }
@@ -151,9 +160,9 @@ function wireEnvModal(modal: EnvironmentModal, opts: {
 } = {}) {
     (modal as any).inputs             = opts.inputs      ?? envInputs();
     (modal as any).features           = opts.features    ?? [];
-    (modal as any).featureContainer   = document.createElement('div');
+    (modal as any).featureContainer   = detachedDiv();
     (modal as any).countdownRows      = [];
-    (modal as any).countdownContainer = document.createElement('div');
+    (modal as any).countdownContainer = detachedDiv();
     (modal as any).insertDestination  = opts.destination ?? { kind: 'none', canvas: null, leaf: null };
     modal.close = jest.fn();
 }

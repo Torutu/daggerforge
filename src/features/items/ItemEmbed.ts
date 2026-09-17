@@ -5,6 +5,7 @@ import { GearData } from "../../types/srd";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
 import { decodeGearCode } from "../embeds/embedCode";
 import { renderMissingEmbed } from "../embeds/embedShared";
+import { appendHtml } from "../../utils/richContentTransform";
 import { gearToHtml } from "./ItemToHtml";
 
 /**
@@ -83,7 +84,7 @@ class ItemEmbedChild extends MarkdownRenderChild {
 			renderMissingEmbed(el, "Item", this.params.id);
 			return;
 		}
-		el.insertAdjacentHTML("beforeend", gearToHtml(gear));
+		appendHtml(el, gearToHtml(gear));
 	}
 }
 

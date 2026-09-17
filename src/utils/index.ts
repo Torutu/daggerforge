@@ -10,7 +10,7 @@ export * from './Sidebar';
 export * from './diceBadges';
 export * from './keywordBadges';
 export * from './themeManager';
-export * from './modalInfoIcon';
 export * from './collapseState';
 export * from './makeDraggable';
 export * from './richContentTransform';
+export * from './iconLabel';

@@ -21,42 +21,26 @@ import { handleCollapseClick } from '../utils/diceBadges';
 // ── DOM helpers ───────────────────────────────────────────────────────────────
 
 function makeAdvCard(id: string, opts: { expanded?: boolean; wide?: boolean } = {}): HTMLElement {
-    const card = document.createElement('section');
-    card.classList.add('df-card-outer');
-    if (opts.expanded) card.classList.add('df-expanded');
-    if (opts.wide)     card.classList.add('df-card--wide');
+    const cls = ['df-card-outer'];
+    if (opts.expanded) cls.push('df-expanded');
+    if (opts.wide)     cls.push('df-card--wide');
+    const card = document.body.createEl('section', { cls });
 
-    const h2 = document.createElement('h2');
-    h2.id = id;
-    card.appendChild(h2);
+    card.createEl('h2', { attr: { id } });
+    card.createEl('button', { cls: 'df-adv-collapse-btn' });
+    card.createEl('button', { cls: 'df-wide-toggle-btn' });
 
-    const collapseBtn = document.createElement('button');
-    collapseBtn.className = 'df-adv-collapse-btn';
-    card.appendChild(collapseBtn);
-
-    const wideBtn = document.createElement('button');
-    wideBtn.className = 'df-wide-toggle-btn';
-    card.appendChild(wideBtn);
-
-    document.body.appendChild(card);
     return card;
 }
 
 function makeEnvCard(id: string, opts: { wide?: boolean } = {}): HTMLElement {
-    const card = document.createElement('section');
-    card.classList.add('df-env-card-outer');
-    if (opts.wide) card.classList.add('df-card--wide');
+    const cls = ['df-env-card-outer'];
+    if (opts.wide) cls.push('df-card--wide');
+    const card = document.body.createEl('section', { cls });
 
-    const nameDiv = document.createElement('div');
-    nameDiv.className = 'df-env-name';
-    nameDiv.id = id;
-    card.appendChild(nameDiv);
+    card.createDiv({ cls: 'df-env-name', attr: { id } });
+    card.createEl('button', { cls: 'df-wide-toggle-btn' });
 
-    const wideBtn = document.createElement('button');
-    wideBtn.className = 'df-wide-toggle-btn';
-    card.appendChild(wideBtn);
-
-    document.body.appendChild(card);
     return card;
 }
 
@@ -65,27 +49,15 @@ function makeEnvCard(id: string, opts: { wide?: boolean } = {}): HTMLElement {
 function addTickboxes(card: HTMLElement, hp: number, stress: number): HTMLInputElement[] {
     const boxes: HTMLInputElement[] = [];
 
-    const hpRow = document.createElement('div');
-    hpRow.className = 'df-hp-tickboxes';
+    const hpRow = card.createDiv({ cls: 'df-hp-tickboxes' });
     for (let i = 0; i < hp; i++) {
-        const cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.className = 'df-hp-tickbox';
-        hpRow.appendChild(cb);
-        boxes.push(cb);
+        boxes.push(hpRow.createEl('input', { cls: 'df-hp-tickbox', attr: { type: 'checkbox' } }));
     }
-    card.appendChild(hpRow);
 
-    const stressRow = document.createElement('div');
-    stressRow.className = 'df-stress-tickboxes';
+    const stressRow = card.createDiv({ cls: 'df-stress-tickboxes' });
     for (let i = 0; i < stress; i++) {
-        const cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.className = 'df-stress-tickbox';
-        stressRow.appendChild(cb);
-        boxes.push(cb);
+        boxes.push(stressRow.createEl('input', { cls: 'df-stress-tickbox', attr: { type: 'checkbox' } }));
     }
-    card.appendChild(stressRow);
 
     return boxes;
 }
@@ -96,46 +68,27 @@ function makeClockInCard(
 ): { clock: HTMLElement; ticks: HTMLInputElement[]; plus: HTMLButtonElement; minus: HTMLButtonElement } {
     const { name = 'Storm', max = 4, idx = '0' } = opts;
 
-    const clock = document.createElement('div');
-    clock.className = 'df-env-countdown';
-    clock.dataset.countdownIdx = idx;
-    clock.dataset.max = String(max);
-    clock.dataset.countdownName = name;
+    const clock = card.createDiv({
+        cls: 'df-env-countdown',
+        attr: {
+            'data-countdown-idx': idx,
+            'data-max': String(max),
+            'data-countdown-name': name,
+        },
+    });
 
-    const header = document.createElement('div');
-    header.className = 'df-env-countdown-header';
+    const header = clock.createDiv({ cls: 'df-env-countdown-header' });
+    const minus = header.createEl('button', { cls: 'df-env-countdown-minus' });
+    header.createSpan();
+    const badge = header.createSpan({ cls: 'df-env-countdown-badge' });
+    badge.createSpan({ cls: 'df-env-countdown-current', text: '0' });
+    const plus = header.createEl('button', { cls: 'df-env-countdown-plus' });
 
-    const minus = document.createElement('button');
-    minus.className = 'df-env-countdown-minus';
-
-    const plus = document.createElement('button');
-    plus.className = 'df-env-countdown-plus';
-
-    const badge = document.createElement('span');
-    badge.className = 'df-env-countdown-badge';
-    const current = document.createElement('span');
-    current.className = 'df-env-countdown-current';
-    current.textContent = '0';
-    badge.appendChild(current);
-
-    header.appendChild(minus);
-    header.appendChild(document.createElement('span'));
-    header.appendChild(badge);
-    header.appendChild(plus);
-    clock.appendChild(header);
-
-    const tickboxes = document.createElement('div');
-    tickboxes.className = 'df-env-countdown-tickboxes';
+    const tickboxes = clock.createDiv({ cls: 'df-env-countdown-tickboxes' });
     const ticks: HTMLInputElement[] = [];
     for (let i = 0; i < max; i++) {
-        const tick = document.createElement('input');
-        tick.type = 'checkbox';
-        tick.className = 'df-env-countdown-tick';
-        tickboxes.appendChild(tick);
-        ticks.push(tick);
+        ticks.push(tickboxes.createEl('input', { cls: 'df-env-countdown-tick', attr: { type: 'checkbox' } }));
     }
-    clock.appendChild(tickboxes);
-    card.appendChild(clock);
 
     return { clock, ticks, plus, minus };
 }
@@ -148,7 +101,7 @@ function fireChange(cb: HTMLInputElement, handler: (e: Event) => void): void {
 
 beforeEach(() => {
     localStorage.clear();
-    document.body.innerHTML = '';
+    document.body.replaceChildren();
 });
 
 // ── Collapse state ────────────────────────────────────────────────────────────
@@ -168,8 +121,7 @@ describe('saveCollapseState', () => {
     });
 
     test('does not throw when card has no h2', () => {
-        const card = document.createElement('section');
-        card.classList.add('df-card-outer');
+        const card = document.body.createEl('section', { cls: 'df-card-outer' });
         expect(() => saveCollapseState(card)).not.toThrow();
     });
 });
@@ -189,7 +141,7 @@ describe('restoreCollapseState', () => {
     });
 
     test('bails early if element lacks df-card-outer class', () => {
-        const card = document.createElement('section');
+        const card = document.body.createEl('section');
         expect(() => restoreCollapseState(card)).not.toThrow();
         expect(card.classList.contains('df-expanded')).toBe(false);
     });
@@ -263,7 +215,7 @@ describe('saveTickState / restoreTickState', () => {
     });
 
     test('restoreTickState bails early without df-card-outer', () => {
-        const card = document.createElement('section');
+        const card = document.body.createEl('section');
         expect(() => restoreTickState(card)).not.toThrow();
     });
 });
@@ -453,9 +405,7 @@ describe('handleCountdownClick - plus/minus', () => {
 describe('handleCountdownClick - collapse button', () => {
     test('toggles df-countdown-collapsed on the env card', () => {
         const card = makeEnvCard('e70');
-        const btn = document.createElement('button');
-        btn.className = 'df-env-countdown-collapse-btn';
-        card.appendChild(btn);
+        const btn = card.createEl('button', { cls: 'df-env-countdown-collapse-btn' });
         handleCountdownClick({ target: btn } as unknown as MouseEvent);
         expect(card.classList.contains('df-countdown-collapsed')).toBe(true);
         handleCountdownClick({ target: btn } as unknown as MouseEvent);
@@ -464,9 +414,7 @@ describe('handleCountdownClick - collapse button', () => {
 
     test('persists collapse state to localStorage', () => {
         const card = makeEnvCard('e71');
-        const btn = document.createElement('button');
-        btn.className = 'df-env-countdown-collapse-btn';
-        card.appendChild(btn);
+        const btn = card.createEl('button', { cls: 'df-env-countdown-collapse-btn' });
         handleCountdownClick({ target: btn } as unknown as MouseEvent);
         expect(localStorage.getItem('df-env-countdown-open:e71')).toBe('0');
     });
@@ -531,7 +479,8 @@ describe('handleCountdownTickChange', () => {
 
     test('does nothing when target is not a countdown tick', () => {
         const card = makeEnvCard('e85');
-        const btn = document.createElement('button');
+        const btn = document.body.createEl('button');
+        btn.remove(); // deliberately unrelated to card - not a countdown tick
         const evt = new Event('change');
         Object.defineProperty(evt, 'target', { value: btn });
         expect(() => handleCountdownTickChange(evt)).not.toThrow();

@@ -326,52 +326,42 @@ export class AdversaryView extends ItemView {
 		}
 
 		adversaries.forEach((adversary) => {
-			const card = this.createAdversaryCard(adversary);
-			this.resultsDiv!.appendChild(card);
+			this.createAdversaryCard(this.resultsDiv!, adversary);
 		});
 	}
 
-	private createAdversaryCard(adversary: Adversary): HTMLElement {
-		const card = document.createElement("div");
-		card.classList.add("df-adversary-card");
-
+	private createAdversaryCard(parent: HTMLElement, adversary: Adversary): HTMLElement {
 		const source = adversary.source || "core";
-		card.classList.add(`df-source-${source.toLowerCase()}`);
+		const card = parent.createDiv({ cls: ["df-adversary-card", `df-source-${source.toLowerCase()}`] });
 
-		const tier = document.createElement("p");
-		tier.classList.add("df-tier-text");
 		const typeDisplay = adversary.type; // displaytype
+		const tier = card.createEl("p", {
+			cls: "df-tier-text",
+			text: `Tier ${adversary.tier} ${typeDisplay} `,
+		});
+		tier.createSpan({
+			cls: `df-source-badge-${source.toLowerCase()}`,
+			text: `${source.toLowerCase()}`,
+		});
 
-		const sourceBadge = document.createElement("span");
-		sourceBadge.classList.add(
-			`df-source-badge-${source.toLowerCase()}`,
-		);
-		sourceBadge.textContent = `${source.toLowerCase()}`;
-
-		tier.textContent = `Tier ${adversary.tier} ${typeDisplay} `;
-		tier.appendChild(sourceBadge);
-
-		card.appendChild(tier);
 		if (source.toLowerCase() === "custom") {
-			const deleteBtn = document.createElement("button");
-			deleteBtn.classList.add("df-adv-delete-btn");
+			const deleteBtn = card.createEl("button", { cls: "df-adv-delete-btn" });
 			setIcon(deleteBtn, "trash");
 			deleteBtn.addEventListener("click", (e: MouseEvent) => {
 				e.stopPropagation();
 				this.deleteCustomAdversary(adversary);
 			});
-			card.appendChild(deleteBtn);
 		}
 
-		const title = document.createElement("h3");
-		title.classList.add("df-title-small-padding");
-		title.textContent = adversary.name || "Unnamed Adversary";
-		card.appendChild(title);
+		card.createEl("h3", {
+			cls: "df-title-small-padding",
+			text: adversary.name || "Unnamed Adversary",
+		});
 
-		const desc = document.createElement("p");
-		desc.classList.add("df-desc-small-padding");
-		desc.textContent = adversary.desc || "No description available.";
-		card.appendChild(desc);
+		card.createEl("p", {
+			cls: "df-desc-small-padding",
+			text: adversary.desc || "No description available.",
+		});
 
 		card.addEventListener("click", () =>
 			this.insertAdversaryIntoNote(adversary),

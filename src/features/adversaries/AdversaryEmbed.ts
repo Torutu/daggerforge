@@ -3,6 +3,7 @@ import type DaggerForgePlugin from "../../main";
 import { ADVERSARIES } from "../../data/adversaries";
 import { AdvData } from "../../types/index";
 import { attachDiceBadges } from "../../utils/diceBadges";
+import { appendHtml } from "../../utils/richContentTransform";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
 import { decodeAdversaryCode } from "../embeds/embedCode";
 import { embedStateKey, renderMissingEmbed } from "../embeds/embedShared";
@@ -105,7 +106,7 @@ class AdversaryEmbedChild extends MarkdownRenderChild {
 			false,
 			embedStateKey(this.params),
 		);
-		el.insertAdjacentHTML("beforeend", html);
+		appendHtml(el, html);
 
 		const section = el.querySelector<HTMLElement>("section");
 		if (section) {

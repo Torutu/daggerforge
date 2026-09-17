@@ -152,11 +152,11 @@ function replaceCardInCanvas(
 	const existingInner = cardElement.querySelector(innerSelector);
 
 	if (newInner && existingInner) {
-		existingInner.innerHTML = "";
+		existingInner.replaceChildren();
 		newInner.childNodes.forEach((node) => existingInner.appendChild(node.cloneNode(true)));
 	} else {
 		// Fallback: replace the card's children entirely.
-		cardElement.innerHTML = "";
+		cardElement.replaceChildren();
 		parsed.body.childNodes.forEach((node) => cardElement.appendChild(node.cloneNode(true)));
 	}
 

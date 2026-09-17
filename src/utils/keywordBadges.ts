@@ -16,6 +16,11 @@ export function applyKeywordColors(enabled: boolean): void {
 	document.body.classList.toggle("df-kw-active", enabled);
 }
 
+// node stays in the tree as a positional cursor - every replacement piece is
+// inserted with node.before(...), preserving order, then node itself is
+// removed. This avoids a DocumentFragment (which is not an HTMLElement and
+// so has no createEl of its own) while still doing the whole splice as one
+// pass through the original text.
 function colorKeywordsInNode(node: Text): void {
 	const text = node.nodeValue ?? "";
 	const re = KEYWORD_SCAN();
@@ -24,10 +29,9 @@ function colorKeywordsInNode(node: Text): void {
 	while ((m = re.exec(text)) !== null) matches.push(m);
 	if (matches.length === 0) return;
 
-	const parent = node.parentNode;
+	const parent = node.parentElement;
 	if (!parent) return;
 
-	const fragment = document.createDocumentFragment();
 	let cursor = 0;
 
 	for (const match of matches) {
@@ -35,22 +39,22 @@ function colorKeywordsInNode(node: Text): void {
 		const end = start + match[0].length;
 
 		if (start > cursor) {
-			fragment.appendChild(document.createTextNode(text.slice(cursor, start)));
+			node.before(document.createTextNode(text.slice(cursor, start)));
 		}
 
-		const span = document.createElement("span");
-		span.className = KEYWORD_CLASS[match[1].toLowerCase()];
-		span.textContent = match[0];
-		fragment.appendChild(span);
+		node.before(parent.createSpan({
+			cls: KEYWORD_CLASS[match[1].toLowerCase()],
+			text: match[0],
+		}));
 
 		cursor = end;
 	}
 
 	if (cursor < text.length) {
-		fragment.appendChild(document.createTextNode(text.slice(cursor)));
+		node.before(document.createTextNode(text.slice(cursor)));
 	}
 
-	parent.replaceChild(fragment, node);
+	node.remove();
 }
 
 // Always inject spans - coloring is controlled purely by CSS (.df-kw-active on body).

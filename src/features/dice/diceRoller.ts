@@ -1,13 +1,7 @@
-import { App, Modal } from "obsidian";
+import { App, Modal, setIcon } from "obsidian";
 import { rollDice } from "../index";
 import { makeDraggable } from "../../utils/makeDraggable";
-
-// ── Icons ─────────────────────────────────────────────────────────────────────
-const PLAY    = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-const DICE    = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M16 8h.01"/><path d="M8 8h.01"/><path d="M12 12h.01"/><path d="M16 16h.01"/><path d="M8 16h.01"/></svg>`;
-const HISTORY = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>`;
-const TRASH   = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`;
-const X_SM    = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+import { setIconLabel } from "../../utils/iconLabel";
 
 const DICE_SIDES = ["4", "6", "8", "10", "12", "20", "100"];
 
@@ -38,12 +32,12 @@ export class DiceRollerModal extends Modal {
 		countInput.value = "1";
 
 		const rollBtn = controls.createEl("button", { cls: "df-dr-roll-btn" });
-		rollBtn.innerHTML = `${PLAY}<span>Roll All</span>`;
+		setIconLabel(rollBtn, "play", "Roll All");
 
 		// ── Dice grid ─────────────────────────────────────────────────────
 		const diceSection = contentEl.createEl("div", { cls: "df-dr-section" });
 		const diceSectionLabel = diceSection.createEl("div", { cls: "df-dr-section-label" });
-		diceSectionLabel.innerHTML = `${DICE}<span>Select dice</span>`;
+		setIconLabel(diceSectionLabel, "dice-5", "Select dice");
 
 		const diceGrid = diceSection.createEl("div", { cls: "df-dr-dice-grid" });
 		DICE_SIDES.forEach(sides => {
@@ -62,9 +56,9 @@ export class DiceRollerModal extends Modal {
 		const logSection = contentEl.createEl("div", { cls: "df-dr-log-section" });
 		const logHeader = logSection.createEl("div", { cls: "df-dr-log-header" });
 		const logTitle = logHeader.createEl("div", { cls: "df-dr-section-label" });
-		logTitle.innerHTML = `${HISTORY}<span>Roll History</span>`;
+		setIconLabel(logTitle, "history", "Roll History");
 		const clearBtn = logHeader.createEl("button", { cls: "df-dr-clear-btn" });
-		clearBtn.innerHTML = TRASH;
+		setIcon(clearBtn, "trash");
 		clearBtn.setAttribute("title", "Clear history");
 
 		const logContainer = logSection.createEl("div", { cls: "df-dr-log" });
@@ -92,7 +86,7 @@ export class DiceRollerModal extends Modal {
 				const chip = queueContainer.createEl("div", { cls: "df-dr-queue-chip" });
 				chip.createEl("span", { text: expr });
 				const rm = chip.createEl("button", { cls: "df-dr-chip-remove" });
-				rm.innerHTML = X_SM;
+				setIcon(rm, "x");
 				rm.addEventListener("click", () => { diceQueue.splice(idx, 1); updateQueue(); });
 			});
 		};

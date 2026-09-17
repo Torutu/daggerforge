@@ -23,6 +23,61 @@ Obsidian plugins run in a browser environment - **`process`, `Buffer`, `__dirnam
 
 ---
 
+# No innerHTML, outerHTML, or insertAdjacentHTML - ever
+
+**`.innerHTML` (read or write), `.outerHTML`, and `insertAdjacentHTML` are completely forbidden anywhere in this codebase.** This is absolute - no exceptions, no "it's already sanitized/escaped so this one is fine." If a change would introduce any of these, it is wrong; rewrite it with the DOM API instead.
+
+- **Build elements**: `createEl()`, `createDiv()`, `createSpan()` - see the dedicated rule below; `document.createElement()` is never used either.
+- **Clear an element's contents**: `el.empty()`.
+- **Parse an HTML *string* into DOM nodes** (e.g. rendering stored card HTML into a live embed, or loading a rich-text editor's saved content): `new DOMParser().parseFromString(html, "text/html")`, then move/inspect the resulting nodes. Never assign the string to `.innerHTML`.
+- **Serialize DOM nodes back into an HTML *string*** (the opposite direction): `new XMLSerializer().serializeToString(node)` per node - not the `.innerHTML` getter. XMLSerializer stamps `xmlns="http://www.w3.org/1999/xhtml"` onto whichever node is the root of each call (an XML-serialization artifact, not part of the actual markup) - strip it.
+- Shared helpers for both directions already exist in `src/utils/richContentTransform.ts` - reuse them instead of reimplementing: `parseFragment` (parse + sanitize an untrusted HTML string), `serializeChildren` (element → string), `appendHtml` (parse + sanitize + append into a live container - the replacement for `insertAdjacentHTML`).
+
+Good:
+```ts
+const el = containerEl.createEl('div', { cls: 'book' });
+el.createEl('span', { text: name });
+el.empty(); // clear it later
+appendHtml(el, storedCardHtml); // insert an HTML string safely
+```
+
+Bad:
+```ts
+el.innerHTML = `<div class="book"><span>${name}</span></div>`; // NEVER
+el.insertAdjacentHTML('beforeend', html); // NEVER
+const copy = el.outerHTML; // NEVER
+const text = el.innerHTML; // NEVER - even as a read, use serializeChildren(el)
+```
+
+---
+
+# `document.createElement()` never exists - use createEl()/createDiv()/createSpan()
+
+**`document.createElement()` is completely forbidden anywhere in this codebase, production or test code, no exceptions.** Every element, anywhere, is built with Obsidian's `createEl()`, `createDiv()`, and `createSpan()` helpers instead - called on the element that will be the new node's parent, which creates *and appends* it in one step.
+
+- `parent.createEl(tag, { cls, text, attr })` - creates `tag`, applies classes/text/attributes, appends it to `parent`, and returns it.
+- `parent.createDiv({ cls, text })` / `parent.createSpan({ cls, text })` - shorthands for `createEl('div', ...)` / `createEl('span', ...)`.
+- A factory function that builds one piece of UI for its caller to place should take the intended **parent** as a parameter and call `parent.createEl(...)` directly, rather than returning a detached node for the caller to append later.
+- **No natural parent at hand?** `createEl` always needs *some* element to call it on - it doesn't matter which, since the result can be repositioned or detached immediately afterward:
+  - Need the result at a specific position (e.g. spliced between sibling text nodes, or swapped in via `.replaceWith()`)? Create it on any real element - even the node's own eventual sibling's parent - then move it into place with `Node.before()`/`.after()`/`.replaceWith()`. See `diceBadges.ts`'s `buildDiceButton`, `keywordBadges.ts`'s keyword-span builder, and `richContentTransform.ts`'s `rewrapElements`.
+  - Need a genuinely detached, possibly never-attached element (an off-screen `<canvas>` scratch buffer, a detached test fixture)? Create it via `document.body.createEl(...)` and call `.remove()` on it immediately - the detach happens synchronously, before anything is ever painted, so it's never visible. See `SheetGuides.tsx`'s portrait downscaler.
+- jsdom (used by test files that opt into `@jest-environment jsdom`) doesn't implement these Obsidian-only extensions natively - `src/tests/obsidianDomPolyfill.ts` polyfills them globally via `setupFilesAfterEnv`, so this works identically in tests and in the real plugin. The polyfill itself builds each element via `new DOMParser().parseFromString(...)` (the same pattern already used in `richContentTransform.ts` to turn a markup string into real DOM) rather than the imperative element-creation API - `document.createElement()` has zero occurrences anywhere in this codebase's source, including the polyfill that implements `createEl` for tests.
+
+Good:
+```ts
+const card = parent.createDiv({ cls: 'book' });
+card.createEl('span', { text: name, cls: 'book__title' });
+```
+
+Bad:
+```ts
+const card = document.createElement('div'); // NEVER, anywhere, for any reason
+card.className = 'book';
+parent.appendChild(card);
+```
+
+---
+
 # Versioning
 Version format: `milestone.big-features.hotfixes` (e.g. `2.1.10`)
 - **milestone** - major redesigns or platform shifts
@@ -426,6 +481,8 @@ Code is complete only if:
 - It is typed properly.
 - It cleans up events/resources correctly.
 - It respects vault safety.
+- It contains zero `.innerHTML`, `.outerHTML`, or `insertAdjacentHTML` usage (see the dedicated rule above - no exceptions).
+- It contains zero `document.createElement()` calls - every element is built with `createEl()`/`createDiv()`/`createSpan()` (see the dedicated rule above - no exceptions).
 - It works in both light and dark themes.
 - It is maintainable and scalable.
 - It introduces minimal complexity.

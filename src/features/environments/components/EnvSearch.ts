@@ -205,8 +205,7 @@ export class EnvironmentView extends ItemView {
 			return;
 		}
 		filtered.forEach((env) => {
-			const card = this.createEnvironmentCard(env);
-			this.resultsDiv!.appendChild(card);
+			this.createEnvironmentCard(this.resultsDiv!, env);
 		});
 	}
 
@@ -253,21 +252,9 @@ export class EnvironmentView extends ItemView {
 		});
 	}
 
-	createEnvironmentCard(env: Environment): HTMLElement {
-		const card = document.createElement("div");
-		card.classList.add("df-env-card");
-
+	createEnvironmentCard(parent: HTMLElement, env: Environment): HTMLElement {
 		const source = env.source || "core";
-		card.classList.add(`df-source-${source.toLowerCase()}`);
-
-		const tier = document.createElement("p");
-		tier.classList.add("df-tier-text");
-		tier.textContent = `Tier ${env.tier} ${env.type}`;
-
-		const sourceBadge = document.createElement("span");
-		sourceBadge.classList.add(
-			`df-source-badge-${source.toLowerCase()}`,
-		);
+		const card = parent.createDiv({ cls: ["df-env-card", `df-source-${source.toLowerCase()}`] });
 
 		const badgeTexts: Record<string, string> = {
 			core: "Core",
@@ -277,31 +264,34 @@ export class EnvironmentView extends ItemView {
 			void: "Void",
 		};
 
+		// Delete button is appended first, matching the original DOM order.
 		if (badgeTexts[source] == "Custom") {
-			const deleteBtn = document.createElement("button");
-			deleteBtn.classList.add("df-env-delete-btn");
+			const deleteBtn = card.createEl("button", { cls: "df-env-delete-btn" });
 			setIcon(deleteBtn, "trash");
 			deleteBtn.addEventListener("click", (e: MouseEvent) => {
 				e.stopPropagation();
 				this.deleteCustomEnvironment(env);
 			});
-			card.appendChild(deleteBtn);
 		}
 
-		sourceBadge.textContent = badgeTexts[source] || source;
-		tier.appendChild(sourceBadge);
+		const tier = card.createEl("p", {
+			cls: "df-tier-text",
+			text: `Tier ${env.tier} ${env.type}`,
+		});
+		tier.createSpan({
+			cls: `df-source-badge-${source.toLowerCase()}`,
+			text: badgeTexts[source] || source,
+		});
 
-		card.appendChild(tier);
+		card.createEl("h3", {
+			cls: "df-title-small-padding",
+			text: env.name || "Unnamed Environment",
+		});
 
-		const title = document.createElement("h3");
-		title.classList.add("df-title-small-padding");
-		title.textContent = env.name || "Unnamed Environment";
-		card.appendChild(title);
-
-		const desc = document.createElement("p");
-		desc.classList.add("df-desc-small-padding");
-		desc.textContent = env.desc || "No description available.";
-		card.appendChild(desc);
+		card.createEl("p", {
+			cls: "df-desc-small-padding",
+			text: env.desc || "No description available.",
+		});
 
 		card.addEventListener("click", () => {
 			const wide = this.searchControlsUI?.getWideCard() ?? false;

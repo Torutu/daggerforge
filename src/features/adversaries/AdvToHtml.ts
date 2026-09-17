@@ -1,5 +1,5 @@
 import { Feature } from "../../types/index";
-import { toCustomHtml } from "../../utils/richContentTransform";
+import { escapeHtml, toCustomHtml } from "../../utils/richContentTransform";
 
 const MINUS = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg>`;
 const PLUS  = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>`;
@@ -78,6 +78,26 @@ export const buildCardHTML = (
 		source,
 	} = values;
 
+	// Every field above is free text that can arrive from an imported or
+	// shared adversary record, not just this vault's own editor - escape
+	// before any of it is concatenated into stored HTML.
+	const safeName = escapeHtml(name);
+	const safeTier = escapeHtml(tier);
+	const safeType = escapeHtml(type);
+	const safeDesc = escapeHtml(desc);
+	const safeMotives = escapeHtml(motives);
+	const safeDifficulty = escapeHtml(difficulty);
+	const safeThresholdMajor = escapeHtml(thresholdMajor);
+	const safeThresholdSevere = escapeHtml(thresholdSevere);
+	const safeHp = escapeHtml(hp);
+	const safeStress = escapeHtml(stress);
+	const safeAtk = escapeHtml(atk);
+	const safeWeaponName = escapeHtml(weaponName);
+	const safeWeaponRange = escapeHtml(weaponRange);
+	const safeWeaponDamage = escapeHtml(weaponDamage);
+	const safeXp = escapeHtml(xp);
+	const safeSource = escapeHtml(source);
+
 	const hptick = Number(hp) || 0;
 	const stresstick = Number(stress) || 0;
 	let countNum = Number(count);
@@ -105,10 +125,14 @@ export const buildCardHTML = (
 			const idx = `${index}-${clockIdx}`;
 			const isLoop = cd.loop === true || cd.name.toLowerCase().includes("loop");
 			const loopAttr = isLoop ? ` data-loop="true"` : "";
+			// The clock's name comes from a feature title, which can arrive from
+			// an imported or shared adversary record - escape before it's ever
+			// concatenated into stored HTML.
+			const safeName = escapeHtml(cd.name);
 			if (cd.dice) {
-				return `<div class="df-env-countdown" data-countdown-idx="${idx}" data-max="0" data-dice-max="${cd.dice}" data-countdown-name="${cd.name}"${loopAttr}>
+				return `<div class="df-env-countdown" data-countdown-idx="${idx}" data-max="0" data-dice-max="${cd.dice}" data-countdown-name="${safeName}"${loopAttr}>
 <div class="df-env-countdown-header">
-<span class="df-env-countdown-name-label">${cd.name}</span>
+<span class="df-env-countdown-name-label">${safeName}</span>
 <span class="df-env-countdown-badge">${cd.dice}</span>
 </div>
 <button class="df-env-countdown-dice-roll" data-dice-expr="${cd.dice}" aria-label="Roll ${cd.dice}">Roll ${cd.dice}</button>
@@ -118,10 +142,10 @@ export const buildCardHTML = (
 				`<input type="checkbox" class="df-env-countdown-tick" />`
 			).join("");
 			const resetBtn = isLoop ? `<button class="df-env-countdown-reset-btn" aria-label="Reset">${RESET}</button>` : "";
-			return `<div class="df-env-countdown" data-countdown-idx="${idx}" data-max="${cd.max}" data-countdown-name="${cd.name}"${loopAttr}>
+			return `<div class="df-env-countdown" data-countdown-idx="${idx}" data-max="${cd.max}" data-countdown-name="${safeName}"${loopAttr}>
 <div class="df-env-countdown-header">
 <button class="df-env-countdown-minus" aria-label="Decrease">${MINUS}</button>
-<span class="df-env-countdown-name-label">${cd.name}</span>
+<span class="df-env-countdown-name-label">${safeName}</span>
 <span class="df-env-countdown-badge"><span class="df-env-countdown-current">0</span>/${cd.max}</span>
 <button class="df-env-countdown-plus" aria-label="Increase">${PLUS}</button>
 ${resetBtn}</div>
@@ -140,44 +164,44 @@ ${resetBtn}</div>
         `;
 	}).join("");
 
-	const stressBlock = stress
-		? `Stress: <span class="df-stat">${stress}</span>`
+	const stressBlock = safeStress
+		? `Stress: <span class="df-stat">${safeStress}</span>`
 		: "";
 
-	const sourceBadge = source ? `<span class="df-source-badge-${source.toLowerCase()}">${source.toLowerCase()}</span>` : `<span class="df-source-badge-custom">custom</span>`;
+	const sourceBadge = safeSource ? `<span class="df-source-badge-${safeSource.toLowerCase()}">${safeSource.toLowerCase()}</span>` : `<span class="df-source-badge-custom">custom</span>`;
 
 	const featuresHTML = features
 		.map(
 			(f) => `
         <div class="df-feature">
             <span class="df-feature-title">
-                ${f.name} - ${f.type}${f.cost ? `: ${f.cost}` : ":"}
+                ${escapeHtml(f.name)} - ${escapeHtml(f.type)}${f.cost ? `: ${escapeHtml(f.cost)}` : ":"}
             </span>
             <div class="df-feature-desc">${toCustomHtml(f.richContent)}</div>
         </div>`,
 		)
 		.join("");
 	return `
-<section id="custom" class="df-card-outer df-pseudo-cut-corners outer${wide ? ' df-card--wide' : ''}" data-weapon-range="${weaponRange || ''}" data-type="${(type || '').split('(')[0].trim()}" data-count="${count || '1'}">
+<section id="custom" class="df-card-outer df-pseudo-cut-corners outer${wide ? ' df-card--wide' : ''}" data-weapon-range="${safeWeaponRange || ''}" data-type="${(safeType || '').split('(')[0].trim()}" data-count="${count || '1'}">
     <div class="df-card-inner df-pseudo-cut-corners inner">
 		<button class="df-adv-collapse-btn" aria-label="Toggle HP and Stress"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg></button>
 		<button class="df-wide-toggle-btn" data-edit-mode-only="true" aria-label="Toggle wide card"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg></button>
 		<button class="df-adv-edit-button" data-edit-mode-only="true" aria-label="Edit" id="${hiddenID}"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button>
         <div class="df-hp-stress-section"><div class="df-hp-stress-inner">${hpStressRepeat}</div></div>
-        <h2 class="df-card-name" id="${hiddenID}">${name}</h2>
-        <div class="df-subtitle">Tier ${tier} ${type} ${sourceBadge}</div>
-        <div class="df-desc">${desc}</div>
+        <h2 class="df-card-name" id="${hiddenID}">${safeName}</h2>
+        <div class="df-subtitle">Tier ${safeTier} ${safeType} ${sourceBadge}</div>
+        <div class="df-desc">${safeDesc}</div>
         <div class="df-motives">Motives & Tactics:
-            <span class="df-motives-desc">${motives}</span>
+            <span class="df-motives-desc">${safeMotives}</span>
         </div>
         <div class="df-stats">
-            Difficulty: <span class="df-stat">${difficulty} |</span>
-            Thresholds: <span class="df-stat">${thresholdMajor}/${thresholdSevere} |</span>
-            HP: <span class="df-stat">${hp} |</span>
+            Difficulty: <span class="df-stat">${safeDifficulty} |</span>
+            Thresholds: <span class="df-stat">${safeThresholdMajor}/${safeThresholdSevere} |</span>
+            HP: <span class="df-stat">${safeHp} |</span>
             ${stressBlock}
-            <br>ATK: <span class="df-stat">${atk} |</span>
-            ${weaponName}: <span class="df-stat">${weaponRange} | ${weaponDamage}</span><br>
-            <div class="df-experience-line">Experience: <span class="df-stat">${xp}</span></div>
+            <br>ATK: <span class="df-stat">${safeAtk} |</span>
+            ${safeWeaponName}: <span class="df-stat">${safeWeaponRange} | ${safeWeaponDamage}</span><br>
+            <div class="df-experience-line">Experience: <span class="df-stat">${safeXp}</span></div>
         </div>
         <div class="df-section">FEATURES</div>
         ${featuresHTML}

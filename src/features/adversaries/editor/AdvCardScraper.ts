@@ -1,4 +1,5 @@
 import { AdvData } from "../../../types/index";
+import { serializeChildren } from "../../../utils/richContentTransform";
 
 // Stats Parsing
 // .df-stats collapses into a flat pipe-delimited string:
@@ -140,9 +141,9 @@ function parseFeature(feat: Element): ParsedFeature {
 	const titleText = feat.querySelector(".df-feature-title")?.textContent ?? "";
 	const { name, type, cost } = parseFeatureTitle(titleText);
 	const descEl = feat.querySelector(".df-feature-desc");
-	// New format stores richContent as innerHTML; old format was plain textContent.
+	// New format stores richContent as serialized markup; old format was plain textContent.
 	const richContent = descEl
-		? (descEl.innerHTML.trim() || `<p>${descEl.textContent?.trim() ?? ""}</p>`)
+		? (serializeChildren(descEl).trim() || `<p>${descEl.textContent?.trim() ?? ""}</p>`)
 		: "";
 	return { name, type, cost, richContent };
 }

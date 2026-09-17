@@ -298,4 +298,23 @@ describe('buildCardHTML - countdowns from features', () => {
         expect(html).toContain('data-countdown-idx="0-0"');
         expect(html).toContain('data-countdown-idx="0-1"');
     });
+
+    // A countdown's name is the feature's title, a plain text field a user can
+    // type anything into (including on a custom adversary imported or shared
+    // by someone else) - it must never be interpolated into the card unescaped.
+    test('escapes a feature name used as a countdown name', () => {
+        const features: Feature[] = [
+            {
+                name: '"><img src=x onerror=alert(1)>',
+                type: 'Passive',
+                cost: '',
+                richContent: '<p>Countdown (3)</p>',
+            },
+        ];
+        const html = buildCardHTML(baseValues(), features);
+        // No real <img> element must ever be created - "onerror" surviving
+        // as inert escaped text is fine; a live element carrying it is not.
+        expect(html).not.toContain('<img');
+        expect(html).toContain('&quot;&gt;&lt;img src=x onerror=alert(1)&gt;');
+    });
 });

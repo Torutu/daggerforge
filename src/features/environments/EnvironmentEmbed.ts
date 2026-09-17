@@ -3,6 +3,7 @@ import type DaggerForgePlugin from "../../main";
 import { ENVIRONMENTS } from "../../data/environments";
 import { EnvironmentData } from "../../types/index";
 import { attachDiceBadges } from "../../utils/diceBadges";
+import { appendHtml } from "../../utils/richContentTransform";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
 import { decodeEnvironmentCode } from "../embeds/embedCode";
 import { embedStateKey, renderMissingEmbed } from "../embeds/embedShared";
@@ -95,7 +96,7 @@ class EnvironmentEmbedChild extends MarkdownRenderChild {
 		}
 
 		const html = envToHtml(env, false, embedStateKey(this.params));
-		el.insertAdjacentHTML("beforeend", html);
+		appendHtml(el, html);
 
 		const section = el.querySelector<HTMLElement>("section");
 		if (section) {

@@ -333,7 +333,12 @@ async function readPortrait(file: File): Promise<string | null> {
 			image.src = url;
 		});
 		const scale = Math.min(1, 320 / Math.max(img.width, img.height));
-		const canvas = document.createElement("canvas");
+		// Off-screen image-processing scratch buffer - created via createEl and
+		// immediately detached again, since canvas rendering works identically
+		// whether attached or not, and this one is never meant to be visible.
+		// The detach happens synchronously before the browser paints anything.
+		const canvas = document.body.createEl("canvas");
+		canvas.remove();
 		canvas.width = Math.max(1, Math.round(img.width * scale));
 		canvas.height = Math.max(1, Math.round(img.height * scale));
 		canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
