@@ -101,7 +101,7 @@ class AdversaryEmbedChild extends MarkdownRenderChild {
 
 		const count = this.params.count ?? (Number(adv.count) || 1);
 		const html = buildCardHTML(
-			advToValues(adv as unknown as Record<string, unknown>, count),
+			advToValues(adv, count),
 			adv.features.map((f) => ({ ...f, cost: f.cost || "" })),
 			false,
 			embedStateKey(this.params),

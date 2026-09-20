@@ -18,15 +18,15 @@ export class DeleteConfirmModal extends Modal {
 		const { contentEl } = this;
 		contentEl.empty();
 
-		contentEl.createEl("h2", { text: "Delete Data File?" });
-		
-		contentEl.createEl("p", { 
+		contentEl.createEl("h2", { text: "Delete data file?" });
+
+		contentEl.createEl("p", {
 			text: "Are you sure you want to delete the data.json file?",
 			cls: "df-delete-warning"
 		});
 
 		contentEl.createEl("p", {
-			text: "This will permanently remove ALL stored adversaries and environments.",
+			text: "This will permanently remove all stored adversaries and environments.",
 			cls: "df-delete-warning-bold"
 		});
 
@@ -41,15 +41,17 @@ export class DeleteConfirmModal extends Modal {
 			text: "Delete",
 			cls: "df-delete-confirm-btn"
 		});
-		deleteBtn.addEventListener("click", async () => {
-			try {
-				await this.onConfirm();
-				new Notice("Data file deleted successfully!");
-				this.close();
-			} catch (err) {
-				new Notice("Error deleting data file: " + (err as Error).message);
-				console.error("Error deleting data file:", err);
-			}
+		deleteBtn.addEventListener("click", () => {
+			void (async () => {
+				try {
+					await this.onConfirm();
+					new Notice("Data file deleted successfully!");
+					this.close();
+				} catch (err) {
+					new Notice("Error deleting data file: " + (err as Error).message);
+					console.error("Error deleting data file:", err);
+				}
+			})();
 		});
 
 		const cancelBtn = buttonContainer.createEl("button", {

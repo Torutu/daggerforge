@@ -41,7 +41,6 @@ export function CharacterSheetApp({ plugin }: Props) {
 			[...plugin.dataManager.getCharacters()].sort((a, b) =>
 				(a.name || "Unnamed").localeCompare(b.name || "Unnamed"),
 			),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[plugin, storeVersion],
 	);
 
@@ -90,7 +89,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 			const saved = await save();
 			const code = await encodeCharacterCode(saved);
 			await navigator.clipboard.writeText(code);
-			new Notice("Character saved and code copied - send it to your GM.");
+			new Notice("Character saved and code copied - send it to your gm.");
 		} catch (error) {
 			console.error("DaggerForge: failed to copy character code", error);
 			new Notice("Could not copy the character code.");
@@ -185,13 +184,13 @@ export function CharacterSheetApp({ plugin }: Props) {
 			title: "Delete character?",
 			message: `"${char.name || "Unnamed character"}" will be removed from your saved characters.`,
 			confirmLabel: "Delete",
-			onConfirm: async () => {
+			onConfirm: () => void (async () => {
 				await plugin.dataManager.deleteCharacterById(char.id);
 				setChar(createEmptyCharacter(generateCharacterUniqueId()));
 				setDirty(false);
 				setStoreVersion((v) => v + 1);
 				new Notice("Character deleted.");
-			},
+			})(),
 		}).open();
 	};
 
@@ -262,11 +261,11 @@ export function CharacterSheetApp({ plugin }: Props) {
 					))}
 				</select>
 				<button type="button" onClick={handleNew}>New</button>
-				<button type="button" className="mod-cta" onClick={handleSave}>
+				<button type="button" className="mod-cta" onClick={() => void handleSave()}>
 					Save{dirty ? " •" : ""}
 				</button>
-				<button type="button" onClick={handleCopyCode}>Copy code</button>
-				<button type="button" onClick={handleInsert} title="Embed this sheet in the last-focused note or canvas">
+				<button type="button" onClick={() => void handleCopyCode()}>Copy code</button>
+				<button type="button" onClick={() => void handleInsert()} title="Embed this sheet in the last-focused note or canvas">
 					Insert in note/canvas
 				</button>
 				<button type="button" onClick={() => setImportOpen((open) => !open)}>
@@ -288,7 +287,7 @@ export function CharacterSheetApp({ plugin }: Props) {
 						onChange={(e) => setImportText(e.target.value)}
 					/>
 					<div className="df-cs-import-buttons">
-						<button type="button" className="mod-cta" onClick={handleImport} disabled={!importText.trim()}>
+						<button type="button" className="mod-cta" onClick={() => void handleImport()} disabled={!importText.trim()}>
 							Import
 						</button>
 						<button type="button" onClick={() => setImportOpen(false)}>Cancel</button>

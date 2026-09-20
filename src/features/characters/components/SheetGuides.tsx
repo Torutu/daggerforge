@@ -58,7 +58,7 @@ export function BackgroundSection({ char, update }: SectionProps) {
 		const next = [...char[field]];
 		while (next.length <= index) next.push("");
 		next[index] = value;
-		update({ [field]: next } as Partial<CharacterData>);
+		update({ [field]: next });
 	};
 
 	return (
@@ -131,7 +131,6 @@ export function LevelUpSection({ char, update }: SectionProps) {
 		if (!Number.isInteger(level)) return;
 		const synced = applyLevelChange(lu, level);
 		if (synced !== lu) update({ levelUp: synced });
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [char.level]);
 
 	const setMarks = (key: string, next: number, costDelta: number) => {

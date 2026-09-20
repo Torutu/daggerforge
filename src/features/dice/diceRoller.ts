@@ -10,7 +10,7 @@ const diceLog: string[] = [];
 export class DiceRollerModal extends Modal {
 	constructor(app: App) {
 		super(app);
-		this.titleEl.setText("Dice Roller");
+		this.titleEl.setText("Dice roller");
 	}
 
 	onOpen(): void {
@@ -21,11 +21,11 @@ export class DiceRollerModal extends Modal {
 		contentEl.addClass("df-dr-content");
 
 		// ── Controls row ──────────────────────────────────────────────────
-		const controls = contentEl.createEl("div", { cls: "df-dr-controls" });
+		const controls = contentEl.createDiv({ cls: "df-dr-controls" });
 
-		const countGroup = controls.createEl("div", { cls: "df-dr-count-group" });
+		const countGroup = controls.createDiv({ cls: "df-dr-count-group" });
 		countGroup.createEl("label", { cls: "df-dr-label", text: "Count" });
-		const countInput = countGroup.createEl("input", { cls: "df-dr-count-input" }) as HTMLInputElement;
+		const countInput = countGroup.createEl("input", { cls: "df-dr-count-input" });
 		countInput.type = "number";
 		countInput.min = "1";
 		countInput.max = "99";
@@ -35,33 +35,33 @@ export class DiceRollerModal extends Modal {
 		setIconLabel(rollBtn, "play", "Roll All");
 
 		// ── Dice grid ─────────────────────────────────────────────────────
-		const diceSection = contentEl.createEl("div", { cls: "df-dr-section" });
-		const diceSectionLabel = diceSection.createEl("div", { cls: "df-dr-section-label" });
+		const diceSection = contentEl.createDiv({ cls: "df-dr-section" });
+		const diceSectionLabel = diceSection.createDiv({ cls: "df-dr-section-label" });
 		setIconLabel(diceSectionLabel, "dice-5", "Select dice");
 
-		const diceGrid = diceSection.createEl("div", { cls: "df-dr-dice-grid" });
+		const diceGrid = diceSection.createDiv({ cls: "df-dr-dice-grid" });
 		DICE_SIDES.forEach(sides => {
 			const btn = diceGrid.createEl("button", { cls: "df-dr-die-btn" });
 			btn.setAttribute("data-sides", sides);
-			btn.createEl("span", { cls: "df-dr-die-label", text: `d${sides}` });
+			btn.createSpan({ cls: "df-dr-die-label", text: `d${sides}` });
 		});
 
 		// ── Queue ─────────────────────────────────────────────────────────
-		const queueSection = contentEl.createEl("div", { cls: "df-dr-queue-section" });
-		const queueHeader = queueSection.createEl("div", { cls: "df-dr-queue-header" });
-		queueHeader.createEl("span", { cls: "df-dr-section-label-text", text: "Queue" });
-		const queueContainer = queueSection.createEl("div", { cls: "df-dr-queue" });
+		const queueSection = contentEl.createDiv({ cls: "df-dr-queue-section" });
+		const queueHeader = queueSection.createDiv({ cls: "df-dr-queue-header" });
+		queueHeader.createSpan({ cls: "df-dr-section-label-text", text: "Queue" });
+		const queueContainer = queueSection.createDiv({ cls: "df-dr-queue" });
 
 		// ── Log ───────────────────────────────────────────────────────────
-		const logSection = contentEl.createEl("div", { cls: "df-dr-log-section" });
-		const logHeader = logSection.createEl("div", { cls: "df-dr-log-header" });
-		const logTitle = logHeader.createEl("div", { cls: "df-dr-section-label" });
+		const logSection = contentEl.createDiv({ cls: "df-dr-log-section" });
+		const logHeader = logSection.createDiv({ cls: "df-dr-log-header" });
+		const logTitle = logHeader.createDiv({ cls: "df-dr-section-label" });
 		setIconLabel(logTitle, "history", "Roll History");
 		const clearBtn = logHeader.createEl("button", { cls: "df-dr-clear-btn" });
 		setIcon(clearBtn, "trash");
 		clearBtn.setAttribute("title", "Clear history");
 
-		const logContainer = logSection.createEl("div", { cls: "df-dr-log" });
+		const logContainer = logSection.createDiv({ cls: "df-dr-log" });
 
 		// ── Logic ─────────────────────────────────────────────────────────
 		const diceQueue: string[] = [];
@@ -69,22 +69,22 @@ export class DiceRollerModal extends Modal {
 		const updateLog = () => {
 			logContainer.empty();
 			[...diceLog].reverse().forEach(line => {
-				const row = logContainer.createEl("div", { cls: "df-dr-log-row" });
+				const row = logContainer.createDiv({ cls: "df-dr-log-row" });
 				const [expr, rest] = line.split(" -> ");
-				row.createEl("span", { cls: "df-dr-log-expr", text: expr });
-				if (rest) row.createEl("span", { cls: "df-dr-log-result", text: `→ ${rest}` });
+				row.createSpan({ cls: "df-dr-log-expr", text: expr });
+				if (rest) row.createSpan({ cls: "df-dr-log-result", text: `→ ${rest}` });
 			});
 		};
 
 		const updateQueue = () => {
 			queueContainer.empty();
 			if (diceQueue.length === 0) {
-				queueContainer.createEl("span", { cls: "df-dr-queue-empty", text: "No dice added yet" });
+				queueContainer.createSpan({ cls: "df-dr-queue-empty", text: "No dice added yet" });
 				return;
 			}
 			diceQueue.forEach((expr, idx) => {
-				const chip = queueContainer.createEl("div", { cls: "df-dr-queue-chip" });
-				chip.createEl("span", { text: expr });
+				const chip = queueContainer.createDiv({ cls: "df-dr-queue-chip" });
+				chip.createSpan({ text: expr });
 				const rm = chip.createEl("button", { cls: "df-dr-chip-remove" });
 				setIcon(rm, "x");
 				rm.addEventListener("click", () => { diceQueue.splice(idx, 1); updateQueue(); });

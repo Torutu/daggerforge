@@ -10,9 +10,9 @@
  */
 
 export class Plugin {
-    app: any = {};
+    app: unknown = {};
     async loadData() { return null; }
-    async saveData(_data: any) {}
+    async saveData(_data: unknown) {}
     registerEvent() {}
     registerDomEvent() {}
     registerInterval() {}
@@ -23,18 +23,18 @@ export class Plugin {
 }
 
 export class Modal {
-    app: any;
-    contentEl: any = { createEl: () => ({}), empty: () => {} };
-    constructor(_app: any) {}
+    app: unknown;
+    contentEl: unknown = { createEl: () => ({}), empty: () => {} };
+    constructor(_app: unknown) {}
     open() {}
     close() {}
 }
 
 export class ItemView {
-    app: any;
-    containerEl: any = { children: [null, { empty: () => {}, createEl: () => ({}), createDiv: () => ({}) }] };
-    leaf: any;
-    constructor(_leaf: any) {}
+    app: unknown;
+    containerEl: unknown = { children: [null, { empty: () => {}, createEl: () => ({}), createDiv: () => ({}) }] };
+    leaf: unknown;
+    constructor(_leaf: unknown) {}
     getViewType() { return ''; }
     getDisplayText() { return ''; }
     getIcon() { return ''; }
@@ -42,7 +42,7 @@ export class ItemView {
 }
 
 export class MarkdownView {
-    editor: any = { replaceSelection: () => {} };
+    editor: unknown = { replaceSelection: () => {} };
     getMode() { return 'source'; }
 }
 
@@ -67,8 +67,8 @@ export class Events {
 }
 
 export class MarkdownRenderChild {
-    containerEl: any;
-    constructor(containerEl: any) { this.containerEl = containerEl; }
+    containerEl: unknown;
+    constructor(containerEl: unknown) { this.containerEl = containerEl; }
     onload() {}
     onunload() {}
 }
@@ -80,8 +80,8 @@ export class Menu {
 }
 
 export class FuzzySuggestModal {
-    app: any;
-    constructor(_app: any) {}
+    app: unknown;
+    constructor(_app: unknown) {}
     open() {}
     close() {}
     setPlaceholder() {}

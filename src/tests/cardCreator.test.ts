@@ -8,15 +8,43 @@
  * Strategy: bypass form rendering entirely. Both modals store their inputs
  * in `this.inputs` (a dict of HTMLInputElement / HTMLSelectElement /
  * HTMLTextAreaElement) and read them in `readFormValues()`. We inject mock
- * elements directly via `(modal as any).inputs` so we never need to render
- * the full Obsidian form or run Tiptap.
+ * elements directly via the TestablePrivateModal view (see asTestable()
+ * below) so we never need to render the full Obsidian form or run Tiptap.
  *
- * `handleSubmit()` is private - we call it via `(modal as any).handleSubmit()`.
+ * `handleSubmit()` is private - we call it via callHandleSubmit(modal).
  * `close()` is mocked on each instance to prevent `onClose()` side-effects.
  */
 
+import type { Editor } from 'obsidian';
 import { AdversaryModal } from '../features/adversaries/components/AdvModal';
 import { EnvironmentModal } from '../features/environments/components/EnvModal';
+import type DaggerForgePlugin from '../main';
+import type { AdvData, EnvironmentData } from '../types/index';
+
+/**
+ * Both modals store their inputs in `this.inputs` (a dict of HTMLInputElement /
+ * HTMLSelectElement / HTMLTextAreaElement) and read them in `readFormValues()`,
+ * and keep `handleSubmit()` private. This shape gives the tests typed access to
+ * that private state (injecting mock inputs, invoking handleSubmit()) instead
+ * of reaching in via `any`.
+ */
+interface TestablePrivateModal {
+    inputs: Record<string, HTMLElement>;
+    features: unknown[];
+    featureContainer: HTMLElement;
+    countdownRows: unknown[];
+    countdownContainer: HTMLElement;
+    insertDestination: unknown;
+    handleSubmit(): Promise<void>;
+}
+
+function asTestable(modal: AdversaryModal | EnvironmentModal): TestablePrivateModal {
+    return modal as unknown as TestablePrivateModal;
+}
+
+function callHandleSubmit(modal: AdversaryModal | EnvironmentModal): Promise<void> {
+    return asTestable(modal).handleSubmit();
+}
 
 // ── Obsidian DOM + crypto polyfills ────────────────────────────────────────
 
@@ -25,7 +53,7 @@ beforeAll(() => {
     // globally for jsdom by src/tests/obsidianDomPolyfill.ts - only the
     // crypto mock is specific to this file.
     let counter = 0;
-    Object.defineProperty(globalThis.crypto, 'randomUUID', {
+    Object.defineProperty(window.crypto, 'randomUUID', {
         writable: true,
         configurable: true,
         value: () => `mock-uuid-${++counter}-xxxx-xxxx-xxxx-xxxxxxxxxxxx`,
@@ -33,7 +61,7 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-    delete (globalThis.crypto as any).randomUUID;
+    delete (window.crypto as { randomUUID?: () => string }).randomUUID;
 });
 
 // ── Helpers ────────────────────────────────────────────────────────────────
@@ -76,7 +104,7 @@ function detachedDiv(): HTMLDivElement {
     return el;
 }
 
-function mockPlugin() {
+function mockPlugin(): DaggerForgePlugin {
     return {
         app: {
             workspace: {
@@ -89,12 +117,36 @@ function mockPlugin() {
             addAdversary: jest.fn().mockResolvedValue(undefined),
             addEnvironment: jest.fn().mockResolvedValue(undefined),
         },
-        savedInputStateAdv: {} as any,
-        savedInputStateEnv: {} as any,
-    } as any;
+        savedInputStateAdv: {},
+        savedInputStateEnv: {},
+    } as unknown as DaggerForgePlugin;
 }
 
-function advInputs(overrides: Record<string, string> = {}) {
+/**
+ * Like mockPlugin(), but also hands back the addAdversary/addEnvironment
+ * mocks directly - as their own local bindings rather than properties
+ * reached through `plugin.dataManager`, so asserting on them isn't a
+ * detached class-method reference.
+ */
+function mockPluginWithSpies() {
+    const addAdversary = jest.fn<Promise<void>, [AdvData]>().mockResolvedValue(undefined);
+    const addEnvironment = jest.fn<Promise<void>, [EnvironmentData]>().mockResolvedValue(undefined);
+    const plugin = {
+        app: {
+            workspace: {
+                getMostRecentLeaf: () => null,
+                getLeavesOfType: () => [],
+            },
+        },
+        lastMainLeaf: null,
+        dataManager: { addAdversary, addEnvironment },
+        savedInputStateAdv: {},
+        savedInputStateEnv: {},
+    } as unknown as DaggerForgePlugin;
+    return { plugin, addAdversary, addEnvironment };
+}
+
+function advInputs(overrides: Record<string, string> = {}): Record<string, HTMLElement> {
     const defaults: Record<string, string> = {
         name:            'Goblin Scout',
         tier:            '1',
@@ -119,10 +171,10 @@ function advInputs(overrides: Record<string, string> = {}) {
         Object.entries(vals).map(([k, v]) =>
             ['tier', 'type', 'weaponRange'].includes(k) ? [k, sel(v)] : [k, inp(v)]
         )
-    );
+    ) as Record<string, HTMLElement>;
 }
 
-function envInputs(overrides: Record<string, string> = {}) {
+function envInputs(overrides: Record<string, string> = {}): Record<string, HTMLElement> {
     const defaults: Record<string, string> = {
         name:                  'Whispering Bog',
         tier:                  '2',
@@ -137,34 +189,40 @@ function envInputs(overrides: Record<string, string> = {}) {
         Object.entries(vals).map(([k, v]) =>
             ['tier', 'type'].includes(k) ? [k, sel(v)] : [k, ta(v)]
         )
-    );
+    ) as Record<string, HTMLElement>;
 }
 
 /** Inject all private state into a modal and mock close() to be a no-op. */
 function wireAdvModal(modal: AdversaryModal, opts: {
     inputs?: Record<string, HTMLElement>;
-    features?: any[];
-    destination?: any;
+    features?: unknown[];
+    destination?: unknown;
 } = {}) {
-    (modal as any).inputs            = opts.inputs      ?? advInputs();
-    (modal as any).features          = opts.features    ?? [];
-    (modal as any).featureContainer  = detachedDiv();
-    (modal as any).insertDestination = opts.destination ?? { kind: 'none', canvas: null, leaf: null };
-    modal.close = jest.fn();
+    const m = asTestable(modal);
+    m.inputs            = opts.inputs      ?? advInputs();
+    m.features          = opts.features    ?? [];
+    m.featureContainer  = detachedDiv();
+    m.insertDestination = opts.destination ?? { kind: 'none', canvas: null, leaf: null };
+    const close = jest.fn();
+    modal.close = close;
+    return close;
 }
 
 function wireEnvModal(modal: EnvironmentModal, opts: {
     inputs?: Record<string, HTMLElement>;
-    features?: any[];
-    destination?: any;
+    features?: unknown[];
+    destination?: unknown;
 } = {}) {
-    (modal as any).inputs             = opts.inputs      ?? envInputs();
-    (modal as any).features           = opts.features    ?? [];
-    (modal as any).featureContainer   = detachedDiv();
-    (modal as any).countdownRows      = [];
-    (modal as any).countdownContainer = detachedDiv();
-    (modal as any).insertDestination  = opts.destination ?? { kind: 'none', canvas: null, leaf: null };
-    modal.close = jest.fn();
+    const m = asTestable(modal);
+    m.inputs             = opts.inputs      ?? envInputs();
+    m.features           = opts.features    ?? [];
+    m.featureContainer   = detachedDiv();
+    m.countdownRows      = [];
+    m.countdownContainer = detachedDiv();
+    m.insertDestination  = opts.destination ?? { kind: 'none', canvas: null, leaf: null };
+    const close = jest.fn();
+    modal.close = close;
+    return close;
 }
 
 // ── AdversaryModal - edit mode ──────────────────────────────────────────────
@@ -174,10 +232,10 @@ describe('AdversaryModal - edit mode', () => {
     test('onEditUpdate receives HTML that contains the card name', async () => {
         const modal = new AdversaryModal(mockPlugin(), null);
         wireAdvModal(modal);
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, AdvData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         expect(cb).toHaveBeenCalledTimes(1);
         const [html] = cb.mock.calls[0];
@@ -187,10 +245,10 @@ describe('AdversaryModal - edit mode', () => {
     test('onEditUpdate receives HTML with tier, type, and source badge', async () => {
         const modal = new AdversaryModal(mockPlugin(), null);
         wireAdvModal(modal);
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, AdvData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         const [html] = cb.mock.calls[0];
         expect(html).toContain('Tier 1');
@@ -201,10 +259,10 @@ describe('AdversaryModal - edit mode', () => {
     test('onEditUpdate receives AdvData with correct fields', async () => {
         const modal = new AdversaryModal(mockPlugin(), null);
         wireAdvModal(modal);
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, AdvData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         const [, data] = cb.mock.calls[0];
         expect(data.name).toBe('Goblin Scout');
@@ -217,12 +275,13 @@ describe('AdversaryModal - edit mode', () => {
 
     test('close() is called after onEditUpdate', async () => {
         const modal = new AdversaryModal(mockPlugin(), null);
-        wireAdvModal(modal);
-        modal.onEditUpdate = jest.fn();
+        const close = wireAdvModal(modal);
+        const cb = jest.fn<void, [string, AdvData]>();
+        modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
-        expect(modal.close).toHaveBeenCalledTimes(1);
+        expect(close).toHaveBeenCalledTimes(1);
     });
 
     test('Horde type is normalised to "Horde (5/HP)" in HTML and data', async () => {
@@ -230,10 +289,10 @@ describe('AdversaryModal - edit mode', () => {
         wireAdvModal(modal, {
             inputs: advInputs({ type: 'Horde', hordeMembers: '5' }),
         });
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, AdvData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         const [html, data] = cb.mock.calls[0];
         expect(data.type).toBe('Horde (5/HP)');
@@ -245,10 +304,10 @@ describe('AdversaryModal - edit mode', () => {
         wireAdvModal(modal, {
             inputs: advInputs({ type: 'Horde', hordeMembers: '0' }),
         });
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, AdvData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         const [, data] = cb.mock.calls[0];
         expect(data.type).toBe('Horde');
@@ -264,10 +323,10 @@ describe('AdversaryModal - edit mode', () => {
                 richEditor: mockRichEditor('<p>Flanking bonus.</p>'),
             }],
         });
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, AdvData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         const [html, data] = cb.mock.calls[0];
         expect(html).toContain('Pack Tactics');
@@ -285,11 +344,12 @@ describe('AdversaryModal - edit mode', () => {
                 { nameEl: inp('Beta'),  typeEl: sel('Action'),  costEl: sel('2'), richEditor: mockRichEditor('') },
             ],
         });
-        modal.onEditUpdate = jest.fn();
+        const cb = jest.fn<void, [string, AdvData]>();
+        modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
-        const [, data] = (modal.onEditUpdate as jest.Mock).mock.calls[0];
+        const [, data] = cb.mock.calls[0];
         expect(data.features).toHaveLength(2);
         expect(data.features[0].name).toBe('Alpha');
         expect(data.features[1].name).toBe('Beta');
@@ -299,10 +359,10 @@ describe('AdversaryModal - edit mode', () => {
     test('wide=false produces no df-card--wide class', async () => {
         const modal = new AdversaryModal(mockPlugin(), null);
         wireAdvModal(modal);
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, AdvData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         const [html] = cb.mock.calls[0];
         expect(html).not.toContain('df-card--wide');
@@ -319,40 +379,40 @@ describe('AdversaryModal - create mode (markdown)', () => {
     }
 
     test('dataManager.addAdversary is called with the assembled data', async () => {
-        const plugin = mockPlugin();
+        const { plugin, addAdversary } = mockPluginWithSpies();
         const { editor, destination } = makeMarkdownDestination();
-        const modal = new AdversaryModal(plugin, editor as any);
+        const modal = new AdversaryModal(plugin, editor as unknown as Editor);
         wireAdvModal(modal, { destination });
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
-        expect(plugin.dataManager.addAdversary).toHaveBeenCalledTimes(1);
-        const saved = plugin.dataManager.addAdversary.mock.calls[0][0];
+        expect(addAdversary).toHaveBeenCalledTimes(1);
+        const saved = addAdversary.mock.calls[0][0];
         expect(saved.name).toBe('Goblin Scout');
         expect(saved.source).toBe('custom');
     });
 
     test('creation no longer pastes raw HTML into the editor (embeds go through the destination picker)', async () => {
-        const plugin = mockPlugin();
+        const { plugin, addAdversary } = mockPluginWithSpies();
         const { editor, destination } = makeMarkdownDestination();
-        const modal = new AdversaryModal(plugin, editor as any);
+        const modal = new AdversaryModal(plugin, editor as unknown as Editor);
         wireAdvModal(modal, { destination });
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         expect(editor.replaceSelection).not.toHaveBeenCalled();
-        expect(plugin.dataManager.addAdversary).toHaveBeenCalledTimes(1);
+        expect(addAdversary).toHaveBeenCalledTimes(1);
     });
 
     test('does not call onEditUpdate when not set', async () => {
-        const plugin = mockPlugin();
+        const { plugin, addAdversary } = mockPluginWithSpies();
         const { editor, destination } = makeMarkdownDestination();
-        const modal = new AdversaryModal(plugin, editor as any);
+        const modal = new AdversaryModal(plugin, editor as unknown as Editor);
         wireAdvModal(modal, { destination });
 
         // onEditUpdate is not set - should NOT throw
-        await expect((modal as any).handleSubmit()).resolves.not.toThrow();
-        expect(plugin.dataManager.addAdversary).toHaveBeenCalled();
+        await expect(callHandleSubmit(modal)).resolves.not.toThrow();
+        expect(addAdversary).toHaveBeenCalled();
     });
 });
 
@@ -363,10 +423,10 @@ describe('EnvironmentModal - edit mode', () => {
     test('onEditUpdate receives HTML that contains the env name', async () => {
         const modal = new EnvironmentModal(mockPlugin(), null);
         wireEnvModal(modal);
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, EnvironmentData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         expect(cb).toHaveBeenCalledTimes(1);
         const [html] = cb.mock.calls[0];
@@ -376,10 +436,10 @@ describe('EnvironmentModal - edit mode', () => {
     test('onEditUpdate receives EnvironmentData with correct fields', async () => {
         const modal = new EnvironmentModal(mockPlugin(), null);
         wireEnvModal(modal);
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, EnvironmentData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         const [, data] = cb.mock.calls[0];
         expect(data.name).toBe('Whispering Bog');
@@ -393,11 +453,12 @@ describe('EnvironmentModal - edit mode', () => {
     test('HTML contains tier and type', async () => {
         const modal = new EnvironmentModal(mockPlugin(), null);
         wireEnvModal(modal);
-        modal.onEditUpdate = jest.fn();
+        const cb = jest.fn<void, [string, EnvironmentData]>();
+        modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
-        const [html] = (modal.onEditUpdate as jest.Mock).mock.calls[0];
+        const [html] = cb.mock.calls[0];
         expect(html).toContain('Tier 2');
         expect(html).toContain('Exploration');
     });
@@ -405,23 +466,25 @@ describe('EnvironmentModal - edit mode', () => {
     test('HTML contains impulse and difficulty', async () => {
         const modal = new EnvironmentModal(mockPlugin(), null);
         wireEnvModal(modal);
-        modal.onEditUpdate = jest.fn();
+        const cb = jest.fn<void, [string, EnvironmentData]>();
+        modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
-        const [html] = (modal.onEditUpdate as jest.Mock).mock.calls[0];
+        const [html] = cb.mock.calls[0];
         expect(html).toContain('Drag under');
         expect(html).toContain('12');
     });
 
     test('close() is called after onEditUpdate', async () => {
         const modal = new EnvironmentModal(mockPlugin(), null);
-        wireEnvModal(modal);
-        modal.onEditUpdate = jest.fn();
+        const close = wireEnvModal(modal);
+        const cb = jest.fn<void, [string, EnvironmentData]>();
+        modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
-        expect(modal.close).toHaveBeenCalledTimes(1);
+        expect(close).toHaveBeenCalledTimes(1);
     });
 
     test('features appear in HTML and EnvironmentData', async () => {
@@ -435,10 +498,10 @@ describe('EnvironmentModal - edit mode', () => {
                 questionEls: [],
             }],
         });
-        const cb = jest.fn();
+        const cb = jest.fn<void, [string, EnvironmentData]>();
         modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         const [html, data] = cb.mock.calls[0];
         expect(html).toContain('Quicksand');
@@ -460,27 +523,30 @@ describe('EnvironmentModal - edit mode', () => {
                 questionEls: [q1],
             }],
         });
-        modal.onEditUpdate = jest.fn();
+        const cb = jest.fn<void, [string, EnvironmentData]>();
+        modal.onEditUpdate = cb;
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
-        const [html] = (modal.onEditUpdate as jest.Mock).mock.calls[0];
+        const [html] = cb.mock.calls[0];
         expect(html).toContain('What lurks here?');
     });
 
     test('different name produces different HTML', async () => {
         const modal1 = new EnvironmentModal(mockPlugin(), null);
         wireEnvModal(modal1, { inputs: envInputs({ name: 'Frozen Tundra' }) });
-        modal1.onEditUpdate = jest.fn();
-        await (modal1 as any).handleSubmit();
+        const cb1 = jest.fn<void, [string, EnvironmentData]>();
+        modal1.onEditUpdate = cb1;
+        await callHandleSubmit(modal1);
 
         const modal2 = new EnvironmentModal(mockPlugin(), null);
         wireEnvModal(modal2, { inputs: envInputs({ name: 'Burning Sands' }) });
-        modal2.onEditUpdate = jest.fn();
-        await (modal2 as any).handleSubmit();
+        const cb2 = jest.fn<void, [string, EnvironmentData]>();
+        modal2.onEditUpdate = cb2;
+        await callHandleSubmit(modal2);
 
-        const [html1] = (modal1.onEditUpdate as jest.Mock).mock.calls[0];
-        const [html2] = (modal2.onEditUpdate as jest.Mock).mock.calls[0];
+        const [html1] = cb1.mock.calls[0];
+        const [html2] = cb2.mock.calls[0];
         expect(html1).toContain('Frozen Tundra');
         expect(html2).toContain('Burning Sands');
         expect(html1).not.toContain('Burning Sands');
@@ -497,28 +563,28 @@ describe('EnvironmentModal - create mode (markdown)', () => {
     }
 
     test('dataManager.addEnvironment is called with the assembled data', async () => {
-        const plugin = mockPlugin();
+        const { plugin, addEnvironment } = mockPluginWithSpies();
         const { destination } = makeMarkdownDestination();
         const modal = new EnvironmentModal(plugin, null);
         wireEnvModal(modal, { destination });
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
-        expect(plugin.dataManager.addEnvironment).toHaveBeenCalledTimes(1);
-        const saved = plugin.dataManager.addEnvironment.mock.calls[0][0];
+        expect(addEnvironment).toHaveBeenCalledTimes(1);
+        const saved = addEnvironment.mock.calls[0][0];
         expect(saved.name).toBe('Whispering Bog');
         expect(saved.source).toBe('custom');
     });
 
     test('creation no longer pastes raw HTML into the editor (embeds go through the destination picker)', async () => {
-        const plugin = mockPlugin();
+        const { plugin, addEnvironment } = mockPluginWithSpies();
         const { editor, destination } = makeMarkdownDestination();
-        const modal = new EnvironmentModal(plugin, editor as any);
+        const modal = new EnvironmentModal(plugin, editor as unknown as Editor);
         wireEnvModal(modal, { destination });
 
-        await (modal as any).handleSubmit();
+        await callHandleSubmit(modal);
 
         expect(editor.replaceSelection).not.toHaveBeenCalled();
-        expect(plugin.dataManager.addEnvironment).toHaveBeenCalledTimes(1);
+        expect(addEnvironment).toHaveBeenCalledTimes(1);
     });
 });

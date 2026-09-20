@@ -1,4 +1,3 @@
-import { Notice } from "obsidian";
 import type { CountdownClock, EnvironmentData, EnvSavedFeatureState } from "../../../types/index";
 import { serializeChildren } from "../../../utils/richContentTransform";
 

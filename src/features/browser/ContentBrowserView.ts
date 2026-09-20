@@ -14,7 +14,7 @@ export class ContentBrowserView extends ItemView {
 	constructor(leaf: WorkspaceLeaf) { super(leaf); }
 
 	getViewType()    { return Content_Browser_View_Type; }
-	getDisplayText() { return "Content Browser"; }
+	getDisplayText() { return "Content browser"; }
 	getIcon()        { return "layout-grid"; }
 
 	private renderApp(container: HTMLElement) {

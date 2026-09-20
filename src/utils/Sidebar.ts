@@ -1,7 +1,7 @@
-import { Notice, Plugin } from "obsidian";
+import { Plugin, View, WorkspaceLeaf } from "obsidian";
 import { Content_Browser_View_Type, ContentBrowserView, type BrowserTab } from "../features/browser/ContentBrowserView";
 
-export function registerSideBarView(plugin: Plugin, viewType: string, view: any) {
+export function registerSideBarView(plugin: Plugin, viewType: string, view: new (leaf: WorkspaceLeaf) => View) {
 	plugin.registerView(viewType, (leaf) => new view(leaf));
 }
 
@@ -16,7 +16,7 @@ export async function openContentBrowser(plugin: Plugin, tab?: BrowserTab) {
 		await leaf.setViewState({ type: Content_Browser_View_Type, active: true });
 	}
 
-	plugin.app.workspace.revealLeaf(leaf);
+	void plugin.app.workspace.revealLeaf(leaf);
 
 	if (tab) {
 		const view = leaf.view as ContentBrowserView;

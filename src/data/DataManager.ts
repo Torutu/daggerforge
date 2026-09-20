@@ -11,6 +11,36 @@ export interface StoredCustomData {
 	lastUpdated: number;
 }
 
+// Shape of a feature as it may appear in data.json before migration - either
+// the current richContent form, or the legacy text/bullets/textAfter (env)
+// or desc (adversary) form. Every field is optional since old saves and
+// hand-edited/imported JSON can be missing any of them.
+type RawFeature = {
+	name?: string;
+	type?: string;
+	cost?: string;
+	richContent?: string | null;
+	desc?: string;
+	text?: string;
+	bullets?: string[];
+	textAfter?: string;
+	questions?: string[];
+};
+
+type RawAdversary = Omit<Partial<AdvData>, 'features'> & { features?: RawFeature[] };
+type RawEnvironment = Omit<Partial<EnvironmentData>, 'features'> & { features?: RawFeature[] };
+
+// The raw shape of data.json (or an imported JSON blob) - untrusted, vault-
+// provided input, so every field is optional.
+type RawStoredData = {
+	adversaries?: RawAdversary[];
+	environments?: RawEnvironment[];
+	characters?: unknown[];
+	items?: GearData[];
+	settings?: Partial<PluginSettings>;
+	lastUpdated?: number;
+};
+
 export class DataManager {
 	/**
 	 * Change notifications so every mounted embed (character sheets, adversary
@@ -40,7 +70,7 @@ export class DataManager {
 
 	async load(): Promise<void> {
 		try {
-			const saved = await this.plugin.loadData();
+			const saved = (await this.plugin.loadData()) as RawStoredData | null;
 			if (!saved) {
 				new Notice('No data.json found');
 				return;
@@ -69,31 +99,31 @@ export class DataManager {
 	}
 
 	// Convert old environment feature shape (text/bullets/textAfter) → richContent
-	private migrateEnvironments(envs: any[]): EnvironmentData[] {
-		return envs.map((env: any) => ({
+	private migrateEnvironments(envs: RawEnvironment[]): EnvironmentData[] {
+		return envs.map((env) => ({
 			...env,
-			features: (env.features ?? []).map((f: any) => {
+			features: (env.features ?? []).map((f) => {
 				if (f.richContent !== undefined && f.richContent !== null) return f;
 				const parts: string[] = [];
 				if (f.text) parts.push(`<p>${f.text}</p>`);
 				if (Array.isArray(f.bullets) && f.bullets.length) {
-					parts.push(`<ul>${(f.bullets as string[]).map(b => `<li>${b}</li>`).join("")}</ul>`);
+					parts.push(`<ul>${f.bullets.map(b => `<li>${b}</li>`).join("")}</ul>`);
 				}
 				if (f.textAfter) parts.push(`<p>${f.textAfter}</p>`);
 				return { name: f.name ?? "", type: f.type ?? "Passive", cost: f.cost ?? undefined, richContent: parts.join(""), questions: f.questions ?? [] };
 			}),
-		}));
+		})) as EnvironmentData[];
 	}
 
 	// Convert old adversary feature shape (desc) → richContent
-	private migrateAdversaries(advs: any[]): AdvData[] {
-		return advs.map((adv: any) => ({
+	private migrateAdversaries(advs: RawAdversary[]): AdvData[] {
+		return advs.map((adv) => ({
 			...adv,
-			features: (adv.features ?? []).map((f: any) => {
+			features: (adv.features ?? []).map((f) => {
 				if (f.richContent !== undefined && f.richContent !== null) return f;
 				return { name: f.name ?? "", type: f.type ?? "Passive", cost: f.cost ?? "", richContent: f.desc ? `<p>${f.desc}</p>` : "" };
 			}),
-		}));
+		})) as AdvData[];
 	}
 
 	private async save(): Promise<void> {
@@ -147,8 +177,8 @@ export class DataManager {
 	// ==================== ENVIRONMENTS ====================
 
 	async addEnvironment(env: EnvironmentData): Promise<void> {
-		if (!(env as any).id) {
-			(env as any).id = generateEnvUniqueId();
+		if (!env.id) {
+			env.id = generateEnvUniqueId();
 		}
 		this.data.environments.push(env);
 		this.events.trigger("environment-changed", env);
@@ -170,7 +200,7 @@ export class DataManager {
 	}
 
 	async deleteEnvironmentById(id: string): Promise<void> {
-		const index = this.data.environments.findIndex(e => (e as any).id === id);
+		const index = this.data.environments.findIndex(e => e.id === id);
 		if (index === -1) throw new Error(`Environment with ID ${id} not found`);
 		this.data.environments.splice(index, 1);
 		this.events.trigger("environment-deleted", id);
@@ -237,21 +267,21 @@ export class DataManager {
 	private ensureAdversariesHaveIds(): void {
 		this.data.adversaries = this.data.adversaries.map(adv => ({
 			...adv,
-			id: (adv as any).id || generateAdvUniqueId()
+			id: adv.id || generateAdvUniqueId()
 		}));
 	}
 
 	private ensureEnvironmentsHaveIds(): void {
 		this.data.environments = this.data.environments.map(env => ({
 			...env,
-			id: (env as any).id || generateEnvUniqueId()
+			id: env.id || generateEnvUniqueId()
 		}));
 	}
 
 	async importData(jsonString: string): Promise<void> {
-		const imported = JSON.parse(jsonString);
-		this.data.adversaries.push(...(imported.adversaries ?? []));
-		this.data.environments.push(...(imported.environments ?? []));
+		const imported = JSON.parse(jsonString) as RawStoredData;
+		this.data.adversaries.push(...((imported.adversaries ?? []) as AdvData[]));
+		this.data.environments.push(...((imported.environments ?? []) as EnvironmentData[]));
 		this.data.characters.push(...this.migrateCharacters(imported.characters ?? []));
 		this.ensureAdversariesHaveIds();
 		this.ensureEnvironmentsHaveIds();

@@ -36,7 +36,7 @@ export const addEnvFeature = (
 	const questionEls = createQuestionSection(wrapper, savedFeature?.questions);
 
 	const removeBtn = wrapper.createEl("button", {
-		text: "Remove Feature",
+		text: "Remove feature",
 		cls: "df-env-btn-remove-feature",
 	});
 	removeBtn.onclick = () => {
@@ -108,14 +108,14 @@ function createQuestionSection(
 	const questionEls: HTMLTextAreaElement[] = [];
 
 	const addBtn = questionsWrapper.createEl("button", {
-		text: "+ Add question",
+		text: "+ add question",
 		cls: "df-env-btn-add-question",
 	});
 
 	const createQuestion = (text?: string) => {
 		const el = questionsWrapper.createEl("textarea", {
 			cls: "df-env-feature-input-question",
-			attr: { placeholder: 'e.g. "Why did this feature occur?"', rows: "2" },
+			attr: { placeholder: 'E.g. "why did this feature occur?"', rows: "2" },
 		});
 		el.value = text || "";
 		questionEls.push(el);

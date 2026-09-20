@@ -157,7 +157,7 @@ export class EnvironmentModal extends Modal {
 			attr: { placeholder: "Enter environment description...", rows: "4" },
 		});
 		this.inputs["desc"] = descTextarea;
-		if (saved["desc"]) descTextarea.value = String(saved["desc"]);
+		if (typeof saved["desc"] === "string" && saved["desc"]) descTextarea.value = saved["desc"];
 	}
 
 	private buildGameplaySection(
@@ -211,7 +211,7 @@ export class EnvironmentModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-env-form-section" });
-		section.createEl("h3", { text: "Countdown Clocks", cls: "df-section-title" });
+		section.createEl("h3", { text: "Countdown clocks", cls: "df-section-title" });
 
 		this.countdownRows = [];
 		this.countdownContainer = section.createDiv({ cls: "df-env-countdown-form-list" });
@@ -222,7 +222,7 @@ export class EnvironmentModal extends Modal {
 		}
 
 		const addBtn = section.createEl("button", {
-			text: "+ Add countdown clock",
+			text: "+ add countdown clock",
 			cls: "df-env-btn-add-countdown",
 		});
 		addBtn.onclick = () => this.addCountdownRow();
@@ -233,14 +233,14 @@ export class EnvironmentModal extends Modal {
 
 		const nameEl = row.createEl("input", {
 			cls: "df-env-countdown-form-name",
-			attr: { type: "text", placeholder: "Clock name (e.g. Storm Arrival)" },
-		}) as HTMLInputElement;
+			attr: { type: "text", placeholder: "Clock name (e.g. Storm arrival)" },
+		});
 		nameEl.value = name;
 
 		const maxEl = row.createEl("input", {
 			cls: "df-env-countdown-form-max",
 			attr: { type: "number", min: "1", max: "20", placeholder: "Max" },
-		}) as HTMLInputElement;
+		});
 		if (max > 0) maxEl.value = String(max);
 
 		const removeBtn = row.createEl("button", {
@@ -270,24 +270,28 @@ export class EnvironmentModal extends Modal {
 
 		if (Array.isArray(savedFeatures) && savedFeatures.length > 0) {
 			savedFeatures.forEach((data) => {
+				const dataText = typeof data.text === "string" ? data.text : "";
+				const dataTextAfter = typeof data.textAfter === "string" ? data.textAfter : "";
+				const dataCost = typeof data.cost === "string" ? data.cost : "";
+
 				// Migrate old format (text/bullets/textAfter) to richContent if needed
-				let richContent = data.richContent ? String(data.richContent) : "";
+				let richContent = typeof data.richContent === "string" ? data.richContent : "";
 				if (!richContent) {
 					const parts: string[] = [];
-					if (data.text) parts.push(`<p>${String(data.text)}</p>`);
+					if (dataText) parts.push(`<p>${dataText}</p>`);
 					if (Array.isArray(data.bullets) && data.bullets.length) {
-						parts.push(`<ul>${data.bullets.map((b) => `<li>${String(b)}</li>`).join("")}</ul>`);
+						parts.push(`<ul>${(data.bullets as unknown[]).map((b) => `<li>${typeof b === "string" ? b : ""}</li>`).join("")}</ul>`);
 					}
-					if (data.textAfter) parts.push(`<p>${String(data.textAfter)}</p>`);
+					if (dataTextAfter) parts.push(`<p>${dataTextAfter}</p>`);
 					richContent = parts.join("");
 				}
 				addEnvFeature(this.featureContainer, this.features, {
-					name: String(data.name || ""),
-					type: String(data.type || "Passive"),
-					cost: data.cost ? String(data.cost) : undefined,
+					name: typeof data.name === "string" && data.name ? data.name : "",
+					type: typeof data.type === "string" && data.type ? data.type : "Passive",
+					cost: dataCost || undefined,
 					richContent,
 					questions: Array.isArray(data.questions)
-						? data.questions.map((q) => String(q))
+						? (data.questions as unknown[]).map((q) => (typeof q === "string" ? q : ""))
 						: [],
 				});
 			});
@@ -296,7 +300,7 @@ export class EnvironmentModal extends Modal {
 		}
 
 		const addBtn = section.createEl("button", {
-			text: "+ Add feature",
+			text: "+ add feature",
 			cls: "df-env-btn-add-feature",
 		});
 		addBtn.onclick = () => addEnvFeature(this.featureContainer, this.features);
@@ -363,7 +367,7 @@ export class EnvironmentModal extends Modal {
 		for (const el of Object.values(this.inputs)) {
 			if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
 				el.value = "";
-			} else if (el instanceof HTMLSelectElement) {
+			} else if (el.instanceOf(HTMLSelectElement)) {
 				el.selectedIndex = 0;
 			}
 		}
@@ -380,7 +384,7 @@ export class EnvironmentModal extends Modal {
 		for (const leaf of leaves) {
 			const v = leaf.view as { refresh?: () => void | Promise<void> };
 			if (typeof v?.refresh === "function") {
-				v.refresh();
+				void v.refresh();
 			}
 		}
 	}
@@ -396,9 +400,7 @@ export class EnvironmentModal extends Modal {
 		this.plugin.savedInputStateEnv = {};
 
 		for (const [key, el] of Object.entries(this.inputs)) {
-			this.plugin.savedInputStateEnv[key] = (
-				el as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-			).value;
+			this.plugin.savedInputStateEnv[key] = el.value;
 		}
 
 		this.plugin.savedInputStateEnv.features = getEnvFeatureValues(this.features);

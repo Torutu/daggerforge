@@ -1,6 +1,25 @@
 import { embedStateKey, repointEmbedBlock } from "../features/embeds/embedShared";
 import { addTextNodeToCanvasJson } from "../features/embeds/insertDestination";
 
+interface ParsedCanvasNode {
+	id: string;
+	type: string;
+	text: string;
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+}
+
+interface ParsedCanvas {
+	nodes: ParsedCanvasNode[];
+	edges: unknown[];
+}
+
+function parseCanvas(json: string): ParsedCanvas {
+	return JSON.parse(json) as ParsedCanvas;
+}
+
 describe("embedStateKey", () => {
 	test("prefers the instance token, falls back to the id", () => {
 		expect(embedStateKey({ id: "VA013", instance: "abc", count: null })).toBe("df-embed-abc");
@@ -56,7 +75,7 @@ describe("repointEmbedBlock", () => {
 
 describe("addTextNodeToCanvasJson", () => {
 	test("creates a node in an empty or blank canvas", () => {
-		const result = JSON.parse(addTextNodeToCanvasJson("", "hello", { width: 400, height: 300 }));
+		const result = parseCanvas(addTextNodeToCanvasJson("", "hello", { width: 400, height: 300 }));
 		expect(result.nodes).toHaveLength(1);
 		expect(result.edges).toEqual([]);
 		expect(result.nodes[0]).toMatchObject({ type: "text", text: "hello", x: 0, y: 0, width: 400, height: 300 });
@@ -71,7 +90,7 @@ describe("addTextNodeToCanvasJson", () => {
 			],
 			edges: [],
 		});
-		const result = JSON.parse(addTextNodeToCanvasJson(existing, "new", { width: 460, height: 620 }));
+		const result = parseCanvas(addTextNodeToCanvasJson(existing, "new", { width: 460, height: 620 }));
 		expect(result.nodes).toHaveLength(3);
 		const added = result.nodes[2];
 		expect(added.x).toBe(-20); // left-aligned with the leftmost node
@@ -79,7 +98,7 @@ describe("addTextNodeToCanvasJson", () => {
 	});
 
 	test("tolerates invalid JSON by starting fresh", () => {
-		const result = JSON.parse(addTextNodeToCanvasJson("{oops", "hello", { width: 10, height: 10 }));
+		const result = parseCanvas(addTextNodeToCanvasJson("{oops", "hello", { width: 10, height: 10 }));
 		expect(result.nodes).toHaveLength(1);
 	});
 });

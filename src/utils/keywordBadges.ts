@@ -35,7 +35,7 @@ function colorKeywordsInNode(node: Text): void {
 	let cursor = 0;
 
 	for (const match of matches) {
-		const start = match.index!;
+		const start = match.index;
 		const end = start + match[0].length;
 
 		if (start > cursor) {
@@ -61,7 +61,7 @@ function colorKeywordsInNode(node: Text): void {
 export function attachKeywordColors(section: HTMLElement): void {
 	const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT, {
 		acceptNode(node) {
-			if ((node.parentElement as HTMLElement | null)?.closest(SKIP_SELECTOR)) {
+			if (node.parentElement?.closest(SKIP_SELECTOR)) {
 				return NodeFilter.FILTER_REJECT;
 			}
 			return KEYWORD_TEST.test(node.nodeValue ?? "")

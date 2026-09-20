@@ -15,8 +15,7 @@ import { envToHtml } from "../EnvToHtml";
 
 export const Env_View_Type = "daggerforge:environment-view";
 
-interface Environment extends EnvironmentData {
-}
+type Environment = EnvironmentData;
 
 export class EnvironmentView extends ItemView {
 	private environments: Environment[] = [];
@@ -35,7 +34,7 @@ export class EnvironmentView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Environment Browser";
+		return "Environment browser";
 	}
 
 	getIcon(): string {
@@ -68,14 +67,14 @@ export class EnvironmentView extends ItemView {
 		container.empty();
 
 		container.createEl("h2", {
-			text: "Environment Browser",
+			text: "Environment browser",
 			cls: "df-env-title",
 		});
 
 		// Create search controls placeholder - will be rebuilt after data loads
 		container.createDiv({ cls: "df-search-controls-container" });
 
-		this.resultsDiv = container.createEl("div", {
+		this.resultsDiv = container.createDiv({
 			cls: "df-environment-results",
 		});
 	}
@@ -88,7 +87,7 @@ export class EnvironmentView extends ItemView {
 		try {
 			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin || !plugin.dataManager) {
-				new Notice("DaggerForge plugin not found.");
+				new Notice("Daggerforge plugin not found.");
 				return;
 			}
 
@@ -118,12 +117,14 @@ export class EnvironmentView extends ItemView {
 
 			const customEnvs = plugin.dataManager.getEnvironments();
 
-			return customEnvs.map((env: any) => ({
+			// tier is normalised to a number here (pre-existing behavior, kept
+			// as-is) even though EnvironmentData types it as a string.
+			return customEnvs.map((env) => ({
 				...env,
 				id: env.id || generateEnvUniqueId(),
 				tier: typeof env.tier === "number" ? env.tier : parseInt(env.tier, 10),
 				source: env.source || "custom",
-			}));
+			})) as unknown as Environment[];
 		} catch (error) {
 			console.error("Error loading custom environments from DataManager:", error);
 			return [];
@@ -132,7 +133,7 @@ export class EnvironmentView extends ItemView {
 
 	private loadEnvironmentData() {
 		try {
-			const builtIn = ENVIRONMENTS.map((e: any) => ({
+			const builtIn = ENVIRONMENTS.map((e) => ({
 				...e,
 				id: e.id || generateEnvUniqueId(),
 				source: e.source ?? "core",
@@ -270,7 +271,7 @@ export class EnvironmentView extends ItemView {
 			setIcon(deleteBtn, "trash");
 			deleteBtn.addEventListener("click", (e: MouseEvent) => {
 				e.stopPropagation();
-				this.deleteCustomEnvironment(env);
+				void this.deleteCustomEnvironment(env);
 			});
 		}
 
@@ -317,12 +318,12 @@ export class EnvironmentView extends ItemView {
 
 			if (kind === "markdown") {
 				if (!leaf) {
-					new Notice("No note is open in Edit mode.");
+					new Notice("No note is open in edit mode.");
 					return;
 				}
 				const view = leaf.view as MarkdownView;
 				if (view.getMode() === "preview") {
-					new Notice("Please switch to Edit mode.");
+					new Notice("Please switch to edit mode.");
 					return;
 				}
 				view.editor.replaceSelection(injectDiceBadgesIntoHtml(envHTML));

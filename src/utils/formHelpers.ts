@@ -1,5 +1,12 @@
 import { FormStateElements } from "../types/shared";
 
+/** Saved form state values are always strings/numbers/booleans in practice. */
+function stringifySavedValue(value: unknown): string {
+	if (typeof value === "string") return value;
+	if (typeof value === "number" || typeof value === "boolean") return String(value);
+	return "";
+}
+
 export const createField = (
 	parent: HTMLElement,
 	inputs: FormStateElements,
@@ -31,7 +38,7 @@ export const createField = (
 	inputs[key] = field;
 
 	if (savedValues?.[key] !== undefined) {
-		field.value = String(savedValues[key]);
+		field.value = stringifySavedValue(savedValues[key]);
 	}
 
 	return field;
@@ -67,7 +74,7 @@ export const createShortTripleFields = (
 			});
 			inputs[key] = select;
 			if (savedValues?.[key] !== undefined)
-				select.value = String(savedValues[key]);
+				select.value = stringifySavedValue(savedValues[key]);
 		} else {
 			const input = wrapper.createEl("input", {
 				cls: "df-field-input",
@@ -75,7 +82,7 @@ export const createShortTripleFields = (
 			});
 			inputs[key] = input;
 			if (savedValues?.[key] !== undefined)
-				input.value = String(savedValues[key]);
+				input.value = stringifySavedValue(savedValues[key]);
 		}
 	};
 
@@ -117,7 +124,7 @@ export const createInlineField = (
 		inputs[config.key] = select;
 
 		if (config.savedValues?.[config.key] !== undefined) {
-			select.value = String(config.savedValues[config.key]);
+			select.value = stringifySavedValue(config.savedValues[config.key]);
 		} else {
 			select.selectedIndex = 0;
 		}
@@ -132,7 +139,7 @@ export const createInlineField = (
 		inputs[config.key] = input;
 
 		if (config.savedValues?.[config.key] !== undefined) {
-			input.value = String(config.savedValues[config.key]);
+			input.value = stringifySavedValue(config.savedValues[config.key]);
 		}
 
 		return input;

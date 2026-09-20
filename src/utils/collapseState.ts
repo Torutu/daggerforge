@@ -1,13 +1,28 @@
+import type { App } from "obsidian";
+
 const COLLAPSE_PREFIX = "df-adv-collapse:";
 const TICK_PREFIX     = "df-adv-ticks:";
 const WIDE_PREFIX     = "df-card-wide:";
 
-// Use localStorage so tick/collapse/wide state survives Obsidian restarts.
-// Lazy accessor so the module loads safely in Node (test) environments.
-const store = {
-	getItem:    (k: string)         => localStorage.getItem(k),
-	setItem:    (k: string, v: string) => localStorage.setItem(k, v),
-	removeItem: (k: string)         => localStorage.removeItem(k),
+let appRef: App | null = null;
+
+/**
+ * Wires this module (and diceBadges.ts, which shares its storage via the
+ * exported `store`) to the vault's own storage. Called once from main.ts's
+ * onload(); test files call it with a stub App before running.
+ */
+export function setStorageApp(app: App): void {
+	appRef = app;
+}
+
+// Vault-scoped storage (App#saveLocalStorage/loadLocalStorage) so
+// tick/collapse/wide/countdown state survives Obsidian restarts without
+// leaking across vaults that share a browser profile. Lazy accessor so the
+// module loads safely in Node (test) environments before setStorageApp() runs.
+export const store = {
+	getItem:    (k: string): string | null => (appRef?.loadLocalStorage(k) as string | null | undefined) ?? null,
+	setItem:    (k: string, v: string): void => appRef?.saveLocalStorage(k, v),
+	removeItem: (k: string): void => appRef?.saveLocalStorage(k, null),
 };
 
 export function getCardId(card: HTMLElement): string | null {

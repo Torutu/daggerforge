@@ -14,7 +14,7 @@ import type { Feature } from '../types/index';
 const MOCK_UUID = 'test-uuid-1234-5678-abcd-efgh';
 
 beforeAll(() => {
-    Object.defineProperty(globalThis.crypto, 'randomUUID', {
+    Object.defineProperty(window.crypto, 'randomUUID', {
         writable: true,
         configurable: true,
         value: () => MOCK_UUID,
@@ -22,7 +22,7 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-    delete (globalThis.crypto as any).randomUUID;
+    delete (window.crypto as { randomUUID?: () => string }).randomUUID;
 });
 
 function baseValues(): Record<string, string> {

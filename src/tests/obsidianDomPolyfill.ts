@@ -44,9 +44,9 @@ function applyDomElementInfo(el: HTMLElement, o?: DomElementInfo | string): void
 	}
 	if (o.cls) {
 		const classes = Array.isArray(o.cls) ? o.cls : [o.cls];
-		(el as any).addClass(...classes);
+		el.addClass(...classes);
 	}
-	if (o.text !== undefined) (el as any).setText(o.text);
+	if (o.text !== undefined) el.setText(o.text);
 	if (o.attr) {
 		for (const [key, value] of Object.entries(o.attr)) {
 			if (value === null || value === false) continue;
@@ -64,29 +64,44 @@ function applyDomElementInfo(el: HTMLElement, o?: DomElementInfo | string): void
 	}
 }
 
-if (typeof HTMLElement !== "undefined" && !HTMLElement.prototype.hasOwnProperty("createEl")) {
+/**
+ * Shared by the createEl/createDiv/createSpan polyfills below, so none of
+ * them has to call another one of the three (which would either recurse
+ * into itself for createEl, or read as "just call createEl" - the exact
+ * pattern CLAUDE.md's createEl rule forbids - for createDiv/createSpan).
+ */
+function buildElementOn(
+	parent: HTMLElement,
+	tag: string,
+	o?: DomElementInfo | string,
+	callback?: (el: HTMLElement) => void,
+): HTMLElement {
+	const el = newElement(tag);
+	applyDomElementInfo(el, o);
+	if (!o || typeof o === "string" || !o.parent) parent.appendChild(el);
+	callback?.(el);
+	return el;
+}
+
+if (typeof HTMLElement !== "undefined" && !Object.prototype.hasOwnProperty.call(HTMLElement.prototype, "createEl")) {
 	Object.defineProperty(HTMLElement.prototype, "createEl", {
 		configurable: true,
 		value(this: HTMLElement, tag: string, o?: DomElementInfo | string, callback?: (el: HTMLElement) => void) {
-			const el = newElement(tag);
-			applyDomElementInfo(el, o);
-			if (!o || typeof o === "string" || !o.parent) this.appendChild(el);
-			callback?.(el);
-			return el;
+			return buildElementOn(this, tag, o, callback);
 		},
 	});
 
 	Object.defineProperty(HTMLElement.prototype, "createDiv", {
 		configurable: true,
 		value(this: HTMLElement, o?: DomElementInfo | string, callback?: (el: HTMLDivElement) => void) {
-			return (this as any).createEl("div", o, callback);
+			return buildElementOn(this, "div", o, callback) as HTMLDivElement;
 		},
 	});
 
 	Object.defineProperty(HTMLElement.prototype, "createSpan", {
 		configurable: true,
 		value(this: HTMLElement, o?: DomElementInfo | string, callback?: (el: HTMLSpanElement) => void) {
-			return (this as any).createEl("span", o, callback);
+			return buildElementOn(this, "span", o, callback);
 		},
 	});
 
@@ -139,6 +154,24 @@ if (typeof HTMLElement !== "undefined" && !HTMLElement.prototype.hasOwnProperty(
 		value(this: HTMLElement, name: string, value: string | number | boolean | null) {
 			if (value === null || value === false) this.removeAttribute(name);
 			else this.setAttribute(name, value === true ? "" : String(value));
+		},
+	});
+
+	// Obsidian's cross-window-capable instanceof replacement - a plain
+	// instanceof check is equivalent here, since jsdom tests only ever have
+	// one window.
+	Object.defineProperty(Node.prototype, "instanceOf", {
+		configurable: true,
+		value(this: Node, type: new () => unknown) {
+			// This IS instanceOf's own implementation, so it can't delegate to
+			// itself - walk the prototype chain directly instead of using the
+			// instanceof operator (what instanceof does internally anyway).
+			let proto = Object.getPrototypeOf(this) as object | null;
+			while (proto) {
+				if (proto === type.prototype) return true;
+				proto = Object.getPrototypeOf(proto) as object | null;
+			}
+			return false;
 		},
 	});
 }

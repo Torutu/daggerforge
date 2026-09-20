@@ -1,4 +1,4 @@
-import { Feature } from "../../types/index";
+import { AdvData, Feature } from "../../types/index";
 import { escapeHtml, toCustomHtml } from "../../utils/richContentTransform";
 
 const MINUS = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg>`;
@@ -29,26 +29,26 @@ function parseClocksFromFeatures(features: Feature[]): { name: string; max: numb
  * Used by the browser insert and the daggerforge-adversary embed renderer.
  */
 export const advToValues = (
-	adv: Record<string, unknown>,
+	adv: AdvData,
 	count: number,
 ): Record<string, string> => ({
-	name: String(adv.name ?? ""),
-	tier: String(adv.tier ?? ""),
-	type: String(adv.type ?? ""),
-	desc: String(adv.desc ?? ""),
-	motives: String(adv.motives ?? ""),
-	difficulty: String(adv.difficulty ?? ""),
-	thresholdMajor: String(adv.thresholdMajor ?? ""),
-	thresholdSevere: String(adv.thresholdSevere ?? ""),
-	hp: String(adv.hp ?? ""),
-	stress: String(adv.stress ?? 0),
-	atk: String(adv.atk ?? ""),
-	weaponName: String(adv.weaponName ?? ""),
-	weaponRange: String(adv.weaponRange ?? ""),
-	weaponDamage: String(adv.weaponDamage ?? ""),
-	xp: String(adv.xp ?? ""),
+	name: adv.name ?? "",
+	tier: adv.tier ?? "",
+	type: adv.type ?? "",
+	desc: adv.desc ?? "",
+	motives: adv.motives ?? "",
+	difficulty: adv.difficulty ?? "",
+	thresholdMajor: adv.thresholdMajor ?? "",
+	thresholdSevere: adv.thresholdSevere ?? "",
+	hp: adv.hp ?? "",
+	stress: adv.stress ?? "0",
+	atk: adv.atk ?? "",
+	weaponName: adv.weaponName ?? "",
+	weaponRange: adv.weaponRange ?? "",
+	weaponDamage: adv.weaponDamage ?? "",
+	xp: adv.xp ?? "",
 	count: String(count),
-	source: String(adv.source || "core"),
+	source: adv.source || "core",
 });
 
 export const buildCardHTML = (

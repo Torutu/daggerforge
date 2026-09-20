@@ -125,7 +125,7 @@ export class SearchControlsUI {
 		if (!this.container) return;
 
 		if (filters.query !== undefined) {
-			const searchInput = this.container.querySelector(".df-search-input") as HTMLInputElement | null;
+			const searchInput = this.container.querySelector<HTMLInputElement>(".df-search-input");
 			if (searchInput) searchInput.value = filters.query;
 		}
 
@@ -191,7 +191,7 @@ export class SearchControlsUI {
 		const input = wrap.createEl("input", {
 			attr: { type: "text", placeholder: this.config.placeholderText ?? "" },
 			cls: "df-search-input",
-		}) as HTMLInputElement;
+		});
 
 		input.addEventListener("input", () => {
 			this.config.onSearchChange?.(input.value);
@@ -214,7 +214,7 @@ export class SearchControlsUI {
 		const button = wrapper.createEl("button", {
 			cls: "df-multiselect-toggle",
 			attr: { "aria-haspopup": "listbox", "aria-expanded": "false" },
-		}) as HTMLButtonElement;
+		});
 
 		button.createSpan({ cls: "df-multiselect-label", text: opts.label });
 		const badge = button.createSpan({ cls: "df-multiselect-badge df-multiselect-badge--hidden" });
@@ -316,7 +316,7 @@ export class SearchControlsUI {
 		const checkbox = wrapper.createEl("input", {
 			attr: { type: "checkbox", id: "df-wide-card-checkbox" },
 			cls: "df-wide-card-checkbox",
-		}) as HTMLInputElement;
+		});
 
 		wrapper.createEl("label", {
 			text: "Wide",
@@ -335,7 +335,7 @@ export class SearchControlsUI {
 		const button = container.createEl("button", {
 			cls: "df-clear-filters-btn",
 			attr: { "aria-label": "Clear filters", title: "Clear filters" },
-		}) as HTMLButtonElement;
+		});
 
 		setIcon(button, "x");
 
@@ -345,7 +345,7 @@ export class SearchControlsUI {
 
 			this.panels.forEach((panel) => {
 				panel.querySelectorAll(".df-multiselect-checkbox").forEach((el) => {
-					if (el instanceof HTMLInputElement) el.checked = false;
+					if (el.instanceOf(HTMLInputElement)) el.checked = false;
 				});
 			});
 
@@ -354,7 +354,7 @@ export class SearchControlsUI {
 			this.state.types.clear();
 
 			this.container?.querySelectorAll(".df-multiselect-badge").forEach((el) => {
-				if (el instanceof HTMLElement) {
+				if (el.instanceOf(HTMLElement)) {
 					const btn = el.closest<HTMLButtonElement>(".df-multiselect-toggle");
 					this.updateBadge(el, btn, 0);
 				}
@@ -388,7 +388,7 @@ export class SearchControlsUI {
 		if (!panel) return;
 
 		panel.querySelectorAll(".df-multiselect-checkbox").forEach((el) => {
-			if (el instanceof HTMLInputElement) {
+			if (el.instanceOf(HTMLInputElement)) {
 				el.checked = this.state[stateKey].has(el.value);
 			}
 		});

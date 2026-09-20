@@ -1,6 +1,6 @@
 import { App, FuzzySuggestModal, MarkdownView, Notice, TFile, WorkspaceLeaf } from "obsidian";
 import type DaggerForgePlugin from "../../main";
-import { createCanvasCard, resolveInsertDestination } from "../../utils/canvasHelpers";
+import { createCanvasCard, resolveInsertDestination, ObsidianCanvas } from "../../utils/canvasHelpers";
 
 /**
  * One-click insert into the last-focused note or canvas (no picker).
@@ -138,7 +138,7 @@ export async function insertTextAtDestination(
 	const name = dest.file?.basename ?? "target";
 
 	if (dest.kind === "open-canvas" && dest.leaf) {
-		const canvas = (dest.leaf.view as unknown as { canvas?: unknown }).canvas;
+		const canvas = (dest.leaf.view as unknown as { canvas?: ObsidianCanvas }).canvas;
 		if (canvas && createCanvasCard(app, blockText, canvas, canvasSize)) {
 			new Notice(`Placed on canvas "${name}".`);
 			return;
@@ -200,7 +200,9 @@ export function addTextNodeToCanvasJson(
 ): string {
 	let canvas: { nodes?: Array<Record<string, unknown>>; edges?: unknown[] };
 	try {
-		canvas = content.trim() ? JSON.parse(content) : {};
+		canvas = content.trim()
+			? (JSON.parse(content) as { nodes?: Array<Record<string, unknown>>; edges?: unknown[] })
+			: {};
 	} catch {
 		canvas = {};
 	}

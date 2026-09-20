@@ -62,7 +62,7 @@ export class EncounterCalcModal extends Modal {
 
 	constructor(app: App) {
 		super(app);
-		this.titleEl.setText("Battle Calculator");
+		this.titleEl.setText("Battle calculator");
 	}
 
 	/** Custom adversaries first (they shadow bundled ids), then the bundled list. */
@@ -80,11 +80,11 @@ export class EncounterCalcModal extends Modal {
 		contentEl.addClass("df-enc-content");
 
 		// ── Header row ────────────────────────────────────────────────────
-		const headerRow = contentEl.createEl("div", { cls: "df-enc-header-row" });
+		const headerRow = contentEl.createDiv({ cls: "df-enc-header-row" });
 
-		const pcGroup = headerRow.createEl("div", { cls: "df-enc-pc-group" });
-		pcGroup.createEl("label", { cls: "df-enc-label", text: "Number of PCs" });
-		const pcInput = pcGroup.createEl("input", { cls: "df-enc-pc-input" }) as HTMLInputElement;
+		const pcGroup = headerRow.createDiv({ cls: "df-enc-pc-group" });
+		pcGroup.createEl("label", { cls: "df-enc-label", text: "Number of pcs" });
+		const pcInput = pcGroup.createEl("input", { cls: "df-enc-pc-input" });
 		pcInput.type = "number";
 		pcInput.min = "1";
 		pcInput.max = "10";
@@ -94,11 +94,11 @@ export class EncounterCalcModal extends Modal {
 		setIconLabel(calcBtn, "zap", "Calculate");
 
 		// ── Stats bar ─────────────────────────────────────────────────────
-		const statsBar = contentEl.createEl("div", { cls: "df-enc-stats" });
+		const statsBar = contentEl.createDiv({ cls: "df-enc-stats" });
 		const makeStatEl = (label: string, cls = "") => {
-			const chip = statsBar.createEl("div", { cls: `df-enc-stat ${cls}` });
-			chip.createEl("span", { cls: "df-enc-stat-label", text: label });
-			const val = chip.createEl("span", { cls: "df-enc-stat-value", text: "0" });
+			const chip = statsBar.createDiv({ cls: `df-enc-stat ${cls}` });
+			chip.createSpan({ cls: "df-enc-stat-label", text: label });
+			const val = chip.createSpan({ cls: "df-enc-stat-value", text: "0" });
 			return val;
 		};
 		const svBase      = makeStatEl("Base BP");
@@ -107,52 +107,52 @@ export class EncounterCalcModal extends Modal {
 		const svRemaining = makeStatEl("Remaining", "df-enc-stat--highlight");
 
 		// ── Log columns ───────────────────────────────────────────────────
-		const columnsDiv = contentEl.createEl("div", { cls: "df-enc-columns" });
+		const columnsDiv = contentEl.createDiv({ cls: "df-enc-columns" });
 
-		const adjCol = columnsDiv.createEl("div", { cls: "df-enc-column" });
-		const adjColHead = adjCol.createEl("div", { cls: "df-enc-col-header" });
+		const adjCol = columnsDiv.createDiv({ cls: "df-enc-column" });
+		const adjColHead = adjCol.createDiv({ cls: "df-enc-col-header" });
 		setIconLabel(adjColHead, "sliders-horizontal", "Adjustments");
-		const adjustmentsList = adjCol.createEl("div", { cls: "df-enc-log" });
+		const adjustmentsList = adjCol.createDiv({ cls: "df-enc-log" });
 
-		const spendCol = columnsDiv.createEl("div", { cls: "df-enc-column" });
-		const spendColHead = spendCol.createEl("div", { cls: "df-enc-col-header" });
+		const spendCol = columnsDiv.createDiv({ cls: "df-enc-column" });
+		const spendColHead = spendCol.createDiv({ cls: "df-enc-col-header" });
 		setIconLabel(spendColHead, "swords", "Spending");
-		const spendingList = spendCol.createEl("div", { cls: "df-enc-log" });
+		const spendingList = spendCol.createDiv({ cls: "df-enc-log" });
 
 		// ── Adjustment buttons ────────────────────────────────────────────
-		const adjSection = contentEl.createEl("div", { cls: "df-enc-section" });
-		const adjHead = adjSection.createEl("div", { cls: "df-enc-section-label" });
+		const adjSection = contentEl.createDiv({ cls: "df-enc-section" });
+		const adjHead = adjSection.createDiv({ cls: "df-enc-section-label" });
 		setIconLabel(adjHead, "sliders-horizontal", "Adjust Battle Points");
-		const adjGrid = adjSection.createEl("div", { cls: "df-enc-btn-grid" });
+		const adjGrid = adjSection.createDiv({ cls: "df-enc-btn-grid" });
 		ADJUSTMENTS.forEach(adj => {
 			const btn = adjGrid.createEl("button", { cls: "df-enc-action-btn" });
 			btn.setAttribute("data-adjust", adj.value.toString());
-			btn.createEl("span", { cls: "df-enc-btn-label", text: adj.label });
-			btn.createEl("span", {
+			btn.createSpan({ cls: "df-enc-btn-label", text: adj.label });
+			btn.createSpan({
 				cls: `df-enc-badge ${adj.value > 0 ? "df-enc-badge--pos" : "df-enc-badge--neg"}`,
 				text: adj.value > 0 ? `+${adj.value}` : `${adj.value}`,
 			});
 		});
 
 		// ── Spend buttons ─────────────────────────────────────────────────
-		const spendSection = contentEl.createEl("div", { cls: "df-enc-section" });
-		const spendHead = spendSection.createEl("div", { cls: "df-enc-section-label" });
+		const spendSection = contentEl.createDiv({ cls: "df-enc-section" });
+		const spendHead = spendSection.createDiv({ cls: "df-enc-section-label" });
 		setIconLabel(spendHead, "swords", "Spend Battle Points");
-		const spendGrid = spendSection.createEl("div", { cls: "df-enc-btn-grid" });
+		const spendGrid = spendSection.createDiv({ cls: "df-enc-btn-grid" });
 		SPEND_OPTIONS.forEach(opt => {
 			const btn = spendGrid.createEl("button", { cls: "df-enc-action-btn" });
 			btn.setAttribute("data-cost", opt.cost.toString());
 			btn.setAttribute("data-key", opt.key);
-			btn.createEl("span", { cls: "df-enc-btn-label", text: opt.label });
-			btn.createEl("span", { cls: "df-enc-badge df-enc-badge--cost", text: `-${opt.cost}` });
+			btn.createSpan({ cls: "df-enc-btn-label", text: opt.label });
+			btn.createSpan({ cls: "df-enc-badge df-enc-badge--cost", text: `-${opt.cost}` });
 		});
 
 		// ── Suggestions ───────────────────────────────────────────────────
-		const sugSection = contentEl.createEl("div", { cls: "df-enc-section" });
-		const sugHead = sugSection.createEl("div", { cls: "df-enc-section-label" });
+		const sugSection = contentEl.createDiv({ cls: "df-enc-section" });
+		const sugHead = sugSection.createDiv({ cls: "df-enc-section-label" });
 		setIconLabel(sugHead, "wand-2", "Suggested Adversaries");
 
-		const filterRow = sugSection.createEl("div", { cls: "df-enc-suggest-filters" });
+		const filterRow = sugSection.createDiv({ cls: "df-enc-suggest-filters" });
 		const tierSelect = filterRow.createEl("select", { cls: "dropdown df-enc-suggest-select" });
 		tierSelect.createEl("option", { text: "Any tier", value: "all" });
 		["1", "2", "3", "4"].forEach(t => tierSelect.createEl("option", { text: `Tier ${t}`, value: t }));
@@ -163,14 +163,14 @@ export class EncounterCalcModal extends Modal {
 		sources.add("custom");
 		[...sources].sort().forEach(s => sourceSelect.createEl("option", { text: capitalize(s), value: s }));
 
-		const sugList = sugSection.createEl("div", { cls: "df-enc-suggest" });
+		const sugList = sugSection.createDiv({ cls: "df-enc-suggest" });
 
-		const insertRow = sugSection.createEl("div", { cls: "df-enc-insert-row" });
+		const insertRow = sugSection.createDiv({ cls: "df-enc-insert-row" });
 		const insertBtn = insertRow.createEl("button", { cls: "mod-cta df-enc-insert-btn", text: "Insert encounter" });
-		const insertNote = insertRow.createEl("span", { cls: "df-enc-insert-note" });
+		const insertNote = insertRow.createSpan({ cls: "df-enc-insert-note" });
 
 		// ── Footer ────────────────────────────────────────────────────────
-		const footer = contentEl.createEl("div", { cls: "df-enc-footer" });
+		const footer = contentEl.createDiv({ cls: "df-enc-footer" });
 		const clearBtn = footer.createEl("button", { cls: "df-enc-clear-btn" });
 		setIconLabel(clearBtn, "trash-2", "Clear all");
 
@@ -238,11 +238,11 @@ export class EncounterCalcModal extends Modal {
 				else groups.set(adv.id, { adv, count: perSlot });
 			}
 			for (const { adv, count } of groups.values()) {
-				const isCustom = (adv.source ?? "").toLowerCase() === "custom" || adv.id!.startsWith("CUA_");
+				const isCustom = (adv.source ?? "").toLowerCase() === "custom" || adv.id.startsWith("CUA_");
 				const code = isCustom ? await encodeAdversaryCode(adv) : undefined;
 				insertAtFocusedTarget(
 					plugin,
-					buildAdversaryEmbedBlock(adv.id!, count > 1 ? count : undefined, code),
+					buildAdversaryEmbedBlock(adv.id, count > 1 ? count : undefined, code),
 					{ width: 460, height: 620 },
 					undefined,
 					true,
@@ -300,10 +300,10 @@ export class EncounterCalcModal extends Modal {
 					.filter(a => this.state.source === "all" || (a.source || "core").toLowerCase() === this.state.source)
 					.sort((a, b) => a.name.localeCompare(b.name));
 
-				const group = sugList.createEl("div", { cls: "df-enc-suggest-group" });
-				const head = group.createEl("div", { cls: "df-enc-suggest-group-head" });
-				head.createEl("span", { text: opt.label });
-				head.createEl("span", {
+				const group = sugList.createDiv({ cls: "df-enc-suggest-group" });
+				const head = group.createDiv({ cls: "df-enc-suggest-group-head" });
+				head.createSpan({ text: opt.label });
+				head.createSpan({
 					cls: "df-enc-suggest-progress" + (done >= slots.length ? " is-done" : ""),
 					text: done >= slots.length ? `${done}/${slots.length} ✓` : `${done}/${slots.length} chosen`,
 				});
@@ -314,15 +314,15 @@ export class EncounterCalcModal extends Modal {
 				}
 
 				const makeChips = (parent: HTMLElement, advs: AdvData[]) => {
-					const chips = parent.createEl("div", { cls: "df-enc-suggest-chips" });
+					const chips = parent.createDiv({ cls: "df-enc-suggest-chips" });
 					advs.forEach(adv => {
 						const picks = slots.filter(s => s.adversary?.id === adv.id).length;
 						const chip = chips.createEl("button", {
 							cls: "df-enc-suggest-chip" + (picks > 0 ? " is-selected" : ""),
 						});
-						if (picks > 0) chip.createEl("span", { cls: "df-enc-chip-check", text: picks > 1 ? `✓×${picks}` : "✓" });
-						chip.createEl("span", { text: adv.name });
-						chip.createEl("span", { cls: "df-enc-chip-tier", text: `T${adv.tier}` });
+						if (picks > 0) chip.createSpan({ cls: "df-enc-chip-check", text: picks > 1 ? `✓×${picks}` : "✓" });
+						chip.createSpan({ text: adv.name });
+						chip.createSpan({ cls: "df-enc-chip-tier", text: `T${adv.tier}` });
 						chip.title = `${adv.type} · ${capitalize((adv.source || "core").toLowerCase())} - choose for this slot`;
 						chip.addEventListener("click", () => chooseSuggestion(adv, opt));
 					});
@@ -343,8 +343,8 @@ export class EncounterCalcModal extends Modal {
 					return;
 				}
 				[...subTypes.keys()].sort().forEach(typeName => {
-					const sub = group.createEl("div", { cls: "df-enc-suggest-subhead" });
-					sub.createEl("span", { cls: "df-enc-suggest-subtype", text: typeName });
+					const sub = group.createDiv({ cls: "df-enc-suggest-subhead" });
+					sub.createSpan({ cls: "df-enc-suggest-subtype", text: typeName });
 					makeChips(group, subTypes.get(typeName)!);
 				});
 			});
@@ -354,9 +354,9 @@ export class EncounterCalcModal extends Modal {
 			// Adjustment log
 			adjustmentsList.empty();
 			this.state.adjustments.forEach((a, i) => {
-				const row = adjustmentsList.createEl("div", { cls: "df-enc-log-row" });
-				row.createEl("span", { cls: "df-enc-log-text", text: a.reason });
-				row.createEl("span", {
+				const row = adjustmentsList.createDiv({ cls: "df-enc-log-row" });
+				row.createSpan({ cls: "df-enc-log-text", text: a.reason });
+				row.createSpan({
 					cls: `df-enc-log-val ${a.value >= 0 ? "df-enc-pos" : "df-enc-neg"}`,
 					text: a.value >= 0 ? `+${a.value}` : `${a.value}`,
 				});
@@ -368,13 +368,13 @@ export class EncounterCalcModal extends Modal {
 			// Spending log
 			spendingList.empty();
 			this.state.spentItems.forEach((item, i) => {
-				const row = spendingList.createEl("div", { cls: "df-enc-log-row" + (item.adversary ? " df-enc-log-row--done" : "") });
-				if (item.adversary) row.createEl("span", { cls: "df-enc-log-tick", text: "✓" });
-				row.createEl("span", {
+				const row = spendingList.createDiv({ cls: "df-enc-log-row" + (item.adversary ? " df-enc-log-row--done" : "") });
+				if (item.adversary) row.createSpan({ cls: "df-enc-log-tick", text: "✓" });
+				row.createSpan({
 					cls: "df-enc-log-text",
 					text: item.adversary ? `${item.label} - ${item.adversary.name}` : item.label,
 				});
-				row.createEl("span", { cls: "df-enc-log-val df-enc-neg", text: `-${item.cost}` });
+				row.createSpan({ cls: "df-enc-log-val df-enc-neg", text: `-${item.cost}` });
 				const rm = row.createEl("button", { cls: "df-enc-remove-btn" });
 				setIcon(rm, "x");
 				rm.title = item.adversary ? "Clear the chosen adversary" : "Remove this slot";

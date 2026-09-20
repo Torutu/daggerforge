@@ -145,7 +145,7 @@ export class AdversaryModal extends Modal {
 		// and capture the member count so we can pre-fill the horde input.
 		let hordeMembers = "";
 		if (typeof saved.type === "string") {
-			const hordeMatch = (saved.type as string).match(/^Horde \((\d+)\/HP\)$/);
+			const hordeMatch = saved.type.match(/^Horde \((\d+)\/HP\)$/);
 			if (hordeMatch) {
 				saved = { ...saved, type: "Horde" };
 				hordeMembers = hordeMatch[1];
@@ -169,8 +169,8 @@ export class AdversaryModal extends Modal {
 		const hordeSection = section.createDiv({ cls: "df-horde-section" });
 		const hordeMembersInput = hordeSection.createEl("input", {
 			cls: "df-field-input df-horde-members-input",
-			attr: { type: "number", min: "1", placeholder: "Members per HP (e.g. 5)" },
-		}) as HTMLInputElement;
+			attr: { type: "number", min: "1", placeholder: "Members per hp (e.g. 5)" },
+		});
 		hordeMembersInput.value = hordeMembers;
 		this.inputs["hordeMembers"] = hordeMembersInput;
 
@@ -276,7 +276,7 @@ export class AdversaryModal extends Modal {
 		}
 
 		const addBtn = section.createEl("button", {
-			text: "+ Add feature",
+			text: "+ add feature",
 			cls: "df-adv-btn-add-feature",
 		});
 		addBtn.onclick = () => addAdvFeature(this.featureContainer, this.features);
@@ -344,7 +344,7 @@ export class AdversaryModal extends Modal {
 		for (const el of Object.values(this.inputs)) {
 			if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
 				el.value = "";
-			} else if (el instanceof HTMLSelectElement) {
+			} else if (el.instanceOf(HTMLSelectElement)) {
 				el.selectedIndex = 0;
 			}
 		}
@@ -363,7 +363,7 @@ export class AdversaryModal extends Modal {
 		for (const leaf of leaves) {
 			const v = leaf.view as { refresh?: () => void | Promise<void> };
 			if (typeof v?.refresh === "function") {
-				v.refresh();
+				void v.refresh();
 			}
 		}
 	}
@@ -379,9 +379,7 @@ export class AdversaryModal extends Modal {
 		this.plugin.savedInputStateAdv = {};
 
 		for (const [key, el] of Object.entries(this.inputs)) {
-			this.plugin.savedInputStateAdv[key] = (
-				el as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-			).value;
+			this.plugin.savedInputStateAdv[key] = el.value;
 		}
 
 		this.plugin.savedInputStateAdv.features = getAdvFeatureValues(this.features);

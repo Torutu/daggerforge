@@ -1,7 +1,7 @@
 import { setIcon } from "obsidian";
 import { rollDice } from "../features/dice/dice";
 import { attachKeywordColors } from "./keywordBadges";
-import { saveCollapseState, restoreCollapseState, restoreTickState, restoreWideState, restoreCountdownState, handleTickChange, getCardId, updateCountdownDisplay } from "./collapseState";
+import { saveCollapseState, restoreCollapseState, restoreTickState, restoreWideState, restoreCountdownState, handleTickChange, getCardId, updateCountdownDisplay, store } from "./collapseState";
 import { serializeChildren } from "./richContentTransform";
 export { handleTickChange };
 
@@ -78,7 +78,7 @@ export function handleCountdownDiceRoll(
 	const id = getCardId(card) ?? "";
 	if (id) {
 		const idx = clock.getAttribute("data-countdown-idx") ?? "0";
-		localStorage.setItem(`${COUNTDOWN_PREFIX}${id}:${idx}`, "0".repeat(total));
+		store.setItem(`${COUNTDOWN_PREFIX}${id}:${idx}`, "0".repeat(total));
 	}
 }
 
@@ -118,7 +118,7 @@ export function handleCountdownReset(
 			attr: { "data-dice-expr": originalDice, "aria-label": `Roll ${originalDice}` },
 		});
 
-		if (id) localStorage.removeItem(`${COUNTDOWN_PREFIX}${id}:${idx}`);
+		if (id) store.removeItem(`${COUNTDOWN_PREFIX}${id}:${idx}`);
 	} else {
 		// Loop, no dice: just reset ticks to 0
 		clock.querySelectorAll<HTMLInputElement>(".df-env-countdown-tick")
@@ -126,7 +126,7 @@ export function handleCountdownReset(
 		updateCountdownDisplay(clock);
 
 		const max = Number(clock.getAttribute("data-max") ?? "0");
-		if (id) localStorage.setItem(`${COUNTDOWN_PREFIX}${id}:${idx}`, "0".repeat(max));
+		if (id) store.setItem(`${COUNTDOWN_PREFIX}${id}:${idx}`, "0".repeat(max));
 	}
 
 	notify(`${name}: reset`);
@@ -138,7 +138,7 @@ export function restoreRolledDiceCountdowns(section: HTMLElement): void {
 
 	section.querySelectorAll<HTMLElement>(".df-env-countdown[data-dice-max]").forEach(clock => {
 		const idx   = clock.getAttribute("data-countdown-idx") ?? "0";
-		const stored = localStorage.getItem(`${COUNTDOWN_PREFIX}${id}:${idx}`);
+		const stored = store.getItem(`${COUNTDOWN_PREFIX}${id}:${idx}`);
 		if (!stored) return;
 
 		const name  = clock.getAttribute("data-countdown-name") ?? "Countdown";
@@ -326,7 +326,7 @@ function collectDiceTextNodes(root: HTMLElement): Text[] {
 
 	const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
 		acceptNode(node) {
-			const parent = node.parentElement as HTMLElement | null;
+			const parent = node.parentElement;
 			// Skip nodes already inside one of our buttons or countdown sections
 			if (parent?.closest(".df-inline-dice-btn, .df-env-countdown-badge, .df-env-countdown-dice-roll")) {
 				return NodeFilter.FILTER_REJECT;
@@ -420,12 +420,9 @@ function showRollResult(anchor: HTMLButtonElement, expression: string): void {
 	const btnRect = anchor.getBoundingClientRect();
 	const btnCenter = btnRect.left + btnRect.width / 2;
 	if (btnCenter < window.innerWidth / 2) {
-		tooltip.style.left = "0";
-		tooltip.style.transform = "none";
+		tooltip.setCssProps({ left: "0", transform: "none" });
 	} else {
-		tooltip.style.left = "auto";
-		tooltip.style.right = "0";
-		tooltip.style.transform = "none";
+		tooltip.setCssProps({ left: "auto", right: "0", transform: "none" });
 	}
 
 	window.setTimeout(() => tooltip.remove(), _tooltipMs);

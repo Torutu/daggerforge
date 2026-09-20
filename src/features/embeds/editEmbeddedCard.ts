@@ -53,7 +53,7 @@ async function editEmbeddedAdversary(
 	}
 
 	// The section element only signals edit mode to the modal; prefill is data-based
-	const modal = new AdversaryModal(plugin, null, section, structuredClone(adv) as unknown as Record<string, unknown>);
+	const modal = new AdversaryModal(plugin, null, section, structuredClone(adv));
 	modal.onEditUpdate = async (_newHTML: string, newData: AdvData) => {
 		if (isCustomId(id)) {
 			newData.id = id;
@@ -126,7 +126,9 @@ async function repointOrExplain(
 	await plugin.app.vault.process(file, (content) => {
 		if (file.extension === "canvas") {
 			try {
-				const canvas = JSON.parse(content || "{}");
+				const canvas = JSON.parse(content || "{}") as {
+					nodes?: Array<{ type?: string; text?: string }>;
+				};
 				for (const node of canvas.nodes ?? []) {
 					if (node.type !== "text" || typeof node.text !== "string") continue;
 					const updated = repointEmbedBlock(node.text, language, oldId, instance, newId);

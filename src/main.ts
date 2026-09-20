@@ -27,7 +27,12 @@ import {
 	applyKeywordColors,
 	setDiceTooltipDuration,
 	applyTheme,
+	setStorageApp,
+	type ObsidianCanvas,
 } from "./utils/index";
+
+/** A workspace view that may expose Obsidian's undocumented canvas extra. */
+type ViewWithCanvas = { canvas?: ObsidianCanvas };
 
 /** View types that belong to DaggerForge sidebars - never treated as insert targets. */
 const SIDEBAR_VIEW_TYPES = new Set([Content_Browser_View_Type]);
@@ -40,6 +45,8 @@ export default class DaggerForgePlugin extends Plugin {
 	lastMainLeaf: WorkspaceLeaf | null = null;
 
 	async onload() {
+		setStorageApp(this.app);
+
 		this.dataManager = new DataManager(this);
 		await this.dataManager.load();
 
@@ -48,7 +55,7 @@ export default class DaggerForgePlugin extends Plugin {
 
 		this.addSettingTab(new DaggerForgeSettingsTab(this.app, this));
 
-		this.addStatusBarItem().setText("DaggerForge Active");
+		this.addStatusBarItem().setText("Daggerforge active");
 		this.registerDomEvent(document, "click", (evt) => listenForEditClicks(evt, this.app, this));
 		this.registerDomEvent(document, "click", handleDiceBtnClick);
 		this.registerDomEvent(document, "click", handleCollapseClick);
@@ -67,8 +74,8 @@ export default class DaggerForgePlugin extends Plugin {
 			this.app.workspace.on("active-leaf-change", (leaf: WorkspaceLeaf | null) => {
 				if (!leaf) return;
 				const view = leaf.view;
-				if (SIDEBAR_VIEW_TYPES.has((view as any).getViewType?.())) return;
-				if ((view as any).canvas || view instanceof MarkdownView) {
+				if (SIDEBAR_VIEW_TYPES.has(view.getViewType())) return;
+				if ((view as ViewWithCanvas).canvas || view instanceof MarkdownView) {
 					this.lastMainLeaf = leaf;
 				}
 			})
@@ -110,7 +117,7 @@ export default class DaggerForgePlugin extends Plugin {
 					this.app.workspace.getLeavesOfType("canvas")[0];
 				if (seed) {
 					const v = seed.view;
-					if ((v as any).canvas || v instanceof MarkdownView) {
+					if ((v as ViewWithCanvas).canvas || v instanceof MarkdownView) {
 						this.lastMainLeaf = seed;
 					}
 				}
@@ -129,7 +136,7 @@ export default class DaggerForgePlugin extends Plugin {
 		const cardObserver = new MutationObserver((mutations) => {
 			for (const mutation of mutations) {
 				for (const node of Array.from(mutation.addedNodes)) {
-					if (!(node instanceof HTMLElement)) continue;
+					if (!node.instanceOf(HTMLElement)) continue;
 					if (node.classList.contains("df-card-outer") || node.classList.contains("df-env-card-outer")) {
 						attachDiceBadges(node);
 					}

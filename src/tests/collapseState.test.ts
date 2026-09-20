@@ -4,6 +4,7 @@
  * collapseState.test.ts
  */
 
+import type { App } from 'obsidian';
 import {
     saveCollapseState,
     restoreCollapseState,
@@ -15,8 +16,30 @@ import {
     handleWideToggleClick,
     handleCountdownClick,
     handleCountdownTickChange,
+    setStorageApp,
 } from '../utils/collapseState';
 import { handleCollapseClick } from '../utils/diceBadges';
+
+// collapseState.ts stores through App#saveLocalStorage/loadLocalStorage in
+// production; this stubs that with an in-memory fake so every assertion
+// below (which checks fakeStorage directly) can inspect what was written.
+const fakeStorage = (() => {
+    const data = new Map<string, string>();
+    return {
+        getItem: (key: string): string | null => data.get(key) ?? null,
+        setItem: (key: string, value: string): void => { data.set(key, value); },
+        removeItem: (key: string): void => { data.delete(key); },
+        clear: (): void => { data.clear(); },
+    };
+})();
+
+setStorageApp({
+    saveLocalStorage: (key: string, data: unknown) => {
+        if (data === null) fakeStorage.removeItem(key);
+        else fakeStorage.setItem(key, data as string);
+    },
+    loadLocalStorage: (key: string) => fakeStorage.getItem(key),
+} as unknown as App);
 
 // ── DOM helpers ───────────────────────────────────────────────────────────────
 
@@ -100,7 +123,7 @@ function fireChange(cb: HTMLInputElement, handler: (e: Event) => void): void {
 }
 
 beforeEach(() => {
-    localStorage.clear();
+    fakeStorage.clear();
     document.body.replaceChildren();
 });
 
@@ -110,14 +133,14 @@ describe('saveCollapseState', () => {
     test('writes "1" to storage when card is expanded', () => {
         const card = makeAdvCard('a1', { expanded: true });
         saveCollapseState(card);
-        expect(localStorage.getItem('df-adv-collapse:a1')).toBe('1');
+        expect(fakeStorage.getItem('df-adv-collapse:a1')).toBe('1');
     });
 
     test('removes key when card is not expanded', () => {
-        localStorage.setItem('df-adv-collapse:a2', '1');
+        fakeStorage.setItem('df-adv-collapse:a2', '1');
         const card = makeAdvCard('a2');
         saveCollapseState(card);
-        expect(localStorage.getItem('df-adv-collapse:a2')).toBeNull();
+        expect(fakeStorage.getItem('df-adv-collapse:a2')).toBeNull();
     });
 
     test('does not throw when card has no h2', () => {
@@ -128,7 +151,7 @@ describe('saveCollapseState', () => {
 
 describe('restoreCollapseState', () => {
     test('adds df-expanded when key exists in storage', () => {
-        localStorage.setItem('df-adv-collapse:a3', '1');
+        fakeStorage.setItem('df-adv-collapse:a3', '1');
         const card = makeAdvCard('a3');
         restoreCollapseState(card);
         expect(card.classList.contains('df-expanded')).toBe(true);
@@ -153,20 +176,20 @@ describe('saveWideState', () => {
     test('writes "1" to storage when card is wide', () => {
         const card = makeAdvCard('a10', { wide: true });
         saveWideState(card);
-        expect(localStorage.getItem('df-card-wide:a10')).toBe('1');
+        expect(fakeStorage.getItem('df-card-wide:a10')).toBe('1');
     });
 
     test('removes key when card is not wide', () => {
-        localStorage.setItem('df-card-wide:a11', '1');
+        fakeStorage.setItem('df-card-wide:a11', '1');
         const card = makeAdvCard('a11');
         saveWideState(card);
-        expect(localStorage.getItem('df-card-wide:a11')).toBeNull();
+        expect(fakeStorage.getItem('df-card-wide:a11')).toBeNull();
     });
 });
 
 describe('restoreWideState', () => {
     test('adds df-card--wide when key exists', () => {
-        localStorage.setItem('df-card-wide:a12', '1');
+        fakeStorage.setItem('df-card-wide:a12', '1');
         const card = makeAdvCard('a12');
         restoreWideState(card);
         expect(card.classList.contains('df-card--wide')).toBe(true);
@@ -179,7 +202,7 @@ describe('restoreWideState', () => {
     });
 
     test('works on env cards too', () => {
-        localStorage.setItem('df-card-wide:e01', '1');
+        fakeStorage.setItem('df-card-wide:e01', '1');
         const card = makeEnvCard('e01');
         restoreWideState(card);
         expect(card.classList.contains('df-card--wide')).toBe(true);
@@ -228,7 +251,7 @@ describe('handleTickChange', () => {
         const boxes = addTickboxes(card, 2, 1);
         boxes[0].checked = true;
         fireChange(boxes[0], handleTickChange);
-        expect(localStorage.getItem('df-adv-ticks:a30')).not.toBeNull();
+        expect(fakeStorage.getItem('df-adv-ticks:a30')).not.toBeNull();
     });
 
     test('does nothing when target is not a tickbox', () => {
@@ -237,7 +260,7 @@ describe('handleTickChange', () => {
         const evt = new Event('change');
         Object.defineProperty(evt, 'target', { value: btn });
         expect(() => handleTickChange(evt)).not.toThrow();
-        expect(localStorage.getItem('df-adv-ticks:a31')).toBeNull();
+        expect(fakeStorage.getItem('df-adv-ticks:a31')).toBeNull();
     });
 
     test('clicking unchecked HP tick N fills ticks 0..N', () => {
@@ -416,7 +439,7 @@ describe('handleCountdownClick - collapse button', () => {
         const card = makeEnvCard('e71');
         const btn = card.createEl('button', { cls: 'df-env-countdown-collapse-btn' });
         handleCountdownClick({ target: btn } as unknown as MouseEvent);
-        expect(localStorage.getItem('df-env-countdown-open:e71')).toBe('0');
+        expect(fakeStorage.getItem('df-env-countdown-open:e71')).toBe('0');
     });
 });
 
@@ -474,11 +497,11 @@ describe('handleCountdownTickChange', () => {
         const { ticks } = makeClockInCard(card, { idx: '0', max: 3 });
         ticks[1].checked = true;
         fireChange(ticks[1], handleCountdownTickChange);
-        expect(localStorage.getItem('df-env-countdown:e84:0')).not.toBeNull();
+        expect(fakeStorage.getItem('df-env-countdown:e84:0')).not.toBeNull();
     });
 
     test('does nothing when target is not a countdown tick', () => {
-        const card = makeEnvCard('e85');
+        makeEnvCard('e85');
         const btn = document.body.createEl('button');
         btn.remove(); // deliberately unrelated to card - not a countdown tick
         const evt = new Event('change');

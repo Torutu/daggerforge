@@ -165,7 +165,7 @@ function replaceCardInCanvas(
 
 	// Force Obsidian's canvas renderer to repaint this node.
 	cardElement.classList.add("df-canvas-force-rerender");
-	requestAnimationFrame(() => {
+	window.requestAnimationFrame(() => {
 		cardElement.classList.remove("df-canvas-force-rerender");
 		cardElement.classList.add("df-canvas-normal-opacity");
 	});
@@ -181,13 +181,13 @@ async function editAdversaryInMarkdown(
 ): Promise<void> {
 	const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) {
-		new Notice("Please open a markdown note first.");
+		new Notice("Please open a Markdown note first.");
 		return;
 	}
 
 	const { startIndex, endIndex } = findCardSectionBounds(view.editor.getValue(), cardId, "adv");
 	if (startIndex === -1 || endIndex === -1) {
-		new Notice("Could not find card in markdown.");
+		new Notice("Could not find card in Markdown.");
 		return;
 	}
 
@@ -197,7 +197,7 @@ async function editAdversaryInMarkdown(
 	modal.onEditUpdate = async (newHTML: string, newData: AdvData) => {
 		const replaced = await replaceCardInMarkdown(plugin, cardId, "adv", newHTML);
 		if (!replaced) {
-			new Notice("Could not find card in markdown for update.");
+			new Notice("Could not find card in Markdown for update.");
 			return;
 		}
 
@@ -223,13 +223,13 @@ async function editEnvironmentInMarkdown(
 ): Promise<void> {
 	const view = plugin.app.workspace.getActiveViewOfType(MarkdownView);
 	if (!view) {
-		new Notice("Please open a markdown note first.");
+		new Notice("Please open a Markdown note first.");
 		return;
 	}
 
 	const { startIndex, endIndex } = findCardSectionBounds(view.editor.getValue(), cardId, "env");
 	if (startIndex === -1 || endIndex === -1) {
-		new Notice("Could not find environment card in markdown.");
+		new Notice("Could not find environment card in Markdown.");
 		return;
 	}
 
@@ -239,7 +239,7 @@ async function editEnvironmentInMarkdown(
 	modal.onEditUpdate = async (newHTML: string, newData) => {
 		const replaced = await replaceCardInMarkdown(plugin, cardId, "env", newHTML);
 		if (!replaced) {
-			new Notice("Could not find environment card in markdown for update.");
+			new Notice("Could not find environment card in Markdown for update.");
 			return;
 		}
 
@@ -327,9 +327,9 @@ export const onEditClick = (
 	const cardName = getCardName(cardElement, cardType);
 
 	if (cardType === "adv") {
-		editAdversaryInMarkdown(cardElement, cardId, cardName, plugin);
+		void editAdversaryInMarkdown(cardElement, cardId, cardName, plugin);
 	} else {
-		editEnvironmentInMarkdown(cardElement, cardId, cardName, plugin);
+		void editEnvironmentInMarkdown(cardElement, cardId, cardName, plugin);
 	}
 };
 
