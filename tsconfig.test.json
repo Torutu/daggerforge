@@ -10,7 +10,7 @@
 		"outDir": "./dist-test"
 	},
 	"include": [
-		"src/**/*.ts"
+		"src/tests/**/*.ts"
 	],
 	"exclude": [
 		"node_modules"

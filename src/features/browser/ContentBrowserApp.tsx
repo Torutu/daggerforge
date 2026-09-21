@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { App, MarkdownView, Notice, setIcon } from "obsidian";
+import { App, Notice, setIcon } from "obsidian";
 import type { AdvData, EnvironmentData } from "../../types/index";
 import { ADVERSARIES } from "../../data/index";
 import { ENVIRONMENTS } from "../../data/index";
@@ -207,7 +207,7 @@ function AdversaryPane({ app, refreshToken }: { app: App; refreshToken?: number 
 				{cards.length === 0
 					? <p>No adversaries found.</p>
 					: cards.map(a => (
-						<AdvCard key={a.id || a.name} adversary={a} onInsert={insert} onDelete={deleteAdv} />
+						<AdvCard key={a.id || a.name} adversary={a} onInsert={(adv) => void insert(adv)} onDelete={(adv) => void deleteAdv(adv)} />
 					))
 				}
 			</div>
@@ -230,7 +230,7 @@ function AdvCard({ adversary, onInsert, onDelete }: {
 			</p>
 			{isCustom && (
 				<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
-					onClick={(e: any) => { e.stopPropagation(); onDelete(adversary); }} />
+					onClick={(e) => { e.stopPropagation(); onDelete(adversary); }} />
 			)}
 			<h3 className="df-title-small-padding">{adversary.name || "Unnamed"}</h3>
 			<p className="df-desc-small-padding">{adversary.desc || ""}</p>
@@ -249,8 +249,8 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 	const load = useCallback(() => {
 		const plugin = getDaggerForgePlugin(app);
 		const customRaw = plugin?.dataManager?.getEnvironments() ?? [];
-		const custom = customRaw.map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source || "custom" }));
-		const builtIn = ENVIRONMENTS.map((e: any) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source ?? "core" }));
+		const custom = customRaw.map((e) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source || "custom" }));
+		const builtIn = ENVIRONMENTS.map((e) => ({ ...e, id: e.id || generateEnvUniqueId(), source: e.source ?? "core" }));
 		const all = [...builtIn, ...custom];
 		engineRef.current.setCards(all);
 		setCards([...engineRef.current.search()]);
@@ -321,7 +321,7 @@ function EnvironmentPane({ app, refreshToken }: { app: App; refreshToken?: numbe
 				{cards.length === 0
 					? <p>No environments found.</p>
 					: cards.map(e => (
-						<EnvCard key={e.id || e.name} env={e} badgeLabels={BADGE_LABELS} onInsert={insert} onDelete={deleteEnv} />
+						<EnvCard key={e.id || e.name} env={e} badgeLabels={BADGE_LABELS} onInsert={(env) => void insert(env)} onDelete={(env) => void deleteEnv(env)} />
 					))
 				}
 			</div>
@@ -345,7 +345,7 @@ function EnvCard({ env, badgeLabels, onInsert, onDelete }: {
 			</p>
 			{isCustom && (
 				<LucideBtn icon="trash" title="Delete" cls="df-env-delete-btn"
-					onClick={(e: any) => { e.stopPropagation(); onDelete(env); }} />
+					onClick={(e) => { e.stopPropagation(); onDelete(env); }} />
 			)}
 			<h3 className="df-title-small-padding">{env.name || "Unnamed"}</h3>
 			<p className="df-desc-small-padding">{env.desc || ""}</p>
@@ -417,7 +417,7 @@ function CharacterPane({ app, refreshToken }: { app: App; refreshToken?: number 
 					<p>{q ? "No characters match." : "No saved characters yet. Open the character sheet to create one."}</p>
 				) : (
 					characters.map((c) => (
-						<CharacterCard key={c.id} character={c} onInsert={insert} onDelete={deleteCharacter} />
+						<CharacterCard key={c.id} character={c} onInsert={(char) => void insert(char)} onDelete={deleteCharacter} />
 					))
 				)}
 			</div>
@@ -453,7 +453,7 @@ function CharacterCard({ character, onInsert, onDelete }: {
 				</span>
 			</p>
 			<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
-				onClick={(e: any) => { e.stopPropagation(); onDelete(character); }} />
+				onClick={(e) => { e.stopPropagation(); onDelete(character); }} />
 			<h3 className="df-title-small-padding">{character.name || "Unnamed character"}</h3>
 			<p className="df-desc-small-padding">{character.heritage}</p>
 		</div>
@@ -513,7 +513,7 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 							key={g.id}
 							className="df-adversary-card df-gear-card"
 							style={{ borderLeftColor: GEAR_KIND_COLORS[g.kind] }}
-							onClick={() => insert(g)}
+							onClick={() => void insert(g)}
 						>
 							<p className="df-tier-text">
 								{GEAR_KIND_LABELS[g.kind]}
@@ -523,7 +523,7 @@ function ItemsPane({ app, refreshToken }: { app: App; refreshToken?: number }) {
 							</p>
 							{g.source === "custom" && (
 								<LucideBtn icon="trash" title="Delete" cls="df-adv-delete-btn"
-									onClick={(e: any) => { e.stopPropagation(); void deleteItem(g); }} />
+									onClick={(e) => { e.stopPropagation(); void deleteItem(g); }} />
 							)}
 							<h3 className="df-title-small-padding">{g.name}</h3>
 							<p className="df-desc-small-padding">{g.meta}{g.meta && g.text ? " - " : ""}{g.text}</p>

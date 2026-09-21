@@ -296,8 +296,8 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 								<span className="df-cs-pick-name">{gear.name}</span>
 								<span className="df-cs-pick-meta">
 									Tier {gear.tier} · {kind === "armor"
-										? `Thresholds ${(gear as typeof SRD_EQUIPMENT.armor[number]).minor}/${(gear as typeof SRD_EQUIPMENT.armor[number]).major} · Score ${(gear as typeof SRD_EQUIPMENT.armor[number]).score}`
-										: `${(gear as typeof SRD_EQUIPMENT.weapons[number]).trait} - ${(gear as typeof SRD_EQUIPMENT.weapons[number]).range} · ${(gear as typeof SRD_EQUIPMENT.weapons[number]).damage}`}
+										? `Thresholds ${gear.minor}/${gear.major} · Score ${gear.score}`
+										: `${gear.trait} - ${gear.range} · ${gear.damage}`}
 								</span>
 							</button>
 							{expanded === gear.id && gear.feature && (
@@ -310,7 +310,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 									<button
 										type="button"
 										className="df-cs-pick-add"
-										onClick={() => update(armorToPatch(gear as typeof SRD_EQUIPMENT.armor[number]))}
+										onClick={() => update(armorToPatch(gear))}
 									>
 										Equip
 									</button>
@@ -320,7 +320,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 											type="button"
 											className="df-cs-pick-add"
 											onClick={() =>
-												update({ primaryWeapon: toCharacterWeapon(gear as typeof SRD_EQUIPMENT.weapons[number]) })
+												update({ primaryWeapon: toCharacterWeapon(gear) })
 											}
 										>
 											Primary
@@ -329,7 +329,7 @@ export function CardPicker({ char, update, tab, onTabChange, onClose, customItem
 											type="button"
 											className="df-cs-pick-add df-cs-pick-add--secondary"
 											onClick={() =>
-												update({ secondaryWeapon: toCharacterWeapon(gear as typeof SRD_EQUIPMENT.weapons[number]) })
+												update({ secondaryWeapon: toCharacterWeapon(gear) })
 											}
 										>
 											Secondary

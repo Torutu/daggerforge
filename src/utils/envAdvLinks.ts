@@ -86,25 +86,21 @@ export function attachPotentialAdversaryLinks(
 	if (!names.some(n => nameMap.has(n.toLowerCase()))) return;
 
 	// Rebuild the paragraph with linked names
-	while (advLine.firstChild) advLine.removeChild(advLine.firstChild);
+	advLine.empty();
 
-	const label = document.createElement("span");
-	label.className = "df-bold-title";
-	label.textContent = "Potential Adversaries";
-	advLine.appendChild(label);
-	advLine.appendChild(document.createTextNode(": "));
+	advLine.createSpan({ cls: "df-bold-title", text: "Potential Adversaries" });
+	advLine.appendText(": ");
 
 	names.forEach((name, i) => {
-		if (i > 0) advLine.appendChild(document.createTextNode(", "));
+		if (i > 0) advLine.appendText(", ");
 		if (nameMap.has(name.toLowerCase())) {
-			const btn = document.createElement("button");
-			btn.type = "button";
-			btn.className = "df-adv-link";
-			btn.dataset.advName = name;
-			btn.textContent = name;
-			advLine.appendChild(btn);
+			advLine.createEl("button", {
+				cls: "df-adv-link",
+				text: name,
+				attr: { type: "button", "data-adv-name": name },
+			});
 		} else {
-			advLine.appendChild(document.createTextNode(name));
+			advLine.appendText(name);
 		}
 	});
 }

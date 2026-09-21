@@ -146,8 +146,8 @@ export class SearchEngine<T extends SearchableCard> {
 	private matchesType(card: T): boolean {
 		if (this.filters.types.length === 0) return true;
 
-		const cardType = (String(card.type ?? "")).toLowerCase();
-		const cardDisplayType = (String((card as Record<string, unknown>).displayType ?? "")).toLowerCase();
+		const cardType = (card.type ?? "").toLowerCase();
+		const cardDisplayType = (typeof card.displayType === "string" ? card.displayType : "").toLowerCase();
 
 		return this.filters.types.some(filterType => {
 			const ft = filterType.toLowerCase();
@@ -203,9 +203,9 @@ export class SearchEngine<T extends SearchableCard> {
 			} else if (filterName === "sources") {
 				options.add(card.source || "core");
 			} else if (filterName === "types") {
-				if (card.type) options.add(String(card.type));
-				const dt = (card as Record<string, unknown>).displayType;
-				if (dt) options.add(String(dt));
+				if (card.type) options.add(card.type);
+				const dt = card.displayType;
+				if (typeof dt === "string" && dt) options.add(dt);
 			}
 		}
 

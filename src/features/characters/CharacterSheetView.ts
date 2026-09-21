@@ -12,7 +12,7 @@ export class CharacterSheetView extends ItemView {
 	constructor(leaf: WorkspaceLeaf) { super(leaf); }
 
 	getViewType()    { return Character_Sheet_View_Type; }
-	getDisplayText() { return "Character Sheet"; }
+	getDisplayText() { return "Character sheet"; }
 	getIcon()        { return "user"; }
 
 	async onOpen() {
@@ -41,5 +41,5 @@ export async function openCharacterSheet(plugin: Plugin) {
 	if (!existing[0]) {
 		await leaf.setViewState({ type: Character_Sheet_View_Type, active: true });
 	}
-	plugin.app.workspace.revealLeaf(leaf);
+	void plugin.app.workspace.revealLeaf(leaf);
 }

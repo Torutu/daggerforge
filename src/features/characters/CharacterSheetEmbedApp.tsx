@@ -68,7 +68,6 @@ export function CharacterSheetEmbedApp({ plugin, characterId, code }: Props) {
 		return () => {
 			cancelled = true;
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// Safety net: an embed can be torn down invisibly (scrolling, mode switch,

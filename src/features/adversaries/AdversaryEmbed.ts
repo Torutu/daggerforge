@@ -3,6 +3,7 @@ import type DaggerForgePlugin from "../../main";
 import { ADVERSARIES } from "../../data/adversaries";
 import { AdvData } from "../../types/index";
 import { attachDiceBadges } from "../../utils/diceBadges";
+import { appendHtml } from "../../utils/richContentTransform";
 import { buildEmbedBlock, EmbedParams, generateInstanceToken, parseEmbedParams } from "../embeds/blockParams";
 import { decodeAdversaryCode } from "../embeds/embedCode";
 import { embedStateKey, renderMissingEmbed } from "../embeds/embedShared";
@@ -100,12 +101,12 @@ class AdversaryEmbedChild extends MarkdownRenderChild {
 
 		const count = this.params.count ?? (Number(adv.count) || 1);
 		const html = buildCardHTML(
-			advToValues(adv as unknown as Record<string, unknown>, count),
+			advToValues(adv, count),
 			adv.features.map((f) => ({ ...f, cost: f.cost || "" })),
 			false,
 			embedStateKey(this.params),
 		);
-		el.insertAdjacentHTML("beforeend", html);
+		appendHtml(el, html);
 
 		const section = el.querySelector<HTMLElement>("section");
 		if (section) {

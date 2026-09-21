@@ -19,7 +19,7 @@ import type { AdvData } from "../../../types/index";
 
 export const Adv_View_Type = "daggerforge:adversary-view";
 
-interface Adversary extends AdvData { }
+type Adversary = AdvData;
 
 export class AdversaryView extends ItemView {
 	private adversaries: Adversary[];
@@ -38,7 +38,7 @@ export class AdversaryView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Adversary Browser";
+		return "Adversary browser";
 	}
 
 	getIcon(): string {
@@ -53,7 +53,7 @@ export class AdversaryView extends ItemView {
 		try {
 			const plugin = getDaggerForgePlugin(this.app);
 			if (!plugin || !plugin.dataManager) {
-				new Notice("DaggerForge plugin not found.");
+				new Notice("Daggerforge plugin not found.");
 				return;
 			}
 
@@ -66,7 +66,7 @@ export class AdversaryView extends ItemView {
 
 			await plugin.dataManager.deleteAdversaryById(adversaryId);
 			new Notice(`Deleted adversary: ${adversary.name}`);
-			this.refresh();
+			void this.refresh();
 		} catch (error) {
 			console.error("Error deleting custom adversary:", error);
 			new Notice("Failed to delete adversary.");
@@ -136,7 +136,7 @@ export class AdversaryView extends ItemView {
 		container.empty();
 
 		container.createEl("h2", {
-			text: "Adversary Browser",
+			text: "Adversary browser",
 			cls: "df-adv-title",
 		});
 
@@ -147,7 +147,7 @@ export class AdversaryView extends ItemView {
 
 		container.createDiv({ cls: "df-search-controls-container" });
 
-		this.resultsDiv = container.createEl("div", {
+		this.resultsDiv = container.createDiv({
 			cls: "df-adversary-results",
 		});
 	}
@@ -212,7 +212,7 @@ export class AdversaryView extends ItemView {
 
 			const customAdvs: AdvData[] = plugin.dataManager.getAdversaries();
 			return customAdvs.map((adv) => ({
-				...adv as Adversary,
+				...adv,
 				source: adv.source || "custom",
 			}));
 		} catch (error) {
@@ -246,7 +246,7 @@ export class AdversaryView extends ItemView {
 		// Update the counter display
 		const counterInputs = this.containerEl.querySelectorAll(".df-count-input");
 		counterInputs.forEach((input) => {
-			if (input instanceof HTMLInputElement) {
+			if (input.instanceOf(HTMLInputElement)) {
 				input.value = "1";
 			}
 		});
@@ -326,52 +326,42 @@ export class AdversaryView extends ItemView {
 		}
 
 		adversaries.forEach((adversary) => {
-			const card = this.createAdversaryCard(adversary);
-			this.resultsDiv!.appendChild(card);
+			this.createAdversaryCard(this.resultsDiv!, adversary);
 		});
 	}
 
-	private createAdversaryCard(adversary: Adversary): HTMLElement {
-		const card = document.createElement("div");
-		card.classList.add("df-adversary-card");
-
+	private createAdversaryCard(parent: HTMLElement, adversary: Adversary): HTMLElement {
 		const source = adversary.source || "core";
-		card.classList.add(`df-source-${source.toLowerCase()}`);
+		const card = parent.createDiv({ cls: ["df-adversary-card", `df-source-${source.toLowerCase()}`] });
 
-		const tier = document.createElement("p");
-		tier.classList.add("df-tier-text");
 		const typeDisplay = adversary.type; // displaytype
+		const tier = card.createEl("p", {
+			cls: "df-tier-text",
+			text: `Tier ${adversary.tier} ${typeDisplay} `,
+		});
+		tier.createSpan({
+			cls: `df-source-badge-${source.toLowerCase()}`,
+			text: `${source.toLowerCase()}`,
+		});
 
-		const sourceBadge = document.createElement("span");
-		sourceBadge.classList.add(
-			`df-source-badge-${source.toLowerCase()}`,
-		);
-		sourceBadge.textContent = `${source.toLowerCase()}`;
-
-		tier.textContent = `Tier ${adversary.tier} ${typeDisplay} `;
-		tier.appendChild(sourceBadge);
-
-		card.appendChild(tier);
 		if (source.toLowerCase() === "custom") {
-			const deleteBtn = document.createElement("button");
-			deleteBtn.classList.add("df-adv-delete-btn");
+			const deleteBtn = card.createEl("button", { cls: "df-adv-delete-btn" });
 			setIcon(deleteBtn, "trash");
 			deleteBtn.addEventListener("click", (e: MouseEvent) => {
 				e.stopPropagation();
-				this.deleteCustomAdversary(adversary);
+				void this.deleteCustomAdversary(adversary);
 			});
-			card.appendChild(deleteBtn);
 		}
 
-		const title = document.createElement("h3");
-		title.classList.add("df-title-small-padding");
-		title.textContent = adversary.name || "Unnamed Adversary";
-		card.appendChild(title);
+		card.createEl("h3", {
+			cls: "df-title-small-padding",
+			text: adversary.name || "Unnamed Adversary",
+		});
 
-		const desc = document.createElement("p");
-		desc.classList.add("df-desc-small-padding");
-		desc.textContent = adversary.desc || "No description available.";
-		card.appendChild(desc);
+		card.createEl("p", {
+			cls: "df-desc-small-padding",
+			text: adversary.desc || "No description available.",
+		});
 
 		card.addEventListener("click", () =>
 			this.insertAdversaryIntoNote(adversary),
@@ -398,13 +388,13 @@ export class AdversaryView extends ItemView {
 		}
 
 		if (kind !== "markdown" || !leaf) {
-			new Notice("No note is open in Edit mode.");
+			new Notice("No note is open in edit mode.");
 			return;
 		}
 
 		const view = leaf.view as MarkdownView;
 		if (view.getMode() === "preview") {
-			new Notice("Please switch to Edit mode.");
+			new Notice("Please switch to edit mode.");
 			return;
 		}
 

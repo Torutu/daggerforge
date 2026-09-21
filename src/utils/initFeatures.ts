@@ -12,12 +12,12 @@ import { ItemModal } from "../features/items/ItemModal";
 export function setupRibbonIcon(plugin: DaggerForgePlugin): void {
     plugin.addRibbonIcon(
         "scroll-text",
-        "DaggerForge menu",
+        "Daggerforge menu",
         (evt: MouseEvent) => {
             const menu = new Menu();
 
-            menu.addItem(item => item.setTitle("Content Browser").setIcon("layout-grid").onClick(() => openContentBrowser(plugin)));
-            menu.addItem(item => item.setTitle("Content Creator").setIcon("pencil-ruler").onClick(() => new ContentCreatorModal(plugin.app, plugin).open()));
+            menu.addItem(item => item.setTitle("Content browser").setIcon("layout-grid").onClick(() => openContentBrowser(plugin)));
+            menu.addItem(item => item.setTitle("Content creator").setIcon("pencil-ruler").onClick(() => new ContentCreatorModal(plugin.app, plugin).open()));
             menu.addItem(item => item.setTitle("Character sheet").setIcon("user").onClick(() => openCharacterSheet(plugin)));
 
             menu.addSeparator();
@@ -94,7 +94,7 @@ export function setupCommands(plugin: DaggerForgePlugin): void {
                 return;
             }
             new CharacterPickerModal(plugin.app, characters, (character) =>
-                insertCharacterEmbed(plugin, character.id),
+                void insertCharacterEmbed(plugin, character.id),
             ).open();
         },
     });

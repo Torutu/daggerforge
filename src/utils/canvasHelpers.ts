@@ -20,10 +20,38 @@ import { App, Notice, MarkdownView, WorkspaceLeaf } from "obsidian";
  */
 export type InsertDestination = "canvas" | "markdown" | "none";
 
+/**
+ * Obsidian's Canvas view exposes an internal, undocumented `canvas` object
+ * with no public type definitions - this describes only the minimal shape
+ * this file relies on (see "Obsidian API Usage" in CLAUDE.md: isolate
+ * undocumented internals, document why, add safeguards).
+ */
+export interface ObsidianCanvasNode {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+}
+
+export interface ObsidianCanvas {
+	tx?: number;
+	ty?: number;
+	nodes?: Map<string, ObsidianCanvasNode>;
+	createTextNode(opts: {
+		pos: { x: number; y: number };
+		text: string;
+		size: { width: number; height: number };
+	}): void;
+	requestSave?: () => void;
+}
+
+/** A workspace view that may expose the undocumented canvas/file extras above. */
+type ViewWithExtras = { canvas?: ObsidianCanvas; file?: { extension?: string } };
+
 export interface ResolvedDestination {
 	kind: InsertDestination;
 	/** The specific canvas object to insert into. Only set when kind === "canvas". */
-	canvas: any | null;
+	canvas: ObsidianCanvas | null;
 	/** The target leaf. Use this to get the editor for markdown inserts. */
 	leaf: WorkspaceLeaf | null;
 }
@@ -39,28 +67,28 @@ export interface ResolvedDestination {
  */
 export function resolveInsertDestination(
 	app: App,
-	lastMainLeaf: { view: any } | null
+	lastMainLeaf: { view: unknown } | null
 ): ResolvedDestination {
 	// Check the most recently focused leaf first (fastest path, e.g. user just
 	// clicked directly on a canvas without going through the sidebar).
 	const activeMostRecent = app.workspace.getMostRecentLeaf();
-	const activeView = activeMostRecent?.view;
-	if (activeView && (activeView as any).canvas) {
-		return { kind: "canvas", canvas: (activeView as any).canvas, leaf: activeMostRecent ?? null };
+	const activeView = activeMostRecent?.view as ViewWithExtras | undefined;
+	if (activeView?.canvas) {
+		return { kind: "canvas", canvas: activeView.canvas, leaf: activeMostRecent ?? null };
 	}
 
 	// Fall back to the last main-area leaf the plugin tracked.
 	if (lastMainLeaf) {
-		const view = lastMainLeaf.view;
-		if ((view as any).canvas) {
-			return { kind: "canvas", canvas: (view as any).canvas, leaf: lastMainLeaf as WorkspaceLeaf };
+		const view = lastMainLeaf.view as ViewWithExtras;
+		if (view.canvas) {
+			return { kind: "canvas", canvas: view.canvas, leaf: lastMainLeaf as WorkspaceLeaf };
 		}
-		if (view instanceof MarkdownView) {
+		if (lastMainLeaf.view instanceof MarkdownView) {
 			return { kind: "markdown", canvas: null, leaf: lastMainLeaf as WorkspaceLeaf };
 		}
-		const file = (view as any)?.file;
+		const file = view.file;
 		if (file?.extension === "canvas") {
-			return { kind: "canvas", canvas: (view as any).canvas ?? null, leaf: lastMainLeaf as WorkspaceLeaf };
+			return { kind: "canvas", canvas: view.canvas ?? null, leaf: lastMainLeaf as WorkspaceLeaf };
 		}
 		if (file?.extension === "md") {
 			return { kind: "markdown", canvas: null, leaf: lastMainLeaf as WorkspaceLeaf };
@@ -84,10 +112,10 @@ export function resolveInsertDestination(
  * Left here so existing call sites compile while being migrated.
  */
 export function isCanvasActive(app: App): boolean {
-	const activeView = app.workspace.getMostRecentLeaf()?.view;
-	if (activeView && (activeView as any).canvas) return true;
+	const activeView = app.workspace.getMostRecentLeaf()?.view as ViewWithExtras | undefined;
+	if (activeView?.canvas) return true;
 	return app.workspace.getLeavesOfType("canvas").some(
-		(leaf) => !!(leaf.view as any).canvas
+		(leaf) => !!(leaf.view as ViewWithExtras).canvas
 	);
 }
 
@@ -95,7 +123,7 @@ export function isCanvasActive(app: App): boolean {
 export function isMarkdownActive(app: App): boolean {
 	if (app.workspace.getActiveViewOfType(MarkdownView)) return true;
 	const leaf = app.workspace.getMostRecentLeaf();
-	const file = (leaf?.view as any)?.file;
+	const file = (leaf?.view as ViewWithExtras | undefined)?.file;
 	return file?.extension === "md";
 }
 
@@ -107,7 +135,7 @@ export function isMarkdownActive(app: App): boolean {
 export function createCanvasCard(
 	_app: App,
 	htmlContent: string,
-	canvas: any,
+	canvas: ObsidianCanvas | null,
 	options?: { width?: number; height?: number; x?: number; y?: number }
 ): boolean {
 	if (!canvas) return false;
@@ -123,7 +151,7 @@ export function createCanvasCard(
 		return true;
 	} catch (error) {
 		console.error("Error creating canvas card:", error);
-		new Notice(`Error creating canvas card: ${error.message}`);
+		new Notice(`Error creating canvas card: ${error instanceof Error ? error.message : String(error)}`);
 		return false;
 	}
 }
@@ -131,15 +159,15 @@ export function createCanvasCard(
 /**
  * Get a non-overlapping position on a specific canvas object.
  */
-export function getAvailableCanvasPosition(canvas: any): { x: number; y: number } {
+export function getAvailableCanvasPosition(canvas: ObsidianCanvas | null): { x: number; y: number } {
 	try {
-		let x = (canvas.tx ?? 0) - 200;
-		let y = (canvas.ty ?? 0) - 300;
+		let x = (canvas!.tx ?? 0) - 200;
+		let y = (canvas!.ty ?? 0) - 300;
 
-		const nodes = canvas.nodes ? Array.from(canvas.nodes.values()) : [];
+		const nodes = canvas!.nodes ? Array.from(canvas!.nodes.values()) : [];
 
 		const overlaps = (tx: number, ty: number): boolean =>
-			nodes.some((node: any) =>
+			nodes.some((node) =>
 				tx < node.x + node.width &&
 				tx + 400 > node.x &&
 				ty < node.y + node.height &&

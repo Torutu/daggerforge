@@ -1,5 +1,5 @@
 # DaggerForge Obsidian Plugin - Makefile
-.PHONY: help build watch test deploy docker-build clean branch count
+.PHONY: help build watch test lint deploy docker-build clean branch count
 
 IMAGE  = daggerforge-builder
 # Mount project into container; shadow node_modules with the container's copy
@@ -16,6 +16,7 @@ help:
 	@echo "make build        - Build for production (Docker)"
 	@echo "make watch        - Watch mode / dev build (Docker)"
 	@echo "make test         - Run tests (Docker)"
+	@echo "make lint         - Run eslint (Docker)"
 	@echo "make deploy       - Deploy built files to Obsidian vault"
 	@echo "make docker-build - Force-rebuild the Docker image"
 	@echo "make clean        - Remove build output and Docker image"
@@ -35,6 +36,9 @@ watch: .docker-image
 
 test: .docker-image
 	$(RUN) npm test
+
+lint: .docker-image
+	$(RUN) npm run lint
 
 clean:
 	@rm -f main.js .docker-image

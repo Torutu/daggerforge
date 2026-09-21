@@ -13,7 +13,7 @@ import type { EnvironmentData } from '../types/index';
 const MOCK_UUID = 'env-uuid-5678-abcd-efgh-ijkl';
 
 beforeAll(() => {
-    Object.defineProperty(globalThis.crypto, 'randomUUID', {
+    Object.defineProperty(window.crypto, 'randomUUID', {
         writable: true,
         configurable: true,
         value: () => MOCK_UUID,
@@ -21,7 +21,7 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-    delete (globalThis.crypto as any).randomUUID;
+    delete (window.crypto as { randomUUID?: () => string }).randomUUID;
 });
 
 function baseEnv(): EnvironmentData {
@@ -280,6 +280,27 @@ describe('envToHtml - countdown parsing from features', () => {
         };
         const html = envToHtml(env);
         expect(html).toContain('data-max="4"');
+    });
+
+    // A countdown's name is the feature's title, a plain text field a user can
+    // type anything into (including on a custom environment imported or
+    // shared by someone else) - it must never be interpolated unescaped.
+    test('escapes a feature name used as a countdown name', () => {
+        const env = {
+            ...baseEnv(),
+            features: [{
+                name: '"><img src=x onerror=alert(1)>',
+                type: 'Passive',
+                cost: undefined,
+                richContent: '<p>Countdown (3)</p>',
+                questions: [],
+            }],
+        };
+        const html = envToHtml(env);
+        // No real <img> element must ever be created - "onerror" surviving
+        // as inert escaped text is fine; a live element carrying it is not.
+        expect(html).not.toContain('<img');
+        expect(html).toContain('&quot;&gt;&lt;img src=x onerror=alert(1)&gt;');
     });
 
     test('explicit countdowns are not duplicated by feature parsing', () => {

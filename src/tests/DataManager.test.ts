@@ -4,20 +4,21 @@
  * Tests for DataManager - saving, loading, and managing adversary and environment data.
  */
 
+import type { Plugin } from 'obsidian';
 import { DataManager } from '../data/index';
 import type { AdvData, EnvironmentData } from '../types/index';
 
 function mockPlugin() {
     const plugin = {
-        _store: null as any,
+        _store: null as unknown,
         async loadData() { return plugin._store; },
-        async saveData(data: any) { plugin._store = data; },
+        async saveData(data: unknown) { plugin._store = data; },
     };
     return plugin;
 }
 
 async function createManager() {
-    const dm = new DataManager(mockPlugin() as any);
+    const dm = new DataManager(mockPlugin() as unknown as Plugin);
     await dm.load();
     return dm;
 }

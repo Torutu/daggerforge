@@ -13,7 +13,7 @@ export class ImportDataModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.empty();
-		contentEl.createEl("h2", { text: "Import Data" });
+		contentEl.createEl("h2", { text: "Import data" });
 		contentEl.createEl("p", { 
 			text: "Select a JSON file to import adversaries and environments. This will merge with your existing data."
 		});
@@ -42,7 +42,7 @@ export class ImportDataModal extends Modal {
 							this.close();
 						} catch (error) {
 							console.error("Import error:", error);
-							new Notice(`Import failed: ${error.message}`);
+							new Notice(`Import failed: ${error instanceof Error ? error.message : String(error)}`);
 						}
 					})
 			)
@@ -62,7 +62,7 @@ export class ImportDataModal extends Modal {
 			reader.onload = async (e) => {
 				try {
 					const text = e.target?.result as string;
-					const data = JSON.parse(text);
+					const data: unknown = JSON.parse(text);
 
 					if (!this.validateImportData(data)) {
 						reject(new Error("Invalid data format. File must contain 'adversaries' or 'environments' arrays."));
@@ -74,7 +74,7 @@ export class ImportDataModal extends Modal {
 					refreshBrowsers(this.plugin);
 					resolve();
 				} catch (error) {
-					reject(error);
+					reject(error instanceof Error ? error : new Error(String(error)));
 				}
 			};
 
@@ -85,13 +85,14 @@ export class ImportDataModal extends Modal {
 		});
 	}
 
-	private validateImportData(data: any): boolean {
+	private validateImportData(data: unknown): boolean {
 		if (typeof data !== "object" || data === null) {
 			return false;
 		}
 
-		const hasAdversaries = Array.isArray(data.adversaries);
-		const hasEnvironments = Array.isArray(data.environments);
+		const record = data as Record<string, unknown>;
+		const hasAdversaries = Array.isArray(record.adversaries);
+		const hasEnvironments = Array.isArray(record.environments);
 
 		return hasAdversaries || hasEnvironments;
 	}

@@ -15,6 +15,7 @@ jest.mock('../features/browser/ContentBrowserView', () => ({
 }));
 
 import { refreshBrowsers } from '../utils/pluginOperations';
+import type DaggerForgePlugin from '../main';
 
 const CONTENT_BROWSER  = 'daggerforge:content-browser';
 const OLD_ADV_VIEW     = 'daggerforge:adversary-search';
@@ -32,7 +33,7 @@ function makePlugin(leaves: { viewType: string; view: object }[]) {
                     leaves.filter(l => l.viewType === type).map(l => ({ view: l.view })),
             },
         },
-    } as any;
+    } as unknown as DaggerForgePlugin;
 }
 
 describe('refreshBrowsers', () => {

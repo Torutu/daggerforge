@@ -6391,3 +6391,86 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	vertical-align: -1px;
 	margin-right: 1px;
 }
+
+/* ---------- Icon sizing for setIcon()-rendered buttons ----------
+   These buttons used to embed a hand-authored SVG string via innerHTML,
+   which carried its own width/height. Now they use Obsidian's setIcon(),
+   whose <svg> has no size of its own - pin the original pixel sizes here
+   so nothing shifts visually. */
+
+.df-dr-roll-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+.df-dr-section-label svg {
+	width: 13px;
+	height: 13px;
+}
+
+.df-dr-clear-btn svg {
+	width: 13px;
+	height: 13px;
+}
+
+.df-dr-chip-remove svg {
+	width: 10px;
+	height: 10px;
+}
+
+.df-enc-calc-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+.df-enc-col-header svg,
+.df-enc-section-label svg {
+	width: 13px;
+	height: 13px;
+}
+
+.df-enc-clear-btn svg {
+	width: 13px;
+	height: 13px;
+}
+
+.df-enc-remove-btn svg {
+	width: 10px;
+	height: 10px;
+}
+
+.df-rich-editor-btn svg {
+	width: 15px;
+	height: 15px;
+}
+
+.df-rich-editor-info-icon svg {
+	width: 13px;
+	height: 13px;
+}
+
+.df-env-countdown-minus svg,
+.df-env-countdown-plus svg {
+	width: 14px;
+	height: 14px;
+}
+
+.df-env-countdown-reset-btn svg {
+	width: 13px;
+	height: 13px;
+}
+
+.df-search-input-icon svg {
+	width: 14px;
+	height: 14px;
+}
+
+.df-multiselect-chevron svg {
+	width: 11px;
+	height: 11px;
+}
+
+.df-clear-filters-btn svg {
+	width: 13px;
+	height: 13px;
+}

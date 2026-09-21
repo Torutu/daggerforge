@@ -2,6 +2,10 @@ module.exports = {
 	testEnvironment: 'node',
 	verbose: true,
 	testMatch: ['**/src/tests/**/*.test.ts'],
+	// Polyfills Obsidian's HTMLElement extensions (createEl, empty, ...) for
+	// test files that opt into jsdom via the @jest-environment pragma; a
+	// no-op for files on the default 'node' environment.
+	setupFilesAfterEnv: ['<rootDir>/src/tests/obsidianDomPolyfill.ts'],
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
 	transform: {
 		'^.+\\.(ts|tsx)$': ['ts-jest', {

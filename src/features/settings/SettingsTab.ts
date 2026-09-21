@@ -14,11 +14,9 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: "DaggerForge" });
-
 		new Setting(containerEl)
 			.setName("Enable keyword highlighting")
-			.setDesc("Color game terms (Hope, Fear, HP, Stress) inside rendered cards.")
+			.setDesc("Color game terms (hope, fear, hp, stress) inside rendered cards.")
 			.addToggle((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.keywordHighlighting)

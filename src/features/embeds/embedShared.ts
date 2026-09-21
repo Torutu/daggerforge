@@ -17,7 +17,7 @@ export function renderMissingEmbed(el: HTMLElement, kind: string, id: string | n
 	box.createEl("p", { text: `${kind} not found`, cls: "df-cs-missing-title" });
 	if (id) box.createEl("code", { text: id, cls: "df-cs-missing-id" });
 	box.createEl("p", {
-		text: `It may have been deleted, or this vault doesn't have it. Check the id against the content browser.`,
+		text: `It may have been deleted, or this vault doesn't have it. Check the ID against the content browser.`,
 		cls: "df-cs-missing-hint",
 	});
 }

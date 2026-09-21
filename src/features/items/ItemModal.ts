@@ -54,7 +54,7 @@ export class ItemModal extends Modal {
 
 		const nameWrap = field("Name", "What the party will call it.");
 		const nameInput = nameWrap.createEl("input", { type: "text" });
-		nameInput.placeholder = "e.g. Bag of Ficklesand";
+		nameInput.placeholder = "E.g. Bag of ficklesand";
 
 		const kindWrap = field("Kind", KIND_GUIDE.item.hint);
 		const kindHint = kindWrap.querySelector<HTMLElement>(".df-item-field-hint");
@@ -85,7 +85,7 @@ export class ItemModal extends Modal {
 		);
 		const textArea = textWrap.createEl("textarea");
 		textArea.rows = 4;
-		textArea.placeholder = "e.g. During downtime, you automatically clear a Stress.";
+		textArea.placeholder = "E.g. During downtime, you automatically clear a stress.";
 
 		kindSelect.addEventListener("change", () => {
 			const guide = KIND_GUIDE[kindSelect.value as GearData["kind"]];
@@ -95,28 +95,30 @@ export class ItemModal extends Modal {
 
 		const buttons = contentEl.createDiv({ cls: "df-cs-confirm-buttons" });
 		const create = buttons.createEl("button", { text: "Create & insert", cls: "mod-cta" });
-		create.addEventListener("click", async () => {
-			const name = nameInput.value.trim();
-			if (!name) {
-				new Notice("Give the item a name first.");
-				return;
-			}
-			const tier = Number(tierInput.value);
-			const item: GearData = {
-				id: "",
-				kind: kindSelect.value as GearData["kind"],
-				name,
-				tier: Number.isInteger(tier) && tier >= 1 && tier <= 4 ? tier : null,
-				rarity: raritySelect.value || null,
-				meta: statsInput.value.trim(),
-				text: textArea.value.trim(),
-				source: "custom",
-			};
-			await this.plugin.dataManager.upsertItem(item);
-			new Notice(`Created ${name}.`);
-			const code = await encodeGearCode(item);
-			insertAtFocusedTarget(this.plugin, buildItemEmbedBlock(item.id, code), { width: 420, height: 260 }, name);
-			this.close();
+		create.addEventListener("click", () => {
+			void (async () => {
+				const name = nameInput.value.trim();
+				if (!name) {
+					new Notice("Give the item a name first.");
+					return;
+				}
+				const tier = Number(tierInput.value);
+				const item: GearData = {
+					id: "",
+					kind: kindSelect.value as GearData["kind"],
+					name,
+					tier: Number.isInteger(tier) && tier >= 1 && tier <= 4 ? tier : null,
+					rarity: raritySelect.value || null,
+					meta: statsInput.value.trim(),
+					text: textArea.value.trim(),
+					source: "custom",
+				};
+				await this.plugin.dataManager.upsertItem(item);
+				new Notice(`Created ${name}.`);
+				const code = await encodeGearCode(item);
+				insertAtFocusedTarget(this.plugin, buildItemEmbedBlock(item.id, code), { width: 420, height: 260 }, name);
+				this.close();
+			})();
 		});
 		buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
 	}
