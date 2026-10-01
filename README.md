@@ -1,4 +1,4 @@
-# Daggerheart Plugin
+# DaggerForge
 
 This plugin designed for **Daggerheart**, a TTRPG, that helps Game Masters easily add adversaries and environments to their notes and create custom content all within Obsidian.
 

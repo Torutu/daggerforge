@@ -148,8 +148,9 @@
 
 .df-hp-tickboxes .df-hp-tickbox:checked:after,
 .df-stress-tickboxes .df-stress-tickbox:after {
-	/* hides the check mark */
-	background-color: transparent !important;
+	/* hides the check mark - 3 class/pseudo-class selectors already outrank
+	   the browser's input[type=checkbox]:checked::after default */
+	background-color: transparent;
 }
 
 .df-env-edit-button,
@@ -236,7 +237,7 @@
 .cm-html-embed:has(.df-env-card-outer) .edit-block-button,
 .markdown-reading-view :has(.df-card-outer) .edit-block-button,
 .markdown-reading-view :has(.df-env-card-outer) .edit-block-button {
-	display: none !important;
+	display: none;
 }
 
 /* Ensure our card buttons always sit above any Obsidian overlays */
@@ -250,7 +251,7 @@
 /* Hide the card edit button in reading view - it's only useful when the
    editor is active. The wide toggle remains visible in both modes. */
 .markdown-reading-view [data-edit-mode-only="true"] {
-	display: none !important;
+	display: none;
 }
 
 .df-adv-collapse-btn {
@@ -780,7 +781,7 @@
 .df-remove-feature-btn {
 	align-self: flex-end;
 	padding: 4px 8px;
-	background-color: #391818 !important;
+	background-color: #391818;
 	color: white;
 	border: none;
 	border-radius: 4px;
@@ -1023,7 +1024,7 @@
 .df-env-btn-remove-feature {
 	align-self: flex-end;
 	padding: 4px 8px;
-	background-color: #391818 !important;
+	background-color: #391818;
 	color: white;
 	border: none;
 	border-radius: 4px;
@@ -1208,9 +1209,9 @@
 	pointer-events: none;
 }
 
-.df-search-input {
+.df-search-input-wrap .df-search-input {
 	width: 100%;
-	padding-left: 30px !important;
+	padding-left: 30px;
 }
 
 .df-adversary-search-box {
@@ -1250,12 +1251,12 @@
 }
 
 /* count input matches button height */
-.df-count-input {
-	width: 48px !important;
-	height: 28px !important;
+.df-count-input.df-inline-input {
+	width: 48px;
+	height: 28px;
 	text-align: center;
-	border-radius: 5px !important;
-	padding: 0 4px !important;
+	border-radius: 5px;
+	padding: 0 4px;
 }
 
 .df-env-results,
@@ -1501,7 +1502,7 @@
 }
 
 .df-env-countdown-tickboxes .df-env-countdown-tick:checked:after {
-	background-color: transparent !important;
+	background-color: transparent;
 }
 
 /* ── Countdown form (creator/editor) ───────────────────────────────────────── */
@@ -2979,16 +2980,16 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 
 /* ── Mobile modal overrides ─────────────────────────────────────────────── */
 
-.is-mobile .modal:has(.df-modal-title) {
-	width: 96vw !important;
-	max-width: 96vw !important;
-	max-height: 88vh !important;
-	padding: 16px 12px !important;
-	border-radius: 12px !important;
+.is-mobile .modal.modal:has(.df-modal-title) {
+	width: 96vw;
+	max-width: 96vw;
+	max-height: 88vh;
+	padding: 16px 12px;
+	border-radius: 12px;
 }
 
-.is-mobile .modal:has(.df-modal-title) .modal-content {
-	padding: 0 !important;
+.is-mobile .modal.modal:has(.df-modal-title) .modal-content {
+	padding: 0;
 }
 
 .is-mobile .df-modal-title {
