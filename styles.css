@@ -13,7 +13,6 @@
 
 .df-pseudo-cut-corners {
 	position: relative;
-	clip-path: none;
 	--df-corner: 4px;
 }
 
@@ -25,14 +24,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	clip-path: polygon(var(--df-corner) 0%,
-			calc(100% - var(--df-corner)) 0%,
-			100% var(--df-corner),
-			100% calc(100% - var(--df-corner)),
-			calc(100% - var(--df-corner)) 100%,
-			var(--df-corner) 100%,
-			0% calc(100% - var(--df-corner)),
-			0% var(--df-corner));
+	border-radius: var(--df-corner);
 }
 
 .df-pseudo-cut-corners.outer {
@@ -230,13 +222,9 @@
 }
 
 /* Hide Obsidian's native "Edit this block" button for our card HTML blocks
-   in BOTH live-preview (cm-html-embed) and reading view. */
-:has(> .df-card-outer) .edit-block-button,
-:has(> .df-env-card-outer) .edit-block-button,
-.cm-html-embed:has(.df-card-outer) .edit-block-button,
-.cm-html-embed:has(.df-env-card-outer) .edit-block-button,
-.markdown-reading-view :has(.df-card-outer) .edit-block-button,
-.markdown-reading-view :has(.df-env-card-outer) .edit-block-button {
+   in BOTH live-preview (cm-html-embed) and reading view. markCardHosts()
+   adds .df-card-host to the card's containers. */
+.df-card-host .edit-block-button {
 	display: none;
 }
 
@@ -2853,10 +2841,6 @@ body[data-df-theme="minimal"] .df-env-card-outer {
 	border-radius: 6px;
 }
 
-body[data-df-theme="minimal"] .df-pseudo-cut-corners {
-	clip-path: none;
-}
-
 /* ── Content Browser - tabbed sidebar ───────────────────────────────────── */
 
 .df-browser-tabs {
@@ -2980,7 +2964,7 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 
 /* ── Mobile modal overrides ─────────────────────────────────────────────── */
 
-.is-mobile .modal.modal:has(.df-modal-title) {
+.is-mobile .modal.modal.df-form-modal {
 	width: 96vw;
 	max-width: 96vw;
 	max-height: 88vh;
@@ -2988,7 +2972,7 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	border-radius: 12px;
 }
 
-.is-mobile .modal.modal:has(.df-modal-title) .modal-content {
+.is-mobile .modal.modal.df-form-modal .modal-content {
 	padding: 0;
 }
 
@@ -3412,11 +3396,14 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	background: var(--df-cs-strong);
+	/* Slanted right edge: a body plus a 24px triangle (half overlaps by 0.5px to avoid a seam) */
+	--df-header-logo-shape:
+		linear-gradient(to bottom right, var(--df-cs-strong) calc(50% - 0.5px), transparent calc(50% + 0.5px)) right top / 24px 100% no-repeat,
+		linear-gradient(var(--df-cs-strong), var(--df-cs-strong)) left top / calc(100% - 23.5px) 100% no-repeat;
+	background: var(--df-header-logo-shape);
 	color: var(--df-cs-paper);
 	padding: 12px 34px 12px 16px;
 	border-radius: 8px 0 0 8px;
-	clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%);
 }
 
 .df-cs-header-logo-title {
@@ -3723,29 +3710,48 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	border-radius: 3px;
 }
 
+/* Hexagon with pointed left/right ends, drawn as four corner triangles plus
+   a body. The body overlaps each cap by 0.5px and a 1px centre line covers
+   the seam between the upper and lower triangles, so no hairline shows at
+   fractional pixel ratios. Each element sets --df-hex-cap (width of one
+   pointed end) and --df-hex-fill. */
+.df-cs-banner-strip,
+.df-cs-banner-hex,
+.df-cs-banner-hex-inner,
+.df-cs-proficiency,
+.df-cs-proficiency-inner {
+	background:
+		linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--df-hex-fill) calc(50% + 0.5px)) left top / var(--df-hex-cap) 50% no-repeat,
+		linear-gradient(to top right, transparent calc(50% - 0.5px), var(--df-hex-fill) calc(50% + 0.5px)) left bottom / var(--df-hex-cap) 50% no-repeat,
+		linear-gradient(to bottom left, transparent calc(50% - 0.5px), var(--df-hex-fill) calc(50% + 0.5px)) right top / var(--df-hex-cap) 50% no-repeat,
+		linear-gradient(to top left, transparent calc(50% - 0.5px), var(--df-hex-fill) calc(50% + 0.5px)) right bottom / var(--df-hex-cap) 50% no-repeat,
+		linear-gradient(var(--df-hex-fill), var(--df-hex-fill)) center / calc(100% - 2 * var(--df-hex-cap) + 1px) 100% no-repeat,
+		linear-gradient(var(--df-hex-fill), var(--df-hex-fill)) left 1px center / calc(100% - 2px) 1px no-repeat;
+}
+
 .df-cs-banner-strip {
+	--df-hex-cap: 8px;
+	--df-hex-fill: var(--df-cs-ink);
 	position: absolute;
 	left: -13px;
 	right: -13px;
 	top: 8.5px;
 	height: 9px;
-	background: var(--df-cs-ink);
-	clip-path: polygon(0 50%, 8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%);
 }
 
 .df-cs-banner-hex {
+	--df-hex-cap: 15px;
+	--df-hex-fill: var(--df-cs-ink);
 	position: absolute;
 	inset: 0;
-	background: var(--df-cs-ink);
-	clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 15px 100%, 0 50%);
 	display: flex;
 }
 
 .df-cs-banner-hex-inner {
+	--df-hex-cap: 14px;
+	--df-hex-fill: var(--df-cs-paper);
 	flex: 1;
 	margin: 1.6px;
-	background: var(--df-cs-paper);
-	clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -3804,7 +3810,7 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	text-transform: uppercase;
 	line-height: 1.2;
 	padding: 4px 2px;
-	clip-path: polygon(3px 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px), 0 3px);
+	border-radius: 3px;
 }
 
 .df-cs-threshold-caption {
@@ -3893,8 +3899,11 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	justify-content: space-evenly;
 	height: 27px;
 	margin: 0 8px 12px;
-	background: var(--df-cs-mid);
-	clip-path: polygon(14px 0, calc(100% - 3px) 0, calc(100% - 14px) 100%, 3px 100%);
+	/* Parallelogram: two slanted 11px ends plus a body between them */
+	background:
+		linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--df-cs-mid) calc(50% + 0.5px)) left 3px top 0 / 11px 100% no-repeat,
+		linear-gradient(to bottom right, var(--df-cs-mid) calc(50% - 0.5px), transparent calc(50% + 0.5px)) right 3px top 0 / 11px 100% no-repeat,
+		linear-gradient(var(--df-cs-mid), var(--df-cs-mid)) center / calc(100% - 27px) 100% no-repeat;
 }
 
 .df-cs-hope-sep {
@@ -4092,11 +4101,11 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 }
 
 .df-cs-proficiency {
+	--df-hex-cap: 11px;
+	--df-hex-fill: var(--df-cs-ink);
 	width: fit-content;
 	margin: 2px auto 0;
-	background: var(--df-cs-ink);
 	padding: 1.2px;
-	clip-path: polygon(11px 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 11px 100%, 0 50%);
 	display: flex;
 }
 
@@ -4107,8 +4116,8 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	justify-content: center;
 	gap: 5px;
 	padding: 3px 20px;
-	background: var(--df-cs-paper);
-	clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
+	--df-hex-cap: 10px;
+	--df-hex-fill: var(--df-cs-paper);
 }
 
 .df-cs-proficiency-label {
@@ -4237,7 +4246,7 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	}
 
 	.is-mobile .df-cs-header-logo {
-		clip-path: none;
+		background: var(--df-cs-strong);
 		border-radius: 8px 8px 0 0;
 		padding: 10px 16px;
 	}
@@ -4289,7 +4298,7 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	}
 
 	.df-cs-header-logo {
-		clip-path: none;
+		background: var(--df-cs-strong);
 		border-radius: 8px 8px 0 0;
 		padding: 10px 16px;
 	}
@@ -5592,7 +5601,7 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 	}
 
 	.df-cs-sheet--compact .df-cs-header-logo {
-		clip-path: none;
+		background: var(--df-cs-strong);
 		border-radius: 8px 8px 0 0;
 		padding: 10px 16px;
 	}
@@ -5648,7 +5657,7 @@ body[data-df-theme="minimal"] .df-pseudo-cut-corners {
 }
 
 .df-cs-sheet--wide .df-cs-header-logo {
-	clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%);
+	background: var(--df-header-logo-shape);
 	border-radius: 8px 0 0 8px;
 	padding: 12px 34px 12px 16px;
 }

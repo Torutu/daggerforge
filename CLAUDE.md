@@ -16,10 +16,28 @@ Obsidian plugins run in a browser environment - **`process`, `Buffer`, `__dirnam
 
 ---
 
+# The UI runs on Preact, never react-dom
+
+Obsidian's plugin review scans the shipped `main.js` and rejects `createElement("script")`. `react-dom` contains that call (script hoisting), so it must never be bundled.
+
+- The UI is rendered by **Preact** through its React-compatible API. Source code keeps importing `react` and `react-dom/client`; `esbuild.config.mjs` aliases both to `preact/compat` and sets `jsxImportSource: "preact"`. Types still come from `@types/react` / `@types/react-dom`.
+- **Do not** add `react` or `react-dom` back to `package.json`. If a new dependency pulls them in, alias or replace it.
+- The production build fails (`assertNoScriptElementCreation` in `esbuild.config.mjs`) if `main.js` contains `createElement("script")`, which also fails the tag-triggered release workflow.
+- Preact 11 is ESM-only, so Jest maps `react`, `react/jsx-runtime` and `react-dom/client` to the inert stub `src/tests/__mocks__/ui.ts`. Tests must not render UI; test pure logic instead.
+- Remaining literal `createElement("div" | "span" | ...)` calls in `main.js` come from the TipTap/ProseMirror editor. They create no `<script>` elements.
+
+---
+
 # CSS Naming Rules
 - **Never** use bare HTML element selectors (`p`, `ul`, `input`, `select`, `textarea`, `button`, etc.) in `styles.css`.
 - **Always** use `df-` prefixed classes. If one doesn't exist for the element you're styling, create it.
 - The only exception is `.is-mobile` - this is an Obsidian-injected body class and cannot be renamed.
+
+# CSS features the Obsidian review rejects
+
+- **No `!important`** - raise selector specificity instead.
+- **No `clip-path`** (even `clip-path: none`) - it is flagged as partially supported. Pointed-end hexagons and slanted edges are drawn with layered gradients (see `.df-cs-banner-hex` and `--df-header-logo-shape`); small corner cuts use `border-radius`.
+- **No `:has()`** - add a class from TypeScript instead (see `markCardHosts()` in `src/utils/cardHosts.ts`, and `df-form-modal` on the create/edit modals).
 
 ---
 
@@ -483,6 +501,7 @@ Code is complete only if:
 - It respects vault safety.
 - It contains zero `.innerHTML`, `.outerHTML`, or `insertAdjacentHTML` usage (see the dedicated rule above - no exceptions).
 - It contains zero `document.createElement()` calls - every element is built with `createEl()`/`createDiv()`/`createSpan()` (see the dedicated rule above - no exceptions).
+- The production `main.js` contains zero `createElement("script")` (react-dom is never bundled; the build guard enforces this).
 - It works in both light and dark themes.
 - It is maintainable and scalable.
 - It introduces minimal complexity.

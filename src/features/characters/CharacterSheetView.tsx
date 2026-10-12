@@ -1,6 +1,5 @@
 import { ItemView, Plugin, WorkspaceLeaf } from "obsidian";
 import { createRoot, Root } from "react-dom/client";
-import { createElement } from "react";
 import { CharacterSheetApp } from "./CharacterSheetApp";
 import { getDaggerForgePlugin } from "../../utils/pluginOperations";
 
@@ -24,7 +23,7 @@ export class CharacterSheetView extends ItemView {
 		if (!plugin) return;
 
 		this.root = createRoot(container);
-		this.root.render(createElement(CharacterSheetApp, { plugin }));
+		this.root.render(<CharacterSheetApp plugin={plugin} />);
 	}
 
 	async onClose() {

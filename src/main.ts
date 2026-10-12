@@ -16,6 +16,7 @@ import {
 	setupCommands,
 	listenForEditClicks,
 	attachDiceBadges,
+	markCardHosts,
 	handleDiceBtnClick,
 	handleCollapseClick,
 	handleWideToggleClick,
@@ -124,10 +125,15 @@ export default class DaggerForgePlugin extends Plugin {
 			}
 		});
 
+		function prepareCard(card: HTMLElement) {
+			markCardHosts(card);
+			attachDiceBadges(card);
+		}
+
 		function processAllVisibleCards() {
 			document
 				.querySelectorAll<HTMLElement>(".df-card-outer, .df-env-card-outer")
-				.forEach((section) => attachDiceBadges(section));
+				.forEach(prepareCard);
 		}
 
 		// Restore card state the moment a card enters the DOM.
@@ -138,10 +144,10 @@ export default class DaggerForgePlugin extends Plugin {
 				for (const node of Array.from(mutation.addedNodes)) {
 					if (!node.instanceOf(HTMLElement)) continue;
 					if (node.classList.contains("df-card-outer") || node.classList.contains("df-env-card-outer")) {
-						attachDiceBadges(node);
+						prepareCard(node);
 					}
 					node.querySelectorAll<HTMLElement>(".df-card-outer, .df-env-card-outer")
-						.forEach(card => attachDiceBadges(card));
+						.forEach(prepareCard);
 				}
 			}
 		});
@@ -153,11 +159,11 @@ export default class DaggerForgePlugin extends Plugin {
 				element.classList.contains("df-card-outer") ||
 				element.classList.contains("df-env-card-outer")
 			) {
-				attachDiceBadges(element);
+				prepareCard(element);
 			}
 			element
 				.querySelectorAll<HTMLElement>(".df-card-outer, .df-env-card-outer")
-				.forEach((section) => attachDiceBadges(section));
+				.forEach(prepareCard);
 		}
 	}
 

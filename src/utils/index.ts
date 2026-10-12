@@ -8,6 +8,7 @@ export * from './initFeatures';
 export * from './pluginOperations';
 export * from './Sidebar';
 export * from './diceBadges';
+export * from './cardHosts';
 export * from './keywordBadges';
 export * from './themeManager';
 export * from './collapseState';

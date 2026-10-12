@@ -18,5 +18,10 @@ module.exports = {
 		// Point all 'obsidian' imports at our stub - the real package only
 		// exists inside the Obsidian Electron process
 		'^obsidian$': '<rootDir>/src/tests/__mocks__/obsidian.ts',
+		// The UI runs on Preact (ESM-only) via esbuild aliases; no test renders
+		// UI, so Jest gets an inert stand-in instead
+		'^react$': '<rootDir>/src/tests/__mocks__/ui.ts',
+		'^react/jsx-runtime$': '<rootDir>/src/tests/__mocks__/ui.ts',
+		'^react-dom/client$': '<rootDir>/src/tests/__mocks__/ui.ts',
 	},
 };

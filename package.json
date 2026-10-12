@@ -1,6 +1,6 @@
 {
 	"name": "daggerforge",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"description": "A DaggerHeart toolkit for Obsidian, providing easy access to DaggerHeart's Adversaries and the ability to create your own.",
 	"type": "module",
 	"main": "main.js",
@@ -8,7 +8,7 @@
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
-		"watch": "esbuild src/main.ts --bundle --outfile=main.js --external:obsidian --platform=node --format=cjs --minify-syntax --minify-whitespace --watch=forever",
+		"watch": "npm run dev",
 		"test": "jest --colors",
 		"lint": "eslint ."
 	},
@@ -48,7 +48,6 @@
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"html2canvas": "^1.4.1",
-		"react": "^19.2.6",
-		"react-dom": "^19.2.6"
+		"preact": "^11.0.1"
 	}
 }

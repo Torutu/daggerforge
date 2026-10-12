@@ -1,5 +1,6 @@
 import esbuild from "esbuild";
 import process from "process";
+import { readFileSync } from "node:fs";
 import { builtinModules } from "node:module";
 
 const banner = `/*
@@ -32,6 +33,15 @@ const context = await esbuild.context({
 		...builtinModules,
 	],
 	jsx: "automatic",
+	jsxImportSource: "preact",
+	// The UI runs on Preact through its React-compatible API, so the source
+	// keeps importing "react" / "react-dom/client". react-dom ships code that
+	// creates <script> elements at runtime, which Obsidian's plugin review
+	// rejects; Preact has no such code.
+	alias: {
+		"react": "preact/compat",
+		"react-dom": "preact/compat",
+	},
 	format: "cjs",
 	target: "es2018",
 	logLevel: "info",
@@ -48,8 +58,19 @@ const context = await esbuild.context({
 	},
 });
 
+// Fails the build (and so the release workflow) if any dependency ever brings
+// runtime <script> element creation back into the bundle.
+function assertNoScriptElementCreation(file) {
+	const bundle = readFileSync(file, "utf8");
+	if (/createElement\(\s*["'`]script["'`]\s*\)/.test(bundle)) {
+		console.error(`${file} contains createElement("script") - a dependency creates <script> elements at runtime.`);
+		process.exit(1);
+	}
+}
+
 if (prod) {
 	await context.rebuild();
+	assertNoScriptElementCreation("main.js");
 	process.exit(0);
 } else {
 	await context.watch();

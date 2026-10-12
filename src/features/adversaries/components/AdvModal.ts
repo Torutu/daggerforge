@@ -102,6 +102,7 @@ export class AdversaryModal extends Modal {
 
 		const { contentEl } = this;
 		contentEl.empty();
+		this.modalEl.addClass("df-form-modal");
 
 		contentEl.createEl("h2", {
 			text: this.isEditMode ? "Edit adversary" : "Create adversary",
