@@ -4919,7 +4919,12 @@ body[data-df-theme="minimal"] .df-env-card-outer {
 .df-cs-wiz-row.is-active {
 	border-color: var(--df-cs-row-accent, var(--interactive-accent));
 	background: var(--background-secondary);
-	background: color-mix(in srgb, var(--df-cs-row-accent, var(--interactive-accent)) 11%, transparent);
+}
+
+@supports (background: color-mix(in srgb, red, transparent)) {
+	.df-cs-wiz-row.is-active {
+		background: color-mix(in srgb, var(--df-cs-row-accent, var(--interactive-accent)) 11%, transparent);
+	}
 }
 
 .df-cs-wiz-row.is-selected {
