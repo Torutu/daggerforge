@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { CharacterData, normalizeCharacter } from "../../types/character";
 import { decodeRecordJson, encodeRecordCode } from "../embeds/embedCode";
 
@@ -24,7 +25,7 @@ export async function encodeCharacterCode(character: CharacterData): Promise<str
 export async function decodeCharacterCode(code: string, fallbackId: string): Promise<CharacterData> {
 	const trimmed = code.trim();
 	if (!trimmed.startsWith(CHARACTER_CODE_PREFIX + "1.") && !trimmed.startsWith(CHARACTER_CODE_PREFIX + "0.")) {
-		throw new Error("Not a DaggerForge character code.");
+		throw new Error(dfTranslate("ui.not.a.daggerforge.character.code"));
 	}
 	return normalizeCharacter(await decodeRecordJson(CHARACTER_CODE_PREFIX, trimmed), fallbackId);
 }

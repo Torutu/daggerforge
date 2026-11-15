@@ -1,0 +1,422 @@
+[
+	{
+		"id": "CN001",
+		"rarity": "Gewöhnlich",
+		"name": "Gewandtheitstrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst einen Bonus von +1 auf deinen nächsten Wurf auf Agilität."
+	},
+	{
+		"id": "CN002",
+		"rarity": "Gewöhnlich",
+		"name": "Stärkungstrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst einen Bonus von +1 auf deinen nächsten Wurf auf Stärke."
+	},
+	{
+		"id": "CN003",
+		"rarity": "Gewöhnlich",
+		"name": "Kontrolltrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst einen Bonus von +1 auf deinen nächsten Wurf auf Geschick."
+	},
+	{
+		"id": "CN004",
+		"rarity": "Gewöhnlich",
+		"name": "Einstimmungstrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst einen Bonus von +1 auf deinen nächsten Wurf auf Instinkt."
+	},
+	{
+		"id": "CN005",
+		"rarity": "Gewöhnlich",
+		"name": "Charmetrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst einen Bonus von +1 auf deinen nächsten Wurf auf Präsenz."
+	},
+	{
+		"id": "CN006",
+		"rarity": "Gewöhnlich",
+		"name": "Erleuchtungstrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst einen Bonus von +1 auf deinen nächsten Wurf auf Wissen."
+	},
+	{
+		"id": "CN007",
+		"rarity": "Gewöhnlich",
+		"name": "Leichter Lebenstrank",
+		"category": "Heilung",
+		"text": "Lösche 1W4 TP."
+	},
+	{
+		"id": "CN008",
+		"rarity": "Gewöhnlich",
+		"name": "Leichter Ausdauertrank",
+		"category": "Heilung",
+		"text": "Lösche 1W4 Stress."
+	},
+	{
+		"id": "CN009",
+		"rarity": "Gewöhnlich",
+		"name": "Grindelzahngift",
+		"category": "Kampf",
+		"text": "Trage dieses Gift auf eine Waffe auf, die physischen Schaden verursacht, um deinem nächsten Schadenswurf mit dieser Waffe 1W6 hinzuzufügen."
+	},
+	{
+		"id": "CN010",
+		"rarity": "Gewöhnlich",
+		"name": "Varikblätter",
+		"category": "Hilfsmittel",
+		"text": "Iss dieses Blattpaar, um sofort 2 Hoffnung zu erhalten."
+	},
+	{
+		"id": "CN011",
+		"rarity": "Gewöhnlich",
+		"name": "Phiole mit Mondtröpfchen",
+		"category": "Hilfsmittel",
+		"text": "Wenn du den Inhalt dieser Phiole trinkst, kannst du bis zu deiner nächsten Rast in völliger Dunkelheit sehen."
+	},
+	{
+		"id": "CN012",
+		"rarity": "Gewöhnlich",
+		"name": "Instabiler Arkan-Splitter",
+		"category": "Kampf",
+		"text": "Führe einen Wurf auf Geschick durch, um diesen Splitter auf eine Gruppe gegnerischer Ziele in weiter Distanz zu werfen. Ziele, gegen die du erfolgreich bist, erleiden 1W20 magischen Schaden."
+	},
+	{
+		"id": "CN013",
+		"rarity": "Ungewöhnlich",
+		"name": "Trank der Stabilität",
+		"category": "Hilfsmittel",
+		"text": "Trinke diesen Trank, um einen zusätzlichen Auszeit-Zug zu wählen."
+	},
+	{
+		"id": "CN014",
+		"rarity": "Ungewöhnlich",
+		"name": "Verbessertes Grindelzahngift",
+		"category": "Kampf",
+		"text": "Trage dieses Gift auf eine Waffe auf, die physischen Schaden verursacht, um deinem nächsten Schadenswurf mit dieser Waffe 1W8 hinzuzufügen."
+	},
+	{
+		"id": "CN015",
+		"rarity": "Ungewöhnlich",
+		"name": "Formbarer Ton",
+		"category": "Hilfsmittel",
+		"text": "Setze 1 Hoffnung ein, um dein Gesicht mit diesem Ton so weit zu verändern, dass du bis zu deiner nächsten Rast nicht wiederzuerkennen bist."
+	},
+	{
+		"id": "CN016",
+		"rarity": "Ungewöhnlich",
+		"name": "Phiole mit Dunkelrauch",
+		"category": "Kampf",
+		"text": "Wenn eine gegnerische Kreatur dich angreift, verwendest du diese Phiole und würfelst eine Anzahl W6 in Höhe deiner Agilität. Addiere das höchste Ergebnis für diesen Angriff auf deinen Ausweichen-Wert."
+	},
+	{
+		"id": "CN017",
+		"rarity": "Ungewöhnlich",
+		"name": "Sprungwurzel",
+		"category": "Hilfsmittel",
+		"text": "Iss diese Wurzel, um dich einmal ohne Wurf bis in weite Distanz zu bewegen."
+	},
+	{
+		"id": "CN018",
+		"rarity": "Ungewöhnlich",
+		"name": "Knallpulver",
+		"category": "Heilung",
+		"text": "Markiere 1 Stress und lösche 1 TP."
+	},
+	{
+		"id": "CN019",
+		"rarity": "Ungewöhnlich",
+		"name": "Lebenstrank",
+		"category": "Heilung",
+		"text": "Lösche 1W4+1 TP."
+	},
+	{
+		"id": "CN020",
+		"rarity": "Ungewöhnlich",
+		"name": "Ausdauertrank",
+		"category": "Heilung",
+		"text": "Lösche 1W4+1 Stress."
+	},
+	{
+		"id": "CN021",
+		"rarity": "Ungewöhnlich",
+		"name": "Rüstungsnäher",
+		"category": "Heilung",
+		"text": "Setze beliebig viel Hoffnung ein, um mit diesem Werkzeug entsprechend viele Rüstungsfelder zu löschen."
+	},
+	{
+		"id": "CN022",
+		"rarity": "Ungewöhnlich",
+		"name": "Kiemensalbe",
+		"category": "Hilfsmittel",
+		"text": "Trage diese Salbe auf deinen Hals auf, um für eine Anzahl Minuten in Höhe deiner Stufe unter Wasser atmen zu können."
+	},
+	{
+		"id": "CN023",
+		"rarity": "Ungewöhnlich",
+		"name": "Kopierpergament",
+		"category": "Hilfsmittel",
+		"text": "Berühre mit diesem Pergament ein anderes Blatt Pergament, um dessen Inhalt vollständig zu kopieren. Danach wird dieses Pergament zu gewöhnlichem Papier."
+	},
+	{
+		"id": "CN024",
+		"rarity": "Ungewöhnlich",
+		"name": "Verbesserter Arkan-Splitter",
+		"category": "Kampf",
+		"text": "Führe einen Wurf auf Geschick durch, um diesen Splitter auf eine Gruppe gegnerischer Ziele in weiter Distanz zu werfen. Ziele, gegen die du erfolgreich bist, erleiden 2W20 magischen Schaden."
+	},
+	{
+		"id": "CN025",
+		"rarity": "Selten",
+		"name": "Großer Gewandtheitstrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst bis zu deiner nächsten Rast einen Bonus von +1 auf Agilität."
+	},
+	{
+		"id": "CN026",
+		"rarity": "Selten",
+		"name": "Großer Stärkungstrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst bis zu deiner nächsten Rast einen Bonus von +1 auf Stärke."
+	},
+	{
+		"id": "CN027",
+		"rarity": "Selten",
+		"name": "Großer Kontrolltrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst bis zu deiner nächsten Rast einen Bonus von +1 auf Geschick."
+	},
+	{
+		"id": "CN028",
+		"rarity": "Selten",
+		"name": "Großer Einstimmungstrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst bis zu deiner nächsten Rast einen Bonus von +1 auf Instinkt."
+	},
+	{
+		"id": "CN029",
+		"rarity": "Selten",
+		"name": "Großer Charmetrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst bis zu deiner nächsten Rast einen Bonus von +1 auf Präsenz."
+	},
+	{
+		"id": "CN030",
+		"rarity": "Selten",
+		"name": "Großer Erleuchtungstrank",
+		"category": "Verstärkung",
+		"text": "Du erhältst bis zu deiner nächsten Rast einen Bonus von +1 auf Wissen."
+	},
+	{
+		"id": "CN031",
+		"rarity": "Selten",
+		"name": "Blut der Yorgi",
+		"category": "Hilfsmittel",
+		"text": "Trinke dieses Blut, um von deinem Standort zu verschwinden und sofort an einem sichtbaren Punkt in sehr weiter Distanz wieder aufzutauchen."
+	},
+	{
+		"id": "CN032",
+		"rarity": "Selten",
+		"name": "Homets geheimer Trank",
+		"category": "Kampf",
+		"text": "Nachdem du diesen Trank getrunken hast, wird dein nächster erfolgreicher Angriff zu einem kritischen Erfolg."
+	},
+	{
+		"id": "CN033",
+		"rarity": "Selten",
+		"name": "Rotdornspeichel",
+		"category": "Kampf",
+		"text": "Trage diesen Speichel auf eine Waffe auf, die physischen Schaden verursacht, um deinem nächsten Schadenswurf mit dieser Waffe 1W12 hinzuzufügen."
+	},
+	{
+		"id": "CN034",
+		"rarity": "Selten",
+		"name": "Kanalstein",
+		"category": "Hilfsmittel",
+		"text": "Verwende diesen Stein, um einen Zauber oder ein Zauberbuch aus deiner Reserve zu nehmen, einmal einzusetzen und anschließend wieder in die Reserve zu legen."
+	},
+	{
+		"id": "CN035",
+		"rarity": "Selten",
+		"name": "Mythischer Staub",
+		"category": "Kampf",
+		"text": "Trage diesen Staub auf eine Waffe auf, die magischen Schaden verursacht, um deinem nächsten Schadenswurf mit dieser Waffe 1W12 hinzuzufügen."
+	},
+	{
+		"id": "CN036",
+		"rarity": "Selten",
+		"name": "Säurepaste",
+		"category": "Hilfsmittel",
+		"text": "Diese Paste frisst sich in hellen Lichtblitzen durch Wände und andere Oberflächen."
+	},
+	{
+		"id": "CN037",
+		"rarity": "Selten",
+		"name": "Hoffnungssignal",
+		"category": "Hilfsmittel",
+		"text": "Wenn du dieses Signal verwendest, würfeln Verbündete in kurzer Distanz einen W6, sobald sie Hoffnung einsetzen. Bei einer 6 erhalten sie den Effekt, ohne die Hoffnung auszugeben. Das Signal hält bis zum Ende der Szene an."
+	},
+	{
+		"id": "CN038",
+		"rarity": "Selten",
+		"name": "Großer Arkan-Splitter",
+		"category": "Kampf",
+		"text": "Führe einen Wurf auf Geschick durch, um diesen Splitter auf eine Gruppe gegnerischer Ziele in weiter Distanz zu werfen. Ziele, gegen die du erfolgreich bist, erleiden 4W20 magischen Schaden."
+	},
+	{
+		"id": "CN039",
+		"rarity": "Selten",
+		"name": "Federknochen",
+		"category": "Hilfsmittel",
+		"text": "Verwende diesen Knochen, um deine Fallgeschwindigkeit für eine Anzahl Minuten in Höhe deiner Stufe zu kontrollieren."
+	},
+	{
+		"id": "CN040",
+		"rarity": "Selten",
+		"name": "Kreis der Leere",
+		"category": "Hilfsmittel",
+		"text": "Markiere 1 Stress, um eine Leere zu erschaffen, die sich bis in weite Distanz erstreckt. In der Leere kann keine Magie gewirkt werden und Kreaturen darin sind immun gegen magischen Schaden."
+	},
+	{
+		"id": "CN041",
+		"rarity": "Selten",
+		"name": "Sonnenbaumharz",
+		"category": "Heilung",
+		"text": "Nimm dieses Harz zu dir und würfle einen W6. Bei 5-6 löschst du 2 TP, bei 2-4 löschst du 3 Stress. Bei einer 1 blickst du durch den Schleier des Todes, kehrst verändert zurück und erhältst eine Narbe."
+	},
+	{
+		"id": "CN042",
+		"rarity": "Selten",
+		"name": "Tropfenzahngift",
+		"category": "Kampf",
+		"text": "Eine Kreatur, die dieses Gift einnimmt, erleidet 8W10 direkten magischen Schaden."
+	},
+	{
+		"id": "CN043",
+		"rarity": "Selten",
+		"name": "Großer Lebenstrank",
+		"category": "Heilung",
+		"text": "Lösche 1W4+2 TP."
+	},
+	{
+		"id": "CN044",
+		"rarity": "Selten",
+		"name": "Großer Ausdauertrank",
+		"category": "Heilung",
+		"text": "Lösche 1W4+2 Stress."
+	},
+	{
+		"id": "CN045",
+		"rarity": "Selten",
+		"name": "Oger-Moschus",
+		"category": "Hilfsmittel",
+		"text": "Verwende diesen Moschus, damit dich bis zu deiner nächsten Rast niemand mit gewöhnlichen oder magischen Mitteln aufspüren kann."
+	},
+	{
+		"id": "CN046",
+		"rarity": "Selten",
+		"name": "Flügelspross",
+		"category": "Hilfsmittel",
+		"text": "Dir wachsen magische Flügel, mit denen du für eine Anzahl Minuten in Höhe deiner Stufe fliegen kannst."
+	},
+	{
+		"id": "CN047",
+		"rarity": "Selten",
+		"name": "Gefäß der verlorenen Stimmen",
+		"category": "Kampf",
+		"text": "Öffne dieses Gefäß, um für eine Anzahl Minuten in Höhe deines Instinkts ein ohrenbetäubendes Echo aus Stimmen freizusetzen. Kreaturen in weiter Distanz, die nicht auf den Lärm vorbereitet sind, erleiden 6W8 magischen Schaden."
+	},
+	{
+		"id": "CN048",
+		"rarity": "Selten",
+		"name": "Drachenblütentee",
+		"category": "Kampf",
+		"text": "Trinke diesen Tee, um einen feurigen Atemangriff zu entfesseln. Führe einen Wurf auf Instinkt gegen alle gegnerischen Ziele vor dir in kurzer Distanz durch. Ziele, gegen die du erfolgreich bist, erleiden abhängig von deiner Übung 2W20 physischen Schaden."
+	},
+	{
+		"id": "CN049",
+		"rarity": "Legendär",
+		"name": "Brückensamen",
+		"category": "Hilfsmittel",
+		"text": "Dicke Ranken wachsen von deinem Standort bis zu einem Punkt deiner Wahl in weiter Distanz. An ihnen kann man hinauf- oder entlangklettern. Bei deiner nächsten Rast lösen sie sich auf."
+	},
+	{
+		"id": "CN050",
+		"rarity": "Legendär",
+		"name": "Schlafharz",
+		"category": "Hilfsmittel",
+		"text": "Trinke diesen Trank, um für eine vollständige Nachtruhe einzuschlafen. Beim Erwachen löschst du deinen gesamten Stress."
+	},
+	{
+		"id": "CN051",
+		"rarity": "Legendär",
+		"name": "Festmahl von Xuria",
+		"category": "Heilung",
+		"text": "Iss diese Mahlzeit, um alle TP und sämtlichen Stress zu löschen und 1W4 Hoffnung zu erhalten."
+	},
+	{
+		"id": "CN052",
+		"rarity": "Legendär",
+		"name": "Bindehonig",
+		"category": "Hilfsmittel",
+		"text": "Mit diesem Honig kannst du zwei Gegenstände dauerhaft zusammenkleben."
+	},
+	{
+		"id": "CN053",
+		"rarity": "Legendär",
+		"name": "Schrumpftrank",
+		"category": "Verstärkung",
+		"text": "Trinke diesen Trank, um deine Größe zu halbieren, bis du diese Gestalt beendest oder deine nächste Rast einlegst. In dieser Gestalt erhältst du +2 auf Agilität und einen Malus von -1 auf Übung."
+	},
+	{
+		"id": "CN054",
+		"rarity": "Legendär",
+		"name": "Wachstumstrank",
+		"category": "Verstärkung",
+		"text": "Trinke diesen Trank, um deine Größe zu verdoppeln, bis du diese Gestalt beendest oder deine nächste Rast einlegst. In dieser Gestalt erhältst du +2 auf Stärke und +1 auf Übung."
+	},
+	{
+		"id": "CN055",
+		"rarity": "Legendär",
+		"name": "Stein des Wissens",
+		"category": "Hilfsmittel",
+		"text": "Wenn du stirbst, während du diesen Stein hältst, darf ein verbündeter Charakter eine Karte aus deiner Ausrüstung nehmen und in die eigene Ausrüstung oder Reserve legen. Anschließend zerfällt der Stein."
+	},
+	{
+		"id": "CN056",
+		"rarity": "Legendär",
+		"name": "Süßmoos",
+		"category": "Heilung",
+		"text": "Verzehre dieses Moos während einer Rast, um 1W10 TP oder 1W10 Stress zu löschen."
+	},
+	{
+		"id": "CN057",
+		"rarity": "Legendär",
+		"name": "Blendkugel",
+		"category": "Kampf",
+		"text": "Aktiviere diese Kugel, um einen gleißenden Lichtblitz zu erzeugen. Alle Ziele in kurzer Distanz werden Verwundbar, bis sie TP markieren."
+	},
+	{
+		"id": "CN058",
+		"rarity": "Legendär",
+		"name": "Todestee",
+		"category": "Kampf",
+		"text": "Nachdem du diesen Tee getrunken hast, tötest du dein Ziel sofort, wenn dir ein kritischer Erfolg bei einem Angriff gelingt. Gelingt dir bis zu deiner nächsten langen Rast kein kritischer Angriffserfolg, stirbst du."
+	},
+	{
+		"id": "CN059",
+		"rarity": "Legendär",
+		"name": "Spiegel der Marigold",
+		"category": "Hilfsmittel",
+		"text": "Wenn du Schaden erleidest, darfst du 1 Hoffnung einsetzen, um diesen Schaden zu verhindern. Anschließend zerbricht der Spiegel."
+	},
+	{
+		"id": "CN060",
+		"rarity": "Legendär",
+		"name": "Sternentropfen",
+		"category": "Kampf",
+		"text": "Verwende diesen Sternentropfen, um einen Kometenhagel zu beschwören, der allen Zielen in sehr weiter Distanz 8W20 physischen Schaden zufügt."
+	}
+]

@@ -1,0 +1,92 @@
+[
+	{
+		"id": "community-highborne",
+		"name": "Von den Noblen",
+		"description": [
+			"Von den Noblen zu sein bedeutet, dass du ein Leben in Eleganz, Überfluss und Prestige innerhalb der oberen Gesellschaftsschichten gewohnt bist."
+		],
+		"features": [
+			"Privilegiert: Du erhältst einen Vorteil auf deine Würfe, wenn du mit Personen aus der Oberschicht verkehrst, Preise verhandelst oder deinen Ruf nutzt, um das zu bekommen, was du willst."
+		]
+	},
+	{
+		"id": "community-loreborne",
+		"name": "Von den Weisen",
+		"description": [
+			"Von den Weisen zu sein bedeutet, aus einer Gesellschaft zu stammen, die großen Wert auf akademische oder politische Fähigkeiten legt."
+		],
+		"features": [
+			"Belesen: Du erhältst einen Vorteil auf Würfe, die sich auf die Geschichte, Kultur oder Politik einer bedeutenden Person oder eines wichtigen Ortes beziehen."
+		]
+	},
+	{
+		"id": "community-orderborne",
+		"name": "Von der Ordnung",
+		"description": [
+			"Von der Ordnung zu sein bedeutet, dass du aus einer Gemeinschaft kommst, die auf Disziplin oder Glauben basiert. Dein Leben steht im Zeichen von Prinzipien, die deine Erfahrungen widerspiegeln."
+		],
+		"features": [
+			"Hingabe: Schreibe drei Gebote oder Werte auf, die deine Gemeinschaft dir beigebracht hat. Einmal pro Rast, wenn du beschreibst, wie du eines dieser Prinzipien durch dein Handeln verkörperst, darfst du einen W20 als deinen Hoffnungswürfel verwenden."
+		]
+	},
+	{
+		"id": "community-ridgeborne",
+		"name": "Aus den Bergen",
+		"description": [
+			"Aus den Bergen zu sein bedeutet, dass du auf den felsigen Gipfeln und steilen Klippen der Gebirge zuhause warst."
+		],
+		"features": [
+			"Standhaft: Du erhältst einen Vorteil auf Würfe, mit denen du gefährliche Klippen und Abhänge überquerst, dich durch schwieriges Terrain bewegst und dein Überlebenswissen anwendest."
+		]
+	},
+	{
+		"id": "community-seaborne",
+		"name": "Von den Wassern",
+		"description": [
+			"Von den Wassern zu sein bedeutet, dass du auf oder nahe bei einem großen Gewässer gelebt hast."
+		],
+		"features": [
+			"Gezeiten verstehen: Du spürst die Ebbe und Flut des Lebens. Wenn du mit Furcht würfelst, darfst du 1 Marker auf diese Karte legen. Du darfst eine Anzahl Marker ansammeln, die deiner Stufe entspricht. Bevor du einen Aktionswurf durchführst, darfst du beliebig viele Marker einsetzen, um einen Bonus von +1 je eingesetztem Marker auf den Wurf zu erhalten. Am Ende jeder Spielsitzung musst du die übrigen Marker von der Karte entfernen."
+		]
+	},
+	{
+		"id": "community-slyborne",
+		"name": "Aus den Schatten",
+		"description": [
+			"Aus den Schatten zu sein bedeutet, dass du einer Gruppierung angehört hast, die sich außerhalb des Gesetzes bewegt und dabei in Betrügereien und andere kriminelle Aktivitäten verwickelt ist."
+		],
+		"features": [
+			"Halunke: Du erhältst einen Vorteil auf Würfe, bei denen du mit Kriminellen verhandelst, Lügen durchschaust oder sichere Verstecke suchst."
+		]
+	},
+	{
+		"id": "community-underborne",
+		"name": "Aus den Höhlen",
+		"description": [
+			"Aus den Höhlen zu sein bedeutet, dass du aus einer unterirdisch angesiedelten Gesellschaft stammst."
+		],
+		"features": [
+			"Leben im Dunkeln: Wenn du dich in spärlich beleuchteter oder völlig dunkler Umgebung befindest, erhältst du einen Vorteil auf Würfe, um dich zu verstecken, etwas zu untersuchen oder Details innerhalb dieser Umgebung wahrzunehmen."
+		]
+	},
+	{
+		"id": "community-wanderborne",
+		"name": "Von den Wegen",
+		"description": [
+			"Von den Wegen zu sein bedeutet, dass du ein nomadisches Leben geführt hast, ohne dir ein permanentes Zuhause aufzubauen. Du hast viele unterschiedliche Kulturen erlebt."
+		],
+		"features": [
+			"Nomadisches Gepäck: Du darfst deinem Inventar ein Nomadisches Gepäck hinzufügen. Einmal pro Spielsitzung darfst du 1 Hoffnung einsetzen, um einen nichtmagischen Gegenstand aus dem Gepäck hervorzuholen, der in dieser Situation hilfreich ist. Sprich mit der SL ab, um welchen Gegenstand es sich handelt."
+		]
+	},
+	{
+		"id": "community-wildborne",
+		"name": "Aus der Wildnis",
+		"description": [
+			"Aus der Wildnis zu sein bedeutet, dass du tief in den Wäldern gelebt hast."
+		],
+		"features": [
+			"Leichtfüßig: Du bewegst dich grundsätzlich sehr leise. Du erhältst einen Vorteil auf Würfe, um dich geräuschlos zu bewegen."
+		]
+	}
+]

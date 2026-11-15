@@ -1,0 +1,269 @@
+[
+	{
+		"id": "class-bard",
+		"name": "Bard*in",
+		"description": [
+			"Bard*innen gehören zu den charismatischsten Personen aller Sphären. Sie verstehen es meisterhaft, andere zu fesseln, und spezialisieren sich auf unterschiedliche Formen der Darbietung, etwa Gesang, Instrumentalmusik, Geschichten oder Humor. Ob vor großem Publikum oder im persönlichen Gespräch: In gesellschaftlichen Situationen blühen sie auf.",
+			"Bard*innen lernen häufig an Schulen oder in Gilden und knüpfen dort enge Bande. Gleichzeitig ist ihnen ein gewisses Ego nicht fremd. Sie können eine Gruppe wie kaum jemand sonst zusammenführen - oder sie in schlechter Stimmung ebenso leicht entzweien."
+		],
+		"stats": { "domains": "Anmut & Kodex", "suggestedPrimary": "Rapier", "suggestedSecondary": "Kleiner Dolch", "suggestedArmor": "Textilrüstung" },
+		"items": "Ein Liebesroman oder ein Brief, der nie geöffnet wurde",
+		"hopeFeature": "Eine Szene machen: Setze 3 Hoffnung ein, um ein Ziel in kurzer Distanz vorübergehend Abgelenkt zu machen. Sein Schwierigkeitsgrad erhält einen Malus von -2.",
+		"classFeatures": [
+			{
+				"name": "Inspirieren",
+				"description": "Beschreibe einmal pro Spielsitzung, wie du deine Gruppe inspirierst. Du und alle deine Verbündeten erhalten je einen Inspirationswürfel. Auf Stufe 1 ist dies ein W6. Ein SC darf seinen Inspirationswürfel einsetzen, um das Ergebnis zu einem Aktions-, Reaktions- oder Schadenswurf zu addieren oder entsprechend viel Stress zu löschen. Am Ende jeder Spielsitzung werden alle nicht eingesetzten Inspirationswürfel entfernt. Auf Stufe 5 wird dein Inspirationswürfel zu einem W8."
+			}
+		],
+		"backgroundQuestions": [
+			"Wer aus deiner Gemeinschaft hat dir dieses große Selbstvertrauen vermittelt?",
+			"Du warst einmal verliebt. Wen hast du geliebt und wie hat diese Person dich verletzt?",
+			"Du hast stets zu einer anderen Person aus deinem Beruf aufgesehen. Wer ist es und warum ist sie dein Vorbild?"
+		],
+		"connectionQuestions": [
+			"Wodurch hast du erkannt, dass wir gute Freund*innen werden würden?",
+			"Welche meiner Angewohnheiten nervt dich?",
+			"Warum greifst du nachts nach meiner Hand?"
+		]
+	},
+	{
+		"id": "class-druid",
+		"name": "Druid*in",
+		"description": [
+			"Druid*in zu werden, ist mehr als ein Beruf: Es ist eine Berufung für alle, die von der Magie der Wildnis lernen und sie beschützen wollen. Wer nur ihre ruhige Arbeit mit Pflanzen kennt, unterschätzt leicht, wie furchteinflößend Druid*innen sein können, wenn sie die ungezähmten Kräfte der Natur kanalisieren.",
+			"Druid*innen entwickeln ihre Fähigkeiten oft in kleinen Gruppen, die durch ein gemeinsames Ethos oder einen Ort verbunden sind; manche arbeiten lieber allein. Durch jahrelanges Studium lernen sie, Tiergestalten anzunehmen und die Natur selbst zu formen."
+		],
+		"stats": { "domains": "Natur & Arkana", "suggestedPrimary": "Kurzstab", "suggestedSecondary": "Rundschild", "suggestedArmor": "Lederrüstung" },
+		"items": "Ein kleiner Beutel mit Steinen und Knochen oder ein seltsamer Anhänger, den du im Erdreich gefunden hast",
+		"hopeFeature": "Evolution: Setze 3 Hoffnung ein, um eine Tiergestalt anzunehmen, ohne Stress zu markieren. Erhöhe dabei ein Attribut deiner Wahl um +1, bis du die Tiergestalt verlässt.",
+		"classFeatures": [
+			{
+				"name": "Tiergestalt",
+				"description": "Markiere 1 Stress, um dich magisch in eine Kreatur deines Rangs oder niedriger aus der Liste der Tiergestalten zu verwandeln. Du kannst die Gestalt jederzeit verlassen. In Tiergestalt kannst du keine Waffen benutzen und keine Zauber von Domänenkarten wirken, aber andere Merkmale und Fähigkeiten weiterhin einsetzen. Bereits gewirkte Zauber bleiben für ihre normale Dauer aktiv und du kannst normal sprechen. Du erhältst die Merkmale der Tiergestalt, addierst ihren Ausweichen-Bonus auf deinen Ausweichen-Wert und verwendest das in ihren Werten angegebene Attribut für Angriffe. Deine Rüstung wird Teil deines Körpers; Rüstungsfelder werden normal markiert und bleiben nach der Rückverwandlung markiert. Markierst du deinen letzten TP, verlässt du die Tiergestalt automatisch."
+			},
+			{
+				"name": "Berührung der Wildnis",
+				"description": "Du kannst jederzeit harmlose, subtile Natureffekte hervorrufen, etwa eine Blume rasch wachsen lassen, einen leichten Windstoß erzeugen oder ein Lagerfeuer entzünden."
+			}
+		],
+		"backgroundQuestions": [
+			"Warum war die Gemeinschaft deiner Kindheit so stark von der Natur und ihren Geschöpfen abhängig?",
+			"Mit welchem wilden Tier hast du zuerst eine Verbindung aufgebaut? Warum endete sie?",
+			"Wer versucht, dich aufzuspüren, und was will diese Person von dir?"
+		],
+		"connectionQuestions": [
+			"Was hast du mir anvertraut, das mich jedes Mal für dich in Gefahr springen lässt?",
+			"An welches Tier erinnerst du mich angeblich?",
+			"Welchen liebevollen Spitznamen hast du mir gegeben?"
+		]
+	},
+	{
+		"id": "class-guardian",
+		"name": "Wächter*in",
+		"description": [
+			"Der Titel Wächter*in umfasst viele kämpferische Berufe und beschreibt eher den moralischen Kompass und die unerschütterliche Standhaftigkeit einer Person als ihre Kampfweise. Viele schließen sich einem Land oder einer Sache an, doch noch häufiger folgen sie den wenigen Menschen, die ihnen wirklich wichtig sind.",
+			"Wächter*innen kämpfen selbst gegen überwältigende Widerstände mit bemerkenswerter Entschlossenheit und stellen den Schutz ihrer Gefährt*innen über alles. Wer ihren Verbündeten Leid zufügt, muss mit entschlossener Vergeltung rechnen."
+		],
+		"stats": { "domains": "Mut & Klinge", "suggestedPrimary": "Streitaxt", "suggestedSecondary": null, "suggestedArmor": "Kettenrüstung" },
+		"items": "Ein Totem deiner Lehrperson oder ein geheimer Schlüssel",
+		"hopeFeature": "An vorderster Front: Setze 3 Hoffnung ein, um 2 Rüstungsfelder zu löschen.",
+		"classFeatures": [
+			{
+				"name": "Unaufhaltsam",
+				"description": "Einmal pro langer Rast kannst du Unaufhaltsam werden. Du erhältst einen Unaufhaltsamkeitswürfel (W4 auf Stufe 1, W6 auf Stufe 5) und legst ihn mit der 1 nach oben auf deinen Charakterbogen. Nachdem dein Schadenswurf einem Ziel mindestens 1 TP zufügt, erhöhst du den Würfelwert um 1. Würde er sein Maximum überschreiten oder endet die Szene, entfernst du ihn und bist nicht länger Unaufhaltsam. Solange du Unaufhaltsam bist, reduzierst du die Schwere physischen Schadens um eine Schwelle, addierst den aktuellen Würfelwert zu deinen Schadenswürfen und kannst weder Festgesetzt noch Verwundbar werden."
+			}
+		],
+		"backgroundQuestions": [
+			"Wen aus deiner Gemeinschaft konntest du nicht beschützen und warum denkst du noch immer an diese Person?",
+			"Du sollst etwas Wichtiges an einen gefährlichen Ort bringen und beschützen. Was ist es und wohin muss es?",
+			"Welchen Teil deiner selbst hältst du für eine Schwäche und wie hat er dich beeinflusst?"
+		],
+		"connectionQuestions": [
+			"Wie habe ich dir bei unserer ersten Begegnung das Leben gerettet?",
+			"Welches kleine Geschenk von dir trage ich immer bei mir?",
+			"Welche Lüge über dich selbst hast du mir erzählt, die ich völlig glaube?"
+		]
+	},
+	{
+		"id": "class-ranger",
+		"name": "Waldläufer*in",
+		"description": [
+			"Waldläufer*innen sind äußerst geschickte Jäger*innen, die ihre kämpferischen Fähigkeiten nur selten einer Armee zur Verfügung stellen. Mit Körperbeherrschung und tiefem Verständnis der Wildnis werden sie zu gerissenen Taktiker*innen, die ihre Beute geduldig und einfallsreich verfolgen.",
+			"Viele kämpfen an der Seite eines Tieres, mit dem sie eine mächtige spirituelle Verbindung eingegangen sind. Durch ihre Erfahrung in der Wildnis werden sie zu hervorragenden Fährtenleser*innen, die ihre Gegner ebenso bereitwillig in Fallen locken wie frontal angreifen."
+		],
+		"stats": { "domains": "Knochen & Natur", "suggestedPrimary": "Kurzbogen", "suggestedSecondary": null, "suggestedArmor": "Lederrüstung" },
+		"items": "Eine Trophäe deines ersten Jagderfolgs oder ein scheinbar kaputter Kompass",
+		"hopeFeature": "In Schach halten: Setze nach einem erfolgreichen Waffenangriff 3 Hoffnung ein, um denselben Wurf gegen zwei weitere gegnerische Ziele in Reichweite des Angriffs zu verwenden.",
+		"classFeatures": [
+			{
+				"name": "Fokus des Waldläufers",
+				"description": "Setze 1 Hoffnung ein und greife ein Ziel an. Bei einem Erfolg verursachst du den normalen Schaden und machst das Ziel vorübergehend zu deinem Fokus. Bis das Merkmal endet oder du eine andere Kreatur zu deinem Fokus machst, kennst du stets die genaue Richtung zu deinem Fokus. Wenn du ihm Schaden zufügst, muss er 1 Stress markieren. Misslingt dir ein Angriff gegen ihn, darfst du deinen Fokus beenden, um deine Dualwürfel erneut zu werfen."
+			}
+		],
+		"backgroundQuestions": [
+			"Eine schreckliche Kreatur hat deiner Gemeinschaft Leid zugefügt und du hast geschworen, sie zu jagen. Was ist es und welche einzigartige Spur hinterlässt sie?",
+			"Dein erster Jagderfolg hätte dich beinahe das Leben gekostet. Was hast du erlegt und was war danach an dir nicht mehr wie zuvor?",
+			"Du hast viele gefährliche Länder bereist. Welchen Ort würdest du dennoch niemals betreten?"
+		],
+		"connectionQuestions": [
+			"In welchem freundschaftlichen Wettstreit stehen wir?",
+			"Warum verhältst du dich anders, wenn wir allein sind?",
+			"Vor welcher Bedrohung soll ich mich in Acht nehmen und warum beunruhigt sie dich?"
+		]
+	},
+	{
+		"id": "class-rogue",
+		"name": "Schurke*in",
+		"description": [
+			"Schurk*innen sind oft in Haltung und Handeln echte Halunk*innen. Sie gelten als Lügner*innen und Dieb*innen, doch die Besten unter ihnen bewegen sich unerkannt durch die Welt. Mit scharfem Verstand und scharfer Klinge manipulieren sie ihre Gegner ebenso geschickt, wie sie Schlösser knacken, durch Fenster steigen oder hinterhältige Treffer landen.",
+			"Diese Meister*innen magischer Künste manipulieren Schatten und Bewegung und erweitern ihr Repertoire um nützliche wie tödliche Werkzeuge. Häufig gründen sie Gilden, um Kompliz*innen zu finden, Aufträge anzunehmen und geheime Fertigkeiten zu verfeinern."
+		],
+		"stats": { "domains": "Mitternacht & Anmut", "suggestedPrimary": "Dolch", "suggestedSecondary": "Kleiner Dolch", "suggestedArmor": "Textilrüstung" },
+		"items": "Ein Satz Fälscherwerkzeuge oder ein Enterhaken",
+		"hopeFeature": "Ausweichmanöver: Setze 3 Hoffnung ein, um einen Bonus von +2 auf deinen Ausweichen-Wert zu erhalten, bis ein Angriff gegen dich erfolgreich ist. Andernfalls endet der Bonus bei deiner nächsten Rast.",
+		"classFeatures": [
+			{
+				"name": "Getarnt",
+				"description": "Immer wenn du den Zustand Versteckt erhalten würdest, wirst du stattdessen Getarnt. Zusätzlich zu den Vorteilen von Versteckt bleibst du ungesehen, wenn du dich nicht bewegst und eine gegnerische Kreatur an einen Ort gelangt, von dem aus sie dich normalerweise sehen könnte. Nachdem du angreifst oder deine Bewegung in Sichtlinie einer gegnerischen Kreatur beendest, bist du nicht länger Getarnt."
+			},
+			{
+				"name": "Hinterhältiger Angriff",
+				"description": "Wenn du Getarnt bist oder sich ein verbündeter Charakter in unmittelbarer Distanz zu deinem Ziel befindet und dir ein Angriff gelingt, fügst du deinem Schadenswurf eine deinem Rang entsprechende Anzahl W6 hinzu. Rang 1 gilt auf Stufe 1, Rang 2 auf den Stufen 2-4, Rang 3 auf den Stufen 5-7 und Rang 4 auf den Stufen 8-10."
+			}
+		],
+		"backgroundQuestions": [
+			"Wobei wurdest du erwischt, sodass man dich aus deiner Heimatgemeinschaft verbannte?",
+			"Du hattest früher ein anderes Leben, das du hinter dir lassen wolltest. Wer aus deiner Vergangenheit verfolgt dich noch immer?",
+			"Von wem aus deiner Vergangenheit fiel dir der Abschied am schwersten?"
+		],
+		"connectionQuestions": [
+			"Wozu habe ich dich kürzlich überredet, das uns beiden Ärger eingebracht hat?",
+			"Was habe ich über deine Vergangenheit herausgefunden, das ich vor den anderen geheim halte?",
+			"Wen aus meiner Vergangenheit kennst du und wie hat diese Person deine Gefühle für mich beeinflusst?"
+		]
+	},
+	{
+		"id": "class-seraph",
+		"name": "Seraph",
+		"description": [
+			"Seraphim sind göttliche Kämpfer*innen und Heiler*innen, die von einer heiligen Bestimmung erfüllt sind. Da in den Sphären zahlreiche Gottheiten existieren, werden ganz unterschiedliche Seraphim berufen. Ihr Ethos entspricht meist dem Einflussbereich oder den Zielen ihrer Gottheit: die Schwachen verteidigen, Rache üben, ein Land oder Artefakt beschützen oder einen Glauben bewahren.",
+			"Manche Seraphim verbünden sich mit einem Heer oder einer Region, andere stellen sich den Torheiten der Sterblichen Sphäre entgegen. Es ist besser, sie an seiner Seite zu wissen, denn wer sich ihrer Bestimmung widersetzt, findet in ihnen furchterregende Gegner*innen."
+		],
+		"stats": { "domains": "Leben & Mut", "suggestedPrimary": "Geheiligte Axt", "suggestedSecondary": "Rundschild", "suggestedArmor": "Kettenrüstung" },
+		"items": "Ein Bündel Opfergaben oder ein Siegel deiner Gottheit",
+		"hopeFeature": "Lebensretter: Setze 3 Hoffnung ein, um bei einem verbündeten Charakter in kurzer Distanz 1 TP zu löschen.",
+		"classFeatures": [
+			{
+				"name": "Gebetswürfel",
+				"description": "Wirf zu Beginn jeder Spielsitzung eine Anzahl W4 in Höhe des Zauber-Attributs deiner Subklasse und lege sie als Gebetswürfel auf deinen Charakterbogen. Du darfst beliebig viele davon einsetzen, um dir oder einem verbündeten Charakter in weiter Distanz zu helfen. Verwende den Wert eines eingesetzten Würfels, um eingehenden Schaden zu reduzieren, ihn nachträglich zu einem Wurfergebnis zu addieren oder entsprechend viel Hoffnung zu erhalten. Am Ende der Spielsitzung werden alle nicht eingesetzten Gebetswürfel entfernt."
+			}
+		],
+		"backgroundQuestions": [
+			"Welcher Gottheit hast du dich verschrieben und welche unglaubliche Tat vollbrachte sie in deiner größten Not für dich?",
+			"Wie hat sich dein Aussehen verändert, nachdem du deinen Eid abgelegt hast?",
+			"Auf welche ungewöhnliche Weise verständigst du dich mit deiner Gottheit?"
+		],
+		"connectionQuestions": [
+			"Welches Versprechen musste ich dir für den Fall geben, dass du auf dem Schlachtfeld stirbst?",
+			"Warum stellst du mir so viele Fragen über meine Gottheit?",
+			"Du hast mich gebeten, ein Gruppenmitglied vor allen anderen zu beschützen - sogar vor dir. Wen und warum?"
+		]
+	},
+	{
+		"id": "class-sorcerer",
+		"name": "Zauberer*in",
+		"description": [
+			"Nicht alle Menschen mit angeborener Magie verfeinern ihre Gabe, doch wer es tut, kann zu einer mächtigen Zauberperson werden. Diese Fähigkeiten werden innerhalb von Familien weitergegeben, selbst wenn eine Familie nichts von ihnen weiß oder sie nicht ausüben will. Die Kräfte reichen von elementaren bis zu illusionären Formen, und viele schließen sich nach ihren Talenten zu Gruppen zusammen.",
+			"Eine mächtige Zauberperson erwirbt ihre Kraft nicht erst, sondern lernt, die bereits vorhandene Macht zu kultivieren und zu kontrollieren. In unbedachten oder undisziplinierten Händen kann diese Magie außerordentlich gefährlich werden."
+		],
+		"stats": { "domains": "Arkana & Mitternacht", "suggestedPrimary": "Doppelstab", "suggestedSecondary": null, "suggestedArmor": "Textilrüstung" },
+		"items": "Eine flüsternde Kugel oder ein Familienerbstück",
+		"hopeFeature": "Unbeständige Magie: Setze 3 Hoffnung ein, um bei einem Angriff mit magischem Schaden eine beliebige Anzahl deiner Schadenswürfel erneut zu werfen.",
+		"classFeatures": [
+			{
+				"name": "Arkanes Gespür",
+				"description": "Du kannst die Anwesenheit magischer Personen und Gegenstände in kurzer Distanz spüren."
+			},
+			{
+				"name": "Kleine Illusion",
+				"description": "Führe einen Zauberwurf (10) durch. Bei einem Erfolg erschaffst du innerhalb kurzer Distanz eine kleine sichtbare Illusion, die nicht größer ist als du selbst. Für alle in kurzer oder größerer Distanz wirkt sie überzeugend."
+			},
+			{
+				"name": "Rohe Kraft kanalisieren",
+				"description": "Einmal pro langer Rast darfst du eine Domänenkarte aus deiner Ausrüstung in deine Reserve legen und eine Option wählen: Du erhältst Hoffnung in Höhe der Kartenstufe oder du verstärkst einen Zauber, der Schaden verursacht, und erhältst auf den Schadenswurf einen Bonus in Höhe der doppelten Kartenstufe."
+			}
+		],
+		"backgroundQuestions": [
+			"Was hast du getan, das die Menschen deiner Gemeinschaft dir gegenüber misstrauisch machte?",
+			"Welche Lehrperson half dir, deine ungezähmte Magie zu kontrollieren, und warum kann sie dich heute nicht mehr führen?",
+			"Welche große Angst verbirgst du vor allen und warum fürchtest du sie so sehr?"
+		],
+		"connectionQuestions": [
+			"Warum vertraust du mir so sehr?",
+			"Was habe ich getan, sodass du in meiner Nähe vorsichtig bist?",
+			"Warum halten wir unsere gemeinsame Vergangenheit geheim?"
+		]
+	},
+	{
+		"id": "class-warrior",
+		"name": "Krieger*in",
+		"description": [
+			"Krieger*in zu werden, erfordert Jahre, oft ein ganzes Leben, voller Training und Hingabe an die Beherrschung von Waffen und Gewalt. Während viele Kämpfende nur ihre Kraft schulen, wissen Krieger*innen um die Bedeutung eines beweglichen Körpers und Geistes. Das macht sie zu besonders gefragten Kämpfer*innen in allen Sphären.",
+			"Viele dienen in einem Heer, einer Söldnergruppe oder einer königlichen Garde. Wo sie ihre Fertigkeiten nicht weiterentwickeln können, bleibt ihr Potenzial jedoch ungenutzt. Häufig haben sie eine bevorzugte Waffe - sich zwischen sie und ihre Klinge zu stellen, ist ein schwerer Fehler."
+		],
+		"stats": { "domains": "Klinge & Knochen", "suggestedPrimary": "Langschwert", "suggestedSecondary": null, "suggestedArmor": "Kettenrüstung" },
+		"items": "Eine Zeichnung einer geliebten Person oder ein Schleifstein",
+		"hopeFeature": "Keine Gnade: Setze 3 Hoffnung ein, um bis zu deiner nächsten Rast einen Bonus von +1 auf deine Angriffswürfe zu erhalten.",
+		"classFeatures": [
+			{
+				"name": "Gelegenheitsangriff",
+				"description": "Versucht eine gegnerische Kreatur, deine unmittelbare Distanz zu verlassen, führst du mit einem Attribut deiner Wahl einen Reaktionswurf gegen ihren Schwierigkeitsgrad durch. Bei einem Erfolg wählst du einen Effekt, bei einem kritischen Erfolg zwei: Sie kann sich nicht fortbewegen; du fügst ihr den Schaden deiner Primärwaffe zu; oder du bewegst dich mit ihr."
+			},
+			{
+				"name": "Kampfausbildung",
+				"description": "Beim Ausrüsten von Waffen ignorierst du deren Handhabung. Wenn du physischen Schaden verursachst, erhältst du auf den Schadenswurf einen Bonus in Höhe deiner Stufe."
+			}
+		],
+		"backgroundQuestions": [
+			"Wer hat dir das Kämpfen beigebracht und warum blieb diese Person zurück, als du deine Heimat verlassen hast?",
+			"Jemand besiegte dich vor Jahren und ließ dich sterbend zurück. Wer war es und wie wurdest du verraten?",
+			"Welchen legendären Ort wolltest du schon immer besuchen und warum ist er so besonders?"
+		],
+		"connectionQuestions": [
+			"Wir kannten uns schon lange, bevor diese Gruppe entstand. Woher?",
+			"Bei welcher alltäglichen Aufgabe helfe ich dir außerhalb eines Kampfes gewöhnlich?",
+			"Welche Angst helfe ich dir zu überwinden?"
+		]
+	},
+	{
+		"id": "class-wizard",
+		"name": "Magier*in",
+		"description": [
+			"Ob an einer Institution oder im Selbststudium: Magier*innen erwerben und verfeinern über viele Jahre gewaltige Kräfte. Dazu nutzen sie Bücher, Steine, Tränke, Kräuter und weitere Hilfsmittel. Manche widmen ihr Leben einer bestimmten Schule der Magie, andere lernen aus zahlreichen Disziplinen.",
+			"Viele werden zu weisen und mächtigen Persönlichkeiten ihrer Gemeinschaften, beraten Herrschende, stellen Arzneien bereit, heilen oder führen Kriegsräte. Obwohl sie alle magisches Wissen sammeln, entstehen unter ihnen heftige Konflikte darüber, wie mächtige Geheimnisse erworben, bewahrt und weitergegeben werden sollen."
+		],
+		"stats": { "domains": "Kodex & Leben", "suggestedPrimary": "Großer Stab", "suggestedSecondary": null, "suggestedArmor": "Lederrüstung" },
+		"items": "Ein Buch, das du zu übersetzen versuchst, oder ein winziges, harmloses Elementarwesen als Haustier",
+		"hopeFeature": "Nicht dieses Mal: Setze 3 Hoffnung ein, um eine gegnerische Kreatur in weiter Distanz zu zwingen, einen Angriffs- oder Schadenswurf erneut zu würfeln.",
+		"classFeatures": [
+			{
+				"name": "Kleine Zaubertricks",
+				"description": "Du kannst jederzeit harmlose, subtile magische Effekte erzeugen. Du kannst beispielsweise die Farbe eines Gegenstands verändern, einen Geruch erzeugen, eine Kerze entzünden, einen kleinen Gegenstand schweben lassen, einen Raum erhellen oder einen kleinen Gegenstand reparieren."
+			},
+			{
+				"name": "Seltsame Muster",
+				"description": "Wähle eine Zahl zwischen 1 und 12. Wenn du diese Zahl auf einem Dualwürfel würfelst, erhältst du 1 Hoffnung oder löschst 1 Stress. Bei einer langen Rast darfst du die gewählte Zahl ändern."
+			}
+		],
+		"backgroundQuestions": [
+			"Auf welche Verantwortung verließ sich deine Gemeinschaft früher bei dir und wie hast du sie enttäuscht?",
+			"Du hast dein Leben lang nach einem bedeutenden Buch oder Gegenstand gesucht. Was ist es und warum ist es dir so wichtig?",
+			"Du hast eine mächtige Rivalin oder einen mächtigen Rivalen. Wer ist es und warum willst du diese Person unbedingt besiegen?"
+		],
+		"connectionQuestions": [
+			"Um welchen Gefallen habe ich dich gebeten, bei dem du nicht sicher bist, ob du ihn erfüllen kannst?",
+			"Welches merkwürdige Hobby oder welche seltsame Faszination teilen wir?",
+			"Welches Geheimnis über dich selbst hast du nur mir anvertraut?"
+		]
+	}
+]

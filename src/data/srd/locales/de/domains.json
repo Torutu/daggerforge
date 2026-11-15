@@ -1,0 +1,1136 @@
+[
+	{
+		"id": "domain-card-arcana-1-rune-ward",
+		"name": "Runensiegel",
+		"type": "Zauber",
+		"text": "Du trägst einen sehr persönlichen Gegenstand bei dir, der mit Schutzmagie angereichert und als Siegel von dir oder einem verbündeten Charakter genutzt werden kann. Beschreibe, worum es sich bei dem Gegenstand handelt, und wieso er so wichtig für dich ist. Wer das Siegel trägt, darf 1 Hoffnung einsetzen, um erlittenen Schaden um 1W8 zu reduzieren. Wenn das Ergebnis des Siegel-Wurfes 8 ist, verliert es nach der Verminderung des Schadens in dieser Runde seine Kraft. Während deiner nächsten Rast kann es kostenlos aufgeladen werden."
+	},
+	{
+		"id": "domain-card-arcana-1-unleash-chaos",
+		"name": "Entfesseltes Chaos",
+		"type": "Zauber",
+		"text": "Zu Beginn einer Spielsitzung legst du eine Anzahl an Markern auf diese Karte, die deinem Zauber-Attribut entspricht. Führe einen Zauberwurf gegen ein Ziel in weiter Distanz durch und setze eine beliebige Anzahl deiner Marker ein, um pure Energie aus deinem Inneren zu kanalisieren und gegen das Ziel zu entfesseln. Bei einem Erfolg würfelst du eine Anzahl an W10, die der Anzahl eingesetzter Marker entspricht, und fügst dem Ziel entsprechenden magischen Schaden zu. Markiere 1 Stress, um diese Karte wieder mit Markern bis zu deinem Zauber-Attributswert aufzufüllen. Am Ende jeder Spielsitzung werden alle nicht eingesetzten Marker entfernt."
+	},
+	{
+		"id": "domain-card-arcana-1-wall-walk",
+		"name": "Wandlauf",
+		"type": "Zauber",
+		"text": "Setze 1 Hoffnung ein, um es einer Kreatur in unmittelbarer Distanz zu ermöglichen, an Wänden und Decken entlangzulaufen wie auf dem Boden. Dieser Effekt hält bis zum Ende der Szene an oder bis du Wandlauf erneut wirkst."
+	},
+	{
+		"id": "domain-card-arcana-2-cinder-grasp",
+		"name": "Zundergriff",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel in unmittelbarer Distanz durch. Bei einem Erfolg geht das Ziel sofort in Flammen auf, erleidet 1W20+3 magischen Schaden und erhält vorübergehend den Zustand Brand. Wenn eine Brennende Kreatur eine Aktion ausführt, erleidet sie zusätzlich 2W6 magischen Schaden, wenn sie am Ende ihrer Aktion immer noch den Zustand Brand hat."
+	},
+	{
+		"id": "domain-card-arcana-2-floating-eye",
+		"name": "Schwebendes Auge",
+		"type": "Zauber",
+		"text": "Setze 1 Hoffnung ein, um eine kleine schwebende Kugel zu beschwören, die sich innerhalb sehr weiter Distanz überall hinbewegen kann. Während dieser Zauber aktiv ist, kannst du durch die Kugel sehen als würdest du auf ihrer Position stehen. Du kannst frei zwischen der Wahrnehmung deiner eigenen Sinne und der Sicht durch die Kugel wechseln. Wenn die Kugel Schaden erleidet oder sich außerhalb der Distanz bewegt, endet der Zauber."
+	},
+	{
+		"id": "domain-card-arcana-3-counterspell",
+		"name": "Zauberbruch",
+		"type": "Zauber",
+		"text": "Du kannst einen magischen Effekt unterbrechen, indem du einen Reaktionswurf mit deinem Zauber-Attribut durchführst. Bei einem Erfolg endet der Effekt sofort und sämtliche Auswirkungen werden verhindert. Im Anschluss legst du diese Karte in deine Reserve."
+	},
+	{
+		"id": "domain-card-arcana-3-flight",
+		"name": "Flug",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (15) durch. Bei einem Erfolg legst du eine Anzahl Marker auf diese Karte, die deinem Wert in Agilität entspricht (mindestens 1). Wenn du beim Fliegen einen Aktionswurf durchführst, setze 1 Marker von dieser Karte ein. Nach der Aktion, für die du den letzten Marker auf dieser Karte einsetzt, landest du auf dem Boden direkt unter dir."
+	},
+	{
+		"id": "domain-card-arcana-4-blink-out",
+		"name": "Hier und Dort",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (12) durch. Bei einem Erfolg darfst du 1 Hoffnung einsetzen, um dich zu einer anderen Position innerhalb weiter Distanz zu teleportieren, die du sehen kannst. Wenn sich weitere Kreaturen innerhalb sehr kurzer Distanz befinden, die sich auch teleportieren möchten, darfst du 1 Hoffnung für jede zusätzliche Kreatur einsetzen und diese mit dir teleportieren."
+	},
+	{
+		"id": "domain-card-arcana-4-preservation-blast",
+		"name": "Schützende Druckwelle",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen alle Ziele in unmittelbarer Distanz durch. Getroffene Ziele werden in weite Distanz zurückgeschleudert und erleiden W8+3 magischen Schaden, abhängig von deinem Zauber-Attribut."
+	},
+	{
+		"id": "domain-card-arcana-5-chain-lightning",
+		"name": "Kettenblitz",
+		"type": "Zauber",
+		"text": "Markiere 2 Stress, um einen Zauberwurf durchzuführen und Blitze auf alle Ziele in kurzer Distanz niedergehen zu lassen. Getroffene Ziele müssen einen Reaktionswurf mit einem Schwierigkeitsgrad durchführen, der dem Ergebnis deines Zauberwurfs entspricht. Ziele, die einen Misserfolg erzielen, erleiden 2W8+4 magischen Schaden. Zusätzliche gegnerische Ziele, die nicht von Kettenblitz anvisiert wurden und sich innerhalb kurzer Distanz zu getroffenen Zielen befinden, müssen ebenfalls einen Reaktionswurf durchführen. Ziele, die einen Misserfolg erzielen, erleiden 2W8+4 magischen Schaden. Diese Kette setzt sich bis zum letzten gegnerischen Ziel in der entsprechenden Distanz fort."
+	},
+	{
+		"id": "domain-card-arcana-5-premonition",
+		"name": "Vorahnung",
+		"type": "Zauber",
+		"text": "Du bist in der Lage die arkane Energie so lenken, dass du Visionen der Zukunft erhältst. Einmal pro langer Rast darfst du, unmittelbar nachdem die SL dir die Folgen eines deiner Würfe sagt, diese Aktion und ihre Folgen widerrufen, als wären sie nie geschehen und stattdessen eine andere Aktion durchführen."
+	},
+	{
+		"id": "domain-card-arcana-6-rift-walker",
+		"name": "Portalwandeln",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (15) durch. Bei einem Erfolg erschaffst du eine magische Markierung auf dem Boden unter deinen Füßen. Wenn du das nächste Mal erfolgreich Portalwandeln wirkst, öffnet sich ein Riss im Raum, der einen sicheren Übergang zu der Stelle bietet, an der du die Markierung platziert hast. Der Riss bleibt geöffnet, bis du ihn schließt oder du einen anderen Zauber wirkst. Du kannst den Zauber jederzeit beenden, wenn du Portalwandeln erneut wirkst und die Markierung an einer anderen Stelle setzt."
+	},
+	{
+		"id": "domain-card-arcana-6-telekinesis",
+		"name": "Telekinese",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb weiter Distanz durch. Bei einem Erfolg darfst du das Ziel mittels Gedankenkraft an eine beliebige Position in weiter Distanz zu seiner Ursprungsposition bewegen. Du darfst das Ziel als Angriff werfen, indem du einen zusätzlichen Zauberwurf gegen ein zweites Ziel durchführst, das du mit dem ersten Ziel treffen willst. Bei einem Erfolg erleidet das zweite Ziel W12+4 physischen Schaden, abhängig von deiner Übung. Im Anschluss endet dieser Zauber."
+	},
+	{
+		"id": "domain-card-arcana-7-arcana-touched",
+		"name": "Segen der Arkana",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Arkana-Domäne stammen, erhältst du folgende Vorteile: • Einen Bonus von +1 auf Zauberwürfe. • Einmal pro Rast darfst du die Würfelergebnisse deines Hoffnungs-und Furchtwürfels miteinander tauschen."
+	},
+	{
+		"id": "domain-card-arcana-7-cloaking-blast",
+		"name": "Verhüllender Angriff",
+		"type": "Zauber",
+		"text": "Wenn du einen erfolgreichen Zauberwurf für einen anderen Zauber durchführst, darfst du 1 Hoffnung einsetzen, um den Zustand Getarnt zu erhalten. Mit dem Zustand Getarnt bleibst du unsichtbar, solange du dich nicht bewegst, wenn ein gegnerischer Charakter sich auf eine Position bewegt, von der aus er dich eigentlich sehen würde. Wenn du dich in das Sichtfeld oder innerhalb des Sichtfeldes eines gegnerischen Charakters bewegst, oder einen Angriff durchführst, bist du nicht mehr Getarnt."
+	},
+	{
+		"id": "domain-card-arcana-8-arcane-reflection",
+		"name": "Arkane Reflexion",
+		"type": "Zauber",
+		"text": "Wenn du magischen Schaden erleiden würdest, darfst du beliebig viel Hoffnung einsetzen, um entsprechend viele W6 zu würfeln. Wenn mindestens einer davon eine 6 zeigt, wird der Angriff auf die angreifende Kreatur zurückgeworfen und sie erleidet an deiner Stelle den Schaden."
+	},
+	{
+		"id": "domain-card-arcana-8-confusing-aura",
+		"name": "Aura der Verwirrung",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (14) durch. Bei einem Erfolg darfst du einmal pro langer Rast eine Illusion über deinem Körper erschaffen, die deine genaue Position verschleiert. Markiere beliebig viel Stress, um entsprechend viele zusätzliche Schichten der Illusion zu erzeugen. Wenn eine gegnerische Kreatur dich angreift, würfle eine Anzahl W6 die den aktiven Schichten der Illusion entspricht. Wenn du mindestens eine 5 oder höher würfelst, wird eine Schicht der Illusion zerstört und der Angriff gegen dich schlägt fehl. Wenn alle Würfel 4 oder weniger zeigen, erleidest du Schaden und der Zauber endet."
+	},
+	{
+		"id": "domain-card-arcana-9-earthquake",
+		"name": "Erdbeben",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (16) durch. Einmal pro Rast bei einem Erfolg müssen alle nicht-fliegenden Ziele innerhalb sehr weiter Distanz einen Reaktionswurf (18) durchführen. Ziele, die einen Misserfolg erzielen, erleiden 3W10+8 physischen Schaden und erhalten vorübergehend den Zustand Verwundbar. Ziele, die einen Erfolg erzielen, erleiden den halben Schaden. Zusätzlich wird bei einem Erfolg auf den Zauberwurf die gesamte Umgebung innerhalb sehr weiter Distanz zu schwierig passierbarem Terrain. Gebäude innerhalb dieser Distanz können Schaden davontragen oder zusammenstürzen."
+	},
+	{
+		"id": "domain-card-arcana-9-sensory-projection",
+		"name": "Projektion der Sinne",
+		"type": "Zauber",
+		"text": "Einmal pro Rast darfst du einen Zauberwurf (15) durchführen. Bei einem Erfolg erhältst du eine Vision, in der du einen dir bekannten Ort klar sehen und hören kannst, als wärst du selbst dort. Du kannst dich in der Vision frei bewegen und bist nicht an die physischen Einschränkungen deines Körpers gebunden. Dieser Zauber kann weder durch Magie noch durch weltliche Methoden entdeckt werden. Die Vision endet, wenn du Schaden erleidest oder einen anderen Zauber wirkst."
+	},
+	{
+		"id": "domain-card-arcana-10-adjust-reality",
+		"name": "Neue Realität",
+		"type": "Zauber",
+		"text": "Nachdem du oder ein gewillter verbündeter Charakter einen beliebigen Wurf durchgeführt haben, darfst du 5 Hoffnung einsetzen, um das nummerische Ergebnis des Wurfs in ein Ergebnis deiner Wahl zu ändern. Das gewählte Ergebnis muss innerhalb des Würfelwertes liegen."
+	},
+	{
+		"id": "domain-card-arcana-10-falling-sky",
+		"name": "Himmelsfall",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen alle gegnerischen Ziele innerhalb weiter Distanz durch. Du darfst beliebig viel Stress markieren, um magische Splitter vom Himmel regnen zu lassen. Getroffene Ziele erleiden 1W20+2 magischen Schaden für jeden Punkt Stress, den du markiert hast."
+	},
+	{
+		"id": "domain-card-blade-1-get-back-up",
+		"name": "Wieder aufstehen",
+		"type": "Fähigkeit",
+		"text": "Wenn du Schweren Schaden erleidest, darfst du 1 Stress markieren, um die Schwere des Schadens um 1 Schwelle zu reduzieren."
+	},
+	{
+		"id": "domain-card-blade-1-not-good-enough",
+		"name": "Nicht gut genug",
+		"type": "Fähigkeit",
+		"text": "Bei einem Schadenswurf darfst du alle 1en und 2en erneut würfeln."
+	},
+	{
+		"id": "domain-card-blade-1-whirlwind",
+		"name": "Wirbelwind",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen erfolgreichen Angriff gegen ein Ziel innerhalb sehr kurzer Distanz ausführst, darfst du 1 Hoffnung einsetzen, um den Angriff gleichzeitig gegen alle anderen Ziele innerhalb sehr kurzer Distanz auszuführen. Alle weiteren mit dieser Fähigkeit getroffenen Ziele erleiden den halbierten Schaden."
+	},
+	{
+		"id": "domain-card-blade-2-a-soldier-s-bond",
+		"name": "Kompanie-Bande",
+		"type": "Fähigkeit",
+		"text": "Einmal pro langer Rast erhalten du und ein weiterer Charakter je 3 Hoffnung, wenn du diesem Charakter ein Kompliment machst oder ihn nach etwas fragst, das er gut kann."
+	},
+	{
+		"id": "domain-card-blade-2-reckless",
+		"name": "Wagehals",
+		"type": "Fähigkeit",
+		"text": "Markiere 1 Stress, um einen Vorteil auf einen Angriff zu erhalten."
+	},
+	{
+		"id": "domain-card-blade-3-scramble",
+		"name": "Gerangel",
+		"type": "Fähigkeit",
+		"text": "Wenn dir eine Kreatur in unmittelbarer Distanz Schaden zufügen würde, darfst du dem Angriff einmal pro Rast ausweichen und dich ungehindert aus der unmittelbaren Distanz dieser Kreatur herausbewegen."
+	},
+	{
+		"id": "domain-card-blade-3-versatile-fighter",
+		"name": "Vielseitiges Kampftalent",
+		"type": "Fähigkeit",
+		"text": "Du darfst ein anderes Charakterattribut für eine ausgerüstete Waffe nutzen als jenes, das die Waffe eigentlich benennt. Wenn du Schaden auswürfelst, darfst du 1 Stress markieren, um für einen deiner Schadenswürfel den maximalen Wert statt des Würfelergebnisses zu verwenden."
+	},
+	{
+		"id": "domain-card-blade-4-deadly-focus",
+		"name": "Tödlicher Fokus",
+		"type": "Fähigkeit",
+		"text": "Einmal pro Rast darfst du deinen gesamten Fokus auf ein Ziel deiner Wahl richten. Du erhältst einen Bonus von +1 auf deine Übung, bis du eine andere Kreatur angreifst, das Ziel besiegst oder der Kampf endet."
+	},
+	{
+		"id": "domain-card-blade-4-fortified-armor",
+		"name": "Verstärkte Rüstung",
+		"type": "Fähigkeit",
+		"text": "Du erhältst einen Bonus von +2 auf deine Schadensschwellen, solange du Rüstung trägst."
+	},
+	{
+		"id": "domain-card-blade-5-champion-s-edge",
+		"name": "Meisterlicher Vorteil",
+		"type": "Fähigkeit",
+		"text": "Wenn du bei einem Angriff einen kritischen Erfolg würfelst, darfst du bis zu 3 Hoffnung einsetzen, um eine der folgenden Optionen für jede eingesetzte Hoffnung auszuwählen: • Du löschst 1 TP. • Du löschst 1 Rüstungsfeld. • Dein Ziel muss 1 zusätzlichen TP markieren. Du darfst jede Option nur einmal wählen."
+	},
+	{
+		"id": "domain-card-blade-5-vitality",
+		"name": "Vitalität",
+		"type": "Fähigkeit",
+		"text": "Wenn du diese Karte wählst, erhältst du zwei der folgenden Vorteile permanent: • 1 zusätzliches Stress-Feld. • 1 zusätzliches TP-Feld. • Einen Bonus von +2 auf deine Schadensschwellen. Im Anschluss legst du diese Karte permanent in deine Reserve."
+	},
+	{
+		"id": "domain-card-blade-6-battle-hardened",
+		"name": "Abgehärtet",
+		"type": "Fähigkeit",
+		"text": "Einmal pro langer Rast darfst du 1 Hoffnung einsetzen, um 1 TP bei dir zu löschen, statt einen Todeszug auszuführen."
+	},
+	{
+		"id": "domain-card-blade-6-rage-up",
+		"name": "Furore",
+		"type": "Fähigkeit",
+		"text": "Vor einem Angriffswurf darfst du 1 Stress markieren, um deinem Schadenswurf einen Bonus in Höhe deines doppelten Stärke-Wertes hinzuzufügen. Pro Angriff darfst du Furore zweimal einsetzen."
+	},
+	{
+		"id": "domain-card-blade-7-blade-touched",
+		"name": "Segen der Klinge",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Klinge-Domäne stammen, erhältst du folgende Vorteile: • Einen Bonus von +2 auf Angriffswürfe. • Einen Bonus von +4 auf deine Schwere Schadensschwelle."
+	},
+	{
+		"id": "domain-card-blade-7-glancing-blow",
+		"name": "Flüchtiger Treffer",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen Misserfolg bei einem Angriffswurf erzielst, darfst du 1 Stress markieren, um dem Ziel Waffenschaden in Höhe der Hälfte deiner Übung zuzufügen."
+	},
+	{
+		"id": "domain-card-blade-8-battle-cry",
+		"name": "Kampfschrei",
+		"type": "Fähigkeit",
+		"text": "Einmal pro langer Rast, wenn du dich in einen Kampf wirfst, darfst du einen mächtigen Schrei ausstoßen, der deine Verbündeten motiviert. Alle Verbündeten, die dich hören können, dürfen 1 Stress löschen und erhalten 1 Hoffnung. Zusätzlich erhalten deine Verbündeten einen Vorteil auf Angriffswürfe bis du oder ein verbündeter Charakter einen Misserfolg mit Furcht erzielt."
+	},
+	{
+		"id": "domain-card-blade-8-frenzy",
+		"name": "Blutrausch",
+		"type": "Fähigkeit",
+		"text": "Einmal pro langer Rast darfst du in einen Blutrausch verfallen, bis keine gegnerischen Kreaturen mehr in Sicht sind. Während der Blutrausch anhält, darfst du keine Rüstungsfelder markieren und du erhältst einen Bonus von +10 auf deine Schadenswürfe sowie einen Bonus von +8 auf deine Schwere Schadensschwelle."
+	},
+	{
+		"id": "domain-card-blade-9-gore-and-glory",
+		"name": "Blut und Ehre",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen kritischen Erfolg bei einem Waffenangriff würfelst, erhältst du 1 zusätzliche Hoffnung oder darfst 1 zusätzlichen Punkt Stress löschen. Außerdem erhältst du 1 Hoffnung oder darfst 1 Stress löschen, wenn du einem gegnerischen Ziel genug Schaden zufügst, um es zu besiegen."
+	},
+	{
+		"id": "domain-card-blade-9-reaper-s-strike",
+		"name": "Guillotine",
+		"type": "Fähigkeit",
+		"text": "Einmal pro langer Rast darfst du 1 Hoffnung einsetzen, um einen Angriffswurf durchzuführen. Die SL sagt dir, welche Ziele innerhalb der Waffendistanz du erfolgreich treffen würdest. Wähle eines dieser Ziele aus; es muss 5 TP markieren."
+	},
+	{
+		"id": "domain-card-blade-10-battle-monster",
+		"name": "Kampfmonster",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen Erfolg bei einem Angriff auf eine gegnerische Kreatur erzielst, darfst du 4 Stress markieren. Das Ziel muss eine Anzahl TP markieren, die der Anzahl deiner aktuell markierten TP entspricht, anstatt Schaden auszuwürfeln."
+	},
+	{
+		"id": "domain-card-blade-10-onslaught",
+		"name": "Schlachtruf",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen erfolgreichen Angriff mit einer Waffe durchführst, richtest du niemals Schaden unterhalb der Mittleren Schadensschwelle an (das Ziel muss immer mindestens 2 TP markieren). Zusätzlich darfst du 1 Stress markieren, wenn eine Kreatur innerhalb der Distanz deiner Waffe einem verbündeten Charakter Schaden mit einem Angriff zufügt, der dich nicht betrifft. Die Kreatur muss einen Reaktionswurf (15) durchführen. Bei einem Misserfolg muss die Kreatur 1 TP markieren."
+	},
+	{
+		"id": "domain-card-bone-1-deft-maneuvers",
+		"name": "Flinkes Manöver",
+		"type": "Fähigkeit",
+		"text": "Einmal pro Rast darfst du 1 Stress markieren, um an einen beliebigen Ort innerhalb weiter Distanz zu sprinten, ohne einen Agilitätswurf ausführen zu müssen. Wenn du am Ende dieser Bewegung in unmittelbarer Distanz zu einem gegnerischen Ziel stehst und sofort einen Angriff gegen es ausführst, erhältst du einen Bonus von +1 auf den Angriffswurf."
+	},
+	{
+		"id": "domain-card-bone-1-i-see-it-coming",
+		"name": "Ich habe es kommen sehen",
+		"type": "Fähigkeit",
+		"text": "Wenn du Ziel eines Angriffs wirst, der außerhalb deiner unmittelbaren Distanz erfolgt, darfst du 1 Stress markieren, um 1W4 zu würfeln und einen Bonus auf deinen Ausweichen-Wert in Höhe des Würfelergebnisses gegen diesen Angriff zu erhalten."
+	},
+	{
+		"id": "domain-card-bone-1-untouchable",
+		"name": "Unantastbar",
+		"type": "Fähigkeit",
+		"text": "Du erhältst einen Bonus auf Ausweichen in Höhe der Hälfte deines Agilitätswertes."
+	},
+	{
+		"id": "domain-card-bone-2-ferocity",
+		"name": "Hitze des Gefechts",
+		"type": "Fähigkeit",
+		"text": "Wenn dein Ziel nach deinem Angriff mindestens 1 TP markieren muss, darfst du 2 Hoffnung einsetzen, um deinen Ausweichen-Wert um die Anzahl der markierten TP zu erhöhen. Dieser Bonus hält an, bis der nächste Angriff gegen dich erfolgt ist."
+	},
+	{
+		"id": "domain-card-bone-2-strategic-approach",
+		"name": "Taktische Annäherung",
+		"type": "Fähigkeit",
+		"text": "Nach einer langen Rast legst du eine Anzahl an Markern auf diese Karte, die deinem Wissen-Wert entspricht (mindestens 1). Wenn du dich zum ersten Mal in kurze Distanz zu einem gegnerischen Ziel begibst und dieses angreifst, darfst du 1 Marker einsetzen, um eine der folgenden Optionen zu wählen: • Du erhältst einen Vorteil auf den Angriffswurf. • Du darfst 1 Stress bei einem verbündeten Charakter löschen, der sich in unmittelbarer Distanz zu deinem Ziel befindet. • Du erhältst einen Bonus von 1W8 auf deinen Schadenswurf. Bei der nächsten langen Rast werden alle nicht verbrauchten Marker entfernt."
+	},
+	{
+		"id": "domain-card-bone-3-brace",
+		"name": "Wappnen",
+		"type": "Fähigkeit",
+		"text": "Wenn du ein Rüstungsfeld markierst, um erlittenen Schaden zu reduzieren, darfst du 1 Stress markieren, um ein zusätzliches Rüstungsfeld zu markieren."
+	},
+	{
+		"id": "domain-card-bone-3-tactician",
+		"name": "Taktieren",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen verbündeten Charakter unterstützt, darf dieser 1 Hoffnung einsetzen, um eine deiner Erfahrungen sowie deinen Vorteilswürfel zu seinem Wurf hinzuzufügen.\n\nWenn ihr einen Teamwurf durchführt, darfst du einen W20 als deinen Hoffnungswürfel verwenden."
+	},
+	{
+		"id": "domain-card-bone-4-boost",
+		"name": "Abflug",
+		"type": "Fähigkeit",
+		"text": "Markiere 1 Stress, um dich von einem gewillten verbündeten Charakter abzustoßen, in die Luft zu schleudern und einen Luftangriff gegen ein Ziel innerhalb weiter Distanz durchzuführen. Du erhältst einen Vorteil auf den Angriffswurf und darfst dem Schadenswurf 1W10 hinzufügen. Am Ende deiner Aktion landest du in unmittelbarer Distanz des Ziels."
+	},
+	{
+		"id": "domain-card-bone-4-redirect",
+		"name": "Umlenken",
+		"type": "Fähigkeit",
+		"text": "Wenn ein Angriff gegen dich von außerhalb der unmittelbaren Distanz fehlschlägt, darfst du eine Anzahl W6 würfeln, die deiner Übung entspricht. Wenn du eine 6 würfelst, darfst du 1 Stress markieren, um den Angriff stattdessen auf ein gegnerisches Ziel innerhalb sehr kurzer Distanz umzulenken."
+	},
+	{
+		"id": "domain-card-bone-5-know-thy-enemy",
+		"name": "Kenne deine Feinde",
+		"type": "Fähigkeit",
+		"text": "Wenn du eine Kreatur beobachtest, darfst du einen Wurf auf Instinkt gegen sie durchführen. Bei einem Erfolg darfst du 1 Hoffnung einsetzen und die SL nach einer der folgenden Informationen über das Ziel fragen: • Die Anzahl der nicht markierten TP und Stressfelder des Ziels. • Den Schwierigkeitsgrad und die Schadensschwellen des Ziels. • Seine Taktik und die Schadenswürfel seines Standard-Angriffs. • Seine Merkmale/Fähigkeiten und Erfahrungen. Zusätzlich darfst du bei einem Erfolg 1 Stress markieren, um 1 Furcht aus dem Besitz der SL zu entfernen."
+	},
+	{
+		"id": "domain-card-bone-5-signature-move",
+		"name": "Markenzeichen",
+		"type": "Fähigkeit",
+		"text": "Benenne und beschreibe deine typische, individuelle Kampf-Technik. Einmal pro Rast darfst du einen W20 als deinen Hoffnungswürfel verwenden, wenn du diese Technik als Angriffswurf ausführst. Bei einem Erfolg darfst du 1 Stress löschen."
+	},
+	{
+		"id": "domain-card-bone-6-rapid-riposte",
+		"name": "Flinker Gegenschlag",
+		"type": "Fähigkeit",
+		"text": "Wenn ein Angriff aus unmittelbarer Distanz gegen dich fehlschlägt, darfst du 1 Stress markieren, um die Gelegenheit zu ergreifen und der angreifenden Kreatur den Schadenswert einer deiner aktiven Waffen zuzufügen."
+	},
+	{
+		"id": "domain-card-bone-6-recovery",
+		"name": "Erholung",
+		"type": "Fähigkeit",
+		"text": "Du darfst während einer kurzen Rast einen Auszeit-Zug auswählen, der eigentlich in einer langen Rast ausgewählt werden kann. Wenn du 1 Hoffnung einsetzt, darf ein verbündeter Charakter dasselbe tun."
+	},
+	{
+		"id": "domain-card-bone-7-bone-touched",
+		"name": "Segen der Knochen",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Knochen-Domäne stammen, erhältst du folgende Vorteile: • Einen Bonus von +1 auf Agilität. • Einmal pro Rast darfst du 3 Hoffnung einsetzen, um einen erfolgreichen Angriffswurf gegen dich in einen Misserfolg zu verwandeln."
+	},
+	{
+		"id": "domain-card-bone-7-cruel-precision",
+		"name": "Brutale Präzision",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen erfolgreichen Angriff mit einer Waffe durchführst, erhältst du einen Bonus auf deinen Schadenswurf, der entweder deinem Geschick oder deiner Agilität entspricht."
+	},
+	{
+		"id": "domain-card-bone-8-breaking-blow",
+		"name": "Zerschmettern",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen erfolgreichen Angriff durchführst, darfst du 1 Stress markieren, um dem nächsten erfolgreichen Angriff auf dasselbe Ziel zusätzlich 2W12 Schaden hinzuzufügen."
+	},
+	{
+		"id": "domain-card-bone-8-wrangle",
+		"name": "Rangeln",
+		"type": "Fähigkeit",
+		"text": "Führe einen Wurf auf Agilität gegen alle Ziele innerhalb kurzer Distanz durch. Du darfst 1 Hoffnung einsetzen, um Ziele, bei denen du einen Erfolg erzielt hast, sowie alle gewillten Verbündeten innerhalb kurzer Distanz auf eine andere Position innerhalb kurzer Distanz zu bewegen."
+	},
+	{
+		"id": "domain-card-bone-9-on-the-brink",
+		"name": "Am Abgrund",
+		"type": "Fähigkeit",
+		"text": "Wenn du 2 oder weniger nicht-markierte TP hast, erleidest du keinen Leichten Schaden."
+	},
+	{
+		"id": "domain-card-bone-9-splintering-strike",
+		"name": "Splitterschlag",
+		"type": "Fähigkeit",
+		"text": "Setze 1 Hoffnung ein und führe einen Angriffswurf gegen alle gegnerischen Ziele innerhalb der Distanz deiner Waffe durch. Einmal pro langer Rast bei einem Erfolg gegen beliebig viele Ziele darfst du den gesamten Schaden, den du damit zugefügt hast, zusammenzählen und diesen Schaden nach Belieben auf die getroffenen Ziele verteilen. Wenn du Schaden auf ein Ziel verteilst, würfle einen zusätzlichen Schadenswürfel und füge dem Schaden dieses Ergebnis hinzu."
+	},
+	{
+		"id": "domain-card-bone-10-deathrun",
+		"name": "Todeslauf",
+		"type": "Fähigkeit",
+		"text": "Setze 3 Hoffnung ein, um auf geradem Weg das Schlachtfeld bis zu einem Punkt innerhalb weiter Distanz zu durchqueren und einen Angriff gegen alle gegnerischen Ziele auf deinem Weg dorthin durchzuführen, die sich in der Distanz deiner Waffe befinden. Du darfst die Reihenfolge wählen, in der du getroffenen Zielen Schaden zufügst. Für das erste Ziel darfst du deinem Schadenswurf einen Bonus von +1 auf deine Übung hinzufügen. Entferne dann einen der Würfel bei dem Schadenswurf auf das nächste Ziel. Entferne bei den Schadenswürfen auf die nachfolgenden Zielen immer je einen weiteren Würfel, bis du keine Schadenswürfel oder Ziele mehr hast. Du kannst ein gegnerisches Ziel nur einmal pro Angriff auswählen."
+	},
+	{
+		"id": "domain-card-bone-10-swift-step",
+		"name": "Schneller Schritt",
+		"type": "Fähigkeit",
+		"text": "Wenn ein Angriff auf dich fehlschlägt, darfst du 1 Stress löschen. Wenn du keinen Stress-Punkt markiert hast, erhältst du 1 Hoffnung."
+	},
+	{
+		"id": "domain-card-codex-1-book-of-ava",
+		"name": "Buch von Ava",
+		"type": "Zauberbuch",
+		"text": "Kraftstoß: Führe einen Zauberwurf gegen ein Ziel in unmittelbarer Distanz aus. Bei einem Erfolg wird das Ziel in weite Distanz zurückgestoßen und erleidet W10+2 magischen Schaden, abhängig von deiner Übung. Tavas Rüstung: Setze 1 Hoffnung ein, um einem Ziel, das du berühren kannst, einen Bonus von +1 auf seinen Rüstungswert zu gewähren. Der Effekt hält bis zu seiner nächsten Rast an, oder bis du Tavas Rüstung erneut wirkst. Eisstachel: Führe einen Zauberwurf (12) durch, um einen großen Eisstachel in weiter Distanz zu beschwören. Wenn du ihn als Waffe einsetzt, führe den Zauberwurf stattdessen gegen den Schwierigkeitsgrad des Ziels aus. Bei einem Erfolg bewirkst du W6 physischen Schaden, abhängig von deiner Übung."
+	},
+	{
+		"id": "domain-card-codex-1-book-of-illiat",
+		"name": "Buch von Illiat",
+		"type": "Zauberbuch",
+		"text": "Schlummer: Führe einen Zauberwurf gegen ein Ziel in sehr kurzer Distanz aus. Bei einem Erfolg erhält das Ziel den Zustand Schlaf, bis es Schaden erleidet oder die SL 1 Furcht einsetzt, um den Zustand aufzuheben. Magisches Kreuzfeuer: Einmal pro Rast darfst du beliebig viel Hoffnung einsetzen, um magische Projektile auf ein Ziel in kurzer Distanz zu werfen. Wirf dazu eine Anzahl W6, die den eingesetzten Punkten Hoffnung entspricht – das Ergebnis entspricht dem magischen Schaden, den das Ziel erleidet. Telepathie: Setze 1 Hoffnung ein, um eine geistige Verbindung zu einem Ziel herzustellen, das du sehen kannst. Du kannst mit ihm telepathisch kommunizieren. Die Verbindung hält bis zu deiner nächsten Rast an, oder bis du erneut Telepathie wirkst."
+	},
+	{
+		"id": "domain-card-codex-1-book-of-tyfar",
+		"name": "Buch von Tyfar",
+		"type": "Zauberbuch",
+		"text": "Wildfeuer: Führe einen Zauberwurf gegen bis zu drei Ziele in unmittelbarer Distanz aus. Flammen brechen aus deinen Händen hervor. Getroffene Ziele erleiden 2W6 magischen Schaden und markieren 1 Stress. Magische Hand: Beschwöre eine magische Hand innerhalb weiter Distanz, die dieselbe Größe und Kraft wie deine normale Hand hat. Magischer Nebel: Führe einen Zauberwurf (13) durch, um für einen kurzen Zeitraum in sehr kurzer Distanz einen dichten Nebel heraufzubeschwören, der sich um einen bestimmten Bereich legt. Der Nebel verschleiert diesen Bereich und alles, was sich in ihm befindet."
+	},
+	{
+		"id": "domain-card-codex-2-book-of-sitil",
+		"name": "Buch von Sitil",
+		"type": "Zauberbuch",
+		"text": "Aussehen verändern: Du veränderst mithilfe von Magie dein Aussehen und deine Kleidung, um nicht erkannt zu werden. Doppeltreffer: Setze 2 Hoffnung ein, um diesen Zauber auf dich selbst oder einen verbündeten Charakter innerhalb kurzer Distanz zu wirken. Beim nächsten Angriff des Ziels kann ein zusätzliches Ziel innerhalb der Distanz getroffen werden, gegen das der Angriffswurf ebenfalls erfolgreich wäre. Du kannst diesen Zauber bei jeder Ausführung nur auf einem Ziel aufrechterhalten. Illusion: Führe einen Zauberwurf (14) durch. Bei einem Erfolg erschaffst du vorübergehend eine optische Illusion innerhalb kurzer Distanz, die nicht größer als du selbst ist und solange besteht, wie du sie ansiehst. Sie hält kritischer Betrachtung stand, bis sich ein beobachtender Charakter in unmittelbarer Distanz befindet."
+	},
+	{
+		"id": "domain-card-codex-2-book-of-vagras",
+		"name": "Buch von Vagras",
+		"type": "Zauberbuch",
+		"text": "Runenschloss: Führe einen Zauberwurf (15) auf einen Gegenstand durch,Zauberbuch den du berührst und der sich schließen lässt (z. B. Schloss oder Kiste). Einmal pro Rast darfst du bei einem Erfolg den Gegenstand so verschließen, dass er nur von ausgewählten Personen geöffnet werden kann. Ein Charakter mit magischen Fähigkeiten und einer Stunde Zeit zum Verständnis des Zaubers kann diesen brechen. Magisches Portal: Wenn sich keine gegnerischen Ziele in unmittelbarer Distanz befinden, führe einen Zauberwurf (13) durch. Bei einem Erfolg darfst du 1 Hoffnung einsetzen, um ein Portal zu erschaffen, das von deinem Standort zu einem für dich sichtbaren Punkt innerhalb weiter Distanz führt. Das Portal schließt sich, sobald eine Kreatur hindurchgegangen ist. Enthüllen: Führe einen Zauberwurf durch. Wenn sich innerhalb kurzer Distanz etwas magisch Verborgenes befindet, wird es enthüllt."
+	},
+	{
+		"id": "domain-card-codex-3-book-of-korvax",
+		"name": "Buch von Korvax",
+		"type": "Zauberbuch",
+		"text": "Levitation: Führe einen Zauberwurf durch, um ein Ziel, das du sehen kannst, vorübergehend in die Luft zu heben und es innerhalb kurzer Distanz zu seiner ursprünglichen Position zu bewegen. Widerruf: Setze 1 Hoffnung ein, um ein Ziel in unmittelbarer Distanz einen Reaktionswurf (15) durchführen zu lassen. Bei einem Misserfolg vergisst das Ziel die letzte Minute eurer Konversation. Runenkreis: Markiere 1 Stress, um vorübergehend einen magischen Kreis auf den Boden um dich herum zu erschaffen. Alle gegnerischen Ziele in unmittelbarer Distanz (oder die sich in unmittelbare Distanz bewegen), erleiden 2W12+4 magischen Schaden und werden in sehr kurze Distanz zurückgestoßen."
+	},
+	{
+		"id": "domain-card-codex-3-book-of-norai",
+		"name": "Buch von Norai",
+		"type": "Zauberbuch",
+		"text": "Mystische Bindung: Führe einen Zauberwurf gegen ein Ziel innerhalb weiter Distanz durch. Bei einem Erfolg ist das Ziel vorübergehend Festgesetzt und muss 1 Stress markieren. Wenn du auf eine fliegende Kreatur zielst, holt der Zauber diese auf den Boden und sie ist vorübergehend Festgesetzt. Feuerball: Führe einen Zauberwurf gegen ein Ziel innerhalb sehr weiter Distanz durch. Bei einem Erfolg wirfst du einen Feuerball, der beim Aufprall explodiert. Das Ziel und alle Kreaturen innerhalb sehr kurzer Distanz des Ziels müssen einen Reaktionswurf (13) durchführen. Bei einem Misserfolg erleiden Ziele W20+5 magischen Schaden, abhängig von deiner Übung. Bei einem Erfolg erleiden Ziele den halbierten Schaden."
+	},
+	{
+		"id": "domain-card-codex-4-book-of-exota",
+		"name": "Buch von Exota",
+		"type": "Zauberbuch",
+		"text": "Zurückweisen: Du kannst einen magischen Effekt während der Ausführung unterbrechen. Führe einen Reaktionswurf mit deinem Zauber-Attribut durch. Einmal pro Rast darfst du bei einem Erfolg den Effekt und sämtliche Konsequenzen verhindern. Konstrukt erschaffen: Setze 1 Hoffnung ein und wähle einige Gegenstände aus deiner Umgebung aus, um mit ihnen ein belebtes Konstrukt zu erschaffen, das einfachen Kommandos folgt. Führe einen Zauberwurf durch, um das Konstrukt angreifen zu lassen. Das Konstrukt verfügt über denselben Ausweichen-Wert und dieselben Attributs-Werte wie du; seine Angriffe bewirken 2W10+3 physischen Schaden. Du kannst nur ein Konstrukt zur selben Zeit beschwören. Wenn es Schaden erleidet, zerfällt das Konstrukt."
+	},
+	{
+		"id": "domain-card-codex-4-book-of-grynn",
+		"name": "Buch von Grynn",
+		"type": "Zauberbuch",
+		"text": "Magische Abwehr: Einmal pro langer Rast darfst du 1 Hoffnung einsetzen, um den Schaden eines Angriffs aufzuheben, der dich oder einen verbündeten Charakter innerhalb sehr kurzer Distanz treffen würde. Zeitgefängnis: Wähle einen Gegenstand innerhalb weiter Distanz aus. Für diesen Gegenstand wird die Zeit bis zu deiner nächsten Rast angehalten. Wenn eine Kreatur versucht, den Gegenstand zu bewegen, musst du einen Zauberwurf gegen sie durchführen, um den Zauber aufrecht zu erhalten. Flammenwand: Führe einen Zauberwurf (15) durch. Bei einem Erfolg schaffst du eine Wand aus magischen Flammen zwischen zwei Positionen innerhalb weiter Distanz. Alle Kreaturen, die sich zwischen diesen Positionen befinden, müssen sich entscheiden, auf welcher Seite der Wand sie stehen wollen. Alle Kreaturen, die die Wand danach durchqueren, erleiden 4W10+3 magischen Schaden."
+	},
+	{
+		"id": "domain-card-codex-5-manifest-wall",
+		"name": "Wand beschwören",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (15) durch. Bei einem Erfolg darfst du einmal pro Rast 1 Hoffnung einsetzen, um vorübergehend eine Wand zwischen zwei Positionen innerhalb weiter Distanz zu erschaffen. Die Wand kann bis zu 15 Meter hoch sein und sich auch um Ecken herum manifestieren. Kreaturen und Gegenstände, die sich dort aufhalten, werden zu einer Seite der Wand deiner Wahl geschoben. Die Wand bleibt bis zu deiner nächsten Rast bestehen, oder bis du Wand beschwören erneut wirkst."
+	},
+	{
+		"id": "domain-card-codex-5-teleport",
+		"name": "Teleport",
+		"type": "Zauber",
+		"text": "Einmal pro langer Rast darfst du dich und eine beliebige Anzahl gewillter Ziele innerhalb kurzer grimoire Distanz zu einem Ort teleportieren, den du bereits kennst. Wähle eine der folgenden Optionen und führe einen Zauberwurf (16) durch: • Wenn du den Ort sehr gut kennst, erhältst du einen Bonus von +3. • Wenn du den Ort regelmäßig besucht hast, erhältst du einen Bonus von +1. • Wenn du den Ort selten besucht hast, erhältst du keinen Bonus. • Wenn du nur einmal an diesem Ort warst, erhältst du einen Malus von –2. Bei einem Erfolg tauchen du und deine Mitreisenden an dem Ort auf, den du dir vorgestellt hast. Bei einem Misserfolg kommst du vom Kurs ab und ihr taucht abseits des vorgestellten Ortes auf – die Distanz vom Zielort ist von der Höhe des Misserfolgs abhängig."
+	},
+	{
+		"id": "domain-card-codex-6-banish",
+		"name": "Verbannen",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb kurzer Distanz durch. Bei einem Erfolg würfelst du eine Anzahl W20, die deinem Zauber-Attribut entspricht. Das Ziel muss einen Reaktionswurf mit deinem höchsten Würfelergebnis als Schwierigkeitsgrad durchführen. Bei einem Erfolg muss das Ziel 1 Stress markieren, ist aber nicht verbannt. Einmal pro Rast bei einem Misserfolg wird das Ziel von dieser Welt verbannt. Wenn die SC mit Furcht würfeln, sinkt der Schwierigkeitsgrad für den Reaktionswurf um 1 und das Ziel darf einen weiteren Reaktionswurf durchführen. Bei einem Erfolg kehrt es aus der Verbannung zurück."
+	},
+	{
+		"id": "domain-card-codex-6-sigil-of-retribution",
+		"name": "Siegel der Vergeltung",
+		"type": "Zauber",
+		"text": "Du belegst ein gegnerisches Ziel innerhalb kurzer Distanz mit einem Siegel der Vergeltung. Die SL erhält 1 Furcht. Wenn das Ziel dir oder deinen Verbündeten Schaden zufügt, lege 1W8 auf diese Karte. Insgesamt darfst du eine Anzahl W8 in Höhe deiner Stufe auf diese Karte legen. Wenn du einen erfolgreichen Angriff gegen das Ziel durchführst, würfle die W8 auf der Karte und füge das Ergebnis deinem Schadenswurf hinzu. Entferne dann die Würfel von der Karte. Der Zauber endet, sobald das Ziel besiegt ist oder du Siegel der Vergeltung erneut wirkst."
+	},
+	{
+		"id": "domain-card-codex-7-book-of-homet",
+		"name": "Buch von Homet",
+		"type": "Zauberbuch",
+		"text": "Durchschreiten: Führe einen Zauberwurf (13) durch. Bei einem Erfolg dürfen du und alle Kreaturen, die dich berühren, einmal pro Rast durch eine Wand oder Tür innerhalb kurzer Distanz hindurchlaufen. Der Zauber endet, wenn alle betroffenen Kreaturen auf der anderen Seite sind. Weltentor: Führe einen Zauberwurf (14) durch. Bei einem Erfolg darfst du einmal pro langer Rast eine Passage zu einem Ort in einer anderen Dimension oder Welt öffnen, an dem du bereits warst. Die Passage bleibt bis zu deiner nächsten Rast bestehen."
+	},
+	{
+		"id": "domain-card-codex-7-codex-touched",
+		"name": "Segen des Kodex",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Kodex-Domäne stammen, erhältst du folgende Vorteile: • Du darfst 1 Stress markieren, um deine Übung zu einem Zauberwurf hinzuzufügen. • Einmal pro Rast darfst du diese Karte mit einer beliebigen anderen Karte aus deiner Reserve tauschen, ohne die Rückruf-Kosten zu bezahlen."
+	},
+	{
+		"id": "domain-card-codex-8-book-of-vyola",
+		"name": "Buch von Vyola",
+		"type": "Zauberbuch",
+		"text": "Erinnerung lesen: Führe einen Zauberwurf gegen ein Ziel innerhalb weiter Distanz durch. Bei einem Erfolg darfst du in die Gedanken des Ziels eintauchen und der SL eine Frage stellen. Die SL beschreibt die Erinnerungen des Ziels, die diese Frage betreffen. Geteilte Ruhe: Einmal pro langer Rast darfst du 1 Hoffnung einsetzen und zwei gewillte Kreaturen auswählen. Wenn eine von ihnen Stress markieren müsste, dürfen beide Kreaturen untereinander entscheiden, wer von beiden den Stress markiert. Dieser Zauber hält bis zu ihrer nächsten Rast an."
+	},
+	{
+		"id": "domain-card-codex-8-safe-haven",
+		"name": "Sicherer Hafen",
+		"type": "Zauber",
+		"text": "Wenn du ein paar Minuten Zeit hast, um dich zu konzentrieren, darfst du 2 Hoffnung einsetzen, um deinen Sicheren Hafen zu beschwören – ein großes, interdimensionales Zuhause, in dem du und deine Verbündeten zur Ruhe kommen können. Sobald du diesen Zauber wirkst, erscheint eine magische Tür innerhalb kurzer Distanz. Nur Kreaturen deiner Wahl dürfen eintreten. Sobald ihr euch im Inneren befindet, kannst du den Eingang unsichtbar machen. Du und alle anderen im Hafen könnt diesen jederzeit verlassen. Sobald das passiert, musst du die Tür erneut beschwören. Wenn du in deinem eigenen Sicheren Hafen eine Rast einlegst, darfst du einen zusätzlichen Auszeit-Zug auswählen."
+	},
+	{
+		"id": "domain-card-codex-9-book-of-ronin",
+		"name": "Buch von Ronin",
+		"type": "Zauberbuch",
+		"text": "Transformieren: Führe einen Zauberwurf (15) durch. Bei einem Erfolg darfst du dich in ein unbelebtes Objekt verwandeln, das nicht größer ist als deine doppelte Körpergröße. Wenn du Schaden erleidest, verwandelst du dich zurück. Ewige Entkräftung: Einmal pro langer Rast darfst du einen Zauberwurf gegen ein Ziel in kurzer Distanz durchführen. Bei einem Erfolg wird das Ziel dauerhaft Verwundbar. Das Ziel kann diesen Zustand niemals entfernen."
+	},
+	{
+		"id": "domain-card-codex-9-disintegration-wave",
+		"name": "Woge der Auflösung",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (18) durch. Einmal pro langer Rast bei einem Erfolg sagt dir die SL, welche gegnerischen Ziele innerhalb weiter Distanz einen Schwierigkeitsgrad von 18 oder weniger haben. Für jedes dieser Ziele, das du mit diesem Zauber treffen willst, musst du 1 Stress markieren. Diese Ziele sterben und können nicht wiederbelebt werden."
+	},
+	{
+		"id": "domain-card-codex-10-book-of-yarrow",
+		"name": "Buch von Yarrow",
+		"type": "Zauberbuch",
+		"text": "Zeitstau: Führe einen Zauberwurf (18) durch. Bei einem Erfolg bleibt die Zeit für alle innerhalb weiter Distanz außer dir selbst vorübergehend stehen. Wenn du das nächste Mal einen Aktionswurf auf eine andere Kreatur durchführst, läuft die Zeit weiter. Magische Immunität: Setze 5 Hoffnung ein, um bis zu deiner nächsten Rast immun gegen magischen Schaden zu sein."
+	},
+	{
+		"id": "domain-card-codex-10-transcendent-union",
+		"name": "Vereinigung",
+		"type": "Zauber",
+		"text": "Einmal pro langer Rast darfst du 5 Hoffnung einsetzen, um diesen Zauber auf zwei oder mehr gewillte Kreaturen zu wirken. Bis zu deiner nächsten Rast können Kreaturen, die durch diesen Zauber verbunden sind, entscheiden, wer von ihnen Stress oder TP markieren muss, wenn es dazu kommt."
+	},
+	{
+		"id": "domain-card-grace-1-deft-deceiver",
+		"name": "Geschickte Täuschung",
+		"type": "Fähigkeit",
+		"text": "Setze 1 Hoffnung ein, um einen Vorteil auf einen Wurf zu erhalten, bei dem du einen Charakter täuschst oder ihm eine Lüge auftischst."
+	},
+	{
+		"id": "domain-card-grace-1-enrapture",
+		"name": "Entzücken",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb kurzer Distanz durch. Bei einem Erfolg wird das Ziel vorübergehend Entzückt. Solange dieser Zustand anhält, ist die Aufmerksamkeit des Ziels auf dich gerichtet, was sein Sichtfeld und die Wahrnehmung von Geräuschen abseits deiner Stimme einschränkt. Einmal pro Rast darfst du bei einem Erfolg 1 Stress markieren, um das Entzückte Ziel ebenfalls 1 Stress markieren zu lassen."
+	},
+	{
+		"id": "domain-card-grace-1-inspirational-words",
+		"name": "Inspirierende Worte",
+		"type": "Fähigkeit",
+		"text": "Deine Worte sind von Macht durchdrungen. Nach einer langen Rast legst du eine Anzahl an Markern auf diese Karte, die deinem Präsenz-Wert entspricht. Wenn du mit einem verbündeten Charakter sprichst, kannst du einen Marker von dieser Karte einsetzen, um ihm einen der folgenden Vorteile zu gewähren: • Der Charakter löscht 1 Stress. • Der Charakter löscht 1 Trefferpunkt. • Der Charakter erhält 1 Hoffnung. Bei der nächsten langen Rast werden alle nicht verbrauchten Marker entfernt."
+	},
+	{
+		"id": "domain-card-grace-2-tell-no-lies",
+		"name": "Keine Lügen",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb sehr kurzer Distanz durch. Bei einem Erfolg kann das Ziel nicht mehr lügen, solange es sich innerhalb kurzer Distanz zu dir befindet, aber es ist nicht gezwungen, zu sprechen. Wenn du dem Ziel eine Frage stellst und es sich weigert zu antworten, muss es 1 Stress markieren und der Zauber endet. Dem Ziel ist in der Regel nicht bewusst, dass es verzaubert wurde, bis es gegen seinen Willen die Wahrheit spricht."
+	},
+	{
+		"id": "domain-card-grace-2-troublemaker",
+		"name": "Stunk machen",
+		"type": "Fähigkeit",
+		"text": "Führe einen Wurf auf Präsenz gegen ein Ziel innerhalb weiter Distanz aus, das du provozierst oder anlockst. Bei einem Erfolg darfst du einmal pro Rast eine Anzahl W4 würfeln, die deiner Übung entspricht. Das Ziel muss Stress in Höhe des höchsten Würfelergebnisses markieren."
+	},
+	{
+		"id": "domain-card-grace-3-hypnotic-shimmer",
+		"name": "Hypnotischer Schimmer",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen alle gegnerischen Ziele vor dir innerhalb kurzer Distanz durch. Einmal pro Rast erschaffst du für alle Ziele, gegen die du einen Erfolg erzielt hast, eine Illusion bunter Farben und Lichter. Die getroffenen Ziele erhalten vorübergehend den Zustand Schock und müssen 1 Stress markieren. Während der Zustand Schock anhält, können sie keine Aktionen oder Reaktionen ausführen."
+	},
+	{
+		"id": "domain-card-grace-3-invisibility",
+		"name": "Unsichtbarkeit",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (10) durch. Bei einem Erfolg darfst du 1 Stress markieren, um dir oder einem verbündeten Charakter in unmittelbarer Distanz den Zustand Unsichtbar zu verleihen. Unsichtbare Kreaturen können nur mithilfe von Magie gesehen werden. Angriffswürfe gegen sie werden mit Nachteil durchgeführt. Lege eine Anzahl von Markern auf diese Karte, die deinem Zauber-Attribut entspricht. Setze 1 Marker von dieser Karte ein, nachdem die Unsichtbare Kreatur eine Aktion ausführt. Die Kreatur wir wieder sichtbar, wenn alle Marker auf der Karte eingesetzt wurden. Du kannst Unsichtbarkeit nur auf eine Kreatur gleichzeitig anwenden."
+	},
+	{
+		"id": "domain-card-grace-4-soothing-speech",
+		"name": "Lindernde Worte",
+		"type": "Fähigkeit",
+		"text": "Während einer kurzen Rast darfst du bei einem Charakter zusätzlich 1 TP löschen, wenn du dir die Zeit nimmst, diesem während des Auszeit-Zugs „Wunden versorgen“ gut zuzureden. Wenn du dies tust, darfst du außerdem bei dir selbst 2 TP löschen."
+	},
+	{
+		"id": "domain-card-grace-4-through-your-eyes",
+		"name": "Durch deine Augen",
+		"type": "Zauber",
+		"text": "Wähle ein Ziel innerhalb sehr weiter Distanz. Du kannst durch seine Augen sehen und durch seine Ohren hören. Du kannst frei zwischen der Wahrnehmung deiner eigenen Sinne und der des Ziels wechseln, bis du einen anderen Zauber wirkst oder eine Rast einlegst."
+	},
+	{
+		"id": "domain-card-grace-5-thought-delver",
+		"name": "Gedankenlesen",
+		"type": "Zauber",
+		"text": "Du kannst in die Gedanken anderer Wesen blicken. Setze 1 Hoffnung ein, um die oberflächlichen Gedanken eines Ziels innerhalb weiter Distanz zu lesen. Wenn du tiefer verborgene Einblicke wünschst, führe einen Zauberwurf gegen das Ziel durch. Bei einem Ergebnis mit Furcht kann das Ziel – nach Ermessen der SL – mitbekommen, dass du seine Gedanken liest."
+	},
+	{
+		"id": "domain-card-grace-5-words-of-discord",
+		"name": "Worte der Zwietracht",
+		"type": "Zauber",
+		"text": "Du flüsterst zwieträchtige Worte in das Ohr eines gegnerischen Charakters in unmittelbarer Distanz. Führe einen Zauberwurf (13) durch. Bei einem Erfolg muss das Ziel 1 Stress markieren und einen Angriff gegen einen anderen gegnerischen Charakter statt gegen dich oder deine Verbündeten ausführen. Sobald dieser Angriff erfolgt ist, versteht das Ziel, was passiert ist. Wenn du das nächste Mal Worte der Zwietracht auf dieses Ziel wirkst, erhältst du einen Malus von –5 auf den Zauberwurf."
+	},
+	{
+		"id": "domain-card-grace-6-never-upstaged",
+		"name": "Unübertroffen",
+		"type": "Fähigkeit",
+		"text": "Wenn du 1 oder mehr TP durch einen Angriff markieren musst, darfst du 1 Stress markieren, um eine Anzahl Marker auf diese Karte zu legen, die den markierten TP entspricht. Bei deinem nächsten erfolgreichen Angriff erhältst du einen Bonus von +5 für jeden Marker auf dieser Karte für deinen Schadenswurf. Entferne im Anschluss alle Marker von der Karte."
+	},
+	{
+		"id": "domain-card-grace-6-share-the-burden",
+		"name": "Geteiltes Leid",
+		"type": "Zauber",
+		"text": "Einmal pro Rast darfst du die Stress-Punkte einer gewillten Kreatur in unmittelbarer Distanz auf dich nehmen. Das Ziel beschreibt, welche Gedanken oder Emotionen in diesem Moment telepathisch zwischen euch beiden ausgetauscht werden und euch verbinden. Du darfst beliebig viel Stress, den das Ziel markiert hat, auf dich nehmen. Im Anschluss erhältst du 1 Hoffnung für jeden übernommenen Stress-Punkt."
+	},
+	{
+		"id": "domain-card-grace-7-endless-charisma",
+		"name": "Maßloser Charme",
+		"type": "Fähigkeit",
+		"text": "Du darfst 1 Hoffnung einsetzen, um den Hoffnungs-oder Furchtwürfel nach einem Aktionswurf erneut zu würfeln, wenn du versuchst jemanden zu überreden, anzulügen oder jemandes Gunst zu gewinnen."
+	},
+	{
+		"id": "domain-card-grace-7-grace-touched",
+		"name": "Segen der Anmut",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Anmut-Domäne stammen, erhältst du folgende Vorteile: • Du darfst 1 Rüstungsfeld statt 1 Stress markieren. • Wenn ein Ziel wegen dir TP markieren müsste, darfst du entscheiden, dass es stattdessen entsprechend viel Stress markiert."
+	},
+	{
+		"id": "domain-card-grace-8-astral-projection",
+		"name": "Astrale Projektion",
+		"type": "Zauber",
+		"text": "Einmal pro langer Rast darfst du 1 Stress markieren, um eine Projektion von dir selbst zu erschaffen, die überall auftauchen kann, wo du bereits gewesen bist. Du kannst durch die Projektion sehen, hören und mit der Welt interagieren, als wärst du selbst dort. Eine Kreatur, die die Projektion untersucht, kann erkennen, dass sie magisch erzeugt wurde. Der Zauber endet bei deiner nächsten Rast oder wenn die Projektion Schaden erleidet."
+	},
+	{
+		"id": "domain-card-grace-8-mass-enrapture",
+		"name": "Großes Entzücken",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen alle Ziele innerhalb weiter Distanz durch. Getroffene Ziele erhalten vorübergehend den Zustand Entzückt. Entzückte Ziele richten ihre Aufmerksamkeit auf dich, was ihr Sichtfeld und ihre Wahrnehmung von Geräuschen außer deiner Stimme einschränkt. Du darfst 1 Stress markieren, um alle Entzückten Ziele dazu zu zwingen, 1 Stress zu markieren. Dann endet der Zauber."
+	},
+	{
+		"id": "domain-card-grace-9-copycat",
+		"name": "Mimikry",
+		"type": "Zauber",
+		"text": "Einmal pro langer Rast darfst du mit dieser Karte die Fähigkeiten einer anderen Domänenkarte der Stufe 8 oder niedriger kopieren, die eine andere Person aus der Spielrunde in ihrer Auslage hat. Um die Fähigkeit der Karte nutzen zu können, musst du eine Anzahl Hoffnung einsetzen, die der Hälfte der Kartenstufe entspricht. Du darfst diese Karte bis zu deiner nächsten Rast nutzen oder bis die Person die Karte in ihre Reserve legt."
+	},
+	{
+		"id": "domain-card-grace-9-master-of-the-craft",
+		"name": "Meister meines Fachs",
+		"type": "Fähigkeit",
+		"text": "Du erhältst einen permanenten Bonus von +2 auf zwei deiner Erfahrungen, oder einen permanenten Bonus von +3 auf eine Erfahrung. Lege diese Karte im Anschluss dauerhaft in deine Reserve."
+	},
+	{
+		"id": "domain-card-grace-10-encore",
+		"name": "Zugabe",
+		"type": "Zauber",
+		"text": "Wenn ein verbündeter Charakter innerhalb kurzer Distanz einem gegnerischen Ziel Schaden zufügt, darfst du einen Zauberwurf gegen dasselbe Ziel durchführen. Bei einem Erfolg fügst du dem Ziel denselben Schadenswert wie der verbündete Charakter zu. Wenn du bei dem Zauberwurf einen Erfolg mit Furcht erzielst, lege diese Karte in deine Reserve."
+	},
+	{
+		"id": "domain-card-grace-10-notorious",
+		"name": "Weltbekannt",
+		"type": "Fähigkeit",
+		"text": "Man kennt dich und deine Taten, und du erfährst deshalb eine besondere Behandlung. Wenn du deine Bekanntheit nutzt, um deinen Willen zu bekommen, darfst du vor deinem Aktionswurf 1 Stress markieren, um einen Bonus von +10 auf das Ergebnis zu erhalten. Du erhältst überall kostenlose Verpflegung und Getränke und alle anderen Handelswaren werden für dich im Preis um 1 Beutel Gold reduziert (bis zu einem Minimalpreis von 1 Handvoll). Diese Karte zählt nicht zu deinem Auslage-Maximum von 5 Domänenkarten dazu und kann nicht in die Reserve gelegt werden."
+	},
+	{
+		"id": "domain-card-midnight-1-pick-and-pull",
+		"name": "Langfinger",
+		"type": "Fähigkeit",
+		"text": "Du hast einen Vorteil auf Aktionswürfe, wenn du nichtmagische Schlösser knackst, nichtmagische Fallen entschärfst oder Diebstahl begehst (egal ob heimlich oder gewaltsam)."
+	},
+	{
+		"id": "domain-card-midnight-1-rain-of-blades",
+		"name": "Klingenregen",
+		"type": "Zauber",
+		"text": "Setze 1 Hoffnung ein, um einen Zauberwurf durchzuführen und Wurfklingen zu beschwören, die alle Ziele in sehr kurzer Distanz treffen. Ziele, bei denen dir der Wurf gelingt, erleiden W8+2 magischen Schaden, abhängig von deiner Übung.\n\nWenn ein getroffenes Ziel Verwundbar ist, erleidet es zusätzlich 1W8 Schaden."
+	},
+	{
+		"id": "domain-card-midnight-1-uncanny-disguise",
+		"name": "Fantastische Fassade",
+		"type": "Zauber",
+		"text": "Wenn du ein paar Minuten zur Vorbereitung hast, darfst du 1 Stress markieren, um das Aussehen eines beliebigen Humanoiden anzunehmen, den du dir klar vor deinem inneren Auge vorstellen kannst. Während du verwandelt bist, erhältst du einen Vorteil bei Würfen auf Präsenz, um einer genauen Prüfung zu entgehen. Lege eine Anzahl an Markern auf diese Karte, die deinem Zauber-Attribut entspricht. Wenn du verwandelt eine Aktion durchführst, setze einen Marker von dieser Karte ein. Nach der Aktion, für die du den letzten Marker verwendest, verwandelst du dich zurück."
+	},
+	{
+		"id": "domain-card-midnight-2-midnight-spirit",
+		"name": "Mitternachtsgeist",
+		"type": "Zauber",
+		"text": "Setze 1 Hoffnung ein, um einen Geist in der Größe eines Humanoiden zu beschwören, der sich bewegen und Gegenstände für dich transportieren kann, bis du deine nächste Rast einlegst. Du kannst ihm befehlen, ein gegnerisches Ziel anzugreifen. Führe in diesem Fall einen Zauberwurf gegen ein Ziel innerhalb sehr weiter Distanz aus. Bei einem Erfolg bewegt sich der Geist in unmittelbare Distanz zum Ziel. Würfle eine Anzahl W6, die deinem Zauber-Attribut entspricht und füge dem Ziel entsprechend viel magischen Schaden zu. Danach verschwindet der Geist. Du kannst immer nur einen Geist gleichzeitig beschwören."
+	},
+	{
+		"id": "domain-card-midnight-2-shadowbind",
+		"name": "Schattenbindung",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen alle gegnerischen Ziele innerhalb sehr kurzer Distanz durch. Jedes Ziel, gegen das du einen Erfolg erzielst, wird von seinem eigenen Schatten an Ort und Stelle gefesselt und erhält vorübergehend den Zustand Festgesetzt."
+	},
+	{
+		"id": "domain-card-midnight-3-chokehold",
+		"name": "Würgegriff",
+		"type": "Fähigkeit",
+		"text": "Wenn du dich hinter einer Kreatur positionierst, die in etwa deine Körpergröße hat, darfst du 1 Stress markieren, um sie in den Würgegriff zu nehmen. Dies verleiht ihr vorübergehend den Zustand Verwundbar. Wenn eine Kreatur das Verwundbare Ziel angreift, richtet ihr Angriff zusätzlich 2W6 Schaden an."
+	},
+	{
+		"id": "domain-card-midnight-3-veil-of-night",
+		"name": "Schleier der Nacht",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (13) durch. Bei einem Erfolg erschaffst du vorübergehend einen dunklen Schleier zwischen zwei Positionen innerhalb weiter Distanz. Nur du kannst durch diese Dunkelheit sehen. Für gegnerische Kreaturen auf der anderen Seite des Schleiers erhältst du den Zustand Versteckt. Du erhältst außerdem einen Vorteil auf Angriffswürfe, die du durch diese Dunkelheit hindurch ausführst. Der Schleier bleibt bestehen, bis du einen anderen Zauber ausführst."
+	},
+	{
+		"id": "domain-card-midnight-4-glyph-of-nightfall",
+		"name": "Tarnungsexpertise",
+		"type": "Fähigkeit",
+		"text": "Wenn du mit Furcht würfelst, während du versuchst, dich unbemerkt durch ein gefährliches Gebiet zu bewegen, darfst du 1 Stress markieren, um stattdessen mit Hoffnung zu würfeln. Wenn ein verbündeter Charakter innerhalb kurzer Distanz ebenfalls versucht, sich unbemerkt zu bewegen und mit Furcht würfelt, darfst du 1 Stress markieren, um das Ergebnis zu einem Wurf mit Hoffnung zu ändern."
+	},
+	{
+		"id": "domain-card-midnight-4-stealth-expertise",
+		"name": "Glyphe der Nacht",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb sehr kurzer Distanz durch. Bei einem Erfolg darfst du 1 Hoffnung einsetzen, um eine dunkle Glyphe auf dem Körper des Ziels zu erschaffen, die seine Schwachpunkte offenlegt. Der Schwierigkeitsgrad des Ziels wird vorübergehend um deinen Wissen-Wert reduziert (mindestens 1)."
+	},
+	{
+		"id": "domain-card-midnight-5-hush",
+		"name": "Stille",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb kurzer Distanz durch. Bei einem Erfolg darfst du 1 Hoffnung einsetzen, um ein magisches, geräuschunterdrückendes Feld um das Ziel zu beschwören, das alles innerhalb sehr kurzer Distanz einschließt und sich mit dem Ziel bewegt. Das Ziel und alles im Wirkungsbereich des Zaubers erhält den Zustand Still, bis die SL Furcht einsetzt, um ihn aufzuheben, du Stille erneut wirkst oder du mittleren Schaden erleidest. Stille Ziele erzeugen keine Geräusche und können keine Zauber wirken."
+	},
+	{
+		"id": "domain-card-midnight-5-phantom-retreat",
+		"name": "Phantom-Rückzug",
+		"type": "Zauber",
+		"text": "Setze 1 Hoffnung ein, um Phantom-Rückzug an deiner aktuellen Position zu aktivieren. Setze 1 weitere Hoffnung ein, um jederzeit vor deiner nächsten Rast zu verschwinden und an der Position wieder aufzutauchen, wo du Phantom-Rückzug aktiviert hast. Der Zauber endet, sobald du wieder auftauchst."
+	},
+	{
+		"id": "domain-card-midnight-6-dark-whispers",
+		"name": "Flüstern aus dem Dunkel",
+		"type": "Zauber",
+		"text": "Du kannst eine direkte Gedankenverbindung zu einer beliebigen Person herstellen, mit der du physischen Kontakt hattest, und auf diese Weise zu ihr sprechen. Sobald du die Verbindung hergestellt hast, kann die Person auf dieselbe Weise antworten. Zusätzlich darfst du 1 Stress markieren, um einen Zauberwurf gegen sie durchzuführen. Bei einem Erfolg darfst du der SL eine der folgenden Fragen stellen, die diese wahrheitsgemäß beantwortet: • Wo befindet sich die Person? • Was tut die Person gerade? • Wovor hat die Person Angst? • Was bedeutet dieser Person am meisten?"
+	},
+	{
+		"id": "domain-card-midnight-6-mass-disguise",
+		"name": "Gruppen-Verwandlung",
+		"type": "Zauber",
+		"text": "Wenn du ein paar Minuten Zeit hast, um dich in Ruhe zu konzentrieren, darfst du 1 Stress markieren, um die Erscheinung aller gewillten Kreaturen innerhalb kurzer Distanz zu verändern. Ihr neues Aussehen muss in etwa denselben Körpertyp und dieselbe Körpergröße haben. Es kann sich um ein vollkommen neues Aussehen handeln oder um das einer dir bekannten Person. Verwandelte Kreaturen erhalten bei Würfen auf Präsenz gegen Enttarnung einen Vorteil. Starte einen Countdown (8). Die SL kann den Countdown als Konsequenz vorantreiben. Wenn er abgelaufen ist, verwandeln sich die Ziele zurück."
+	},
+	{
+		"id": "domain-card-midnight-7-midnight-touched",
+		"name": "Segen der Mitternacht",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Mitternacht-Domäne stammen, erhältst du folgende Vorteile: • Einmal pro Rast darfst du, wenn du 0 Hoffnung hast und die SL Furcht erhalten würde, stattdessen 1 Hoffnung erhalten. • Wenn du einen erfolgreichen Angriff durchführst, darfst du 1 Stress markieren, um dem Schadenswurf das Ergebnis deines Furchtwürfels hinzuzufügen."
+	},
+	{
+		"id": "domain-card-midnight-7-vanishing-dodge",
+		"name": "In die Schatten ausweichen",
+		"type": "Zauber",
+		"text": "Wenn ein physischer Angriff gegen dich fehlschlägt, darfst du 1 Hoffnung einsetzen, um dich in Schatten zu hüllen, den Zustand Versteckt zu erhalten und dich an eine Position innerhalb kurzer Distanz der angreifenden Kreatur zu teleportieren. Du bleibst Versteckt, bis du das nächste Mal einen Angriffswurf durchführst."
+	},
+	{
+		"id": "domain-card-midnight-8-shadowhunter",
+		"name": "Auge der Schatten",
+		"type": "Fähigkeit",
+		"text": "Der Mantel der Schatten gibt dir Kraft. Während du dich in Dunkelheit oder spärlichem Licht befindest, erhältst du einen Bonus von +1 auf Ausweichen und einen Vorteil auf Angriffswürfe."
+	},
+	{
+		"id": "domain-card-midnight-8-spellcharge",
+		"name": "Zauber aufladen",
+		"type": "Zauber",
+		"text": "Wenn du magischen Schaden erleidest, darfst du eine Anzahl Marker auf diese Karten legen, die deinen aktuell markierten TP entspricht. Du darfst auf diese Weise maximal eine Anzahl Marker in Höhe deines Zauber-Attributs ansammeln. Wenn du einen erfolgreichen Angriff gegen ein Ziel durchführst, darfst du eine beliebige Anzahl Marker einsetzen, um für jeden eingesetzten Marker 1W6 zu deinem Schadenswurf hinzuzufügen."
+	},
+	{
+		"id": "domain-card-midnight-9-night-terror",
+		"name": "Nachtschrecken",
+		"type": "Zauber",
+		"text": "Einmal pro langer Rast darfst du beliebig viele Ziele innerhalb sehr kurzer Distanz auswählen, die dich als albtraumhafte Schreckensgestalt wahrnehmen. Die Ziele müssen einen Reaktionswurf (16) durchführen. Bei einem Misserfolg erhalten sie vorübergehend den Zustand Furcht. Während sie Furcht haben, sind sie Verwundbar. Du darfst der SL eine Anzahl an Furcht-Punkten wegnehmen, die der Anzahl der Ziele mit Furcht entspricht (maximal so viele Punkte, wie die SL aktuell besitzt). Würfle eine Anzahl W6, die den gestohlenen Furcht-Punkten entspricht. Füge das Gesamtergebnis des Wurfs allen Zielen mit Furcht als Schaden zu. Danach legst du diese Furcht-Punkte ab."
+	},
+	{
+		"id": "domain-card-midnight-9-twilight-toll",
+		"name": "Zoll des Zwielichts",
+		"type": "Fähigkeit",
+		"text": "Wähle ein Ziel innerhalb weiter Distanz aus. Wenn du bei einem Aktionswurf gegen das Ziel einen Erfolg erzielst, der keinen Schadenswurf nach sich ziehen würde, darfst du 1 Marker auf diese Karte legen. Wenn du diesem Ziel Schaden zufügst, darfst du beliebig viele Marker einsetzen, um pro eingesetztem Marker 1W12 zu deinem Schadenswurf hinzuzufügen. Du kannst Zoll des Zwielichts nur auf eine Kreatur gleichzeitig anwenden. Entferne alle Marker von dieser Karte, wenn du ein neues Ziel wählst oder eine Rast einlegst."
+	},
+	{
+		"id": "domain-card-midnight-10-eclipse",
+		"name": "Finsternis",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (16) durch. Einmal pro langer Rast bei einem Erfolg darfst du die gesamte Umgebung innerhalb weiter Distanz in absolute Finsternis hüllen, in der nur du und deine Verbündeten sehen könnt. Angriffswürfe gegen dich oder deine Verbündeten erhalten innerhalb der Finsternis einen Nachteil. Zusätzlich müssen gegnerische Ziele innerhalb der Finsternis 1 Stress markieren, wenn du oder ein verbündeter Charakter einen Erfolg mit Hoffnung gegen sie erzielen. Dieser Zauber endet, wenn die SL in ihrem Zug 1 Furcht einsetzt, um den Effekt zu beenden, oder wenn du Schweren Schaden erleidest."
+	},
+	{
+		"id": "domain-card-midnight-10-specter-of-the-dark",
+		"name": "Schemen der Nacht",
+		"type": "Zauber",
+		"text": "Markiere 1 Stress, um bis zu deinem nächsten Aktionswurf auf eine andere Kreatur den Zustand Schemen zu erhalten. Während du ein Schemen bist, bist du immun gegen physischen Schaden, kannst schweben und feste Materie durchqueren. Andere Kreaturen können dich in dieser Form immer noch sehen."
+	},
+	{
+		"id": "domain-card-sage-1-gifted-tracker",
+		"name": "Spurensuche",
+		"type": "Fähigkeit",
+		"text": "Wenn du eine bestimmte Kreatur oder eine Gruppe von Kreaturen anhand ihrer Spuren verfolgst, darfst du beliebig viel Hoffnung einsetzen und der SL entsprechend viele Fragen aus der folgenden Liste stellen: • In welche Richtung bewegt sich das Ziel? • Wie lange ist es her, dass das Ziel hier vorbeikam? • Was hat das Ziel an diesem Ort getan? • Wie viele Wesen waren hier? Wenn du auf die Kreatur(en) triffst, die du auf diese Weise verfolgt hast, erhältst du einen Bonus von +1 auf deinen Ausweichen-Wert gegen sie."
+	},
+	{
+		"id": "domain-card-sage-1-nature-s-tongue",
+		"name": "Sprache der Natur",
+		"type": "Fähigkeit",
+		"text": "Du sprichst die Sprache der Wildnis. Wenn du mit den Pflanzen und Tieren in deiner Umgebung sprechen möchtest, führe einen Wurf auf Instinkt (12) durch. Bei einem Erfolg teilen sie ihr Wissen mit dir. Bei einem Ergebnis mit Furcht kann ihr Wissen begrenzt sein oder es hat einen Preis. Zusätzlich darfst du 1 Hoffnung einsetzen, bevor du in einer natürlichen Umgebung einen Zauberwurf durchführst, um einen Bonus von +2 auf den Wurf zu erhalten."
+	},
+	{
+		"id": "domain-card-sage-1-vicious-entangle",
+		"name": "Wilde Fessel",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel in weiter Distanz aus. Bei einem Erfolg schnellen Wurzeln und Ranken aus dem Boden hervor, fügen dem Ziel 1W8+1 physischen Schaden zu und verleihen ihm vorübergehend den Zustand Festgesetzt. Zusätzlich darfst du bei einem Erfolg 1 Hoffnung einsetzen, um ein weiteres Ziel in sehr kurzer Distanz des ursprünglichen Ziels vorübergehend zu fesseln und ihm so den Zustand Festgesetzt zu verleihen."
+	},
+	{
+		"id": "domain-card-sage-2-conjure-swarm",
+		"name": "Schwarm beschwören",
+		"type": "Zauber",
+		"text": "Tekaira-Panzerkäfer: Markiere 1 Stress, um gepanzerte Käfer zu beschwören, die dich umkreisen. Wenn du das nächste Mal Schaden erleidest, wird die Schwere um eine Schadensschwelle reduziert. Du darfst 1 Hoffnung einsetzen, um die Beschwörung nach dem Schaden aufrechtzuerhalten. Leuchtkäfer: Führe einen Zauberwurf gegen alle gegnerischen Ziele innerhalb kurzer Distanz durch. Setze 1 Hoffnung ein, um 2W8+3 magischen Schaden bei allen Zielen zu verursachen, gegen die du einen Erfolg erzielt hast."
+	},
+	{
+		"id": "domain-card-sage-2-natural-familiar",
+		"name": "Vertrauter Naturgeist",
+		"type": "Zauber",
+		"text": "Setze 1 Hoffnung ein, um einen kleinen Naturgeist oder Waldbewohner zu beschwören – bis zur nächsten Rast, bis du Vertrauter Naturgeist erneut wirkst oder bis er Ziel eines Angriffs wird. Wenn du zusätzlich 1 Hoffnung einsetzt, kann dein vertrauter Naturgeist fliegen. Du kannst mit ihm kommunizieren, einen Zauberwurf durchführen, um ihm einfache Aufgaben zu befehlen, und 1 Stress markieren, um durch seine Augen zu sehen. Wenn du einem gegnerischen Ziel in unmittelbarer Distanz deines vertrauten Naturgeists Schaden zufügst, erhältst du bei deinem Schadenswurf einen Bonus von 1W6."
+	},
+	{
+		"id": "domain-card-sage-3-corrosive-projectile",
+		"name": "Säure-Schuss",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb weiter Distanz durch. Bei einem Erfolg fügst du dem Ziel W6+4 magischen Schaden zu, abhängig von deiner Übung. Zusätzlich darfst du 2 oder mehr Stress markieren, um dem Ziel permanent den Zustand Verätzt zuzufügen. Verätzte Ziele erhalten für je 2 eingesetzte Punkte Stress einen Malus von –1 auf ihren Schwierigkeitsgrad. Der Effekt dieses Zustands kann mehrfach auf eine Kreatur angewendet werden."
+	},
+	{
+		"id": "domain-card-sage-3-towering-stalk",
+		"name": "Gewaltige Ranke",
+		"type": "Zauber",
+		"text": "Einmal pro Rast kannst du eine massive, geschwungene Ranke in unmittelbarer Distanz beschwören, die leicht erklommen werden kann. Sie kann bis in weite Distanz in die Höhe sprießen. Markiere 1 Stress, um diesen Zauber als Angriff zu nutzen. Führe einen Zauberwurf gegen ein oder mehr gegnerische Ziele innerhalb kurzer Distanz durch. Die hervorbrechende Ranke hebt getroffene Ziele in die Luft und lässt sie zu Boden fallen. Sie erleiden W8 physischen Schaden, abhängig von deiner Übung."
+	},
+	{
+		"id": "domain-card-sage-4-death-grip",
+		"name": "Todesgriff Zauber",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb kurzer Distanz durch und wähle eine der folgenden Optionen: • Du ziehst das Ziel in deine unmittelbare Distanz oder ziehst dich selbst in unmittelbare Distanz zum Ziel. • Du fesselst das Ziel an Ort und Stelle. Es muss 2 Stress markieren. • Alle gegnerischen Kreaturen zwischen dir und dem Ziel müssen einen Reaktionswurf (13) durchführen. Getroffene Kreaturen werden von Ranken erwischt und erleiden 3W6+2 physischen Schaden. Bei einem Erfolg entspringen Ranken deinen Händen, lösen den gewählten Effekt aus und fügen dem Ziel vorübergehend den Zustand Festgesetzt zu."
+	},
+	{
+		"id": "domain-card-sage-4-healing-field",
+		"name": "Heilendes Feld",
+		"type": "Zauber",
+		"text": "Einmal pro langer Rast kannst du ein Feld aus heilenden Pflanzen um dich herum beschwören. Innerhalb kurzer Distanz erwacht deine Umgebung zu blühendem Leben, wodurch du und alle Verbündeten in diesem Bereich je 1 TP löschen dürfen. Setze 2 Hoffnung ein, damit du und deine Verbündeten stattdessen 2 TP löschen dürfen."
+	},
+	{
+		"id": "domain-card-sage-5-thorn-skin",
+		"name": "Dornenhaut",
+		"type": "Zauber",
+		"text": "Einmal pro Rast darfst du 1 Hoffnung einsetzen, um Dornen aus deinem gesamten Körper wachsen zu lassen. Lege eine Anzahl Marker auf diese Karte, die deinem Zauber-Attribut entspricht. Wenn du Schaden erleidest, darfst du eine beliebige Anzahl Marker einsetzen und entsprechend viele W6 würfeln. Du darfst den erlittenen Schaden um das Gesamtergebnis dieses Würfelwurfs reduzieren. Wenn du dich in unmittelbarer Distanz zum angreifenden Charakter befindest, fügst du ihm dieses Gesamtergebnis als Schaden zu. Nimm alle übrigen Marker von dieser Karte, sobald du deine nächste Rast einlegst."
+	},
+	{
+		"id": "domain-card-sage-5-wild-fortress",
+		"name": "Rankendom",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (13) durch. Bei einem Erfolg darfst du 2 Hoffnung einsetzen, um eine natürliche Barrikade in Form einer Kuppel wachsen zu lassen, in die du und ein weiterer Charakter sich zurückziehen können. Kreaturen im Inneren der Kuppel können nicht angegriffen werden oder selbst Angriffe ausführen. Angriffe auf die Kuppel gelingen automatisch. Die Kuppel hat folgende Schadensschwellen und bleibt bestehen, bis sie 3 TP markiert hat. Lege drei Marker zur Darstellung der TP auf diese Karte. LEICHTER SCHADEN 15 MITTLERER SCHADEN 30 SCHWERER SCHADEN Markiere 1 TP Markiere 2 TP Markiere 3 TP"
+	},
+	{
+		"id": "domain-card-sage-6-conjured-steeds",
+		"name": "Beschwöre Reittiere",
+		"type": "Zauber",
+		"text": "Setze beliebig viel Hoffnung ein, um entsprechend viele magische Reittiere zu beschwören (z.B. Pferde, Kamele oder Elefanten), auf denen du und deine Verbündeten reiten können, bis ihr eure nächste lange Rast einlegt oder die Reittiere Schaden erleiden. Die Tiere verdoppeln eure Reisegeschwindigkeit, wenn ihr Überland reist. Wenn ihr in Gefahr seid, dürft ihr euch mit den Reittieren innerhalb weiter Distanz bewegen, ohne würfeln zu müssen. Wer sich auf einem Reittier befindet, erhält einen Malus von –2 auf Angriffswürfe und einen Bonus von +2 auf Schadenswürfe."
+	},
+	{
+		"id": "domain-card-sage-6-forager",
+		"name": "Sammeln",
+		"type": "Fähigkeit",
+		"text": "Du darfst als Auszeit-Zug einen W6 zu würfeln, um Gegenstände sammeln zu gehen. Sprich deine Vorgehensweise mit der SL ab und füge den gefundenen Gegenstand deinem Inventar als Verbrauchsgut hinzu. Deine Gruppe kann insgesamt fünf auf diese Weise gesammelte Verbrauchsgüter gleichzeitig tragen. Ergeb. Verbrauchsgut Wirkung 1 Ein besonderes Lösche 2 Stress Nahrungsmittel 2 Ein schönes Relikt Erhalte 2 Hoffnung 3 Eine magische Rune +2 auf einen Zauberwurf 4 Ein Heilmittel Lösche 2 TP 5 Ein Glücksbringer Würfle einen beliebigen Würfel neu 6 Wähle eine der obenstehenden Optionen."
+	},
+	{
+		"id": "domain-card-sage-7-sage-touched",
+		"name": "Segen der Natur",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Natur-Domäne stammen, erhältst du folgende Vorteile: • Einen Bonus von +2 auf Zauberwürfe, wenn du dich in einer natürlichen Umgebung befindest. • Einmal pro Rast darfst du deinen Wert in Agilität oder Instinkt verdoppeln, wenn du einen entsprechenden Aktionswurf durchführst. Du musst diesen Vorteil wählen, bevor du den Wurf durchführst."
+	},
+	{
+		"id": "domain-card-sage-7-wild-surge",
+		"name": "Wilde Woge",
+		"type": "Zauber",
+		"text": "Einmal pro langer Rast darfst du 1 Stress markieren, um die Kräfte der Natur um dich herum zu sammeln und dich so zu verstärken. Beschreibe, wie sich dein Aussehen verändert, und lege einen W6 mit der 1 nach oben auf diese Karte. Während Wilde Woge aktiv ist, fügst du den Wert des Würfels jedem deiner Aktionswürfe hinzu. Nachdem du den Wert einem Aktionswurf hinzugefügt hast, erhöhst du den Wert des Würfels um 1. Wenn der Wert 6 übersteigen würde oder du eine Rast einlegst, klingt die Wilde Woge ab und du musst zusätzlich 1 Stress markieren."
+	},
+	{
+		"id": "domain-card-sage-8-forest-sprites",
+		"name": "Waldgeister",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (13) durch. Bei einem Erfolg darfst du beliebig viel Hoffnung einsetzen, um entsprechend viele kleine Waldgeister zu beschwören, die an Positionen deiner Wahl innerhalb weiter Distanz auftauchen. Die Waldgeister bieten folgende Vorteile: • Deine Verbündeten erhalten einen Bonus von +3 auf Angriffswürfe gegen Ziele in unmittelbarer Distanz zu einem Waldgeist. • Ein verbündeter Charakter, der ein Rüstungsfeld markiert, während er sich in unmittelbarer Distanz zu einem Waldgeist befindet, darf ein zusätzliches Rüstungsfeld markieren. Ein Waldgeist verschwindet, nachdem er einen dieser Vorteile gewährt hat oder er Schaden erleidet."
+	},
+	{
+		"id": "domain-card-sage-8-rejuvenation-barrier",
+		"name": "Barriere der Linderung",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (15) durch. Einmal pro Rast bei einem Erfolg erschaffst du vorübergehend eine Barriere aus schützender Energie in sehr kurzer Distanz um dich herum. Du und alle Verbündeten, die sich beim Erschaffen der Barriere im Inneren befinden, dürfen 1W4 TP löschen. Während die Barriere besteht, erhalten du und alle Verbündeten im Inneren Resistenz gegen physischen Schaden, der von außerhalb der Barriere kommt. Wenn du dich bewegst, bewegt sich die Barriere mit dir mit."
+	},
+	{
+		"id": "domain-card-sage-9-fane-of-the-wilds",
+		"name": "Heiligtum der Wildnis",
+		"type": "Fähigkeit",
+		"text": "Lege nach einer langen Rast eine Anzahl Marker auf diese Karte, die der Anzahl der Natur-Domänenkarten in deiner Auslage und deiner Reserve entspricht. Wenn du einen Zauberwurf durchführst, darfst du beliebig viele Marker nach dem Wurf einsetzen, um pro eingesetztem Marker einen Bonus von +1 auf den Wurf zu erhalten. Du erhältst einen zusätzlichen Marker, wenn du einen kritischen Erfolg bei einem Zauber der Natur-Domäne erzielst. Entferne alle Marker von dieser Karte, wenn du eine lange Rast einlegst."
+	},
+	{
+		"id": "domain-card-sage-9-plant-dominion",
+		"name": "Flora beherrschen",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (18) durch. Bei einem Erfolg darfst du einmal pro langer Rast deine natürliche Umgebung und damit alle Pflanzen und Gewächse innerhalb weiter Distanz nach deiner Vorstellung umgestalten. Beispielsweise kannst du Bäume wachsen lassen, dir einen Weg durch dichtes Gestrüpp und Ranken erschaffen oder vor dir einen Wall aus Wurzeln beschwören."
+	},
+	{
+		"id": "domain-card-sage-10-force-of-nature",
+		"name": "Kraft der Natur",
+		"type": "Zauber",
+		"text": "Markiere 1 Stress, um dich in einen mächtigen Naturgeist zu verwandeln, was dir folgende Vorteile gewährt: • Wenn du bei einem Angriffs-oder Zauberwurf einen Erfolg erzielst, erhältst du einen Bonus von +10 auf den Schadenswurf. • Wenn du einer Kreatur innerhalb kurzer Distanz genug Schaden zufügst, um sie zu besiegen, absorbierst du sie und darfst 1 Rüstungsfeld löschen. • Du bist immun gegen den Zustand Festgesetzt. Du musst 1 Hoffnung einsetzen, bevor du einen Angriffswurf durchführst. Wenn du keine Hoffnung einsetzen kannst, verwandelst du dich zurück."
+	},
+	{
+		"id": "domain-card-sage-10-tempest",
+		"name": "Sturm",
+		"type": "Zauber",
+		"text": "Wähle einen der folgenden Stürme und führe einen Zauberwurf gegen alle Ziele innerhalb weiter Distanz durch. Getroffene Ziele sind von den Auswirkungen des Sturms betroffen, bis die SL in ihrem Zug 1 Furcht einsetzt, um den Zauber zu beenden. • Schneesturm: Getroffene Ziele erleiden 2W20+8 magischen Schaden und werden vorübergehend Verwundbar. • Orkan: Getroffene Ziele erleiden 3W10+10 magischen Schaden und können sich nicht gegen Windrichtung bewegen. Du entscheidest, in welche Richtung der Orkan weht. • Sandsturm: Getroffene Ziele erleiden 5W6+9 magischen Schaden. Angriffe von außerhalb unmittelbarer Distanz werden mit Nachteil gewürfelt."
+	},
+	{
+		"id": "domain-card-splendor-1-bolt-beacon",
+		"name": "Leuchtfeuer",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf gegen ein Ziel innerhalb weiter Distanz durch. Bei einem Erfolg darfst du 1 Hoffnung einsetzen, um eine schimmernd leuchtende Kugel auf das Ziel zu schleudern, die W8+2 magischen Schaden verursacht, abhängig von deiner Übung. Das Ziel wird vorübergehend Verwundbar und leuchtet hell, bis dieser Zustand beendet ist."
+	},
+	{
+		"id": "domain-card-splendor-1-mending-touch",
+		"name": "Sanfte Berührung",
+		"type": "Zauber",
+		"text": "Du legst deine Hände auf ein Ziel und wirkst heilende Magie, um dessen Wunden zu schließen. Wenn du dir ein paar Minuten Zeit nimmst, um dich auf dein Ziel zu konzentrieren, darfst du 2 Hoffnung einsetzen, um bei ihm 1 TP oder 1 Stress zu löschen. Einmal pro langer Rast darfst du stattdessen 2 TP oder 2 Stress des Ziels heilen, wenn du während der Heilung etwas Neues über das Ziel erfährst oder etwas über dich selbst offenbarst."
+	},
+	{
+		"id": "domain-card-splendor-1-reassurance",
+		"name": "Zuspruch",
+		"type": "Fähigkeit",
+		"text": "Einmal pro Rast darfst du einem verbündeten Charakter Unterstützung oder aufmunternde Worte anbieten, nachdem er einen Aktionswurf durchgeführt hat, aber bevor die Konsequenzen eintreten. Wenn du dies tust, darf der Charakter den Aktionswurf erneut durchführen."
+	},
+	{
+		"id": "domain-card-splendor-2-final-words",
+		"name": "Letzte Worte",
+		"type": "Zauber",
+		"text": "Du kannst einem Leichnam für einen Moment Leben einhauchen, um mit ihm zu sprechen. Führe einen Zauberwurf (13) durch. Bei einem Erfolg mit Hoffnung beantwortet der Leichnam bis zu drei Fragen. Bei einem Erfolg mit Furcht beantwortet er eine Frage. Der Leichnam antwortet wahrheitsgemäß, kann jedoch nur Informationen teilen, die er zu Lebzeiten besaß. Bei einem Misserfolg – oder nachdem der Leichnam deine Fragen beantwortet hat – zerfällt der Körper zu Staub."
+	},
+	{
+		"id": "domain-card-splendor-2-healing-hands",
+		"name": "Heilende Hände",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (13) durch und wähle ein Ziel außer dir selbst in unmittelbarer Distanz. Bei einem Erfolg darfst du 1 Stress markieren, um 2 TP oder 2 Stress des Ziels zu löschen. Bei einem Misserfolg darfst du 1 Stress markieren, um das Ziel um 1 TP oder 1 Stress zu heilen. Du kannst dieselbe Kreatur erst nach deiner nächsten langen Rast erneut heilen."
+	},
+	{
+		"id": "domain-card-splendor-3-second-wind",
+		"name": "Energieschub",
+		"type": "Fähigkeit",
+		"text": "Einmal pro Rast darfst du 3 Stress oder 1 TP bei dir löschen, wenn du einen erfolgreichen Angriff gegen eine gegnerische Kreatur durchführst. Bei einem Erfolg mit Hoffnung darfst du zusätzlich 3 Stress oder 1 TP bei einem verbündeten Charakter innerhalb kurzer Distanz zu dir löschen."
+	},
+	{
+		"id": "domain-card-splendor-3-voice-of-reason",
+		"name": "Stimme der Vernunft",
+		"type": "Fähigkeit",
+		"text": "Du sprichst mit einnehmender Autorität und Nachdruck. Du erhältst einen Vorteil auf Aktionswürfe, um angespannte Situationen zu deeskalieren oder jemanden zu überreden, deinem Kommando zu folgen. Zusätzlich wirst du in belastenden Momenten ermutigt. Wenn du alle Stressfelder markiert hast, erhältst du einen Bonus von +1 auf deine Übung für Schadenswürfe."
+	},
+	{
+		"id": "domain-card-splendor-4-divination",
+		"name": "Weissagung",
+		"type": "Zauber",
+		"text": "Einmal pro langer Rast darfst du 3 Hoffnung einsetzen, um jenseitige Kräfte anzurufen und ihnen eine Frage über ein Ereignis, eine Person, einen Ort oder eine Situation in naher Zukunft zu stellen, die mit Ja oder Nein beantwortet werden kann. Für einen Moment verschwimmt die Gegenwart vor deinen Augen und du siehst die Antwort deutlich vor dir."
+	},
+	{
+		"id": "domain-card-splendor-4-life-ward",
+		"name": "Schutz des Lebens",
+		"type": "Zauber",
+		"text": "Setze 3 Hoffnung ein und wähle einen verbündeten Charakter innerhalb kurzer Distanz. Auf diesem erscheint ein leuchtendes Schutzsiegel. Wenn der Charakter einen Todeszug ausführen müsste, darf er stattdessen 1 TP löschen. Dieser Effekt hält so lange an, bis er das Ziel vor einem Todeszug schützt, bis du Schutz des Lebens auf ein anderes Ziel wirkst oder du eine lange Rast einlegst."
+	},
+	{
+		"id": "domain-card-splendor-5-shape-material",
+		"name": "Material formen",
+		"type": "Zauber",
+		"text": "Setze 1 Hoffnung ein, um ein Stück eines natürlichen Materials (z.B. Gestein, Eis, Holz), das du berühren kannst, zu deinem Zweck umzuformen. Der Umfang des Materials darf nicht größer sein als du selbst. Beispielsweise kannst du ein zerbrechliches Werkzeug oder eine Tür erschaffen. Dieser Zauber betrifft nur Material, das sich innerhalb kurzer Distanz zu dem Punkt befindet, den du berührst."
+	},
+	{
+		"id": "domain-card-splendor-5-smite",
+		"name": "Peinigung",
+		"type": "Zauber",
+		"text": "Einmal pro Rast darfst du 3 Hoffnung einsetzen, um einen mächtigen Angriff der Peinigung aufzuladen. Dein nächster erfolgreicher Angriff mit einer Waffe verursacht das doppelte Ergebnis deines Schadenswurfs. Dieser Angriff bewirkt unabhängig vom Schadenstyp der Waffe magischen Schaden."
+	},
+	{
+		"id": "domain-card-splendor-6-restoration",
+		"name": "Wiederherstellung",
+		"type": "Zauber",
+		"text": "Lege nach einer langen Rast eine Anzahl Marker auf diese Karte, die deinem Zauber-Attribut entspricht. Wenn du eine Kreatur berührst, darfst du beliebig viele Marker einsetzen, um pro Marker 2 TP oder 2 Stress bei dieser Kreatur zu löschen. Für einen Marker kannst du auch den Zustand Verwundbar sowie ein physisches oder magisches Gebrechen bei einer Kreatur heilen (die SL darf je nach Schwere des Gebrechens auch mehr Marker verlangen). Entferne alle Marker von dieser Karte, wenn du eine lange Rast einlegst."
+	},
+	{
+		"id": "domain-card-splendor-6-zone-of-protection",
+		"name": "Schutzzone",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (16) durch. Einmal pro langer Rast darfst du bei einem Erfolg einen Punkt innerhalb weiter Distanz auswählen und dort eine sichtbare Schutzzone für alle Verbündeten in sehr kurzer Distanz zu diesem Punkt errichten. Lege dann einen W6 mit der 1 nach oben auf diese Karte. Wenn ein verbündeter Charakter in dieser Zone Schaden erleidet, wird der Schaden um die Zahl auf dem Würfel verringert. Dann erhöhst du den Wert des Würfels um 1. Wenn die Zahl auf dem Würfel 6 übersteigen würde, endet der Zauber."
+	},
+	{
+		"id": "domain-card-splendor-7-healing-strike",
+		"name": "Heilender Schlag",
+		"type": "Zauber",
+		"text": "Wenn du einem gegnerischen Ziel Schaden zufügst, darfst du 2 Hoffnung einsetzen, um bei einem verbündeten Charakter innerhalb kurzer Distanz 1 TP zu löschen."
+	},
+	{
+		"id": "domain-card-splendor-7-splendor-touched",
+		"name": "Segen des Lebens",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Leben-Domäne stammen, erhältst du folgende Vorteile: • Einen Bonus von +3 auf deine Schwere Schadensschwelle. • Einmal pro langer Rast, wenn du durch Schaden TP markieren müsstest, darfst du dich entscheiden, stattdessen entsprechend viel Stress zu markieren oder Hoffnung einzusetzen."
+	},
+	{
+		"id": "domain-card-splendor-8-shield-aura",
+		"name": "Schild-Aura",
+		"type": "Zauber",
+		"text": "Du darfst 1 Stress markieren, um eine schützende Aura auf ein Ziel innerhalb sehr kurzer Distanz zu wirken. Wenn das Ziel ein Rüstungsfeld markiert, wird die Schwere des Schadens um eine zusätzliche Schwelle reduziert. Wenn dieser Zauber bewirkt, dass eine Kreatur, die Schaden erleiden würde, stattdessen keine TP markieren muss, endet der Zauber. Du darfst Schild-Aura nur auf eine Kreatur zur selben Zeit wirken."
+	},
+	{
+		"id": "domain-card-splendor-8-stunning-sunlight",
+		"name": "Sonnenlicht-Schock",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf durch, um mächtige, brennende Sonnenstrahlen auf alle gegnerischen Ziele vor dir innerhalb weiter Distanz abzufeuern. Bei einem Erfolg darfst du beliebig viel Hoffnung einsetzen, um entsprechend viele getroffene Ziele zu einem Reaktionswurf (14) zu zwingen. Ziele, die einen Erfolg erzielen, erleiden 3W20+3 magischen Schaden. Ziele, die einen Misserfolg erzielen, erleiden 4W20+5 magischen Schaden und erhalten vorübergehend den Zustand Schock. Solange Schock anhält, dürfen die Ziele keine Aktionen oder Reaktionen ausführen."
+	},
+	{
+		"id": "domain-card-splendor-9-overwhelming-aura",
+		"name": "Überwältigende Aura",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (15) durch, um deine Aura magisch zu verstärken. Bei einem Erfolg darfst du 2 Hoffnung einsetzen, um deinen Präsenz-Wert bis zu deiner nächsten langen Rast deinem Zauber-Attribut anzugleichen. Solange dieser Zauber aktiv ist, müssen gegnerische Ziele 1 Stress markieren, wenn sie dich angreifen."
+	},
+	{
+		"id": "domain-card-splendor-9-salvation-beam",
+		"name": "Strahl der Erlösung",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (16) durch. Bei einem Erfolg darfst du beliebig viel Stress markieren, um Verbündete in einer geraden Linie innerhalb weiter Distanz auszuwählen. Du darfst bei den Zielen TP in Höhe der markierten Stress-Punkte löschen; die Verteilung der gelöschten TP darfst du beliebig wählen."
+	},
+	{
+		"id": "domain-card-splendor-10-invigoration",
+		"name": "Kräftigen",
+		"type": "Zauber",
+		"text": "Wenn du oder ein verbündeter Charakter innerhalb kurzer Distanz eine Fähigkeit nutzen, die ein bestimmtes Limit hat (z.B. Einmal pro Rast oder Einmal pro Sitzung), darfst du beliebig viel Hoffnung einsetzen, um entsprechend viele W6 zu würfeln. Wenn du auf mindestens einem davon eine 6 würfelst, kann die Fähigkeit erneut eingesetzt werden."
+	},
+	{
+		"id": "domain-card-splendor-10-resurrection",
+		"name": "Wiederbeleben",
+		"type": "Zauber",
+		"text": "Führe einen Zauberwurf (20) durch. Bei einem Erfolg darfst du eine Kreatur, die nicht länger als 100 Jahre tot war, zu voller Gesundheit wiederbeleben. Würfle dann einen W6. Bei einer 5 oder weniger musst du diese Karte permanent in deine Reserve legen. Bei einem Misserfolg musst du 1 Woche warten, bis du Wiederbeleben erneut wirken darfst."
+	},
+	{
+		"id": "domain-card-valor-1-bare-bones",
+		"name": "Wer braucht schon Rüstung?",
+		"type": "Fähigkeit",
+		"text": "Wenn du dich entscheidest, keine Rüstung zu tragen, beträgt dein Rüstungswert 3 + deinen Wert in Stärke. Verwende die folgenden Grundwerte für deine Schadensschwellen: • Rang 1: 9/19 • Rang 2: 11/24 • Rang 3: 13/31 • Rang 4: 15/38"
+	},
+	{
+		"id": "domain-card-valor-1-forceful-push",
+		"name": "Mächtiger Stoß",
+		"type": "Fähigkeit",
+		"text": "Führe einen Angriff mit deiner Primärwaffe gegen ein Ziel in unmittelbarer Distanz aus. Bei einem Erfolg verursachst du normalen Schaden und stößt das Ziel in kurze Distanz zurück. Bei einem Erfolg mit Hoffnung fügst du deinem Schadenswurf zusätzlich 1W6 hinzu. Außerdem darfst du 1 Hoffnung einsetzen, um das Ziel vorübergehend Verwundbar zu machen."
+	},
+	{
+		"id": "domain-card-valor-1-i-am-your-shield",
+		"name": "Ich bin dein Schild",
+		"type": "Fähigkeit",
+		"text": "Wenn ein verbündeter Charakter in sehr kurzer Distanz Schaden erleiden würde, darfst du 1 Stress markieren, um dazwischenzugehen und stattdessen zum Ziel des Angriffs zu werden. Wenn du durch diesen Angriff Schaden erleidest, darfst du beliebig viele Rüstungsfelder markieren."
+	},
+	{
+		"id": "domain-card-valor-2-body-basher",
+		"name": "Körpereinsatz",
+		"type": "Fähigkeit",
+		"text": "Du kämpfst mit vollen Körpereinsatz. Nach einem erfolgreichen Angriff mit einer Waffe mit unmittelbarer Distanz erhältst du einen Bonus in Höhe deines Stärke-Wertes auf deinen Schadenswurf."
+	},
+	{
+		"id": "domain-card-valor-2-bold-presence",
+		"name": "Mächtige Präsenz",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen Wurf auf Präsenz ausführst, darfst du 1 Hoffnung einsetzen, um deinen Stärke-Wert zum Würfelergebnis hinzuzufügen. Zusätzlich darfst du einmal pro Rast, wenn du einen Zustand erleiden würdest, beschreiben, wie deine mächtige Präsenz in der Situation dazu beiträgt, dass du diesen Zustand nicht erhältst."
+	},
+	{
+		"id": "domain-card-valor-3-critical-inspiration",
+		"name": "Mächtige Inspiration",
+		"type": "Fähigkeit",
+		"text": "Einmal pro Rast dürfen alle verbündeten Charaktere innerhalb sehr kurzer Distanz 1 Stress löschen oder 1 Hoffnung erhalten, wenn du einen kritischen Erfolg bei einem Angriffswurf erzielst."
+	},
+	{
+		"id": "domain-card-valor-3-lean-on-me",
+		"name": "Ich bin für dich da",
+		"type": "Fähigkeit",
+		"text": "Einmal pro langer Rast dürfen du und ein verbündeter Charakter je 2 Stress löschen, wenn du diesen nach einem Misserfolg auf einen Angriffswurf tröstest oder inspirierst."
+	},
+	{
+		"id": "domain-card-valor-4-goad-them-on",
+		"name": "Anstacheln",
+		"type": "Fähigkeit",
+		"text": "Beschreibe, wie du ein Ziel innerhalb kurzer Distanz provozierst und führe dann einen Wurf auf Präsenz gegen das Ziel durch. Bei einem Erfolg muss das Ziel 1 Stress markieren, und wenn die SL das Ziel das nächste Mal in den Fokus rückt, muss es einen Angriff mit Nachteil gegen dich durchführen."
+	},
+	{
+		"id": "domain-card-valor-4-support-tank",
+		"name": "Unterstützende Front",
+		"type": "Fähigkeit",
+		"text": "Wenn ein verbündeter Charakter innerhalb kurzer Distanz einen Misserfolg würfelt, darfst du 2 Hoffnung einsetzen, um dem Charakter zu ermöglichen, seinen Hoffnungs-oder Furchtwürfel erneut zu würfeln."
+	},
+	{
+		"id": "domain-card-valor-5-armorer",
+		"name": "Rüstungsschmiede",
+		"type": "Fähigkeit",
+		"text": "Du erhältst einen Bonus von +1 auf deinen Rüstungswert, wenn du Rüstung trägst. Wenn du während einer Rast als Auszeit-Zug deine Rüstung reparierst, dürfen deine Verbündeten ebenfalls ein Rüstungsfeld löschen."
+	},
+	{
+		"id": "domain-card-valor-5-rousing-strike",
+		"name": "Weckruf",
+		"type": "Fähigkeit",
+		"text": "Einmal pro Rast dürfen du und alle Verbündeten, die dich sehen oder hören können, 1 TP oder 1W4 Stress löschen, wenn du einen kritischen Erfolg bei einem Angriffswurf erzielst."
+	},
+	{
+		"id": "domain-card-valor-6-inevitable",
+		"name": "Unausweichlich",
+		"type": "Fähigkeit",
+		"text": "Wenn du einen Misserfolg bei einem Aktionswurf erzielst, erhältst du einen Vorteil auf deinen nächsten Aktionswurf."
+	},
+	{
+		"id": "domain-card-valor-6-rise-up",
+		"name": "Erheben",
+		"type": "Fähigkeit",
+		"text": "Du erhältst einen Bonus auf deine Schwere Schadensschwelle, die deiner Übung entspricht. Wenn du nach einem Angriff 1 oder mehr TP markieren musst, darfst du 1 Stress löschen."
+	},
+	{
+		"id": "domain-card-valor-7-shrug-it-off",
+		"name": "Verschmerzen",
+		"type": "Fähigkeit",
+		"text": "Wenn du Schaden erleiden würdest, darfst du 1 Stress markieren, um die Schwere des Schadens um 1 Schwelle zu reduzieren. Würfle dann 1W6. Bei einem Ergebnis von 3 oder weniger musst du diese Karte in deine Reserve legen."
+	},
+	{
+		"id": "domain-card-valor-7-valor-touched",
+		"name": "Segen des Mutes",
+		"type": "Fähigkeit",
+		"text": "Wenn 4 oder mehr Domänenkarten in deiner Auslage aus der Mut-Domäne stammen, erhältst du folgende Vorteile: • Einen Bonus von +1 auf deinen Rüstungswert. • Wenn du 1 oder mehr TP markierst ohne ein Rüstungsfeld zu markieren, darfst du 1 Rüstungsfeld löschen."
+	},
+	{
+		"id": "domain-card-valor-8-full-surge",
+		"name": "Volle Power",
+		"type": "Fähigkeit",
+		"text": "Einmal pro langer Rast darfst du 3 Stress markieren, um deinen Körper an seine Grenzen zu bringen. Bis zu deiner nächsten Rast erhältst du einen Bonus von +2 auf alle Attributswerte."
+	},
+	{
+		"id": "domain-card-valor-8-ground-pound",
+		"name": "Erdbebenschlag",
+		"type": "Fähigkeit",
+		"text": "Setze 2 Hoffnung ein, um den Boden unter dir mit einem mächtigen Schlag aufzurütteln, und führe einen Wurf auf Stärke gegen alle Ziele innerhalb sehr kurzer Distanz durch. Getroffene Ziele werden in weite Distanz zurückgeschleudert und müssen einen Reaktionswurf (17) durchführen. Ziele, die einen Misserfolg erzielen, erleiden 4W10+8 Schaden. Ziele, die einen Erfolg erzielen, erleiden den halben Schaden."
+	},
+	{
+		"id": "domain-card-valor-9-hold-the-line",
+		"name": "Stellung halten",
+		"type": "Fähigkeit",
+		"text": "Beschreibe, welche Abwehrhaltung du einnimmst, und setze 1 Hoffnung ein. Wenn eine gegnerische Kreatur sich in sehr kurze Distanz zu dir bewegt, wird sie in unmittelbare Distanz gezogen und erhält den Zustand Festgesetzt. Dieser Zustand bleibt bestehen, bis du dich bewegst, einen Misserfolg mit Furcht würfelst oder bis die SL in ihrem Zug 2 Furcht einsetzt, um den Zustand zu löschen."
+	},
+	{
+		"id": "domain-card-valor-9-lead-by-example",
+		"name": "Vorbildfunktion",
+		"type": "Fähigkeit",
+		"text": "Wenn du einem gegnerischen Ziel Schaden zufügst, darfst du 1 Stress markieren und beschreiben, wie du deine Verbündeten ermutigst. Der nächste SC, der dieses Ziel angreift, darf 1 Stress löschen oder erhält 1 Hoffnung."
+	},
+	{
+		"id": "domain-card-valor-10-unbreakable",
+		"name": "Unbezwingbar",
+		"type": "Fähigkeit",
+		"text": "Wenn du deinen letzten TP markierst, darfst du einen W6 würfeln und eine Anzahl TP löschen, die dem Ergebnis entspricht, statt einen Todeszug auszuführen. Lege diese Karte im Anschluss in deine Reserve."
+	},
+	{
+		"id": "domain-card-valor-10-unyielding-armor",
+		"name": "Unzerstörbare Rüstung",
+		"type": "Fähigkeit",
+		"text": "Wenn du ein Rüstungsfeld markieren würdest, darfst du eine Anzahl W6 würfeln, die deiner Übung entspricht. Wenn du mindestens eine 6 erzielst, darfst du die Schwere des Schadens um eine Schwelle reduzieren, ohne ein Rüstungsfeld zu markieren."
+	}
+]

@@ -7,7 +7,14 @@ function extractTierAndType(innerCard: Element | null): { tier: string; type: st
 	return { tier: words[1] ?? "1", type: words[2] ?? "Exploration" };
 }
 
+// Lines are found by class first so cards rendered with translated labels
+// still parse; the English label match covers cards that predate the classes.
 function extractImpulse(innerCard: Element | null): string {
+	const line = innerCard?.querySelector(".df-env-impulse-line");
+	if (line) {
+		const label = line.querySelector(".df-env-impulse-label")?.textContent ?? "";
+		return (line.textContent ?? "").replace(label, "").trim();
+	}
 	const el = Array.from(innerCard?.querySelectorAll("p") ?? []).find((p) =>
 		p.textContent?.includes("Impulse:"),
 	);
@@ -18,17 +25,18 @@ function extractDifficultyAndAdversaries(innerCard: Element | null): {
 	difficulty: string;
 	potentialAdversaries: string;
 } {
-	const paragraphs = Array.from(
-		innerCard?.querySelector(".df-env-card-diff-pot")?.querySelectorAll("p") ?? [],
-	);
+	const diffPot = innerCard?.querySelector(".df-env-card-diff-pot");
+	const paragraphs = Array.from(diffPot?.querySelectorAll("p") ?? []);
+	const difficultyLine =
+		diffPot?.querySelector(".df-env-diff-line") ??
+		paragraphs.find((p) => p.textContent?.includes("Difficulty"));
+	const adversaryLine =
+		diffPot?.querySelector(".df-env-adv-line") ??
+		paragraphs.find((p) => p.textContent?.includes("Potential Adversaries"));
 
 	return {
-		difficulty:
-			paragraphs.find((p) => p.textContent?.includes("Difficulty"))
-				?.textContent?.split(":")[1]?.trim() ?? "",
-		potentialAdversaries:
-			paragraphs.find((p) => p.textContent?.includes("Potential Adversaries"))
-				?.textContent?.split(":")[1]?.trim() ?? "",
+		difficulty: difficultyLine?.textContent?.split(":")[1]?.trim() ?? "",
+		potentialAdversaries: adversaryLine?.textContent?.split(":")[1]?.trim() ?? "",
 	};
 }
 

@@ -1,6 +1,7 @@
 {
 	"weapons": [
 		{
+			"source": "core",
 			"id": "WP001",
 			"name": "Arcane Gauntlets",
 			"category": "Primary",
@@ -14,6 +15,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP002",
 			"name": "Improved Arcane Gauntlets",
 			"category": "Primary",
@@ -27,6 +29,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP003",
 			"name": "Advanced Arcane Gauntlets",
 			"category": "Primary",
@@ -40,6 +43,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP004",
 			"name": "Legendary Arcane Gauntlets",
 			"category": "Primary",
@@ -53,6 +57,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP005",
 			"name": "Battleaxe",
 			"category": "Primary",
@@ -66,6 +71,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP006",
 			"name": "Improved Battleaxe",
 			"category": "Primary",
@@ -79,6 +85,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP007",
 			"name": "Advanced Battleaxe",
 			"category": "Primary",
@@ -92,6 +99,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP008",
 			"name": "Legendary Battleaxe",
 			"category": "Primary",
@@ -105,6 +113,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP009",
 			"name": "Broadsword",
 			"category": "Primary",
@@ -118,6 +127,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP010",
 			"name": "Improved Broadsword",
 			"category": "Primary",
@@ -131,6 +141,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP011",
 			"name": "Advanced Broadsword",
 			"category": "Primary",
@@ -144,6 +155,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP012",
 			"name": "Legendary Broadsword",
 			"category": "Primary",
@@ -157,6 +169,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP013",
 			"name": "Crossbow",
 			"category": "Primary",
@@ -170,6 +183,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP014",
 			"name": "Improved Crossbow",
 			"category": "Primary",
@@ -183,6 +197,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP015",
 			"name": "Advanced Crossbow",
 			"category": "Primary",
@@ -196,6 +211,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP016",
 			"name": "Legendary Crossbow",
 			"category": "Primary",
@@ -209,6 +225,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP017",
 			"name": "Cutlass",
 			"category": "Primary",
@@ -222,6 +239,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP018",
 			"name": "Improved Cutlass",
 			"category": "Primary",
@@ -235,6 +253,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP019",
 			"name": "Advanced Cutlass",
 			"category": "Primary",
@@ -248,6 +267,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP020",
 			"name": "Legendary Cutlass",
 			"category": "Primary",
@@ -261,6 +281,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP021",
 			"name": "Dagger",
 			"category": "Primary",
@@ -274,6 +295,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP022",
 			"name": "Improved Dagger",
 			"category": "Primary",
@@ -287,6 +309,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP023",
 			"name": "Advanced Dagger",
 			"category": "Primary",
@@ -300,6 +323,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP024",
 			"name": "Legendary Dagger",
 			"category": "Primary",
@@ -313,6 +337,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP025",
 			"name": "Dualstaff",
 			"category": "Primary",
@@ -326,6 +351,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP026",
 			"name": "Improved Dualstaff",
 			"category": "Primary",
@@ -339,6 +365,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP027",
 			"name": "Advanced Dualstaff",
 			"category": "Primary",
@@ -352,6 +379,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP028",
 			"name": "Legendary Dualstaff",
 			"category": "Primary",
@@ -365,6 +393,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP029",
 			"name": "Glowing Rings",
 			"category": "Primary",
@@ -378,6 +407,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP030",
 			"name": "Improved Glowing Rings",
 			"category": "Primary",
@@ -391,6 +421,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP031",
 			"name": "Advanced Glowing Rings",
 			"category": "Primary",
@@ -404,6 +435,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP032",
 			"name": "Legendary Glowing Rings",
 			"category": "Primary",
@@ -417,6 +449,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP033",
 			"name": "Greatstaff",
 			"category": "Primary",
@@ -430,6 +463,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP034",
 			"name": "Improved Greatstaff",
 			"category": "Primary",
@@ -443,6 +477,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP035",
 			"name": "Advanced Greatstaff",
 			"category": "Primary",
@@ -456,6 +491,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP036",
 			"name": "Legendary Greatstaff",
 			"category": "Primary",
@@ -469,6 +505,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP037",
 			"name": "Greatsword",
 			"category": "Primary",
@@ -482,6 +519,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP038",
 			"name": "Improved Greatsword",
 			"category": "Primary",
@@ -495,6 +533,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP039",
 			"name": "Advanced Greatsword",
 			"category": "Primary",
@@ -508,6 +547,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP040",
 			"name": "Legendary Greatsword",
 			"category": "Primary",
@@ -521,6 +561,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP041",
 			"name": "Halberd",
 			"category": "Primary",
@@ -534,6 +575,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP042",
 			"name": "Improved Halberd",
 			"category": "Primary",
@@ -547,6 +589,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP043",
 			"name": "Advanced Halberd",
 			"category": "Primary",
@@ -560,6 +603,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP044",
 			"name": "Legendary Halberd",
 			"category": "Primary",
@@ -573,6 +617,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP045",
 			"name": "Hallowed Axe",
 			"category": "Primary",
@@ -586,6 +631,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP046",
 			"name": "Improved Hallowed Axe",
 			"category": "Primary",
@@ -599,6 +645,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP047",
 			"name": "Advanced Hallowed Axe",
 			"category": "Primary",
@@ -612,6 +659,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP048",
 			"name": "Legendary Hallowed Axe",
 			"category": "Primary",
@@ -625,6 +673,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP049",
 			"name": "Hand Runes",
 			"category": "Primary",
@@ -638,6 +687,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP050",
 			"name": "Improved Hand Runes",
 			"category": "Primary",
@@ -651,6 +701,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP051",
 			"name": "Advanced Hand Runes",
 			"category": "Primary",
@@ -664,6 +715,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP052",
 			"name": "Legendary Hand Runes",
 			"category": "Primary",
@@ -677,6 +729,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP053",
 			"name": "Longbow",
 			"category": "Primary",
@@ -690,6 +743,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP054",
 			"name": "Improved Longbow",
 			"category": "Primary",
@@ -703,6 +757,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP055",
 			"name": "Advanced Longbow",
 			"category": "Primary",
@@ -716,6 +771,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP056",
 			"name": "Legendary Longbow",
 			"category": "Primary",
@@ -729,6 +785,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP057",
 			"name": "Longsword",
 			"category": "Primary",
@@ -742,6 +799,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP058",
 			"name": "Improved Longsword",
 			"category": "Primary",
@@ -755,6 +813,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP059",
 			"name": "Advanced Longsword",
 			"category": "Primary",
@@ -768,6 +827,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP060",
 			"name": "Legendary Longsword",
 			"category": "Primary",
@@ -781,6 +841,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP061",
 			"name": "Mace",
 			"category": "Primary",
@@ -794,6 +855,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP062",
 			"name": "Improved Mace",
 			"category": "Primary",
@@ -807,6 +869,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP063",
 			"name": "Advanced Mace",
 			"category": "Primary",
@@ -820,6 +883,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP064",
 			"name": "Legendary Mace",
 			"category": "Primary",
@@ -833,6 +897,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP065",
 			"name": "Quarterstaff",
 			"category": "Primary",
@@ -846,6 +911,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP066",
 			"name": "Improved Quarterstaff",
 			"category": "Primary",
@@ -859,6 +925,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP067",
 			"name": "Advanced Quarterstaff",
 			"category": "Primary",
@@ -872,6 +939,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP068",
 			"name": "Legendary Quarterstaff",
 			"category": "Primary",
@@ -885,6 +953,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP069",
 			"name": "Rapier",
 			"category": "Primary",
@@ -898,6 +967,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP070",
 			"name": "Improved Rapier",
 			"category": "Primary",
@@ -911,6 +981,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP071",
 			"name": "Advanced Rapier",
 			"category": "Primary",
@@ -924,6 +995,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP072",
 			"name": "Legendary Rapier",
 			"category": "Primary",
@@ -937,6 +1009,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP073",
 			"name": "Returning Blade",
 			"category": "Primary",
@@ -950,6 +1023,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP074",
 			"name": "Improved Returning Blade",
 			"category": "Primary",
@@ -963,6 +1037,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP075",
 			"name": "Advanced Returning Blade",
 			"category": "Primary",
@@ -976,6 +1051,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP076",
 			"name": "Legendary Returning Blade",
 			"category": "Primary",
@@ -989,6 +1065,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP077",
 			"name": "Scepter",
 			"category": "Primary",
@@ -1002,6 +1079,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP078",
 			"name": "Improved Scepter",
 			"category": "Primary",
@@ -1015,6 +1093,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP079",
 			"name": "Advanced Scepter",
 			"category": "Primary",
@@ -1028,6 +1107,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP080",
 			"name": "Legendary Scepter",
 			"category": "Primary",
@@ -1041,6 +1121,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP081",
 			"name": "Shortbow",
 			"category": "Primary",
@@ -1054,6 +1135,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP082",
 			"name": "Improved Shortbow",
 			"category": "Primary",
@@ -1067,6 +1149,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP083",
 			"name": "Advanced Shortbow",
 			"category": "Primary",
@@ -1080,6 +1163,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP084",
 			"name": "Legendary Shortbow",
 			"category": "Primary",
@@ -1093,6 +1177,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP085",
 			"name": "Shortstaff",
 			"category": "Primary",
@@ -1106,6 +1191,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP086",
 			"name": "Improved Shortstaff",
 			"category": "Primary",
@@ -1119,6 +1205,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP087",
 			"name": "Advanced Shortstaff",
 			"category": "Primary",
@@ -1132,6 +1219,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP088",
 			"name": "Legendary Shortstaff",
 			"category": "Primary",
@@ -1145,6 +1233,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP089",
 			"name": "Spear",
 			"category": "Primary",
@@ -1158,6 +1247,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP090",
 			"name": "Improved Spear",
 			"category": "Primary",
@@ -1171,6 +1261,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP091",
 			"name": "Advanced Spear",
 			"category": "Primary",
@@ -1184,6 +1275,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP092",
 			"name": "Legendary Spear",
 			"category": "Primary",
@@ -1197,6 +1289,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP093",
 			"name": "Wand",
 			"category": "Primary",
@@ -1210,6 +1303,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP094",
 			"name": "Improved Wand",
 			"category": "Primary",
@@ -1223,6 +1317,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP095",
 			"name": "Advanced Wand",
 			"category": "Primary",
@@ -1236,6 +1331,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP096",
 			"name": "Legendary Wand",
 			"category": "Primary",
@@ -1249,6 +1345,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP097",
 			"name": "Warhammer",
 			"category": "Primary",
@@ -1262,6 +1359,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP098",
 			"name": "Improved Warhammer",
 			"category": "Primary",
@@ -1275,6 +1373,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP099",
 			"name": "Advanced Warhammer",
 			"category": "Primary",
@@ -1288,6 +1387,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP100",
 			"name": "Legendary Warhammer",
 			"category": "Primary",
@@ -1301,6 +1401,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP101",
 			"name": "Grappler",
 			"category": "Secondary",
@@ -1314,6 +1415,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP102",
 			"name": "Improved Grappler",
 			"category": "Secondary",
@@ -1327,6 +1429,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP103",
 			"name": "Advanced Grappler",
 			"category": "Secondary",
@@ -1340,6 +1443,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP104",
 			"name": "Legendary Grappler",
 			"category": "Secondary",
@@ -1353,6 +1457,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP105",
 			"name": "Hand Crossbow",
 			"category": "Secondary",
@@ -1366,6 +1471,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP106",
 			"name": "Improved Hand Crossbow",
 			"category": "Secondary",
@@ -1379,6 +1485,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP107",
 			"name": "Advanced Hand Crossbow",
 			"category": "Secondary",
@@ -1392,6 +1499,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP108",
 			"name": "Legendary Hand Crossbow",
 			"category": "Secondary",
@@ -1405,6 +1513,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP109",
 			"name": "Round Shield",
 			"category": "Secondary",
@@ -1418,6 +1527,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP110",
 			"name": "Improved Round Shield",
 			"category": "Secondary",
@@ -1431,6 +1541,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP111",
 			"name": "Advanced Round Shield",
 			"category": "Secondary",
@@ -1444,6 +1555,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP112",
 			"name": "Legendary Round Shield",
 			"category": "Secondary",
@@ -1457,6 +1569,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP113",
 			"name": "Shortsword",
 			"category": "Secondary",
@@ -1470,6 +1583,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP114",
 			"name": "Improved Shortsword",
 			"category": "Secondary",
@@ -1483,6 +1597,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP115",
 			"name": "Advanced Shortsword",
 			"category": "Secondary",
@@ -1496,6 +1611,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP116",
 			"name": "Legendary Shortsword",
 			"category": "Secondary",
@@ -1509,6 +1625,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP117",
 			"name": "Small Dagger",
 			"category": "Secondary",
@@ -1522,6 +1639,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP118",
 			"name": "Improved Small Dagger",
 			"category": "Secondary",
@@ -1535,6 +1653,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP119",
 			"name": "Advanced Small Dagger",
 			"category": "Secondary",
@@ -1548,6 +1667,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP120",
 			"name": "Legendary Small Dagger",
 			"category": "Secondary",
@@ -1561,6 +1681,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP121",
 			"name": "Tower Shield",
 			"category": "Secondary",
@@ -1574,6 +1695,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP122",
 			"name": "Improved Tower Shield",
 			"category": "Secondary",
@@ -1587,6 +1709,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP123",
 			"name": "Advanced Tower Shield",
 			"category": "Secondary",
@@ -1600,6 +1723,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP124",
 			"name": "Legendary Tower Shield",
 			"category": "Secondary",
@@ -1613,6 +1737,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP125",
 			"name": "Whip",
 			"category": "Secondary",
@@ -1626,6 +1751,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP126",
 			"name": "Improved Whip",
 			"category": "Secondary",
@@ -1639,6 +1765,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP127",
 			"name": "Advanced Whip",
 			"category": "Secondary",
@@ -1652,6 +1779,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP128",
 			"name": "Legendary Whip",
 			"category": "Secondary",
@@ -1665,6 +1793,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "WP129",
 			"name": "Aantari Bow",
 			"category": "Primary",
@@ -1678,6 +1807,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP130",
 			"name": "Axe of Fortunis",
 			"category": "Primary",
@@ -1691,6 +1821,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP131",
 			"name": "Black Powder Revolver",
 			"category": "Primary",
@@ -1704,6 +1835,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP132",
 			"name": "Bladed Whip",
 			"category": "Primary",
@@ -1717,6 +1849,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP133",
 			"name": "Blessed Anlace",
 			"category": "Primary",
@@ -1730,6 +1863,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP134",
 			"name": "Bloodstaff",
 			"category": "Primary",
@@ -1743,6 +1877,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP135",
 			"name": "Blunderbuss",
 			"category": "Primary",
@@ -1756,6 +1891,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP136",
 			"name": "Braveshield",
 			"category": "Secondary",
@@ -1769,6 +1905,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP137",
 			"name": "Bravesword",
 			"category": "Primary",
@@ -1782,6 +1919,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP138",
 			"name": "Buckler",
 			"category": "Secondary",
@@ -1795,6 +1933,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP139",
 			"name": "Casting Sword",
 			"category": "Primary",
@@ -1808,6 +1947,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP140",
 			"name": "Curved Dagger",
 			"category": "Primary",
@@ -1821,6 +1961,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP141",
 			"name": "Devouring Dagger",
 			"category": "Primary",
@@ -1834,6 +1975,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP142",
 			"name": "Double Flail",
 			"category": "Primary",
@@ -1847,6 +1989,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP143",
 			"name": "Dual-Ended Sword",
 			"category": "Primary",
@@ -1860,6 +2003,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP144",
 			"name": "Ego Blade",
 			"category": "Primary",
@@ -1873,6 +2017,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP145",
 			"name": "Elder Bow",
 			"category": "Primary",
@@ -1886,6 +2031,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP146",
 			"name": "Extended Polearm",
 			"category": "Primary",
@@ -1899,6 +2045,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP147",
 			"name": "Finehair Bow",
 			"category": "Primary",
@@ -1912,6 +2059,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP148",
 			"name": "Firestaff",
 			"category": "Primary",
@@ -1925,6 +2073,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP149",
 			"name": "Flickerfly Blade",
 			"category": "Primary",
@@ -1938,6 +2087,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP150",
 			"name": "Floating Bladeshards",
 			"category": "Primary",
@@ -1951,6 +2101,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP151",
 			"name": "Fusion Gloves",
 			"category": "Primary",
@@ -1964,6 +2115,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP152",
 			"name": "Ghostblade",
 			"category": "Primary",
@@ -1977,6 +2129,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP153",
 			"name": "Gilded Bow",
 			"category": "Primary",
@@ -1990,6 +2143,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP154",
 			"name": "Gilded Falchion",
 			"category": "Primary",
@@ -2003,6 +2157,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP155",
 			"name": "Greatbow",
 			"category": "Primary",
@@ -2016,6 +2171,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP156",
 			"name": "Hammer of Exota",
 			"category": "Primary",
@@ -2029,6 +2185,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP157",
 			"name": "Hammer of Wrath",
 			"category": "Primary",
@@ -2042,6 +2199,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP158",
 			"name": "Hand Cannon",
 			"category": "Primary",
@@ -2055,6 +2213,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP159",
 			"name": "Hand Sling",
 			"category": "Secondary",
@@ -2068,6 +2227,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP160",
 			"name": "Ilmari's Rifle",
 			"category": "Primary",
@@ -2081,6 +2241,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP161",
 			"name": "Impact Gauntlet",
 			"category": "Primary",
@@ -2094,6 +2255,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP162",
 			"name": "Keepers Staff",
 			"category": "Primary",
@@ -2107,6 +2269,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP163",
 			"name": "Knuckle Blades",
 			"category": "Primary",
@@ -2120,6 +2283,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP164",
 			"name": "Knuckle Claws",
 			"category": "Secondary",
@@ -2133,6 +2297,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP165",
 			"name": "Labrys Axe",
 			"category": "Primary",
@@ -2146,6 +2311,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP166",
 			"name": "Mage Orb",
 			"category": "Primary",
@@ -2159,6 +2325,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP167",
 			"name": "Magus Revolver",
 			"category": "Primary",
@@ -2172,6 +2339,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP168",
 			"name": "Meridian Cutlass",
 			"category": "Primary",
@@ -2185,6 +2353,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP169",
 			"name": "Midas Scythe",
 			"category": "Primary",
@@ -2198,6 +2367,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP170",
 			"name": "Parrying Dagger",
 			"category": "Secondary",
@@ -2211,6 +2381,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP171",
 			"name": "Powered Gauntlet",
 			"category": "Secondary",
@@ -2224,6 +2395,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP172",
 			"name": "Primer Shard",
 			"category": "Secondary",
@@ -2237,6 +2409,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP173",
 			"name": "Retractable Saber",
 			"category": "Primary",
@@ -2250,6 +2423,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP174",
 			"name": "Returning Axe",
 			"category": "Secondary",
@@ -2263,6 +2437,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP175",
 			"name": "Ricochet Axes",
 			"category": "Primary",
@@ -2276,6 +2451,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP176",
 			"name": "Runes of Ruination",
 			"category": "Primary",
@@ -2289,6 +2465,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP177",
 			"name": "Scepter of Elias",
 			"category": "Primary",
@@ -2302,6 +2479,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP178",
 			"name": "Siphoning Gauntlets",
 			"category": "Primary",
@@ -2315,6 +2493,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP179",
 			"name": "Sledge Axe",
 			"category": "Primary",
@@ -2328,6 +2507,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP180",
 			"name": "Spiked Bow",
 			"category": "Primary",
@@ -2341,6 +2521,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP181",
 			"name": "Spiked Shield",
 			"category": "Secondary",
@@ -2354,6 +2535,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP182",
 			"name": "Steelforged Halberd",
 			"category": "Primary",
@@ -2367,6 +2549,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP183",
 			"name": "Swinging Ropeblade",
 			"category": "Primary",
@@ -2380,6 +2563,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP184",
 			"name": "Sword of Light & Flame",
 			"category": "Primary",
@@ -2393,6 +2577,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP185",
 			"name": "Talon Blades",
 			"category": "Primary",
@@ -2406,6 +2591,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP186",
 			"name": "Thistlebow",
 			"category": "Primary",
@@ -2419,6 +2605,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP187",
 			"name": "Urok Broadsword",
 			"category": "Primary",
@@ -2432,6 +2619,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP188",
 			"name": "Wand of Enthrallment",
 			"category": "Primary",
@@ -2445,6 +2633,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP189",
 			"name": "Wand of Essek",
 			"category": "Primary",
@@ -2458,6 +2647,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP190",
 			"name": "War Scythe",
 			"category": "Primary",
@@ -2471,6 +2661,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP191",
 			"name": "Widogast Pendant",
 			"category": "Primary",
@@ -2484,6 +2675,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "WP192",
 			"name": "Yutari Bloodbow",
 			"category": "Primary",
@@ -2499,6 +2691,7 @@
 	],
 	"armor": [
 		{
+			"source": "core",
 			"id": "AR001",
 			"name": "Gambeson Armor",
 			"tier": 1,
@@ -2509,6 +2702,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR002",
 			"name": "Improved Gambeson Armor",
 			"tier": 2,
@@ -2519,6 +2713,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR003",
 			"name": "Advanced Gambeson Armor",
 			"tier": 3,
@@ -2529,6 +2724,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR004",
 			"name": "Legendary Gambeson Armor",
 			"tier": 4,
@@ -2539,6 +2735,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR005",
 			"name": "Leather Armor",
 			"tier": 1,
@@ -2549,6 +2746,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR006",
 			"name": "Improved Leather Armor",
 			"tier": 2,
@@ -2559,6 +2757,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR007",
 			"name": "Advanced Leather Armor",
 			"tier": 3,
@@ -2569,6 +2768,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR008",
 			"name": "Legendary Leather Armor",
 			"tier": 4,
@@ -2579,6 +2779,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR009",
 			"name": "Chainmail Armor",
 			"tier": 1,
@@ -2589,6 +2790,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR010",
 			"name": "Improved Chainmail Armor",
 			"tier": 2,
@@ -2599,6 +2801,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR011",
 			"name": "Advanced Chainmail Armor",
 			"tier": 3,
@@ -2609,6 +2812,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR012",
 			"name": "Legendary Chainmail Armor",
 			"tier": 4,
@@ -2619,6 +2823,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR013",
 			"name": "Full Plate Armor",
 			"tier": 1,
@@ -2629,6 +2834,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR014",
 			"name": "Improved Full Plate Armor",
 			"tier": 2,
@@ -2639,6 +2845,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR015",
 			"name": "Advanced Full Plate Armor",
 			"tier": 3,
@@ -2649,6 +2856,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR016",
 			"name": "Legendary Full Plate Armor",
 			"tier": 4,
@@ -2659,6 +2867,7 @@
 			"isUnique": false
 		},
 		{
+			"source": "core",
 			"id": "AR017",
 			"name": "Bellamoi Fine Armor",
 			"tier": 3,
@@ -2669,6 +2878,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR018",
 			"name": "Bladefare Armor",
 			"tier": 3,
@@ -2679,6 +2889,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR019",
 			"name": "Channeling Armor",
 			"tier": 4,
@@ -2689,6 +2900,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR020",
 			"name": "Dragonscale Armor",
 			"tier": 3,
@@ -2699,6 +2911,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR021",
 			"name": "Dunamis Silkchain",
 			"tier": 4,
@@ -2709,6 +2922,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR022",
 			"name": "Elundrian Chain Armor",
 			"tier": 2,
@@ -2719,6 +2933,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR023",
 			"name": "Emberwoven Armor",
 			"tier": 4,
@@ -2729,6 +2944,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR024",
 			"name": "Full Fortified Armor",
 			"tier": 4,
@@ -2739,6 +2955,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR025",
 			"name": "Harrowbone Armor",
 			"tier": 2,
@@ -2749,6 +2966,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR026",
 			"name": "IronTree Breastplate",
 			"tier": 2,
@@ -2759,6 +2977,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR027",
 			"name": "Monett's Cloak",
 			"tier": 3,
@@ -2769,6 +2988,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR028",
 			"name": "Rosewild Armor",
 			"tier": 2,
@@ -2779,6 +2999,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR029",
 			"name": "Runes of Fortification",
 			"tier": 3,
@@ -2789,6 +3010,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR030",
 			"name": "Runetan Floating Armor",
 			"tier": 2,
@@ -2799,6 +3021,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR031",
 			"name": "Savior Chainmail",
 			"tier": 4,
@@ -2809,6 +3032,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR032",
 			"name": "Spiked Plate Armor",
 			"tier": 3,
@@ -2819,6 +3043,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR033",
 			"name": "Tyris Soft Armor",
 			"tier": 2,
@@ -2829,6 +3054,7 @@
 			"isUnique": true
 		},
 		{
+			"source": "core",
 			"id": "AR034",
 			"name": "Veritas Opal Armor",
 			"tier": 4,
@@ -2841,6 +3067,7 @@
 	],
 	"wheelchairs": [
 		{
+			"source": "core",
 			"id": "WH001",
 			"name": "Light-Frame Wheelchair",
 			"frame": "Light-Frame",
@@ -2853,6 +3080,7 @@
 			"feature": "Quick: When you make an attack, you can mark a Stress to target another creature within range."
 		},
 		{
+			"source": "core",
 			"id": "WH002",
 			"name": "Improved Light-Frame Wheelchair",
 			"frame": "Light-Frame",
@@ -2865,6 +3093,7 @@
 			"feature": "Quick: When you make an attack, you can mark a Stress to target another creature within range."
 		},
 		{
+			"source": "core",
 			"id": "WH003",
 			"name": "Advanced Light-Frame Wheelchair",
 			"frame": "Light-Frame",
@@ -2877,6 +3106,7 @@
 			"feature": "Quick: When you make an attack, you can mark a Stress to target another creature within range."
 		},
 		{
+			"source": "core",
 			"id": "WH004",
 			"name": "Legendary Light-Frame Wheelchair",
 			"frame": "Light-Frame",
@@ -2889,6 +3119,7 @@
 			"feature": "Quick: When you make an attack, you can mark a Stress to target another creature within range."
 		},
 		{
+			"source": "core",
 			"id": "WH005",
 			"name": "Heavy-Frame Wheelchair",
 			"frame": "Heavy-Frame",
@@ -2901,6 +3132,7 @@
 			"feature": "Heavy: -1 to Evasion."
 		},
 		{
+			"source": "core",
 			"id": "WH006",
 			"name": "Improved Heavy-Frame Wheelchair",
 			"frame": "Heavy-Frame",
@@ -2913,6 +3145,7 @@
 			"feature": "Heavy: -1 to Evasion."
 		},
 		{
+			"source": "core",
 			"id": "WH007",
 			"name": "Advanced Heavy-Frame Wheelchair",
 			"frame": "Heavy-Frame",
@@ -2925,6 +3158,7 @@
 			"feature": "Heavy: -1 to Evasion."
 		},
 		{
+			"source": "core",
 			"id": "WH008",
 			"name": "Legendary Heavy-Frame Wheelchair",
 			"frame": "Heavy-Frame",
@@ -2937,6 +3171,7 @@
 			"feature": "Heavy: -1 to Evasion."
 		},
 		{
+			"source": "core",
 			"id": "WH009",
 			"name": "Arcane-Frame Wheelchair",
 			"frame": "Arcane-Frame",
@@ -2949,6 +3184,7 @@
 			"feature": "Reliable: +1 to attack rolls."
 		},
 		{
+			"source": "core",
 			"id": "WH010",
 			"name": "Improved Arcane-Frame Wheelchair",
 			"frame": "Arcane-Frame",
@@ -2961,6 +3197,7 @@
 			"feature": "Reliable: +1 to attack rolls."
 		},
 		{
+			"source": "core",
 			"id": "WH011",
 			"name": "Advanced Arcane-Frame Wheelchair",
 			"frame": "Arcane-Frame",
@@ -2973,6 +3210,7 @@
 			"feature": "Reliable: +1 to attack rolls."
 		},
 		{
+			"source": "core",
 			"id": "WH012",
 			"name": "Legendary Arcane-Frame Wheelchair",
 			"frame": "Arcane-Frame",

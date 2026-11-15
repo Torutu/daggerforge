@@ -1,5 +1,6 @@
 [
 	{
+		"source": "core",
 		"id": "CN001",
 		"roll": 1,
 		"rarity": "Common",
@@ -8,6 +9,7 @@
 		"text": "You gain a +1 bonus to your next Agility Roll."
 	},
 	{
+		"source": "core",
 		"id": "CN002",
 		"roll": 2,
 		"rarity": "Common",
@@ -16,6 +18,7 @@
 		"text": "You gain a +1 bonus to your next Strength Roll."
 	},
 	{
+		"source": "core",
 		"id": "CN003",
 		"roll": 3,
 		"rarity": "Common",
@@ -24,6 +27,7 @@
 		"text": "You gain a +1 bonus to your next Finesse Roll."
 	},
 	{
+		"source": "core",
 		"id": "CN004",
 		"roll": 4,
 		"rarity": "Common",
@@ -32,6 +36,7 @@
 		"text": "You gain a +1 bonus to your next Instinct Roll."
 	},
 	{
+		"source": "core",
 		"id": "CN005",
 		"roll": 5,
 		"rarity": "Common",
@@ -40,6 +45,7 @@
 		"text": "You gain a +1 bonus to your next Presence Roll."
 	},
 	{
+		"source": "core",
 		"id": "CN006",
 		"roll": 6,
 		"rarity": "Common",
@@ -48,6 +54,7 @@
 		"text": "You gain a +1 bonus to your next Knowledge Roll."
 	},
 	{
+		"source": "core",
 		"id": "CN007",
 		"roll": 7,
 		"rarity": "Common",
@@ -56,6 +63,7 @@
 		"text": "Clear 1d4 HP."
 	},
 	{
+		"source": "core",
 		"id": "CN008",
 		"roll": 8,
 		"rarity": "Common",
@@ -64,6 +72,7 @@
 		"text": "Clear 1d4 Stress."
 	},
 	{
+		"source": "core",
 		"id": "CN009",
 		"roll": 9,
 		"rarity": "Common",
@@ -72,6 +81,7 @@
 		"text": "You can apply this venom to a weapon that deals physical damage to add a d6 to your next damage roll with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "CN010",
 		"roll": 10,
 		"rarity": "Common",
@@ -80,6 +90,7 @@
 		"text": "You can eat these paired leaves to immediately gain 2 Hope."
 	},
 	{
+		"source": "core",
 		"id": "CN011",
 		"roll": 11,
 		"rarity": "Common",
@@ -88,6 +99,7 @@
 		"text": "When you drink the contents of this vial, you can see in total darkness until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN012",
 		"roll": 12,
 		"rarity": "Common",
@@ -96,6 +108,7 @@
 		"text": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 1d20 magic damage."
 	},
 	{
+		"source": "core",
 		"id": "CN013",
 		"roll": 13,
 		"rarity": "Uncommon",
@@ -104,6 +117,7 @@
 		"text": "You can drink this potion to choose one additional downtime move."
 	},
 	{
+		"source": "core",
 		"id": "CN014",
 		"roll": 14,
 		"rarity": "Uncommon",
@@ -112,6 +126,7 @@
 		"text": "You can apply this venom to a weapon that deals physical damage to add a d8 to your next damage roll with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "CN015",
 		"roll": 15,
 		"rarity": "Uncommon",
@@ -120,6 +135,7 @@
 		"text": "You can spend a Hope to use this clay, altering your face enough to make you unrecognizable until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN016",
 		"roll": 16,
 		"rarity": "Uncommon",
@@ -128,6 +144,7 @@
 		"text": "When an adversary attacks you, use this vial and roll a number of d6s equal to your Agility. Add the highest result to your Evasion against the attack."
 	},
 	{
+		"source": "core",
 		"id": "CN017",
 		"roll": 17,
 		"rarity": "Uncommon",
@@ -136,6 +153,7 @@
 		"text": "Eat this root to leap up to Far range once without needing to roll."
 	},
 	{
+		"source": "core",
 		"id": "CN018",
 		"roll": 18,
 		"rarity": "Uncommon",
@@ -144,6 +162,7 @@
 		"text": "Mark a Stress and clear a HP."
 	},
 	{
+		"source": "core",
 		"id": "CN019",
 		"roll": 19,
 		"rarity": "Uncommon",
@@ -152,6 +171,7 @@
 		"text": "Clear 1d4+1 HP."
 	},
 	{
+		"source": "core",
 		"id": "CN020",
 		"roll": 20,
 		"rarity": "Uncommon",
@@ -160,6 +180,7 @@
 		"text": "Clear 1d4+1 Stress."
 	},
 	{
+		"source": "core",
 		"id": "CN021",
 		"roll": 21,
 		"rarity": "Uncommon",
@@ -168,6 +189,7 @@
 		"text": "You can use this stitcher to spend any number of Hope and clear that many Armor Slots."
 	},
 	{
+		"source": "core",
 		"id": "CN022",
 		"roll": 22,
 		"rarity": "Uncommon",
@@ -176,6 +198,7 @@
 		"text": "You can apply this salve to your neck to breathe underwater for a number of minutes equal to your level."
 	},
 	{
+		"source": "core",
 		"id": "CN023",
 		"roll": 23,
 		"rarity": "Uncommon",
@@ -184,6 +207,7 @@
 		"text": "By touching this piece of parchment to another, you can perfectly copy the second parchment's contents. Once used, this parchment becomes mundane paper."
 	},
 	{
+		"source": "core",
 		"id": "CN024",
 		"roll": 24,
 		"rarity": "Uncommon",
@@ -192,6 +216,7 @@
 		"text": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 2d20 magic damage."
 	},
 	{
+		"source": "core",
 		"id": "CN025",
 		"roll": 25,
 		"rarity": "Rare",
@@ -200,6 +225,7 @@
 		"text": "You gain a +1 bonus to your Agility until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN026",
 		"roll": 26,
 		"rarity": "Rare",
@@ -208,6 +234,7 @@
 		"text": "You gain a +1 bonus to your Strength until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN027",
 		"roll": 27,
 		"rarity": "Rare",
@@ -216,6 +243,7 @@
 		"text": "You gain a +1 bonus to your Finesse until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN028",
 		"roll": 28,
 		"rarity": "Rare",
@@ -224,6 +252,7 @@
 		"text": "You gain a +1 bonus to your Instinct until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN029",
 		"roll": 29,
 		"rarity": "Rare",
@@ -232,6 +261,7 @@
 		"text": "You gain a +1 bonus to your Presence until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN030",
 		"roll": 30,
 		"rarity": "Rare",
@@ -240,6 +270,7 @@
 		"text": "You gain a +1 bonus to your Knowledge until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN031",
 		"roll": 31,
 		"rarity": "Rare",
@@ -248,6 +279,7 @@
 		"text": "You can drink this blood to disappear from where you are and immediately reappear at a point you can see within Very Far range."
 	},
 	{
+		"source": "core",
 		"id": "CN032",
 		"roll": 32,
 		"rarity": "Rare",
@@ -256,6 +288,7 @@
 		"text": "After drinking this potion, the next successful attack you make critically succeeds."
 	},
 	{
+		"source": "core",
 		"id": "CN033",
 		"roll": 33,
 		"rarity": "Rare",
@@ -264,6 +297,7 @@
 		"text": "You can apply this saliva to a weapon that deals physical damage to add a d12 to your next damage roll with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "CN034",
 		"roll": 34,
 		"rarity": "Rare",
@@ -272,6 +306,7 @@
 		"text": "You can use this stone to take a spell or grimoire from your vault, use it once, and return it to your vault."
 	},
 	{
+		"source": "core",
 		"id": "CN035",
 		"roll": 35,
 		"rarity": "Rare",
@@ -280,6 +315,7 @@
 		"text": "You can apply this dust to a weapon that deals magic damage to add a d12 to your next damage roll with that weapon."
 	},
 	{
+		"source": "core",
 		"id": "CN036",
 		"roll": 36,
 		"rarity": "Rare",
@@ -288,6 +324,7 @@
 		"text": "This paste eats away walls and other surfaces in bright flashes."
 	},
 	{
+		"source": "core",
 		"id": "CN037",
 		"roll": 37,
 		"rarity": "Rare",
@@ -296,6 +333,7 @@
 		"text": "When you use this flare, allies within Close range roll a d6 when they spend a Hope. On a result of 6, they gain the effect of that Hope without spending it. The flare lasts until the end of the scene."
 	},
 	{
+		"source": "core",
 		"id": "CN038",
 		"roll": 38,
 		"rarity": "Rare",
@@ -304,6 +342,7 @@
 		"text": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 4d20 magic damage."
 	},
 	{
+		"source": "core",
 		"id": "CN039",
 		"roll": 39,
 		"rarity": "Rare",
@@ -312,6 +351,7 @@
 		"text": "You can use this bone to control your falling speed for a number of minutes equal to your level."
 	},
 	{
+		"source": "core",
 		"id": "CN040",
 		"roll": 40,
 		"rarity": "Rare",
@@ -320,6 +360,7 @@
 		"text": "Mark a Stress to create a void that extends up to Far range. No magic can be cast inside the void, and creatures within the void are immune to magic damage."
 	},
 	{
+		"source": "core",
 		"id": "CN041",
 		"roll": 41,
 		"rarity": "Rare",
@@ -328,6 +369,7 @@
 		"text": "Consume this sap to roll a d6. On a result of 5-6, clear 2 HP. On a result of 2-4, clear 3 Stress. On a result of 1, see through the veil of death and return changed, gaining one scar."
 	},
 	{
+		"source": "core",
 		"id": "CN042",
 		"roll": 42,
 		"rarity": "Rare",
@@ -336,6 +378,7 @@
 		"text": "A creature who consumes this poison takes 8d10 direct magic damage."
 	},
 	{
+		"source": "core",
 		"id": "CN043",
 		"roll": 43,
 		"rarity": "Rare",
@@ -344,6 +387,7 @@
 		"text": "Clear 1d4+2 HP."
 	},
 	{
+		"source": "core",
 		"id": "CN044",
 		"roll": 44,
 		"rarity": "Rare",
@@ -352,6 +396,7 @@
 		"text": "Clear 1d4+2 Stress."
 	},
 	{
+		"source": "core",
 		"id": "CN045",
 		"roll": 45,
 		"rarity": "Rare",
@@ -360,6 +405,7 @@
 		"text": "You can use this musk to prevent anyone from tracking you by mundane or magical means until your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN046",
 		"roll": 46,
 		"rarity": "Rare",
@@ -368,6 +414,7 @@
 		"text": "You gain magic wings that allow you to fly for a number of minutes equal to your level."
 	},
 	{
+		"source": "core",
 		"id": "CN047",
 		"roll": 47,
 		"rarity": "Rare",
@@ -376,6 +423,7 @@
 		"text": "You can open this jar to release a deafening echo of voices for a number of minutes equal to your Instinct. Creatures within Far range unprepared for the sound take 6d8 magic damage."
 	},
 	{
+		"source": "core",
 		"id": "CN048",
 		"roll": 48,
 		"rarity": "Rare",
@@ -384,6 +432,7 @@
 		"text": "You can drink this tea to unleash a fiery breath attack. Make an Instinct Roll against all adversaries in front of you within Close range. Targets you succeed against take 2d20 physical damage using your Proficiency."
 	},
 	{
+		"source": "core",
 		"id": "CN049",
 		"roll": 49,
 		"rarity": "Legendary",
@@ -392,6 +441,7 @@
 		"text": "Thick vines grow from your location to a point of your choice within Far range, allowing you to climb up or across them. The vines dissipate on your next rest."
 	},
 	{
+		"source": "core",
 		"id": "CN050",
 		"roll": 50,
 		"rarity": "Legendary",
@@ -400,6 +450,7 @@
 		"text": "You can drink this potion to fall asleep for a full night's rest. You clear all Stress upon waking."
 	},
 	{
+		"source": "core",
 		"id": "CN051",
 		"roll": 51,
 		"rarity": "Legendary",
@@ -408,6 +459,7 @@
 		"text": "You can eat this meal to clear all HP and Stress and gain 1d4 Hope."
 	},
 	{
+		"source": "core",
 		"id": "CN052",
 		"roll": 52,
 		"rarity": "Legendary",
@@ -416,6 +468,7 @@
 		"text": "This honey can be used to glue two objects together permanently."
 	},
 	{
+		"source": "core",
 		"id": "CN053",
 		"roll": 53,
 		"rarity": "Legendary",
@@ -424,6 +477,7 @@
 		"text": "You can drink this potion to halve your size until you choose to drop this form or your next rest. While in this form, you have a +2 bonus to Agility and a -1 penalty to your Proficiency."
 	},
 	{
+		"source": "core",
 		"id": "CN054",
 		"roll": 54,
 		"rarity": "Legendary",
@@ -432,6 +486,7 @@
 		"text": "You can drink this potion to double your size until you choose to drop this form or your next rest. While in this form, you have a +2 bonus to Strength and a +1 bonus to your Proficiency."
 	},
 	{
+		"source": "core",
 		"id": "CN055",
 		"roll": 55,
 		"rarity": "Legendary",
@@ -440,6 +495,7 @@
 		"text": "If you die while holding this stone, an ally can take a card from your loadout to place in their loadout or vault. After they take this knowledge, the stone crumbles."
 	},
 	{
+		"source": "core",
 		"id": "CN056",
 		"roll": 56,
 		"rarity": "Legendary",
@@ -448,6 +504,7 @@
 		"text": "You can consume this moss during a rest to clear 1d10 HP or 1d10 Stress."
 	},
 	{
+		"source": "core",
 		"id": "CN057",
 		"roll": 57,
 		"rarity": "Legendary",
@@ -456,6 +513,7 @@
 		"text": "You can activate this orb to create a flash of bright light. All targets within Close range become Vulnerable until they mark HP."
 	},
 	{
+		"source": "core",
 		"id": "CN058",
 		"roll": 58,
 		"rarity": "Legendary",
@@ -464,6 +522,7 @@
 		"text": "After you drink this tea, you instantly kill your target when you critically succeed on an attack. If you don't critically succeed on an attack before your next long rest, you die."
 	},
 	{
+		"source": "core",
 		"id": "CN059",
 		"roll": 59,
 		"rarity": "Legendary",
@@ -472,6 +531,7 @@
 		"text": "When you take damage, you can spend a Hope to negate that damage, after which the mirror shatters."
 	},
 	{
+		"source": "core",
 		"id": "CN060",
 		"roll": 60,
 		"rarity": "Legendary",

@@ -1,0 +1,5225 @@
+[
+	{
+		"id": "HF-A001",
+		"name": "Ahuizotl",
+		"tier": "1",
+		"type": "Skulk",
+		"desc": "A doglike ambush predator that has a clawed hand on the end of a long prehensile tail and drags victims into rivers to drown them.",
+		"motives": "Ambush, drown, restrain",
+		"difficulty": "12",
+		"thresholdMajor": "5",
+		"thresholdSevere": "9",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Bite",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+2 phy",
+		"xp": "Stealth +2, Swimming +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Aquatic Attacker",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Ahuizotl attacks from the water, it has advantage on the attack and deals an extra 1d6 damage."
+			},
+			{
+				"name": "Tail Swat",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a target within Very Close range. On a success, deal 1d8+2 physical damage."
+			},
+			{
+				"name": "Drag and Bag",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Ahuizotl grab a target within Close range with its tail, pull the target into Melee range, and temporarily Restrain them. The Ahuizotl has advantage on attacks against targets Restrained in this way."
+			}
+		]
+	},
+	{
+		"id": "HF-A002",
+		"name": "Archmage",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "A seeker of secret knowledge hidden away in a tome-filled tower.",
+		"motives": "Corrupt, destroy, overwhelm with evil power",
+		"difficulty": "18",
+		"thresholdMajor": "24",
+		"thresholdSevere": "45",
+		"hp": "5",
+		"stress": "8",
+		"atk": "+5",
+		"weaponName": "Archmage's Greatstaff",
+		"weaponRange": "Far",
+		"weaponDamage": "3d10 mag",
+		"xp": "Esoterica +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Archmage can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Orbiting Aegis",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Archmage appears, they conjure six discs of magical energy that orbit around them. Place a d6 Aegis Die on this stat block with the 6 value facing up. When a PC makes a successful attack against the Archmage, roll a d6.\nIf the result is equal to or less than the value of the Aegis Die, tick the Aegis Die down and ignore the damage. A PC can make a Knowledge Roll to tick down the Aegis Die by 1 on a success or by 2 on a success with Hope."
+			},
+			{
+				"name": "Force Salvo",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend any number of Fear and roll that many d4s. The Archmage unleashes a number of magical homing force bolts equal to the total result. For each bolt, a creature within Far range marks a HP. The same creature can be targeted by up to three force bolts."
+			},
+			{
+				"name": "Fireball",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark any number of Stress to target the same number of PCs within Far range. Each target must succeed on an Agility Reaction Roll or take 4d10 magic damage."
+			},
+			{
+				"name": "Counterspell",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC succeeds on a Spellcast Roll, you can spend a Fear to have the Archmage make a reaction roll with a Difficulty equal to the Spellcast Roll's result. On a success, the PC's Spellcast Roll fails instead, and you place a token on this stat block. Using this feature again costs additional Fear equal to the number of tokens on this stat block. You can't Counterspell a critical success."
+			}
+		]
+	},
+	{
+		"id": "HF-A003",
+		"name": "Atototl",
+		"tier": "1",
+		"type": "Standard",
+		"desc": "A majestic green water bird that has a ten-foot wingspan and is hunted for the fortune-telling stone inside their stomach.",
+		"motives": "Avoid, escape, misdirect",
+		"difficulty": "12",
+		"thresholdMajor": "8",
+		"thresholdSevere": "12",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Talons",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8+1 phy",
+		"xp": "Flight +3, Jungles +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Wind Lord",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While the Atototl is flying, attacks against it is made with disadvantage."
+			},
+			{
+				"name": "Stone of Omens",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Inside the Atototl is a stone that foretells good or ill fortune, depending on its color. A PC who searches the Atototl's remains finds the stone and makes a fate roll. On an even result, the PC gains Hope equal to half the result, which they can distribute among the PCs however they wish. On an odd result, you gain Fear equal to half the result.\n[[/fr]]"
+			},
+			{
+				"name": "Archer's Bane",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a creature beyond Very Close range would deal damage to the Atototl with a weapon attack, you can spend a Fear to make an attack roll against them. On a success, whirling winds reflect the attack and deal the attacker's damage back to them."
+			}
+		]
+	},
+	{
+		"id": "HF-A004",
+		"name": "Banshee",
+		"tier": "2",
+		"type": "Skulk",
+		"desc": "A corrupted fey spirit that haunts the night in the form of a willowy specter wearing a luminous gossamer gown.",
+		"motives": "Ambush from inside solid objects, frighten to death, mourn life and beauty lost, scream balefully",
+		"difficulty": "14",
+		"thresholdMajor": "9",
+		"thresholdSevere": "18",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Fingernails",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d6+1 mag",
+		"xp": "Vain +3, Wrathful +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Specter",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Banshee has resistance to physical damage. Mark a Stress to move up to Close range through solid objects."
+			},
+			{
+				"name": "Terrifying",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Banshee makes a successful attack, all PCs within Close range lose a Hope, and you gain a Fear."
+			},
+			{
+				"name": "Scare Tactic",
+				"type": "Action",
+				"cost": "",
+				"desc": "Up to three times per scene, spend a Fear to have the Banshee teleport up to Very Far range and scare a PC within Melee range. The PC marks 1d4 Stress. If this causes them to mark HP, they also lose a Hope."
+			},
+			{
+				"name": "Wail of Despair",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Banshee unleash a mournful scream of pain and anguish. Each PC within Close range must make a Presence Reaction Roll. Targets who succeed take 1d12+1 magic damage. Targets who fail take double damage and are knocked back to Close range."
+			}
+		]
+	},
+	{
+		"id": "HF-A005",
+		"name": "Basilisk",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "A six-legged monitor lizard that has the head of a vulture, a spiked backbone, and a petrifying gaze.",
+		"motives": "Move slow and steady, savor petrified prey, turn everyone to stone, watch and wait",
+		"difficulty": "14",
+		"thresholdMajor": "8",
+		"thresholdSevere": "19",
+		"hp": "4",
+		"stress": "4",
+		"atk": "+1",
+		"weaponName": "Jaws & Claws",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d6+4 phy",
+		"xp": "",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Petrify",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to force a PC within Far range to make an Instinct Reaction Roll. On a success, the target marks a Stress. On a failure, the target becomes Stiff . If the target is already Stiff , they become Petrified. While Stiff , the PC must mark a Stress each time they act until they take a rest or the Basilisk is defeated. While Petrified, the PC can't act. The Petrified condition can be cleared only by applying Basilisk saliva to the target."
+			},
+			{
+				"name": "CRONCH!",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Basilisk chomp down on a Petrified PC within Melee range. The target must make a death move."
+			}
+		]
+	},
+	{
+		"id": "HF-A006",
+		"name": "Berserker Alpha",
+		"tier": "2",
+		"type": "Leader",
+		"desc": "A veteran commander who quaff s magic elixirs to change into a beast and lead their packmates on a hunt.",
+		"motives": "Embrace the change, howl at the moon, lead the pack, run down enemies",
+		"difficulty": "14",
+		"thresholdMajor": "13",
+		"thresholdSevere": "26",
+		"hp": "6",
+		"stress": "4",
+		"atk": "+3",
+		"weaponName": "Tooth & Claw",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d10+2 phy",
+		"xp": "Hunt +3, Keen Senses +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Pack Fury",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Alpha gains a +1 bonus to their attack rolls for each ally within Very Close range of their attack's target."
+			},
+			{
+				"name": "Bark at the Moon",
+				"type": "Action",
+				"cost": "",
+				"desc": "Once per scene, spend a Fear to have each ally within Close range of the Alpha clear a HP and a Stress."
+			},
+			{
+				"name": "Berserker Rage",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "The first time in a scene the Alpha marks their last Stress, they gain a +6 bonus to damage rolls."
+			}
+		]
+	},
+	{
+		"id": "HF-A007",
+		"name": "Berserker Initiate",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "A raging warrior who imbibes ritualistic concoctions to enhance their form with aspects of a predatory beast.",
+		"motives": "Coordinate with packmates, dance around the fire, howl at the moon",
+		"difficulty": "13",
+		"thresholdMajor": "9",
+		"thresholdSevere": "18",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Tooth & Claw",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d10 phy",
+		"xp": "Hunt +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Pack Fury",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Initiate gains a +1 bonus to their attack rolls for each ally within Very Close range of their attack's target."
+			},
+			{
+				"name": "Berserker Rage",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "The first time in a scene the Initiate marks their last Stress, they gain a +4 bonus to damage rolls."
+			}
+		]
+	},
+	{
+		"id": "HF-A008",
+		"name": "Bugboar",
+		"tier": "1",
+		"type": "Bruiser",
+		"desc": "A large bipedal creature that has a tusked snout and coarse fur.",
+		"motives": "Ambush, bully, seek carnage and shiny things",
+		"difficulty": "13",
+		"thresholdMajor": "8",
+		"thresholdSevere": "15",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Spiked Mace",
+		"weaponRange": "Very Close",
+		"weaponDamage": "d8+6 phy",
+		"xp": "Traps +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Surprise!",
+				"type": "Passive",
+				"cost": "",
+				"desc": "If the Bugboar makes its first attack in a scene before it's marked HP or Stress, it has advantage on the attack and deals an extra 1d8 damage."
+			},
+			{
+				"name": "Brutal",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Bugboar makes a successful standard attack, you can mark a Stress to deal an extra 1d6 damage."
+			},
+			{
+				"name": "Warheart",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a condition would be imposed on the Bugboar, you can spend a Fear to negate it."
+			}
+		]
+	},
+	{
+		"id": "HF-A009",
+		"name": "Catrin",
+		"tier": "3",
+		"type": "Social",
+		"desc": "A lavishly adorned skeleton that has an endless appetite for gold.",
+		"motives": "Dominate the conversation, seek attention, steal everything",
+		"difficulty": "17",
+		"thresholdMajor": "20",
+		"thresholdSevere": "32",
+		"hp": "5",
+		"stress": "6",
+		"atk": "+3",
+		"weaponName": "Spirit Flame",
+		"weaponRange": "Far",
+		"weaponDamage": "3d8+5 mag",
+		"xp": "Opulence +2, Storyteller +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Attracted to Wealth",
+				"type": "Passive",
+				"cost": "",
+				"desc": "PCs carrying at least a bag of gold gain advantage on Presence Rolls made to influence the Catrin."
+			},
+			{
+				"name": "The Weight of Opulence",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to turn the Catrin's gaze toward the PC carrying the most gold. The target must succeed on an Instinct Reaction Roll or lose a Hope for each bag of gold they're carrying. If the PC loses their last Hope or has no Hope to lose, they mark Stress instead."
+			},
+			{
+				"name": "Expensive Failure",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC within Melee range fails an action roll, you can mark a Stress to have the Catrin brazenly steal a handful of gold from them."
+			}
+		]
+	},
+	{
+		"id": "HF-A010",
+		"name": "Centaur Warden",
+		"tier": "2",
+		"type": "Ranged",
+		"desc": "A half-human, half-horse guardian who patrols the borders of idyllic lands uncorrupted by the touch of civilization.",
+		"motives": "Live in harmony with nature, protect the wilderness, use mobility and distance to drive off intruders",
+		"difficulty": "14",
+		"thresholdMajor": "10",
+		"thresholdSevere": "19",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Recurved Bow",
+		"weaponRange": "Far",
+		"weaponDamage": "2d8+4 phy",
+		"xp": "Nature +2, Philosophy +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Flanking Maneuver",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Warden makes a standard attack against a target within Melee range of one or more of the Warden's allies, the Warden gains a +2 bonus to the attack roll."
+			},
+			{
+				"name": "Eye of the Sage",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make a standard attack. The Warden has advantage on the attack roll and critically succeeds on a roll of 19–20."
+			},
+			{
+				"name": "Trample",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Warden gallop up to Far range in a straight line. Each target in their path must make an Agility Reaction Roll. Targets who succeed take 1d6+2 physical damage. Targets who fail take double damage and must mark a Stress."
+			},
+			{
+				"name": "Quick Volley",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Warden makes a standard attack, you can mark any number of Stress to target an equal number of additional creatures within range."
+			}
+		]
+	},
+	{
+		"id": "HF-A011",
+		"name": "Cephilith Abomination",
+		"tier": "4",
+		"type": "Bruiser",
+		"desc": "A lumbering, bog-grown frog beast that has tadpolelike leeches visibly wriggling underneath their translucent skin.",
+		"motives": "Do the heavy lifting, leap menacingly, move surprisingly fast, smash and grab",
+		"difficulty": "19",
+		"thresholdMajor": "35",
+		"thresholdSevere": "70",
+		"hp": "7",
+		"stress": "5",
+		"atk": "+4",
+		"weaponName": "Meaty Fists",
+		"weaponRange": "Melee",
+		"weaponDamage": "4d10+10 phy",
+		"xp": "Brute +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Toxic Skin",
+				"type": "Passive",
+				"cost": "",
+				"desc": "A PC who comes into physical contact with the Abomination must roll a d6. On a result of 3 or lower, the PC must mark an Armor Slot or 2 HP."
+			},
+			{
+				"name": "Bear Hug",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make a standard attack against a target within Melee range. On a success, the target takes standard damage and is Grappled until they escape with a successful Strength Roll. While Grappled, the target is Vulnerable and Restrained."
+			},
+			{
+				"name": "Crunch!",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to deal 4d12 direct physical damage to a creature Grappled by the Abomination."
+			},
+			{
+				"name": "Tongue Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Abomination pull a target within Far range into Melee range, then immediately spotlight the Abomination again."
+			},
+			{
+				"name": "Burrowing Leechpoles",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Abomination takes Major or greater damage, their skin erupts in an explosion of subcutaneous wrigglers. Each PC within Close range must make an Agility Reaction Roll. Targets who fail are covered in 2d4 leechpoles, which burrow under their skin. Until the leechpoles are dug out with a successful Finesse Roll (21), any damage the target takes gains a +1 bonus for each leechpole under their skin."
+			}
+		]
+	},
+	{
+		"id": "HF-A012",
+		"name": "Cephilith Hatchling",
+		"tier": "4",
+		"type": "Minion",
+		"desc": "A squidlike parasite that latches onto their prey's skull, bathing the victim's brain in extradimensional neurotoxins.",
+		"motives": "Climb, feed, hatch, numb, scuttle",
+		"difficulty": "18",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "+3",
+		"weaponName": "Barbed Suckers",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+9 phy",
+		"xp": "Psychic +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (12)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Hatchling is defeated when they take any damage. For every 12 damage a PC deals to the Hatchling, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Comatize",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Hatchling latch onto the head of a PC within Melee range. The PC must mark a Stress as the Hatchling injects the PC's brain with psycho-chemicals, and they must mark an additional Stress each time any PC fails a roll with Fear. The PC can remove the Hatchling by spending a number of Hope equal to the number of Stress they have marked. If a PC marks their last Stress while the Hatchling is latched on, the PC must make a death move."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Cephilith Hatchlings within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 9 physical damage each. Combine this damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A013",
+		"name": "Cephilith Novitiate",
+		"tier": "4",
+		"type": "Minion",
+		"desc": "A luminary of the Mortal Realm who has given their mind to extradimensional entities in exchange for eldritch abilities.",
+		"motives": "Help others see the Truth, make way for It, seek forbidden knowledge",
+		"difficulty": "16",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "+2",
+		"weaponName": "Eldritch Might",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+12 phy",
+		"xp": "Visions +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (12)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Novitiate is defeated when they take any damage. For every 12 damage a PC deals to the Novitiate, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Cephilith Novitiates within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 12 physical damage each. Combine this damage."
+			},
+			{
+				"name": "Sacrifice Self",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Novitiate charge at a target within Far range and melt into them. Deal 12 direct magic damage to the target and defeat the Novitiate."
+			}
+		]
+	},
+	{
+		"id": "HF-A014",
+		"name": "Cephilith Titan",
+		"tier": "4",
+		"type": "Solo",
+		"desc": "A transdimensional entity in the form of an impossibly large, winged humanoid with an octopus-shaped head and rows of glowing eyes.",
+		"motives": "Call and consume followers, corrupt reality, invade the Mortal Realm, spew forth chaos",
+		"difficulty": "20",
+		"thresholdMajor": "38",
+		"thresholdSevere": "68",
+		"hp": "10",
+		"stress": "10",
+		"atk": "+8",
+		"weaponName": "Pseudoclaw",
+		"weaponRange": "Close",
+		"weaponDamage": "4d8+10 mag",
+		"xp": "Chaos +5, Psychic +5",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (X)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Titan can be spotlighted up to X times per GM turn, where X equals the number of PCs in the scene. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Terrifying",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Titan makes a successful attack, all PCs within Close range lose a Hope, and you gain a Fear."
+			},
+			{
+				"name": "Merely a Projection",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Titan appears in the Mortal Realm as a psychic projection approximating its true form. They have immunity to physical damage and resistance to magic damage."
+			},
+			{
+				"name": "Psychic Scream",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Titan unleash a mind-shattering onslaught of nightmarish visions from the Outer Realms. Each PC within Far range must make an Instinct Reaction Roll (22). Targets who fail take 4d12 direct magic damage. Targets who succeed must mark a Stress."
+			},
+			{
+				"name": "Summon Worshippers",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to summon 1d4 Cephilith Abominations, which appear within Far range, then choose one to immediately spotlight."
+			},
+			{
+				"name": "\"It's Here…\"",
+				"type": "Evolution",
+				"cost": "",
+				"desc": "When the Titan has marked half its HP, they manifests in their full form, clearing all HP and losing the \"Merely a Projection\" feature. While the Titan is in this form, a creature who marks HP from the Titan's standard attack must mark an additional HP."
+			}
+		]
+	},
+	{
+		"id": "HF-A015",
+		"name": "Chicken-foot Hut",
+		"tier": "2",
+		"type": "Bruiser",
+		"desc": "A tall wooden shack that moves around on giant chicken legs.",
+		"motives": "Claw, protect master, run and jump, trample",
+		"difficulty": "16",
+		"thresholdMajor": "14",
+		"thresholdSevere": "27",
+		"hp": "8",
+		"stress": "2",
+		"atk": "+2",
+		"weaponName": "Clawed Feet",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d10+3 phy",
+		"xp": "Forests +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Fast",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Hut can move up to Far range when spotlighted."
+			},
+			{
+				"name": "Double Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make two standard attacks. If both attacks succeed against the same target, combine the damage."
+			},
+			{
+				"name": "Pin",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Hut makes a successful standard attack, you can mark a Stress to temporarily Restrain the target. The Hut drags the Restrained target when it moves."
+			}
+		]
+	},
+	{
+		"id": "HF-A016",
+		"name": "Cipactli",
+		"tier": "4",
+		"type": "Solo",
+		"desc": "A gargantuan crocodile that has a body covered in a patchwork of fish scales, toad skin, and dozens of hungry mouths.",
+		"motives": "Consume, reshape the land, trample",
+		"difficulty": "20",
+		"thresholdMajor": "35",
+		"thresholdSevere": "60",
+		"hp": "8",
+		"stress": "5",
+		"atk": "+8",
+		"weaponName": "Bite",
+		"weaponRange": "Close",
+		"weaponDamage": "4d8+12 phy",
+		"xp": "Hungry +3, Primordial +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Cipactli can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Many Mouths",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make a standard attack against all targets within Very Close range. Targets the Cipactli succeeds against must also mark a Stress."
+			},
+			{
+				"name": "Frenzied Feeding",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to force all PCs within Close range to succeed on an Instinct Reaction Roll or take 4d6 direct physical damage. The Cipactli clears a HP for each creature who took Severe damage from this attack."
+			},
+			{
+				"name": "Quaking Footfalls",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to force each PC within Far range to make an Agility Reaction Roll. Targets who fail must mark 2 Stress and are Vulnerable until they take damage. Targets who succeed must mark a Stress."
+			},
+			{
+				"name": "Lifeblooded",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Cipactli takes Severe damage, its blood splashes to the ground and instantly erupts into a jungle. All creatures within Close range are temporarily Restrained."
+			},
+			{
+				"name": "Verdant Explosion",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Cipactli marks its last HP, its body erupts into dense vegetation that overtakes the landscape."
+			}
+		]
+	},
+	{
+		"id": "HF-A017",
+		"name": "Cloud Titan",
+		"tier": "4",
+		"type": "Social",
+		"desc": "A devastatingly attractive, blue-skinned goliath dressed in the finest silks and dripping with jewelry. They luxuriate in the finer things and dwell in a sky palace filled with treasure.",
+		"motives": "Acquire rare and valuable things, celebrate beauty, never pass up an interesting wager",
+		"difficulty": "18",
+		"thresholdMajor": "26",
+		"thresholdSevere": "42",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Bejeweled Blade",
+		"weaponRange": "Very Close",
+		"weaponDamage": "4d6+8 phy",
+		"xp": "Luxury +3, Nobility +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Lightning Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a target within Far range. On a success, deal 4d10+14 magic damage and roll a d6. On a result of 4 or higher, the lightning bounces, and the Titan makes this attack against a different target within Very Close range of the previous target. Each time the lightning bounces, decrease the damage it deals by 1d10."
+			},
+			{
+				"name": "Mist Weaver",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear and choose a point within Far range. The Titan conjures a thick fog over the area within Close range of that point. The Titan is Hidden to enemies within and on the other side of the fog and has advantage on attacks against creatures inside it. The fog lasts until the Titan marks HP."
+			},
+			{
+				"name": "Nebulous Transformation",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Titan transform into a misty cloud that fills a Very Close area. While in this form, the Titan takes double magic damage and has immunity to physical damage. This form lasts until the Titan chooses to drop out of it or takes Severe damage."
+			},
+			{
+				"name": "Unleash the Menagerie",
+				"type": "Action",
+				"cost": "",
+				"desc": "Once per scene, mark any number of Stress to summon an equal number of Griffins, which appear at Close range."
+			},
+			{
+				"name": "Wind Worker",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Titan blast wind at a target within Close range. The target takes 4d6+8 physical damage and is pushed back to Far range from their current position."
+			},
+			{
+				"name": "Double or Nothing",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When you would gain a Fear from an attack against the Titan, you can roll a d6. On an odd result, you don't gain the Fear. On an even result, you gain 2 Fear instead of 1."
+			}
+		]
+	},
+	{
+		"id": "HF-A018",
+		"name": "Common Ruffian",
+		"tier": "1",
+		"type": "Standard",
+		"desc": "A local laborer or artisan pushed by circumstances to assail others.",
+		"motives": "Do violence, seek security and survival",
+		"difficulty": "12",
+		"thresholdMajor": "6",
+		"thresholdSevere": "10",
+		"hp": "4",
+		"stress": "4",
+		"atk": "+0",
+		"weaponName": "Improvised Weapon",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8 phy",
+		"xp": "Desperate +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Ruffians within Close range of them. The Ruffians move into Melee range of the target and make one shared attack roll. On a success, they deal 1d8 physical damage each. Combine this damage."
+			},
+			{
+				"name": "Survival Instinct",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Ruffian marks half their HP, roll a d6. On a result of 4 or higher, the Ruffian flees the scene. Otherwise, you gain a Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A019",
+		"name": "Crimson Lepus",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "A red-eyed rabbit that thinks only of murder.",
+		"motives": "Be cute, go for the throat, hop around",
+		"difficulty": "18",
+		"thresholdMajor": "20",
+		"thresholdSevere": "35",
+		"hp": "10",
+		"stress": "6",
+		"atk": "+3",
+		"weaponName": "Leaping Bite",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d20 phy",
+		"xp": "Vicious +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Lepus can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "\"Awww...\"",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Lepus first appears, it is Too Cute. To attack a Too Cute creature, a PC must succeed on an Instinct Reaction Roll (20). Clear the Too Cute condition if a PC deals damage to the Lepus or if the Lepus attacks a PC."
+			},
+			{
+				"name": "Terrifying",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Lepus makes a successful attack, all PCs within Close range lose a Hope, and you gain a Fear."
+			},
+			{
+				"name": "Leaping Jugular Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Lepus leap into Melee range of a target within Far range and make an attack against them. On a success, deal 3d20 direct physical damage. If the target marks HP from this attack, they become Vulnerable until they clear a HP."
+			},
+			{
+				"name": "Evasive",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Lepus would take damage, roll a d6. On a 4 or higher, halve the damage. If the damage was already halved, the Lepus takes no damage."
+			},
+			{
+				"name": "\"Run Away!\"",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC with no Hope takes the spotlight within Very Far range of the Lepus, the PC must succeed on a Presence Reaction Roll or use their action to flee the battlefield until they spend a Hope to return."
+			}
+		]
+	},
+	{
+		"id": "HF-A020",
+		"name": "Cryptimoth",
+		"tier": "3",
+		"type": "Skulk",
+		"desc": "A large red-eyed moth creature that walks upright and portends mysterious or evil events.",
+		"motives": "Echolocate, fly silently, melt into the shadows",
+		"difficulty": "14",
+		"thresholdMajor": "16",
+		"thresholdSevere": "30",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Claws",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d8+5 phy",
+		"xp": "Dark Omens +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Terrifying",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Cryptimoth makes a successful attack, all PCs within Close range lose a Hope, and you gain a Fear."
+			},
+			{
+				"name": "Psychic Screech",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend 2 Fear to have the Cryptimoth unleash a burst of psychic energy that causes each PC within Far range to suffer visions of their horrifying fate. Each target must make an Instinct Reaction Roll (16). Targets who fail take 3d8 direct magic damage and become Vulnerable until their next rest. Targets who succeed must mark a Stress or take half damage."
+			},
+			{
+				"name": "Shadow Swarm",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Cryptimoth conjure a swarm of mothlike shadow creatures within Far range. The swarm fills a Close range area and blocks line of sight. Creatures that aren't Cryptimoths are Vulnerable while inside that area and must mark a Stress to move through it. A PC can dispel the swarm with a successful Spellcast Roll (12)."
+			},
+			{
+				"name": "Paranoia Glare",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Cryptimoth gaze into the eyes of a PC within Close range and make them Paranoid. While Paranoid, the PC is suspicious of other PCs and can't Help an Ally or take part in Tag Team Rolls. To clear this condition, the PC must succeed on an Insight Roll (16) or participate in the Prepare downtime move with one or more members of their party during a rest."
+			}
+		]
+	},
+	{
+		"id": "HF-A021",
+		"name": "Cursed Merfolk",
+		"tier": "3",
+		"type": "Standard",
+		"desc": "A half-fish, half-human creature psychically bound to serve the Deep Dwellers.",
+		"motives": "Separate enemies, strike from the shadows, use aquatic environment to advantage",
+		"difficulty": "16",
+		"thresholdMajor": "18",
+		"thresholdSevere": "35",
+		"hp": "5",
+		"stress": "4",
+		"atk": "+3",
+		"weaponName": "Chained Trident",
+		"weaponRange": "Far",
+		"weaponDamage": "3d6 phy",
+		"xp": "Aquatic +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Fish-Tailed",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Merfolk is Vulnerable out of the water."
+			},
+			{
+				"name": "Gang Up",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Merfolk gains a +2 bonus to attack rolls against targets within Melee range of one or more allies."
+			},
+			{
+				"name": "\"Get Over Here!\"",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Merfolk makes a successful standard attack against a target beyond Melee range, you can mark a Stress to pull them into Melee range. If you do, you can spend a Fear to make a standard attack with advantage against the target."
+			}
+		]
+	},
+	{
+		"id": "HF-A022",
+		"name": "Darkweave Crawler",
+		"tier": "1",
+		"type": "Minion",
+		"desc": "A spider the size of a human head, woven out of shadow-silk.",
+		"motives": "Hide in shadow, strike the unwary, wait for an opening",
+		"difficulty": "10",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "-2",
+		"weaponName": "Bite",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+2 phy",
+		"xp": "Darkness +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Crawler is defeated when it takes any damage. For every 3 damage a PC deals to the Crawler, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Skin-Crawling",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to force all PCs within Melee range of the Crawler to mark a Stress."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Darkweave Crawlers within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 2 physical damage each. Combine this damage."
+			},
+			{
+				"name": "Darkweave Venom",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Crawler makes a successful attack, you can mark a Stress to Exhaust the target until they succeed on a Strength Roll (9). While Exhausted, the target must mark a Stress each time they make an action roll."
+			}
+		]
+	},
+	{
+		"id": "HF-A023",
+		"name": "Darkweave Queen",
+		"tier": "1",
+		"type": "Solo",
+		"desc": "A wagon-sized spider woven from shadow-silk by a long-forgotten god. Each of her many eyes bears the face of a different victim.",
+		"motives": "Ambush prey, climb the walls and ceiling, misdirect, paralyze, stash bodies away for later, steal faces",
+		"difficulty": "14",
+		"thresholdMajor": "8",
+		"thresholdSevere": "15",
+		"hp": "9",
+		"stress": "4",
+		"atk": "+3",
+		"weaponName": "Spider Bite",
+		"weaponRange": "Very Close",
+		"weaponDamage": "d12+4 phy",
+		"xp": "Giant-Sized +3, Hunter +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Queen can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight her."
+			},
+			{
+				"name": "Den Mother",
+				"type": "Action",
+				"cost": "",
+				"desc": "Once per scene, spend 2 Fear to summon up to two Darkweave adversaries (other than Darkweave Queens), who appear within Close range and immediately take the spotlight."
+			},
+			{
+				"name": "Quicker Than She Looks",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to move up to Far range and make a standard attack with advantage."
+			},
+			{
+				"name": "Darkfang Envenomation",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Queen succeeds on a standard attack, you can spend a Fear to make the target Vulnerable and Restrained until they succeed on a Strength Roll (12) or take a rest."
+			},
+			{
+				"name": "Terrifying",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When a PC fails an attack roll against the Queen, you gain a Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A024",
+		"name": "Darkweave Spinner",
+		"tier": "1",
+		"type": "Standard",
+		"desc": "A boar-sized arachnid woven from primordial shadow-silk.",
+		"motives": "Bite, stick to the darkness",
+		"difficulty": "12",
+		"thresholdMajor": "6",
+		"thresholdSevere": "9",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Fangs",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8+1 phy",
+		"xp": "Holes +2, Webs +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Wrap in Shadow-Silk",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a target within Melee range. On a success, the target is Vulnerable and Restrained until they succeed on a Strength Roll (10)."
+			},
+			{
+				"name": "Shadow Fang",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Spinner makes a successful attack against a target within Melee range, you can spend a Fear to make the target Shaky until they succeed on an Instinct Roll (10). While Shaky, the target has disadvantage on attack rolls."
+			}
+		]
+	},
+	{
+		"id": "HF-A025",
+		"name": "Darkweave Swarmlings",
+		"tier": "1",
+		"type": "Horde",
+		"desc": "A teeming swarm of tiny spiders woven out of shadow-silk.",
+		"motives": "Burst out of holes, climb up legs, crawl into ears, scuttle under clothes",
+		"difficulty": "9",
+		"thresholdMajor": "4",
+		"thresholdSevere": "8",
+		"hp": "8",
+		"stress": "4",
+		"atk": "+0",
+		"weaponName": "Nibble",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8 phy",
+		"xp": "Climb +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (1d4)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Swarmlings have marked half or more of their HP, their standard attack deals 1d4 physical damage instead."
+			},
+			{
+				"name": "\"Get 'em Off , Get 'em Off !\"",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When an attack from the Swarmlings causes a target to mark HP, you can mark a Stress to make the target temporarily Covered in Spiders. While Covered in Spiders, the target must roll a d6 when they make an action roll. On a result of 4 or higher, they must mark a Stress or you gain a Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A026",
+		"name": "Deep Dweller",
+		"tier": "3",
+		"type": "Leader",
+		"desc": "A huge psychic lamprey that has pitch-black eyes and toxic tentacles.",
+		"motives": "Abuse power, seek worship, stalk sunken ruins",
+		"difficulty": "17",
+		"thresholdMajor": "22",
+		"thresholdSevere": "42",
+		"hp": "6",
+		"stress": "6",
+		"atk": "+5",
+		"weaponName": "Teeth & Tentacles",
+		"weaponRange": "Close",
+		"weaponDamage": "3d10+4 phy",
+		"xp": "Ancient Mysteries +2, Dark Water +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Psychic Blast",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose up to three targets within Close range and force them to make an Instinct or Knowledge Reaction Roll. Targets who succeed mark a Stress. Targets who fail take 3d10+4 direct magic damage and are Vulnerable until spotlighted."
+			},
+			{
+				"name": "Brain Drain",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to choose a Vulnerable PC within Very Close range. The target marks 1d4 Stress, and the Deep Dweller clears an equal number of HP."
+			},
+			{
+				"name": "Call of the Deep",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend 2 Fear to summon 1d4 Cursed Merfolk, who appear at Far range and immediately take the spotlight."
+			},
+			{
+				"name": "Mucosal Contamination",
+				"type": "Action",
+				"cost": "",
+				"desc": "Make an attack roll against a PC within Very Close range. On a success, the Deep Dweller uses its tentacles to immobilize the target, sliming them with toxic sludge. The target is Restrained until they break free or slip out with a successful Strength or Finesse Roll. Each time the Deep Dweller is spotlighted, all PCs Restrained in this way take 3d8 direct physical damage. The Deep Dweller releases all creatures Restrained by it when it's defeated or takes Severe damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A027",
+		"name": "Demon Lord Berzug",
+		"tier": "4",
+		"type": "Solo",
+		"desc": "The ruler of a deep circle in the Circles Below and a huge hybrid beast with a serpent's tail, a lizard's hind legs, a crab's claw arms, and a two-faced wolf's head.",
+		"motives": "Destroy goodness, sow chaos, unseat rivals",
+		"difficulty": "20",
+		"thresholdMajor": "35",
+		"thresholdSevere": "70",
+		"hp": "12",
+		"stress": "8",
+		"atk": "+8",
+		"weaponName": "Abyssal Claws",
+		"weaponRange": "Close",
+		"weaponDamage": "4d12+10 phy",
+		"xp": "Infernal Knowledge +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Berzug can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Chaos Lash",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have Berzug lash at up to three PCs within Close range and force each target to make an Agility Reaction Roll. Targets who fail take 4d20 physical damage. Targets who succeed take half damage."
+			},
+			{
+				"name": "Gaze into the Abyss",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have Berzug lock eyes with a PC within Far range. The target must succeed on a Presence Reaction Roll or gain one of the following conditions (roll a d6 and use the corresponding result):\n1–2: Mesmerized. The target immediately moves into Melee range of Berzug and is Vulnerable and Restrained until they clear the condition with a successful Instinct Roll.\n3–4: Confused. The target must mark a Stress each time they make an action roll until they clear the condition with a successful Knowledge Roll.\n5–6: Enthralled. Until the PC makes a successful Presence Roll to clear the condition, you can spotlight them during a GM turn as if they were an adversary. When you do so, choose a target within Close range of the Enthralled PC. The Enthralled PC moves into Melee range of the target and makes a weapon attack against them using a d20 instead of Duality Dice."
+			},
+			{
+				"name": "Crushing Strike",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC marks HP from Berzug's standard attack, you can mark a Stress to force them to mark a number of Stress equal to the number of HP they marked. You gain a Fear."
+			},
+			{
+				"name": "Horrifying",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC fails an attack against Berzug, you gain a Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A028",
+		"name": "Dire Pangolati",
+		"tier": "2",
+		"type": "Bruiser",
+		"desc": "A carriage-sized pangolin-coati hybrid covered in armor plating. It has a bladed tail it uses to fling razor-sharp scales.",
+		"motives": "Escape with a meal, slice and dice, wade into danger",
+		"difficulty": "14",
+		"thresholdMajor": "14",
+		"thresholdSevere": "28",
+		"hp": "7",
+		"stress": "4",
+		"atk": "+2",
+		"weaponName": "Tail Slash",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d12+3 phy",
+		"xp": "Climbing +3, Scent Tracking +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Armor Eater",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Pangolati makes a successful attack against a PC, that PC must mark an additional Armor Slot to reduce the severity of the damage."
+			},
+			{
+				"name": "Blade Spin",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Pangolati quickly spin in a circle. Each target within Very Close range must succeed on an Agility Reaction Roll or take 2d8 physical damage."
+			},
+			{
+				"name": "Blade Fling",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Pangolati flick its tail and fling a razor-edged armor plate. Make an attack against a target within Far range. On a success, the attack deals 2d6+10 physical damage."
+			},
+			{
+				"name": "Keratin Scales",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Pangolati would mark HP from an attack, you can mark a Stress to reduce the number of HP it marks by 1."
+			}
+		]
+	},
+	{
+		"id": "HF-A029",
+		"name": "Doppelhound",
+		"tier": "2",
+		"type": "Skulk",
+		"desc": "A vicious magical canid that has glowing eyes and two barbed, whiplike tails. It confuses enemies by conjuring an illusory duplicate of itself.",
+		"motives": "Ambush prey, kill for sport, play with food, trick and deceive",
+		"difficulty": "14",
+		"thresholdMajor": "9",
+		"thresholdSevere": "17",
+		"hp": "4",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Barbed Tail Whip",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d8+2 phy",
+		"xp": "Shadows +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Blink Beast",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When combat begins, place a duplicate within Close range of the Doppelhound. The Doppelhound occupies both its place and its duplicate's. The duplicate can move when the Doppelhound is spotlighted, and the Doppelhound can target enemies with attacks as if it were in its duplicate's place. When the Doppelhound or duplicate is attacked, the attacker rolls a d6. On an even result, they target the Doppelhound. On an odd result, they target the duplicate, and the attack fails. If an attack succeeds against the Doppelhound, the duplicate is dispelled until you spend a Fear to conjure it again."
+			},
+			{
+				"name": "Double Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make two standard attacks. If both attacks succeed against the same target, combine the damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A030",
+		"name": "Dragon Mother Mitera",
+		"tier": "4",
+		"type": "Solo",
+		"desc": "A gargantuan seven-headed dragon with dazzling diamond scales that shine with every color of the rainbow.",
+		"motives": "Birth destruction, control the battlefield, fly, repel invaders, use all available options",
+		"difficulty": "16",
+		"thresholdMajor": "35",
+		"thresholdSevere": "65",
+		"hp": "12",
+		"stress": "10",
+		"atk": "+8",
+		"weaponName": "Bite & Slash",
+		"weaponRange": "Close",
+		"weaponDamage": "4d10+10 phy",
+		"xp": "Ancient +5",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Mitera can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight her."
+			},
+			{
+				"name": "Diamond Hide",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Countdown (7). When Mitera first appears, activate the countdown. Mitera gains a bonus to her Difficulty equal to the countdown die's current value. It ticks down from Mitera's \"Seven-Headed\" feature. When the countdown triggers, Mitera becomes Vulnerable and gains a +2 bonus to attack rolls."
+			},
+			{
+				"name": "Elemental Breath",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have Mitera unleash elemental energy from one head of your choice:\nFire. Deal 4d12 magic damage to 1d4+1 targets within Close range. Targets who take damage must mark an Armor Slot or 2 additional HP.\nLightning. Deal 4d12 magic damage to 1d6 targets within Far range, so long as each target beyond the first is within Close range of the previous target.\nAcid. Each PC in front of Mitera within Close range must make an Agility Reaction Roll. Targets who fail must mark 2 Armor Slots and 2 HP. Targets who succeed must mark an Armor Slot and a HP.\nPoison. A miasma of toxic swamp gas Sickens all targets within Close range of Mitera. While Sickened, a target has disadvantage on action rolls until they mark 1d4 Stress to clear the condition.\nIce. Each target in front of Mitera within Close range takes 4d8+8 magic damage and is Restrained by ice until they break free with a successful Strength Roll. Additionally, this area freezes over and a PC must succeed on an Agility Reaction Roll to move through it.\nDarkness. A cloud of magical shadow fills an area within Close range. Creatures inside the cloud except for Mitera are Vulnerable and have disadvantage on action rolls that rely on sight. The cloud dissipates when this Elemental Breath option is removed by Mitera's \"Seven-Headed\" feature.\nLight. A beam of pure light energy deals 28 direct magic damage to each creature in a line within Very Far range."
+			},
+			{
+				"name": "Tail Swipe",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to attack all targets within Close range. Targets this attack succeeds against take 2d20+10 physical damage and are knocked back to Far range. Targets who mark HP from this attack become Vulnerable until they clear a HP. Targets this attack failed against must mark a Stress."
+			},
+			{
+				"name": "Fearsome",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When Mitera makes a successful attack roll against a PC or a PC fails a roll within Far range, you gain a Fear."
+			},
+			{
+				"name": "Seven-Headed",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When Mitera takes damage, roll a d8. Permanently remove the \"Elemental Breath\" option that corresponds to the result. On a result of 8, or if the corresponding option has already been removed, tick down the Diamond Hide countdown (see \"Diamond Hide\")."
+			}
+		]
+	},
+	{
+		"id": "HF-A031",
+		"name": "Drake",
+		"tier": "3",
+		"type": "Skulk",
+		"desc": "A clawed quadruped that has a scaled, serpentine body and a willingness to serve its cousins, the dragons.",
+		"motives": "Coil and crush, protect master, slither around lairs and ruins, strike first",
+		"difficulty": "14",
+		"thresholdMajor": "16",
+		"thresholdSevere": "30",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+4",
+		"weaponName": "Claws & Teeth",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d8+5 phy",
+		"xp": "Vicious +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Drake can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Guard Dog",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC would deal damage to a creature within Close range, you can mark a Stress to have the Drake move to intercept the attack and take the damage instead. If the attacker is within Melee range of the Drake's new position, you can immediately spotlight the Drake without spending Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A032",
+		"name": "Dullahan",
+		"tier": "3",
+		"type": "Bruiser",
+		"desc": "A horse-mounted specter holding their own severed head in one hand and wielding a whip fashioned from a human spine in the other.",
+		"motives": "Doom with a glance, gallop across water, kick with heavy hooves",
+		"difficulty": "17",
+		"thresholdMajor": "22",
+		"thresholdSevere": "40",
+		"hp": "7",
+		"stress": "4",
+		"atk": "+3",
+		"weaponName": "Spine Whip",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d10+1 mag",
+		"xp": "Nocturnal +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Specter",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Dullahan has resistance to physical damage. Mark a Stress to move up to Close range through solid objects."
+			},
+			{
+				"name": "Spectral Mount",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While atop their steed, the Dullahan can move up to Far range instead of Close range before taking an action. If the Dullahan is unhorsed, their mount disappears until you mark a Stress to summon it again. The Dullahan is Vulnerable while not on their horse."
+			},
+			{
+				"name": "Bone Whip Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a target within Melee range. On a success, the target takes 4d4+10 direct physical damage and is Vulnerable until they clear a HP."
+			},
+			{
+				"name": "Death Glare",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a PC within Far range. The target must make an Presence Reaction Roll (19). On a success, they mark a Stress. On a failure, they mark a HP and activate a Doom Countdown (4). It ticks down when the Dullahan is spotlighted. When it triggers, the target makes a death move. If the Dullahan is defeated or the PCs take a rest, all Doom Countdowns end."
+			}
+		]
+	},
+	{
+		"id": "HF-A033",
+		"name": "Elephant",
+		"tier": "2",
+		"type": "Bruiser",
+		"desc": "A huge pachyderm that has large ears and a prehensile trunk.",
+		"motives": "Eat vegetation, protect the herd, socialize",
+		"difficulty": "15",
+		"thresholdMajor": "14",
+		"thresholdSevere": "28",
+		"hp": "6",
+		"stress": "3",
+		"atk": "+3",
+		"weaponName": "Feet & Tusks",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d12 phy",
+		"xp": "Huge +2, Never Forgets +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Trample",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Elephant charge up to Far range in a straight line. Each target in its path must succeed on an Agility Reaction Roll or take 2d10+3 physical damage."
+			},
+			{
+				"name": "Toss",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Elephant makes a successful standard attack, you can spend a Fear to have it toss the target to another location within Close range and deal an extra 1d12 damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A034",
+		"name": "Elk",
+		"tier": "1",
+		"type": "Skulk",
+		"desc": "A large deer.",
+		"motives": "Bound away, graze, rut, sense danger",
+		"difficulty": "13",
+		"thresholdMajor": "4",
+		"thresholdSevere": "8",
+		"hp": "3",
+		"stress": "2",
+		"atk": "+0",
+		"weaponName": "Antlers",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8+1 phy",
+		"xp": "Keen Senses +3, Run +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Headbutt",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Elk moves from Close range or farther before making a standard attack, it deals 1d12+2 physical damage instead of its standard damage."
+			},
+			{
+				"name": "Bolt",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Elk marks a HP or Stress, it must succeed on a Reaction Roll (10) or flee the scene."
+			}
+		]
+	},
+	{
+		"id": "HF-A035",
+		"name": "Entombed Cat Beast",
+		"tier": "2",
+		"type": "Solo",
+		"desc": "A large undead humanoid skeleton with a panther's skull for a head.",
+		"motives": "Rush attack, shred, terrify",
+		"difficulty": "15",
+		"thresholdMajor": "12",
+		"thresholdSevere": "23",
+		"hp": "7",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Razor Claws",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d12+2 phy",
+		"xp": "Feral +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Entombed Cat Beast can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Screeching Caterwaul",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to force each PC within Far range of the Cat Beast to make a Presence Reaction Roll. Targets who fail become Rattled until they roll with Hope. When the Cat Beast makes a successful attack against a Rattled PC, roll damage twice and take the better result, then clear the Rattled condition from the target."
+			},
+			{
+				"name": "I Alone",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Cat Beast first appears, you can choose to have them absorb the essence of their allies. Immediately defeat any number of allies on the battlefield, and gain a Fear for each ally defeated this way."
+			},
+			{
+				"name": "Vicious Reprisal",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Cat Beast takes damage from an attack made by a PC within Very Close range, you can mark a Stress to make a standard attack against that PC."
+			},
+			{
+				"name": "Bloody Strike",
+				"type": "Passive",
+				"cost": "",
+				"desc": "A PC who marks 3 or more HP from an attack made by the Cat Beast must mark an additional HP."
+			}
+		]
+	},
+	{
+		"id": "HF-A036",
+		"name": "Entombed Elite Guard",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "An elite undead soldier buried with their empress to defend the tomb from theft and desecration.",
+		"motives": "Form up, protect the empress, strike as one",
+		"difficulty": "15",
+		"thresholdMajor": "9",
+		"thresholdSevere": "18",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Curved Blade",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d10+2 phy",
+		"xp": "Soldier +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Battle Formation",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Guard gains a +1 bonus to their Difficulty for each ally within Very Close range."
+			},
+			{
+				"name": "Javelin",
+				"type": "Action",
+				"cost": "",
+				"desc": "Make an attack against a target within Very Far range. On a success, deal 2d6+2 physical damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A037",
+		"name": "Entombed Empress",
+		"tier": "2",
+		"type": "Leader",
+		"desc": "The undead ruler of a forgotten realm. She's been given blasphemous funeral rites to prevent her soul from moving on.",
+		"motives": "Command inferiors, curse the invaders",
+		"difficulty": "16",
+		"thresholdMajor": "12",
+		"thresholdSevere": "24",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Swipe",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d8+2 phy",
+		"xp": "Ruler +4, Undead +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Empty Husk",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Empress has resistance to physical damage."
+			},
+			{
+				"name": "Missing Organs",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Empress's internal organs have been removed and placed into six crystal containers hidden throughout her tomb. Each time the PCs find and destroy one, the Empress marks a HP."
+			},
+			{
+				"name": "Grasping Chains",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Empress target a creature within Close range and try to telekinetically bind them with her funeral chains. Make an attack against a target within Close range. On a success, the Empress pulls the target into Melee range, deals 2d8 physical damage, and temporarily Restrains them."
+			},
+			{
+				"name": "Deathless Obedience",
+				"type": "Action",
+				"cost": "",
+				"desc": "Up to three times per scene, you can spend a Fear to spotlight any number of allies within Close range. If any attacks succeed against the same target, combine the damage."
+			},
+			{
+				"name": "Accursed Caress",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Empress makes a successful standard attack against a PC, you can spend a Fear to activate a Doom Countdown (1d6+1) for that PC. It ticks down when a PC rolls with Fear. When it triggers, the PC marks all HP and makes a death move. If the Empress is defeated or the PCs take a rest, all Doom Countdowns end."
+			},
+			{
+				"name": "Final Transformation (Phase Change)",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Empress marks her last HP, replace her with the Entombed Cat Beast and immediately spotlight them."
+			}
+		]
+	},
+	{
+		"id": "HF-A038",
+		"name": "Entombed Necropriest",
+		"tier": "2",
+		"type": "Support",
+		"desc": "A necromancer charged with preserving the empress's life beyond death.",
+		"motives": "Boost allies, conquer time, hold down enemies, serve the empress, wield death as a weapon",
+		"difficulty": "13",
+		"thresholdMajor": "8",
+		"thresholdSevere": "16",
+		"hp": "3",
+		"stress": "7",
+		"atk": "+2",
+		"weaponName": "Death Bolt",
+		"weaponRange": "Far",
+		"weaponDamage": "2d6+2 mag",
+		"xp": "Dark Magic +4, Protect +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Invigorate",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to choose up to three allies within Far range. Each one gains advantage on their next attack roll."
+			},
+			{
+				"name": "Last Grasp",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a PC within Far range. Skeletal hands burst out of the ground at the PC's feet and Restrain them until the PC breaks free with a successful Strength Roll. When a target Restrained in this way spends Hope, you gain a Fear."
+			},
+			{
+				"name": "Chill Touch",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make a standard attack against a target within Melee range. On a success, the target takes standard damage and must mark 1d4 Stress. If the target marks their last Stress from this attack, you gain a Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A039",
+		"name": "Entombed Skin Beetles",
+		"tier": "2",
+		"type": "Horde",
+		"desc": "Flesh-eating beetles that burrow beneath the skin.",
+		"motives": "Carpet the ground, consume the living, crawl under clothing",
+		"difficulty": "14",
+		"thresholdMajor": "10",
+		"thresholdSevere": "20",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+0",
+		"weaponName": "Pincers",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d8+2 phy",
+		"xp": "Tombs +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (2d4+1)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Beetles have marked half or more of their HP, their standard attack deals 2d4+1 physical damage instead."
+			},
+			{
+				"name": "Omophagous",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a HP to have 5 Beetles burrow under the skin of a PC within Melee range, forcing them to mark a Stress and Infecting them. While Infected, the target takes 6 direct physical damage every time they roll with Fear. This condition is cleared when the PC clears a HP or a Stress."
+			},
+			{
+				"name": "Momentum",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Beetles make a successful attack against a PC, you gain a Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A040",
+		"name": "Entombed Stonemason",
+		"tier": "2",
+		"type": "Minion",
+		"desc": "An unfortunate undead laborer chosen by lottery to wall up their empress's tomb from the inside.",
+		"motives": "Never stop working, sacrifice yourself for the empress",
+		"difficulty": "12",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "-1",
+		"weaponName": "Hammer and Chisel",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+5 phy",
+		"xp": "Builder +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (5)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Stonemason is defeated when they take any damage. For every 5 damage a PC deals to the Stonemason, the PC defeats an additional Minion within range their attack would succeed against."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Entombed Stonemasons within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 5 physical damage each. Combine this damage."
+			},
+			{
+				"name": "The Work Never Ends",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Stonemason is defeated by an attack that deals physical damage, you can spend a Fear to clear the Stonemason's HP and Stress."
+			}
+		]
+	},
+	{
+		"id": "HF-A041",
+		"name": "Falcon",
+		"tier": "1",
+		"type": "Skulk",
+		"desc": "A bird of prey that has long, pointed wings and a notched beak.",
+		"motives": "Circle, clutch, dive, spy",
+		"difficulty": "12",
+		"thresholdMajor": "5",
+		"thresholdSevere": "8",
+		"hp": "3",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Talons",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+1 phy",
+		"xp": "Keen Senses +4, Fly +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Nimble Flyer",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While flying, the Falcon gains a +3 bonus to its Difficulty."
+			},
+			{
+				"name": "Dive Bomb",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make a standard attack against a target from above. The Falcon gains a +2 bonus to the attack and damage rolls."
+			}
+		]
+	},
+	{
+		"id": "HF-A042",
+		"name": "Fire Titan",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "An armor-clad goliath who has ash-gray skin and fiery hair and wields a masterwork greatsword crafted in their own smithy.",
+		"motives": "Act valorously, make war, think tactically",
+		"difficulty": "18",
+		"thresholdMajor": "19",
+		"thresholdSevere": "35",
+		"hp": "10",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Greatsword",
+		"weaponRange": "Close",
+		"weaponDamage": "3d12+4 phy",
+		"xp": "Smithing +5, Tactics +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Titan can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Masterwork Armor",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Countdown (3). When the Titan first appears, activate the countdown. It ticks down when the Titan takes Major or Severe damage. Until the countdown triggers, reduce incoming damage by 1d12. When it triggers, the Titan gains a +1 bonus to their Difficulty and attack rolls."
+			},
+			{
+				"name": "Momentum",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Titan makes a successful attack against a PC, you gain a Fear."
+			},
+			{
+				"name": "Hurl Rock",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to choose a point within Far range, then make an attack against all targets between the Titan and that point. Targets the Titan succeeds against take 3d12 physical damage."
+			},
+			{
+				"name": "Skull Splitter",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to place a token on this stat block. The next time the Titan is spotlighted, you must spend the token from this stat block and make an attack against a PC within Close range. On a success, deal 3d20+5 direct physical damage. On a failure, the target marks a Stress."
+			},
+			{
+				"name": "Blazing Heart",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Titan marks half or more of their HP, you can spend a Fear and mark any number of Stress to clear a number of HP equal to the number of Stress marked."
+			}
+		]
+	},
+	{
+		"id": "HF-A043",
+		"name": "Fire Titan Warlord",
+		"tier": "4",
+		"type": "Leader",
+		"desc": "A smoldering, battle-obsessed goliath wearing bespoke armor and wielding a massive maul.",
+		"motives": "Compete against rivals, conquer the weak, craft colossal war machines",
+		"difficulty": "21",
+		"thresholdMajor": "33",
+		"thresholdSevere": "66",
+		"hp": "9",
+		"stress": "8",
+		"atk": "+6",
+		"weaponName": "Maul",
+		"weaponRange": "Very Close",
+		"weaponDamage": "4d10+10 phy",
+		"xp": "Tactics +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Warlord can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Colossus Crafter",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Countdown (6). When the Warlord enters the scene, activate the countdown. It ticks down when the Warlord is spotlighted. When it triggers, summon the Gargantuan War Machine, which appears at the edge of the battlefield and immediately takes the spotlight."
+			},
+			{
+				"name": "Release the Hounds",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Warlord summon two Demonic Hound Packs, which appear at Close range and immediately take the spotlight."
+			},
+			{
+				"name": "Spinning Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make a standard attack against all targets within Very Close range and gain a Fear."
+			},
+			{
+				"name": "Ground-Breaking",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Warlord crack the earth with a downward swing of their maul and make an attack against a group within Close range. Targets the attack succeeds against take 4d10+10 direct damage. The area becomes rough terrain, and a PC must succeed on an Agility Reaction Roll (16) to move through it."
+			}
+		]
+	},
+	{
+		"id": "HF-A044",
+		"name": "Flock Of Feather Fiends",
+		"tier": "2",
+		"type": "Horde",
+		"desc": "A flock of undead crow corpses, eyes aglow with necroplasmic light.",
+		"motives": "Caw incessantly, claw faces, flutter through the air, peck eyes",
+		"difficulty": "14",
+		"thresholdMajor": "10",
+		"thresholdSevere": "20",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+0",
+		"weaponName": "Peck and Claw",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d6+2 mag",
+		"xp": "Fly +2, Swarm +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (1d6+1)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Flock has marked half or more of its HP, its standard attack deals 1d6+1 magic damage instead."
+			},
+			{
+				"name": "Maddening Cacophony",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to force each PC within Very Close range to make an Instinct Reaction Roll. Targets who fail must spend a Hope or become Vulnerable until they deal damage to the Flock or the Flock is defeated."
+			}
+		]
+	},
+	{
+		"id": "HF-A045",
+		"name": "Fowlbear",
+		"tier": "2",
+		"type": "Bruiser",
+		"desc": "A grizzly bear with a feathery hide and the head of a giant goose.",
+		"motives": "Drive prey into an ambush, fight to the death, hunt in pairs",
+		"difficulty": "15",
+		"thresholdMajor": "14",
+		"thresholdSevere": "28",
+		"hp": "7",
+		"stress": "4",
+		"atk": "+3",
+		"weaponName": "Goose Teeth & Bear Claws",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d12+2 phy",
+		"xp": "Keen Senses +3, Ponds +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Fowlbear can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Double Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make two standard attacks. If both attacks succeed against the same target, combine the damage."
+			},
+			{
+				"name": "Dread Honk",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Fowlbear unleash a terrifying, ear-splitting goose honk. Each PC within Close range must make a Presence Reaction Roll. Targets who fail must mark a Stress, move away from the Fowlbear to Far range, and become Vulnerable until the Fowlbear deals damage to them. Targets who succeed must mark a Stress or move away from the Fowlbear to Far range."
+			}
+		]
+	},
+	{
+		"id": "HF-A046",
+		"name": "Frost Titan",
+		"tier": "3",
+		"type": "Bruiser",
+		"desc": "A blue-skinned goliath who has rimed hair and wears trophies of past battles.",
+		"motives": "Claim trophies, raid and pillage, test mettle",
+		"difficulty": "17",
+		"thresholdMajor": "22",
+		"thresholdSevere": "40",
+		"hp": "10",
+		"stress": "4",
+		"atk": "+7",
+		"weaponName": "Dual Axes",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d10+2 phy",
+		"xp": "Cold +3, War +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Titan can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "War Horn",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to force each PC within Far range to succeed on a Presence Reaction Roll or mark a Stress and become Vulnerable until after the next attack against them."
+			},
+			{
+				"name": "Bull Rush",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to move up to Close range and make an attack roll against a target within Melee range. On a success, deal 4d10+2 physical damage and knock the target back to Close range."
+			},
+			{
+				"name": "Cleaving Strike",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC marks HP from the Titan's standard attack, you can mark a Stress to force another PC within Very Close range who the attack would have succeeded against to mark the same number of HP."
+			},
+			{
+				"name": "Trophy Hunter",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Titan defeats a PC, the Titan takes the PC's most valuable possession as a trophy."
+			}
+		]
+	},
+	{
+		"id": "HF-A047",
+		"name": "Fungispunj Sporeling",
+		"tier": "2",
+		"type": "Minion",
+		"desc": "A halfling-sized mushroom creature that defends itself from attackers with tiny puff s of neurotoxic spores.",
+		"motives": "Avoid violence, spray attackers",
+		"difficulty": "13",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "-1",
+		"weaponName": "Neuro Spore",
+		"weaponRange": "Very Close",
+		"weaponDamage": "d6+4 mag",
+		"xp": "Darkness +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (6)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Sporeling is defeated when it takes any damage. For every 6 damage a PC deals to the Sporeling, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Fungispunj Sporelings within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 4 magic damage each. Combine this damage."
+			},
+			{
+				"name": "Form Up",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to combine three Sporelings within a Close area and replace them with a Fungispunj Sporophore."
+			}
+		]
+	},
+	{
+		"id": "HF-A048",
+		"name": "Fungispunj Sporophore",
+		"tier": "2",
+		"type": "Leader",
+		"desc": "A giant mushroom creature that can command the dead.",
+		"motives": "Awaken the fallen, defend the colony, spread spores",
+		"difficulty": "16",
+		"thresholdMajor": "12",
+		"thresholdSevere": "24",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Spongy Fist",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d8+4 phy",
+		"xp": "Commander +5, Guardian +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Neurotoxic Spore Cloud",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Sporophore spray a cloud of spores on all targets within Close range. Each PC must succeed on a Agility Reaction Roll or become Poisoned until they spend a Hope to clear the condition. While Poisoned, a target must roll a d6 before they make an action roll. On a result of 4 or lower, they must mark a Stress."
+			},
+			{
+				"name": "Reanimator",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Sporophore spray a corpse within Very Close range with a cloud of psychic spores. The corpse clears all HP and Stress, then reanimates under the psychic control of the Sporophore. When the Sporophore is spotlighted, you can also spotlight all corpses it controls."
+			},
+			{
+				"name": "Colony",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark any number of Stress to have the Sporophore summon an equal number of Fungispunj Sporelings within Close range."
+			},
+			{
+				"name": "Mind Meld",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "All Fungispunj can telepathically communicate with one another. When the Sporophore would be forced to mark Stress from an attack, it can cause Fungispunj allies in the scene to mark that Stress in its place, distributed among allies as it chooses."
+			}
+		]
+	},
+	{
+		"id": "HF-A049",
+		"name": "Gargantuan Sea Turtle",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "A monstrous sea turtle that has an adamantine shell and beak.",
+		"motives": "Acquire riches, capsize trading vessels, lie in wait, use the waves as cover",
+		"difficulty": "18",
+		"thresholdMajor": "21",
+		"thresholdSevere": "41",
+		"hp": "10",
+		"stress": "6",
+		"atk": "+7",
+		"weaponName": "Crushing Jaws",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d12+7 phy",
+		"xp": "Open Sea +5",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Turtle can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Piercing Bite",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Turtle makes a successful standard attack against a PC, the PC must either mark an Armor Slot without receiving its benefit or take double damage."
+			},
+			{
+				"name": "Tail Bash",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make a standard attack against all PCs behind the Turtle within Very Close range. On a success, a target takes an extra 1d12 physical damage and is pushed away from the Turtle to Close range."
+			},
+			{
+				"name": "Gigaton Splash",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Turtle use its weight to unleash an unstoppable wall of water that targets all creatures within Far range. Each PC must make a Strength Reaction Roll to navigate the tide. Targets who fail are pushed away from the Turtle to Close range, take 4d8 physical damage, and become temporarily Vulnerable. Targets who succeed must mark a Stress. For each target who failed, you gain a Fear."
+			},
+			{
+				"name": "Steam Breath",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend 2 Fear to have the Turtle release a blast of superheated steam targeting all PCs in front of it within Close range. Each target must make an Agility Reaction Roll. Targets who fail take 4d8 magic damage and become temporarily Vulnerable. Targets who succeed must choose to either mark a Stress or take half damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A050",
+		"name": "Gargantuan War Machine",
+		"tier": "4",
+		"type": "Solo",
+		"desc": "A 100-foot-tall adamantine construct that has gemstone eyes, powered by a chest crucible of elemental flame.",
+		"motives": "Crush, destroy",
+		"difficulty": "20",
+		"thresholdMajor": "48",
+		"thresholdSevere": "88",
+		"hp": "10",
+		"stress": "6",
+		"atk": "+7",
+		"weaponName": "Fists of Iron",
+		"weaponRange": "Close",
+		"weaponDamage": "4d12+10 phy",
+		"xp": "Unbreakable +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Machine can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Awesome Size",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Machine enters the battlefield, each PC must either lose a Hope or mark 1d4 Stress."
+			},
+			{
+				"name": "Rocket Punch",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a PC within Close range. On a success, the target takes 4d12+10 direct physical damage and marks 2 Armor Slots without gaining their benefits."
+			},
+			{
+				"name": "Ground-Breaking Stomp",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a point within Close range and make an attack roll against all enemies within Close range of that point. Targets the attack succeeds against take 4d12 direct physical damage and are Vulnerable until they are spotlighted. Additionally, the entire area becomes rubble, and a PC must succeed on an Agility Reaction Roll (16) to move through it."
+			},
+			{
+				"name": "Supercharged",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "Countdown (Loop 2d6). When the Machine is spotlighted for the first time, activate the countdown. It ticks down each time the Machine is spotlighted. When it triggers, place a token on this stat block as the Machine's chest crucible flares with magical flame. For each token on this stat block, the Machine gains a +1 bonus to Difficulty and attack rolls, and its standard attack deals an extra 1d12 damage. Remove a token when the Machine takes Severe damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A051",
+		"name": "Ghastly Legion",
+		"tier": "4",
+		"type": "Horde",
+		"desc": "A teeming army of ghosts roused from dreamless slumber to fulfill their ancient oath.",
+		"motives": "Overwhelm, serve, swarm",
+		"difficulty": "17",
+		"thresholdMajor": "25",
+		"thresholdSevere": "45",
+		"hp": "8",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Spectral Armaments",
+		"weaponRange": "Close",
+		"weaponDamage": "4d6+10 mag",
+		"xp": "Tactics +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (2d6+5)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Legion has marked half or more of its HP, its standard attack deals 2d6+5 magic damage instead."
+			},
+			{
+				"name": "Necroplasmic",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Legion is immune to physical damage and takes double magic damage."
+			},
+			{
+				"name": "Final Act",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Legion is defeated, it makes a standard attack against all targets within Close range before being dispelled."
+			}
+		]
+	},
+	{
+		"id": "HF-A052",
+		"name": "Giant Octopus",
+		"tier": "2",
+		"type": "Solo",
+		"desc": "A monstrous, aquatic mollusk that has eight sucker-bearing arms and a hard, beaklike jaw.",
+		"motives": "Crush and bite, grapple, harry sailing vessels, hunt prey",
+		"difficulty": "14",
+		"thresholdMajor": "13",
+		"thresholdSevere": "26",
+		"hp": "10",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Arm Whip",
+		"weaponRange": "Close",
+		"weaponDamage": "2d10 phy",
+		"xp": "Intelligent +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Octopus can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Armed and Dangerous",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Octopus first appears, place a d8 on this stat block with the 8 value facing up. When the Octopus makes a successful standard attack against a PC, you can add the die's value to the damage dealt. After you add its value to a roll, decrease the die's value by 1."
+			},
+			{
+				"name": "Grapple",
+				"type": "Action",
+				"cost": "",
+				"desc": "When the Octopus succeeds on a standard attack, you can spend a Fear to have the Octopus Grapple the target. While Grappled, the target is Restrained and Vulnerable until they break free with a successful Strength or Finesse Roll."
+			},
+			{
+				"name": "Crush",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to deal 3d8 direct physical damage to a target Grappled by the Octopus."
+			}
+		]
+	},
+	{
+		"id": "HF-A053",
+		"name": "Griffin",
+		"tier": "4",
+		"type": "Standard",
+		"desc": "A large leonine creature that has the head, talons, and wings of an eagle.",
+		"motives": "Hunt, look for an opening, swoop",
+		"difficulty": "18",
+		"thresholdMajor": "30",
+		"thresholdSevere": "45",
+		"hp": "6",
+		"stress": "4",
+		"atk": "+4",
+		"weaponName": "Beak & Talons",
+		"weaponRange": "Very Close",
+		"weaponDamage": "4d8+4 phy",
+		"xp": "Riches +5, Keen Senses +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Treasure Hoarder",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When a PC would mark any number of HP from the Griffin's attack, the PC can choose instead to give the Griffin an equal number of bags of gold."
+			},
+			{
+				"name": "Swooping Slash",
+				"type": "Action",
+				"cost": "",
+				"desc": "Move up to Far range and make a standard attack against a target along the way."
+			}
+		]
+	},
+	{
+		"id": "HF-A054",
+		"name": "Grimmling Warband",
+		"tier": "1",
+		"type": "Horde",
+		"desc": "A cluster of small, strange creatures wearing armor fashioned from trash and stolen housewares.",
+		"motives": "Ambush, celebrate a little too early, hit and run, infight, sabotage, sow chaos",
+		"difficulty": "12",
+		"thresholdMajor": "5",
+		"thresholdSevere": "11",
+		"hp": "3",
+		"stress": "2",
+		"atk": "+1",
+		"weaponName": "Tailor's Shears",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8+2 phy",
+		"xp": "Traps +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (1d4+1)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Warband has marked half or more of its HP, its standard attack deals 1d4+1 physical damage instead."
+			},
+			{
+				"name": "Cowardly",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Warband marks its last Stress or an allied Leader is defeated, roll a d6. On a result of 2 or lower, the Warband flees the scene."
+			}
+		]
+	},
+	{
+		"id": "HF-A055",
+		"name": "Guahalan Alebrujo",
+		"tier": "2",
+		"type": "Solo",
+		"desc": "A huge, colorful, chimeric beast formed from many animals.",
+		"motives": "Destroy, give no quarter, ravage",
+		"difficulty": "14",
+		"thresholdMajor": "13",
+		"thresholdSevere": "26",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Tooth & Claw",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d10+4 mag",
+		"xp": "Brutal +2, Quick +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "The Beast Unleashed",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Alebrujo gains a bonus to damage rolls equal to the number of Fear you have."
+			},
+			{
+				"name": "Guahalan Sacrifice",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Alebrujo devour a Minion within Very Close range, then clear a HP or a Stress."
+			},
+			{
+				"name": "Howl of the Guahala",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Alebrujo emit a howl. Each PC within Far range must succeed on a Presence Reaction Roll or become temporarily Panicked. While Panicked, a PC must mark a Stress when they take the spotlight."
+			},
+			{
+				"name": "Rip & Tear",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to make a standard attack with advantage. On a success, you can mark a Stress to make another standard attack against an additional target within range. You can continue marking Stress to make additional attacks until the Alebrujo fails an attack roll."
+			},
+			{
+				"name": "Brutal Spectacle",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Alebrujo deals Severe damage, you can spend a Fear to force all targets within Close range to mark a Stress."
+			}
+		]
+	},
+	{
+		"id": "HF-A056",
+		"name": "Guahalan Fang Lord",
+		"tier": "2",
+		"type": "Leader",
+		"desc": "A shapeshifting warlord who leads a group of warriors into battle.",
+		"motives": "Bolster allies, lead the pack, rally the troops",
+		"difficulty": "16",
+		"thresholdMajor": "12",
+		"thresholdSevere": "24",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Spear",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d8+4 phy",
+		"xp": "Ancient Knowledge +2, Hunter +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Pack Alpha",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Pool. When the Fang Lord makes a successful attack, add a token to the Guahalan Pool. When a Guahalan ally within Close range makes an attack, you can spend a token from the Guahalan Pool to give them advantage on the roll."
+			},
+			{
+				"name": "Unleash the Beast",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Fang Lord adopt a bestial form. While in this form, they gain a bonus to attack and damage rolls equal to the number of Stress they have marked. Additionally, they can move up to Far range instead of Close range before taking an action."
+			},
+			{
+				"name": "Call of the Guahala",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend 2 Fear to spotlight all Guahalan Shifters within Close range. Each one makes a standard attack against a target within range. If any attacks succeed against the same target, combine their damage."
+			},
+			{
+				"name": "Feral Form (Phase Change)",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Fang Lord marks their last HP, replace them with the Guahalan Alebrujo and immediately spotlight them."
+			}
+		]
+	},
+	{
+		"id": "HF-A057",
+		"name": "Guahalan Shifter",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "A shapeshifting masked warrior who has animalistic features.",
+		"motives": "Escape, profit, throw smoke",
+		"difficulty": "15",
+		"thresholdMajor": "9",
+		"thresholdSevere": "18",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Warclub",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d8+4 phy",
+		"xp": "Hunter +2, Trapper +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Unleash the Beast",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Shifter adopt a more bestial form. While in this form, they gain a bonus to attack and damage rolls equal to the number of Stress they have marked. Additionally, they can move up to Far range instead of Close range before taking an action."
+			},
+			{
+				"name": "Pack Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make a standard attack. On a success, the attack gains a bonus to damage equal to the number of other Shifters within Very Close range of the target."
+			}
+		]
+	},
+	{
+		"id": "HF-A058",
+		"name": "Guahalan Spirit Beast",
+		"tier": "2",
+		"type": "Minion",
+		"desc": "A brightly colored spirit in the shape of an animal.",
+		"motives": "Protect, sacrifice, surround",
+		"difficulty": "13",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "2",
+		"atk": "+1",
+		"weaponName": "Bite & Claw",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+5 mag",
+		"xp": "",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (5)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Spirit Beast is defeated when it takes any damage. For every 5 damage a PC deals to the Spirit Beast, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Ethereal Form",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Spirit Beast has resistance to physical damage."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Guahalan Spirit Beasts within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 5 magic damage each. Combine this damage."
+			},
+			{
+				"name": "Beast Bomb",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Spirit Beast is defeated, it explodes in white flame and deals 5 magic damage to creatures within Melee range."
+			}
+		]
+	},
+	{
+		"id": "HF-A059",
+		"name": "Guahalan Spirit Singer",
+		"tier": "2",
+		"type": "Support",
+		"desc": "A shapeshifting summoner who has animalistic features.",
+		"motives": "Abjure, bolster, summon",
+		"difficulty": "14",
+		"thresholdMajor": "9",
+		"thresholdSevere": "18",
+		"hp": "4",
+		"stress": "6",
+		"atk": "+2",
+		"weaponName": "Spirit Flame",
+		"weaponRange": "Close",
+		"weaponDamage": "2d6+4 mag",
+		"xp": "Ritual +3, Ancient History +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Unleash the Beast",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Spirit Singer adopt a more bestial form. While in this form, they gain a bonus to attack and damage rolls equal to the number of Stress they have marked. Additionally, they can move up to Far range instead of Close range before taking an action."
+			},
+			{
+				"name": "Beast-Caller",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Spirit Singer summon 2d4 Guahalan Spirit Beasts within Very Close range and immediately spotlight one."
+			},
+			{
+				"name": "Rage of Spirits",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to spotlight any number of Guahalan Spirit Beasts within Very Close range and have each one move into Melee range with the nearest PC and make a standard attack. If any attacks succeed against the same target, combine their damage."
+			},
+			{
+				"name": "Spiritual Sacrifice",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Spirit Singer would take damage while within Very Close range of a Guahalan Spirit Beast, you can spend a Fear to sacrifice the Spirit Beast and negate the damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A060",
+		"name": "Harbinger Of Death",
+		"tier": "4",
+		"type": "Skulk",
+		"desc": "A desiccated corpse riding atop a skeletal horse. Their eyes are sewn shut and their body is wrapped in a burial shroud of dust and ash.",
+		"motives": "Bring judgment, cut them down, move swiftly, seek relentlessly, take souls",
+		"difficulty": "18",
+		"thresholdMajor": "28",
+		"thresholdSevere": "52",
+		"hp": "6",
+		"stress": "6",
+		"atk": "+8",
+		"weaponName": "Great Scythe",
+		"weaponRange": "Close",
+		"weaponDamage": "4d10+10 phy",
+		"xp": "Judgment +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Harbinger can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Mount",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While the Harbinger is on their mount, they gain a +2 bonus to their Difficulty. When the Harbinger takes Severe damage, they're knocked from their mount. If the Harbinger is unhorsed, their mount disappears until you mark a Stress to summon it again."
+			},
+			{
+				"name": "Fear the Reaper",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When a creature is defeated within Far range of the Harbinger, you gain a Fear."
+			},
+			{
+				"name": "Decapitate",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend 2 Fear to have the Harbinger make an attack roll against a PC within Melee range. On a success, roll a d6. On a result of 6, the target marks all HP and must make a death move."
+			},
+			{
+				"name": "Wake the Fallen",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear and mark any number of Stress to have the Harbinger resurrect a defeated ally within Far range. The resurrected ally clears a number of HP equal to the number of Stress marked. Immediately spotlight the ally."
+			},
+			{
+				"name": "Ashes to Ashes, Dust to Dust",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Harbinger would mark HP, you can mark a Stress to have an ally within Far range mark the HP instead."
+			}
+		]
+	},
+	{
+		"id": "HF-A061",
+		"name": "Harbinger Of Famine",
+		"tier": "4",
+		"type": "Support",
+		"desc": "A dried-out husk of a body riding atop a withered white horse. They are covered in mouths and surrounded by swarming flies.",
+		"motives": "Drain, impoverish, weaken, wither",
+		"difficulty": "18",
+		"thresholdMajor": "26",
+		"thresholdSevere": "42",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+4",
+		"weaponName": "Barbed Lash",
+		"weaponRange": "Close",
+		"weaponDamage": "4d8+10 phy",
+		"xp": "Hunger +2, Thirst +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Harbinger can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Hunger Pangs",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Countdown (Decreasing 6). When the Harbinger appears, activate the countdown. It ticks down when the Harbinger is spotlighted. When it triggers, all PCs within Far range mark a Stress and become Ravenous. While Ravenous, a PC can't spend Hope until they clear the condition with a successful Instinct Roll."
+			},
+			{
+				"name": "Drain Essence",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose up to three PCs. Each target takes 4d6 magic damage."
+			},
+			{
+				"name": "Too Many Mouths",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to attack a PC within Melee range. On a success, the Harbinger grabs the target and bites them, dealing 4d6 physical damage and Restraining the target until they break free with a successful Strength Roll."
+			},
+			{
+				"name": "Withering Touch",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Harbinger caress the face of a Restrained PC within Melee range. The target marks 2 Stress and either loses a Hope or marks 1d4 HP."
+			},
+			{
+				"name": "Mount",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While the Harbinger is on their mount, they gain a +2 bonus to their Difficulty. When the Harbinger takes Severe damage, they're knocked from their mount. If the Harbinger is unhorsed, their mount disappears until you mark a Stress to summon it again."
+			}
+		]
+	},
+	{
+		"id": "HF-A062",
+		"name": "Harbinger Of Pestilence",
+		"tier": "4",
+		"type": "Leader",
+		"desc": "A bloated and rotting agglomeration of wriggling insects and slugs formed into a single humanoid mass riding a worm-eaten horse.",
+		"motives": "Corrupt the pure, infect the weak, summon plague and disease",
+		"difficulty": "18",
+		"thresholdMajor": "37",
+		"thresholdSevere": "70",
+		"hp": "7",
+		"stress": "8",
+		"atk": "+8",
+		"weaponName": "Touch of Corruption",
+		"weaponRange": "Melee",
+		"weaponDamage": "4d10+10 mag",
+		"xp": "Rot +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Halo of Contagion",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Harbinger is Contagious. When a PC within Very Close range of a Contagious creature takes an action, the PC rolls a d6. On a result of 1, the PC becomes Contagious. While Contagious, a PC has disadvantage on action rolls until they spend 3 Hope to clear the condition. Contagious adversaries are unaffected by the condition."
+			},
+			{
+				"name": "Locust Swarm",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend 2 Fear to have the Harbinger conjure a swarm of locusts at a point within Very Far range. Each PC within Close range of that point must either mark an Armor Slot or take 4d10 direct physical damage and roll a d6. On a result of 1–2, the PC becomes Contagious."
+			},
+			{
+				"name": "Frog Spawn",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Harbinger conjure a clutch of diseased frogs inside the mouths of up to three PCs within Close range. Each PC must succeed on a Presence Reaction Roll or take 4d12 magic damage and roll a d6. On a result of 1–3, the PC becomes Contagious."
+			},
+			{
+				"name": "Plague Bringer",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark any number of Stress up to the number of PCs in the scene. For each Stress you mark, the Harbinger summons 1d4 Contagious Zombie Legions within Far range and immediately spotlights one of them."
+			},
+			{
+				"name": "Mount",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While the Harbinger is on their mount, they gain a +2 bonus to their Difficulty. When the Harbinger takes Severe damage, they're knocked from their mount. If the Harbinger is unhorsed, their mount disappears until you mark a Stress to summon it again."
+			}
+		]
+	},
+	{
+		"id": "HF-A063",
+		"name": "Harbinger Of War",
+		"tier": "4",
+		"type": "Bruiser",
+		"desc": "A warrior clad in black armor and a horned helmet and bearing a bloody banner.",
+		"motives": "Destroy utterly, fight honorably, relish combat, shield-bash, strike powerfully",
+		"difficulty": "21",
+		"thresholdMajor": "40",
+		"thresholdSevere": "70",
+		"hp": "9",
+		"stress": "4",
+		"atk": "+5",
+		"weaponName": "Battle Axe",
+		"weaponRange": "Very Close",
+		"weaponDamage": "4d20 phy",
+		"xp": "Heavy Armor +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Harbinger can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Iron Dice",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Harbinger attempt a risky all-out attack. Make a standard attack with advantage. On a success, the target marks an additional HP. On a failure, the Harbinger becomes Vulnerable until they take or deal damage."
+			},
+			{
+				"name": "Supreme Commander",
+				"type": "Action",
+				"cost": "",
+				"desc": "Once per scene, spend a Fear to summon 1d6 Hallowed Soldiers within Close range and immediately spotlight one of them."
+			},
+			{
+				"name": "Battering Ram",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC fails an action roll within Close range, you can spend a Fear to move into Melee range with the PC and make a standard attack with advantage against them. On a success, the PC takes standard damage and is Vulnerable until they are spotlighted."
+			},
+			{
+				"name": "Mount",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While the Harbinger is on their mount, they gain a +2 bonus to their Difficulty. When the Harbinger takes Severe damage, they're knocked from their mount. If the Harbinger is unhorsed, their mount disappears until you mark a Stress to summon it again."
+			}
+		]
+	},
+	{
+		"id": "HF-A064",
+		"name": "Harpy",
+		"tier": "1",
+		"type": "Skulk",
+		"desc": "A fierce and foul-smelling bird with an eight-foot wingspan and the upper body and face of a human.",
+		"motives": "Defend nest, drop enemies from a great height, maraud from the air, screech incessantly",
+		"difficulty": "12",
+		"thresholdMajor": "3",
+		"thresholdSevere": "7",
+		"hp": "3",
+		"stress": "3",
+		"atk": "+0",
+		"weaponName": "Talons",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8+1 phy",
+		"xp": "Islands +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Toxic Aura",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Harpy emits a foul stench that renders all non-Harpies Vulnerable while within Very Close range."
+			},
+			{
+				"name": "Swooping Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Harpy move in a straight line to a point within Far range and make an attack against a target in the Harpy's path. On a success, the Harpy deals 3d6 physical damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A065",
+		"name": "Hill Titan",
+		"tier": "2",
+		"type": "Solo",
+		"desc": "A goliath clad in animal skins and surrounded by a swarm of insects.",
+		"motives": "Eat, make a mess, patrol stomping grounds",
+		"difficulty": "14",
+		"thresholdMajor": "13",
+		"thresholdSevere": "26",
+		"hp": "10",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Tree Stump",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d10+4 phy",
+		"xp": "Survival +3, Vengeful +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Titan can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Gullible",
+				"type": "Passive",
+				"cost": "",
+				"desc": "PCs have advantage on action rolls to trick or emotionally manipulate the Titan."
+			},
+			{
+				"name": "Bug Swarm",
+				"type": "Passive",
+				"cost": "",
+				"desc": "PCs are Vulnerable while within Very Close range."
+			},
+			{
+				"name": "Mighty Swing",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to make a standard attack against all targets within Very Close range."
+			},
+			{
+				"name": "Momentum",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Titan makes a successful attack against a PC, you gain a Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A066",
+		"name": "Hive Walker",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "A corpse filled with and puppeted by a colony of carrion-eating bees.",
+		"motives": "Encase prey in honey, protect the hive",
+		"difficulty": "12",
+		"thresholdMajor": "11",
+		"thresholdSevere": "24",
+		"hp": "3",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Rotting Fist",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d6+3 phy",
+		"xp": "Meat Eater +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Blood Honey",
+				"type": "Action",
+				"cost": "",
+				"desc": "The Walker disgorges thick crimson honey at all targets between it and a point within Close range. Each target in that line must succeed on an Agility Reaction Roll or take 2d8 magic damage and become temporarily Restrained as the honey hardens on them."
+			},
+			{
+				"name": "Bee-Ruption",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Walker marks HP, vengeful bees erupt from its body to protect it. Each target within Very Close range must succeed on an Instinct Reaction Roll or take 1d8 direct physical damage for each HP the Hive Walker has marked. Restrained targets automatically fail the reaction roll."
+			}
+		]
+	},
+	{
+		"id": "HF-A067",
+		"name": "Jack-o'-lantern",
+		"tier": "2",
+		"type": "Minion",
+		"desc": "A floating pumpkin or other gourd that has a face carved into it. The soul trapped within it emits an eerie glow.",
+		"motives": "Bite, float, laugh, tell spooky stories",
+		"difficulty": "14",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "+2",
+		"weaponName": "Chomp",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+6 phy",
+		"xp": "",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (4)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Jack-o'-lantern is defeated when it takes any damage. For every 4 damage a PC deals to the Jack-o'- Lantern, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Jack-o'-lanterns within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 6 physical damage each. Combine this damage."
+			},
+			{
+				"name": "Spine-Chilling Cackle",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC within Very Close range rolls with Fear, you can mark a Stress to gain an additional Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A068",
+		"name": "Kelpie",
+		"tier": "1",
+		"type": "Skulk",
+		"desc": "A river-dwelling shapeshifter who prefers an enchanting equine form in and out of the water.",
+		"motives": "Adopt an attractive or useful shape, drown and devour, entice unwary travelers",
+		"difficulty": "12",
+		"thresholdMajor": "4",
+		"thresholdSevere": "8",
+		"hp": "3",
+		"stress": "5",
+		"atk": "-2",
+		"weaponName": "Hooves",
+		"weaponRange": "Very Close",
+		"weaponDamage": "d8+2 phy",
+		"xp": "Entanglement +3, Mind Reader +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Captivating",
+				"type": "Passive",
+				"cost": "",
+				"desc": "A PC must mark a Stress to move out of the Kelpie's Melee range."
+			},
+			{
+				"name": "Heart's Desire",
+				"type": "Passive",
+				"cost": "",
+				"desc": "After the Kelpie interacts with or watches a creature for at least a hundred heartbeats, the Kelpie knows the physical form that creature would find most pleasing or alluring."
+			},
+			{
+				"name": "Shapeshifter",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to change the Kelpie's physical form into any creature or object smaller than a wagon. A creature has disadvantage on rolls against the Kelpie while the Kelpie is in a form the creature finds pleasing or alluring."
+			},
+			{
+				"name": "Enchant",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Kelpie beguile a PC within Close range. The PC must succeed on an Instinct Reaction Roll or become Enchanted until they take damage. While Enchanted, the PC perceives the Kelpie as a trusted friend or ally and will do what the Kelpie says unless it contradicts the PC's most deeply held morals."
+			}
+		]
+	},
+	{
+		"id": "HF-A069",
+		"name": "Lamia",
+		"tier": "3",
+		"type": "Skulk",
+		"desc": "A snake-tailed humanoid monster who stalks the night to absorb the life energy of sleeping people.",
+		"motives": "Attack the unaware, avoid sunlight, leech life force, put to sleep, slither through tall grass",
+		"difficulty": "17",
+		"thresholdMajor": "18",
+		"thresholdSevere": "35",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Curved Dagger",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d8+4 phy",
+		"xp": "Snaky +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Constriction",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Lamia wrap their tail around a PC within Melee range and squeeze. The target must succeed on a Finesse Reaction Roll or become Constricted until the Lamia moves or takes Major or greater damage. While Constricted, the target is Restrained and must mark a Stress when the Lamia takes the spotlight."
+			},
+			{
+				"name": "Life Leech",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to force a Vulnerable or Restrained target within Melee range to mark 1d4-1 HP. The Lamia then clears an equal number of HP."
+			},
+			{
+				"name": "Sleep Toxin",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Lamia makes a successful standard attack against a PC, you can spend a Fear to make them Vulnerable until they succeed on a Instinct Roll (19)."
+			}
+		]
+	},
+	{
+		"id": "HF-A070",
+		"name": "Landshark",
+		"tier": "2",
+		"type": "Bruiser",
+		"desc": "A quadrupedal shark that swims through the ground.",
+		"motives": "Burrow, burst out of the ground, circle prey",
+		"difficulty": "14",
+		"thresholdMajor": "14",
+		"thresholdSevere": "25",
+		"hp": "7",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Toothy Maw",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d10+2 phy",
+		"xp": "Subterranean +3, Bloodthirsty +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Burrowing",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Landshark can move through the ground as easily as over it. When the Landshark moves, it can choose to burrow or surface. While underground, the Landshark has resistance to all damage but can't attack."
+			},
+			{
+				"name": "Thick-Skinned",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Landshark would be forced to mark any number of HP, you can mark an equal number of Stress instead."
+			},
+			{
+				"name": "Rending Chomp",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Landshark makes a successful attack against a PC within Melee range, you can spend a Fear to force the target to mark an Armor Slot without receiving its benefits (they can still use armor to reduce the damage)."
+			}
+		]
+	},
+	{
+		"id": "HF-A071",
+		"name": "Landshark Behemoth",
+		"tier": "2",
+		"type": "Solo",
+		"desc": "A landshark that's lived long enough to become a large burrowing monstrosity with steely hide and razor-sharp teeth.",
+		"motives": "Bite, burrow, burst out of the ground",
+		"difficulty": "15",
+		"thresholdMajor": "15",
+		"thresholdSevere": "28",
+		"hp": "10",
+		"stress": "4",
+		"atk": "+2",
+		"weaponName": "Toothy Maw",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d12+6 phy",
+		"xp": "Subterranean +4, Bloodthirsty +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Behemoth can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Deep Diver",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Behemoth can move through the ground as easily as over it. When the Behemoth moves, it can choose to burrow or surface. While underground, the Behemoth is immune to damage but can't attack."
+			},
+			{
+				"name": "Steel-Skinned",
+				"type": "Passive",
+				"cost": "",
+				"desc": "All damage dealt to the Behemoth is reduced by one threshold."
+			},
+			{
+				"name": "Forceful Eruption",
+				"type": "Action",
+				"cost": "",
+				"desc": "The Behemoth erupts from the ground, forcing each PC within Very Close range to succeed on an Agility Reaction Roll or be knocked over, becoming Vulnerable until they make an action roll. For each PC made Vulnerable in this way, you gain a Fear."
+			}
+		]
+	},
+	{
+		"id": "HF-A072",
+		"name": "Manticore",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "A legendary beast that has a human's face, lion's body, scorpion's tail, and dragon's wings.",
+		"motives": "Bite, claw, pounce, riddle, swipe, swoop, trick",
+		"difficulty": "17",
+		"thresholdMajor": "20",
+		"thresholdSevere": "35",
+		"hp": "12",
+		"stress": "6",
+		"atk": "+6",
+		"weaponName": "Teeth & Claws",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d12+6 phy",
+		"xp": "Overgrowth +3, Riddles +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Manticore can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Riddle Me This",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Manticore is obsessed with puzzles and can be distracted by brain teasers, word games, or other semi-intellectual diversions."
+			},
+			{
+				"name": "Winged",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While airborne, the Manticore gains a +2 bonus to their Difficulty and attack rolls."
+			},
+			{
+				"name": "Pouncing Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Manticore pounce into Melee range of a target within Far range and make an attack against them. On a success, deal 3d20+6 physical damage, and the target becomes Shaky until they spend a Hope. While Shaky, the target makes attack rolls with disadvantage."
+			},
+			{
+				"name": "Paralyzing Tail Spike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack roll against a target within Close range. On a success, the target takes 3d8 physical damage and becomes Restrained until they overcome the toxin with a successful Strength Roll."
+			},
+			{
+				"name": "Locking Jaws",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Manticore succeeds on a standard attack against a target within Melee range, you can mark a Stress to lock their jaws onto the target, making the target Restrained and Vulnerable until they escape with a successful Strength Roll (19)."
+			}
+		]
+	},
+	{
+		"id": "HF-A073",
+		"name": "Masque Muerte",
+		"tier": "1",
+		"type": "Solo",
+		"desc": "The raging soul of a villainous masked wrestler.",
+		"motives": "Call out, embarrass, energize the audience, pin opponents to the ground",
+		"difficulty": "13",
+		"thresholdMajor": "7",
+		"thresholdSevere": "14",
+		"hp": "8",
+		"stress": "4",
+		"atk": "+4",
+		"weaponName": "Open-Handed Strike",
+		"weaponRange": "Melee",
+		"weaponDamage": "d12+2 mag",
+		"xp": "Grappler +3, Showboat +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Libre",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Masque Muerte can't be Restrained."
+			},
+			{
+				"name": "Heel Turn",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a PC within Close range. On a success, the target must mark a Stress and is temporarily Vulnerable as the Masque Muerte assaults them with a string of insulting taunts."
+			},
+			{
+				"name": "Spectral Suplex",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Masque Muerte suplex a Restrained PC, dealing 1d10+6 magic damage to them."
+			},
+			{
+				"name": "Unmasking Death",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Masque Muerte momentarily remove their mask, revealing their horrifying face underneath. Each PC within Close range must succeed on a Presence Reaction Roll or mark a Stress."
+			},
+			{
+				"name": "Tag Team",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Masque Muerte deals damage to a PC, you can spend a Fear to have a spectral wrestler appear and Pin the target until they escape with a successful Strength Roll. While Pinned, the target is Restrained and takes an extra 1d12 magic damage from the Masque Muerte's attacks."
+			}
+		]
+	},
+	{
+		"id": "HF-A074",
+		"name": "Mechanorb",
+		"tier": "1",
+		"type": "Standard",
+		"desc": "A floating clockwork sphere that has telescoping limbs and comes from a realm of machines and metal.",
+		"motives": "Coordinate, (dis)assemble, move orthogonally, speak in binary",
+		"difficulty": "12",
+		"thresholdMajor": "5",
+		"thresholdSevere": "10",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Needle",
+		"weaponRange": "Melee",
+		"weaponDamage": "d10+1 phy",
+		"xp": "Machines +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Hive Mind",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Mechanorb gains a +1 bonus to their Difficulty for each other Mechanorb within Close range."
+			},
+			{
+				"name": "Adaptive Tactics",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Pool. When the Mechanorb fails an attack roll, add a token to the Mechanorb Pool. All Mechanorbs in the scene gain a bonus to attack rolls equal to the number of tokens in the Mechanorb Pool. Clear all tokens when any Mechanorb takes Severe damage or is defeated."
+			}
+		]
+	},
+	{
+		"id": "HF-A075",
+		"name": "Night Children",
+		"tier": "3",
+		"type": "Horde",
+		"desc": "A teeming assortment of nocturnal fiends under the thrall of an ancient evil.",
+		"motives": "Carry victims back to master, overrun settlements, slither through shadow",
+		"difficulty": "16",
+		"thresholdMajor": "17",
+		"thresholdSevere": "32",
+		"hp": "7",
+		"stress": "4",
+		"atk": "+1",
+		"weaponName": "Fangs & Claws",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d6+8 phy",
+		"xp": "Terrorize +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (2d6+2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Night Children have marked half or more of their HP, their standard attack deals 2d6+2 physical damage instead."
+			},
+			{
+				"name": "Swell Ranks",
+				"type": "Action",
+				"cost": "",
+				"desc": "Once per scene, mark any number of Stress to have the Night Children open a portal that spews forth reinforcements, refilling the Horde's ranks. Clear a number of HP equal to the number of Stress marked."
+			},
+			{
+				"name": "Overwhelm",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Night Children mark HP from an attack within Melee range, you can mark a Stress to make a standard attack against the attacker."
+			}
+		]
+	},
+	{
+		"id": "HF-A076",
+		"name": "Octopus",
+		"tier": "1",
+		"type": "Skulk",
+		"desc": "An aquatic, soft-bodied mollusk that has eight sucker-bearing arms and a hard, beaklike jaw.",
+		"motives": "Crawl along the ocean floor, eat fish, squirt ink to escape",
+		"difficulty": "12",
+		"thresholdMajor": "3",
+		"thresholdSevere": "7",
+		"hp": "2",
+		"stress": "3",
+		"atk": "-1",
+		"weaponName": "Beak",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6 phy",
+		"xp": "Dexterity +3, Water +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Grapple",
+				"type": "Action",
+				"cost": "",
+				"desc": "Make an attack roll against a target within Close range. On a success, the target becomes Restrained and Vulnerable until they escape with a successful Strength Roll."
+			},
+			{
+				"name": "Squirt Ink",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Octopus squirt ink. On land, the ink covers the ground within Very Close range. Each creature who moves through that area must succeed on an Agility Reaction Roll or slip and fall, becoming Vulnerable until they exit the area. If this feature is used while the Octopus is underwater, it instead creates a cloud of darkness that fills an area within Very Close range and blocks line of sight."
+			}
+		]
+	},
+	{
+		"id": "HF-A077",
+		"name": "Pain Priest",
+		"tier": "3",
+		"type": "Social",
+		"desc": "A member of an other-dimensional religious order devoted to exploring the boundaries of mortal suff ering and ecstasy.",
+		"motives": "Feed on emotions, locate the innocent or curious, tempt them with their deepest desires",
+		"difficulty": "16",
+		"thresholdMajor": "16",
+		"thresholdSevere": "32",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+0",
+		"weaponName": "Torture Implements",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d6+4 phy",
+		"xp": "Experimentation +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Walk Between Worlds",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to place the Priest anywhere within Very Far range and immediately spotlight them again."
+			},
+			{
+				"name": "Pleasure and Pain",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC within Close range of the Priest gains a Hope or marks HP, roll a d8. On a result of 8, the Priest opens a portal to their original dimension and flees there with the closest party member. You gain 1d6 Fear. The portal remains open until the Priest is defeated or spotlighted again."
+			}
+		]
+	},
+	{
+		"id": "HF-A078",
+		"name": "Panther",
+		"tier": "1",
+		"type": "Skulk",
+		"desc": "A large feline predator that stalks its prey from the shadows.",
+		"motives": "Climb trees, pounce, stalk",
+		"difficulty": "14",
+		"thresholdMajor": "5",
+		"thresholdSevere": "10",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Teeth and Claws",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8+1 phy",
+		"xp": "Keen Senses +3, Slink +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Shadow Stalker",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While Hidden, the Panther gains a +2 bonus to its attack rolls."
+			},
+			{
+				"name": "Pouncing Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Panther leap into Melee range of a target within Far range and make an attack against them. On a success, deal 1d12+2 physical damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A079",
+		"name": "Phantom",
+		"tier": "1",
+		"type": "Standard",
+		"desc": "The echo of a lost soul in the form of an ectoplasmic shadow.",
+		"motives": "Create cold spots, swoop through the air, whisper dark tidings",
+		"difficulty": "11",
+		"thresholdMajor": "5",
+		"thresholdSevere": "5",
+		"hp": "2",
+		"stress": "1",
+		"atk": "-1",
+		"weaponName": "Chill Touch",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+2 mag",
+		"xp": "Spooky +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Incorporeal",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Phantom has resistance to physical damage and can move through solid objects."
+			},
+			{
+				"name": "Fear Aura",
+				"type": "Passive",
+				"cost": "",
+				"desc": "A PC who takes the spotlight within Very Close range of the Phantom must succeed on a Presence Reaction Roll (10) or mark a Stress."
+			},
+			{
+				"name": "Lingering Haunt",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "Countdown (1d6). When the Phantom is defeated, you can spend a Fear to activate the countdown. It ticks down when a PC rolls with Fear. When it triggers, clear the Phantom's HP and immediately spotlight them."
+			}
+		]
+	},
+	{
+		"id": "HF-A080",
+		"name": "Phoenix",
+		"tier": "3",
+		"type": "Ranged",
+		"desc": "A huge eagle that's made of magical flame, impossible to kill, and hunted for its healing plumage.",
+		"motives": "Flee pursuers, live brilliantly, soar through the heavens, wield light and flame",
+		"difficulty": "18",
+		"thresholdMajor": "19",
+		"thresholdSevere": "30",
+		"hp": "6",
+		"stress": "6",
+		"atk": "+4",
+		"weaponName": "Fire Bolt",
+		"weaponRange": "Very Far",
+		"weaponDamage": "3d10+3 mag",
+		"xp": "Bright +4, Legendary +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Purifying Aura",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Any PC who takes an action within the Phoenix's Melee range can spend a Hope to purify themself in its healing warmth, clearing a HP or a Stress and all conditions."
+			},
+			{
+				"name": "Fireseed",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "The Phoenix bleeds magic fire. When the Phoenix marks a HP, summon one Minor Fire Elemental within Very Close range."
+			},
+			{
+				"name": "Resurrection",
+				"type": "Evolution",
+				"cost": "",
+				"desc": "When the Phoenix is defeated, it becomes a cloud of ash that blows away to reveal a Smoldering Egg. The Egg is immune to all damage and has a heat aura that deals 3d4 direct magic damage to anyone who touches it. The Egg hatches into a new Phoenix, with all HP and Stress cleared, in 7 days."
+			}
+		]
+	},
+	{
+		"id": "HF-A081",
+		"name": "Plesiosaurus",
+		"tier": "3",
+		"type": "Standard",
+		"desc": "A canoe-length marine lizard that has a long neck and four flippers.",
+		"motives": "Dive deeper, eat fish, swim peacefully",
+		"difficulty": "16",
+		"thresholdMajor": "18",
+		"thresholdSevere": "35",
+		"hp": "7",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Bite",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d8+5 phy",
+		"xp": "Lochs +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Only a Rumor",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While deep underwater, the Plesiosaurus can't be located or targeted."
+			},
+			{
+				"name": "Wall of Water",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Plesiosaurus breach and crash, sending a wall of water from one side of its body. Each PC within Far range on that side of the Plesiosaurus must succeed on an Agility Reaction Roll (18) or take 3d10 physical damage and be pushed back to Far range."
+			}
+		]
+	},
+	{
+		"id": "HF-A082",
+		"name": "Poltergeist",
+		"tier": "1",
+		"type": "Ranged",
+		"desc": "A baleful, translucent spirit that possesses inanimate objects.",
+		"motives": "Flicker candles, rattle chains, shake windows, throw people around the room",
+		"difficulty": "9",
+		"thresholdMajor": "4",
+		"thresholdSevere": "7",
+		"hp": "2",
+		"stress": "2",
+		"atk": "-1",
+		"weaponName": "Thrown Object",
+		"weaponRange": "Far",
+		"weaponDamage": "d6+3 phy",
+		"xp": "Spooky +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Specter",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Poltergeist has resistance to physical damage. Mark a Stress to move up to Close range through solid objects."
+			},
+			{
+				"name": "Possessor",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Poltergeist inhabit a nonmagical object that is entirely within Close range, infusing the object with a ghostly glow. The next time the Poltergeist would take damage, the object is destroyed instead, and the Poltergeist is expelled from it."
+			},
+			{
+				"name": "Ghost Storm",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Poltergeist pull all unequipped nonmagical objects within Very Close range into a violent vortex. Each target in that area must make an Agility Reaction Roll. Targets who fail take 1d12+2 physical damage. Targets who succeed take half damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A083",
+		"name": "Ravenous Mockery",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "A shapeshifting predator that assumes the appearance of inanimate objects to lure unwary prey into its threat range.",
+		"motives": "Ambush, lie in wait, swallow without chewing, take on an unassuming shape",
+		"difficulty": "14",
+		"thresholdMajor": "8",
+		"thresholdSevere": "19",
+		"hp": "4",
+		"stress": "4",
+		"atk": "+1",
+		"weaponName": "Gnashing Teeth",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d6+4 phy",
+		"xp": "Mimicry +5, Hungry +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Tongue Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to attack a creature within Close range. On a success, the target is pulled into Melee range with the Mockery and Restrained until they escape with a successful Strength Roll, and you can spend a Fear to activate the Mockery's Devour feature against the target."
+			},
+			{
+				"name": "Devour",
+				"type": "Action",
+				"cost": "",
+				"desc": "Attack a target within Melee range. On a success, the Mockery Swallows the target. While Swallowed, the target is Restrained and marks a HP when the Mockery is spotlighted. The Mockery disgorges all Swallowed creatures when it takes Major or Severe damage."
+			},
+			{
+				"name": "Never Just One",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to reveal that another object on the battlefield has been a Ravenous Mockery the whole time, then immediately spotlight it."
+			}
+		]
+	},
+	{
+		"id": "HF-A084",
+		"name": "Redcap Biters",
+		"tier": "1",
+		"type": "Horde",
+		"desc": "A troop of fist-sized fey creatures who have needle-sharp teeth and conical red caps sealed on their heads with candle wax.",
+		"motives": "Bring 'em down, celebrate tiny victories, giggle and chitter, scamper between the walls",
+		"difficulty": "10",
+		"thresholdMajor": "6",
+		"thresholdSevere": "11",
+		"hp": "5",
+		"stress": "3",
+		"atk": "-1",
+		"weaponName": "Gnash",
+		"weaponRange": "Melee",
+		"weaponDamage": "d8+4 phy",
+		"xp": "Nooks and Crannies +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (1d4+2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Biters have marked half or more of their HP, their standard attack deals 1d4+2 physical damage instead."
+			},
+			{
+				"name": "Ankle Weights",
+				"type": "Passive",
+				"cost": "",
+				"desc": "A PC must mark a Stress to move out of the Biters' Melee range."
+			}
+		]
+	},
+	{
+		"id": "HF-A085",
+		"name": "Redcap Breaker",
+		"tier": "1",
+		"type": "Bruiser",
+		"desc": "A large, brutish fey creature who has a conical red cap sealed on their head with candle wax.",
+		"motives": "Beat chest and bellow, ragdoll puny enemies, rush forward recklessly",
+		"difficulty": "13",
+		"thresholdMajor": "8",
+		"thresholdSevere": "15",
+		"hp": "6",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Wooden Mallet",
+		"weaponRange": "Melee",
+		"weaponDamage": "d12+2 phy",
+		"xp": "Bones +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Backbreaker",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a target within Melee range. On a success, deal 3d4+10 physical damage. A target who marks HP from this attack is Restrained until they clear a HP."
+			},
+			{
+				"name": "Kneecapper",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Breaker makes a successful standard attack, you can spend a Fear to make the target temporarily Vulnerable."
+			}
+		]
+	},
+	{
+		"id": "HF-A086",
+		"name": "Redcap Skinner",
+		"tier": "1",
+		"type": "Minion",
+		"desc": "A cat-sized fey creature wielding a straight razor and wearing a conical red cap sealed on their head with candle wax.",
+		"motives": "Flense, giggle, scrape, slice",
+		"difficulty": "9",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "-1",
+		"weaponName": "Razor",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+2 phy",
+		"xp": "Leatherwork +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (4)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Skinner is defeated when they take any damage. For every 4 damage a PC deals to the Skinner, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Shallow Cuts",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When a PC fails a roll, they take 1 physical damage for each Skinner within Melee range of them. Combine this damage."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Redcap Skinners within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 2 physical damage each. Combine this damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A087",
+		"name": "Roc",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "A giant falcon that nests in the mountains and unleashes storms.",
+		"motives": "Breathe lightning and speak thunder, protect eggs, rake with talons, spy from afar",
+		"difficulty": "18",
+		"thresholdMajor": "20",
+		"thresholdSevere": "35",
+		"hp": "12",
+		"stress": "6",
+		"atk": "+3",
+		"weaponName": "Beak & Talons",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d12+8 phy",
+		"xp": "Craggy Peaks +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Roc can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Bird of Prey",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Once per GM turn, the Roc can move up to Very Far range before or after it takes an action."
+			},
+			{
+				"name": "Here Comes the Boom",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Roc unleash a storm of lightning and thunder. Make an attack roll against 1d4+1 targets within Far range. Targets the Roc succeeds against take 3d12 magic damage. Then each target within Far range of the Roc must make an Agility Reaction Roll (20). Targets who fail take 3d8 physical damage and are pushed back to Close range. Targets who succeed must mark a Stress."
+			},
+			{
+				"name": "Crushing Grasp",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Roc makes a successful standard attack, you can mark a Stress to have the Roc crush the target with its talons, forcing them to mark 1d4 Stress and Restraining them until they succeed on a Strength Roll (20)."
+			},
+			{
+				"name": "Nest Warden",
+				"type": "Evolution",
+				"cost": "",
+				"desc": "When the Roc's eggs are threatened, it gains the following features:\nWrathful - Passive: The Roc gains a +2 bonus to its Difficulty and a bonus to damage rolls equal to the number of Stress it has marked.\nElectrifying Aura - Passive: The Roc has resistance to magic damage. PCs who fail a roll within Very Close range must spend a Hope or mark 1d4 Stress."
+			},
+			{
+				"name": "Wrathfull",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Roc gains a +2 bonus to its Difficulty and a bonus to damage rolls equal to the number of Stress it has marked."
+			},
+			{
+				"name": "Electrifying Aura",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Roc has resistance to magic damage. PCs who fail a roll within Very Close range must spend a Hope or mark 1d4 Stress."
+			}
+		]
+	},
+	{
+		"id": "HF-A088",
+		"name": "Ruby Dragon",
+		"tier": "4",
+		"type": "Standard",
+		"desc": "A huge winged dragon that has visible flames beneath its glittering, gem-encrusted scales. Its body heat melts stone.",
+		"motives": "Crack the earth, melt, protect treasure",
+		"difficulty": "19",
+		"thresholdMajor": "30",
+		"thresholdSevere": "50",
+		"hp": "6",
+		"stress": "4",
+		"atk": "+6",
+		"weaponName": "Tooth & Claw",
+		"weaponRange": "Close",
+		"weaponDamage": "4d10+8 phy",
+		"xp": "Mountains +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Dragon can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Fearsome",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Dragon succeeds on an attack against a PC or a PC within Far range fails an action roll, you gain a Fear."
+			},
+			{
+				"name": "Melting Breath",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Dragon unleash a blast of fire on all PCs in front of it within Close range. Each target must succeed on an Agility Reaction Roll or take 4d12+10 magic damage and mark an Armor Slot without gaining its benefits (they can still use armor to reduce the damage)."
+			},
+			{
+				"name": "Volcanic Fissure",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Dragon snap its tail against the ground, opening a lava rift that flows over the area within Close range. Each PC within that area must make an Agility Reaction Roll. Targets who succeed immediately move out of the area. Targets who fail take 4d8+5 magic damage. Until the Dragon is defeated, a creature who enters the area takes 4d8+5 magic damage."
+			},
+			{
+				"name": "Hot-Blooded",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a creature makes a successful attack against the Dragon within Very Close range, the Dragon's blood erupts from the wound and burns the attacker, forcing them to mark an Armor Slot. If they can't mark an Armor Slot, they mark 1d4 HP."
+			}
+		]
+	},
+	{
+		"id": "HF-A089",
+		"name": "Rugaru",
+		"tier": "1",
+		"type": "Solo",
+		"desc": "A wolf-headed humanoid cursed by the gods to prowl the swamps in search of blood.",
+		"motives": "Blaspheme, go for the throat, stalk, terrorize",
+		"difficulty": "14",
+		"thresholdMajor": "7",
+		"thresholdSevere": "14",
+		"hp": "8",
+		"stress": "4",
+		"atk": "+4",
+		"weaponName": "Snapping Jaws",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d8+4 phy",
+		"xp": "Swamps +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Rugaru can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Child of Night",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While in moonlight, the Rugaru gains a +2 bonus to their Difficulty."
+			},
+			{
+				"name": "Bloodthirsty",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When a PC marks HP from the Rugaru's standard attack, add a token to this stat block. The Rugaru gains a bonus to attack rolls equal to the number of tokens on this stat block. Clear all tokens when the Rugaru takes Severe damage."
+			},
+			{
+				"name": "Howl at the Moon",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to force each PC within Far range to make a Presence Reaction Roll (15). Targets who fail lose a Hope. Gain a Fear for each Hope lost. If a PC has no Hope, they must mark a Stress and become Vulnerable until they roll with Hope."
+			},
+			{
+				"name": "Flesh Ripper",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a target within Melee range. On a success, deal 1d12+2 direct physical damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A090",
+		"name": "Rust Eater",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "A pony-sized cockroach coated in a corrosive chitin that turns metal into rust.",
+		"motives": "Avoid detection, eat rust, sniff out metal",
+		"difficulty": "12",
+		"thresholdMajor": "10",
+		"thresholdSevere": "18",
+		"hp": "5",
+		"stress": "2",
+		"atk": "+1",
+		"weaponName": "Bite",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d6+4 phy",
+		"xp": "Snuffle +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Stifling Pheromones",
+				"type": "Passive",
+				"cost": "",
+				"desc": "A PC who makes an action roll within Very Close range of the Rust Eater must succeed on an Instinct Reaction Roll or mark a Stress."
+			},
+			{
+				"name": "Rust Touch",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Rust Eater's carapace is coated in a corrosive acid that pits and rusts metal. When a PC within Melee range of the Rust Easter succeeds on an attack against it with a metal weapon, reduce the weapon's damage die by one step (for example, d8 to d6 or d6 to d4). If a weapon's damage die is reduced below a d4, the weapon crumbles into rust. The Rust Eater then devours the rust pile and clears a HP."
+			}
+		]
+	},
+	{
+		"id": "HF-A091",
+		"name": "Sandwyrm",
+		"tier": "3",
+		"type": "Bruiser",
+		"desc": "A gargantuan burrowing worm that has armor plating and gnashing jaws. This intelligent and opportunistic hunter can swim through sand as quickly as a cheetah runs on land.",
+		"motives": "Ambush from below, eat and leave, tunnel and erupt, use both ends",
+		"difficulty": "17",
+		"thresholdMajor": "21",
+		"thresholdSevere": "40",
+		"hp": "6",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Bite",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d8+4 phy",
+		"xp": "Tremor Sense +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Venomous Tail Stinger",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to attack a target within Close range. On a success, the target takes 3d10+2 physical damage and must succeed on a Strength Reaction Roll or become Restrained and Vulnerable until they roll with Hope."
+			},
+			{
+				"name": "Devour",
+				"type": "Action",
+				"cost": "",
+				"desc": "Make an attack against a target within Melee range. On a success, the Sandwyrm Swallows the target. While Swallowed, the target is Restrained and marks a HP when the Sandwyrm is spotlighted. The Sandwyrm disgorges all Swallowed creatures when it takes Major or greater damage."
+			},
+			{
+				"name": "Hungry, Not Stupid",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Sandwyrm marks half its HP or Swallows a creature, roll a d6. On a result of 3 or lower, the Sandwyrm retreats to safety."
+			}
+		]
+	},
+	{
+		"id": "HF-A092",
+		"name": "Sawtoothed Gillbeast",
+		"tier": "1",
+		"type": "Standard",
+		"desc": "A stocky fish creature that has rows of razor-sharp teeth.",
+		"motives": "Clamber ashore, hit and run, peek above the waterline",
+		"difficulty": "12",
+		"thresholdMajor": "5",
+		"thresholdSevere": "10",
+		"hp": "4",
+		"stress": "2",
+		"atk": "+1",
+		"weaponName": "Waterlogged Weaponry",
+		"weaponRange": "Close",
+		"weaponDamage": "d8+1 phy",
+		"xp": "Aquatic +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Ka-Chomp",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to attack a target within Melee range. On a success, the target takes 1d12 physical damage and must mark an Armor Slot without gaining its benefit (they can still use armor to reduce the damage)."
+			},
+			{
+				"name": "Feeding Frenzy",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a creature marks HP, you can spend a Fear to spotlight all Sawtoothed Gillbeasts within Very Close range of them. Those Gillbeasts move into Melee range of the creature and each make a standard attack against them. If any attacks succeed, combine their damage."
+			},
+			{
+				"name": "Scaly",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Gillbeast would mark any number of HP, roll a d6. On a result of 6, you can mark a Stress instead."
+			}
+		]
+	},
+	{
+		"id": "HF-A093",
+		"name": "Scarecrow",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "A bundle of straw bound into a humanoid shape, clothed in rags, and animated by a trapped soul.",
+		"motives": "Pull yourself together, scratch and claw",
+		"difficulty": "15",
+		"thresholdMajor": "7",
+		"thresholdSevere": "15",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Sickle",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d6+1 phy",
+		"xp": "Birds +2, Fields +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Made of Straw",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Scarecrow has resistance to physical damage but takes double damage from fire."
+			},
+			{
+				"name": "Terror Vision",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Scarecrow lock eyes with a PC within Very Close range, dealing 2d8 magic damage and making them Vulnerable until they roll with Hope."
+			}
+		]
+	},
+	{
+		"id": "HF-A094",
+		"name": "Severed Shadow",
+		"tier": "4",
+		"type": "Minion",
+		"desc": "A two-dimensional living shadow bound to flat planes and surfaces.",
+		"motives": "Curse the light, slip between the cracks, split and reform",
+		"difficulty": "19",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "2",
+		"atk": "+3",
+		"weaponName": "Strangle",
+		"weaponRange": "Close",
+		"weaponDamage": "d6+10 mag",
+		"xp": "",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (12)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Shadow is defeated when it takes any damage. For every 12 damage a PC deals to the Shadow, the PC defeats an additional Minion within range that the attack would succeed against."
+			},
+			{
+				"name": "Shadow Grapple",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against a target within Close range. On a success, the target becomes Vulnerable and must mark a Stress when they take an action until the Shadow is defeated."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Severed Shadows within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 10 magic damage each. Combine this damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A095",
+		"name": "Shapeshifting Fiend",
+		"tier": "3",
+		"type": "Social",
+		"desc": "An evil entity who impersonates a trusted figure.",
+		"motives": "Impersonate, sow discord, tempt betrayal",
+		"difficulty": "17",
+		"thresholdMajor": "20",
+		"thresholdSevere": "32",
+		"hp": "4",
+		"stress": "8",
+		"atk": "+3",
+		"weaponName": "Hidden Blade",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d8+3 phy",
+		"xp": "Manipulate +3, Mimic +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Fiendish Nature",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Fiend has resistance to magic damage and can't be fooled by magic illusions."
+			},
+			{
+				"name": "Impersonate",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Fiend magically transform into a humanoid they have previously interacted with. A PC who targets the Fiend while they're in the form of a person the PC cares for must succeed on an Instinct Reaction Roll or the attack fails and the PC must mark a Stress."
+			},
+			{
+				"name": "Turn Invisible",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make the Fiend Hidden until they make an action roll or take damage."
+			},
+			{
+				"name": "Backhanded Guidance",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC makes an action roll while the Fiend is in the scene, you can mark a Stress to add 1d6 to the result of their Fear Die."
+			},
+			{
+				"name": "Exposed! (Phase Change)",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Fiend is defeated or the PCs discover its true identity, replace the Fiend with Shapeshifting Fiend Revealed and immediately spotlight them."
+			}
+		]
+	},
+	{
+		"id": "HF-A096",
+		"name": "Shapeshifting Fiend Revealed",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "A towering humanoid who has an insectile head and multiple sets of glowing red eyes.",
+		"motives": "Claim souls, confuse and misdirect, escape to the Circles Below, teleport",
+		"difficulty": "17",
+		"thresholdMajor": "20",
+		"thresholdSevere": "32",
+		"hp": "10",
+		"stress": "8",
+		"atk": "+3",
+		"weaponName": "Mantis Claws",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d12+5 phy",
+		"xp": "Hellbound +3, Immortal +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Fiend can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Fiendish Resistance",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Fiend has resistance to magic damage and can't be fooled by magic illusions."
+			},
+			{
+				"name": "Demonic Rage",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to make a standard attack with a bonus to the attack roll equal the amount of Stress the Fiend has marked. On a success, the attack deals direct damage."
+			},
+			{
+				"name": "Hall of Mirrors",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark 2 Stress to have the Fiend summon four illusory duplicates and activate a Duplicate Countdown (4). When the Fiend is targeted by an attack, they gain a bonus to their Difficulty equal to the countdown die's current value. The countdown ticks down when a PC fails an attack against the Fiend. When it triggers, the duplicates vanish."
+			},
+			{
+				"name": "Flash Claw",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Fiend unleash an arc of magical energy. Make an attack roll against all targets within Close range. Targets the attack succeeds against take 3d20 magic damage."
+			},
+			{
+				"name": "Mind Games",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When an attack targeting the Fiend from beyond Very Close range succeeds with Fear, you can mark a Stress to have the Fiend instantly switch places with a PC within Very Close range. The PC takes the damage instead."
+			}
+		]
+	},
+	{
+		"id": "HF-A097",
+		"name": "Soul-shattered Mage",
+		"tier": "1",
+		"type": "Solo",
+		"desc": "A spellcaster with a psyche broken by knowledge best left hidden.",
+		"motives": "Babble in an unknown language, laugh unsettlingly, wield power beyond control",
+		"difficulty": "12",
+		"thresholdMajor": "8",
+		"thresholdSevere": "15",
+		"hp": "6",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Wormwood Staff",
+		"weaponRange": "Far",
+		"weaponDamage": "d12 mag",
+		"xp": "Forbidden Knowledge +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Mage can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Broken Magic",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to roll a d6. The Mage uses the corresponding move:\n1–2: Dimension Rift. Choose a target within Far range. The target teleports to a point you choose within Close range of their original position and takes 2d6 direct magic damage as their body and mind reassemble.\n3–4: Time Dilation. Choose a group of PCs within Far range. Each target is Slowed until they roll with Hope. While Slowed, a target is Vulnerable and must mark a Stress when they move.\n5–6: Discordant Visions. Make an attack against up to three targets within Close range. Targets the Mage succeeds against take 2d8 direct magic damage."
+			},
+			{
+				"name": "Feel My Pain",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Mage marks HP, roll a number of d6s equal to the number of Stress the Mage has marked. The Mage deals direct magic damage equal to the total result to all PCs within Very Close range."
+			}
+		]
+	},
+	{
+		"id": "HF-A098",
+		"name": "Spellbound Armor",
+		"tier": "1",
+		"type": "Bruiser",
+		"desc": "An empty suit of full plate armor that glows with a faint corona of ghostly light.",
+		"motives": "Clank noisily, move like clockwork, watch silently",
+		"difficulty": "10",
+		"thresholdMajor": "9",
+		"thresholdSevere": "17",
+		"hp": "6",
+		"stress": "0",
+		"atk": "+0",
+		"weaponName": "Zweihander",
+		"weaponRange": "Very Close",
+		"weaponDamage": "d10+1 phy",
+		"xp": "Guardian +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Tireless",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Armor can't be forced to mark Stress. When an effect would cause it to mark Stress, the Armor ignores that part of the effect."
+			},
+			{
+				"name": "Clatter & Recombobulate",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "Once per scene when the Armor is defeated, you can spend a Fear to reactivate it. Clear 2 HP and immediately spotlight it."
+			}
+		]
+	},
+	{
+		"id": "HF-A099",
+		"name": "Sprite",
+		"tier": "2",
+		"type": "Minion",
+		"desc": "A tiny winged warrior that attacks trespassers with poison-tipped arrows.",
+		"motives": "Avoid detection, let the poison do its work, protect the wilderness",
+		"difficulty": "13",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "+0",
+		"weaponName": "Needle-Sharp Arrows",
+		"weaponRange": "Close",
+		"weaponDamage": "d6+5 phy",
+		"xp": "Stealth +2, Vengeance +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (5)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Sprite is defeated when they take any damage. For every 5 damage a PC deals to the Sprite, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Art of Invisibility",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to make the Sprite Hidden until they attack."
+			},
+			{
+				"name": "Dream Petal Poison",
+				"type": "Action",
+				"cost": "",
+				"desc": "When the Sprite succeeds on a standard attack, you can spend a Fear to make the target Sleepy until the target takes damage. While Sleepy, the target must make a Presence Reaction Roll before they make an action roll. On a failure, they must mark 2 Stress or fall asleep until they take damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A100",
+		"name": "Stone Titan",
+		"tier": "2",
+		"type": "Solo",
+		"desc": "A gray-skinned goliath who lives underground and specializes in crafting powerful items inlaid with magical runes.",
+		"motives": "Blend into the rocks, craft and contemplate, pursue prophecy and solitude",
+		"difficulty": "17",
+		"thresholdMajor": "17",
+		"thresholdSevere": "32",
+		"hp": "5",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Stone Hammer",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d6+8 phy",
+		"xp": "Crafting +3, Runes +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Titan can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Skillful Strike",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Before the Titan makes an attack, you can mark a Stress and roll a d6. On a result of 3 or higher, the target's Evasion is halved against this attack."
+			},
+			{
+				"name": "Sunlight Sickness",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Titan first appears above ground, roll a d4. Mark a number of Stress equal to the result. The Titan gains a bonus to their attack and damage rolls equal to the number of Stress marked."
+			},
+			{
+				"name": "Hammer Smash",
+				"type": "Action",
+				"cost": "",
+				"desc": "When a PC marks HP from the Titan's standard attack, you can spend a Fear to force the target to mark an Armor Slot without gaining its benefits (they can still use armor to reduce the damage)."
+			}
+		]
+	},
+	{
+		"id": "HF-A101",
+		"name": "Storm Titan",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "An ancient, wise, and temperamental goliath who has hair made of mist and electricity crackling across their skin.",
+		"motives": "Erupt violently, wait, watch",
+		"difficulty": "20",
+		"thresholdMajor": "35",
+		"thresholdSevere": "70",
+		"hp": "11",
+		"stress": "8",
+		"atk": "+7",
+		"weaponName": "Lightning Bolt",
+		"weaponRange": "Far",
+		"weaponDamage": "3d20+10 mag",
+		"xp": "Power of the Storm +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Titan can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Momentum",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Titan makes a successful attack against a PC, you gain a Fear."
+			},
+			{
+				"name": "Ball Lightning",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Titan conjure 1d4 spheres of electrical energy within Close range. When the Titan is spotlighted, they can move each sphere up to Close range. When a sphere moves within Very Close range of a PC, the PC takes 4d6 magic damage, and the sphere disappears. Each sphere has the same Difficulty as the Titan and disappears if a creature deals magic damage to it."
+			},
+			{
+				"name": "Storm Bringer",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Titan conjure a raging storm. Each PC within Close range of the Titan must make a Strength Reaction Roll. Targets who fail take 3d12 magic damage and are Vulnerable until they are spotlighted. Targets who succeed take half damage."
+			},
+			{
+				"name": "Thunderclap",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to target up to three PCs in front of the Titan within Close range. Each target marks a Stress and becomes Vulnerable until they roll with Hope."
+			}
+		]
+	},
+	{
+		"id": "HF-A102",
+		"name": "Supreme Demiurge Adonix",
+		"tier": "4",
+		"type": "Solo",
+		"desc": "The four-faced angel from the Hallows Above who manifests in the Mortal Realm as a floating tetrahedron with numerous eyes and multiple sets of metallic feathered wings.",
+		"motives": "Establish dominion, exile from reality, float above it all, speak into being",
+		"difficulty": "20",
+		"thresholdMajor": "35",
+		"thresholdSevere": "70",
+		"hp": "12",
+		"stress": "10",
+		"atk": "+8",
+		"weaponName": "Wing Strike",
+		"weaponRange": "Close",
+		"weaponDamage": "4d12+10 phy",
+		"xp": "Omnipotence +10, Be Not Afraid +5",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (4)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Adonix can be spotlighted up to four times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Elemental Archon",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to roll a d4. Adonix activates the corresponding effect:\nFire Beam. Adonix manifests a beam of elemental fire with a Very Close width from themself to the edge of the battlefield. Each target in the beam's path must make an Agility Reaction Roll. Targets who fail take Severe damage. Targets who succeed take Minor damage.\nThunderclap. All creatures within Far range must mark a Stress and become Vulnerable until they succeed on an attack roll or the Demiurge is defeated.\nLightning Bolt. Make an attack against a target within Very Far range, dealing 4d8 magic damage on a success. If all results are even, make the same attack against a different target, repeating the cycle until you roll an odd result or run out of targets.\nIce Storm. Each PC within Close range must succeed on a Strength Reaction Roll or mark 1d4 Stress and become Restrained until they spend a Hope to escape."
+			},
+			{
+				"name": "Alpha to Omega",
+				"type": "Evolution",
+				"cost": "",
+				"desc": "When Adonix is defeated, they resurrect in Omega form with all HP and Stress cleared. Each PC within Very Far range must succeed on a Presence Reaction Roll or lose a Hope. You gain a Fear for each Hope lost in this way."
+			},
+			{
+				"name": "Forsaken",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a PC and activate a Forsaken Countdown (1d8) for them. It ticks down when Adonix is spotlighted. When it triggers, the PC must mark all their HP. The countdown ends if Adonix takes Severe damage. You can have only one Forsaken Countdown active at a time."
+			},
+			{
+				"name": "Armageddon",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When Adonix is defeated again, they unleash a reality storm that shakes the realms to their foundations. Roll a d6. On a result of 5–6, each PC must make a death move."
+			}
+		]
+	},
+	{
+		"id": "HF-A103",
+		"name": "Temporal Enforcer",
+		"tier": "4",
+		"type": "Bruiser",
+		"desc": "A giant mechanical being from a dimension outside time, built by the Time Keepers to preserve the Holy Continuum.",
+		"motives": "Repair the timeline, seek out temporal heretics, serve the Lords of Continuity",
+		"difficulty": "20",
+		"thresholdMajor": "42",
+		"thresholdSevere": "68",
+		"hp": "8",
+		"stress": "5",
+		"atk": "+4",
+		"weaponName": "Adamantine Hammer",
+		"weaponRange": "Very Close",
+		"weaponDamage": "d6+40 phy",
+		"xp": "Temporal Anomalies +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Enforcer can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Time Looper",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Countdown (Loop 2d6). When the Enforcer first appears, activate the countdown. It ticks down when the Enforcer is spotlighted. When it triggers, the Enforcer clears all HP, Stress, and conditions. Reroll the countdown when the Enforcer takes Severe damage."
+			},
+			{
+				"name": "Move Between Moments",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Enforcer teleport to a point within Very Far range, then spotlight them again."
+			},
+			{
+				"name": "Instant Rewind",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Enforcer fails an attack, you can spend a Fear to reroll the die."
+			},
+			{
+				"name": "Invert Polarity",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "Up to three times per scene, you can spend a Fear to flip any die rolled onto its obverse result. This effect can't be used to alter a critical success."
+			}
+		]
+	},
+	{
+		"id": "HF-A104",
+		"name": "Triceratops",
+		"tier": "2",
+		"type": "Bruiser",
+		"desc": "A large dinosaur that has an armored frill and three horns.",
+		"motives": "Eat ferns, move in herds for protection, patrol the watering hole",
+		"difficulty": "15",
+		"thresholdMajor": "14",
+		"thresholdSevere": "28",
+		"hp": "7",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Horns",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d10+4 phy",
+		"xp": "Defender +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Leathery Hide",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Triceratops would be forced to mark HP, you can mark any number of Stress instead of an equal number of HP."
+			},
+			{
+				"name": "Tail Swipe",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to choose up to three targets within Very Close range. Each target must make an Agility Reaction Roll. Targets who fail take 5d6 physical damage. Targets who succeed take half damage."
+			},
+			{
+				"name": "Bull Rush",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to choose a target within Close range. The Triceratops moves into Melee range with the target and makes an attack. On a success, deal 3d10 direct physical damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A105",
+		"name": "Tyrannosaurus",
+		"tier": "2",
+		"type": "Bruiser",
+		"desc": "A huge carnivorous dinosaur that walks on two legs.",
+		"motives": "Break through the treeline, eat, stomp around",
+		"difficulty": "15",
+		"thresholdMajor": "14",
+		"thresholdSevere": "28",
+		"hp": "7",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Mighty Jaws",
+		"weaponRange": "Very Close",
+		"weaponDamage": "2d10+4 phy",
+		"xp": "Predator +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Earth-Shaking Roar",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to force each PC within Close range to make a Presence Reaction Roll. On a failure, they must choose to lose a Hope or mark 1d4 Stress."
+			},
+			{
+				"name": "Stomp",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to attack a target within Melee range. On a success, the target takes 3d12 direct physical damage."
+			},
+			{
+				"name": "Crushing Bite",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Tyrannosaurus makes a successful standard attack, you can spend a Fear to force the target to mark an additional HP."
+			}
+		]
+	},
+	{
+		"id": "HF-A106",
+		"name": "Unicorn",
+		"tier": "3",
+		"type": "Standard",
+		"desc": "A celestial avatar of goodness in the form of a preternaturally beautiful horse with a long, spiraled horn emerging from its head.",
+		"motives": "Keep evil at bay, protect the sacred, sense emotions and intent",
+		"difficulty": "17",
+		"thresholdMajor": "19",
+		"thresholdSevere": "36",
+		"hp": "7",
+		"stress": "5",
+		"atk": "+3",
+		"weaponName": "Hoof & Horn",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d10+3 mag",
+		"xp": "Magic +3, Nature +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Celestial Lance",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Unicorn's standard attack deals double damage to a creature that has dealt damage to it."
+			},
+			{
+				"name": "Healing Touch",
+				"type": "Action",
+				"cost": "",
+				"desc": "The Unicorn touches its horn to an ally within Melee range and channels healing energy into them. Mark any number of Stress to clear an equal number of the ally's HP."
+			},
+			{
+				"name": "Protective Aura",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Unicorn conjure a sparkling magical aura. While the aura is in effect, attack rolls made against the Unicorn or an ally within Very Close range are made with disadvantage. This effect lasts until the Unicorn takes damage."
+			},
+			{
+				"name": "Teleport",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Unicorn teleport up to Very Far range. The Unicorn can bring up to three allies within Very Close range with it."
+			}
+		]
+	},
+	{
+		"id": "HF-A107",
+		"name": "Urco",
+		"tier": "2",
+		"type": "Standard",
+		"desc": "A black-furred hound from beyond the veil of death that portends death and feeds on fear.",
+		"motives": "Feed, frighten, hunt",
+		"difficulty": "15",
+		"thresholdMajor": "9",
+		"thresholdSevere": "18",
+		"hp": "4",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Black Fang",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d8+4 mag",
+		"xp": "Omens +3, Stealth +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Fearmonger",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When a PC within Very Close range fails with Hope, you gain a Fear."
+			},
+			{
+				"name": "Terror-Fueled",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Urco gains a bonus to attack and damage rolls equal to the number of Fear you have."
+			},
+			{
+				"name": "Fear Eater",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend any number of Fear to clear the same number of Stress. If the Urco has no marked Stress, you can spend any number of Fear to clear the same number of HP."
+			},
+			{
+				"name": "Baleful Gaze",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Urco takes damage from an attack, you can spend a Fear to cause the attacker's damage thresholds to gain a -1 penalty until the end of the scene. This effect can stack."
+			}
+		]
+	},
+	{
+		"id": "HF-A108",
+		"name": "Valdenhax",
+		"tier": "2",
+		"type": "Leader",
+		"desc": "A malevolent forest hag who has long, mossy hair and flies through the air with an oversized mortar and pestle.",
+		"motives": "Collect souls, fly, vex trespassers",
+		"difficulty": "16",
+		"thresholdMajor": "12",
+		"thresholdSevere": "24",
+		"hp": "6",
+		"stress": "4",
+		"atk": "+2",
+		"weaponName": "Giant Stone Pestle",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d8+2 phy",
+		"xp": "Witchcraft +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "To Me, My Pretties",
+				"type": "Action",
+				"cost": "",
+				"desc": "Once per scene, summon 2d4 Tier 2 Hordes, which appear at Far range. You gain a Fear for each Horde summoned in this way."
+			},
+			{
+				"name": "Shadow Strangler",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to attack a target within Far range. On a success, the shadow of the Valdenhax's hand stretches across the ground until it grasps the target's shadow and drains their essence. The target marks 1d4 Stress, and you gain an equal number of Fear."
+			},
+			{
+				"name": "Corpse Whisperer",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Valdenhax call out to the lingering spirit of a fallen ally within Close range. Roll a d6. On an even result, the Valdenhax resurrects the ally with half its HP cleared. On an odd result, the Valdenhax absorbs the dregs of its life force and clears a Stress."
+			},
+			{
+				"name": "Vexing Word",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "After a PC makes a roll, you can mark a Stress to force them to reroll it. This feature can't be used if the PC critically succeeds."
+			}
+		]
+	},
+	{
+		"id": "HF-A109",
+		"name": "Vampire Bat Swarm",
+		"tier": "3",
+		"type": "Horde",
+		"desc": "A cloud of blood-sucking bats.",
+		"motives": "Blot out the moon, murmur, spread disease",
+		"difficulty": "15",
+		"thresholdMajor": "16",
+		"thresholdSevere": "30",
+		"hp": "8",
+		"stress": "3",
+		"atk": "+1",
+		"weaponName": "Fangs",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d6+6 phy",
+		"xp": "Blood +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (2d6)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Swarm has marked half or more of its HP, its standard attack deals 2d6 physical damage instead."
+			},
+			{
+				"name": "Blinding Multitude",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Swarm is so thick it blocks the vision of anyone it interacts with. Creatures within Melee range have disadvantage on attacks made against adversaries other than the Swarm."
+			},
+			{
+				"name": "Bloodsuckers",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Swarm deals damage to a target, you can mark a Stress to have the Swarm feed. The target marks an additional HP, and the Swarm clears a HP."
+			}
+		]
+	},
+	{
+		"id": "HF-A110",
+		"name": "Vampire Lord",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "A cruel vampire lord from a long-lost age, cursed with immortality.",
+		"motives": "Corrupt, destroy, overwhelm with evil power",
+		"difficulty": "18",
+		"thresholdMajor": "24",
+		"thresholdSevere": "45",
+		"hp": "7",
+		"stress": "7",
+		"atk": "+5",
+		"weaponName": "Claws",
+		"weaponRange": "Melee",
+		"weaponDamage": "3d10+2 phy",
+		"xp": "Evil +3, Noble +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Vampire Lord can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight them."
+			},
+			{
+				"name": "Midnight Heart",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Long-Term Countdown (6). The Vampire Lord keeps their heart hidden in a safe place. If it's destroyed, the Vampire Lord dies. Otherwise, when the Vampire Lord is defeated, activate the countdown. It ticks down each time the PCs finish a long rest. When it triggers, the Vampire Lord revives within Close range of the heart with all HP and Stress cleared."
+			},
+			{
+				"name": "Terrifying",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Vampire Lord makes a successful attack roll, all PCs within Close range lose a Hope, and you gain a Fear."
+			},
+			{
+				"name": "Unleash Hellfire",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Vampire Lord momentarily conjure 1d4 bursts of hellfire within Far range. Each burst deals 3d6 magic damage to each target within Very Close range. If a target takes damage from multiple bursts, combine the damage."
+			},
+			{
+				"name": "Resurgence",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC within Very Close range rolls with Hope, you can spend a Fear to clear a HP or a Stress."
+			},
+			{
+				"name": "Melt into Shadow",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC would deal damage to the Vampire Lord, you can spend a Fear to roll a d6. On a result of 5 or higher, negate the damage, then teleport the Vampire Lord to a point within Far range."
+			},
+			{
+				"name": "Hellwing",
+				"type": "Evolution",
+				"cost": "",
+				"desc": "When the Vampire Lord marks half their HP, they transform into the Hellwing: a towering, demonic bat creature."
+			},
+			{
+				"name": "On Crimson Wings",
+				"type": "Passive",
+				"cost": "",
+				"desc": "While flying, the Hellwing gains a +1 bonus to their Difficulty."
+			},
+			{
+				"name": "Blood Bath",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Hellwing takes Major or greater damage, the ground within Very Close range is covered with blood, dealing 3d10 magic damage to all other creatures in the area. When the Hellwing takes the spotlight on subsequent GM turns, all other creatures in that area take 3d6 magic damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A111",
+		"name": "Viper",
+		"tier": "1",
+		"type": "Minion",
+		"desc": "A small serpent that envenomates its prey with hinged fangs.",
+		"motives": "Lie in wait, slither, strike",
+		"difficulty": "11",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "+3",
+		"weaponName": "Bite",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+1 phy",
+		"xp": "Grounded +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (4)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Viper is defeated when it takes any damage. For every 4 damage a PC deals to the Viper, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Venomous",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Viper makes a successful standard attack, the target becomes temporarily Envenomated. While Envenomated, the target must mark a Stress whenever they make an action roll."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Vipers within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 1 physical damage each. Combine this damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A112",
+		"name": "Viscera Sucker",
+		"tier": "3",
+		"type": "Skulk",
+		"desc": "A vampiric demon whose upper body detaches at sundown to fly through nearby villages in search of victims. It has a winged upper body with hanging entrails.",
+		"motives": "Clamp onto prey, suck blood, tear in half",
+		"difficulty": "14",
+		"thresholdMajor": "16",
+		"thresholdSevere": "30",
+		"hp": "5",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Long Nails",
+		"weaponRange": "Melee",
+		"weaponDamage": "2d6+7 phy",
+		"xp": "Flying +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Join or Die",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Viscera Sucker dies if it hasn't reconnected its upper and lower halves by dawn."
+			},
+			{
+				"name": "Entangling Entrails",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Viscera Sucker latch onto a target within Very Close range, Restraining them until they escape with a successful Strength Roll (16)."
+			},
+			{
+				"name": "Lifesuck",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Viscera Sucker drink blood from a Restrained target within Melee range. The target marks a HP, and the Viscera Sucker clears a HP."
+			}
+		]
+	},
+	{
+		"id": "HF-A113",
+		"name": "Water Mother",
+		"tier": "4",
+		"type": "Solo",
+		"desc": "A colossal fur-covered snake that hunts in large bodies of water.",
+		"motives": "Constrict the world, control the battlefield, draw enemies into the water",
+		"difficulty": "20",
+		"thresholdMajor": "40",
+		"thresholdSevere": "70",
+		"hp": "12",
+		"stress": "8",
+		"atk": "+8",
+		"weaponName": "Bite",
+		"weaponRange": "Very Close",
+		"weaponDamage": "4d10+5 phy",
+		"xp": "Rivers +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Segmented",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Water Mother's body is divided into three segments: Head, Center, and Tail. The Water Mother always moves from the Head first, pulling the Center and then Tail behind it. A creature can target the Water Mother with an attack as long as at least one of her segments is within range, but the Water Mother can make a standard attack only against a target within range of her Head. If an attack deals damage to the Water Mother and her Head is within range, the attack deals an extra 1d10 damage."
+			},
+			{
+				"name": "Eat the World",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Water Mother inhale sharply. Each PC within Close range of her Head must succeed on a Strength Reaction Roll or mark a Stress and be pulled within Melee range of the Head. The Water Mother then makes a standard attack against all targets within Melee range of her Head."
+			},
+			{
+				"name": "Constrict",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to make an attack against all targets within Melee range of the Center segment. Targets the attack succeeds against take 4d8+8 physical damage and are temporarily Restrained. At the beginning of each GM turn, you can mark a Stress to force all targets Restrained by the Water Mother to mark a HP."
+			},
+			{
+				"name": "Venom Surge",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Water Mother makes a successful standard attack, you can spend a Fear to make the target Vulnerable until the end of the scene."
+			}
+		]
+	},
+	{
+		"id": "HF-A114",
+		"name": "Waxwork Creation",
+		"tier": "1",
+		"type": "Solo",
+		"desc": "A ten-foot-tall, semisolid (and semisentient) candle wax construct.",
+		"motives": "Lumber menacingly, moan with the pain of unlife, smother",
+		"difficulty": "13",
+		"thresholdMajor": "8",
+		"thresholdSevere": "15",
+		"hp": "10",
+		"stress": "3",
+		"atk": "+2",
+		"weaponName": "Fists",
+		"weaponRange": "Very Close",
+		"weaponDamage": "d20 phy",
+		"xp": "Giant-Sized +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (2)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Creation can be spotlighted up to two times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "No Vital Organs",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Creation doesn't take extra damage from attacks that critically succeed against it."
+			},
+			{
+				"name": "Wax Ball",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Creation throw a ball of wax at a target within Far range. Make an attack against the target. On a success, the target takes 1d12+2 physical damage and becomes Restrained until they succeed on a Strength Roll (15)."
+			},
+			{
+				"name": "Splutch!",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a PC within Melee range of the Creation makes a weapon attack against it, roll a d6. On a 5 or higher, the attacker's weapon gets stuck in the Creation and can be removed only with a successful Strength Roll (15)."
+			},
+			{
+				"name": "Smothering Grapple",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Creation makes a successful standard attack against a target within Melee range, you can spend a Fear to Trap the target inside the Creation's wax body. While Trapped, the target is Restrained and must mark a Stress and move with the Creation each time it's spotlighted. A Trapped creature is freed when the Creation takes Major or greater damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A115",
+		"name": "Will-o'-the-wisps",
+		"tier": "1",
+		"type": "Horde",
+		"desc": "Lazily floating orbs of color-shifting werelight.",
+		"motives": "Dazzle and distract, disorient, lead astray",
+		"difficulty": "9",
+		"thresholdMajor": "5",
+		"thresholdSevere": "9",
+		"hp": "4",
+		"stress": "2",
+		"atk": "-3",
+		"weaponName": "Flash",
+		"weaponRange": "Close",
+		"weaponDamage": "d4+2 mag",
+		"xp": "Darkness +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (1d4-1)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Will-o'-the-wisps have marked half or more of their HP, their standard attack deals 1d4-1 magic damage instead."
+			},
+			{
+				"name": "Kaleidoscopic",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Will-o'-the-wisps pulse and dance in hypnotic, color-changing patterns that entrance any creature who looks upon them. All targets within Very Close range of the Will-o'-the-wisps are Vulnerable."
+			},
+			{
+				"name": "Fascinating",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Will-o'-the-wisps trace looping light trails through the air, leaving afterimages that beg to be deciphered. Each PC within Far range must succeed on an Instinct Reaction Roll (13) or mark a Stress and move up to Close range toward the Will-o'-the-wisps."
+			}
+		]
+	},
+	{
+		"id": "HF-A116",
+		"name": "Wyrmfiend",
+		"tier": "4",
+		"type": "Minion",
+		"desc": "A reptilian biped created by mysterious and ancient dragon magic. Wyrmfiends exist more as extensions of their draconic master's will than as individual beings.",
+		"motives": "Hold the line, sacrifice, serve, swarm",
+		"difficulty": "17",
+		"thresholdMajor": "0",
+		"thresholdSevere": "0",
+		"hp": "1",
+		"stress": "1",
+		"atk": "+3",
+		"weaponName": "Weapons from the Hoard",
+		"weaponRange": "Melee",
+		"weaponDamage": "d6+11 phy",
+		"xp": "Dragon Bond +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Minion (13)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Wyrmfiend is defeated when it takes any damage. For every 13 damage a PC deals to the Wyrmfiend, the PC defeats an additional Minion within range the attack would succeed against."
+			},
+			{
+				"name": "Venomous Bite",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to make an attack against a PC within Melee range. On a success, deal 4d4+4 physical damage and Poison the target until they succeed on a Strength Roll (20). While Poisoned, the target must roll a d6 before they make an action roll. On a result of 4 or lower, the target must mark a Stress."
+			},
+			{
+				"name": "Group Attack",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to choose a target and spotlight all Wyrmfiends within Close range of them. Those Minions move into Melee range of the target and make one shared attack roll. On a success, they deal 11 physical damage each. Combine this damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A117",
+		"name": "Wyrmlings",
+		"tier": "4",
+		"type": "Horde",
+		"desc": "A clutch of newly hatched dragons. As newborns, they're furious, hungry, and stupid.",
+		"motives": "Consume, shred, swarm",
+		"difficulty": "17",
+		"thresholdMajor": "25",
+		"thresholdSevere": "45",
+		"hp": "8",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Tiny Jaws & Claws",
+		"weaponRange": "Melee",
+		"weaponDamage": "4d6+10 phy",
+		"xp": "Dragon Bond +2",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Horde (2d6+5)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When the Wyrmlings have marked half or more of their HP, their standard attack deals 2d6+5 physical damage instead."
+			},
+			{
+				"name": "Ravenous",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "Once per GM turn when a PC marks a HP from an attack made by the Wyrmlings, you can spend a Fear to spotlight the Wyrmlings again."
+			},
+			{
+				"name": "Overwhelm",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Wyrmlings take Minor damage from an attack within Melee range, you can mark a Stress to make a standard attack with advantage against the attacker."
+			}
+		]
+	},
+	{
+		"id": "HF-A118",
+		"name": "Wyvern",
+		"tier": "3",
+		"type": "Standard",
+		"desc": "A two-legged dragon that flies from its mountaintop aerie to devour livestock.",
+		"motives": "Cast a long shadow, snatch and grab, wheel through the air",
+		"difficulty": "16",
+		"thresholdMajor": "18",
+		"thresholdSevere": "35",
+		"hp": "7",
+		"stress": "5",
+		"atk": "+2",
+		"weaponName": "Teeth & Claws",
+		"weaponRange": "Very Close",
+		"weaponDamage": "3d8+5 phy",
+		"xp": "Death from Above +4",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Double Strike",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to have the Wyvern make two standard attacks. If both attacks succeed against the same target, combine the damage."
+			},
+			{
+				"name": "Terrifying Shriek",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Wyvern let out a spine-chilling screech. All PCs within Far range are Terrified until they succeed on a Presence Roll (18) to clear the condition or the Wyvern is defeated. While Terrified, a PC doesn't gain a Hope when they roll with Hope."
+			},
+			{
+				"name": "Clutch",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Wyvern makes a successful attack against a PC, you can spend a Fear to have the Wyvern Restrain the target in its claws until the PC succeeds on a Strength Roll (18) or the Wyvern takes Major or greater damage. While Restrained in this way, the PC has disadvantage on attack rolls."
+			}
+		]
+	},
+	{
+		"id": "HF-A119",
+		"name": "Xero The Castle Killer",
+		"tier": "4",
+		"type": "Solo",
+		"desc": "A castle-sized, bipedal reptile.",
+		"motives": "Leave a wake of destruction, level buildings, stomp through settlements",
+		"difficulty": "20",
+		"thresholdMajor": "35",
+		"thresholdSevere": "70",
+		"hp": "12",
+		"stress": "10",
+		"atk": "+8",
+		"weaponName": "Tail Swipe",
+		"weaponRange": "Close",
+		"weaponDamage": "4d12+6 phy",
+		"xp": "Destruction +5",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (X)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Xero can be spotlighted up to X times per GM turn, where X is the number of PCs in the scene. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Collateral Damage",
+				"type": "Passive",
+				"cost": "",
+				"desc": "Xero's movement can't be hindered, impeded, or affected by anything other than natural terrain. All destructible terrain or obstacles in Xero's path are destroyed when Xero moves through them."
+			},
+			{
+				"name": "Gigaton Stomp",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have Xero bring its foot down hard, creating a localized earthquake. Each PC within Melee range takes 4d12 physical damage and is Restrained until they wriggle out with a successful Finesse Roll. Each creature beyond Melee range but within Close range must succeed on an Instinct Reaction Roll or be knocked back to Far range. If a target is knocked back, they must either mark an Armor Slot or take 4d12 physical damage as they land."
+			},
+			{
+				"name": "Power Slide",
+				"type": "Action",
+				"cost": "",
+				"desc": "Mark a Stress to move up to Close range. Each PC Xero moves through must succeed on a Strength Reaction Roll or choose to either mark 2 Armor Slots or take Severe damage."
+			},
+			{
+				"name": "Radioactive Breath",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have Xero charge up a nuclear beam. Place a token on this stat block. The next time Xero is spotlighted, you can spend this token and unleash a beam to Very Far range. The beam has a width of Close range. Each PC in this area must make an Agility Reaction Roll. Targets who fail take 4d12+12 direct magic damage. Targets who succeed take half damage. Xero can't use this feature again until it takes Severe damage."
+			},
+			{
+				"name": "Regeneration",
+				"type": "Action",
+				"cost": "",
+				"desc": "Up to three times per scene, spend any number of Fear to clear an equal number of HP."
+			}
+		]
+	},
+	{
+		"id": "HF-A120",
+		"name": "Young Fire Dragon",
+		"tier": "3",
+		"type": "Solo",
+		"desc": "A crimson dragon with four powerful limbs and smoldering wings.",
+		"motives": "Burn, defend lair, erupt, fly, shred, take",
+		"difficulty": "18",
+		"thresholdMajor": "21",
+		"thresholdSevere": "34",
+		"hp": "10",
+		"stress": "6",
+		"atk": "+7",
+		"weaponName": "Bite & Claws",
+		"weaponRange": "Close",
+		"weaponDamage": "4d10 phy",
+		"xp": "Burning Rage +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Relentless (3)",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Dragon can be spotlighted up to three times per GM turn. Spend Fear as usual to spotlight it."
+			},
+			{
+				"name": "Intimidating",
+				"type": "Passive",
+				"cost": "",
+				"desc": "When you spend a Fear to spotlight the Dragon, all PCs within Close range must mark a Stress or lose a Hope."
+			},
+			{
+				"name": "Flame Breath",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Dragon unleash a blast of flame against all targets in front of it within Close range. Each target must make an Agility Reaction Roll. Targets who fail take 4d8+3 magic damage. Targets who succeed must mark a Stress or take half damage. A target who marks HP from this attack also becomes Vulnerable until they clear a HP."
+			},
+			{
+				"name": "Eruption",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear to have the Dragon crack the earth open with its tail, unleashing an explosion of lava. Choose a point within Far range. Each PC on the line between the Dragon and the chosen point must succeed on an Agility Reaction Roll or get burned, becoming Vulnerable until their next rest. You gain a Fear for each PC who fails."
+			},
+			{
+				"name": "Blazing Scales",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When a creature within Very Close range attacks the Dragon, the attacker must mark a Stress."
+			},
+			{
+				"name": "Slash and Burn",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Dragon makes a successful standard attack, you gain a Fear and can mark a Stress to have the attack deal an extra 10 magic damage."
+			}
+		]
+	},
+	{
+		"id": "HF-A121",
+		"name": "Yufo",
+		"tier": "1",
+		"type": "Social",
+		"desc": "A large, interdimensional jellyfishlike creature that floats in and out of the timestream.",
+		"motives": "Exchange information about possible timelines, feed on heightened emotions, watch from the shadows",
+		"difficulty": "14",
+		"thresholdMajor": "6",
+		"thresholdSevere": "10",
+		"hp": "3",
+		"stress": "5",
+		"atk": "-3",
+		"weaponName": "Tentacle Lash",
+		"weaponRange": "Very Close",
+		"weaponDamage": "d6+3 phy",
+		"xp": "Secrets +3, Floating Oddity +3",
+		"source": "hope-fear",
+		"features": [
+			{
+				"name": "Telepathic",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Yufo can mentally communicate with creatures within Very Far range."
+			},
+			{
+				"name": "Psychic Strongbox",
+				"type": "Passive",
+				"cost": "",
+				"desc": "The Yufo is immune to abilities and features that would affect or alter its thoughts or emotions."
+			},
+			{
+				"name": "Glitch Wave",
+				"type": "Action",
+				"cost": "",
+				"desc": "Spend a Fear and choose up to three targets within Close range. Each target must succeed on a Instinct Reaction Roll or become desynced from reality and have disadvantage on Instinct Rolls until they use a downtime move to ground their psyches in the now."
+			},
+			{
+				"name": "Temporal Corrosion",
+				"type": "Reaction",
+				"cost": "",
+				"desc": "When the Yufo succeeds on a standard attack, you can mark a Stress to have the Yufo excrete an entropic acid through its skin, giving the target a -2 penalty to their damage thresholds until they use a downtime move to repair their armor."
+			}
+		]
+	}
+]

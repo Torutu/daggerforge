@@ -1,18 +1,24 @@
-import { App, PluginSettingTab, Setting, SliderComponent, ToggleComponent } from "obsidian";
+import { App, ButtonComponent, DropdownComponent, ExtraButtonComponent, PluginSettingTab, Setting, SliderComponent, ToggleComponent } from "obsidian";
 import type DaggerForgePlugin from "../../main";
 import { DEFAULT_SETTINGS } from "../../types/index";
+import { translate as t, TranslationKey } from "../../i18n";
 
-/** One settings row: its search metadata plus how to build its controls. */
+/** One settings row: its translated search metadata plus how to build its controls. */
 interface SettingEntry {
-	name: string;
-	desc: string;
+	nameKey: TranslationKey;
+	descKey: TranslationKey;
 	build: (setting: Setting) => void;
 }
 
 export class DaggerForgeSettingsTab extends PluginSettingTab {
 	private plugin: DaggerForgePlugin;
+	private languageDropdown: DropdownComponent | null = null;
 	private keywordToggle: ToggleComponent | null = null;
 	private durationSlider: SliderComponent | null = null;
+	private durationResetButton: ExtraButtonComponent | null = null;
+	private restoreButton: ButtonComponent | null = null;
+	/** Rendered rows, kept so a language change can relabel them in place. */
+	private rows: { setting: Setting; entry: SettingEntry }[] = [];
 
 	constructor(app: App, plugin: DaggerForgePlugin) {
 		super(app, plugin);
@@ -22,18 +28,23 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 	private entries(): SettingEntry[] {
 		return [
 			{
-				name: "Enable keyword highlighting",
-				desc: "Color game terms (hope, fear, hp, stress) inside rendered cards.",
+				nameKey: "settings.language.name",
+				descKey: "settings.language.description",
+				build: (setting) => this.buildLanguage(setting),
+			},
+			{
+				nameKey: "settings.keywordHighlighting.name",
+				descKey: "settings.keywordHighlighting.description",
 				build: (setting) => this.buildKeywordHighlighting(setting),
 			},
 			{
-				name: "Roll result duration",
-				desc: "How long the roll result stays visible.",
+				nameKey: "settings.rollDuration.name",
+				descKey: "settings.rollDuration.description",
 				build: (setting) => this.buildRollDuration(setting),
 			},
 			{
-				name: "Restore defaults",
-				desc: "Reset all settings to their default values.",
+				nameKey: "settings.restore.name",
+				descKey: "settings.restore.description",
 				build: (setting) => this.buildRestoreDefaults(setting),
 			},
 		];
@@ -45,12 +56,9 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 	 */
 	getSettingDefinitions() {
 		return this.entries().map((entry) => ({
-			name: entry.name,
-			desc: entry.desc,
-			render: (setting: Setting) => {
-				setting.setName(entry.name).setDesc(entry.desc);
-				entry.build(setting);
-			},
+			name: t(entry.nameKey),
+			desc: t(entry.descKey),
+			render: (setting: Setting) => this.renderRow(setting, entry),
 		}));
 	}
 
@@ -60,9 +68,30 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 		containerEl.empty();
 
 		for (const entry of this.entries()) {
-			const setting = new Setting(containerEl).setName(entry.name).setDesc(entry.desc);
-			entry.build(setting);
+			this.renderRow(new Setting(containerEl), entry);
 		}
+	}
+
+	private renderRow(setting: Setting, entry: SettingEntry): void {
+		this.rows = this.rows.filter((row) => row.setting.settingEl.isConnected);
+		this.rows.push({ setting, entry });
+		setting.setName(t(entry.nameKey)).setDesc(t(entry.descKey));
+		entry.build(setting);
+	}
+
+	private buildLanguage(setting: Setting): void {
+		setting.addDropdown((dropdown) => {
+			this.languageDropdown = dropdown;
+			dropdown
+				.addOption("en", "English")
+				.addOption("de", "Deutsch")
+				.setValue(this.plugin.settings.language)
+				.onChange(async (value) => {
+					this.plugin.settings.language = value === "de" ? "de" : "en";
+					await this.save();
+					this.relabel();
+				});
+		});
 	}
 
 	private buildKeywordHighlighting(setting: Setting): void {
@@ -90,35 +119,52 @@ export class DaggerForgeSettingsTab extends PluginSettingTab {
 						await this.save();
 					});
 			})
-			.addExtraButton((btn) =>
+			.addExtraButton((btn) => {
+				this.durationResetButton = btn;
 				btn
 					.setIcon("reset")
-					.setTooltip(`Default: ${DEFAULT_SETTINGS.diceBadgeTooltipMs / 1000}s`)
+					.setTooltip(this.durationDefaultTooltip())
 					.onClick(async () => {
 						this.plugin.settings.diceBadgeTooltipMs = DEFAULT_SETTINGS.diceBadgeTooltipMs;
 						await this.save();
 						this.syncControls();
-					}),
-			);
+					});
+			});
 	}
 
 	private buildRestoreDefaults(setting: Setting): void {
-		setting.addButton((btn) =>
+		setting.addButton((btn) => {
+			this.restoreButton = btn;
 			btn
-				.setButtonText("Restore defaults")
+				.setButtonText(t("settings.restore.button"))
 				.setWarning()
 				.onClick(async () => {
 					this.plugin.settings = { ...DEFAULT_SETTINGS };
 					await this.save();
 					this.syncControls();
-				}),
-		);
+					this.relabel();
+				});
+		});
+	}
+
+	private durationDefaultTooltip(): string {
+		return t("settings.rollDuration.default", { seconds: DEFAULT_SETTINGS.diceBadgeTooltipMs / 1000 });
 	}
 
 	/** Pushes the saved values back into the rendered controls. */
 	private syncControls(): void {
+		this.languageDropdown?.setValue(this.plugin.settings.language);
 		this.keywordToggle?.setValue(this.plugin.settings.keywordHighlighting);
 		this.durationSlider?.setValue(this.plugin.settings.diceBadgeTooltipMs / 1000);
+	}
+
+	/** Re-applies translated labels to the rendered rows after a language change. */
+	private relabel(): void {
+		for (const { setting, entry } of this.rows) {
+			setting.setName(t(entry.nameKey)).setDesc(t(entry.descKey));
+		}
+		this.durationResetButton?.setTooltip(this.durationDefaultTooltip());
+		this.restoreButton?.setButtonText(t("settings.restore.button"));
 	}
 
 	private async save(): Promise<void> {

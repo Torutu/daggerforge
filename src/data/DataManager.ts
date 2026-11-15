@@ -95,7 +95,9 @@ export class DataManager {
 
 	private mergeSettings(saved: Partial<PluginSettings> | undefined): PluginSettings {
 		if (!saved) return { ...DEFAULT_SETTINGS };
-		return { ...DEFAULT_SETTINGS, ...saved };
+		// data.json is user-editable; an unknown language would break every translation lookup.
+		const language = saved.language === "de" ? "de" : "en";
+		return { ...DEFAULT_SETTINGS, ...saved, language };
 	}
 
 	// Convert old environment feature shape (text/bullets/textAfter) → richContent

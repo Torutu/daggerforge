@@ -1,5 +1,32 @@
 import { buildCharacterFromChoices } from "../features/characters/creationTemplate";
-import { ALL_GEAR } from "../data/srd";
+import {
+	ALL_GEAR,
+	SRD_ANCESTRIES,
+	SRD_CLASSES,
+	SRD_COMMUNITIES,
+	SRD_DOMAIN_CARDS,
+	SRD_TRANSFORMATIONS,
+	getSrdClasses,
+	getSrdAncestries,
+	getSrdCommunities,
+	getSrdEquipment,
+	getSrdItems,
+	getSrdConsumables,
+	getBeastforms,
+	getSrdDomainCards,
+	getSrdTransformations,
+	localizeDamageDie,
+} from "../data/srd";
+import { setLanguage } from "../i18n";
+import {
+	localizedArmor,
+	localizedClassFeature,
+	localizedClassSubclass,
+	localizedDomainCard,
+	localizedHeritageCard,
+	localizedHopeFeature,
+	localizedWeapon,
+} from "../features/characters/localizedCharacter";
 
 describe("ALL_GEAR", () => {
 	test("every entry has a unique id and a name", () => {
@@ -7,7 +34,166 @@ describe("ALL_GEAR", () => {
 		expect(ids.size).toBe(ALL_GEAR.length);
 		expect(ALL_GEAR.every((g) => g.name.length > 0)).toBe(true);
 		// 192 weapons + 34 armor + 12 wheelchairs + 60 items + 60 consumables
-		expect(ALL_GEAR.length).toBe(358);
+		// 312 weapons + 70 armor + 12 wheelchairs + 121 items + 121 consumables
+		expect(ALL_GEAR.length).toBe(636);
+	});
+});
+
+describe("stable SRD ids", () => {
+	test("bundles the complete SRD 2.0 player options", () => {
+		expect(SRD_CLASSES).toHaveLength(13);
+		expect(SRD_ANCESTRIES).toHaveLength(24);
+		expect(SRD_COMMUNITIES).toHaveLength(15);
+		expect(SRD_DOMAIN_CARDS).toHaveLength(210);
+		expect(SRD_TRANSFORMATIONS).toHaveLength(6);
+	});
+
+	test("classes, subclasses, heritages, and domain cards have unique ids", () => {
+		const entities = [
+			...SRD_CLASSES,
+			...SRD_CLASSES.flatMap((item) => item.subclasses),
+			...SRD_ANCESTRIES,
+			...SRD_COMMUNITIES,
+			...SRD_DOMAIN_CARDS,
+		];
+		const ids = entities.map((item) => item.id);
+		expect(new Set(ids).size).toBe(ids.length);
+	});
+
+	test("known ids do not depend on display labels", () => {
+		expect(SRD_CLASSES.find((item) => item.name === "Bard")?.id).toBe("class-bard");
+		expect(SRD_ANCESTRIES.find((item) => item.name === "Faun")?.id).toBe("ancestry-faun");
+		expect(SRD_DOMAIN_CARDS.find((item) => item.name === "Rune Ward")?.id).toBe(
+			"domain-card-arcana-1-rune-ward",
+		);
+	});
+});
+
+describe("German SRD data", () => {
+	afterEach(() => setLanguage("en"));
+
+	test("localizes Hope & Fear classes, Dread cards, and transformations without changing ids", () => {
+		expect(getSrdClasses("de").find((item) => item.id === "class-warlock")?.name).toBe("Paktmagier");
+		expect(getSrdDomainCards("de").find((item) => item.id === "domain-card-dread-1-blighting-strike")?.name).toBe("Verheerender Schlag");
+		expect(getSrdTransformations("de").find((item) => item.id === "transformation-demigod")?.name).toBe("Halbgott");
+	});
+
+	test("localizes every core player-data record without changing ids or mechanical values", () => {
+		const sameIds = (english: Array<{ id: string }>, german: Array<{ id: string }>) =>
+			expect(german.map((item) => item.id)).toEqual(english.map((item) => item.id));
+
+		sameIds(SRD_ANCESTRIES, getSrdAncestries("de"));
+		sameIds(SRD_COMMUNITIES, getSrdCommunities("de"));
+		sameIds(getSrdItems("en"), getSrdItems("de"));
+		sameIds(getSrdConsumables("en"), getSrdConsumables("de"));
+
+		const enEquipment = getSrdEquipment("en");
+		const deEquipment = getSrdEquipment("de");
+		for (const group of ["weapons", "armor", "wheelchairs"] as const) {
+			sameIds(enEquipment[group], deEquipment[group]);
+		}
+		expect(deEquipment.weapons.map(({ tier, trait, range, damage, damageType, burden }) =>
+			({ tier, trait, range, damage, damageType, burden }))).toEqual(
+			enEquipment.weapons.map(({ tier, trait, range, damage, damageType, burden }) =>
+				({ tier, trait, range, damage, damageType, burden })),
+		);
+		expect(deEquipment.armor.map(({ tier, minor, major, score }) =>
+			({ tier, minor, major, score }))).toEqual(
+			enEquipment.armor.map(({ tier, minor, major, score }) =>
+				({ tier, minor, major, score })),
+		);
+
+		const enForms = getBeastforms("en");
+		const deForms = getBeastforms("de");
+		expect(deForms).toHaveLength(enForms.length);
+		expect(deForms.map(({ tier, traitMod, evasionMod, attackMod, attackDamage }) => ({
+			tier, traitMod, evasionMod, attackMod,
+			attackDamage: attackDamage ? attackDamage.replace(/^W/, "d") : null,
+		}))).toEqual(enForms.map(({ tier, traitMod, evasionMod, attackMod, attackDamage }) =>
+			({ tier, traitMod, evasionMod, attackMod, attackDamage })));
+
+		const enClasses = getSrdClasses("en").slice(0, 9);
+		const deClasses = getSrdClasses("de").slice(0, 9);
+		sameIds(enClasses, deClasses);
+		expect(deClasses.map(({ id, stats, subclasses }) => ({
+			id, evasion: stats.evasion, hp: stats.hp,
+			subclassIds: subclasses.map((subclass) => subclass.id),
+		}))).toEqual(enClasses.map(({ id, stats, subclasses }) => ({
+			id, evasion: stats.evasion, hp: stats.hp,
+			subclassIds: subclasses.map((subclass) => subclass.id),
+		})));
+	});
+
+	test("creates a German core character with localized starting equipment", () => {
+		setLanguage("de");
+		const char = buildCharacterFromChoices({ classId: "class-bard" }, "CHR_core_de");
+		expect(char.classSubclass).toBe("Bard*in");
+		expect(char.primaryWeapon.name).toBe("Rapier");
+		expect(char.primaryWeapon.id).toBe("WP069");
+		expect(char.primaryWeapon.traitRange).toBe("Präsenz - Unmittelbar");
+		expect(char.primaryWeapon.damageDice).toBe("W8 phy");
+		expect(char.activeArmor.name).toBe("Textilrüstung");
+		expect(char.activeArmor.id).toBe("AR001");
+	});
+
+	test("localizes every dice prefix without changing the stored mechanic", () => {
+		expect(localizeDamageDie("2d8+2 phy", "de")).toBe("2W8+2 phy");
+		expect(localizeDamageDie("2d8+2 phy", "en")).toBe("2d8+2 phy");
+	});
+
+	test("creates a German Hope & Fear character with a transformation snapshot", () => {
+		setLanguage("de");
+		const char = buildCharacterFromChoices({
+			classId: "class-warlock",
+			subclassId: "subclass-warlock-pact-of-the-endless",
+			transformationId: "transformation-demigod",
+			domainCardIds: ["domain-card-dread-1-blighting-strike"],
+		}, "CHR_de");
+		expect(char.classSubclass).toContain("Paktmagier");
+		expect(char.transformationCard?.name).toBe("Halbgott");
+		expect(char.domainCards[0]?.name).toBe("Verheerender Schlag");
+	});
+
+	test("resolves an English character in German without mutating its stored snapshots", () => {
+		setLanguage("en");
+		const char = buildCharacterFromChoices(
+			{
+				classId: "class-bard",
+				subclassId: "subclass-bard-troubadour",
+				ancestryId: "ancestry-faun",
+				communityId: "community-wildborne",
+				domainCardIds: ["domain-card-arcana-1-rune-ward"],
+			},
+			"CHR_live_language",
+		);
+		const stored = structuredClone(char);
+
+		expect(localizedClassSubclass(char, "de")).not.toBe(char.classSubclass);
+		expect(localizedHopeFeature(char, "de")).not.toBe(char.hopeFeature);
+		expect(localizedClassFeature(char, "de")).not.toBe(char.classFeature);
+		expect(
+			localizedHeritageCard(char.ancestryCard, "ancestry", "de")?.features,
+		).not.toBe(char.ancestryCard?.features);
+		expect(localizedDomainCard(char.domainCards[0], "de").name).not.toBe(
+			char.domainCards[0].name,
+		);
+		expect(localizedWeapon(char.primaryWeapon, "de").id).toBe(char.primaryWeapon.id);
+		expect(localizedArmor(char.activeArmor, "de").id).toBe(char.activeArmor.id);
+		expect(char).toEqual(stored);
+	});
+
+	test("keeps user-authored and legacy snapshots static", () => {
+		const char = buildCharacterFromChoices({ classId: "class-bard" }, "CHR_custom_text");
+		char.classFeature = "My custom feature";
+		char.customSrdFields.classFeature = true;
+		char.primaryWeapon = {
+			name: "My custom weapon",
+			traitRange: "Special",
+			damageDice: "X",
+			feature: "Custom",
+		};
+		expect(localizedClassFeature(char, "de")).toBe("My custom feature");
+		expect(localizedWeapon(char.primaryWeapon, "de")).toBe(char.primaryWeapon);
 	});
 });
 
@@ -15,12 +201,15 @@ describe("buildCharacterFromChoices", () => {
 	test("full Bard/Troubadour build autofills the sheet from SRD data", () => {
 		const char = buildCharacterFromChoices(
 			{
-				className: "Bard",
-				subclassName: "Troubadour",
-				ancestryName: "Faun",
-				communityName: "Wildborne",
+				classId: "class-bard",
+				subclassId: "subclass-bard-troubadour",
+				ancestryId: "ancestry-faun",
+				communityId: "community-wildborne",
 				experiences: ["Raised by wolves", "Herbalist's apprentice"],
-				domainCardNames: ["Rune Ward", "Gifted Tracker"],
+				domainCardIds: [
+					"domain-card-arcana-1-rune-ward",
+					"domain-card-sage-1-gifted-tracker",
+				],
 			},
 			"CHR_test",
 		);
@@ -28,6 +217,8 @@ describe("buildCharacterFromChoices", () => {
 		expect(char.id).toBe("CHR_test");
 		expect(char.level).toBe("1");
 		expect(char.classSubclass).toBe("Bard - Troubadour");
+		expect(char.classId).toBe("class-bard");
+		expect(char.subclassId).toBe("subclass-bard-troubadour");
 		expect(char.heritage).toBe("Faun Wildborne");
 		expect(char.evasion).toBe("10");
 
@@ -87,7 +278,7 @@ describe("buildCharacterFromChoices", () => {
 	});
 
 	test("class without subclass still applies class stats", () => {
-		const char = buildCharacterFromChoices({ className: "Warrior" }, "CHR_w");
+		const char = buildCharacterFromChoices({ classId: "class-warrior" }, "CHR_w");
 		expect(char.classSubclass).toBe("Warrior");
 		expect(char.evasion).not.toBe("");
 		expect(char.classFeature).not.toContain("foundation");
@@ -95,7 +286,7 @@ describe("buildCharacterFromChoices", () => {
 
 	test("mixed ancestry combines first feature of one with second feature of the other", () => {
 		const char = buildCharacterFromChoices(
-			{ ancestryName: "Clank", ancestryName2: "Faun", communityName: "Wildborne" },
+			{ ancestryId: "ancestry-clank", ancestryId2: "ancestry-faun", communityId: "community-wildborne" },
 			"CHR_mix",
 		);
 		expect(char.ancestryCard?.name).toBe("Clank / Faun");
@@ -107,17 +298,17 @@ describe("buildCharacterFromChoices", () => {
 		expect(char.heritage).toBe("Clank / Faun Wildborne");
 	});
 
-	test("empty second ancestry name falls back to single ancestry", () => {
+	test("empty second ancestry id falls back to single ancestry", () => {
 		const char = buildCharacterFromChoices(
-			{ ancestryName: "Faun", ancestryName2: "" },
+			{ ancestryId: "ancestry-faun", ancestryId2: "" },
 			"CHR_single",
 		);
 		expect(char.ancestryCard?.name).toBe("Faun");
 	});
 
-	test("unknown names are ignored gracefully", () => {
+	test("unknown ids are ignored gracefully", () => {
 		const char = buildCharacterFromChoices(
-			{ className: "Nonsense", ancestryName: "Nope", domainCardNames: ["Missing Card"] },
+			{ classId: "class-nonsense", ancestryId: "ancestry-nope", domainCardIds: ["domain-card-missing"] },
 			"CHR_x",
 		);
 		expect(char.classSubclass).toBe("");

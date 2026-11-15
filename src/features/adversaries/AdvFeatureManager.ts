@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { FeatureElements, Feature } from "../../types/index";
 import { RichTextEditor } from "../../utils/RichTextEditor";
 
@@ -11,7 +12,7 @@ export const addAdvFeature = (
 
 	const nameEl = row.createEl("input", {
 		cls: "df-input-feature-name",
-		placeholder: "Feature Name",
+		placeholder: dfTranslate("ui.feature.name"),
 	});
 	nameEl.value = savedFeature?.name || "";
 
@@ -35,7 +36,7 @@ export const addAdvFeature = (
 	const richEditor = new RichTextEditor(editorContainer, savedFeature?.richContent);
 
 	const removeBtn = wrapper.createEl("button", {
-		text: "Remove",
+		text: dfTranslate("ui.remove"),
 		cls: "df-remove-feature-btn",
 	});
 	removeBtn.onclick = () => {

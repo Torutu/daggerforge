@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { App, Modal, setIcon } from "obsidian";
 import { rollDice } from "../index";
 import { makeDraggable } from "../../utils/makeDraggable";
@@ -10,7 +11,7 @@ const diceLog: string[] = [];
 export class DiceRollerModal extends Modal {
 	constructor(app: App) {
 		super(app);
-		this.titleEl.setText("Dice roller");
+		this.titleEl.setText(dfTranslate("ui.dice.roller"));
 	}
 
 	onOpen(): void {
@@ -24,7 +25,7 @@ export class DiceRollerModal extends Modal {
 		const controls = contentEl.createDiv({ cls: "df-dr-controls" });
 
 		const countGroup = controls.createDiv({ cls: "df-dr-count-group" });
-		countGroup.createEl("label", { cls: "df-dr-label", text: "Count" });
+		countGroup.createEl("label", { cls: "df-dr-label", text: dfTranslate("ui.count") });
 		const countInput = countGroup.createEl("input", { cls: "df-dr-count-input" });
 		countInput.type = "number";
 		countInput.min = "1";
@@ -32,12 +33,12 @@ export class DiceRollerModal extends Modal {
 		countInput.value = "1";
 
 		const rollBtn = controls.createEl("button", { cls: "df-dr-roll-btn" });
-		setIconLabel(rollBtn, "play", "Roll All");
+		setIconLabel(rollBtn, "play", dfTranslate("dice.rollAll"));
 
 		// ── Dice grid ─────────────────────────────────────────────────────
 		const diceSection = contentEl.createDiv({ cls: "df-dr-section" });
 		const diceSectionLabel = diceSection.createDiv({ cls: "df-dr-section-label" });
-		setIconLabel(diceSectionLabel, "dice-5", "Select dice");
+		setIconLabel(diceSectionLabel, "dice-5", dfTranslate("dice.select"));
 
 		const diceGrid = diceSection.createDiv({ cls: "df-dr-dice-grid" });
 		DICE_SIDES.forEach(sides => {
@@ -49,17 +50,17 @@ export class DiceRollerModal extends Modal {
 		// ── Queue ─────────────────────────────────────────────────────────
 		const queueSection = contentEl.createDiv({ cls: "df-dr-queue-section" });
 		const queueHeader = queueSection.createDiv({ cls: "df-dr-queue-header" });
-		queueHeader.createSpan({ cls: "df-dr-section-label-text", text: "Queue" });
+		queueHeader.createSpan({ cls: "df-dr-section-label-text", text: dfTranslate("ui.queue") });
 		const queueContainer = queueSection.createDiv({ cls: "df-dr-queue" });
 
 		// ── Log ───────────────────────────────────────────────────────────
 		const logSection = contentEl.createDiv({ cls: "df-dr-log-section" });
 		const logHeader = logSection.createDiv({ cls: "df-dr-log-header" });
 		const logTitle = logHeader.createDiv({ cls: "df-dr-section-label" });
-		setIconLabel(logTitle, "history", "Roll History");
+		setIconLabel(logTitle, "history", dfTranslate("dice.history"));
 		const clearBtn = logHeader.createEl("button", { cls: "df-dr-clear-btn" });
 		setIcon(clearBtn, "trash");
-		clearBtn.setAttribute("title", "Clear history");
+		clearBtn.setAttribute("title", dfTranslate("dice.clear"));
 
 		const logContainer = logSection.createDiv({ cls: "df-dr-log" });
 
@@ -79,7 +80,7 @@ export class DiceRollerModal extends Modal {
 		const updateQueue = () => {
 			queueContainer.empty();
 			if (diceQueue.length === 0) {
-				queueContainer.createSpan({ cls: "df-dr-queue-empty", text: "No dice added yet" });
+				queueContainer.createSpan({ cls: "df-dr-queue-empty", text: dfTranslate("ui.no.dice.added.yet") });
 				return;
 			}
 			diceQueue.forEach((expr, idx) => {

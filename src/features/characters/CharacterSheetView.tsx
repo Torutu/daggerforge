@@ -1,3 +1,4 @@
+import { translate } from "../../i18n";
 import { ItemView, Plugin, WorkspaceLeaf } from "obsidian";
 import { createRoot, Root } from "react-dom/client";
 import { CharacterSheetApp } from "./CharacterSheetApp";
@@ -11,7 +12,7 @@ export class CharacterSheetView extends ItemView {
 	constructor(leaf: WorkspaceLeaf) { super(leaf); }
 
 	getViewType()    { return Character_Sheet_View_Type; }
-	getDisplayText() { return "Character sheet"; }
+	getDisplayText() { return translate("ui.character.sheet"); }
 	getIcon()        { return "user"; }
 
 	async onOpen() {

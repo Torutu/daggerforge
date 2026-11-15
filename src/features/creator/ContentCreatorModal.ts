@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { App, Modal, setIcon } from "obsidian";
 import DaggerForgePlugin from "../../main";
 import { openCreator } from "../../utils/pluginOperations";
@@ -15,7 +16,7 @@ export class ContentCreatorModal extends Modal {
 	constructor(app: App, plugin: DaggerForgePlugin) {
 		super(app);
 		this.plugin = plugin;
-		this.titleEl.setText("What do you want to create?");
+		this.titleEl.setText(dfTranslate("ui.what.do.you.want.to.create"));
 	}
 
 	onOpen() {

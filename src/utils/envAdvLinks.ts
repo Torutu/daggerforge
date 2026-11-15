@@ -1,7 +1,8 @@
 import { App, MarkdownView } from "obsidian";
 import type DaggerForgePlugin from "../main";
 import type { AdvData } from "../types/adversary";
-import { ADVERSARIES } from "../data/index";
+import { getAdversaries } from "../data/index";
+import { getLanguage } from "../i18n";
 import { buildCardHTML } from "../features/adversaries/AdvToHtml";
 import { injectDiceBadgesIntoHtml } from "./diceBadges";
 
@@ -9,7 +10,7 @@ import { injectDiceBadgesIntoHtml } from "./diceBadges";
 // (same name = custom is the "latest" version).
 function buildNameMap(plugin: DaggerForgePlugin): Map<string, AdvData> {
 	const map = new Map<string, AdvData>();
-	ADVERSARIES.forEach(a => map.set(a.name.toLowerCase().trim(), a));
+	getAdversaries(getLanguage()).forEach(a => map.set(a.name.toLowerCase().trim(), a));
 	plugin.dataManager.getAdversaries().forEach(a => map.set(a.name.toLowerCase().trim(), a));
 	return map;
 }
@@ -85,10 +86,12 @@ export function attachPotentialAdversaryLinks(
 	const nameMap = buildNameMap(plugin);
 	if (!names.some(n => nameMap.has(n.toLowerCase()))) return;
 
-	// Rebuild the paragraph with linked names
+	// Rebuild the paragraph with linked names, keeping the label in whatever
+	// language the card was rendered in.
+	const label = fullText.slice(0, colonIdx).trim();
 	advLine.empty();
 
-	advLine.createSpan({ cls: "df-bold-title", text: "Potential Adversaries" });
+	advLine.createSpan({ cls: "df-bold-title", text: label });
 	advLine.appendText(": ");
 
 	names.forEach((name, i) => {

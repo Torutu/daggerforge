@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../../i18n";
 import { Notice, Editor, Modal } from "obsidian";
 import { addAdvFeature, getAdvFeatureValues, buildCardHTML, Adv_View_Type } from "../index";
 import type DaggerForgePlugin from "../../../main";
@@ -57,7 +58,7 @@ async function persistAdversary(
 		new Notice(`Custom adversary "${data.name}" saved successfully!`);
 	} catch (error) {
 		console.error("Error saving custom adversary:", error);
-		new Notice("Failed to save custom adversary. Check console for details.");
+		new Notice(dfTranslate("ui.failed.to.save.custom.adversary.check.console.for.details"));
 	}
 }
 
@@ -105,7 +106,7 @@ export class AdversaryModal extends Modal {
 		this.modalEl.addClass("df-form-modal");
 
 		contentEl.createEl("h2", {
-			text: this.isEditMode ? "Edit adversary" : "Create adversary",
+			text: this.isEditMode ? dfTranslate("ui.dynamic.edit.adversary") : dfTranslate("ui.dynamic.create.adversary"),
 			cls: "df-modal-title",
 		});
 
@@ -121,12 +122,12 @@ export class AdversaryModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
-		section.createEl("h3", { text: "Basic information", cls: "df-section-title" });
+		section.createEl("h3", { text: dfTranslate("ui.basic.information"), cls: "df-section-title" });
 
 		const row = section.createDiv({ cls: "df-adv-form-row" });
 
 		createInlineField(row, this.inputs, {
-			label: "Name",
+			label: dfTranslate("ui.name"),
 			key: "name",
 			type: "input",
 			savedValues: saved,
@@ -134,7 +135,7 @@ export class AdversaryModal extends Modal {
 		});
 
 		createInlineField(row, this.inputs, {
-			label: "Tier",
+			label: dfTranslate("ui.tier"),
 			key: "tier",
 			type: "select",
 			options: ["1", "2", "3", "4"],
@@ -154,7 +155,7 @@ export class AdversaryModal extends Modal {
 		}
 
 		createInlineField(row, this.inputs, {
-			label: "Type",
+			label: dfTranslate("ui.type"),
 			key: "type",
 			type: "select",
 			options: [
@@ -170,7 +171,7 @@ export class AdversaryModal extends Modal {
 		const hordeSection = section.createDiv({ cls: "df-horde-section" });
 		const hordeMembersInput = hordeSection.createEl("input", {
 			cls: "df-field-input df-horde-members-input",
-			attr: { type: "number", min: "1", placeholder: "Members per hp (e.g. 5)" },
+			attr: { type: "number", min: "1", placeholder: dfTranslate("ui.members.per.hp.e.g.5") },
 		});
 		hordeMembersInput.value = hordeMembers;
 		this.inputs["hordeMembers"] = hordeMembersInput;
@@ -193,7 +194,7 @@ export class AdversaryModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
-		section.createEl("h3", { text: "Statistics", cls: "df-section-title" });
+		section.createEl("h3", { text: dfTranslate("ui.statistics"), cls: "df-section-title" });
 
 		createShortTripleFields(
 			section, this.inputs,
@@ -217,7 +218,7 @@ export class AdversaryModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
-		section.createEl("h3", { text: "Weapon", cls: "df-section-title" });
+		section.createEl("h3", { text: dfTranslate("ui.weapon"), cls: "df-section-title" });
 
 		createShortTripleFields(
 			section, this.inputs,
@@ -233,7 +234,7 @@ export class AdversaryModal extends Modal {
 		const countRow = section.createDiv({ cls: "df-adv-form-row-weapon" });
 
 		createInlineField(countRow, this.inputs, {
-			label: "Count",
+			label: dfTranslate("ui.count"),
 			key: "count",
 			type: "input",
 			savedValues: saved,
@@ -250,7 +251,7 @@ export class AdversaryModal extends Modal {
 		saved: Record<string, unknown>,
 	) {
 		const section = contentEl.createDiv({ cls: "df-adv-form-section" });
-		section.createEl("h3", { text: "Features", cls: "df-section-title" });
+		section.createEl("h3", { text: dfTranslate("ui.features"), cls: "df-section-title" });
 
 		this.featureContainer = section.createDiv({ cls: "df-adv-feature-container" });
 		this.features = [];
@@ -277,7 +278,7 @@ export class AdversaryModal extends Modal {
 		}
 
 		const addBtn = section.createEl("button", {
-			text: "+ add feature",
+			text: dfTranslate("ui.add.feature"),
 			cls: "df-adv-btn-add-feature",
 		});
 		addBtn.onclick = () => addAdvFeature(this.featureContainer, this.features);
@@ -285,7 +286,7 @@ export class AdversaryModal extends Modal {
 
 	private buildActionButtons(contentEl: HTMLElement) {
 		const btn = contentEl.createEl("button", {
-			text: this.isEditMode ? "Update card" : "Insert card",
+			text: this.isEditMode ? dfTranslate("ui.dynamic.update.card") : dfTranslate("ui.dynamic.insert.card"),
 			cls: "df-modal-submit-btn",
 		});
 		btn.onclick = () => this.handleSubmit();

@@ -1,0 +1,551 @@
+[
+	{
+		"source": "hope-fear",
+		"id": "HF-IT001",
+		"roll": 1,
+		"rarity": "Hope & Fear",
+		"name": "Augur's Relic",
+		"subtype": "Loot",
+		"text": "Once per long rest, you can activate your Hope feature without spending Hope. You can carry only one relic."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT002",
+		"roll": 2,
+		"rarity": "Hope & Fear",
+		"name": "Ball Bearings",
+		"subtype": "Loot",
+		"text": "This pouch contains perfectly smooth metal spheres."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT003",
+		"roll": 3,
+		"rarity": "Hope & Fear",
+		"name": "Blackwing Quill",
+		"subtype": "Loot",
+		"text": "This writing quill never runs out of ink or needs to be sharpened."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT004",
+		"roll": 4,
+		"rarity": "Hope & Fear",
+		"name": "Boots of Supple Mystique",
+		"subtype": "Loot",
+		"text": "While wearing these boots, you don't leave tracks or footprints."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT005",
+		"roll": 5,
+		"rarity": "Hope & Fear",
+		"name": "Box of Dragon Dust",
+		"subtype": "Loot",
+		"text": "This snuffbox is filled with combustible powder."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT006",
+		"roll": 6,
+		"rarity": "Hope & Fear",
+		"name": "Brooch",
+		"subtype": "Loot",
+		"text": "On a successful weapon attack, you can knock your target back up to Close range from their location."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT007",
+		"roll": 7,
+		"rarity": "Hope & Fear",
+		"name": "Caltrops",
+		"subtype": "Loot",
+		"text": "You can spread these caltrops in a Very Close area around you. A creature hastening through that area must mark a Stress."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT008",
+		"roll": 8,
+		"rarity": "Hope & Fear",
+		"name": "Cheater's Coin",
+		"subtype": "Loot",
+		"text": "When you flip this coin, you can spend a Hope to determine which side it lands on."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT009",
+		"roll": 9,
+		"rarity": "Hope & Fear",
+		"name": "Collapsible Pole",
+		"subtype": "Loot",
+		"text": "You can break down this 18-foot pole into six interlinked 3-foot segments."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT010",
+		"roll": 10,
+		"rarity": "Hope & Fear",
+		"name": "Collar of Ascendancy",
+		"subtype": "Loot",
+		"text": "An animal who wears this collar gains the ability to speak and understand common speech."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT011",
+		"roll": 11,
+		"rarity": "Hope & Fear",
+		"name": "Communion Relic",
+		"subtype": "Loot",
+		"text": "Once per rest, you can spend a Hope to use an ally's Experience as if it were your own. You can carry only one relic."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT012",
+		"roll": 12,
+		"rarity": "Hope & Fear",
+		"name": "Crucible Frames",
+		"subtype": "Loot",
+		"text": "These eyeglasses reveal weak points in objects and creatures. Three times per rest, you can spend a Hope to gain advantage on an attack roll."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT013",
+		"roll": 13,
+		"rarity": "Hope & Fear",
+		"name": "Dagginae's Obsidian Slate",
+		"subtype": "Loot",
+		"text": "This wafer-thin sheet of volcanic glass is used by archivists to keep notes. Any information etched onto its surface disappears but can be recalled via a command you set."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT014",
+		"roll": 14,
+		"rarity": "Hope & Fear",
+		"name": "Eclipse Coin",
+		"subtype": "Loot",
+		"text": "Once per rest, 1d2{flip a coin.} On heads, you gain a +1 bonus to attack rolls until your next successful attack. On tails, you gain +1 to your Evasion until an attack fails against you."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT015",
+		"roll": 15,
+		"rarity": "Hope & Fear",
+		"name": "Elven Spyglass",
+		"subtype": "Loot",
+		"text": "You can use this spyglass to magnify your vision a hundredfold."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT016",
+		"roll": 16,
+		"rarity": "Hope & Fear",
+		"name": "Enchanter's Loupe",
+		"subtype": "Loot",
+		"text": "You can use this loupe to see through illusions and enchantments."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT017",
+		"roll": 17,
+		"rarity": "Hope & Fear",
+		"name": "Escher's Mirrorball",
+		"subtype": "Loot",
+		"text": "Once per long rest, you can command this fist-sized silver orb to capture an omnidirectional image of its surroundings on its surface. This image lasts until your next long rest."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT018",
+		"roll": 18,
+		"rarity": "Hope & Fear",
+		"name": "Force Disc",
+		"subtype": "Loot",
+		"text": "This shimmering two-dimensional disc of magical force has a 4-foot diameter and is magically tethered to a pebble. The disc always floats 3 feet north of, and at the same elevation as, the pebble. The pebble has a mass equal to one-hundredth of the total mass carried by the disc."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT019",
+		"roll": 19,
+		"rarity": "Hope & Fear",
+		"name": "Furball Bag",
+		"subtype": "Loot",
+		"text": "Once per rest, you can produce 2d20 harmless, cat-sized fur creatures of indeterminate origin and species from this bag."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT020",
+		"roll": 20,
+		"rarity": "Hope & Fear",
+		"name": "Gadiman's Backpack",
+		"subtype": "Loot",
+		"text": "Once per rest, you can spend a Hope to conjure a mundane item up to a cubic foot in size inside this satchel."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT021",
+		"roll": 21,
+		"rarity": "Hope & Fear",
+		"name": "Ghoulskin Gloves",
+		"subtype": "Loot",
+		"text": "When you attack with a physical weapon while wearing these gloves, the damage is considered both physical and magic."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT022",
+		"roll": 22,
+		"rarity": "Hope & Fear",
+		"name": "Gloves of Alacrity",
+		"subtype": "Loot",
+		"text": "When you would mark a Stress to reload a weapon, you don't mark it."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT023",
+		"roll": 23,
+		"rarity": "Hope & Fear",
+		"name": "Gourmet Granules",
+		"subtype": "Loot",
+		"text": "This savory powder makes any food it's sprinkled on delicious and healthy, no matter how bland or rotten it is."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT024",
+		"roll": 24,
+		"rarity": "Hope & Fear",
+		"name": "Grapnel",
+		"subtype": "Loot",
+		"text": "You gain advantage on action rolls to climb sheer surfaces."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT025",
+		"roll": 25,
+		"rarity": "Hope & Fear",
+		"name": "Gravewarden's Bell",
+		"subtype": "Loot",
+		"text": "This bell rings when a ghost or undead creature moves within Far range of it."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT026",
+		"roll": 26,
+		"rarity": "Hope & Fear",
+		"name": "Hero's Helm",
+		"subtype": "Loot",
+		"text": "When you critically succeed on an attack, all allies within Close range gain a Hope."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT027",
+		"roll": 27,
+		"rarity": "Hope & Fear",
+		"name": "Hollowbark Horn",
+		"subtype": "Loot",
+		"text": "You can blow this horn to summon a small woodland creature to perform a simple task."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT028",
+		"roll": 28,
+		"rarity": "Hope & Fear",
+		"name": "Insomniac's Periapt",
+		"subtype": "Loot",
+		"text": "When you take a rest without clearing Hit Points or Stress, you gain a +2 bonus to attack and damage rolls until your next rest."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT029",
+		"roll": 29,
+		"rarity": "Hope & Fear",
+		"name": "Iron Dagger Pendant",
+		"subtype": "Loot",
+		"text": "Once per long rest, you can spend a Hope to tell the pendant a creature's name. The pendant gently pulls you toward that creature's current location until your next long rest."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT030",
+		"roll": 30,
+		"rarity": "Hope & Fear",
+		"name": "Iron Veil",
+		"subtype": "Loot",
+		"text": "This chain-link head covering renders the wearer invisible to fey creatures."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT031",
+		"roll": 31,
+		"rarity": "Hope & Fear",
+		"name": "Kingfisher's Net",
+		"subtype": "Loot",
+		"text": "Once per long rest, you can use this net to scoop one live fish out of any amount of water, no matter how unlikely it is for that water to have fish in it."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT032",
+		"roll": 32,
+		"rarity": "Hope & Fear",
+		"name": "Knockback Bracelets",
+		"subtype": "Loot",
+		"text": "On a successful weapon attack, you can knock your target back up to Close range from their location."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT033",
+		"roll": 33,
+		"rarity": "Hope & Fear",
+		"name": "Loaded Dice",
+		"subtype": "Loot",
+		"text": "You can choose what result this set of weighted dice rolls with a successful Finesse Roll (14). If you roll with Fear, anyone watching knows the dice are loaded."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT034",
+		"roll": 34,
+		"rarity": "Hope & Fear",
+		"name": "Mandragorian Torch",
+		"subtype": "Loot",
+		"text": "This torch gives off light only the bearer can see."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT035",
+		"roll": 35,
+		"rarity": "Hope & Fear",
+		"name": "Map of Revelation",
+		"subtype": "Loot",
+		"text": "You can attune this map to one creature at a time. The map always shows the attuned creature's location."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT036",
+		"roll": 36,
+		"rarity": "Hope & Fear",
+		"name": "Molepaw Mittens",
+		"subtype": "Loot",
+		"text": "Spend a Hope to swim through earth as if it were water for the next 10 minutes."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT037",
+		"roll": 37,
+		"rarity": "Hope & Fear",
+		"name": "Namer's Oracle",
+		"subtype": "Loot",
+		"text": "Once per session, you can roll this set of runic dice to reveal the full name of the last person you touched."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT038",
+		"roll": 38,
+		"rarity": "Hope & Fear",
+		"name": "Nighthawker's Ring",
+		"subtype": "Loot",
+		"text": "Spend a Hope to activate the gemstone in this ring until the end of the scene. While active, the gemstone changes color to indicate the wearer's proximity to hidden treasure: warm colors for near, cool colors for far."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT039",
+		"roll": 39,
+		"rarity": "Hope & Fear",
+		"name": "Phobophage's Circlet",
+		"subtype": "Loot",
+		"text": "When the GM spends a Fear, roll a d4. Once per scene on a result of 4, you clear a Stress."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT040",
+		"roll": 40,
+		"rarity": "Hope & Fear",
+		"name": "Portal Frames",
+		"subtype": "Loot",
+		"text": "This pair of small ornate frames, one red and one blue, are connected. Anything that passes into one exits from the other."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT041",
+		"roll": 41,
+		"rarity": "Hope & Fear",
+		"name": "Quillshawl",
+		"subtype": "Loot",
+		"text": "If an adversary attacks you within Melee range, they must succeed on a Reaction Roll (12) or mark a Hit Point."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT042",
+		"roll": 42,
+		"rarity": "Hope & Fear",
+		"name": "Reliquary of the Sightless Saint",
+		"subtype": "Loot",
+		"text": "You gain a +1 bonus to your Hope Die when you make the Risk It All death move."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT043",
+		"roll": 43,
+		"rarity": "Hope & Fear",
+		"name": "Returning Ring",
+		"subtype": "Loot",
+		"text": "When you throw your primary weapon while wearing this ring, the weapon appears in your hand immediately after the attack."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT044",
+		"roll": 44,
+		"rarity": "Hope & Fear",
+		"name": "Rings of Alliance",
+		"subtype": "Loot",
+		"text": "Two creatures can wear this pair of rose gold rings. Once per session, you can initiate a Tag Team Roll with whoever is wearing the other ring without spending Hope or counting against your session limit for Tag Team Rolls."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT045",
+		"roll": 45,
+		"rarity": "Hope & Fear",
+		"name": "Rings of Camaraderie",
+		"subtype": "Loot",
+		"text": "Two creatures can wear this pair of wooden rings. You can mark the Stress of whoever is wearing the other ring (with their permission) as if it were your own."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT046",
+		"roll": 46,
+		"rarity": "Hope & Fear",
+		"name": "Rings of Friendship",
+		"subtype": "Loot",
+		"text": "Two creatures can wear this pair of rings shaped like coiled snakes. You can spend the Hope of whoever is wearing the other ring (with their permission) as if it were your own."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT047",
+		"roll": 47,
+		"rarity": "Hope & Fear",
+		"name": "Self-Tying Rope",
+		"subtype": "Loot",
+		"text": "You can command this rope to tie or untie itself."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT048",
+		"roll": 48,
+		"rarity": "Hope & Fear",
+		"name": "Silee's Folding Knife",
+		"subtype": "Loot",
+		"text": "This 3-inch blade has an edge that easily cuts through anything except the handle it's stored in."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT049",
+		"roll": 49,
+		"rarity": "Hope & Fear",
+		"name": "Sorcerer's Hat",
+		"subtype": "Loot",
+		"text": "This conical blue hat is covered in silver stars. Once per rest, you can cast a spell from your vault with a Recall Cost equal to or less than your tier. This doesn't work for permanently vaulted cards."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT050",
+		"roll": 50,
+		"rarity": "Hope & Fear",
+		"name": "Soul-Twin Circlets",
+		"subtype": "Loot",
+		"text": "Two creatures can wear this pair of circlets. You can spend a Hope to switch places with whoever is wearing the other circlet."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT051",
+		"roll": 51,
+		"rarity": "Hope & Fear",
+		"name": "Temporal Sanctuary",
+		"subtype": "Loot",
+		"text": "A PC who takes a rest in the temporal sanctuary can choose an additional downtime move."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT052",
+		"roll": 52,
+		"rarity": "Hope & Fear",
+		"name": "Thief's Compass",
+		"subtype": "Loot",
+		"text": "This compass points the way toward the nearest exit while indoors and the closest entrance while outdoors."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT053",
+		"roll": 53,
+		"rarity": "Hope & Fear",
+		"name": "Timekeeper's Pendant",
+		"subtype": "Loot",
+		"text": "You can choose an additional downtime move each rest."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT054",
+		"roll": 54,
+		"rarity": "Hope & Fear",
+		"name": "Titan's Girdle",
+		"subtype": "Loot",
+		"text": "Once per scene, you can activate this girdle to gain a +1 bonus to your Proficiency for your next attack."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT055",
+		"roll": 55,
+		"rarity": "Hope & Fear",
+		"name": "Traveler's Bell",
+		"subtype": "Loot",
+		"text": "Once per long rest, you can ring this bell to magically open the shortest safe path through rough terrain for 1 hour."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT056",
+		"roll": 56,
+		"rarity": "Hope & Fear",
+		"name": "Two-Faced Aegis Brooch",
+		"subtype": "Loot",
+		"text": "Once per rest, 1d2{flip a coin}. On heads, you become immune to the next physical damage you take. On tails, you become immune to the next magic damage you take."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT057",
+		"roll": 57,
+		"rarity": "Hope & Fear",
+		"name": "Warp Pendant",
+		"subtype": "Loot",
+		"text": "Once per rest, mark a Stress to teleport to a location you can clearly see."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT058",
+		"roll": 58,
+		"rarity": "Hope & Fear",
+		"name": "Whisperstep Anklet",
+		"subtype": "Loot",
+		"text": "This anklet makes your steps silent as long as you don't move faster than walking speed."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT059",
+		"roll": 59,
+		"rarity": "Hope & Fear",
+		"name": "Wildrider's Saddle",
+		"subtype": "Loot",
+		"text": "This saddle grants any animal it's strapped onto the ability to understand their rider's commands."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT060",
+		"roll": 60,
+		"rarity": "Hope & Fear",
+		"name": "Windup Toy",
+		"subtype": "Loot",
+		"text": "This small mechanical device is shaped like a strixwolf pup and can be programmed to perform simple tricks."
+	},
+	{
+		"source": "hope-fear",
+		"id": "HF-IT061",
+		"roll": 61,
+		"rarity": "Hope & Fear",
+		"name": "Zephyr's Jar",
+		"subtype": "Loot",
+		"text": "You can open this empty jar during inclement weather to capture the storm and leave behind clear skies. The storm remains inside until unleashed by reopening the jar."
+	}
+]

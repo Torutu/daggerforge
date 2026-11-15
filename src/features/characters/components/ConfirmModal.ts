@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../../i18n";
 import { App, Modal } from "obsidian";
 
 /** Minimal confirmation dialog for destructive character sheet actions. */
@@ -33,7 +34,7 @@ export class ConfirmModal extends Modal {
 			this.close();
 			this.onConfirm();
 		});
-		buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
+		buttons.createEl("button", { text: dfTranslate("ui.cancel") }).addEventListener("click", () => this.close());
 	}
 
 	onClose() {

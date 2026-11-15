@@ -1,0 +1,198 @@
+[
+	{
+		"id": "ancestry-clank",
+		"name": "Klonk",
+		"description": [
+			"Klonks sind lebendige mechanische Geschöpfe, die aus vielen verschiedenen Materialien wie etwa Metall, Holz und Stein erbaut werden."
+		],
+		"features": [
+			"Funktionales Design: Lege fest, wer dich zu welchem Zweck gebaut hat. Bei der Charaktererschaffung darfst du eine deiner Erfahrungen wählen, die diesem Zweck am meisten entspricht – du erhältst einen permanenten Bonus von +1 auf diese Erfahrung.",
+			"Effizient: Wenn du eine kurze Rast einlegst, darfst du einen Zug für eine Lange Rast statt einem Zug für eine Kurze Rast wählen."
+		]
+	},
+	{
+		"id": "ancestry-drakona",
+		"name": "Drakona",
+		"description": [
+			"Drakona sehen aus wie flügellose, humanoide Drachen. Sie verfügen über einen mächtigen Elementar-Atem."
+		],
+		"features": [
+			"Schuppen: Deine Schuppen bieten dir natürlichen Schutz. Wenn du Schweren Schaden erleiden würdest, darfst du 1 Stress markieren, um 1 TP weniger zu markieren.",
+			"Elementar-Atem: Wähle ein Element für deinen Atem aus (z.B. Elektrizität, Feuer, Eis). Du kannst diesen Atem gegen ein oder mehrere Ziele innerhalb sehr kurzer Distanz anwenden. Der Atem zählt als Instinkt-Waffe und bewirkt W8 magischen Schaden, abhängig von deiner Übung."
+		]
+	},
+	{
+		"id": "ancestry-dwarf",
+		"name": "Zwerg*in",
+		"description": [
+			"Zwerg*innen sind Humanoide von kleiner, aber breiter Statur. Sie haben eine kräftige Muskulatur und eine dichte Körperbehaarung."
+		],
+		"features": [
+			"Dicke Haut: Wenn du Leichten Schaden erleidest, darfst du 2 Stress statt 1 TP markieren.",
+			"Zähigkeit: Setze 3 Hoffnung ein, um physischen Schaden gegen dich zu halbieren."
+		]
+	},
+	{
+		"id": "ancestry-elf",
+		"name": "Elf*e",
+		"description": [
+			"Elfen sind typischerweise hochgewachsene Humanoide mit spitzen Ohren und geschärften Sinnen."
+		],
+		"features": [
+			"Geistesgegenwart: Du darfst 1 Stress markieren, um einen Vorteil auf einen Reaktionswurf zu erhalten.",
+			"Himmlische Trance: Während einer Rast kannst du in Trance verfallen, um einen zusätzlichen Auszeit-Zug auszuführen."
+		]
+	},
+	{
+		"id": "ancestry-faerie",
+		"name": "Fee",
+		"description": [
+			"Feen sind geflügelte Humanoide mit insektenartigen Merkmalen."
+		],
+		"features": [
+			"Zweite Chance: Einmal pro Spielsitzung darfst du 3 Hoffnung einsetzen, um die Dualwürfel erneut zu werfen, nachdem du oder ein gewillter verbündeter Charakter innerhalb kurzer Distanz einen Aktionswurf durchgeführt habt.",
+			"Flügel: Du kannst fliegen. Während du fliegst und zum Ziel eines Angriffs wirst, darfst du 1 Stress markieren, um bei diesem Angriff einen Bonus von +2 auf Ausweichen zu erhalten."
+		]
+	},
+	{
+		"id": "ancestry-faun",
+		"name": "Faun",
+		"description": [
+			"Faune ähneln mit ihren geschwungenen Hörnern, quadratischen Pupillen und Paarhufen humanoiden Ziegen."
+		],
+		"features": [
+			"Ziegensprung: Du kannst an jede beliebige Position innerhalb kurzer Distanz springen, als würdest du dich normal dorthin bewegen. Du kannst so Hindernisse, Abgründe oder Barrieren mit Leichtigkeit überqueren.",
+			"Tritt: Wenn du bei einem Angriff gegen ein Ziel in unmittelbarer Distanz einen Erfolg erzielst, darfst du 1 Stress markieren, um dich mit einem Tritt von diesem abzustoßen. Der Tritt verursacht zusätzlich 2W6 Schaden und stößt entweder dich selbst oder das Ziel in sehr kurze Distanz zurück."
+		]
+	},
+	{
+		"id": "ancestry-firbolg",
+		"name": "Firbolg",
+		"description": [
+			"Firbolgs sind rinderartige Humanoide. Man erkennt sie oft an ihrer breiten Nase und ihren langen, hängenden Ohren."
+		],
+		"features": [
+			"Ansturm: Wenn du bei einem Wurf auf Agilität einen Erfolg erzielst, um dich von weiter oder sehr weiter Distanz in unmittelbare Distanz zu bewegen, darfst du 1 Stress markieren, um allen Zielen in unmittelbarer Distanz 1W12 physischen Schaden zuzufügen.",
+			"Unerschütterlich: Wenn du 1 Stress markieren würdest, darfst du 1W6 würfeln. Würfelst du eine 6, musst du keinen Stress markieren."
+		]
+	},
+	{
+		"id": "ancestry-fungril",
+		"name": "Fungril",
+		"description": ["Fungril sehen aus wie humanoide Pilzwesen."],
+		"features": [
+			"Fungril-Netzwerk: Führe einen Wurf auf Instinkt (12) durch. Bei einem Erfolg nutzt du dein Myzel, um mit anderen Charakteren mit Fungril-Abstammung über beliebig weite Distanz hinweg zu kommunizieren.",
+			"Totenverbindung: Wenn du eine Leiche berührst, die vor Kurzem verstorben ist, darfst du 1 Stress markieren, um eine Erinnerung der Leiche zutage zu fördern, die mit einem bestimmten Gefühl deiner Wahl in Verbindung steht."
+		]
+	},
+	{
+		"id": "ancestry-galapa",
+		"name": "Galapa",
+		"description": [
+			"Galapas sehen wie humanoide Schildkröten aus. Sie haben große, kuppelförmige Panzer, in die sie sich zurückziehen können."
+		],
+		"features": [
+			"Panzer: Du erhältst einen Bonus in Höhe deiner Übung auf deine Schadensschwellen.",
+			"Einigeln: Du darfst 1 Stress markieren, um dich in deinen Panzer zurückzuziehen. Während du in deinem Panzer bist, bist du resistent gegen physischen Schaden, erhältst einen Nachteil auf Aktionswürfe und kannst dich nicht bewegen."
+		]
+	},
+	{
+		"id": "ancestry-giant",
+		"name": "Riese*in",
+		"description": [
+			"Ries*innen sind sehr hochgewachsene Humanoide mit breiten Schultern, langen Armen und einem bis drei Augen."
+		],
+		"features": [
+			"Durchhaltevermögen: Bei der Charaktererschaffung erhältst du ein zusätzliches TP-Feld.",
+			"Reichweite: Du kannst sämtliche Waffen, Fähigkeiten, Zauber und andere Merkmale, die in unmittelbarer Distanz wirken, auch innerhalb sehr kurzer Distanz anwenden."
+		]
+	},
+	{
+		"id": "ancestry-goblin",
+		"name": "Goblin",
+		"description": [
+			"Goblins sind kleine Humanoide, die man an ihren großen Augen und riesigen Ohren erkennt."
+		],
+		"features": [
+			"Trittsicher: Du erhältst niemals einen Nachteil auf Agilitätswürfe.",
+			"Gefahrensinn: Einmal pro Rast darfst du 1 Stress markieren – ein gegnerisches Ziel, das einen Angriff gegen dich oder einen verbündeten Charakter innerhalb sehr kurzer Distanz durchgeführt hat, muss erneut würfeln."
+		]
+	},
+	{
+		"id": "ancestry-halfling",
+		"name": "Halbling",
+		"description": [
+			"Halblinge sind kleine Humanoide mit großen, haarigen Füßen und hervorstehenden, runden Ohren."
+		],
+		"features": [
+			"Glücksbringer: Am Anfang jeder Spielsitzung erhält jedes Mitglied deiner Gruppe 1 Hoffnung.",
+			"Innerer Kompass: Wenn du eine 1 auf dem Hoffnungswürfel erzielst, darfst du ihn erneut würfeln."
+		]
+	},
+	{
+		"id": "ancestry-human",
+		"name": "Mensch",
+		"description": [
+			"Menschen sind erkennbar an ihren filigranen Händen, runden Ohren und ihrem auf Ausdauer ausgelegten Körperbau."
+		],
+		"features": [
+			"Hohe Belastbarkeit: Bei der Charaktererschaffung erhältst du ein zusätzliches Stress-Feld.",
+			"Anpassungsfähig: Wenn du einen Misserfolg bei einem Wurf erzielst, für den du eine deiner Erfahrungen eingesetzt hast, darfst du 1 Stress markieren, um erneut zu würfeln."
+		]
+	},
+	{
+		"id": "ancestry-infernis",
+		"name": "Infernis",
+		"description": [
+			"Infernis sind Humanoide mit scharfen Reißzähnen, spitzen Ohren und Hörnern. Sie stammen von den Dämonen der Finsteren Stätten ab."
+		],
+		"features": [
+			"Furchtlos: Wenn du mit Furcht würfelst, darfst du 2 Stress markieren, um das Ergebnis in einen Wurf mit Hoffnung umzuwandeln.",
+			"Furchterregendes Antlitz: Du erhältst einen Vorteil auf Würfe, um feindliche Kreaturen einzuschüchtern."
+		]
+	},
+	{
+		"id": "ancestry-katari",
+		"name": "Katari",
+		"description": [
+			"Katari sind humanoide Katzen mit ausfahrbaren Krallen, schlitzartigen Pupillen und hohen, aufgestellten Ohren."
+		],
+		"features": [
+			"Katzenhafter Instinkt: Wenn du auf Agilität würfelst, darfst du 2 Hoffnung einsetzen, um deinen Hoffnungswürfel erneut zu würfeln.",
+			"Ausfahrbare Krallen: Führe einen Wurf auf Agilität aus, um ein Ziel in deiner unmittelbaren Distanz zu kratzen. Bei einem Erfolg wird das Ziel vorübergehend Verwundbar."
+		]
+	},
+	{
+		"id": "ancestry-orc",
+		"name": "Ork*in",
+		"description": [
+			"Orks sind Humanoide, die sich durch ihr grobschlächtiges Aussehen und ihre wildschweinartigen Hauer auszeichnen, die aus ihrem Unterkiefer wachsen."
+		],
+		"features": [
+			"Robust: Wenn du nur noch 1 TP übrig hast, erhalten Angriffe gegen dich einen Nachteil.",
+			"Hauer: Wenn du einen Erfolg bei einem Angriff auf ein Ziel in unmittelbarer Distanz erzielst, darfst du 1 Hoffnung einsetzen, um das Ziel mit deinen Hauern anzugreifen und ihm so zusätzlich 1W6 Schaden zuzufügen."
+		]
+	},
+	{
+		"id": "ancestry-ribbet",
+		"name": "Quak",
+		"description": [
+			"Quaks sind humanoide Frösche mit hervorstehenden Augen und Schwimmhäuten an Händen und Füßen."
+		],
+		"features": [
+			"Amphibisch: Du kannst dich problemlos unter Wasser bewegen und atmen.",
+			"Lange Zunge: Du kannst deine lange Zunge nutzen, um dich an Objekten in kurzer Distanz festzuhalten. Du darfst 1 Stress markieren, um deine Zunge als Waffe zu verwenden (Geschick, kurze Distanz), die W12 physischen Schaden verursacht, abhängig von deiner Übung."
+		]
+	},
+	{
+		"id": "ancestry-simiah",
+		"name": "Simiah",
+		"description": [
+			"Simiah sehen aus wie humanoide Affen mit langen Gliedmaßen und Klammerfüßen."
+		],
+		"features": [
+			"Klettertalent: Du erhältst einen Vorteil bei Würfen auf Agilität, um zu balancieren oder zu klettern.",
+			"Wendig: Bei der Charaktererschaffung erhältst du einen permanenten Bonus von +1 auf Ausweichen."
+		]
+	}
+]

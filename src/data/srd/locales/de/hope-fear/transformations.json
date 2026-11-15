@@ -1,0 +1,104 @@
+[
+	{
+		"id": "transformation-demigod",
+		"name": "Halbgott",
+		"description": [
+			"Halbgötter sind sterbliche Kreaturen, durch deren Adern das Blut der Götter fließt."
+		],
+		"features": [
+			{
+				"name": "Begabt",
+				"description": "Du erhältst einen Bonus von +1 auf Aktions-, Reaktions- und Schadenswürfe."
+			},
+			{
+				"name": "Bürde der Göttlichkeit",
+				"description": "Wenn dir ein Wurf misslingt, musst du 1 Stress markieren oder die SL erhält 1 Furcht."
+			}
+		]
+	},
+	{
+		"id": "transformation-ghost",
+		"name": "Geist",
+		"description": [
+			"Geister sind die Seelen Verstorbener, die an das Reich der Sterblichen gebunden sind."
+		],
+		"features": [
+			{
+				"name": "Unerledigte Angelegenheit",
+				"description": "Lege gemeinsam mit der SL fest, welche Aufgabe oder welches Verlangen dich an das Reich der Sterblichen bindet. Sobald du sie erfüllst, trittst du durch den Schleier des Todes."
+			},
+			{
+				"name": "Körperlos",
+				"description": "Dein Körper wechselt zwischen einer körperlichen und körperlosen Gestalt. Du besitzt Resistenz gegen physischen Schaden, erleidest doppelten magischen Schaden und darfst 2 Stress markieren, um für einen kurzen Moment durch einen festen Gegenstand zu treten."
+			}
+		]
+	},
+	{
+		"id": "transformation-reanimated",
+		"name": "Wiederbelebter",
+		"description": [
+			"Wiederbelebte sind Leichname, die ins Leben zurückgebracht wurden."
+		],
+		"features": [
+			{
+				"name": "Leichnam",
+				"description": "Während einer Rast darfst du TP nur löschen, wenn dir Überreste einer kürzlich verstorbenen Kreatur zur Verfügung stehen. Beschreibe, wie du diese Materialien verwendest, um deinen Leichnam zu erhalten."
+			},
+			{
+				"name": "Nicht totzukriegen",
+				"description": "Wenn du die Todesaktion „Alles riskieren“ wählst und scheiterst, darfst du dauerhaft 1 TP markieren, um stattdessen erfolgreich zu sein. Verwende dennoch den Wert des Hoffnungswürfels, um TP und Stress zu löschen. Wenn du deinen letzten TP dauerhaft markierst, trittst du durch den Schleier des Todes."
+			}
+		]
+	},
+	{
+		"id": "transformation-shapeshifter",
+		"name": "Gestaltwandler",
+		"description": [
+			"Gestaltwandler sind Kreaturen, die ihre körperliche Form verändern können."
+		],
+		"features": [
+			{
+				"name": "Gestalt wechseln",
+				"description": "Während einer Rast darfst du eine Auszeit-Aktion verwenden, um deine aktuelle Abstammung gegen eine andere auszutauschen. Beschreibe dabei, wie sich dein Erscheinungsbild verändert."
+			},
+			{
+				"name": "Nur oberflächlich",
+				"description": "Du erhältst nur den Vorteil eines Merkmals deiner gewählten Abstammung. Dieses Merkmal bestimmst du bei der Wahl der Abstammung. Mit einer Auszeit-Aktion darfst du ein anderes Merkmal dieser Abstammung wählen."
+			}
+		]
+	},
+	{
+		"id": "transformation-vampire",
+		"name": "Vampir",
+		"description": [
+			"Vampire sind untote Kreaturen mit scharfen Fangzähnen, die sich vom Blut der Lebenden ernähren."
+		],
+		"features": [
+			{
+				"name": "Fangzähne",
+				"description": "Führe mit einem Attribut deiner Wahl einen Angriff aus, um ein Ziel in unmittelbarer Distanz zu beißen. Bei einem Erfolg fügst du abhängig von deiner Übung W6 physischen Schaden zu."
+			},
+			{
+				"name": "Trinken",
+				"description": "Wenn dir ein Angriff mit „Fangzähne“ gegen eine Kreatur gelingt, die bluten kann, darfst du 1 Stress markieren, um von ihr zu trinken. Lege so viele Marker auf diese Karte, wie das Ziel TP markieren muss. Du kannst höchstens 6 Marker gleichzeitig besitzen. Bevor du einen Aktionswurf durchführst, darfst du 1 Marker ausgeben, damit dein Furchtwürfel zu einem W20 wird. Entferne bei einer langen Rast 1 Marker. Solange sich keine Marker auf dieser Karte befinden, hast du einen Nachteil bei Aktions- und Reaktionswürfen."
+			}
+		]
+	},
+	{
+		"id": "transformation-werewolf",
+		"name": "Werwolf",
+		"description": [
+			"Werwölfe sind Kreaturen, die sich in große übernatürliche Wölfe verwandeln."
+		],
+		"features": [
+			{
+				"name": "Wolfsgestalt",
+				"description": "Wenn du mindestens 1 TP markierst, darfst du 1 Stress markieren, um deine Wolfsgestalt anzunehmen. In dieser Gestalt erhältst du einen Bonus von 1W10 auf Angriffs- und Schadenswürfe. Wenn du in Wolfsgestalt ein Ergebnis mit Hoffnung würfelst, musst du 1 Stress markieren. Die Wolfsgestalt hält an, bis du in „Heulende Raserei“ verfällst oder eine Rast einlegst."
+			},
+			{
+				"name": "Heulende Raserei",
+				"description": "Wenn du in Wolfsgestalt deinen letzten Stress markierst, verfällst du in Raserei. Wirf eine Anzahl W20 in Höhe deines Rangs und füge allen Kreaturen in sehr kurzer Distanz physischen Schaden in Höhe der Summe zu. Anschließend endet deine Wolfsgestalt."
+			}
+		]
+	}
+]

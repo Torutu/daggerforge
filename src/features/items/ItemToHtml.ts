@@ -1,3 +1,5 @@
+import { gameTerm } from "../../i18n/gameTerms";
+import { translate as dfTranslate } from "../../i18n";
 import { GearData, GEAR_KIND_LABELS } from "../../types/srd";
 import { escapeHtml } from "../../utils/richContentTransform";
 
@@ -20,8 +22,8 @@ function renderText(text: string): string {
  */
 export function gearToHtml(gear: GearData): string {
 	const chips = [
-		GEAR_KIND_LABELS[gear.kind],
-		gear.tier !== null ? `Tier ${gear.tier}` : null,
+		gameTerm(GEAR_KIND_LABELS[gear.kind]),
+		gear.tier !== null ? `${dfTranslate("ui.tier")} ${gear.tier}` : null,
 		gear.rarity,
 	]
 		.filter(Boolean)

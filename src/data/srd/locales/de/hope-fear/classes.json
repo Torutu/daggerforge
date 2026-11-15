@@ -1,0 +1,118 @@
+[
+	{
+		"id": "class-assassin",
+		"name": "Assassine",
+		"description": [
+			"Assassinen sind Meister darin, mit präzisen Schlägen tödliche Verletzungen zuzufügen. Anders als jene, für die Gewalt nur ein Mittel zum Zweck ist, betrachten sie den Tod als Beruf. Viele halten ihr Handwerk für ehrenwert oder sogar heilig und schließen sich Gilden an, um ihre Fertigkeiten zu verfeinern, ihre Grundsätze zu formen und ihren Lebensunterhalt zu verdienen. Mächtige Herrscher, einflussreiche Geschäftsleute und gewöhnliche Leute mit einer offenen Rechnung nehmen ihre Dienste in Anspruch. Oft ist ein Assassine die letzte Hoffnung, wenn ein Ziel bislang als unbezwingbar galt. Manche töten für den richtigen Grund oder den richtigen Preis, andere folgen einem strengen moralischen Kodex. Wer ins Visier eines Assassinen gerät, darf sich bereits zu den Toten zählen."
+		],
+		"items": "Eine Namensliste, auf der mehrere Einträge durchgestrichen sind, oder eine rostige Klinge mit einem eingravierten Abzeichen",
+		"hopeFeature": "Tödliche Entschlossenheit: **Setze 3 Hoffnung ein**, um 2 Stress zu löschen.",
+		"classFeatures": [
+			{
+				"name": "Zum Tode markiert",
+				"description": "Nach einem erfolgreichen Waffenangriff darfst du **1 Stress markieren**, um das Ziel _Zum Tode markiert_ zu machen. Wenn du einem so markierten Ziel Schaden zufügst, fügst du dem Schadenswurf pro Rang einen **W4** hinzu.\n\nDu kannst immer nur einen gegnerischen Charakter zum Tode markieren. Der Zustand hält an, bis du eine Rast einlegst, das markierte Ziel besiegt wird oder die SL eine Anzahl Furcht in Höhe deines Rangs ausgibt, um ihn zu entfernen."
+			},
+			{
+				"name": "Rein und raus",
+				"description": "**Setze 1 Hoffnung ein**, um die SL nach einem schnellen oder unauffälligen Weg in einen Ort hinein oder aus ihm heraus zu fragen, den du sehen kannst. Dein nächster Wurf, bei dem du diese Information nutzt, hat einen Vorteil."
+			}
+		],
+		"backgroundQuestions": [
+			"Du hast einst eine Person getötet, die dir nahestand. Was ist geschehen und wie hat es dich verändert?",
+			"Welche Organisation hat dich im Töten ausgebildet und wie wurdest du Mitglied?",
+			"Ein Ziel ist dir während deiner Laufbahn immer wieder entkommen. Wer ist es und wie konnte es dir entgehen?"
+		],
+		"connectionQuestions": [
+			"Ich habe jemanden für dich getötet. Wer war es?",
+			"Wie hast du mich gerettet, als ich dem Tod nahe war, und was habe ich dir als Gegenleistung versprochen?",
+			"Welches Geheimnis über mich habe ich dir anvertraut und wie hat es dein Bild von mir verändert?"
+		]
+	},
+	{
+		"id": "class-brawler",
+		"name": "Faustkämpfer",
+		"description": [
+			"Faustkämpfer sind Experten des unbewaffneten Kampfes und formen ihren Körper zu einer tödlichen Waffe. Ob sie eine formelle Ausbildung genossen, bei einem Mentor gelernt oder sich ihre Fähigkeiten Kampf für Kampf angeeignet haben: Ihr Training ist stets unerbittlich und bringt Körper und Geist in Einklang. Faustkämpfer werden für ihre Kraft und Vielseitigkeit geschätzt. Da ihr Körper ihre stärkste Waffe ist, suchen sie ständig nach neuen Herausforderungen und ebenbürtigen Trainingspartnern. Für Gegner, die bis an die Zähne bewaffnete Feinde gewohnt sind, wirken sie vielleicht harmlos – doch mit bloßen Fäusten erreichen sie oft mehr als ein durchschnittlicher Soldat mit einem Schwert."
+		],
+		"items": "Bandagen von einem Mentor oder ein Buch über dein geheimes Hobby",
+		"hopeFeature": "Stell dich: **Setze 3 Hoffnung ein**, um ein Ziel in kurzer Distanz einzuschüchtern und es vorübergehend _Verwundbar_ zu machen.",
+		"classFeatures": [
+			{
+				"name": "Ich bin die Waffe",
+				"description": "Deine Angriffe mit bloßen Händen sind so stark wie jede Klinge. Solange du keine andere aktive Waffe führst, gilt der Faustkämpfer-Schlag als deine Primärwaffe. Er verwendet ein Attribut deiner Wahl, hat Nahkampfdistanz und verursacht abhängig von deiner Übung **W8+W6 physischen Schaden**; sowohl W8 als auch W6 skalieren mit deiner Übung. Solange diese Waffe aktiv ist, erhältst du einen Bonus von +1 auf Ausweichen."
+			},
+			{
+				"name": "Komboschlag",
+				"description": "Nachdem du bei einem erfolgreichen Angriff mit einer Nahkampfwaffe den Schaden gewürfelt hast, darfst du **1 Stress markieren**, um einen Komboschlag zu beginnen. Würfle deinen Kombowürfel und notiere das Ergebnis. Würfle weiter, bis das neueste Ergebnis niedriger ist als das unmittelbar vorherige. Du verursachst bei diesem Angriff zusätzlichen Schaden in Höhe der Summe aller gewürfelten Ergebnisse. Diese Ergebnisse können nicht verändert werden.\n\nDein Kombowürfel beginnt als **W4**. Einmal pro Rang darfst du ihn mit einer Stufenaufstiegsoption um eine Würfelstufe erhöhen."
+			}
+		],
+		"backgroundQuestions": [
+			"Wo hast du deine prägenden Jahre verbracht und dort direkt oder indirekt den Kampfstil gelernt, den du heute nutzt?",
+			"Welche Organisation hat geschworen, dich bei Sichtkontakt zu töten, und womit hast du ihren Zorn geweckt?",
+			"Gegen wen hast du kürzlich einen Kampf verloren und warum verlangst du so sehr nach einer Revanche?"
+		],
+		"connectionQuestions": [
+			"Wovor fürchten wir uns beide?",
+			"Wobei verlasse ich mich auf unseren Reisen auf dich und wie fühlst du dich dabei?",
+			"Ich habe dir etwas, das du zu mir gesagt hast, noch immer nicht verziehen. Was war es und warum hast du es gesagt?"
+		]
+	},
+	{
+		"id": "class-warlock",
+		"name": "Paktmagier",
+		"description": [
+			"Wer sein Leben – oder sogar seine Seele – im Austausch für unglaubliche Macht einem übernatürlichen Patron verschreibt, wird Paktmagier genannt. Häufig treibt Verzweiflung sterbliche Wesen zu diesem Opfer: Sie wollen sich oder geliebte Menschen schützen, ihrer Gemeinschaft helfen, Rache üben, ihren Stand erhöhen oder ihre Ziele verwirklichen. Ihre Patrone können Götter, Geister, Dämonen oder Wesen sein, die selbst ihrem Schützling unbekannt bleiben. Jeder Patron besitzt einen eigenen Einflussbereich, und jene, die Seelen sammeln, sind nur selten für Güte bekannt. Die Macht eines Paktmagiers wird daher durch die Beziehung zu seinem Gönner geprägt. Trotz seiner furchterregenden Magie könnte er feststellen, dass jemand anderes die Fäden zieht."
+		],
+		"items": "Eine Schnitzerei, die deinen Patron darstellt, oder ein Ring, den du nicht ablegen kannst",
+		"hopeFeature": "Gunst des Patrons: Wenn dir ein Wurf misslingt, darfst du **3 Hoffnung einsetzen**, um ihn mit Vorteil zu wiederholen.",
+		"classFeatures": [
+			{
+				"name": "Pakt des Patrons",
+				"description": "Du hast dich im Austausch für Macht einem übernatürlichen Wesen verschrieben, etwa einem Gott, Feenwesen oder Dämon. Schreibe seinen Namen auf deinen Charakterbogen und bestimme gemeinsam mit der SL seinen Einflussbereich, beispielsweise Natur, Chaos, Weisheit, Unheil, Liebe, Krieg, Gerechtigkeit oder Tod. Bevor du einen Aktionswurf ausführst, der mit diesem Einflussbereich zusammenhängt, darfst du **1 Gunst ausgeben**, um deinen Patron um Hilfe zu bitten. Würfle deinen Patronwürfel und addiere das Ergebnis zum Wurf. Dein Patronwürfel beginnt als **W6** und wird auf Stufe 5 zu einem **W8**."
+			},
+			{
+				"name": "Gunst",
+				"description": "Du beginnst mit 3 Gunst. Als Auszeit-Aktion kannst du deinem Patron Tribut zollen. Beschreibe, wie du dies tust, und erhalte Gunst in Höhe deines Zauber-Attributs. Wenn dir ein Aktionswurf mit Hoffnung gelingt, darfst du außerdem 1 Gunst anstelle von 1 Hoffnung erhalten. Du kannst höchstens 6 Gunst gleichzeitig besitzen."
+			}
+		],
+		"backgroundQuestions": [
+			"Wer aus deiner Gemeinschaft hat dich verstoßen, nachdem du den Pakt mit deinem Patron geschlossen hast?",
+			"Welche verzweifelte Lage brachte dich dazu, deinem Patron dein Leben zu versprechen?",
+			"Dein Patron hat dir eine Aufgabe erteilt, die du unbedingt erfüllen musst. Welche ist es und warum beunruhigt sie dich?"
+		],
+		"connectionQuestions": [
+			"Warum vertraue ich dir an, was mein Patron sagt und tut?",
+			"Unsere Beziehung hat sich verändert, seit du gesehen hast, wie ich meinem Patron Tribut zollte. Was hast du gesehen und wie hat es dich beeinflusst?",
+			"Ich habe einmal etwas sehr Törichtes getan und du lässt mich das bis heute nicht vergessen. Was war es?"
+		]
+	},
+	{
+		"id": "class-witch",
+		"name": "Hexe",
+		"description": [
+			"Hexen sind magische Praktiker, die mit Naturkräften und Wesen aus anderen Sphären verkehren. Sie rufen Macht durch ihr Handwerk hervor und verbinden Greifbares mit Vergänglichem, indem sie Zauber wirken, Beschwörungen murmeln, Talismane erschaffen, Illusionen weben und ganz eigene Praktiken pflegen. Durch Ahnen, Gottheiten, Naturaspekte und andere übernatürliche Mächte können sie ihre Verbündeten schützen und ihren Feinden schaden. Ihr Wissen wird häufig von solchen Wesen oder über viele Generationen in kleinen Zirkeln weitergegeben. Außenstehende begegnen Hexen oft mit Angst und Unverständnis, weil ihre Methoden geheimnisvoll, fremdartig oder makaber erscheinen. Welchen Weg eine Hexe auch beschreitet, sie wandelt ohne Furcht zwischen Licht und Schatten."
+		],
+		"items": "Ein kleines harmloses Haustier oder ein Wahrsagestein",
+		"hopeFeature": "Hexenzauber: Wenn dir oder einem verbündeten Charakter in weiter Distanz ein Aktionswurf misslingt, darfst du **3 Hoffnung einsetzen**, um ihn stattdessen zu einem Erfolg mit Furcht zu machen.",
+		"classFeatures": [
+			{
+				"name": "Verhexen",
+				"description": "**Markiere 1 Stress**, um ein Ziel in weiter Distanz vorübergehend zu _verhexen_. Solange es verhext ist, erhält es einen Malus in Höhe deines Rangs auf Schadenswürfe und seinen Schwierigkeitsgrad. Du kannst höchstens eine Anzahl Kreaturen in Höhe deines Zauber-Attributs gleichzeitig verhexen."
+			},
+			{
+				"name": "Zwiesprache",
+				"description": "Einmal pro langer Rast darfst du während eines ruhigen Augenblicks mit einem Ahnen, einer Gottheit, einem Geist oder einem Wesen aus einer anderen Sphäre Zwiesprache halten. Stelle eine Frage und würfle eine Anzahl **W6** in Höhe deines Zauber-Attributs. Wähle eines der Ergebnisse:\n• 1–3: Du schmeckst, riechst oder fühlst etwas, das für die Antwort von Bedeutung ist.\n• 4–5: Du hörst Geräusche oder siehst eine Vision, die für die Antwort von Bedeutung ist.\n• 6: Du erlebst eine für die Antwort bedeutsame Szene auf geistige Weise, als wärst du selbst dort."
+			}
+		],
+		"backgroundQuestions": [
+			"Wer aus deiner Gemeinschaft fürchtete dein magisches Handwerk? Welches Gerücht verbreitete diese Person über dich und welche Wahrheit steckte darin?",
+			"Du hast deine Macht einst eingesetzt, um jemandem in großer Not zu helfen. Wer war diese Person und warum kam sie zu dir?",
+			"Deine Magie öffnete einst eine Tür, die besser verschlossen geblieben wäre. Wer oder was befand sich auf der anderen Seite?"
+		],
+		"connectionQuestions": [
+			"Welches besondere Ritual oder welche Praxis habe ich dir beigebracht, die wir nun gemeinsam ausüben?",
+			"Ich bin dir einmal im Traum erschienen und habe dir eine Vision der Zukunft gezeigt. Was habe ich dir erzählt?",
+			"Wofür suchst du normalerweise meinen Rat?"
+		]
+	}
+]

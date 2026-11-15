@@ -1,3 +1,4 @@
+import { translate as dfTranslate } from "../../i18n";
 import { AdvData, EnvironmentData, GearData } from "../../types/index";
 
 /**
@@ -31,7 +32,7 @@ export async function decodeRecordJson(prefixBase: string, code: string): Promis
 
 	if (trimmed.startsWith(prefixBase + "1.")) {
 		if (typeof DecompressionStream === "undefined") {
-			throw new Error("This platform cannot read compressed codes.");
+			throw new Error(dfTranslate("ui.this.platform.cannot.read.compressed.codes"));
 		}
 		const bytes = base64UrlToBytes(trimmed.slice(prefixBase.length + 2));
 		json = new TextDecoder().decode(await transformBytes(bytes, new DecompressionStream("gzip")));

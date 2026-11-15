@@ -1,3 +1,5 @@
+import { useLanguage as useUiLanguage } from "../../../i18n/react";
+import { translate as dfTranslate } from "../../../i18n";
 import React from "react";
 
 /**
@@ -9,6 +11,7 @@ import React from "react";
 /** Lucide "zap", inlined like the sheet's other icons (no emoji, SSR-safe).
  *  Marks domain card recall costs. */
 export function ZapIcon({ className }: { className?: string }) {
+	useUiLanguage();
 	return (
 		<svg
 			viewBox="0 0 24 24"
@@ -26,6 +29,7 @@ export function ZapIcon({ className }: { className?: string }) {
 }
 
 export function SectionBanner({ title }: { title: string }) {
+	useUiLanguage();
 	return (
 		<div className="df-cs-banner">
 			<span className="df-cs-banner-bar" />
@@ -49,6 +53,7 @@ export function FieldBox({
 	onChange: (value: string) => void;
 	className?: string;
 }) {
+	useUiLanguage();
 	return (
 		<label className={"df-cs-fieldbox" + (className ? " " + className : "")}>
 			<span className="df-cs-fieldbox-label">{label}</span>
@@ -74,6 +79,7 @@ export function LineField({
 	onChange: (value: string) => void;
 	className?: string;
 }) {
+	useUiLanguage();
 	return (
 		<label className={"df-cs-linefield" + (className ? " " + className : "")}>
 			<input
@@ -101,6 +107,7 @@ export function LineTextarea({
 	rows?: number;
 	className?: string;
 }) {
+	useUiLanguage();
 	return (
 		<label className={"df-cs-linefield" + (className ? " " + className : "")}>
 			<textarea
@@ -131,6 +138,7 @@ export function SlotToggle({
 	className?: string;
 	children?: React.ReactNode;
 }) {
+	useUiLanguage();
 	return (
 		<button
 			type="button"
@@ -149,11 +157,12 @@ export function SlotToggle({
  * that stays out of the printed-sheet look until hovered.
  */
 export function SectionCog({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+	useUiLanguage();
 	return (
 		<button
 			type="button"
 			className={"df-cs-cog" + (open ? " is-open" : "")}
-			aria-label="Section options"
+			aria-label={dfTranslate("ui.section.options")}
 			aria-expanded={open}
 			onClick={onToggle}
 		>
@@ -167,6 +176,7 @@ export function SectionCog({ open, onToggle }: { open: boolean; onToggle: () => 
 
 /** Quiet inline panel holding a section's cog options. */
 export function CogPanel({ children }: { children: React.ReactNode }) {
+	useUiLanguage();
 	return <div className="df-cs-cog-panel">{children}</div>;
 }
 
@@ -184,6 +194,7 @@ export function CogNumber({
 	max: number;
 	onChange: (value: number) => void;
 }) {
+	useUiLanguage();
 	return (
 		<label className="df-cs-cog-field">
 			{label}
@@ -212,6 +223,7 @@ export function LabeledCheck({
 	on: boolean;
 	onToggle: () => void;
 }) {
+	useUiLanguage();
 	return (
 		<button
 			type="button"
